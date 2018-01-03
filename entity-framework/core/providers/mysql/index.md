@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: 4900b882-79c5-40d2-a44a-ccb0292f6ed9
 ms.technology: entity-framework-core
 uid: core/providers/mysql/index
-ms.openlocfilehash: c151845c8b08ef6a668b352f15545752156b0a9d
-ms.sourcegitcommit: 5e2d97e731f975cf3405ff3deab2a3c75ad1b969
+ms.openlocfilehash: 1500d017cb463c3f394131a79b9063ff90cce5e2
+ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
+ms.lasthandoff: 12/22/2017
 ---
 # <a name="mysql-ef-core-database-provider"></a>Provider di database MySQL per Entity Framework Core
 
@@ -43,3 +43,5 @@ Vedere [Starting with MySQL EF Core provider and Connector/Net 7.0.4](http://ins
 * .NET Framework (4.5.1 e versioni successive)
 
 * .NET Core
+
+Consultare la documentazione di MySQL per informazioni sulla compatibilità della versione [qui](https://dev.mysql.com/doc/connector-net/en/connector-net-versions.html) e [qui](https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework-core.html)
