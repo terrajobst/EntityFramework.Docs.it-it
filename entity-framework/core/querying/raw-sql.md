@@ -6,18 +6,18 @@ ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 ms.technology: entity-framework-core
 uid: core/querying/raw-sql
-ms.openlocfilehash: ddf3a841800684688d50dcf9323f4d83c851222f
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 79894c7b9fd9e40cdf14460abf5d872ee2f4b9f0
+ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 12/22/2017
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborato
 
 Entity Framework Core consente di elenco a discesa di query SQL non elaborate quando si lavora con un database relazionale. Può essere utile se la query da eseguire non può essere espresse utilizzando LINQ, o se tramite una query LINQ è risultante in inefficiente SQL inviati al database.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
 
 ## <a name="limitations"></a>Limitazioni
 
@@ -29,6 +29,13 @@ Esistono alcune limitazioni da tenere presenti quando si usano query SQL non ela
 * I nomi delle colonne nel set di risultati deve corrispondere ai nomi di proprietà sono mappate a colonna. Questo è diverso da EF6 in cui il mapping di proprietà o la colonna è stato ignorato per le query SQL non elaborate e nomi devono corrispondere ai nomi di proprietà di colonna del set di risultati.
 
 * La query SQL non può contenere i dati correlati. Tuttavia, in molti casi è possibile comporre sopra la query utilizzando il `Include` operatore per restituire i dati correlati (vedere [inclusi i dati correlati](#including-related-data)).
+
+* `SELECT`istruzioni passate a questo metodo devono essere in genere componibile: se Core EF deve restituire ulteriori operatori di query nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), fornito SQL verrà considerato come una sottoquery. Ciò significa che l'istruzione SQL passata non può contenere caratteri o le opzioni non valide in una sottoquery, ad esempio:
+  * un punto e virgola finale
+  * In SQL Server, un livello di query finale hint, ad esempio`OPTION (HASH JOIN)`
+  * In SQL Server, un `ORDER BY` clausola che non è disponibile di `TOP 100 PERCENT` nel `SELECT` clausola
+
+* Istruzioni SQL diverso `SELECT` vengono riconosciute automaticamente come non componibile. Di conseguenza, i risultati completi della stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicato dopo `FromSql` vengono valutate in memoria. 
 
 ## <a name="basic-raw-sql-queries"></a>Query SQL non elaborate base
 

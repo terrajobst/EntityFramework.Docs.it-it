@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 ms.technology: entity-framework-core
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: b9d9662ce277e4f7b3d6f997a5117a0592f59fa3
-ms.sourcegitcommit: c72d85805db0aa95f980514a18381fdc5e17c786
+ms.openlocfilehash: 0ea02876b9594d54c971a7b70fcf7ce591e56ba0
+ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/01/2017
+ms.lasthandoff: 12/22/2017
 ---
 # <a name="disconnected-entities"></a>Entità disconnesse
 
@@ -19,7 +19,7 @@ Un'istanza di DbContext rileverà automaticamente le entità restituite dal data
 Tuttavia, talvolta le entità vengono interrogate utilizzando un'unica istanza di contesto e quindi salvati utilizzando un'istanza diversa. Questo accade spesso "disconnessi" scenari, ad esempio un'applicazione web in cui le entità sono query inviate al client, modificate, inviate al server in una richiesta e quindi salvate. In questo caso, il contesto della secondo istanza deve sapere se le entità sono nuovo (deve essere inserito) o esistente (deve essere aggiornato).
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) di questo articolo in GitHub.
 
 ## <a name="identifying-new-entities"></a>Identificazione di nuove entità
 
@@ -46,7 +46,7 @@ Tuttavia, EF dispone anche di un metodo incorporato per eseguire questa operazio
 
 ### <a name="with-other-keys"></a>Con altre chiavi
 
-Un altro meccanismo è necessaria per le nuove entità di identità quando i valori di chiave non vengono generati automaticamente. Esistono due approcci generali per questo:
+Un altro meccanismo è necessario per identificare nuove entità quando i valori di chiave non vengono generati automaticamente. Esistono due approcci generali per questo:
  * Query per l'entità
  * Passare un flag dal client
 
