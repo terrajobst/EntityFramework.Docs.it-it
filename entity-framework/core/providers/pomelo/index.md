@@ -22,7 +22,7 @@ Questo provider di database consente l'uso di Entity Framework Core (EF Core) co
 
 ## <a name="install"></a>Installazione di
 
-Installare il [pacchetto NuGet Pomelo..MySqlEntityFrameworkCore](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql).
+Installare il [pacchetto NuGet Pomelo.MySqlEntityFrameworkCore](https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySql).
 
 ``` powershell
 Install-Package Pomelo.EntityFrameworkCore.MySql
