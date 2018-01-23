@@ -6,18 +6,18 @@ ms.date: 10/27/2016
 ms.assetid: 0d0590f1-1ea3-4d5c-8f44-db17395cd3f3
 ms.technology: entity-framework-core
 uid: core/miscellaneous/testing/in-memory
-ms.openlocfilehash: c5c48c575e9fd693d1f28d1a6d10eb83ebbc9d70
-ms.sourcegitcommit: 860ec5d047342fbc4063a0de881c9861cc1f8813
+ms.openlocfilehash: 33690e3424d0777930d3cb8167575fb0f4ddd8f7
+ms.sourcegitcommit: d096484dcf9eff73d9943fa60db7a418b10ca0b3
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/05/2017
+ms.lasthandoff: 01/22/2018
 ---
 # <a name="testing-with-inmemory"></a>Test con InMemory
 
 Il provider InMemory è utile quando si desidera testare i componenti dell'utilizzo di un elemento che si avvicinano a connettersi al database reale, senza l'overhead delle operazioni di database effettivo.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Miscellaneous/Testing) di questo articolo in GitHub.
 
 ## <a name="inmemory-is-not-a-relational-database"></a>InMemory non è un database relazionale
 
@@ -64,6 +64,6 @@ La chiave per il test con questo provider è la possibilità di stabilire il con
 Di seguito è riportato un esempio di una classe di test che utilizza il database InMemory. Ogni metodo di test specifica un nome di database univoco, vale a dire che ogni metodo presenta un proprio database InMemory.
 
 >[!TIP]
-> Utilizzare il `.UseInMemoryDatabase()` metodo di estensione, il pacchetto Nuget di riferimento `Microsoft.EntityFrameworkCore.InMemory`.
+> Utilizzare il `.UseInMemoryDatabase()` metodo di estensione, il pacchetto NuGet di riferimento `Microsoft.EntityFrameworkCore.InMemory`.
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/Testing/TestProject/InMemory/BlogServiceTests.cs)]

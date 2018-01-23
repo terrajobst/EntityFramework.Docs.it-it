@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 ms.technology: entity-framework-core
 uid: core/saving/cascade-delete
-ms.openlocfilehash: a9481fe851cc264ab3eaecad052c2e683ae57a44
-ms.sourcegitcommit: 5367516f063cb42804ec92c31cdf76322554f2b5
-ms.translationtype: HT
+ms.openlocfilehash: e1cb194d7c7472af59eb44fe2a084fa16c40c186
+ms.sourcegitcommit: 3b21a7fdeddc7b3c70d9b7777b72bef61f59216c
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/08/2017
+ms.lasthandoff: 01/22/2018
 ---
 # <a name="cascade-delete"></a>Eliminazione a catena
 
@@ -35,19 +35,19 @@ Sono disponibili quattro eliminazione comportamenti, elencati nelle tabelle segu
 
 | Nome del comportamento | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database
 |-|-|-
-| **CASCADE** | Le entità vengono eliminate. | Le entità vengono eliminate.
-| **ClientSetNull** (predefinito) | Proprietà di chiave esterna sono impostate su null | None
+| **Cascade** | Le entità vengono eliminate. | Le entità vengono eliminate.
+| **ClientSetNull** (predefinito) | Proprietà di chiave esterna sono impostate su null | nessuno
 | **SetNull** | Proprietà di chiave esterna sono impostate su null | Proprietà di chiave esterna sono impostate su null
-| **Limitare** | None | None
+| **Limitare** | nessuno | nessuno
 
 Per le relazioni necessarie (chiave esterna non nullable) è _non_ possibile salvare un null valore di chiave esterna, che determina gli effetti seguenti:
 
 | Nome del comportamento | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database
 |-|-|-
 | **CASCADE** (predefinito) | Le entità vengono eliminate. | Le entità vengono eliminate.
-| **ClientSetNull** | Genera SaveChanges | None
+| **ClientSetNull** | Genera SaveChanges | nessuno
 | **SetNull** | Genera SaveChanges | Genera SaveChanges
-| **Limitare** | None | None
+| **Limitare** | nessuno | nessuno
 
 Nelle tabelle precedenti, *Nessuno* può comportare una violazione del vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma viene eseguita alcuna azione per modificare la chiave esterna di un dipendente/figlio, quindi il database verrà probabilmente genera eccezioni in SaveChanges a causa di una violazione del vincolo foreign.
 
@@ -67,7 +67,7 @@ In generale:
 
 ## <a name="entity-deletion-examples"></a>Esempi di eliminazione di entità
 
-Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato un'esecuzione. Nell'esempio viene illustrato cosa accade per ogni comportamento di eliminazione per le relazioni obbligatori e facoltative, quando viene eliminata un'entità padre.
+Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato ed eseguito. Nell'esempio viene illustrato cosa accade per ogni comportamento di eliminazione per le relazioni obbligatori e facoltative, quando viene eliminata un'entità padre.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
 

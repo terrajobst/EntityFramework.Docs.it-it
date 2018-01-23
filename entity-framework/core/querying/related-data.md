@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 ms.technology: entity-framework-core
 uid: core/querying/related-data
-ms.openlocfilehash: cd26bd2e6f85083f73d97b1356d0ba38f53e0b8f
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: ec69bb128890a1e0b72fe77014f37747585bb5a5
+ms.sourcegitcommit: 3b21a7fdeddc7b3c70d9b7777b72bef61f59216c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 01/22/2018
 ---
 # <a name="loading-related-data"></a>Caricamento dei dati correlati
 
@@ -20,7 +20,7 @@ Entity Framework Core consente di utilizzare le proprietà di navigazione del mo
 * **Caricamento lazy** indica che i dati correlati vengono caricati in modo trasparente dal database quando si accede alla proprietà di navigazione. Il caricamento differito non è ancora possibile con Entity Framework di base.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
 
 ## <a name="eager-loading"></a>Caricamento eager
 
@@ -42,6 +42,9 @@ Entity Framework Core consente di utilizzare le proprietà di navigazione del mo
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleThenInclude)]
 
+> [!NOTE]  
+> Le versioni correnti di Visual Studio offrono le opzioni di completamento di codice non corretto e può causare espressioni corrette viene contrassegnata con errori di sintassi quando si utilizza il `ThenInclude` metodo dopo una proprietà di navigazione della raccolta. Si tratta di un sintomo di un bug IntelliSense rilevato al https://github.com/dotnet/roslyn/issues/8237. È possibile ignorare questi errori di sintassi di vario tipo, purché il codice sia corretto e può essere compilato correttamente. 
+
 È possibile concatenare più chiamate a `ThenInclude` continuare inclusi ulteriori livelli di dati correlati.
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleThenIncludes)]
@@ -50,7 +53,7 @@ Entity Framework Core consente di utilizzare le proprietà di navigazione del mo
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IncludeTree)]
 
-È consigliabile includere più entità correlate per un'entità che è incluso. Ad esempio, quando si eseguono query `Blog`s, includere `Posts` e si desidera includere sia il `Author` e `Tags` del `Posts`. A tale scopo, è necessario specificare ogni percorso iniziando dalla radice di inclusione. Ad esempio `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Ciò non significa che si otterranno join ridondanti, nella maggior parte dei casi che verranno consolidate EF i join durante la generazione di SQL.
+È consigliabile includere più entità correlate per un'entità che è incluso. Ad esempio, quando si eseguono query `Blog`s, includere `Posts` e si desidera includere sia il `Author` e `Tags` del `Posts`. A tale scopo, è necessario specificare ogni percorso iniziando dalla radice di inclusione. Ad esempio, `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Ciò non significa che si otterranno join ridondanti, nella maggior parte dei casi che verranno consolidate EF i join durante la generazione di SQL.
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
