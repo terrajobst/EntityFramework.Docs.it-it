@@ -55,7 +55,7 @@
 ##### [Sequenze](core/modeling/relational/sequences.md)
 ##### [Valori predefiniti](core/modeling/relational/default-values.md)
 ##### [Indici](core/modeling/relational/indexes.md)
-##### [Foreign Key Constraints](core/modeling/relational/fk-constraints.md)
+##### [Vincoli della chiave esterna](core/modeling/relational/fk-constraints.md)
 ##### [Chiavi alternative (vincoli univoci)](core/modeling/relational/unique-constraints.md)
 ##### [Ereditarietà (database relazionale)](core/modeling/relational/inheritance.md)
 
@@ -83,7 +83,7 @@
 
 ### [Provider di database](core/providers/index.md)
 #### [Microsoft SQL Server](core/providers/sql-server/index.md)
-##### [Tabelle con ottimizzazione per la memoria](core/providers/sql-server/memory-optimized-tables.md)
+##### [Tabelle ottimizzate per la memoria](core/providers/sql-server/memory-optimized-tables.md)
 #### [SQLite](core/providers/sqlite/index.md)
 ##### [Limitazioni di SQLite](core/providers/sqlite/limitations.md)
 #### [PostgreSQL (Npgsql)](core/providers/npgsql/index.md)
@@ -129,6 +129,7 @@
 #### [Microsoft.EntityFrameworkCore.AutoHistory](core/extensions/autohistory.md)
 #### [Microsoft.EntityFrameworkCore.DynamicLinq](core/extensions/dynamiclinq.md)
 #### [Microsoft.EntityFrameworkCore.UnitOfWork](core/extensions/unitofwork.md)
+#### [NeinLinq.EntityFrameworkCore](core/extensions/neinlinq.md)
 
 ### Varie
 #### [Stringhe di connessione](core/miscellaneous/connection-strings.md)
