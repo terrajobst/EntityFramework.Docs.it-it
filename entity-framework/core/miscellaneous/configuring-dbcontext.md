@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 ms.technology: entity-framework-core
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: de26e3b28851d4dc4e50f0490093dd05ad489b31
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 6980acd53b0a74055af7a1e04b476f4625c327c9
+ms.sourcegitcommit: d2434edbfa6fbcee7287e33b4915033b796e417e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 02/12/2018
 ---
 # <a name="configuring-a-dbcontext"></a>Configurazione di un elemento DbContext
 
@@ -18,15 +18,15 @@ Questo articolo illustra i modelli di base per la configurazione di un `DbContex
 
 ## <a name="design-time-dbcontext-configuration"></a>Configurazione DbContext Design-time
 
-Strumenti di Entity Framework Core in fase di progettazione, ad esempio [migrazioni](xref:core/managing-schemas/migrations/index) devono essere in grado di individuare e creare un'istanza funzionante di un `DbContext` tipo per raccogliere informazioni dettagliate sui tipi di entità e modalità di mapping a uno schema di database dell'applicazione. Questo processo può essere automatica, purché lo strumento è possibile creare facilmente il `DbContext` in modo che verrà configurato in modo analogo a come potrebbe essere configurato in fase di run.
+Strumenti di Entity Framework Core in fase di progettazione, ad esempio [migrazioni](xref:core/managing-schemas/migrations/index) devono essere in grado di individuare e creare un'istanza funzionante di un `DbContext` tipo per raccogliere informazioni dettagliate sui tipi di entità e modalità di mapping a uno schema di database dell'applicazione. Questo processo può essere automatica, purché lo strumento è possibile creare facilmente il `DbContext` in modo che verrà configurato in modo analogo al modo in cui potrebbe essere configurato in fase di esecuzione.
 
 Mentre qualsiasi criterio di ricerca che fornisce informazioni di configurazione necessarie per il `DbContext` può funzionare in fase di esecuzione, gli strumenti che richiedono l'utilizzo di un `DbContext` in fase di progettazione può funzionare solo con un numero limitato di modelli. Questi prerequisiti sono analizzati più dettagliatamente il [creare il contesto in fase di progettazione](xref:core/miscellaneous/cli/dbcontext-creation) sezione.
 
 ## <a name="configuring-dbcontextoptions"></a>Configurazione DbContextOptions
 
-`DbContext`deve avere un'istanza di `DbContextOptions` per eseguire operazioni. Il `DbContextOptions` istanza contiene informazioni di configurazione, ad esempio:
+`DbContext` deve avere un'istanza di `DbContextOptions` per eseguire operazioni. Il `DbContextOptions` istanza contiene informazioni di configurazione, ad esempio:
 
-- Il provider di database da utilizzare, in genere selezionata richiamando un metodo, ad esempio `UseSqlServer` o`UseSqlite`
+- Il provider di database da utilizzare, in genere selezionata richiamando un metodo, ad esempio `UseSqlServer` o `UseSqlite`
 - Qualsiasi stringa di connessione necessarie o l'identificatore dell'istanza del database, in genere passato come argomento al metodo di selezione del provider indicato in precedenza
 - Tutti i selettori di provider a livello di comportamento facoltativo, in genere anche concatenati all'interno della chiamata al metodo di selezione del provider
 - Tutti i selettori generale comportamento di Entity Framework Core, concatenati in genere dopo o prima del metodo di selezione del provider
@@ -108,7 +108,7 @@ using (var context = new BloggingContext())
 
 Supporta l'utilizzo di Entity Framework Core `DbContext` con un contenitore dell'inserimento di dipendenza. Il tipo DbContext può essere aggiunti al contenitore del servizio con il `AddDbContext<TContext>` metodo.
 
-`AddDbContext<TContext>`renderà sia il tipo DbContext, `TContext`e i corrispondenti `DbContextOptions<TContext>` disponibili per l'aggiunta dal contenitore del servizio.
+`AddDbContext<TContext>` renderà sia il tipo DbContext, `TContext`e i corrispondenti `DbContextOptions<TContext>` disponibili per l'aggiunta dal contenitore del servizio.
 
 Vedere [lettura più](#more-reading) seguito per ulteriori informazioni sull'inserimento di dipendenze.
 

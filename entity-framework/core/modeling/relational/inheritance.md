@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
 ms.technology: entity-framework-core
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: 55286adf08a6a1c3286b7059d747a62e1feffd22
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 22eed0002b5903d3cfd18a7e4af0fcd2d46a5c4c
+ms.sourcegitcommit: d2434edbfa6fbcee7287e33b4915033b796e417e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 02/12/2018
 ---
 # <a name="inheritance-relational-database"></a>Ereditarietà (Database relazionale)
 
@@ -85,4 +85,52 @@ public class RssBlog : Blog
 {
     public string RssUrl { get; set; }
 }
+```
+
+## <a name="configuring-the-discriminator-property"></a>Configurazione proprietà discriminator
+
+Negli esempi precedenti, viene creato il discriminatore come un [nascondere proprietà](xref:core/modeling/shadow-properties) su entità di base della gerarchia. Poiché si tratta di una proprietà nel modello, può essere configurato come altre proprietà. Ad esempio, per impostare la lunghezza massima, quando viene utilizzato il valore predefinito, del discriminatore per convenzione:
+
+```C#
+modelBuilder.Entity<Blog>()
+    .Property("Discriminator")
+    .HasMaxLength(200);
+```
+
+Il discriminatore può anche essere mappato a una proprietà CLR effettiva nell'entità. Ad esempio:
+```C#
+class MyContext : DbContext
+{
+    public DbSet<Blog> Blogs { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Blog>()
+            .HasDiscriminator<string>("BlogType");
+    }
+}
+
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string Url { get; set; }
+    public string BlogType { get; set; }
+}
+
+public class RssBlog : Blog
+{
+    public string RssUrl { get; set; }
+}
+```
+
+Combinando queste due operazioni è possibile eseguire il mapping del discriminatore per una proprietà reale sia configurarlo:
+```C#
+modelBuilder.Entity<Blog>(b =>
+{
+    b.HasDiscriminator<string>("BlogType");
+
+    b.Property(e => e.BlogType)
+        .HasMaxLength(200)
+        .HasColumnName("blog_type");
+});
 ```

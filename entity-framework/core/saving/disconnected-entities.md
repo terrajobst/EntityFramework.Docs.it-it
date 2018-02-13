@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 ms.technology: entity-framework-core
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 0ea02876b9594d54c971a7b70fcf7ce591e56ba0
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 0b145217d40027c4b8e4746e9c5651652a28c9eb
+ms.sourcegitcommit: d2434edbfa6fbcee7287e33b4915033b796e417e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 02/12/2018
 ---
 # <a name="disconnected-entities"></a>Entità disconnesse
 
@@ -20,6 +20,9 @@ Tuttavia, talvolta le entità vengono interrogate utilizzando un'unica istanza d
 
 > [!TIP]  
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) di questo articolo in GitHub.
+
+> [!TIP]
+> EF Core può rilevare solo un'istanza di qualsiasi entità con un determinato valore di chiave primaria. Il modo migliore per evitare un problema consiste nell'usare un contesto di breve durato per ogni unità di lavoro in modo che sia inizialmente vuoto, il contesto di questo corso dispone di entità associata a essa, Salva le entità e il contesto viene eliminato e rimossi.
 
 ## <a name="identifying-new-entities"></a>Identificazione di nuove entità
 
@@ -85,6 +88,10 @@ Ecco i passaggi sono:
 > SetValues solo viene contrassegnato come modificato le proprietà che hanno valori diversi da quelli in entità rilevata. Ciò significa che quando viene inviato l'aggiornamento, verranno aggiornate solo le colonne effettivamente modificati. (E se è stato modificato nulla, verrà inviato alcun aggiornamento affatto.)
 
 ## <a name="working-with-graphs"></a>Utilizzo dei grafici
+
+### <a name="identity-resolution"></a>Risoluzione di identità
+
+Come indicato in precedenza, EF Core può rilevare solo un'istanza di qualsiasi entità con un determinato valore di chiave primaria. Quando si lavora con grafici in modo che questo invariante viene mantenuto e il contesto da utilizzare per la sola unità di lavoro deve essere creato in teoria il grafico. Se il grafico di contengono duplicati, sarà necessario elaborare il grafico prima di inviarlo a EF per consolidare più istanze in un unico. Questo potrebbe non essere semplice in cui le istanze hanno valori in conflitto e relazioni, in modo duplicati consolidamento è necessario eseguire quanto prima nella pipeline dell'applicazione per evitare la risoluzione dei conflitti.
 
 ### <a name="all-newall-existing-entities"></a>Tutte le entità esistenti con nuove/all
 
