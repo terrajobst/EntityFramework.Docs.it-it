@@ -6,16 +6,16 @@ ms.date: 10/27/2016
 ms.assetid: 4581e7ba-5e7f-452c-9937-0aaf790ba10a
 ms.technology: entity-framework-core
 uid: core/modeling/relational/indexes
-ms.openlocfilehash: 683b580bb155e0416f13c5d63e3280078fbcee21
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: f577fccfefc6908edf2ac47ae630323d7a9f5f2b
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="indexes"></a>Indici
 
 > [!NOTE]  
-> La configurazione di questa sezione è applicabile a database relazionali in generale. I metodi di estensione qui verranno rese disponibili quando si installa un provider di database relazionali (a causa di condiviso *Microsoft.EntityFrameworkCore.Relational* pacchetto).
+> La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
 Esegue il mapping di un indice in un database relazionale per lo stesso concetto di un indice in base di Entity Framework.
 
@@ -27,27 +27,16 @@ Per convenzione, gli indici sono denominati `IX_<type name>_<property name>`. Pe
 
 Gli indici non possono essere configurati utilizzando le annotazioni dei dati.
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
 Per configurare il nome di un indice, è possibile utilizzare l'API Fluent.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/IndexName.cs?highlight=9)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/IndexName.cs?name=Model&highlight=9)]
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasIndex(b => b.Url)
-            .HasName("Index_Url");
-    }
-}
+È inoltre possibile specificare un filtro.
 
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/IndexFilter.cs?name=Model&highlight=9)]
+
+Quando si utilizza il provider di SQL Server EF aggiunge filtrare un 'IS NOT NULL' per tutte le colonne che ammettono valori null che fanno parte di un indice univoco. Per eseguire l'override di questa convenzione è possibile fornire un `null` valore.
+
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/IndexNoFilter.cs?name=Model&highlight=10)]

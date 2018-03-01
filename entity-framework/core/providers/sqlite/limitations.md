@@ -6,11 +6,11 @@ ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 ms.technology: entity-framework-core
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: 08a4b8c26a3678491d412b333a7415cb45d4231f
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 3e0f375fa3e01747565cc158af02f6d21f6ae898
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>Limitazioni del Provider di SQLite EF Core Database
 
@@ -27,24 +27,29 @@ Libreria comune relazionale (condivisa dai provider di database relazionale di E
 
 Il motore di database SQLite non supporta un numero di operazioni sullo schema supportate dalla maggioranza degli altri database relazionali. Se si tenta di applicare una delle operazioni non supportate in un database SQLite un `NotSupportedException` verrà generata.
 
-| Operazione            | Supportato? |
-| -------------------- | ---------- |
-| AddColumn            | ✔          |
-| AddForeignKey        | ✗          |
-| AddPrimaryKey        | ✗          |
-| AddUniqueConstraint  | ✗          |
-| AlterColumn          | ✗          |
-| CreateIndex          | ✔          |
-| CreateTable          | ✔          |
-| DropColumn           | ✗          |
-| DropForeignKey       | ✗          |
-| DropIndex            | ✔          |
-| DropPrimaryKey       | ✗          |
-| DropTable            | ✔          |
-| DropUniqueConstraint | ✗          |
-| RenameColumn         | ✗          |
-| RenameIndex          | ✗          |
-| RenameTable          | ✔          |
+| Operazione            | Supportato? | Richiede la versione |
+|:---------------------|:-----------|:-----------------|
+| AddColumn            | ✔          | 1.0              |
+| AddForeignKey        | ✗          |                  |
+| AddPrimaryKey        | ✗          |                  |
+| AddUniqueConstraint  | ✗          |                  |
+| AlterColumn          | ✗          |                  |
+| CreateIndex          | ✔          | 1.0              |
+| CreateTable          | ✔          | 1.0              |
+| DropColumn           | ✗          |                  |
+| DropForeignKey       | ✗          |                  |
+| DropIndex            | ✔          | 1.0              |
+| DropPrimaryKey       | ✗          |                  |
+| DropTable            | ✔          | 1.0              |
+| DropUniqueConstraint | ✗          |                  |
+| RenameColumn         | ✔          | 2.1              |
+| RenameIndex          | ✔          | 1.0              |
+| RenameTable          | ✔          | 1.0              |
+| EnsureSchema         | ✔ (nessuna operazione)  | 2.0              |
+| DropSchema           | ✔ (nessuna operazione)  | 2.0              |
+| INS               | ✔          | 2.0              |
+| Aggiorna               | ✔          | 2.0              |
+| Eliminare               | ✔          | 2.0              |
 
 ## <a name="migrations-limitations-workaround"></a>Soluzione alternativa limitazioni migrazioni
 
@@ -52,4 +57,4 @@ Il motore di database SQLite non supporta un numero di operazioni sullo schema s
 
 Vedere [apportare altri tipi di tabella le modifiche dello Schema](http://sqlite.org/lang_altertable.html#otheralter) nella documentazione di SQLite per altri dettagli.
 
-In futuro, EF possono supportare alcune di queste operazioni tramite l'approccio di ricompilazione tabella dietro le quinte. È possibile [tenere traccia di questa funzionalità nel progetto GitHub](https://github.com/aspnet/EntityFramework/issues/329).
+In futuro, EF possono supportare alcune di queste operazioni tramite l'approccio di ricompilazione tabella dietro le quinte. È possibile [tenere traccia di questa funzionalità nel progetto GitHub](https://github.com/aspnet/EntityFrameworkCore/issues/329).

@@ -4,16 +4,16 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
-ms.openlocfilehash: b4ecb27edf94e7b9ad6c7fe65a891dcbf1593309
-ms.sourcegitcommit: 5e2d97e731f975cf3405ff3deab2a3c75ad1b969
+ms.openlocfilehash: aacf8c8564a3966db6202c9ff1c1c02a19a10814
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
+ms.lasthandoff: 02/28/2018
 ---
 <a name="ef-core-package-manager-console-tools"></a>Strumenti di Entity Framework Core Package Manager Console
 =====================================
 Gli strumenti di Entity Framework Core Package Manager Console (PMC) eseguito all'interno di Visual Studio tramite NuGet [Package Manager Console][2].
-Questi strumenti sono compatibili con i progetti sia .NET Framework e .NET Core.
+Questi strumenti funzionano sia con i progetti .NET Framework che con i progetti .NET Core.
 
 > [!TIP]
 > Non si usa Visual Studio? Il [strumenti da riga di comando di base EF] [ 1] sono multipiattaforma e vengono eseguiti all'interno di un prompt dei comandi.
@@ -42,14 +42,14 @@ Get-Help about_EntityFrameworkCore
 ---------------
 Ogni volta che si richiama un comando, vengono utilizzate due progetti:
 
-Il progetto di destinazione è in cui vengono aggiunti tutti i file (o in alcuni casi rimossi). Per impostazione predefinita il progetto di destinazione di **progetto predefinito** selezionato nella Console di gestione pacchetti, ma può anche essere specificato utilizzando il progetto parametro-.
+Il progetto di destinazione è dove vengono aggiunti, in alcuni casi rimossi, tutti i file. Per impostazione predefinita il progetto di destinazione di **progetto predefinito** selezionato nella Console di gestione pacchetti, ma può anche essere specificato utilizzando il progetto parametro-.
 
-Il progetto di avvio viene emulato dagli strumenti quando si esegue il codice del progetto. Per impostazione predefinita uno **imposta come progetto di avvio** in Esplora soluzioni. Può anche essere specificato utilizzando il parametro - proprietà.
+Il progetto di avvio è quello emulato dagli strumenti quando si esegue il codice del progetto. Per impostazione predefinita uno **imposta come progetto di avvio** in Esplora soluzioni. Può anche essere specificato utilizzando il parametro - proprietà.
 
 Parametri comuni:
 
 |                           |                             |
-| ------------------------- | --------------------------- |
+|:--------------------------|:----------------------------|
 | -Contesto \<stringa >        | L'elemento DbContext da utilizzare.       |
 | -Progetto \<stringa >        | Il progetto da utilizzare.         |
 | Proprietà - \<stringa > | Il progetto di avvio da utilizzare. |
@@ -63,7 +63,7 @@ Per visualizzare informazioni della Guida su un comando, utilizzare PowerShell `
 > [!TIP]
 > Impostare **env:ASPNETCORE_ENVIRONMENT** prima di eseguire per specificare l'ambiente di ASP.NET Core.
 
-<a name="commands"></a>Comandi
+<a name="commands"></a>Comandi:
 --------
 
 ### <a name="add-migration"></a>Aggiungere la migrazione
@@ -72,10 +72,10 @@ Aggiunge una nuova migrazione.
 
 Parametri:
 
-|                                    |                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------- |
-| ***-Nome*** \<stringa >              | Il nome della migrazione.                                                      |
-| <nobr>-OutputDir \<stringa ></nobr>  | La directory e spazio dei nomi secondario da utilizzare. I percorsi sono relativi alla directory del progetto. Valore predefinito è "Migrazione". |
+|                                   |                                                                                                                  |
+|:----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
+| ***-Nome*** \<stringa >             | Il nome della migrazione.                                                                                       |
+| <nobr>-OutputDir \<stringa ></nobr> | La directory e spazio dei nomi secondario da utilizzare. I percorsi sono relativi alla directory del progetto. Valore predefinito è "Migrazione". |
 
 > [!NOTE]
 > I parametri in **grassetto** sono necessari e quelle in *corsivo* sono posizionali.
@@ -86,9 +86,9 @@ Elimina il database.
 
 Parametri:
 
-|          |                                                          |
-| -------- | -------------------------------------------------------- |
-| -WhatIf  | Mostra il database verrà rimossa, ma non l'eliminazione. |
+|         |                                                          |
+|:--------|:---------------------------------------------------------|
+| -WhatIf | Mostra il database verrà rimossa, ma non l'eliminazione. |
 
 ### <a name="get-dbcontext"></a>Get-DbContext
 
@@ -101,35 +101,35 @@ Rimuove l'ultima migrazione.
 Parametri:
 
 |        |                                                                       |
-| ------ | --------------------------------------------------------------------- |
+|:-------|:----------------------------------------------------------------------|
 | -Force | Non verificare se la migrazione è stata applicata al database. |
 
-### <a name="scaffold-dbcontext"></a>Lo scaffolding DbContext
+### <a name="scaffold-dbcontext"></a>Scaffold-DbContext
 
 Strutture una tipi DbContext ed entità per un database.
 
 Parametri:
 
-|                                          |                                                                           |
-| ---------------------------------------- | ------------------------------------------------------------------------- |
-| <nobr>***-Connessione*** \<stringa ></nobr> | La stringa di connessione al database.                                    |
-| ***-Provider*** \<stringa >                | Il provider da utilizzare. Ad esempio, Microsoft.EntityFrameworkCore.SqlServer)       |
-| -OutputDir \<stringa >                     | Della directory in cui inserire i file in. I percorsi sono relativi alla directory del progetto. |
-| -Contesto \<stringa >                       | Il nome di DbContext per generare.                                    |
-| -Gli schemi \<String [] >                     | Gli schemi delle tabelle per generare i tipi di entità per.                       |
-| -Tabelle \<String [] >                      | Generare tipi di entità per le tabelle.                                  |
+|                                          |                                                                                                  |
+|:-----------------------------------------|:-------------------------------------------------------------------------------------------------|
+| <nobr>***-Connessione*** \<stringa ></nobr> | La stringa di connessione al database.                                                           |
+| ***-Provider*** \<stringa >                | Il provider da utilizzare. (Ad esempio Microsoft.EntityFrameworkCore.SqlServer)                              |
+| -OutputDir \<stringa >                     | Della directory in cui inserire i file in. I percorsi sono relativi alla directory del progetto.                      |
+| -Contesto \<stringa >                       | Il nome di DbContext per generare.                                                           |
+| -Gli schemi \<String [] >                     | Gli schemi delle tabelle per generare i tipi di entità per.                                              |
+| -Tabelle \<String [] >                      | Generare tipi di entità per le tabelle.                                                         |
 | -DataAnnotations                         | Utilizzare gli attributi per configurare il modello (dove possibile). Se omesso, viene utilizzato solo l'API fluent. |
-| -UseDatabaseNames                        | Utilizzare nomi di tabella e colonna direttamente dal database.                    |
-| -Force                                   | Sovrascrivi file esistenti.                                                 |
+| -UseDatabaseNames                        | Utilizzare nomi di tabella e colonna direttamente dal database.                                           |
+| -Force                                   | Sovrascrivi file esistenti.                                                                        |
 
-### <a name="script-migration"></a>Migrazione di script
+### <a name="script-migration"></a>Script-Migration
 
 Genera uno script SQL dalla migrazione.
 
 Parametri:
 
 |                   |                                                                    |
-| ----------------- | ------------------------------------------------------------------ |
+|:------------------|:-------------------------------------------------------------------|
 | *-Da* \<stringa > | La migrazione inizia. Il valore predefinito 0 (il database iniziale).      |
 | *-A* \<stringa >   | La migrazione finale. Per impostazione predefinita all'ultima migrazione.              |
 | -Idempotente       | Generare uno script che può essere usato in un database in ogni operazione di migrazione. |
@@ -140,8 +140,8 @@ Parametri:
 
 ### <a name="update-database"></a>Update-Database
 
-|                                     |                                                                                |
-| ----------------------------------- | ------------------------------------------------------------------------------ |
+|                                     |                                                                                                |
+|:------------------------------------|:-----------------------------------------------------------------------------------------------|
 | <nobr>*-Migrazione* \<stringa ></nobr> | La migrazione di destinazione. Se è '0', verranno annullate tutte le migrazioni. Per impostazione predefinita all'ultima migrazione. |
 
 > [!TIP]

@@ -6,18 +6,18 @@ ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 ms.technology: entity-framework-core
 uid: core/saving/transactions
-ms.openlocfilehash: a2f890c0af1e83cbcc1d40d68540ff7132a9bafd
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 2dda7b7d58ae058fc2aa89fe16fbf46adc8c6bdc
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="using-transactions"></a>Utilizzo delle transazioni
 
 Le transazioni consentono di varie operazioni di database possono essere elaborati in modo atomico. Se viene eseguito il commit della transazione, tutte le operazioni vengono applicate correttamente nel database. Se viene eseguito il rollback della transazione, nessuna delle operazioni vengono applicata al database.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Transactions/) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Transactions/) di questo articolo in GitHub.
 
 ## <a name="default-transaction-behavior"></a>Comportamento predefinito delle transazioni
 
@@ -74,19 +74,9 @@ La condivisione di un `DbConnection` richiede la possibilità di passare una con
 Il modo più semplice per consentire `DbConnection` specificare esternamente consiste nell'interrompere l'utilizzo di `DbContext.OnConfiguring` per configurare il contesto e creare esternamente `DbContextOptions` e passarli al costruttore di contesto.
 
 > [!TIP]  
-> `DbContextOptionsBuilder`è l'API utilizzata nel `DbContext.OnConfiguring` per configurare il contesto, ora si desidera utilizzarlo per creare esternamente `DbContextOptions`.
+> `DbContextOptionsBuilder` è l'API utilizzata nel `DbContext.OnConfiguring` per configurare il contesto, ora si desidera utilizzarlo per creare esternamente `DbContextOptions`.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=3,4,5)] -->
-``` csharp
-    public class BloggingContext : DbContext
-    {
-        public BloggingContext(DbContextOptions<BloggingContext> options)
-            : base(options)
-        { }
-
-        public DbSet<Blog> Blogs { get; set; }
-    }
-```
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?name=Context&highlight=3,4,5)]
 
 In alternativa è possibile continuare a usare `DbContext.OnConfiguring`, ma accetta un `DbConnection` che viene salvato e quindi utilizzato `DbContext.OnConfiguring`.
 
@@ -113,41 +103,7 @@ public class BloggingContext : DbContext
 
 È ora possibile creare più istanze di contesto che condividono la stessa connessione. Utilizzare quindi la `DbContext.Database.UseTransaction(DbTransaction)` API per integrare entrambi i contesti nella stessa transazione.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?highlight=1,2,3,7,16,23,24,25)] -->
-``` csharp
-        var options = new DbContextOptionsBuilder<BloggingContext>()
-            .UseSqlServer(new SqlConnection(connectionString))
-            .Options;
-
-        using (var context1 = new BloggingContext(options))
-        {
-            using (var transaction = context1.Database.BeginTransaction())
-            {
-                try
-                {
-                    context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context1.SaveChanges();
-
-                    using (var context2 = new BloggingContext(options))
-                    {
-                        context2.Database.UseTransaction(transaction.GetDbTransaction());
-
-                        var blogs = context2.Blogs
-                            .OrderBy(b => b.Url)
-                            .ToList();
-                    }
-
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    // TODO: Handle failure
-                }
-            }
-        }
-```
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/SharingTransaction/Sample.cs?name=Transaction&highlight=1,2,3,7,16,23,24,25)]
 
 ## <a name="using-external-dbtransactions-relational-databases-only"></a>Utilizzando DbTransactions esterno (solo database relazionali)
 
@@ -155,39 +111,26 @@ Se si utilizza tecnologie di accesso ai dati più per accedere a un database rel
 
 L'esempio seguente viene illustrato come eseguire un'operazione di ADO.NET SqlClient e un'operazione di Entity Framework Core nella stessa transazione.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ExternalDbTransaction/Sample.cs?highlight=4,10,21,26,27,28)] -->
-``` csharp
-        var connection = new SqlConnection(connectionString);
-        connection.Open();
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/ExternalDbTransaction/Sample.cs?name=Transaction&highlight=4,10,21,26,27,28)]
 
-        using (var transaction = connection.BeginTransaction())
-        {
-            try
-            {
-                // Run raw ADO.NET command in the transaction
-                var command = connection.CreateCommand();
-                command.Transaction = transaction;
-                command.CommandText = "DELETE FROM dbo.Blogs";
-                command.ExecuteNonQuery();
+## <a name="using-systemtransactions"></a>Using System. Transactions
 
-                // Run an EF Core command in the transaction
-                var options = new DbContextOptionsBuilder<BloggingContext>()
-                    .UseSqlServer(connection)
-                    .Options;
+> [!NOTE]  
+> Questa funzionalità è nuova in Entity Framework Core 2.1.
 
-                using (var context = new BloggingContext(options))
-                {
-                    context.Database.UseTransaction(transaction);
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-                }
+È possibile utilizzare le transazioni di ambiente, se è necessario coordinare un ambito più ampio.
 
-                // Commit transaction if all commands succeed, transaction will auto-rollback
-                // when disposed if either commands fails
-                transaction.Commit();
-            }
-            catch (System.Exception)
-            {
-                // TODO: Handle failure
-            }
-```
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/AmbientTransaction/Sample.cs?name=Transaction&highlight=1,24,25,26)]
+
+È inoltre possibile eseguire l'inserimento in una transazione esplicita.
+
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/CommitableTransaction/Sample.cs?name=Transaction&highlight=1,13,26,27,28)]
+
+### <a name="limitations-of-systemtransactions"></a>Limitazioni di System. Transactions  
+
+1. Core EF si basa sui provider di database per implementare il supporto per System. Transactions. Sebbene il supporto è piuttosto comune tra i provider ADO.NET per .NET Framework, l'API solo aggiunti di recente a .NET Core e il supporto di conseguenza non è essere molto diffuso. Se un provider non implementa il supporto per System. Transactions, è possibile che le chiamate a queste API verranno ignorate completamente. SqlClient per .NET Core supporti da 2.1 in poi. SqlClient per .NET 2.0 Core genererà un'eccezione di si tenta di utilizzare la funzionalità. 
+
+   > [!IMPORTANT]  
+   > È consigliabile verificare che l'API si comporti correttamente con il provider prima basarsi su di essa per la gestione delle transazioni. Sono invitati a contattare il gestore del provider del database in caso contrario. 
+
+2. A partire dalla versione 2.1, l'implementazione di System. Transactions in .NET Core non include il supporto per le transazioni distribuite, pertanto è possibile utilizzare `TransactionScope` o `CommitableTransaction`per coordinare le transazioni tra più gestori di risorse. 

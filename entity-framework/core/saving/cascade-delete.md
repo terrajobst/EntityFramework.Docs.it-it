@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 ms.technology: entity-framework-core
 uid: core/saving/cascade-delete
-ms.openlocfilehash: e1cb194d7c7472af59eb44fe2a084fa16c40c186
-ms.sourcegitcommit: 3b21a7fdeddc7b3c70d9b7777b72bef61f59216c
+ms.openlocfilehash: 1ab9d114e27aac0bec972df631a426c8ce87a518
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/22/2018
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="cascade-delete"></a>Eliminazione a catena
 
@@ -33,21 +33,21 @@ Per la seconda azione precedente, l'impostazione di un valore di chiave esterna 
 
 Sono disponibili quattro eliminazione comportamenti, elencati nelle tabelle seguenti. Per le relazioni facoltative (chiave esterna che ammette valori null), _è_ possibile salvare un null valore di chiave esterna, che determina gli effetti seguenti:
 
-| Nome del comportamento | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database
-|-|-|-
-| **Cascade** | Le entità vengono eliminate. | Le entità vengono eliminate.
-| **ClientSetNull** (predefinito) | Proprietà di chiave esterna sono impostate su null | nessuno
-| **SetNull** | Proprietà di chiave esterna sono impostate su null | Proprietà di chiave esterna sono impostate su null
-| **Limitare** | nessuno | nessuno
+| Nome del comportamento               | Effetto sul dipendente/figlio in memoria    | Effetto sul dipendente/figlio nel database  |
+|:----------------------------|:---------------------------------------|:---------------------------------------|
+| **Cascade**                 | Le entità vengono eliminate.                   | Le entità vengono eliminate.                   |
+| **ClientSetNull** (predefinito) | Proprietà di chiave esterna sono impostate su null | nessuno                                   |
+| **SetNull**                 | Proprietà di chiave esterna sono impostate su null | Proprietà di chiave esterna sono impostate su null |
+| **Limitare**                | nessuno                                   | nessuno                                   |
 
 Per le relazioni necessarie (chiave esterna non nullable) è _non_ possibile salvare un null valore di chiave esterna, che determina gli effetti seguenti:
 
-| Nome del comportamento | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database
-|-|-|-
-| **CASCADE** (predefinito) | Le entità vengono eliminate. | Le entità vengono eliminate.
-| **ClientSetNull** | Genera SaveChanges | nessuno
-| **SetNull** | Genera SaveChanges | Genera SaveChanges
-| **Limitare** | nessuno | nessuno
+| Nome del comportamento         | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database |
+|:----------------------|:------------------------------------|:--------------------------------------|
+| **CASCADE** (predefinito) | Le entità vengono eliminate.                | Le entità vengono eliminate.                  |
+| **ClientSetNull**     | Genera SaveChanges                  | nessuno                                  |
+| **SetNull**           | Genera SaveChanges                  | Genera SaveChanges                    |
+| **Limitare**          | nessuno                                | nessuno                                  |
 
 Nelle tabelle precedenti, *Nessuno* può comportare una violazione del vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma viene eseguita alcuna azione per modificare la chiave esterna di un dipendente/figlio, quindi il database verrà probabilmente genera eccezioni in SaveChanges a causa di una violazione del vincolo foreign.
 

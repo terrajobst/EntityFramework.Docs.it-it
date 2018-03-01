@@ -6,21 +6,21 @@ ms.date: 10/27/2016
 ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
 ms.technology: entity-framework-core
 uid: core/providers/writing-a-provider
-ms.openlocfilehash: 9d6d3748a9097b3b8eeee2a8a516c53f3b2afa58
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 4bddf5858ab2c6b2fd22571a20edb3f7c85e2853
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="writing-a-database-provider"></a>Scrittura di un Provider di Database
 
 Per informazioni sulla scrittura di un provider di database di Entity Framework Core, vedere [, pertanto si desidera scrivere un provider di Entity Framework Core](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) da [Arthur Vickers](https://github.com/ajcvickers).
 
-La base di codice di Entity Framework Core open source e contiene diversi provider di database che può essere usato come riferimento. È possibile trovare il codice sorgente in https://github.com/aspnet/EntityFramework.
+La base di codice di Entity Framework Core open source e contiene diversi provider di database che può essere usato come riferimento. È possibile trovare il codice sorgente in https://github.com/aspnet/EntityFrameworkCore.
 
 ## <a name="the-providers-beware-label"></a>Il provider-beware etichetta
 
-Quando si inizia a lavorare su un provider, cercare il [ `providers-beware` ](https://github.com/aspnet/EntityFramework/labels/providers-beware) etichetta sui problemi di GitHub e richieste pull. Si può essere utilizzata per identificare le modifiche che potrebbero influire sulla writer di provider.
+Quando si inizia a lavorare su un provider, cercare il [ `providers-beware` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) etichetta sui problemi di GitHub e richieste pull. Si può essere utilizzata per identificare le modifiche che potrebbero influire sulla writer di provider.
 
 ## <a name="suggested-naming-of-third-party-providers"></a>Suggerito di denominazione dei provider di terze parti
 
