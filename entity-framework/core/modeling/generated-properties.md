@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
 ms.technology: entity-framework-core
 uid: core/modeling/generated-properties
-ms.openlocfilehash: 2d79bf1339ebe522c39fe8971d908c30e1f4dca0
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 892494461bcf49ee10d05c972da0ba19ca003c35
+ms.sourcegitcommit: 4b7d3d3e258b0d9cb778bb45a9f4a33c0792e38e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="generated-values"></a>Valori generati
 
@@ -50,7 +50,7 @@ Ad esempio `value generated on add`, se si specifica un valore per la proprietà
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, le chiavi primarie di un intero o un tipo di dati GUID verrà configurato i valori vengono generati su Aggiungi. Tutte le altre proprietà verrà configurato con la generazione di alcun valore.
+Per convenzione, le chiavi primarie non composito di tipo short, int, long o Guid verrà configurato, aggiungere i valori vengono generati su. Tutte le altre proprietà verrà configurato con la generazione di alcun valore.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
@@ -72,7 +72,7 @@ Per convenzione, le chiavi primarie di un intero o un tipo di dati GUID verrà c
 > [!WARNING]  
 > Ciò consente solo di EF che vengono generati valori per le entità aggiunte o aggiornate, non garantisce che EF installerà il meccanismo effettivo per generare valori. Vedere [valore generato in aggiunta o aggiornamento](#value-generated-on-add-or-update) sezione per ulteriori dettagli.
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
 È possibile utilizzare l'API Fluent per cambiare il modello di generazione del valore per una determinata proprietà.
 
@@ -85,7 +85,7 @@ Per convenzione, le chiavi primarie di un intero o un tipo di dati GUID verrà c
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/ValueGeneratedOnAdd.cs#Sample)]
 
 > [!WARNING]  
-> `ValueGeneratedOnAdd()`consente solo EF che vengono generati valori per le entità aggiunte, non garantisce che EF installerà il meccanismo effettivo per generare valori.  Vedere [aggiungere valore generato in](#value-generated-on-add) sezione per ulteriori dettagli.
+> `ValueGeneratedOnAdd()` consente solo EF che vengono generati valori per le entità aggiunte, non garantisce che EF installerà il meccanismo effettivo per generare valori.  Vedere [aggiungere valore generato in](#value-generated-on-add) sezione per ulteriori dettagli.
 
 ### <a name="value-generated-on-add-or-update-fluent-api"></a>Valore generato in aggiunta o aggiornamento (Fluent API)
 
