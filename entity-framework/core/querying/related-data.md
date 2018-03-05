@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 ms.technology: entity-framework-core
 uid: core/querying/related-data
-ms.openlocfilehash: dadc6235c3879ae27ad5c99988a5e594872045df
-ms.sourcegitcommit: 4b7d3d3e258b0d9cb778bb45a9f4a33c0792e38e
+ms.openlocfilehash: 0d7705e0e5368435536e98d319c853ea8c732643
+ms.sourcegitcommit: 8f3be0a2a394253efb653388ec66bda964e5ee1b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 03/05/2018
 ---
 # <a name="loading-related-data"></a>Caricamento dei dati correlati
 
@@ -152,7 +152,7 @@ Ciò consente di eseguire operazioni quali l'esecuzione di un operatore di aggre
 > [!NOTE]  
 > Questa funzionalità è stata introdotta in EF Core 2.1.
 
-È il modo più semplice per utilizzare il caricamento lazy installando il [Microsoft.EntityFramworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) pacchetto e abilitarlo con una chiamata a `UseLazyLoadingProxies`. Ad esempio:
+È il modo più semplice per utilizzare il caricamento lazy installando il [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) pacchetto e abilitarlo con una chiamata a `UseLazyLoadingProxies`. Ad esempio:
 ```Csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder

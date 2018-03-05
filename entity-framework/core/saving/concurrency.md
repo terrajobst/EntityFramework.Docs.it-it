@@ -1,33 +1,61 @@
 ---
-title: La gestione della concorrenza - Core a Entity Framework
+title: Gestione dei conflitti di concorrenza - Core EF
 author: rowanmiller
 ms.author: divega
-ms.date: 10/27/2016
-ms.assetid: bce0539d-b0cd-457d-be71-f7ca16f3baea
+ms.date: 03/03/2018
 ms.technology: entity-framework-core
 uid: core/saving/concurrency
-ms.openlocfilehash: bbd3e154c1b27b16c7d8f8fbf9ed51df0849795c
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 288d9c6fced5ebbaa2c366248c68547502c3698e
+ms.sourcegitcommit: 8f3be0a2a394253efb653388ec66bda964e5ee1b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 03/05/2018
 ---
-# <a name="handling-concurrency"></a>Gestione della concorrenza
+# <a name="handling-concurrency-conflicts"></a>Gestione dei conflitti di concorrenza
 
-Se una proprietà è configurata come un token di concorrenza EF verificherà che nessun altro utente ha modificato il valore nel database durante il salvataggio delle modifiche al record specifico.
+> [!NOTE]
+> Questa pagina illustra il funzionamento di concorrenza in EF Core e come gestire i conflitti di concorrenza nell'applicazione. Vedere [i token di concorrenza](xref:core/modeling/concurrency) per informazioni dettagliate su come configurare i token di concorrenza nel modello.
 
-> [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) su GitHub.
+> [!TIP]
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) di questo articolo in GitHub.
 
-## <a name="how-concurrency-handling-works-in-ef-core"></a>Il funzionamento di gestione delle concorrenze in EF Core
+_Concorrenza del database_ fa riferimento alle situazioni in cui più processi o gli utenti accedano o modificano gli stessi dati in un database nello stesso momento. _Controllo della concorrenza_ fa riferimento a meccanismi specifici per garantire la coerenza dei dati in presenza di modifiche simultanee.
 
-Per una descrizione dettagliata del funzionamento di gestione delle concorrenze in Entity Framework Core, vedere [i token di concorrenza](../modeling/concurrency.md).
+Componenti di base di Entity Framework implementa _controllo della concorrenza ottimistica_, vale a dire che sarà possibile più processi o gli utenti di apportare modifiche in modo indipendente senza l'overhead di sincronizzazione o di blocco. Nella situazione ideale, queste modifiche non interferisce con l'altro e pertanto saranno possibile abbia esito positivo. Nello scenario del caso peggiore, due o più processi verrà eseguito un tentativo di apportare modifiche in conflitto e solo uno di essi dovrebbe avere esito positivo.
+
+## <a name="how-concurrency-control-works-in-ef-core"></a>Funzionamento del controllo della concorrenza in EF Core
+
+Proprietà configurata come token di concorrenza vengono utilizzate per implementare il controllo della concorrenza ottimistica: ogni volta che un'operazione update o delete viene eseguita durante `SaveChanges`, il valore del token di concorrenza nel database viene confrontato con originale valore letto da Entity Framework Core.
+
+- Se i valori corrispondono, è possibile completare l'operazione.
+- Se i valori non corrispondono, Core EF presuppone che un altro utente ha eseguito un'operazione in conflitto e interrompe la transazione corrente.
+
+La situazione quando un altro utente ha eseguito un'operazione che è in conflitto con l'operazione corrente è noto come _conflitto di concorrenza_.
+
+Provider di database sono responsabili dell'implementazione il confronto di valori dei token di concorrenza.
+
+Nei database relazionali EF Core include un controllo per il valore del token di concorrenza nel `WHERE` clausola di qualsiasi `UPDATE` o `DELETE` istruzioni. Dopo avere eseguito le istruzioni, Core EF legge il numero di righe interessate.
+
+Se nessuna riga è interessata, viene rilevato un conflitto di concorrenza e genera un'eccezione Core EF `DbUpdateConcurrencyException`.
+
+Ad esempio, si può decidere di configurare `LastName` su `Person` da un token di concorrenza. Qualsiasi operazione di aggiornamento sulla persona includerà il controllo della concorrenza nel `WHERE` clausola:
+
+``` sql
+UPDATE [Person] SET [FirstName] = @p1
+WHERE [PersonId] = @p0 AND [LastName] = @p2;
+```
 
 ## <a name="resolving-concurrency-conflicts"></a>Risoluzione dei conflitti di concorrenza
 
-Risoluzione di un conflitto di concorrenza prevede l'utilizzo di un algoritmo di unire le modifiche in sospeso da parte dell'utente corrente con le modifiche apportate nel database. L'esatto approccio variano in base all'applicazione, ma un approccio comune consiste nel visualizzare i valori per l'utente e farli decidere i valori corretti da archiviare nel database.
+Continuando con l'esempio precedente, se un utente tenta di salvare alcune modifiche apportate a un `Person`, ma un altro utente ha cambiato il `LastName` il verrà generata un'eccezione.
 
-**Sono disponibili tre set di valori disponibili per risolvere un conflitto di concorrenza.**
+A questo punto, l'applicazione potrebbe semplicemente informare l'utente che l'aggiornamento non è riuscito a causa di modifiche in conflitto e passare. Ma può essere opportuno per richiedere all'utente per garantire che questo record rappresenta comunque la stessa persona e ripetere l'operazione.
+
+Questo processo è un esempio di _risolve un conflitto di concorrenza_.
+
+Risoluzione di un conflitto di concorrenza comporta l'unione delle modifiche in sospeso da corrente `DbContext` con i valori nel database. I valori che viene uniti variano in base all'applicazione e potrebbero essere diretti dall'input dell'utente.
+
+**Sono disponibili tre set di valori disponibili per risolvere un conflitto di concorrenza:**
 
 * **I valori correnti** sono i valori che l'applicazione ha tentato di scrivere nel database.
 
@@ -35,106 +63,13 @@ Risoluzione di un conflitto di concorrenza prevede l'utilizzo di un algoritmo di
 
 * **I valori del database** sono i valori attualmente archiviati nel database.
 
-Per gestire un conflitto di concorrenza, è possibile intercettare un `DbUpdateConcurrencyException` durante `SaveChanges()`, utilizzare `DbUpdateConcurrencyException.Entries` per preparare un nuovo set di modifiche per le entità interessate, quindi ripetere il `SaveChanges()` operazione.
+L'approccio generale per gestire i conflitti di concorrenza è:
 
-Nell'esempio seguente, `Person.FirstName` e `Person.LastName` siano impostati come token di concorrenza. È presente un `// TODO:` commento nella posizione in cui è necessario includere la logica specifica dell'applicazione per scegliere il valore da salvare nel database.
+1. Catch `DbUpdateConcurrencyException` durante `SaveChanges`.
+2. Utilizzare `DbUpdateConcurrencyException.Entries` per preparare un nuovo set di modifiche per le entità interessate.
+3. Aggiornare i valori originali del token di concorrenza in modo da riflettere i valori correnti nel database.
+4. Ripetere il processo fino a quando non si verifichino conflitti.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Concurrency/Sample.cs?highlight=53,54)] -->
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+Nell'esempio seguente, `Person.FirstName` e `Person.LastName` siano impostati come token di concorrenza. È presente un `// TODO:` commento nella posizione in cui includere la logica specifica dell'applicazione per scegliere il valore deve essere salvato.
 
-namespace EFSaving.Concurrency
-{
-    public class Sample
-    {
-        public static void Run()
-        {
-            // Ensure database is created and has a person in it
-            using (var context = new PersonContext())
-            {
-                context.Database.EnsureDeleted();
-                context.Database.EnsureCreated();
-
-                context.People.Add(new Person { FirstName = "John", LastName = "Doe" });
-                context.SaveChanges();
-            }
-
-            using (var context = new PersonContext())
-            {
-                // Fetch a person from database and change phone number
-                var person = context.People.Single(p => p.PersonId == 1);
-                person.PhoneNumber = "555-555-5555";
-
-                // Change the persons name in the database (will cause a concurrency conflict)
-                context.Database.ExecuteSqlCommand("UPDATE dbo.People SET FirstName = 'Jane' WHERE PersonId = 1");
-
-                try
-                {
-                    // Attempt to save changes to the database
-                    context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    foreach (var entry in ex.Entries)
-                    {
-                        if (entry.Entity is Person)
-                        {
-                            // Using a NoTracking query means we get the entity but it is not tracked by the context
-                            // and will not be merged with existing entities in the context.
-                            var databaseEntity = context.People.AsNoTracking().Single(p => p.PersonId == ((Person)entry.Entity).PersonId);
-                            var databaseEntry = context.Entry(databaseEntity);
-
-                            foreach (var property in entry.Metadata.GetProperties())
-                            {
-                                var proposedValue = entry.Property(property.Name).CurrentValue;
-                                var originalValue = entry.Property(property.Name).OriginalValue;
-                                var databaseValue = databaseEntry.Property(property.Name).CurrentValue;
-
-                                // TODO: Logic to decide which value should be written to database
-                                // entry.Property(property.Name).CurrentValue = <value to be saved>;
-
-                                // Update original values to
-                                entry.Property(property.Name).OriginalValue = databaseEntry.Property(property.Name).CurrentValue;
-                            }
-                        }
-                        else
-                        {
-                            throw new NotSupportedException("Don't know how to handle concurrency conflicts for " + entry.Metadata.Name);
-                        }
-                    }
-
-                    // Retry the save operation
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        public class PersonContext : DbContext
-        {
-            public DbSet<Person> People { get; set; }
-
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFSaving.Concurrency;Trusted_Connection=True;");
-            }
-        }
-
-        public class Person
-        {
-            public int PersonId { get; set; }
-
-            [ConcurrencyCheck]
-            public string FirstName { get; set; }
-
-            [ConcurrencyCheck]
-            public string LastName { get; set; }
-
-            public string PhoneNumber { get; set; }
-        }
-
-    }
-}
-```
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
