@@ -6,11 +6,11 @@ ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 ms.technology: entity-framework-core
 uid: core/index
-ms.openlocfilehash: 13de9cf98111b8e253e073c591fcec04206b4c4f
-ms.sourcegitcommit: 5e2d97e731f975cf3405ff3deab2a3c75ad1b969
+ms.openlocfilehash: c76b4cd318151b502c549fa0a82800f9987ed94c
+ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
+ms.lasthandoff: 02/28/2018
 ---
 # <a name="entity-framework-core-quick-overview"></a>Breve panoramica di Entity Framework Core
 
@@ -20,12 +20,14 @@ EF Core è un mapper relazionale a oggetti che consente agli sviluppatori di .NE
 
 Per un apprendimento per scrittura di codice, vedere una delle guide [Introduzione](get-started/index.md) per iniziare con Entity Framework Core.
 
-## <a name="latest-version-ef-core-20"></a>Ultima versione: EF Core 2.0
+## <a name="what-is-new-in-ef-core"></a>Novità di EF Core
 
-Se si ha familiarità con Entity Framework Core e si vuole passare direttamente ai dettagli della nuova versione:
+Se si ha familiarità con EF Core e si vuole passare direttamente ai dettagli delle versioni più recenti:
 
-- **[nuove funzionalità di EF Core 2.0](what-is-new/index.md)**
-- **[aggiornamento delle applicazioni esistenti di EF Core 2.0](miscellaneous/1x-2x-upgrade.md)**
+- **[Novità di EF Core 2.1 (attualmente in anteprima)](xref:core/what-is-new/ef-core-2.1)**
+- **[Novità di EF Core 2.0 (ultima versione rilasciata)](xref:core/what-is-new/ef-core-2.0)**
+- **[aggiornamento delle applicazioni esistenti di EF Core 2.0](xref:core/miscellaneous/1x-2x-upgrade)**
+
 
 ## <a name="get-entity-framework-core"></a>Ottenere Entity Framework Core
 
