@@ -6,11 +6,11 @@ ms.date: 2/23/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 ms.technology: entity-framework-core
 uid: core/providers/index
-ms.openlocfilehash: 520afe85af5a2eacbfc2764fdc0a8addb78c07ab
-ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
+ms.openlocfilehash: 6311f6a336198b45d307fa8c4318abd2e64e9df0
+ms.sourcegitcommit: fc68321c211aca38f7b9dc3a75677c6ca1b2524b
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 03/08/2018
 ---
 # <a name="database-providers"></a>Provider di database
 
@@ -71,7 +71,8 @@ install-package provider_package_name
 Dopo l'installazione, il provider verrà configurato nel `DbContext`, nel metodo `OnConfiguring` o nel metodo `AddDbContext` se si usa un contenitore di inserimento delle dipendenze. Ad esempio, la riga seguente consente di configurare il provider SQL Server con la stringa di connessione passata:
 
 ``` csharp
-  optionsBuilder.UseSqlServer("Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+optionsBuilder.UseSqlServer(
+    "Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
 ```  
 
 I provider di database possono estendere EF Core per abilitare funzionalità univoche per database specifici. Alcuni concetti sono comuni alla maggior parte dei database e sono inclusi nei componenti primari di EF Core. Tali concetti includono l'espressione di query in LINQ, le transazioni e il rilevamento delle modifiche agli oggetti dopo che sono stati caricati dal database. Alcuni concetti sono specifici di un determinato provider. Il provider SQL Server, ad esempio, consente di [configurare le tabelle ottimizzate per la memoria](xref:core/providers/sql-server/memory-optimized-tables), una funzionalità specifica di SQL Server. Altri concetti sono specifici di una classe di provider. Ad esempio, i provider di EF Core per i database relazionali compilati sulla libreria `Microsoft.EntityFrameworkCore.Relational` comune, che offre le API per la configurazione della tabella e il mapping colonne, i vincoli della chiave esterna e così via. I provider vengono in genere distribuiti come pacchetti NuGet.
