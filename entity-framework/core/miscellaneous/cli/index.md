@@ -4,11 +4,11 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
-ms.openlocfilehash: 076e9251850ba10df323cd25922aa8b95b3a5491
-ms.sourcegitcommit: 5e2d97e731f975cf3405ff3deab2a3c75ad1b969
+ms.openlocfilehash: db25ed55e3724ee71743e563f39a6e4b16c17589
+ms.sourcegitcommit: fc68321c211aca38f7b9dc3a75677c6ca1b2524b
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
+ms.lasthandoff: 03/08/2018
 ---
 <a name="entity-framework-core-tools"></a>Strumenti di Entity Framework Core
 ===========================
@@ -24,15 +24,9 @@ Entrambi gli strumenti espongono la stessa funzionalità. Se sviluppa in Visual 
 ----------
 Gli strumenti supportano i progetti destinati a .NET Framework o .NET Core.
 
-Se il progetto è destinato a un altro framework, ad esempio Windows universale o Xamarin, si consiglia di creare un progetto .NET Standard separato e destinarlo in modo trasversale a uno dei framework supportati.
+Se si vuole usare una libreria di classi, prendere in considerazione la possibilità di usare una libreria di classi .NET Framework o .NET Core, se possibile. Ciò consentirà di ridurre al minimo i problemi con gli strumenti .NET. Se invece si vuole usare una libreria di classi .NET Standard, è necessario usare un progetto di avvio destinato a .NET Framework o a .NET Core, in modo che gli strumenti abbiano una piattaforma di destinazione concreta in cui caricare la libreria di classi. Il progetto di avvio può essere un progetto fittizio senza vero codice. È infatti necessario solo per specificare una destinazione per gli strumenti.
 
-Per specificare .NET Core come destinazione trasversale, ad esempio, fare clic sul progetto con il pulsante destro del mouse e selezionare **Modifica \*.csproj**. Aggiornare la proprietà `TargetFramework` come indicato di seguito (si noti che il nome della proprietà diventa plurale).
-
-``` xml
-<TargetFrameworks>netcoreapp2.0;netstandard2.0</TargetFrameworks>
-```
-
-Se si usa una libreria di classi .NET Standard, la destinazione trasversale non è necessaria se il progetto di avvio ha come destinazione .NET Framework o .NET Core.
+Se il progetto è destinato a un altro framework (ad esempio, Windows universale o Xamarin), sarà necessario creare una libreria di classi .NET Standard separata. In questo caso, seguire le linee guida precedenti per creare anche un progetto di avvio che possa essere usato dagli strumenti.
 
 <a name="startup-and-target-projects"></a>Progetti di avvio e destinazione
 ---------------------------
