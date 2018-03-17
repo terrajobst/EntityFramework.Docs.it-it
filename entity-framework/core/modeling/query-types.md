@@ -6,11 +6,11 @@ ms.date: 2/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 ms.technology: entity-framework-core
 uid: core/modeling/query-types
-ms.openlocfilehash: 19a371c65da33e8209cc1ab3423a67c34ddae61e
-ms.sourcegitcommit: fc68321c211aca38f7b9dc3a75677c6ca1b2524b
+ms.openlocfilehash: dfd08cd1c30debddc79740bbf05c39c22e973855
+ms.sourcegitcommit: 01b5cf3b7c983bcced91e7cc4c78391ced2d2caa
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/08/2018
+ms.lasthandoff: 03/17/2018
 ---
 # <a name="query-types"></a>Tipi di query
 > [!NOTE]
@@ -20,7 +20,7 @@ Tipi di query sono tipi di risultati di query di sola lettura che possono essere
 
 Sono concettualmente simili ai tipi di entità in cui:
 
-- Sono tipi POCO c# che vengono aggiunti al modello, in ```OnModelCreating``` utilizzando il ```ModelBuilder.Query``` metodo, o tramite una proprietà DbContext "set" (per i tipi di query tale proprietà è digitata come ```DbQuery<T>``` piuttosto che ```DbSet<T>```).
+- Sono tipi POCO c# che vengono aggiunti al modello, in ```OnModelCreating``` utilizzando il ```ModelBuilder.Query``` metodo, o tramite una proprietà DbContext "set" (per i tipi di query tale proprietà è digitata come ```DbQuery<T>``` anziché ```DbSet<T>```).
 - Supportano la maggior parte delle stesse funzionalità di mapping come tipi di entità normale. Ad esempio, il mapping di ereditarietà, spostamenti (vedere limitiations riportato di seguito) e, in archivi relazionali, la possibilità di configurare gli oggetti dello schema di database di destinazione tramite ```ToTable```, ```HasColumn``` metodi api fluent (o le annotazioni dei dati).
 
 Tipi di query sono diversi dall'entità tipi in cui:
