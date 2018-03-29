@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 10/27/2017
 ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: a899c474cc45437bff7c82ce5bddeb915b15c3b0
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 8b38d300d31038bdf5cd877aa3c42b7f5f97eabc
+ms.sourcegitcommit: 7113e8675f26cbb546200824512078bf360225df
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 03/28/2018
 ---
 <a name="design-time-dbcontext-creation"></a>Creazione in fase di progettazione DbContext
 ==============================
@@ -38,6 +38,7 @@ Se l'elemento DbContext non è possibile ottenere dal provider del servizio di a
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace MyProject
