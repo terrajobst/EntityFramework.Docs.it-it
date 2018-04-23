@@ -6,40 +6,43 @@ ms.date: 2/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 ms.technology: entity-framework-core
 uid: core/modeling/query-types
-ms.openlocfilehash: dfd08cd1c30debddc79740bbf05c39c22e973855
-ms.sourcegitcommit: 01b5cf3b7c983bcced91e7cc4c78391ced2d2caa
+ms.openlocfilehash: 4e02f106e086d243b23a60c02838f32555be210e
+ms.sourcegitcommit: 26f33758c47399ae933f22fec8e1d19fa7d2c0b7
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/17/2018
+ms.lasthandoff: 04/19/2018
 ---
 # <a name="query-types"></a>Tipi di query
 > [!NOTE]
 > Questa funzionalità è nuova in Entity Framework Core 2.1
 
-Tipi di query sono tipi di risultati di query di sola lettura che possono essere aggiunto al modello di base di Entity Framework. Tipi di query abilitare query ad hoc (ad esempio, tipi anonimi), ma sono più flessibili perché possono avere configurazione del mapping specificata.
+Oltre ai tipi di entità, può contenere un modello di Entity Framework Core _tipi di query_, che può essere usato per eseguire query sui dati che non sono stato eseguito il mapping ai tipi di entità.
 
-Sono concettualmente simili ai tipi di entità in cui:
+Tipi di query presentano molte analogie con tipi di entità:
 
-- Sono tipi POCO c# che vengono aggiunti al modello, in ```OnModelCreating``` utilizzando il ```ModelBuilder.Query``` metodo, o tramite una proprietà DbContext "set" (per i tipi di query tale proprietà è digitata come ```DbQuery<T>``` anziché ```DbSet<T>```).
-- Supportano la maggior parte delle stesse funzionalità di mapping come tipi di entità normale. Ad esempio, il mapping di ereditarietà, spostamenti (vedere limitiations riportato di seguito) e, in archivi relazionali, la possibilità di configurare gli oggetti dello schema di database di destinazione tramite ```ToTable```, ```HasColumn``` metodi api fluent (o le annotazioni dei dati).
+- Possono inoltre essere aggiunti al modello oppure in `OnModelCreating`, o tramite una proprietà "set" su un oggetto derivato _DbContext_.
+- Supportano molte delle stesse funzionalità di mapping, come l'ereditarietà di mapping, le proprietà di navigazione (vedere le limitazioni seguenti) e, negli archivi relazionali, la possibilità di configurare le oggetti di database di destinazione e le colonne tramite metodi dell'API fluent o le annotazioni dei dati.
 
-Tipi di query sono diversi dall'entità tipi in cui:
+Tuttavia sono diversi dall'entità tipi che sono:
 
 - Non richiedono una chiave da definire.
-- Non sono mai monitorati dal rilevamento delle modifiche.
+- Non viene mai tenuta traccia delle modifiche la _DbContext_ e pertanto sono mai inseriti, aggiornati o eliminati nel database.
 - Non vengono individuati per convenzione.
 - Supportano solo un sottoinsieme di funzionalità di mapping di spostamento, in particolare, non possono agire come l'entità finale principale di una relazione.
-- Può essere mappato a un _definizione query_ -una definizione di Query è secondario che funge da un'origine dati per un tipo di Query.
+- Vengono indirizzate nel _ModelBuilder_ utilizzando il `Query` metodo invece che al `Entity` (metodo).
+- Viene eseguito il mapping sul _DbContext_ tramite le proprietà di tipo `DbQuery<T>` anziché `DbSet<T>`
+- Viene eseguito il mapping agli oggetti di database utilizzando la `ToView` metodo, piuttosto che `ToTable`.
+- Può essere mappato a un _definizione di query_ - una definizione di query è una query secondaria dichiarata nel modello che funge da un'origine dati per un tipo di query.
 
 Alcuni degli scenari di utilizzo principali per i tipi di query sono:
 
+- Serve come tipo restituito per hoc `FromSql()` query.
 - Mapping a viste di database.
 - Mapping a tabelle che non dispone di una chiave primaria definita.
-- Serve come tipo restituito per hoc ```FromSql()``` query.
 - Mapping per le query definite nel modello.
 
 > [!TIP]
-> Mapping di un tipo di query a una vista di database viene eseguito mediante il ```ToTable``` API fluent.
+> Mapping di un tipo di query a un oggetto di database viene eseguito mediante il `ToView` API fluent. Dal punto di vista di EF nell'elemento principale, l'oggetto di database specificato in questo metodo è un _vista_, vale a dire che viene considerato come un'origine di query di sola lettura e non può essere la destinazione dell'aggiornamento, inserimento o le operazioni di eliminazione. Tuttavia, ciò non significa che l'oggetto di database risulta effettivamente necessario per essere una vista di database, in alternativa può essere una tabella di database che verrà trattata come di sola lettura. Al contrario, per i tipi di entità, Core EF si presuppone che un oggetto di database specificato nella `ToTable` metodo può essere considerato come un _tabella_, vale a dire che può essere utilizzato come origine di query ma anche assegnato dall'aggiornamento, eliminazione e inserimento operazioni. In effetti, è possibile specificare il nome di una vista di database in `ToTable` e tutto dovrebbe funzionare, purché la vista è configurata per essere aggiornabile nel database.
 
 ## <a name="example"></a>Esempio
 
@@ -60,7 +63,7 @@ Successivamente, è possibile definire una classe per contenere il risultato del
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#QueryType)]
 
-Successivamente, è stato possibile configurare il tipo di query in _OnModelCreating_ utilizzando il ```modelBuilder.Query<T>``` API.
+Successivamente, è stato possibile configurare il tipo di query in _OnModelCreating_ utilizzando il `modelBuilder.Query<T>` API.
 Si utilizza configurazione standard di Microsoft Office fluent API per configurare il mapping per il tipo di Query:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryTypes/Program.cs#Configuration)]

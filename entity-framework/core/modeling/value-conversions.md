@@ -6,11 +6,11 @@ ms.date: 02/19/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 ms.technology: entity-framework-core
 uid: core/modeling/value-conversions
-ms.openlocfilehash: 50acba39cdec16caa9300fcaf47ab6242a4f69fb
-ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
+ms.openlocfilehash: 329d2757059462468ca30772d37789343c03ba7b
+ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 04/16/2018
 ---
 # <a name="value-conversions"></a>Conversioni di valori
 
@@ -137,6 +137,6 @@ Verranno quindi salvati i valori di enumerazione come stringhe nel database senz
 
 Esistono alcune limitazioni correnti di sistema di conversione di valori di:
 * Come indicato in precedenza, `null` non può essere convertito.
-* Attualmente non è possibile distribuire una conversione di una proprietà per le colonne multuple o viceversa.
+* Non è attualmente in una conversione di una proprietà in più colonne o viceversa.
 * Uso di conversioni di valori potrebbe compromettere la possibilità di EF Core per convertire le espressioni SQL. In questo caso verrà registrato un avviso.
 La rimozione di queste limitazioni viene considerata per una versione futura.

@@ -1,16 +1,16 @@
 ---
-title: "Proprietà di tipi di entità: EF Core"
+title: 'Proprietà di tipi di entità: EF Core'
 author: julielerman
 ms.author: divega
 ms.date: 2/26/2018
 ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
 ms.technology: entity-framework-core
 uid: core/modeling/owned-entities
-ms.openlocfilehash: a6823377eb626ca92263c31351e1aef61db5a787
-ms.sourcegitcommit: 4b7d3d3e258b0d9cb778bb45a9f4a33c0792e38e
+ms.openlocfilehash: f2f05499a3e3494f420d916df2db19667a6f1e29
+ms.sourcegitcommit: 26f33758c47399ae933f22fec8e1d19fa7d2c0b7
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 04/19/2018
 ---
 # <a name="owned-entity-types"></a>Tipi di proprietà di entità
 
@@ -21,7 +21,7 @@ Componenti di base di Entity Framework consente ai tipi di entità di modello ch
 
 ## <a name="explicit-configuration"></a>Configurazione esplicita
 
-Proprietà entità tipi non sono mai inclusi EF core nel modello per convenzione. È possibile utilizzare il `OwnsOne` metodo `OnModelCreating` o annotare il tipo con `OwnedAttrbibute` (nuova in Entity Framework Core 2.1) per configurare il tipo come tipo di proprietà.
+Proprietà entità tipi non sono mai inclusi EF core nel modello per convenzione. È possibile utilizzare il `OwnsOne` metodo `OnModelCreating` o annotare il tipo con `OwnedAttribute` (nuova in Entity Framework Core 2.1) per configurare il tipo come tipo di proprietà.
 
 In questo esempio StreetAddress è un tipo con nessuna proprietà identity. Viene usato come proprietà del tipo Order per specificare l'indirizzo di spedizione per uno specifico ordine. In `OnModelCreating`, utilizziamo la `OwnsOne` per specificare che la proprietà ShippingAddress è un'entità di proprietà del tipo di ordine.
 

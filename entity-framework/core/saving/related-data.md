@@ -6,18 +6,18 @@ ms.date: 10/27/2016
 ms.assetid: 07b6680f-ffcf-412c-9857-f997486b386c
 ms.technology: entity-framework-core
 uid: core/saving/related-data
-ms.openlocfilehash: 078879163002cb66e0f0f439415789963181ec15
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: b0ed25267c85e82db18d8a89693b6040db7e4b34
+ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
+ms.lasthandoff: 04/16/2018
 ---
 # <a name="saving-related-data"></a>Salvataggio di dati correlati
 
 Oltre alle entità di tipo isolata, è inoltre possibile rendere utilizzare le relazioni definite nel modello.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/RelatedData/) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/RelatedData/) di questo articolo in GitHub.
 
 ## <a name="adding-a-graph-of-new-entities"></a>Aggiunta di un grafico di nuove entità
 
@@ -26,6 +26,9 @@ Se si crea diverse nuove entità correlate, l'aggiunta di uno di essi al contest
 Nell'esempio seguente, blog e tre i post correlati vengono inseriti nel database. I post vengono rilevati e aggiunti, in quanto sono raggiungibile tramite il `Blog.Posts` proprietà di navigazione.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/RelatedData/Sample.cs#AddingGraphOfEntities)]
+
+> [!TIP]  
+> Utilizzare la proprietà EntityEntry.State per impostare lo stato di solo una singola entità. Ad esempio `context.Entry(blog).State = EntityState.Modified`.
 
 ## <a name="adding-a-related-entity"></a>Aggiunta di un'entità correlata
 

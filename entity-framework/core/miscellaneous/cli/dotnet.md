@@ -4,11 +4,11 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
-ms.openlocfilehash: 8a52cb8259bb381729a33a8161aec4b73f69f45d
-ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
+ms.openlocfilehash: 396d31c9d0c0f47d299f49e82e557ed29b8420e7
+ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 04/16/2018
 ---
 <a name="ef-core-net-command-line-tools"></a>Strumenti da riga di comando di EF Core .NET
 ===============================
@@ -65,6 +65,9 @@ Il progetto di destinazione è dove vengono aggiunti, in alcuni casi rimossi, tu
 
 Il progetto di avvio è quello emulato dagli strumenti quando si esegue il codice del progetto. Anche il progetto nella directory corrente per impostazione predefinita, ma può essere modificato utilizzando il **-progetto di avvio** opzione.
 
+> [!NOTE]
+> Ad esempio, l'aggiornamento del database dell'applicazione web che include Core EF installato in un progetto diverso avrà un aspetto simile al seguente: `dotnet ef database update --project {project-path}` (dalla directory dell'app web)
+
 Opzioni comuni:
 
 |    |                                  |                             |
@@ -97,7 +100,7 @@ Opzioni:
 |    |           |                                                          |
 |:---|:----------|:---------------------------------------------------------|
 | -f | -force   | Non verificare.                                           |
-|    | --dry-run | Mostra il database verrà rimossa, ma non l'eliminazione. |
+|    | -esecuzione | Mostra il database verrà rimossa, ma non l'eliminazione. |
 
 ### <a name="dotnet-ef-database-update"></a>aggiornamento del database ef dotnet
 
@@ -107,7 +110,7 @@ Argomenti:
 
 |              |                                                                                              |
 |:-------------|:---------------------------------------------------------------------------------------------|
-| \<MIGRAZIONE > | La migrazione di destinazione. Se è 0, verranno annullate tutte le migrazioni. Per impostazione predefinita all'ultima migrazione. |
+| \<MIGRAZIONE &GT; | La migrazione di destinazione. Se è 0, verranno annullate tutte le migrazioni. Per impostazione predefinita all'ultima migrazione. |
 
 ### <a name="dotnet-ef-dbcontext-info"></a>informazioni di dbcontext ef dotnet
 
@@ -125,8 +128,8 @@ Argomenti:
 
 |               |                                                                     |
 |:--------------|:--------------------------------------------------------------------|
-| \<CONNESSIONE > | La stringa di connessione al database.                              |
-| \<PROVIDER>   | Il provider da utilizzare. (Ad esempio Microsoft.EntityFrameworkCore.SqlServer) |
+| \<CONNESSIONE &GT; | La stringa di connessione al database.                              |
+| \<PROVIDER &GT;   | Il provider da utilizzare. Ad esempio, Microsoft.EntityFrameworkCore.SqlServer) |
 
 Opzioni:
 
@@ -134,6 +137,7 @@ Opzioni:
 |:----------------|:----------------------------------------|:-------------------------------------------------------------------------------------------------|
 | <nobr>-d</nobr> | --le annotazioni dei dati                      | Utilizzare gli attributi per configurare il modello (dove possibile). Se omesso, viene utilizzato solo l'API fluent. |
 | -c              | -contesto \<nome >                       | Il nome di DbContext.                                                                       |
+|                 | -dir contesto \<percorso >                   | Della directory in cui inserire file DbContext in. I percorsi sono relativi alla directory del progetto.             |
 | -f              | -force                                 | Sovrascrivi file esistenti.                                                                        |
 | -o              | -output-dir \<percorso >                    | Della directory in cui inserire i file in. I percorsi sono relativi alla directory del progetto.                      |
 |                 | <nobr>--schema \<SCHEMA_NAME>...</nobr> | Gli schemi delle tabelle per generare i tipi di entità per.                                              |
@@ -148,7 +152,7 @@ Argomenti:
 
 |         |                            |
 |:--------|:---------------------------|
-| \<NOME > | Il nome della migrazione. |
+| \<NOME &GT; | Il nome della migrazione. |
 
 Opzioni:
 
@@ -168,7 +172,7 @@ Opzioni:
 
 |    |         |                                                                       |
 |:---|:--------|:----------------------------------------------------------------------|
-| -f | -force | Non verificare se la migrazione è stata applicata al database. |
+| -f | -force | Ripristinare la migrazione, se è stato applicato al database. |
 
 ### <a name="dotnet-ef-migrations-script"></a>script di migrazioni ef dotnet
 
@@ -178,8 +182,8 @@ Argomenti:
 
 |         |                                                               |
 |:--------|:--------------------------------------------------------------|
-| \<DA > | La migrazione inizia. Il valore predefinito 0 (il database iniziale). |
-| \<TO>   | La migrazione finale. Per impostazione predefinita all'ultima migrazione.         |
+| \<DA &GT; | La migrazione inizia. Il valore predefinito 0 (il database iniziale). |
+| \<A &GT;   | La migrazione finale. Per impostazione predefinita all'ultima migrazione.         |
 
 Opzioni:
 

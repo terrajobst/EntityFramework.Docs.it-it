@@ -1,16 +1,16 @@
 ---
-title: "Tipi di entità con costruttori di EF Core."
+title: Tipi di entità con costruttori di EF Core.
 author: ajcvickers
 ms.author: divega
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 ms.technology: entity-framework-core
 uid: core/modeling/constructors
-ms.openlocfilehash: 38ab0c1c3cd8c490875abf30b8478c99bc58630f
-ms.sourcegitcommit: 60b831318c4f5ec99061e8af6a7c9e7c03b3469c
+ms.openlocfilehash: 3f861d54c5bff637ae28f38b08da7aff7d0ea5c0
+ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/02/2018
+ms.lasthandoff: 04/16/2018
 ---
 # <a name="entity-types-with-constructors"></a>Tipi di entità con costruttori
 
@@ -254,7 +254,7 @@ public class Post
 }
 ```
 Alcuni aspetti da notare in questo:
-* Il costruttore è privato, in quanto è sufficiente chiamare mai EF core e non è presente un altro costruttore pubblico per uso generale.
+* Il costruttore è privato, poiché viene sempre chiamato da Entity Framework Core, e non è presente un altro costruttore pubblico per uso generale.
 * Il codice che usa il servizio inserito (ad esempio il contesto) è difensivo su di esso viene `null` per gestire i casi in cui Core EF non crea l'istanza.
 * Poiché il servizio viene archiviato in una proprietà di lettura/scrittura, verrà reimpostato quando l'entità è associata a una nuova istanza di contesto.
 
