@@ -6,18 +6,18 @@ ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 ms.technology: entity-framework-core
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: 5aef679df2ecdfe7f59458c8994d0d17b4a889ff
-ms.sourcegitcommit: 2ef0a4a90b01edd22b9206f8729b8de459ef8cab
+ms.openlocfilehash: 6c10e64a4fa3bf26dc0da64bb9e102c8b76d3a6e
+ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/20/2018
+ms.lasthandoff: 04/16/2018
 ---
 # <a name="entity-framework-core-roadmap"></a>Roadmap per Entity Framework Core
 
 > [!IMPORTANT]
 > Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
 
-La prima anteprima di EF Core 2.1 è stata rilasciata nel mese di febbraio 2018. È ora possibile trovare altre informazioni su questa versione in [Nuove funzionalità di EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
+La seconda anteprima di EF Core 2.1 è stata rilasciata nel mese di aprile 2018. È ora possibile trovare altre informazioni su questa versione in [Nuove funzionalità di EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
 
 Si prevede di rilasciare altre anteprime di EF Core 2.1 con frequenza mensile e una versione finale nel secondo trimestre di calendario del 2018.
 
