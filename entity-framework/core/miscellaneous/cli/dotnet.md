@@ -4,11 +4,11 @@ author: bricelam
 ms.author: bricelam
 ms.date: 11/6/2017
 ms.technology: entity-framework-core
-ms.openlocfilehash: 396d31c9d0c0f47d299f49e82e557ed29b8420e7
-ms.sourcegitcommit: 4997314356118d0d97b04ad82e433e49bb9420a2
+ms.openlocfilehash: d053d53bd50d2e7d16223c5b4e4009c9bb2298bb
+ms.sourcegitcommit: 038acd91ce2f5a28d76dcd2eab72eeba225e366d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/16/2018
+ms.lasthandoff: 05/14/2018
 ---
 <a name="ef-core-net-command-line-tools"></a>Strumenti da riga di comando di EF Core .NET
 ===============================
@@ -19,14 +19,18 @@ Gli strumenti da riga di comando .NET di Entity Framework Core sono un'estension
 
 <a name="installing-the-tools"></a>Installazione degli strumenti
 --------------------
-Installare gli strumenti da riga di comando di EF Core .NET attenendosi alla procedura seguente:
+> [!NOTE]
+> .NET Core SDK versione 2.1.300 e include più recente **dotnet ef** comandi che sono compatibili con Entity Framework Core 2.0 e versioni successive. Pertanto se si utilizza le versioni recenti di .NET Core SDK e il runtime di Entity Framework Core, è richiesta alcuna installazione ed è possibile ignorare il resto di questa sezione.
+>
+> D'altro canto, la **dotnet ef** strumento autonomo nella versione di .NET Core SDK 2.1.300 e più recente non è compatibile con la versione dei componenti di base di Entity Framework 1.0 e 1.1. Prima di poter utilizzare un progetto che Usa queste versioni precedenti di Entity Framework Core in un computer che dispone di .NET Core SDK 2.1.300 o installata più recente, è necessario installare anche versione 2.1.200 o precedente del SDK e configurare l'applicazione di usare tale versione precedente modificando il relativo  [global.json](https://docs.microsoft.com/en-us/dotnet/core/tools/global-json) file. Questo file è normalmente incluso nella directory della soluzione (uno di sopra del progetto). È quindi possibile procedere con l'istruzione di installazione riportata di seguito.
+
+Per le versioni precedenti di .NET Core SDK, è possibile installare gli strumenti della riga di comando di EF Core .NET utilizzando i seguenti passaggi:
 
 1. Modificare il file di progetto e aggiungere Microsoft.EntityFrameworkCore.Tools.DotNet come elemento DotNetCliToolReference (vedere sotto)
 2. Eseguire i comandi seguenti:
 
        dotnet add package Microsoft.EntityFrameworkCore.Design
        dotnet restore
-
 
 Il progetto risultante dovrebbe essere simile al seguente:
 

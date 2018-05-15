@@ -6,13 +6,13 @@ ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 ms.technology: entity-framework-core
 uid: core/querying/raw-sql
-ms.openlocfilehash: 79894c7b9fd9e40cdf14460abf5d872ee2f4b9f0
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 29b7e20e875bf791a88a92636c1df4bc4e31656b
+ms.sourcegitcommit: 038acd91ce2f5a28d76dcd2eab72eeba225e366d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 05/14/2018
 ---
-# <a name="raw-sql-queries"></a>Query SQL non elaborato
+# <a name="raw-sql-queries"></a>Query SQL non elaborate
 
 Entity Framework Core consente di elenco a discesa di query SQL non elaborate quando si lavora con un database relazionale. Può essere utile se la query da eseguire non può essere espresse utilizzando LINQ, o se tramite una query LINQ è risultante in inefficiente SQL inviati al database.
 
@@ -24,15 +24,15 @@ Entity Framework Core consente di elenco a discesa di query SQL non elaborate qu
 Esistono alcune limitazioni da tenere presenti quando si usano query SQL non elaborate:
 * Query SQL è utilizzabile solo per restituire i tipi di entità che fanno parte del modello. Un aumento nel nostro backlog per [enable restituzione di tipi ad hoc da una query SQL non elaborate](https://github.com/aspnet/EntityFramework/issues/1862).
 
-* La query SQL deve restituire dati per tutte le proprietà del tipo di entità.
+* La query SQL deve restituire i dati per tutte le proprietà del tipo di entità o query.
 
 * I nomi delle colonne nel set di risultati deve corrispondere ai nomi di proprietà sono mappate a colonna. Questo è diverso da EF6 in cui il mapping di proprietà o la colonna è stato ignorato per le query SQL non elaborate e nomi devono corrispondere ai nomi di proprietà di colonna del set di risultati.
 
 * La query SQL non può contenere i dati correlati. Tuttavia, in molti casi è possibile comporre sopra la query utilizzando il `Include` operatore per restituire i dati correlati (vedere [inclusi i dati correlati](#including-related-data)).
 
-* `SELECT`istruzioni passate a questo metodo devono essere in genere componibile: se Core EF deve restituire ulteriori operatori di query nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), fornito SQL verrà considerato come una sottoquery. Ciò significa che l'istruzione SQL passata non può contenere caratteri o le opzioni non valide in una sottoquery, ad esempio:
+* `SELECT` istruzioni passate a questo metodo in genere devono essere componibile: Core EF se è necessario valutare gli operatori di query aggiuntive nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), SQL fornito verrà considerato come una sottoquery. Ciò significa che l'istruzione SQL passata non può contenere caratteri o le opzioni non valide in una sottoquery, ad esempio:
   * un punto e virgola finale
-  * In SQL Server, un livello di query finale hint, ad esempio`OPTION (HASH JOIN)`
+  * In SQL Server, a livello di query finale hint, ad esempio `OPTION (HASH JOIN)`
   * In SQL Server, un `ORDER BY` clausola che non è disponibile di `TOP 100 PERCENT` nel `SELECT` clausola
 
 * Istruzioni SQL diverso `SELECT` vengono riconosciute automaticamente come non componibile. Di conseguenza, i risultati completi della stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicato dopo `FromSql` vengono valutate in memoria. 
@@ -126,4 +126,4 @@ var blogs = context.Blogs
 ```
 
 > [!WARNING]  
-> **Utilizzare sempre la parametrizzazione per query SQL non elaborata:** di stringa, ad esempio le API che accettano un database SQL non elaborato `FromSql` e `ExecuteSqlCommand` consentire facilmente essere passati come parametri di valori. Oltre a convalidare l'input dell'utente, utilizzare sempre la parametrizzazione per tutti i valori utilizzati in non elaborato o comando di query SQL. Se si utilizza la concatenazione di stringhe per compilare in modo dinamico qualsiasi parte della stringa di query, quindi l'utente è responsabile per la convalida di input per proteggersi da attacchi SQL injection.
+> **Utilizzare sempre la parametrizzazione per query SQL non elaborata:** di stringa, ad esempio le API che accettano un database SQL non elaborato `FromSql` e `ExecuteSqlCommand` consentono i valori essere facilmente passati come parametri. Oltre a convalidare l'input dell'utente, utilizzare sempre la parametrizzazione per tutti i valori utilizzati in non elaborato o comando di query SQL. Se si utilizza la concatenazione di stringhe per compilare in modo dinamico qualsiasi parte della stringa di query, quindi l'utente è responsabile per la convalida di input per proteggersi da attacchi SQL injection.

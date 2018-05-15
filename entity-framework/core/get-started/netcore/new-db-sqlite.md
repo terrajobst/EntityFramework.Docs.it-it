@@ -9,11 +9,11 @@ ms.date: 04/05/2017
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 ms.technology: entity-framework-core
 uid: core/get-started/netcore/new-db-sqlite
-ms.openlocfilehash: 2511dfa3f3262bb12c2058dc1c402b7dcc4c670d
-ms.sourcegitcommit: 90139dbd6f485473afda0788a5a314c9aa601ea0
+ms.openlocfilehash: fcace3c0f259b1a456d9ca1086e6a1549c070d57
+ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/23/2018
+ms.lasthandoff: 04/26/2018
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a>Introduzione a EF Core nell'app console .NET Core con un nuovo database
 
@@ -89,13 +89,13 @@ Dopo avere creato un modello, è possibile usare le [migrazioni](https://docs.mi
 
 * Aprire *Program.cs* e sostituire il contenuto con il codice seguente:
 
- [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
+  [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
 * Eseguire il test dell'app:
 
- `dotnet run`
+  `dotnet run`
 
- Un blog è salvato nel database e i dettagli di tutti i blog vengono visualizzati nella console.
+  Un blog è salvato nel database e i dettagli di tutti i blog vengono visualizzati nella console.
 
   ``` Console
   ConsoleApp.SQLite>dotnet run
