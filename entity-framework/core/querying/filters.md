@@ -1,5 +1,5 @@
 ---
-title: Filtri di Query globale - Core EF
+title: Filtri di query globali - EF Core
 author: anpete
 ms.author: anpete
 ms.date: 11/03/2017
@@ -7,48 +7,49 @@ ms.technology: entity-framework-core
 uid: core/querying/filters
 ms.openlocfilehash: 4e3c3c99d155f69e00fed99c415f519808ea1a68
 ms.sourcegitcommit: 6e379265e4f087fb7cf180c824722c81750554dc
-ms.translationtype: MT
+ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/15/2017
+ms.locfileid: "26053901"
 ---
-# <a name="global-query-filters"></a>Filtri di Query globale
+# <a name="global-query-filters"></a>Filtri di query globali
 
-I filtri di query globale sono predicati di query LINQ (un'espressione booleana in genere passato a LINQ *in* operatore query) applicato ai tipi di entità nel modello di metadati (in genere in *OnModelCreating*). Tali filtri vengono applicati automaticamente a tutte le query LINQ che interessa i tipi di entità, inclusi riferimenti a proprietà di navigazione a cui viene fatto riferimento indirettamente, ad esempio tramite l'utilizzo di inclusione o diretto di tipi di entità. Vengono elencate alcune applicazioni di questa funzionalità:
+I filtri di query globali sono predicati di query LINQ (un'espressione booleana in genere passata all'operatore di query *Where* di LINQ) applicati ai tipi di entità nel modello di metadati (solitamente in *OnModelCreating*). Questi filtri vengono automaticamente applicati a qualsiasi query LINQ che interessa questi tipi di entità, inclusi quelli a cui si fa riferimento in modo indiretto, ad esempio tramite l'uso di riferimenti alle proprietà Include o di navigazione diretta. Alcune applicazioni comuni di questa funzionalità sono:
 
-* **Eliminare temporaneamente** -definisce un tipo di entità un *IsDeleted* proprietà.
-* **Multi-tenancy** -definisce un tipo di entità un *TenantId* proprietà.
+* **Eliminazione temporanea**, un tipo di entità definisce una proprietà *IsDeleted*.
+* **Multi-tenancy**, un tipo di entità definisce una proprietà *TenantId*.
 
 ## <a name="example"></a>Esempio
 
-Nell'esempio seguente viene illustrato come utilizzare i filtri di Query globale per implementare i comportamenti di soft-delete e multi-tenancy query in un modello semplice blog.
+L'esempio seguente mostra come usare i filtri di query globali per implementare i comportamenti di query per eliminazione temporanea e multi-tenancy in un modello di blog semplice.
 
 > [!TIP]
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFrameworkCore/tree/dev/samples/QueryFilters) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFrameworkCore/tree/dev/samples/QueryFilters) di questo articolo in GitHub.
 
-Prima di definire le entità:
+Prima di tutto, definire le entità:
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Entities)]
 
-Si noti la dichiarazione di un __tenantId_ nel campo di _Blog_ entità. Questo verrà utilizzato per associare ogni istanza di blog relativo a un tenant specifico. Viene inoltre definito un _IsDeleted_ proprietà il _Post_ tipo di entità. Questa opzione viene utilizzata questa opzione per consentire di controllare se un _Post_ istanza è stato "eliminato". Ad esempio L'istanza è contrassegnata come eliminata withouth rimozione fisicamente i dati sottostanti.
+Si noti la dichiarazione di un campo __tenantId_ per l'entità _Blog_. Questo verrà usato per associare ogni istanza di Blog a un tenant specifico. Viene anche definita una proprietà _IsDeleted_ per il tipo di entità _Post_. Questa proprietà viene usata per tenere traccia dell'eliminazione temporanea di un'istanza di _Post_. Ad esempio L'istanza è contrassegnata come eliminata senza rimuovere fisicamente i dati sottostanti.
 
-A questo punto, configurare i filtri di query in _OnModelCreating_ utilizzando il ```HasQueryFilter``` API.
+A questo punto, configurare i filtri di query in _OnModelCreating_ usando l'API ```HasQueryFilter```.
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Configuration)]
 
-Le espressioni del predicato passato per il _HasQueryFilter_ chiamate verranno ora applicate automaticamente a tutte le query LINQ per tali tipi.
+Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno ora applicate automaticamente a tutte le query LINQ per tali tipi.
 
 > [!TIP]
-> Si noti l'utilizzo di un campo di livello di istanza di DbContext: ```_tenantId``` utilizzato per impostare il tenant corrente. I filtri a livello di modello verranno utilizzato il valore dall'istanza del contesto corretto. Ad esempio L'istanza che esegue la query.
+> Si noti l'uso del campo a livello di istanza di DbContext ```_tenantId```, usato per impostare il tenant corrente. I filtri a livello di modello useranno il valore dell'istanza di contesto corretta, Ad esempio L'istanza che esegue la query.
 
-## <a name="disabling-filters"></a>La disabilitazione di filtri
+## <a name="disabling-filters"></a>Disabilitazione dei filtri
 
-I filtri possono essere disabilitati per le singole query LINQ usando il ```IgnoreQueryFilters()``` operatore.
+È possibile disabilitare i filtri per singole query LINQ usando l'operatore ```IgnoreQueryFilters()```.
 
 [!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#IgnoreFilters)]
 
 ## <a name="limitations"></a>Limitazioni
 
-I filtri di query globale presentano le limitazioni seguenti:
+I filtri di query globali presentano le limitazioni seguenti:
 
 * I filtri non possono contenere riferimenti a proprietà di navigazione.
-* I filtri possono essere definiti solo per la radice tipo di entità di una gerarchia di ereditarietà.
+* I filtri possono essere definiti solo per il tipo di entità radice di una gerarchia di ereditarietà.
