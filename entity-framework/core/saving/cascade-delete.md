@@ -1,5 +1,5 @@
 ---
-title: Delete - Core EF a catena
+title: Eliminazione a catena - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,72 +8,73 @@ ms.technology: entity-framework-core
 uid: core/saving/cascade-delete
 ms.openlocfilehash: 0fc8929c56d4c657b7fb1e3c8e4b1a71659220c9
 ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
-ms.translationtype: MT
+ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 04/26/2018
+ms.locfileid: "31812677"
 ---
 # <a name="cascade-delete"></a>Eliminazione a catena
 
-Nella terminologia dei database, eliminazione a catena in genere viene utilizzato per descrivere una caratteristica che consente l'eliminazione di una riga per attivare automaticamente l'eliminazione di righe correlate. Un concetto strettamente correlato rientrano anche i comportamenti di delete EF Core è l'eliminazione automatica di un'entità figlio quando la relazione a un elemento padre è stata interrotta, questo è comunemente noto come "eliminazione orfani".
+Nella terminologia dei database, il termine eliminazione a catena viene usato comunemente per descrivere una caratteristica che consente di attivare automaticamente l'eliminazione di righe correlate in seguito all'eliminazione di una riga. Un concetto strettamente correlato, anch'esso coperto dai comportamenti di eliminazione di EF Core, è l'eliminazione automatica di un'entità figlio quando la relazione con un'entità padre è stata interrotta, operazione comunemente nota come "eliminazione degli orfani".
 
-Core EF implementa alcuni comportamenti diversi delete e consente la configurazione dei comportamenti di eliminazione di relazioni singoli. Core EF implementa inoltre convenzioni che consente di configurare automaticamente i comportamenti di eliminazione predefiniti utili per ogni relazione basata sul [requiredness della relazione](../modeling/relationships.md#required-and-optional-relationships).
+EF Core implementa vari comportamenti di eliminazione diversi e consente di configurare i comportamenti di eliminazione di singole relazioni. EF Core implementa anche convenzioni per la configurazione automatica di comportamenti di eliminazione predefiniti utili per ogni relazione in base alla [obbligatorietà della relazione](../modeling/relationships.md#required-and-optional-relationships).
 
-## <a name="delete-behaviors"></a>Eliminare i comportamenti
-Eliminare i comportamenti vengono definiti nel *DeleteBehavior* enumeratore digitare e può essere passato al *OnDelete* fluent API per controllare se l'eliminazione di un'entità principale o padre o il interruzione del relazione con l'entità dipendente/figlio deve ha un effetto collaterale sulle entità dipendente/figlio.
+## <a name="delete-behaviors"></a>Comportamenti di eliminazione
+I comportamenti di eliminazione vengono definiti nel tipo di enumeratore *DeleteBehavior* e possono essere passati all'API fluent *OnDelete* per controllare se l'eliminazione di un'entità principale/padre o l'interruzione della relazione con le entità dipendenti/figlio deve avere un effetto collaterale sulle entità dipendenti/figlio.
 
-Esistono tre azioni EF quando viene eliminata un'entità principale o padre o la relazione per l'elemento figlio viene interrotto:
-* Figlio/dipendente può essere eliminato.
-* Valori di chiave esterna del figlio possono essere impostati su null
-* L'elemento figlio rimane invariato
+Esistono tre azioni che EF può eseguire quando viene eliminata un'entità principale/padre o viene interrotta la relazione con l'entità figlio:
+* L'entità figlio/dipendente può essere eliminata
+* I valori di chiave esterna dell'entità figlio possono essere impostati su Null
+* L'entità figlio rimane invariata
 
 > [!NOTE]  
-> Il comportamento di eliminazione configurato nel modello di Entity Framework Core viene applicato solo quando l'entità principale viene eliminato usando EF Core e le entità dipendenti vengono caricate in memoria (ad esempio per il rilevamento dipendenti). Un comportamento di propagazione corrispondente deve essere il programma di installazione del database per garantire che i dati che non viene rilevati dal contesto è necessario azione applicata. Se si utilizza Entity Framework Core per creare il database, questo comportamento cascade verrà configurato automaticamente.
+> Il comportamento di eliminazione configurato nel modello di EF Core viene applicato solo quando l'entità principale viene eliminata usando EF Core e le entità dipendenti vengono caricate in memoria (come nel caso delle entità dipendenti con rilevamento delle modifiche). È necessario configurare un comportamento a catena corrispondente nel database per garantire l'applicazione dell'azione necessaria ai dati non sottoposti a rilevamento delle modifiche dal contesto. Se si usa EF Core per creare il database, questo comportamento a catena verrà configurato automaticamente.
 
-Per la seconda azione precedente, l'impostazione di un valore di chiave esterna su null non è valido se la chiave esterna non ammette valori null. (Una chiave esterna non ammettono valori null è equivalente a una relazione obbligatoria). In questi casi, Core EF rileva che la proprietà di chiave esterna è stata contrassegnata come null fino a quando non viene chiamato SaveChanges, nel qual caso viene generata un'eccezione in quanto la modifica non può essere reso persistente nel database. È simile a ottenere una violazione del vincolo dal database.
+Per la seconda azione indicata in precedenza, l'impostazione di un valore di chiave esterna su Null non è valida se la chiave esterna non ammette valori Null. (Una chiave esterna che non ammette valori Null equivale a una relazione obbligatoria.) In questi casi, EF Core rileva che proprietà di chiave esterna è stata contrassegnata come Null fino a quando non viene chiamato SaveChanges e in quel momento viene generata un'eccezione in quanto la modifica non può essere salvata in modo permanente nel database. La situazione è simile alla segnalazione di una violazione di vincolo dal database.
 
-Sono disponibili quattro eliminazione comportamenti, elencati nelle tabelle seguenti. Per le relazioni facoltative (chiave esterna che ammette valori null), _è_ possibile salvare un null valore di chiave esterna, che determina gli effetti seguenti:
+Sono disponibili quattro comportamenti di eliminazione, elencati nelle tabelle seguenti. Per le relazioni facoltative (chiave esterna che ammette valori Null), _è_ possibile salvare un valore di chiave esterna Null, con gli effetti seguenti:
 
-| Nome del comportamento               | Effetto sul dipendente/figlio in memoria    | Effetto sul dipendente/figlio nel database  |
+| Nome del comportamento               | Effetto sull'entità dipendente/figlio in memoria    | Effetto sull'entità dipendente/figlio nel database  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
-| **CASCADE**                 | Le entità vengono eliminate.                   | Le entità vengono eliminate.                   |
-| **ClientSetNull** (predefinito) | Proprietà di chiave esterna sono impostate su null | Nessuno                                   |
-| **SetNull**                 | Proprietà di chiave esterna sono impostate su null | Proprietà di chiave esterna sono impostate su null |
-| **Limitare**                | Nessuno                                   | Nessuno                                   |
+| **Cascade**                 | Le entità vengono eliminate                   | Le entità vengono eliminate                   |
+| **ClientSetNull** (impostazione predefinita) | Le proprietà di chiave esterna vengono impostate su Null | Nessuno                                   |
+| **SetNull**                 | Le proprietà di chiave esterna vengono impostate su Null | Le proprietà di chiave esterna vengono impostate su Null |
+| **Restrict**                | Nessuno                                   | Nessuno                                   |
 
-Per le relazioni necessarie (chiave esterna non nullable) è _non_ possibile salvare un null valore di chiave esterna, che determina gli effetti seguenti:
+Per le relazioni obbligatorie (chiave esterna che non ammette valori Null), _non_ è possibile salvare un valore di chiave esterna Null, con gli effetti seguenti:
 
-| Nome del comportamento         | Effetto sul dipendente/figlio in memoria | Effetto sul dipendente/figlio nel database |
+| Nome del comportamento         | Effetto sull'entità dipendente/figlio in memoria | Effetto sull'entità dipendente/figlio nel database |
 |:----------------------|:------------------------------------|:--------------------------------------|
-| **CASCADE** (predefinito) | Le entità vengono eliminate.                | Le entità vengono eliminate.                  |
-| **ClientSetNull**     | Genera SaveChanges                  | Nessuno                                  |
-| **SetNull**           | Genera SaveChanges                  | Genera SaveChanges                    |
-| **Limitare**          | Nessuno                                | Nessuno                                  |
+| **Cascade** (impostazione predefinita) | Le entità vengono eliminate                | Le entità vengono eliminate                  |
+| **ClientSetNull**     | SaveChanges genera un'eccezione                  | Nessuno                                  |
+| **SetNull**           | SaveChanges genera un'eccezione                  | SaveChanges genera un'eccezione                    |
+| **Restrict**          | Nessuno                                | Nessuno                                  |
 
-Nelle tabelle precedenti, *Nessuno* può comportare una violazione del vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma viene eseguita alcuna azione per modificare la chiave esterna di un dipendente/figlio, quindi il database verrà probabilmente genera eccezioni in SaveChanges a causa di una violazione del vincolo foreign.
+Nelle tabelle precedenti, la condizione *Nessuno* può comportare una violazione di vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma non viene eseguita alcuna azione per modificare la chiave esterna di un'entità dipendente/figlio, il database genererà probabilmente eccezioni durante SaveChanges a causa di una violazione del vincolo di chiave esterna.
 
 In generale:
-* Se si dispone di entità che non può esistere senza un padre e desiderate EF da svolgere per eliminare automaticamente gli elementi figlio, quindi utilizzare *Cascade*.
-  * Le entità che non possono esistere senza un elemento padre in genere assicurarsi utilizzare relazioni necessarie, per cui *Cascade* è l'impostazione predefinita.
-* Se si dispone di entità che possono o non dispone di un padre ed EF di occuparsi di Annulla della chiave esterna per l'utente desiderato, quindi utilizzare *ClientSetNull*
-  * Entità che possono esistere senza un elemento padre in genere assicurarsi utilizzare relazioni facoltative, per cui *ClientSetNull* è l'impostazione predefinita.
-  * Se si desidera il database anche provare a propagare anche i valori null per le chiavi esterne figlio quando l'entità figlio non viene caricato, quindi utilizzare *SetNull*. Si noti tuttavia che il database deve supportare questo e configurazione del database, questo può comportare altre restrizioni, in pratica spesso rendendo questa opzione causa. Questo è il motivo *SetNull* non è il valore predefinito.
-* Se non si desidera Core EF mai eliminare automaticamente un'entità o null automaticamente della chiave esterna, quindi utilizzare *Restrict*. Si noti che questa operazione richiede che il codice sincronizzare entità figlio e i relativi valori di chiave esterna manualmente in caso contrario vincolo verranno generate eccezioni.
+* In presenza di entità che non possono esistere senza un padre e se si vuole che EF gestisca automaticamente l'eliminazione delle entità figlio, usare *Cascade*.
+  * Le entità che non possono esistere senza un'entità padre in genere usano relazioni obbligatorie, per le quali *Cascade* è l'impostazione predefinita.
+* Con entità che possono o meno avere un'entità padre e se si vuole che EF gestisca automaticamente l'impostazione su Null della chiave esterna, usare *ClientSetNull*
+  * Le entità che possono esistere senza un'entità padre in genere usano relazioni facoltative, per le quali *ClientSetNull* è l'impostazione predefinita.
+  * Se si vuole che il database tenti inoltre la propagazione dei valori Null alle chiavi esterne figlio, anche quando l'entità figlio non viene caricata, usare *SetNull*. Si noti, tuttavia, che il database deve supportare queste operazioni e la configurazione del database in questo modo può comportare altre restrizioni, rendendo spesso questa opzione impraticabile. Questo è il motivo per cui *SetNull* non è l'impostazione predefinita.
+* Se non si vuole che Core EF elimini mai automaticamente un'entità o imposti automaticamente su Null la chiave esterna, usare *Restrict*. Si noti che questa operazione richiede che il codice mantenga sincronizzati manualmente le entità figlio e i relativi valori di chiave esterna. In caso contrario verranno generate eccezioni per i vincoli.
 
 > [!NOTE]
-> In Entity Framework Core, a differenza di EF6, effetti a catena non vengono eseguiti immediatamente, ma invece solo quando viene chiamato SaveChanges.
+> In EF Core, a differenza di EF6, gli effetti a catena non vengono eseguiti immediatamente, ma solo quando viene chiamato SaveChanges.
 
 > [!NOTE]  
-> **Le modifiche in EF Core 2.0:** nelle versioni precedenti, *Restrict* causerebbe facoltativa proprietà di chiave esterna nelle entità dipendenti rilevate sia impostato su null e il comportamento per le relazioni facoltative di eliminare il valore predefinito è stato. In Entity Framework Core 2.0 il *ClientSetNull* è stato introdotto per rappresentare tale comportamento ed è diventato il valore predefinito per le relazioni facoltative. Il comportamento di *Restrict* regolato per mai avere effetti collaterali su entità dipendente.
+> **Modifiche in EF Core 2.0:** nelle versioni precedenti *Restrict* causerebbe l'impostazione su Null delle proprietà di chiave esterna facoltative nelle entità dipendenti sottoposte a rilevamento delle modifiche e questo era il comportamento di eliminazione predefinito per le relazioni facoltative. In EF Core 2.0 è stato introdotto il valore *ClientSetNull* per rappresentare tale comportamento ed è diventato il valore predefinito per le relazioni facoltative. Il comportamento di *Restrict* è stato modificato in modo da non produrre mai effetti collaterali sulle entità dipendenti.
 
 ## <a name="entity-deletion-examples"></a>Esempi di eliminazione di entità
 
-Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato ed eseguito. Nell'esempio viene illustrato cosa accade per ogni comportamento di eliminazione per le relazioni obbligatori e facoltative, quando viene eliminata un'entità padre.
+Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio mostra cosa accade per ogni comportamento di eliminazione sia per le relazioni obbligatorie che facoltative, quando viene eliminata un'entità padre.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
 
-Si analizzerà ogni variazione alla capire cosa succede.
+Ogni variazione verrà analizzata per capire il funzionamento.
 
-### <a name="deletebehaviorcascade-with-required-or-optional-relationship"></a>DeleteBehavior.Cascade con relazione obbligatorio o facoltativo
+### <a name="deletebehaviorcascade-with-required-or-optional-relationship"></a>DeleteBehavior.Cascade con relazione obbligatoria o facoltativa
 
 ```
   After loading entities:
@@ -97,10 +98,10 @@ Si analizzerà ogni variazione alla capire cosa succede.
       Post '1' is in state Detached with FK '1' and no reference to a blog.
 ```
 
-* Blog è contrassegnato come eliminato
-* Post di rimanere inizialmente non modificato dal momento che a catena non vengono eseguiti fino a quando SaveChanges
-* SaveChanges invia eliminazioni per oggetti dipendenti (POST) o gli elementi figlio e quindi l'entità/elemento padre (blog)
-* Dopo il salvataggio, tutte le entità vengono disconnesse poiché ora sono state eliminate dal database
+* Il blog viene contrassegnato come eliminato (Deleted)
+* I post rimangono invariati (Unchanged) dato che le operazioni a catena non vengono eseguite fino a SaveChanges
+* SaveChanges invia eliminazioni per entrambe le entità dipendenti/figlio (post) e poi per l'entità principale/padre (blog)
+* Dopo il salvataggio, tutte le entità vengono scollegate perché a questo punto sono state eliminate dal database
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-required-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con relazione obbligatoria
 
@@ -121,11 +122,11 @@ Si analizzerà ogni variazione alla capire cosa succede.
   SaveChanges threw DbUpdateException: Cannot insert the value NULL into column 'BlogId', table 'EFSaving.CascadeDelete.dbo.Posts'; column does not allow nulls. UPDATE fails. The statement has been terminated.
 ```
 
-* Blog è contrassegnato come eliminato
-* Post di rimanere inizialmente non modificato dal momento che a catena non vengono eseguiti fino a quando SaveChanges
-* SaveChanges tenta di impostare il post di chiave esterna su null, ma l'operazione non riesce perché la chiave esterna non ammette valori null
+* Il blog viene contrassegnato come eliminato (Deleted)
+* I post rimangono invariati (Unchanged) dato che le operazioni a catena non vengono eseguite fino a SaveChanges
+* SaveChanges tenta di impostare la chiave esterna del post su Null, ma l'operazione non riesce perché la chiave esterna non ammette valori Null
 
-### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con una relazione facoltativa
+### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con relazione facoltativa
 
 ```
   After loading entities:
@@ -149,13 +150,13 @@ Si analizzerà ogni variazione alla capire cosa succede.
       Post '1' is in state Unchanged with FK 'null' and no reference to a blog.
 ```
 
-* Blog è contrassegnato come eliminato
-* Post di rimanere inizialmente non modificato dal momento che a catena non vengono eseguiti fino a quando SaveChanges
-* Tentativi SaveChanges imposta la chiave esterna di entrambi dipendenti/figli (POST) su null prima di eliminare l'entità/elemento padre (blog)
-* Dopo il salvataggio, l'entità/elemento padre (blog) vengono eliminata, ma vengono ancora rilevati dipendenti o gli elementi figlio (POST)
-* Rilevati oggetti dipendenti o gli elementi figlio (POST) sono ora consentiti valori null della chiave esterna e rimozione del riferimento a entità/padre eliminato (blog)
+* Il blog viene contrassegnato come eliminato (Deleted)
+* I post rimangono invariati (Unchanged) dato che le operazioni a catena non vengono eseguite fino a SaveChanges
+* SaveChanges tenta di impostare la chiave esterna di entrambe le entità dipendenti/figlio (post) su Null prima di eliminare l'entità principale/padre (blog)
+* Dopo il salvataggio, l'entità principale/padre (blog) viene eliminata, ma le entità dipendenti/figlio (post) sono ancora incluse nel rilevamento delle modifiche
+* Le entità dipendenti/figlio (post) incluse nel rilevamento delle modifiche hanno ora valori di chiave esterna Null e il riferimento all'entità principale/padre (blog) è stato rimosso
 
-### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>DeleteBehavior.Restrict con relazione obbligatorio o facoltativo
+### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>DeleteBehavior.Restrict con relazione obbligatoria o facoltativa
 
 ```
   After loading entities:
@@ -172,19 +173,19 @@ Si analizzerà ogni variazione alla capire cosa succede.
   SaveChanges threw InvalidOperationException: The association between entity types 'Blog' and 'Post' has been severed but the foreign key for this relationship cannot be set to null. If the dependent entity should be deleted, then setup the relationship to use cascade deletes.
 ```
 
-* Blog è contrassegnato come eliminato
-* Post di rimanere inizialmente non modificato dal momento che a catena non vengono eseguiti fino a quando SaveChanges
-* Poiché *Restrict* indica EF per impostare automaticamente la chiave esterna su null, rimane non null e SaveChanges genera senza salvare le modifiche
+* Il blog viene contrassegnato come eliminato (Deleted)
+* I post rimangono invariati (Unchanged) dato che le operazioni a catena non vengono eseguite fino a SaveChanges
+* Poiché *Restrict* indica a EF di non impostare automaticamente la chiave esterna su Null, la chiave rimane non Null e SaveChanges genera un'eccezione senza salvare le modifiche
 
-## <a name="delete-orphans-examples"></a>Esempi di orfani di eliminazione
+## <a name="delete-orphans-examples"></a>Esempi di eliminazione degli orfani
 
-Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato un'esecuzione. Nell'esempio viene illustrato cosa accade per ogni comportamento di eliminazione per le relazioni obbligatori e facoltative, quando viene interrotta la relazione tra un elemento padre/principale e i relativi elementi figlio o dipendenti. In questo esempio, la relazione viene interrotto rimuovendo gli oggetti dipendenti o elementi figlio (POST) dalla proprietà di navigazione di raccolta nell'entità/elemento padre (blog). Tuttavia, il comportamento è lo stesso se il riferimento dipendente/figlio/padre principale viene invece impostato su null.
+Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio illustra le conseguenze di ogni comportamento di eliminazione sia per le relazioni facoltative che per quelle obbligatorie, quando viene interrotta la relazione tra un'entità padre/principale e le relative entità figlio/dipendenti. In questo esempio, la relazione viene interrotta rimuovendo gli oggetti dipendenti o elementi figlio (POST) dalla proprietà di navigazione della raccolta nell'entità principale/padre (blog). Tuttavia, il comportamento è lo stesso se il riferimento da entità dipendente/figlio a entità principale/padre viene invece impostato su Null.
 
 [!code-csharp[Main](../../../samples/core/Saving/Saving/CascadeDelete/Sample.cs#DeleteOrphansVariations)]
 
-Si analizzerà ogni variazione alla capire cosa succede.
+Ogni variazione verrà analizzata per capire il funzionamento.
 
-### <a name="deletebehaviorcascade-with-required-or-optional-relationship"></a>DeleteBehavior.Cascade con relazione obbligatorio o facoltativo
+### <a name="deletebehaviorcascade-with-required-or-optional-relationship"></a>DeleteBehavior.Cascade con relazione obbligatoria o facoltativa
 
 ```
   After loading entities:
@@ -207,10 +208,10 @@ Si analizzerà ogni variazione alla capire cosa succede.
       Post '1' is in state Detached with FK '1' and no reference to a blog.
 ```
 
-* Post sono contrassegnati come modificati perché l'interruzione della relazione ha causato la chiave esterna deve essere contrassegnato come null
-  * Se la chiave esterna non ammette valori null, quindi il valore effettivo non cambierà anche se è contrassegnato come null
-* SaveChanges invia eliminazioni per oggetti dipendenti (POST) o gli elementi figlio
-* Dopo il salvataggio, gli oggetti dipendenti o elementi figlio (POST) sono scollegati dall'ora sono state eliminate dal database
+* I post vengono contrassegnati come modificati perché, a causa dell'interruzione della relazione, la chiave esterna è stata contrassegnata come Null
+  * Se la chiave esterna non ammette valori Null, il valore effettivo non cambierà anche se è contrassegnato come Null
+* SaveChanges invia eliminazioni per le entità dipendenti/figlio (post)
+* Dopo il salvataggio, le entità dipendenti/figlio (post) vengono scollegate perché a questo punto sono state eliminate dal database
 
 ### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-required-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con relazione obbligatoria
 
@@ -231,11 +232,11 @@ Si analizzerà ogni variazione alla capire cosa succede.
   SaveChanges threw DbUpdateException: Cannot insert the value NULL into column 'BlogId', table 'EFSaving.CascadeDelete.dbo.Posts'; column does not allow nulls. UPDATE fails. The statement has been terminated.
 ```
 
-* Post sono contrassegnati come modificati perché l'interruzione della relazione ha causato la chiave esterna deve essere contrassegnato come null
-  * Se la chiave esterna non ammette valori null, quindi il valore effettivo non cambierà anche se è contrassegnato come null
-* SaveChanges tenta di impostare il post di chiave esterna su null, ma l'operazione non riesce perché la chiave esterna non ammette valori null
+* I post vengono contrassegnati come modificati perché, a causa dell'interruzione della relazione, la chiave esterna è stata contrassegnata come Null
+  * Se la chiave esterna non ammette valori Null, il valore effettivo non cambierà anche se è contrassegnato come Null
+* SaveChanges tenta di impostare la chiave esterna del post su Null, ma l'operazione non riesce perché la chiave esterna non ammette valori Null
 
-### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con una relazione facoltativa
+### <a name="deletebehaviorclientsetnull-or-deletebehaviorsetnull-with-optional-relationship"></a>DeleteBehavior.ClientSetNull o DeleteBehavior.SetNull con relazione facoltativa
 
 ```
   After loading entities:
@@ -258,12 +259,12 @@ Si analizzerà ogni variazione alla capire cosa succede.
       Post '1' is in state Unchanged with FK 'null' and no reference to a blog.
 ```
 
-* Post sono contrassegnati come modificati perché l'interruzione della relazione ha causato la chiave esterna deve essere contrassegnato come null
-  * Se la chiave esterna non ammette valori null, quindi il valore effettivo non cambierà anche se è contrassegnato come null
-* SaveChanges imposta la chiave esterna di entrambi dipendenti/figli (POST) su null
-* Dopo il salvataggio, gli oggetti dipendenti o elementi figlio (POST) sono ora consentiti valori null della chiave esterna e rimozione del riferimento a entità/padre eliminato (blog)
+* I post vengono contrassegnati come modificati perché, a causa dell'interruzione della relazione, la chiave esterna è stata contrassegnata come Null
+  * Se la chiave esterna non ammette valori Null, il valore effettivo non cambierà anche se è contrassegnato come Null
+* SaveChanges imposta la chiave esterna di entrambe le entità dipendenti/figlio (post) su Null
+* Dopo il salvataggio, le entità dipendenti/figlio (post) hanno ora valori di chiave esterna Null e il riferimento all'entità principale/padre (blog) è stato rimosso
 
-### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>DeleteBehavior.Restrict con relazione obbligatorio o facoltativo
+### <a name="deletebehaviorrestrict-with-required-or-optional-relationship"></a>DeleteBehavior.Restrict con relazione obbligatoria o facoltativa
 
 ```
   After loading entities:
@@ -280,13 +281,13 @@ Si analizzerà ogni variazione alla capire cosa succede.
   SaveChanges threw InvalidOperationException: The association between entity types 'Blog' and 'Post' has been severed but the foreign key for this relationship cannot be set to null. If the dependent entity should be deleted, then setup the relationship to use cascade deletes.
 ```
 
-* Post sono contrassegnati come modificati perché l'interruzione della relazione ha causato la chiave esterna deve essere contrassegnato come null
-  * Se la chiave esterna non ammette valori null, quindi il valore effettivo non cambierà anche se è contrassegnato come null
-* Poiché *Restrict* indica EF per impostare automaticamente la chiave esterna su null, rimane non null e SaveChanges genera senza salvare le modifiche
+* I post vengono contrassegnati come modificati perché, a causa dell'interruzione della relazione, la chiave esterna è stata contrassegnata come Null
+  * Se la chiave esterna non ammette valori Null, il valore effettivo non cambierà anche se è contrassegnato come Null
+* Poiché *Restrict* indica a EF di non impostare automaticamente la chiave esterna su Null, la chiave rimane non Null e SaveChanges genera un'eccezione senza salvare le modifiche
 
-## <a name="cascading-to-untracked-entities"></a>Per le entità non viene tenuta tracciate di propagazione
+## <a name="cascading-to-untracked-entities"></a>Applicazione a catena alle entità senza rilevamento delle modifiche
 
-Quando si chiama *SaveChanges*, le regole di delete cascade verranno applicate a tutte le entità che vengono rilevate dal contesto. Si tratta della situazione in tutti gli esempi illustrati in precedenza, che è il motivo per cui SQL è stato generato per eliminare l'entità/elemento padre (blog) e tutti i dipendenti/figlio (POST):
+Quando si chiama *SaveChanges*, le regole di eliminazione a catena verranno applicate a tutte le entità incluse nel rilevamento delle modifiche dal contesto. Si tratta della situazione esistente in tutti gli esempi illustrati in precedenza, che è il motivo per cui vengono generate istruzioni SQL per eliminare sia l'entità principale/padre (blog) che tutte le entità dipendenti/figlio (post):
 
 ```sql
     DELETE FROM [Posts] WHERE [PostId] = 1
@@ -294,10 +295,10 @@ Quando si chiama *SaveChanges*, le regole di delete cascade verranno applicate a
     DELETE FROM [Blogs] WHERE [BlogId] = 1
 ```
 
-Se solo l'entità viene caricato, ad esempio, quando viene eseguita una query per un blog senza un `Include(b => b.Posts)` includere inoltre post - quindi SaveChanges genererà solo SQL per eliminare l'entità/elemento padre:
+Se viene caricata solo l'entità principale, ad esempio, quando viene eseguita una query per un blog senza `Include(b => b.Posts)` per includere anche i post, SaveChanges genererà solo le istruzioni SQL per eliminare l'entità principale/padre:
 
 ```sql
     DELETE FROM [Blogs] WHERE [BlogId] = 1
 ```
 
-Gli oggetti dipendenti o elementi figlio (POST) verrà eliminati solo se il database ha un comportamento di propagazione corrispondente configurato. Se si utilizza Entity Framework per creare il database, questo comportamento cascade verrà configurato automaticamente.
+Le entità dipendenti/figlio (post) verranno eliminate solo se per il database è configurato un comportamento a catena corrispondente. Se si usa EF per creare il database, questo comportamento a catena verrà configurato automaticamente.

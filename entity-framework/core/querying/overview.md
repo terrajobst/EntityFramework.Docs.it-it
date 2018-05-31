@@ -1,5 +1,5 @@
 ---
-title: "La modalità query - Core EF"
+title: Funzionamento delle query - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,42 +8,43 @@ ms.technology: entity-framework-core
 uid: core/querying/overview
 ms.openlocfilehash: 7fd2940d559f82016d7a8fc3fdcf3af0d5b8bc8f
 ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
-ms.translationtype: MT
+ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052871"
 ---
-# <a name="how-queries-work"></a>Il funzionamento delle query
+# <a name="how-queries-work"></a>Funzionamento delle query
 
-Entity Framework Core Usa integrare Query LINQ (Language) per eseguire query sui dati dal database. LINQ consente di usare c# (o il proprio linguaggio .NET) per creare query fortemente tipizzata in base alle classi di contesto ed entità derivate.
+Entity Framework Core usa query LINQ (Language Integrated Query) per eseguire query sui dati dal database. Le query LINQ consentono di usare C#, o il linguaggio .NET che si preferisce, per generare query fortemente tipizzate in base alle classi di contesto ed entità derivate.
 
-## <a name="the-life-of-a-query"></a>Il ciclo di vita di una query
+## <a name="the-life-of-a-query"></a>Ciclo di vita di una query
 
-Di seguito è fornita una panoramica di alto livello del processo di che ogni query passa attraverso.
+Di seguito è disponibile una panoramica generale del processo di elaborazione di ogni query.
 
-1. La query LINQ viene elaborata da Entity Framework Core per compilare una rappresentazione che è pronta per essere eseguito dal provider di database
-   1. Il risultato viene memorizzato nella cache in modo che tale elaborazione non devono essere eseguite ogni volta che viene eseguita la query
+1. La query LINQ viene elaborata da Entity Framework Core per creare una rappresentazione pronta per essere elaborata dal provider di database
+   1. Il risultato viene memorizzato nella cache in modo che tale elaborazione non debba essere ripetuta per ogni esecuzione della query
 2. Il risultato viene passato al provider di database
-   1. Il provider di database identifica le parti della query possono essere valutate in database
-   2. Queste parti della query vengono convertite in linguaggio di query specifico di database (ad esempio SQL per un database relazionale)
-   3. Una o più query vengono inviate al database e il set di risultati restituito (risultati sono i valori del database, non le istanze di entità)
+   1. Il provider di database identifica le parti della query che possono essere valutate nel database
+   2. Queste parti della query vengono convertite nel linguaggio di query specifico del database, ad esempio SQL per un database relazionale
+   3. Una o più query vengono inviate al database e il set di risultati viene restituito (i risultati sono valori del database e non istanze di entità)
 3. Per ogni elemento nel set di risultati
-   1. Se si tratta di una query di rilevamento, EF controlla se i dati rappresentano un'entità già presenti nel rilevamento delle modifiche per l'istanza del contesto
-      * In questo caso, viene restituito l'entità esistente
+   1. Se si tratta di una query con rilevamento delle modifiche, EF controlla se i dati rappresentano un'entità già presente nello strumento di rilevamento delle modifiche per l'istanza di contesto
+      * In caso affermativo, viene restituita l'entità esistente
       * In caso contrario, viene creata una nuova entità, viene configurato il rilevamento delle modifiche e viene restituita la nuova entità
-   2. Se si tratta di una query di rilevamento di no, EF controlla se i dati rappresentano un'entità già presente nel set di risultati per questa query
-      * Se in tal caso, viene restituita l'entità esistente <sup>(1)</sup>
-      * In caso contrario, una nuova entità viene creata e restituita
+   2. Se si tratta di una query senza rilevamento delle modifiche, EF controlla se i dati rappresentano un'entità già presente nel set di risultati per questa query
+      * In caso affermativo, viene restituita l'entità esistente <sup>(1)</sup>
+      * In caso contrario, viene creata e restituita una nuova entità
 
-<sup>(1) </sup> Nessuna query di rilevamento utilizza riferimenti deboli per tenere traccia delle entità che sono già state restituite. Se un risultato precedente con la stessa identità abbandona l'ambito e l'esecuzione della garbage collection, è possibile ottenere una nuova istanza di entità.
+<sup>(1) </sup> Nessuna query con rilevamento delle modifiche usa riferimenti deboli per tenere traccia delle entità già restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità.
 
-## <a name="when-queries-are-executed"></a>Quando vengono eseguite query
+## <a name="when-queries-are-executed"></a>Quando vengono eseguite le query
 
-Quando si chiamano operatori LINQ, si sta compilando semplicemente una rappresentazione in memoria della query. La query viene inviata solo al database quando vengono usati i risultati.
+Quando si chiamano operatori LINQ, si crea semplicemente una rappresentazione in memoria della query. La query viene inviata al database solo al momento dell'utilizzo dei risultati.
 
-Le operazioni più comuni che la query viene inviato al database sono:
-* L'iterazione i risultati in un `for` ciclo
-* Utilizzo di un operatore, ad esempio `ToList`, `ToArray`, `Single`,`Count`
-* L'associazione dati i risultati di una query a un'interfaccia utente
+Le operazioni più comuni che causano l'invio della query al database sono:
+* Iterazione dei risultati in un ciclo `for`
+* Uso di un operatore, ad esempio `ToList`, `ToArray`, `Single`, `Count`
+* Data binding dei risultati di una query a un'interfaccia utente
 
 > [!WARNING]  
-> **Convalidare sempre l'input dell'utente:** EF mentre forniscono protezione da attacchi SQL injection, non esegue alcuna convalida dell'input generale. Pertanto se i valori passati alle API, utilizzate nelle query LINQ, assegnata alla proprietà dell'entità e così via, provengono da un'origine non attendibile quindi convalida appropriato, per esigenze dell'applicazione deve essere eseguita. Ciò include qualsiasi input dell'utente utilizzato per costruire in modo dinamico delle query. Anche quando si usa LINQ, se si accetta l'input dell'utente per la compilazione di espressioni, che è necessario assicurarsi che solo le espressioni previsto può essere costruito.
+> **Convalidare sempre l'input dell'utente:** anche se EF offre protezione da attacchi SQL injection, non esegue alcuna convalida generale dell'input. Pertanto se i valori passati alle API, usati nelle query LINQ, assegnati alle proprietà di entità e così via, provengono da un'origine non attendibile, è opportuno prevedere una convalida appropriata in base ai requisiti dell'applicazione. Ciò include qualsiasi input dell'utente usato per costruire query in modo dinamico. Anche quando si usa LINQ, se si accetta l'input dell'utente per la creazione delle espressioni, è necessario assicurarsi che possano essere costruite solo le espressioni previste.

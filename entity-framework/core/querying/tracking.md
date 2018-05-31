@@ -1,5 +1,5 @@
 ---
-title: Rilevamento di Visual Studio. Query di rilevamento No - EF Core
+title: Query con rilevamento delle modifiche e senza rilevamento delle modifiche - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -8,22 +8,23 @@ ms.technology: entity-framework-core
 uid: core/querying/tracking
 ms.openlocfilehash: 9a22c893f3b1e9991560e25e0252287a2844b39e
 ms.sourcegitcommit: 3b6159db8a6c0653f13c7b528367b4e69ac3d51e
-ms.translationtype: MT
+ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/28/2017
+ms.locfileid: "26053961"
 ---
-# <a name="tracking-vs-no-tracking-queries"></a>Rilevamento di Visual Studio. Query di rilevamento di No
+# <a name="tracking-vs-no-tracking-queries"></a>Query con rilevamento delle modifiche e senza rilevamento delle modifiche
 
-Controlli di comportamento di rilevamento Entity Framework Core conserverà le informazioni relative a un'istanza di entità nel rilevamento delle modifiche o meno. Se viene rilevata un'entità, le modifiche rilevate nell'entità verranno rese persistenti nel database durante `SaveChanges()`. Entity Framework Core verrà correzione anche le proprietà di navigazione tra le entità che vengono ottenute da una query di rilevamento e che sono stati caricati in precedenza nell'istanza di DbContext.
+Dal comportamento di rilevamento delle modifiche dipende se Entity Framework Core conserverà o meno le informazioni relative a un'istanza di entità nel relativo strumento di rilevamento delle modifiche. Se un'entità viene inclusa nel rilevamento delle modifiche, qualsiasi modifica individuata per l'entità verrà salvata in modo permanente nel database durante `SaveChanges()`. Entity Framework Core correggerà anche le proprietà di navigazione tra le entità ottenute da una query con rilevamento delle modifiche e le entità caricate in precedenza nell'istanza di DbContext.
 
 > [!TIP]  
-> È possibile visualizzare in questo articolo [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) su GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
 
-## <a name="tracking-queries"></a>Query di rilevamento
+## <a name="tracking-queries"></a>Query con rilevamento delle modifiche
 
-Per impostazione predefinita, le query che restituiscono tipi di entità sono di rilevamento. In questo modo è possibile apportare modifiche alle istanze di entità e le modifiche sono rese persistenti dal `SaveChanges()`.
+Per impostazione predefinita, le query che restituiscono tipi di entità sono con rilevamento delle modifiche. Ciò significa che è possibile apportare modifiche alle istanze di entità e le modifiche vengono salvate in modo permanente da `SaveChanges()`.
 
-Nell'esempio seguente, rilevata e resi persistenti nel database durante la modifica per la classificazione di blog `SaveChanges()`.
+Nell'esempio seguente la modifica della classificazione del blog verrà rilevata e salvata in modo permanente nel database durante `SaveChanges()`.
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs)] -->
 ``` csharp
@@ -35,11 +36,11 @@ using (var context = new BloggingContext())
 }
 ```
 
-## <a name="no-tracking-queries"></a>Query di rilevamento di No
+## <a name="no-tracking-queries"></a>Query senza rilevamento delle modifiche
 
-Nessuna query di rilevamento è utile quando i risultati vengono usati in uno scenario di sola lettura. Sono più veloci per l'esecuzione perché non è necessario per informazioni sul rilevamento delle modifiche di configurazione.
+Le query senza rilevamento delle modifiche sono utili quando i risultati vengono usati in uno scenario di sola lettura. Sono più veloci da eseguire perché non è necessario configurare le informazioni per il rilevamento delle modifiche.
 
-È possibile scambiare una singola query di rilevamento non essere:
+È possibile configurare una singola query in modo che sia senza rilevamento delle modifiche:
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=4)] -->
 ``` csharp
@@ -51,7 +52,7 @@ using (var context = new BloggingContext())
 }
 ```
 
-È inoltre possibile modificare il comportamento a livello di istanza di contesto di rilevamento predefinito:
+È anche possibile modificare il comportamento predefinito di rilevamento delle modifiche a livello di istanza di contesto:
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=3)] -->
 ``` csharp
@@ -64,11 +65,11 @@ using (var context = new BloggingContext())
 ```
 
 > [!NOTE]  
-> Nessuna query di rilevamento comunque esegue la risoluzione di identità all'interno della query di eseguire. Se il set di risultati contiene la stessa entità più volte, restituirà la stessa istanza della classe di entità per ogni occorrenza del set di risultati. Riferimenti deboli, tuttavia, vengono utilizzati per tenere traccia delle entità che sono già state restituite. Se un risultato precedente con la stessa identità abbandona l'ambito e l'esecuzione della garbage collection, è possibile ottenere una nuova istanza di entità. Per ulteriori informazioni, vedere [come funziona la Query](overview.md).
+> Le query senza rilevamento delle modifiche eseguono comunque la risoluzione dell'identità all'interno della query in esecuzione. Se il set di risultati contiene la stessa entità più volte, verrà restituita la stessa istanza della classe di entità per ogni occorrenza nel set di risultati. Vengono tuttavia usati riferimenti deboli per tenere traccia delle entità già restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità. Per altre informazioni, vedere [Funzionamento delle query](overview.md).
 
-## <a name="tracking-and-projections"></a>Rilevamento e le proiezioni
+## <a name="tracking-and-projections"></a>Rilevamento delle modifiche e proiezioni
 
-Anche se il tipo di risultato della query non è un tipo di entità, se il risultato contiene i tipi di entità sono comunque essere registrati per impostazione predefinita. Nella query seguente, che restituisce un tipo anonimo, le istanze di `Blog` nel risultato di rilevamento dei set.
+Anche se il tipo di risultato della query non è un tipo di entità, se il risultato contiene tipi di entità questi verranno comunque inclusi nel rilevamento delle modifiche per impostazione predefinita. Nella query seguente, che restituisce un tipo anonimo, le istanze di `Blog` nel set di risultati verranno incluse nel rilevamento delle modifiche.
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs?highlight=7)] -->
 ``` csharp
@@ -84,7 +85,7 @@ using (var context = new BloggingContext())
 }
 ```
 
-Se il set di risultati non contiene alcun tipo di entità, non viene eseguita alcuna registrazione. Nella query seguente, che restituisce un tipo anonimo con alcuni dei valori dell'entità (ma non le istanze del tipo di entità effettivo), non c'è alcun rilevamento eseguita.
+Se il set di risultati non contiene alcun tipo di entità, il rilevamento delle modifiche non viene eseguito. Nella query seguente, che restituisce un tipo anonimo con alcuni dei valori dell'entità (ma non le istanze del tipo di entità effettivo), il rilevamento delle modifiche non viene eseguito.
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/Tracking/Sample.cs)] -->
 ``` csharp
