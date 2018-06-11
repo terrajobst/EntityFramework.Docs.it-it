@@ -5,11 +5,12 @@ ms.author: bricelam
 ms.date: 10/30/2017
 ms.technology: entity-framework-core
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 24fbe344eba9b99929d905ac2b9e49c68a1a4323
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: dd164125c053497af94773011127853ad10d27a6
+ms.sourcegitcommit: 72e59e6af86b568653e1b29727529dfd7f65d312
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
+ms.lasthandoff: 06/04/2018
+ms.locfileid: "34754509"
 ---
 <a name="migrations"></a>Migrazioni
 ==========
