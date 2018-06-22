@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052741"
 ---
 # <a name="foreign-key-constraints"></a><span data-ttu-id="8dd6d-102">Vincoli di chiave esterna</span><span class="sxs-lookup"><span data-stu-id="8dd6d-102">Foreign Key Constraints</span></span>
 

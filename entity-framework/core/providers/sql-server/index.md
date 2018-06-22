@@ -11,6 +11,7 @@ ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 02/28/2018
+ms.locfileid: "29678650"
 ---
 # <a name="microsoft-sql-server-ef-core-database-provider"></a><span data-ttu-id="00755-102">Provider di database Microsoft SQL Server per EF Core</span><span class="sxs-lookup"><span data-stu-id="00755-102">Microsoft SQL Server EF Core Database Provider</span></span>
 

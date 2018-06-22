@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052721"
 ---
 # <a name="primary-keys"></a><span data-ttu-id="c418e-102">Chiavi primarie</span><span class="sxs-lookup"><span data-stu-id="c418e-102">Primary Keys</span></span>
 

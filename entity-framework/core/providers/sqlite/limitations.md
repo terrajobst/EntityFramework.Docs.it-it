@@ -11,6 +11,7 @@ ms.sourcegitcommit: 60b831318c4f5ec99061e8af6a7c9e7c03b3469c
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 03/02/2018
+ms.locfileid: "29719485"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a><span data-ttu-id="fbcc2-102">Limitazioni del Provider di SQLite EF Core Database</span><span class="sxs-lookup"><span data-stu-id="fbcc2-102">SQLite EF Core Database Provider Limitations</span></span>
 

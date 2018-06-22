@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052531"
 ---
 # <a name="connection-strings"></a><span data-ttu-id="d0cf9-102">Stringhe di connessione</span><span class="sxs-lookup"><span data-stu-id="d0cf9-102">Connection Strings</span></span>
 

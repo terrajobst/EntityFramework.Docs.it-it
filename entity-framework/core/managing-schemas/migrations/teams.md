@@ -9,6 +9,7 @@ ms.sourcegitcommit: b467368cc350e6059fdc0949e042a41cb11e61d9
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/15/2017
+ms.locfileid: "26053801"
 ---
 <a name="migrations-in-team-environments"></a><span data-ttu-id="d81c0-102">Migrazioni in ambienti di Team</span><span class="sxs-lookup"><span data-stu-id="d81c0-102">Migrations in Team Environments</span></span>
 ===============================

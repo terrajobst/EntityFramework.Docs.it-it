@@ -9,6 +9,7 @@ ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 04/26/2018
+ms.locfileid: "31812664"
 ---
 # <a name="-reverse-engineering"></a><span data-ttu-id="81a1f-102">🔧 Esegui reverse Engineering</span><span class="sxs-lookup"><span data-stu-id="81a1f-102">🔧 Reverse Engineering</span></span>
 

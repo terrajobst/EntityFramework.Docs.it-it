@@ -11,6 +11,7 @@ ms.sourcegitcommit: 860ec5d047342fbc4063a0de881c9861cc1f8813
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/05/2017
+ms.locfileid: "26053501"
 ---
 # <a name="data-types"></a><span data-ttu-id="0172e-102">Riepilogo dei tipi di dati</span><span class="sxs-lookup"><span data-stu-id="0172e-102">Data Types</span></span>
 

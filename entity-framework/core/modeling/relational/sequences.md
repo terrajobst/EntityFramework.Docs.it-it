@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052711"
 ---
 # <a name="sequences"></a><span data-ttu-id="cea22-102">Sequenze</span><span class="sxs-lookup"><span data-stu-id="cea22-102">Sequences</span></span>
 

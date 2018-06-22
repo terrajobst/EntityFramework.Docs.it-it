@@ -14,6 +14,7 @@ ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 04/26/2018
+ms.locfileid: "31812534"
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a><span data-ttu-id="62201-104">Introduzione a EF Core nell'app console .NET Core con un nuovo database</span><span class="sxs-lookup"><span data-stu-id="62201-104">Getting Started with EF Core on .NET Core Console App with a New database</span></span>
 

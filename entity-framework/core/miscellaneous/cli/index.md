@@ -9,6 +9,7 @@ ms.sourcegitcommit: fc68321c211aca38f7b9dc3a75677c6ca1b2524b
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 03/08/2018
+ms.locfileid: "29769412"
 ---
 <a name="entity-framework-core-tools"></a><span data-ttu-id="d9d3f-102">Strumenti di Entity Framework Core</span><span class="sxs-lookup"><span data-stu-id="d9d3f-102">Entity Framework Core Tools</span></span>
 ===========================

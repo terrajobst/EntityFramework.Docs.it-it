@@ -11,6 +11,7 @@ ms.sourcegitcommit: 8f3be0a2a394253efb653388ec66bda964e5ee1b
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 03/05/2018
+ms.locfileid: "29745486"
 ---
 # <a name="concurrency-tokens"></a><span data-ttu-id="11202-102">Token di concorrenza</span><span class="sxs-lookup"><span data-stu-id="11202-102">Concurrency Tokens</span></span>
 

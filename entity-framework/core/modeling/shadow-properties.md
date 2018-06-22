@@ -1,5 +1,5 @@
 ---
-title: "Proprietà shadow - Core a Entity Framework"
+title: Proprietà shadow - Core a Entity Framework
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -11,6 +11,7 @@ ms.sourcegitcommit: 860ec5d047342fbc4063a0de881c9861cc1f8813
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/05/2017
+ms.locfileid: "26053551"
 ---
 # <a name="shadow-properties"></a><span data-ttu-id="ea15b-102">Nascondere le proprietà</span><span class="sxs-lookup"><span data-stu-id="ea15b-102">Shadow Properties</span></span>
 

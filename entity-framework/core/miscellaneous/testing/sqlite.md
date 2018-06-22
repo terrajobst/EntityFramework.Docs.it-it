@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052701"
 ---
 # <a name="testing-with-sqlite"></a><span data-ttu-id="e906d-102">Test con SQLite</span><span class="sxs-lookup"><span data-stu-id="e906d-102">Testing with SQLite</span></span>
 

@@ -11,6 +11,7 @@ ms.sourcegitcommit: 038acd91ce2f5a28d76dcd2eab72eeba225e366d
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 05/14/2018
+ms.locfileid: "34163174"
 ---
 # <a name="query-types"></a><span data-ttu-id="981db-102">Tipi di query</span><span class="sxs-lookup"><span data-stu-id="981db-102">Query Types</span></span>
 > [!NOTE]

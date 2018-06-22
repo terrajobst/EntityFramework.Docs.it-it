@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052731"
 ---
 # <a name="table-mapping"></a><span data-ttu-id="0158b-102">Mapping di tabella</span><span class="sxs-lookup"><span data-stu-id="0158b-102">Table Mapping</span></span>
 

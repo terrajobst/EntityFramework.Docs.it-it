@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052671"
 ---
 # <a name="maximum-length"></a><span data-ttu-id="5a477-102">Lunghezza massima</span><span class="sxs-lookup"><span data-stu-id="5a477-102">Maximum Length</span></span>
 
