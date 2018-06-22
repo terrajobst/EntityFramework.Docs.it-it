@@ -1,5 +1,5 @@
 ---
-title: "Novità di EF Core 2.0 - EF Core"
+title: Novità di EF Core 2.0 - EF Core
 author: divega
 ms.author: divega
 ms.date: 02/20/2018
@@ -11,6 +11,7 @@ ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 02/28/2018
+ms.locfileid: "29680022"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 

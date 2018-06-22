@@ -1,5 +1,5 @@
 ---
-title: "Migrazioni con più provider - Entity Framework Core"
+title: Migrazioni con più provider - Entity Framework Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/8/2017
@@ -9,6 +9,7 @@ ms.sourcegitcommit: 2ef0a4a90b01edd22b9206f8729b8de459ef8cab
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 03/20/2018
+ms.locfileid: "30002805"
 ---
 <a name="migrations-with-multiple-providers"></a>Migrazioni con più provider
 ==================================

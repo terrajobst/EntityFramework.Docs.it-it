@@ -11,6 +11,7 @@ ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 02/28/2018
+ms.locfileid: "29678627"
 ---
 # <a name="upgrading-from-ef-core-10-rc1-to-10-rc2"></a>L'aggiornamento da Entity Framework Core 1.0 RC1 a 1.0 RC2
 

@@ -1,5 +1,5 @@
 ---
-title: "Proprietà obbligatorie o facoltative - Core a Entity Framework"
+title: Proprietà obbligatorie o facoltative - Core a Entity Framework
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052851"
 ---
 # <a name="required-and-optional-properties"></a>Proprietà obbligatorie e facoltative
 

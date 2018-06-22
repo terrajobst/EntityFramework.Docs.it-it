@@ -9,6 +9,7 @@ ms.sourcegitcommit: b467368cc350e6059fdc0949e042a41cb11e61d9
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/15/2017
+ms.locfileid: "26049383"
 ---
 # <a name="managing-database-schemas"></a>Gestione di schemi di database
 EF Core offre due metodi principali per mantenere sincronizzati il modello di EF Core e lo schema di database. Per scegliere tra i due, decidere se il modello di EF Core o lo schema del database è l'origine di dati reali.

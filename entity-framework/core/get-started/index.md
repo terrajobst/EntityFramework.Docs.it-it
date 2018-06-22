@@ -11,6 +11,7 @@ ms.sourcegitcommit: d2434edbfa6fbcee7287e33b4915033b796e417e
 ms.translationtype: HT
 ms.contentlocale: it-IT
 ms.lasthandoff: 02/12/2018
+ms.locfileid: "29152403"
 ---
 # <a name="getting-started-with-entity-framework-core"></a>Introduzione a Entity Framework Core
 

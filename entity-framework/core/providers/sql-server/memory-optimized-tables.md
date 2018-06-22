@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052641"
 ---
 # <a name="memory-optimized-tables-support-in-sql-server-ef-core-database-provider"></a>Le tabelle con ottimizzazione per la memoria supportano nel Provider di Database di SQL Server EF Core
 

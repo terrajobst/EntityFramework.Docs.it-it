@@ -1,5 +1,5 @@
 ---
-title: "Tra cui & esclusione delle proprietà - Core a Entity Framework"
+title: Tra cui & esclusione delle proprietà - Core a Entity Framework
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
@@ -11,6 +11,7 @@ ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 10/27/2017
+ms.locfileid: "26052491"
 ---
 # <a name="including--excluding-properties"></a>Tra cui & esclusione delle proprietà
 

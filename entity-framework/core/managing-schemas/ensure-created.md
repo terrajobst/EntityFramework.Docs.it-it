@@ -1,5 +1,5 @@
 ---
-title: "Creare ed eliminare le API - Core a Entity Framework"
+title: "\U0001F527Creare ed eliminare le API - Core a Entity Framework"
 author: bricelam
 ms.author: bricelam
 ms.date: 11/10/2017
@@ -9,6 +9,7 @@ ms.sourcegitcommit: b467368cc350e6059fdc0949e042a41cb11e61d9
 ms.translationtype: MT
 ms.contentlocale: it-IT
 ms.lasthandoff: 11/15/2017
+ms.locfileid: "26053821"
 ---
 # <a name="-create-and-drop-apis"></a>🔧Creare ed eliminare le API
 
