@@ -6,18 +6,18 @@ ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 ms.technology: entity-framework-core
 uid: core/index
-ms.openlocfilehash: 3befcbd3ff3da5dd159e6e6cb5fe7140c81317c2
-ms.sourcegitcommit: a2b38dedc88ca3ccbfe7b1db9602ca02da8294cd
+ms.openlocfilehash: 103e5e069687950a8411f2d92c7b5a191844e0ae
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/31/2018
-ms.locfileid: "34686662"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37948990"
 ---
 # <a name="entity-framework-core-quick-overview"></a>Breve panoramica di Entity Framework Core
 
 Entity Framework (EF) Core è una versione semplice, estendibile e multipiattaforma della tecnologia di accesso dati Entity Framework più diffusa.
 
-Entity Framework Core può essere usato come mapper relazionale a oggetti (O/RM), consentendo agli sviluppatori .NET di utilizzare un database con oggetti .NET ed eliminando la necessità della maggior parte del codice di accesso ai dati che è in genere necessario scrivere. 
+Entity Framework Core può essere usato come mapper relazionale a oggetti (O/RM), consentendo agli sviluppatori .NET di utilizzare un database con oggetti .NET ed eliminando la necessità della maggior parte del codice di accesso ai dati che è in genere necessario scrivere.
 
 EF Core supporta molti motori di database. Per informazioni dettagliate, vedere [Provider di Database](providers/index.md).
 

@@ -6,12 +6,12 @@ ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 ms.technology: entity-framework-core
 uid: core/get-started/install/index
-ms.openlocfilehash: 31b96ebd0ae282b88be98988eff6263084dc5dd5
-ms.sourcegitcommit: 5e2d97e731f975cf3405ff3deab2a3c75ad1b969
+ms.openlocfilehash: 7bb2ee11940a4fd5736c7a23c16533ef53018f7b
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
-ms.locfileid: "26049243"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949192"
 ---
 # <a name="installing-ef-core"></a>Installazione di EF Core
 
@@ -53,7 +53,7 @@ Oltre alle librerie di runtime è possibile installare strumenti che semplifican
 Per sviluppare applicazioni associate a [.NET Core](https://www.microsoft.com/net/download/core) è possibile scegliere di usare i [comandi CLI](https://docs.microsoft.com/dotnet/core/tools/) `dotnet` in combinazione con l'editor di testo di preferenza oppure un ambiente di sviluppo integrato (IDE) come Visual Studio, Visual Studio per Mac o Visual Studio Code.
 
 > [!IMPORTANT]  
-> Le applicazioni associate a .NET Core richiedono versioni specifiche di Visual Studio. Ad esempio per lo sviluppo .NET Core 1.x è necessario Visual Studio 2017, mentre per lo sviluppo .NET Core 2.0 è necessario Visual Studio 2017 versione 15.3.
+> Le applicazioni destinate a .NET Core richiedono versioni specifiche di Visual Studio. Ad esempio, lo sviluppo per .NET Core 1.x richiede Visual Studio 2017, durante lo sviluppo per .NET Core 2.0 richiede Visual Studio 2017 versione 15.3.
 
 Per installare o aggiornare il provider SQL Server in un'applicazione .NET Core multipiattaforma, passare alla directory dell'applicazione ed eseguire le operazioni seguenti dalla riga di comando:
 
@@ -106,7 +106,7 @@ Esistono due modi per installare un provider di database EF Core nell'applicazio
   ```
 * In alternativa è possibile usare il comando `Update-Package` per aggiornare un pacchetto già installato a una versione più recente
 
-* Per indicare una versione specifica, usare il modificatore `-Version`. Ad esempio, per installare i pacchetti di EF Core 2.0, accodare `-Version 2.0.0` ai comandi
+* Per specificare una versione specifica, è possibile usare il modificatore `-Version`. Ad esempio, per installare i pacchetti di EF Core 2.0 aggiungere `-Version 2.0.0` ai comandi.
 
 #### <a name="tools"></a>Strumenti
 
