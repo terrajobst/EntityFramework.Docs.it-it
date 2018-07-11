@@ -9,14 +9,15 @@ ms.technology: entity-framework-6
 ms.topic: article
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
 caps.latest.revision: 3
-ms.openlocfilehash: 9ec7a83e8bdfde2f67b821bbe46dd688f64bc51d
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: 8bd5a5a420d741accd1167845575e23c09579ae1
+ms.sourcegitcommit: 390f3a37bc55105ed7cc5b0e0925b7f9c9e80ba6
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "37911635"
+ms.lasthandoff: 07/09/2018
+ms.locfileid: "37914297"
 ---
 # <a name="entity-framework-6-providers"></a>Provider di Entity Framework 6
+> [!NOTE]
 > **Solo EF6 e versioni successive**: funzionalità, API e altri argomenti discussi in questa pagina sono stati introdotti in Entity Framework 6. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
 
 Entity Framework viene ora sviluppato in base a una licenza open source e EF6 e versioni successive non faranno parte di .NET Framework. Questa novità offre molti vantaggi ma comporta anche la necessità di ricompilare i provider di Entity Framework in base agli assembly di EF6. I provider di Entity Framework per EF5 e versioni precedenti funzioneranno infatti con EF6 solo dopo che saranno stati ricompilati.
