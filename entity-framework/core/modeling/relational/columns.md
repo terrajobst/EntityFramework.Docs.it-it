@@ -1,32 +1,32 @@
 ---
-title: Mapping di colonna - Core EF
+title: Mapping colonne - EF Core
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 05a47de9-1078-488e-a823-b516a4208f33
 ms.technology: entity-framework-core
 uid: core/modeling/relational/columns
-ms.openlocfilehash: 697b966dbac892e332fe65feaa4dd11f00dd8298
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: ac3ab2ce3faa54eb8e862d01dcecb48cb0d1f811
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052901"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949411"
 ---
 # <a name="column-mapping"></a>Mapping di colonne
 
 > [!NOTE]  
-> La configurazione di questa sezione è applicabile a database relazionali in generale. I metodi di estensione qui verranno rese disponibili quando si installa un provider di database relazionali (a causa di condiviso *Microsoft.EntityFrameworkCore.Relational* pacchetto).
+> La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Mapping della colonna identifica i dati della colonna devono essere una query e salvati nel database.
+Mapping di colonne identifica quali dati di colonna devono essere una query e salvati nel database.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, ogni proprietà verrà configurato per eseguire il mapping a una colonna con lo stesso nome della proprietà.
+Per convenzione, ogni proprietà essere configurerà per eseguire il mapping a una colonna con lo stesso nome della proprietà.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-È possibile utilizzare le annotazioni dei dati per configurare la colonna a cui viene eseguito il mapping di una proprietà.
+È possibile usare le annotazioni dei dati per configurare la colonna a cui viene mappata una proprietà.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/DataAnnotations/Samples/Relational/Column.cs?highlight=3)] -->
 ``` csharp
@@ -38,9 +38,9 @@ public class Blog
 }
 ```
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
-Per configurare la colonna a cui viene eseguito il mapping di una proprietà, è possibile utilizzare l'API Fluent.
+È possibile usare l'API Fluent per configurare la colonna a cui viene mappata una proprietà.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Column.cs?highlight=7,8,9)] -->
 ``` csharp
