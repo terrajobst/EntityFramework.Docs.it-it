@@ -9,12 +9,12 @@ ms.technology: entity-framework-6
 ms.topic: article
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
 caps.latest.revision: 3
-ms.openlocfilehash: e06dc1c35f8d74772e5c7d69b29553288fd652d0
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: 8a656ca73a7e1a628f4053ff7ad47f5c1b17d878
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "37911725"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949179"
 ---
 # <a name="designer-code-generation-templates"></a>Modelli di generazione codice di Designer
 Quando si crea un modello usando Entity Framework Designer, le classi e il contesto derivato vengono generati automaticamente. Oltre alla generazione codice predefinita, sono anche disponibili diversi modelli che possono essere usati per personalizzare il codice generato. Si tratta di modelli di testo T4, che consentono di personalizzare i modelli, se necessario.
@@ -151,7 +151,7 @@ Selezionare la scheda **Online** quando si aggiunge il modello per scaricarlo da
 
 ### <a name="what-are-the-web-sites-templates"></a>Modelli per siti Web
 
-I modelli per siti Web (vale a dire **EF 5.x DbContext Generator per siti Web C\#** ) sono destinati all'uso in progetti di siti Web creati tramite **File -&gt; Nuovo -&gt; Sito Web...**. Sono diversi rispetto alle applicazioni Web create tramite il percorso **File -&gt; Nuovo -&gt; Progetto...** , in cui si usano i modelli standard. Vengono offerti modelli distinti in quanto il sistema di modelli di elemento in Visual Studio li richiede.
+I modelli per siti Web (ad esempio **EF 5.x DbContext Generator per siti Web C\#** ) sono destinati all'uso in progetti di siti Web creati tramite **File -&gt; Nuovo -&gt; Sito Web...**. Sono diversi rispetto alle applicazioni Web create tramite il percorso **File -&gt; Nuovo -&gt; Progetto...** , in cui si usano i modelli standard. Vengono offerti modelli distinti in quanto il sistema di modelli di elemento in Visual Studio li richiede.
 
 ## <a name="using-a-template"></a>Uso di un modello
 
