@@ -6,12 +6,12 @@ ms.date: 10/27/2016
 ms.assetid: 20A25111-AEBE-4BC2-83A5-3F651952DF72
 ms.technology: entity-framework-core
 uid: core/what-is-new/ef-core-1.0
-ms.openlocfilehash: e5b9e57a01ff302b1d7bd0fc5419aa5b8213865e
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: af7cf490ef2b04afb02461279fbe67c1c7fa3d95
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26049684"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949022"
 ---
 # <a name="features-included-in-ef-core-10"></a>Funzionalità incluse in EF Core 1.0
 
@@ -31,7 +31,7 @@ Compilano un modello iniziale basato sulla forma delle classi di entità.
 ### <a name="fluent-api"></a>API Fluent
 Consente di eseguire l'override del metodo `OnModelCreating` nel contesto per ulteriori configurazioni del modello individuato dalla convenzione.
 ### <a name="data-annotations"></a>Annotazioni dei dati
-Sono attributi che possono essere aggiunti alle classi/proprietà dell'entità e influenzeranno il modello di EF, ad esempio l'aggiunta di [Required] indicherà a EF che una proprietà è obbligatoria.
+Sono attributi che possono essere aggiunti alle classi/proprietà dell'entità e influenzeranno il modello di EF. Ad esempio, l'aggiunta di `[Required]` indicherà a EF che una proprietà è obbligatoria.
 ### <a name="relational-table-mapping"></a>Mapping tabella relazionale
 Consente di eseguire il mapping delle entità a tabelle/colonne.
 ### <a name="key-value-generation"></a>Generazione di valori di chiave
@@ -79,7 +79,7 @@ Consente di usare LINQ per recuperare i dati dal database.
 ### <a name="mixed-clientserver-evaluation"></a>Valutazione client/server mista
 Consente alle query di contenere la logica che non può essere valutata nel database e deve quindi essere valutata dopo che i dati sono stati recuperati nella memoria.
 ### <a name="notracking"></a>NoTracking
-Consente un'esecuzione più rapida delle query quando il contesto non deve monitorare le modifiche alle istanze delle entità, ad esempio quando i risultati sono di sola lettura.
+Consente un'esecuzione più rapida delle query quando il contesto non deve monitorare le modifiche alle istanze delle entità (utile quando i risultati sono di sola lettura).
 ### <a name="eager-loading"></a>Caricamento eager
 Fornisce i metodi `Include` e `ThenInclude` per identificare i dati correlati che devono anche essere recuperati durante le query.
 ### <a name="async-query"></a>Query asincrona

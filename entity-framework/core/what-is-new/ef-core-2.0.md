@@ -6,12 +6,12 @@ ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 ms.technology: entity-framework-core
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 02d0b6fe2956e819e08e08c9a0658008abd36c34
-ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
+ms.openlocfilehash: 538458cf49ee86b9a5cba2f606adc04e583605e2
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
-ms.locfileid: "29680022"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949127"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -93,7 +93,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
-Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità ```Post```. Si noti l'uso di una proprietà a livello di istanza DbContext: ```TenantId```. I filtri a livello di modello useranno il valore dell'istanza di contesto corretta, ovvero quella che sta eseguendo la query.
+Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità ```Post```. Si noti l'uso di una proprietà a livello di istanza DbContext: ```TenantId```. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
 
 È possibile disabilitare i filtri per le singole query LINQ usando l'operatore IgnoreQueryFilters().
 
@@ -134,7 +134,7 @@ Si noti che:
 
 - Per convenzione, durante la generazione di SQL, il nome del metodo viene usato come nome di una funzione (in questo caso una funzione definita dall'utente), ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
 - Attualmente sono supportate solo le funzioni scalari.
-- È necessario creare la funzione mappata nel database. Durante le migrazioni EF Core non viene infatti creata.
+- È necessario creare la funzione mappata nel database. La funzione non viene creata dalle migrazioni EF Core.
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Configurazione dei tipi completa per Code First
 
@@ -259,7 +259,7 @@ WHERE ""City"" = @p0
 ``` csharp
 var aCustomers =
     from c in context.Customers
-    where EF.Functions.Like(c.Name, "a%");
+    where EF.Functions.Like(c.Name, "a%")
     select c;
 ```
 

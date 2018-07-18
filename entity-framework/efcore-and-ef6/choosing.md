@@ -5,12 +5,12 @@ ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 288f825b-b3e6-4096-971b-d0a1cb96770e
 uid: efcore-and-ef6/choosing
-ms.openlocfilehash: f0a632902384a65ea3cddf752ad262c7a2e89e2e
-ms.sourcegitcommit: 2ef0a4a90b01edd22b9206f8729b8de459ef8cab
+ms.openlocfilehash: 17c81e0d6c384c06e45f0cf4f338d4ba402788e1
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/20/2018
-ms.locfileid: "30002821"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37949140"
 ---
 # <a name="ef-core-and-ef6-which-one-is-right-for-you"></a>Come scegliere tra EF Core ed EF6
 
@@ -20,7 +20,7 @@ Le informazioni seguenti consentono di scegliere tra Entity Framework Core ed En
 
 Può essere utile usare EF Core per le nuove applicazioni per avere a disposizione tutte le funzionalità di EF Core e quando l'applicazione non richiede funzionalità che non sono state ancora implementate in EF Core.
 
-EF6 richiede .NET Framework 4.0 o versione successiva ed è supportato solo in Windows (non può essere eseguito in .NET Core e non è supportato in altri sistemi operativi), ma rappresenta ancora una valida scelta per le nuove applicazioni a condizione che tali vincoli siano accettabili e l'applicazione non richieda nuove funzionalità in EF Core non disponibili per EF6.
+EF6 richiede .NET Framework 4.0 o versione successiva ed è supportato solo in Windows (ovvero EF6 non può essere eseguito in .NET Core e non è supportato in altri sistemi operativi), ma rappresenta ancora una valida scelta per le nuove applicazioni a condizione che tali vincoli siano accettabili e l'applicazione non richieda nuove funzionalità in EF Core non disponibili per EF6.
 
 Per verificare se EF Core può essere una scelta adatta per la propria applicazione, vedere [Confronto delle funzionalità](features.md).
 

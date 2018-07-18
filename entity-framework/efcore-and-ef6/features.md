@@ -1,15 +1,16 @@
 ---
-title: "Confronto delle singole funzionalità disponibili in EF Core ed EF6"
+title: Confronto delle singole funzionalità disponibili in EF Core ed EF6
 author: rowanmiller
 ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: f22f29ef-efc0-475d-b0b2-12a054f80f95
 uid: efcore-and-ef6/features
-ms.openlocfilehash: 3f05fbe53439826a4e1e1b188a7c03951dc109ec
-ms.sourcegitcommit: b2d94cebdc32edad4fecb07e53fece66437d1b04
+ms.openlocfilehash: 84b40f03cdab27fd6fc68c5bb65c6e3d238f226a
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/28/2018
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "37967138"
 ---
 # <a name="ef-core-and-ef6-feature-by-feature-comparison"></a>Confronto delle singole funzionalità disponibili in EF Core ed EF6
 
@@ -60,10 +61,10 @@ La colonna EF Core contiene il numero della versione del prodotto in cui la funz
 | Caricamento dei dati correlati: lazy                            | Yes      | 2.1                                   |
 | Caricamento dei dati correlati: esplicito                        | Yes      | 1.1                                   |
 | Query SQL non elaborate: tipi di entità                         | Yes      | 1.0                                   |
-| Query SQL non elaborate: tipi non di entità (ad esempio, tipi di query)  | Yes      | 2.1                                   |
+| Query SQL non elaborate: tipi non di entità (ad esempio, tipi di query)       | Yes      | 2.1                                   |
 | Query SQL non elaborate: composizione con LINQ                  |          | 1.0                                   |
 | Query compilate in modo esplicito                           | Poor     | 2.0                                   |
-| Linguaggio di query basato su testo (ad esempio Entity SQL)           | 1.0      |                                       |
+| Linguaggio di query basato su testo (Entity SQL)                | Yes      |                                       |
 |                                                       |          |                                       |
 | **Salvataggio di dati**                                       | **EF6**  | **EF Core**                           |
 | Rilevamento modifiche: snapshot                             | Yes      | 1.0                                   |
@@ -83,7 +84,7 @@ La colonna EF Core contiene il numero della versione del prodotto in cui la funz
 | Dati del valore di inizializzazione                                             | Yes      | 2.1                                   |
 | Resilienza della connessione                                 | Yes      | 1.1                                   |
 | Hook del ciclo di vita (eventi, intercettazione)                | Yes      |                                       |
-| Registrazione semplice (ad esempio Database.Log)                    | Yes      |                                       |
+| Registrazione semplice (Database.Log)                         | Yes      |                                       |
 | Pooling DbContext                                     |          | 2.0                                   |
 |                                                       |          |                                       |
 | **Provider di database**                                | **EF6**  | **EF Core**                           |
