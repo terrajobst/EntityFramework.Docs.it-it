@@ -6,12 +6,12 @@ ms.date: 2/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 ms.technology: entity-framework-core
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: 44cbbc965755a694772dc4336ca2c1efc51fd6cd
-ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
+ms.openlocfilehash: 660e2a9787b0a6d2544da785827caa20d51626c1
+ms.sourcegitcommit: 00cb52625b57c1ea339ded1454179fe89b6bcfea
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/10/2018
-ms.locfileid: "37949231"
+ms.lasthandoff: 07/16/2018
+ms.locfileid: "39067560"
 ---
 # <a name="new-features-in-ef-core-21"></a>Nuove funzionalità di EF Core 2.1
 
@@ -105,7 +105,7 @@ Leggere la [sezione su System.Transactions](xref:core/saving/transactions#using-
 In base ai suggerimenti dei clienti, sono state aggiornate le migrazioni per generare inizialmente le colonne per le tabelle nello stesso ordine con cui sono dichiarate le proprietà nelle classi. Si noti che EF Core non può modificare l'ordine quando vengono aggiunti nuovi membri dopo la creazione iniziale delle tabelle.
 
 ## <a name="optimization-of-correlated-subqueries"></a>Ottimizzazione di sottoquery correlate
-È stata migliorata la conversione di query per evitare l'esecuzione di "N + 1" query SQL in molti scenari comuni in cui l'utilizzo di una proprietà di navigazione nella proiezione comporta il join dei dati dalla query radice con i dati da una sottoquery correlata. L'ottimizzazione richiede la memorizzazione nel buffer dei risultati dalla sottoquery ed è necessario modificare la query per acconsentire esplicitamente al nuovo comportamento.
+È stata migliorata la conversione di query per evitare l'esecuzione di "N + 1" query SQL in molti scenari comuni in cui l'utilizzo di una proprietà di navigazione nella proiezione comporta il join dei dati dalla query radice con i dati da una sottoquery correlata. L'ottimizzazione richiede la memorizzazione nel buffer dei risultati della sottoquery ed è necessario modificare la query per acconsentire esplicitamente al nuovo comportamento.
 
 Ad esempio, la query seguente viene in genere convertita in un'unica query per Customers, oltre a N (dove "N" è il numero di clienti restituito) query separate per Orders:
 
