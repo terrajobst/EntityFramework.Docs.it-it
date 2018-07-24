@@ -6,12 +6,12 @@ ms.date: 2/26/2018
 ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
 ms.technology: entity-framework-core
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 476a1dcaadcd99eba0cd4f5f0ac40c32a97af5c9
-ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
+ms.openlocfilehash: 3eb7480625db4ebc3ce0b7a18d042139f888dab8
+ms.sourcegitcommit: 0935ff275ae739243297f5b97eb21414398125c6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/10/2018
-ms.locfileid: "37949427"
+ms.lasthandoff: 07/23/2018
+ms.locfileid: "39201893"
 ---
 # <a name="owned-entity-types"></a>Tipi di entità di proprietà
 
@@ -70,7 +70,7 @@ public class Order
 
 In EF Core 2.0 e 2.1, solo le proprietà di navigazione di riferimento possono puntare a tipi di proprietà. Raccolte di tipi di proprietà non sono supportate. Questi riferimenti di proprietà tipi hanno sempre una relazione uno a uno con il proprietario, pertanto non necessitano i propri valori di chiave. Nell'esempio precedente, il tipo StreetAddress non necessario definire una proprietà chiave.  
 
-Per comprendere come EF Core controlla questi oggetti, è utile sapere che una chiave primaria viene creata come un [proprietà shadow](xref:core/modeling/shadow-properties) per il tipo di proprietà. Il valore della chiave di un'istanza del tipo di proprietà sarà identico al valore della chiave dell'istanza del proprietario.      
+Per comprendere come EF Core controlla questi oggetti, è utile pensare che una chiave primaria viene creata come un [proprietà shadow](xref:core/modeling/shadow-properties) per il tipo di proprietà. Il valore della chiave di un'istanza del tipo di proprietà sarà identico al valore della chiave dell'istanza del proprietario.      
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>Mapping dei tipi con la suddivisione di tabelle di proprietà
 

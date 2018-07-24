@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 10/27/2017
 ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: 7c16017d3b97d115841050fe6ac0fdbeb5e71d94
-ms.sourcegitcommit: 00cb52625b57c1ea339ded1454179fe89b6bcfea
+ms.openlocfilehash: 648ca990252fb32d8cf181a7ae672d07a81f56bb
+ms.sourcegitcommit: 0935ff275ae739243297f5b97eb21414398125c6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/16/2018
-ms.locfileid: "39067531"
+ms.lasthandoff: 07/23/2018
+ms.locfileid: "39201919"
 ---
 <a name="design-time-dbcontext-creation"></a>Creazione DbContext in fase di progettazione
 ==============================
@@ -27,7 +27,7 @@ Lo strumento tenta innanzitutto di ottenere il provider di servizi richiamando `
 > [!NOTE]
 > Quando si crea una nuova applicazione ASP.NET Core 2.0, questo hook è incluso per impostazione predefinita. Nelle versioni precedenti di EF Core e ASP.NET Core, strumenti di provano a richiamare `Startup.ConfigureServices` direttamente per ottenere il provider di servizi dell'applicazione, ma questo modello non sono più funzioni correttamente nelle applicazioni ASP.NET Core 2.0. Se si esegue l'aggiornamento di un'applicazione di ASP.NET Core 1.x a 2.0, è possibile [modificare il `Program` classe seguire il nuovo modello][3].
 
-Il `DbContext` se stesso e tutte le dipendenze nel costruttore devono essere registrati come servizi in provider di servizi dell'applicazione. Ciò può essere ottenuta facilmente facendo in modo che [costruttore sul `DbContext` che accetta un'istanza di `DbContextOptions<TContext>` come argomento] [ 4] e l'uso di [ `AddDbContext<TContext>` (metodo)] [5].
+Il `DbContext` se stesso e tutte le dipendenze nel costruttore devono essere registrati come servizi in provider di servizi dell'applicazione. Ciò può essere ottenuta facilmente facendo in modo che [costruttore sulla `DbContext` che accetta un'istanza di `DbContextOptions<TContext>` come argomento] [ 4] e l'uso di [ `AddDbContext<TContext>` (metodo)] [5].
 
 <a name="using-a-constructor-with-no-parameters"></a>Usando un costruttore senza parametri
 --------------------------------------
