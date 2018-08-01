@@ -6,12 +6,12 @@ ms.date: 2/23/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 ms.technology: entity-framework-core
 uid: core/providers/index
-ms.openlocfilehash: 6f058698f78c787fc6c313486874b0af2183f97a
-ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
+ms.openlocfilehash: f51304a20bab2c80d2d546fc4685da0fa28d5f92
+ms.sourcegitcommit: 5c2634c546720902fe01935f4fc031d73aa3ebde
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/10/2018
-ms.locfileid: "37949316"
+ms.lasthandoff: 08/01/2018
+ms.locfileid: "39393750"
 ---
 # <a name="database-providers"></a>Provider di database
 
@@ -53,7 +53,7 @@ Entity Framework Core può accedere a molti database diversi tramite librerie pl
 Il team di Oracle .NET ha annunciato che prevede di rilasciare un provider di proprietà per EF Core 2.0 più o meno nel terzo trimestre del 2018. Per altre informazioni, vedere la [dichiarazione di intenti per .NET Core ed Entity Framework Core](http://www.oracle.com/technetwork/topics/dotnet/tech-info/odpnet-dotnet-ef-core-sod-4395108.pdf).
 Inviare domande sul provider, incluse le date di rilascio, al [sito della community di Oracle](https://community.oracle.com/).
 
-Nel frattempo, il team di EF ha prodotto un [provider EF Core di esempio per i database Oracle](https://github.com/aspnet/EntityFrameworkCore/blob/dev/samples/OracleProvider/README.md). Lo scopo del progetto non è produrre un provider di EF Core di proprietà di Microsoft, ma consentire di identificare le eventuali lacune nelle funzionalità di base e relazionali di EF Core che occorre affrontare per migliorare il supporto per Oracle e promuovere lo sviluppo di altri provider Oracle per EF Core da parte di Oracle o di terze parti.
+Nel frattempo, il team di EF ha prodotto un [provider EF Core di esempio per i database Oracle](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/OracleProvider). Lo scopo del progetto non è produrre un provider di EF Core di proprietà di Microsoft, ma consentire di identificare le eventuali lacune nelle funzionalità di base e relazionali di EF Core che occorre affrontare per migliorare il supporto per Oracle e promuovere lo sviluppo di altri provider Oracle per EF Core da parte di Oracle o di terze parti.
 
 Verranno presi in considerazione tutti i contributi che consentono di migliorare l'implementazione di esempio. Microsoft desidera anche sostenere un impegno da parte della community per la creazione di un provider Oracle open source per EF Core, usando l'esempio come punto di partenza.
 
