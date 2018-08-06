@@ -6,12 +6,12 @@ ms.date: 10/27/2016
 ms.assetid: a29a3d97-b2d8-4d33-9475-40ac67b3b2c6
 ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/existing-db
-ms.openlocfilehash: 3cd69109e3cf8dbc103f9eea6e2553df17f29a98
-ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
+ms.openlocfilehash: 39e77ab8c124df67458cc5fa6db2882b65943ebe
+ms.sourcegitcommit: 4467032fd6ca223e5965b59912d74cf88a1dd77f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/26/2018
-ms.locfileid: "31812625"
+ms.lasthandoff: 08/01/2018
+ms.locfileid: "39388468"
 ---
 # <a name="getting-started-with-ef-core-on-net-framework-with-an-existing-database"></a>Introduzione a EF Core in .NET Framework con un database esistente
 
@@ -24,7 +24,7 @@ In questa procedura dettagliata verrà compilata un'applicazione console che ese
 
 Per completare la procedura dettagliata, sono necessari i prerequisiti seguenti:
 
-* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
+* [Visual Studio 2017](https://www.visualstudio.com/downloads/): almeno versione 15.3
 
 * [Versione più recente di Gestione pacchetti NuGet](https://dist.nuget.org/index.html)
 
@@ -69,7 +69,7 @@ Questa esercitazione usa un database **Blogging** nell'istanza di LocalDb come d
 
 * Selezionare il modello di progetto **Applicazione console**
 
-* Assicurarsi di specificare come destinazione **.NET Framework 4.5.1** o versione successiva
+* Assicurarsi di specificare come destinazione **.NET Framework 4.6.1** o versione successiva
 
 * Specificare un nome per il progetto e fare clic su **OK**
 
