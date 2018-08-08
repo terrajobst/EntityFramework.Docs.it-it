@@ -988,7 +988,7 @@ Nell'esempio seguente si basa sul modello School e viene illustrato il **InsertF
 
 Il **Mapping** elemento in specifica linguaggio MSL (mapping) contiene informazioni per il mapping tra gli oggetti definiti in un modello concettuale a un database (come descritto in un modello di archiviazione). Per altre informazioni, vedere Specifica CSDL e SSDL Specification.
 
-Il **Mapping** è l'elemento radice per una specifica di mapping. Lo spazio dei nomi XML per il mapping di specifiche http://schemas.microsoft.com/ado/2009/11/mapping/cs.
+Il **Mapping** è l'elemento radice per una specifica di mapping. Lo spazio dei nomi XML per il mapping di specifiche http://schemas.microsoft.com/ado/2009/11/mapping/cs .
 
 L'elemento Mapping può includere i seguenti elementi figlio (nell'ordine elencato):
 
