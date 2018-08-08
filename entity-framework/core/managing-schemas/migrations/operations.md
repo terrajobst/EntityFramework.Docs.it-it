@@ -1,30 +1,30 @@
 ---
-title: Operazioni di migrazioni personalizzato - Core EF
+title: Operazioni personalizzate migrazioni - Entity Framework Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/7/2017
 ms.technology: entity-framework-core
-ms.openlocfilehash: 84d80175e719c950844b13688e1a4992614f25d8
-ms.sourcegitcommit: 038acd91ce2f5a28d76dcd2eab72eeba225e366d
+ms.openlocfilehash: 510d585534b4809179c905ee5b77cab4209a2b8f
+ms.sourcegitcommit: 902257be9c63c427dc793750a2b827d6feb8e38c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/14/2018
-ms.locfileid: "34163142"
+ms.lasthandoff: 08/07/2018
+ms.locfileid: "39614285"
 ---
-<a name="custom-migrations-operations"></a>Operazioni di migrazione personalizzata
+<a name="custom-migrations-operations"></a>Operazioni di migrazioni personalizzato
 ============================
-L'API MigrationBuilder consente di eseguire molti tipi diversi di operazioni durante una migrazione, ma è lontano dal completo. Tuttavia, l'API può anche essere estesa che consente di definire operazioni personalizzate. Esistono due modi per estendere l'API: utilizzando il `Sql()` metodo, o definendo personalizzato `MigrationOperation` oggetti.
+L'API MigrationBuilder consente di eseguire molti tipi diversi di operazioni durante una migrazione, ma è lungi dall'essere completo. Tuttavia, l'API è anche estendibile che consente di definire le proprie operazioni. Esistono due modi per estendere l'API: usando il `Sql()` metodo, o definendo personalizzato `MigrationOperation` oggetti.
 
-Per illustrare, esaminiamo l'implementazione di un'operazione che crea un utente del database utilizzando ciascun approccio. Il nostro delle migrazioni, si vuole abilitare la scrittura di codice riportato di seguito:
+Per illustrare questo concetto, esaminiamo l'implementazione di un'operazione che crea un utente del database usando ogni approccio. Nel nostro le migrazioni, è necessario abilitare la scrittura di codice seguente:
 
 ``` csharp
 migrationBuilder.CreateUser("SQLUser1", "Password");
 ```
 
-<a name="using-migrationbuildersql"></a>Utilizzando MigrationBuilder.Sql()
+<a name="using-migrationbuildersql"></a>Usando MigrationBuilder.Sql()
 ----------------------------
 Il modo più semplice per implementare un'operazione personalizzata consiste nel definire un metodo di estensione che chiama `MigrationBuilder.Sql()`.
-Di seguito è riportato un esempio che genera l'istruzione Transact-SQL appropriato.
+Ecco un esempio che genera l'istruzione Transact-SQL appropriato.
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -34,7 +34,7 @@ static MigrationBuilder CreateUser(
     => migrationBuilder.Sql($"CREATE USER {name} WITH PASSWORD '{password}';");
 ```
 
-Se le migrazioni necessario supportare più provider di database, è possibile utilizzare il `MigrationBuilder.ActiveProvider` proprietà. Di seguito è riportato un esempio che supporta Microsoft SQL Server e PostgreSQL.
+Se le migrazioni devono supportare più provider di database, è possibile usare il `MigrationBuilder.ActiveProvider` proprietà. Di seguito è riportato un esempio che supportano Microsoft SQL Server e PostgreSQL.
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -52,14 +52,16 @@ static MigrationBuilder CreateUser(
             return migrationBuilder
                 .Sql($"CREATE USER {name} WITH PASSWORD = '{password}';");
     }
+
+    return migrationBuilder;
 }
 ```
 
-Questo approccio funziona solo se si conoscono tutti i provider in cui verrà applicato l'operazione personalizzata.
+Questo approccio funziona solo se si conosce ogni provider in cui verrà applicato l'operazione personalizzata.
 
-<a name="using-a-migrationoperation"></a>Utilizzando un MigrationOperation
+<a name="using-a-migrationoperation"></a>Usando un MigrationOperation
 ---------------------------
-Per separare l'operazione personalizzata da SQL, è possibile definirne di propri `MigrationOperation` per rappresentarlo. L'operazione viene quindi passato al provider, pertanto può determinare per generare SQL appropriato.
+Per separare l'operazione personalizzata da SQL, è possibile definire il proprio `MigrationOperation` per rappresentarlo. L'operazione viene quindi passato al provider e può pertanto determinare per generare SQL appropriato.
 
 ``` csharp
 class CreateUserOperation : MigrationOperation
@@ -69,7 +71,7 @@ class CreateUserOperation : MigrationOperation
 }
 ```
 
-Con questo approccio, il metodo di estensione deve semplicemente una di queste operazioni per aggiungere `MigrationBuilder.Operations`.
+Con questo approccio, il metodo di estensione deve semplicemente aggiungere una di queste operazioni per `MigrationBuilder.Operations`.
 
 ``` csharp
 static MigrationBuilder CreateUser(
@@ -88,7 +90,7 @@ static MigrationBuilder CreateUser(
 }
 ```
 
-Questo approccio richiede che ogni provider imparare a generare SQL per questa operazione nella loro `IMigrationsSqlGenerator` servizio. Di seguito è riportato un esempio si esegue l'override del generatore di SQL Server per gestire la nuova operazione.
+Questo approccio richiede che ogni provider sapere come generare SQL per questa operazione nella loro `IMigrationsSqlGenerator` servizio. Di seguito è riportato un esempio si esegue l'override del generatore di SQL Server per gestire la nuova operazione.
 
 ``` csharp
 class MyMigrationsSqlGenerator : SqlServerMigrationsSqlGenerator
