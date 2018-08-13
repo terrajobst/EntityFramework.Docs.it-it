@@ -2,164 +2,100 @@
 title: Introduzione a .NET Framework - Nuovo database - EF Core
 author: rowanmiller
 ms.author: divega
-ms.date: 10/27/2016
+ms.date: 08/06/2018
 ms.assetid: 52b69727-ded9-4a7b-b8d5-73f3acfbbad3
 ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/new-db
-ms.openlocfilehash: bd7054c6834ae11bfdc352d63654e4304771e432
-ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
+ms.openlocfilehash: 088ac915041489242eb8090e7bf3a2bdc8036534
+ms.sourcegitcommit: 902257be9c63c427dc793750a2b827d6feb8e38c
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/26/2018
-ms.locfileid: "31812521"
+ms.lasthandoff: 08/07/2018
+ms.locfileid: "39614428"
 ---
-# <a name="getting-started-with-ef-core-on-net-framework-with-a-new-database"></a><span data-ttu-id="ab70f-102">Introduzione a EF Core in .NET Framework con un nuovo database</span><span class="sxs-lookup"><span data-stu-id="ab70f-102">Getting started with EF Core on .NET Framework with a New Database</span></span>
+# <a name="getting-started-with-ef-core-on-net-framework-with-a-new-database"></a><span data-ttu-id="c01d2-102">Introduzione a EF Core in .NET Framework con un nuovo database</span><span class="sxs-lookup"><span data-stu-id="c01d2-102">Getting started with EF Core on .NET Framework with a New Database</span></span>
 
-<span data-ttu-id="ab70f-103">In questa procedura dettagliata verrà compilata un'applicazione console che esegue l'accesso ai dati di base in un database Microsoft SQL Server usando Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="ab70f-103">In this walkthrough, you will build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework.</span></span> <span data-ttu-id="ab70f-104">Si useranno le migrazioni per creare il database dal modello.</span><span class="sxs-lookup"><span data-stu-id="ab70f-104">You will use migrations to create the database from your model.</span></span>
+<span data-ttu-id="c01d2-103">In questa esercitazione verrà creata un'applicazione console che esegue l'accesso ai dati di base in un database di Microsoft SQL Server usando Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="c01d2-103">In this tutorial, you build a console application that performs basic data access against a Microsoft SQL Server database using Entity Framework.</span></span> <span data-ttu-id="c01d2-104">Vengono usate le migrazioni per creare il database da un modello.</span><span class="sxs-lookup"><span data-stu-id="c01d2-104">You use migrations to create the database from a model.</span></span>
 
-> [!TIP]  
-> <span data-ttu-id="ab70f-105">È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) di questo articolo in GitHub.</span><span class="sxs-lookup"><span data-stu-id="ab70f-105">You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) on GitHub.</span></span>
+<span data-ttu-id="c01d2-105">[Visualizzare l'esempio di questo articolo su GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb).</span><span class="sxs-lookup"><span data-stu-id="c01d2-105">[View this article's sample on GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb).</span></span>
 
-## <a name="prerequisites"></a><span data-ttu-id="ab70f-106">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="ab70f-106">Prerequisites</span></span>
+## <a name="prerequisites"></a><span data-ttu-id="c01d2-106">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="c01d2-106">Prerequisites</span></span>
 
-<span data-ttu-id="ab70f-107">Per completare la procedura dettagliata, sono necessari i prerequisiti seguenti:</span><span class="sxs-lookup"><span data-stu-id="ab70f-107">The following prerequisites are needed to complete this walkthrough:</span></span>
+* [<span data-ttu-id="c01d2-107">Visual Studio 2017 versione 15.7 o successive</span><span class="sxs-lookup"><span data-stu-id="c01d2-107">Visual Studio 2017 version 15.7 or later</span></span>](https://www.visualstudio.com/downloads/)
 
-* [<span data-ttu-id="ab70f-108">Visual Studio 2017</span><span class="sxs-lookup"><span data-stu-id="ab70f-108">Visual Studio 2017</span></span>](https://www.visualstudio.com/downloads/)
+## <a name="create-a-new-project"></a><span data-ttu-id="c01d2-108">Creare un nuovo progetto</span><span class="sxs-lookup"><span data-stu-id="c01d2-108">Create a new project</span></span>
 
-* [<span data-ttu-id="ab70f-109">Versione più recente di Gestione pacchetti NuGet</span><span class="sxs-lookup"><span data-stu-id="ab70f-109">Latest version of NuGet Package Manager</span></span>](https://dist.nuget.org/index.html)
+* <span data-ttu-id="c01d2-109">Aprire Visual Studio 2017</span><span class="sxs-lookup"><span data-stu-id="c01d2-109">Open Visual Studio 2017</span></span>
 
-* [<span data-ttu-id="ab70f-110">Versione più recente di Windows PowerShell</span><span class="sxs-lookup"><span data-stu-id="ab70f-110">Latest version of Windows PowerShell</span></span>](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
+* <span data-ttu-id="c01d2-110">**File > Nuovo > Progetto**</span><span class="sxs-lookup"><span data-stu-id="c01d2-110">**File > New > Project...**</span></span>
 
-## <a name="create-a-new-project"></a><span data-ttu-id="ab70f-111">Creare un nuovo progetto</span><span class="sxs-lookup"><span data-stu-id="ab70f-111">Create a new project</span></span>
+* <span data-ttu-id="c01d2-111">Scegliere **Installati > Visual C# > Desktop Windows** dal menu a sinistra</span><span class="sxs-lookup"><span data-stu-id="c01d2-111">From the left menu select **Installed > Visual C# > Windows Desktop**</span></span>
 
-* <span data-ttu-id="ab70f-112">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="ab70f-112">Open Visual Studio</span></span>
+* <span data-ttu-id="c01d2-112">Selezionare il modello di progetto **App console (.NET Framework)**</span><span class="sxs-lookup"><span data-stu-id="c01d2-112">Select the **Console App (.NET Framework)** project template</span></span>
 
-* <span data-ttu-id="ab70f-113">File > Nuovo > Progetto</span><span class="sxs-lookup"><span data-stu-id="ab70f-113">File > New > Project...</span></span>
+* <span data-ttu-id="c01d2-113">Assicurarsi che il progetto sia destinato a **.NET Framework 4.6.1** o versione successiva</span><span class="sxs-lookup"><span data-stu-id="c01d2-113">Make sure that the project targets **.NET Framework 4.6.1** or later</span></span>
 
-* <span data-ttu-id="ab70f-114">Scegliere Modelli > Visual C# > Desktop classico di Windows dal menu a sinistra</span><span class="sxs-lookup"><span data-stu-id="ab70f-114">From the left menu select Templates > Visual C# > Windows Classic Desktop</span></span>
+* <span data-ttu-id="c01d2-114">Denominare il progetto *ConsoleApp.NewDb* e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="c01d2-114">Name the project *ConsoleApp.NewDb* and click **OK**</span></span>
 
-* <span data-ttu-id="ab70f-115">Selezionare il modello di progetto **App console (.NET Framework)**</span><span class="sxs-lookup"><span data-stu-id="ab70f-115">Select the **Console App (.NET Framework)** project template</span></span>
+## <a name="install-entity-framework"></a><span data-ttu-id="c01d2-115">Installare Entity Framework</span><span class="sxs-lookup"><span data-stu-id="c01d2-115">Install Entity Framework</span></span>
 
-* <span data-ttu-id="ab70f-116">Assicurarsi di specificare come destinazione **.NET Framework 4.5.1** o versione successiva</span><span class="sxs-lookup"><span data-stu-id="ab70f-116">Ensure you are targeting **.NET Framework 4.5.1** or later</span></span>
+<span data-ttu-id="c01d2-116">Per usare EF Core, installare il pacchetto per i provider di database che si vuole specificare come destinazione.</span><span class="sxs-lookup"><span data-stu-id="c01d2-116">To use EF Core, install the package for the database provider(s) you want to target.</span></span> <span data-ttu-id="c01d2-117">Questa esercitazione usa SQL Server.</span><span class="sxs-lookup"><span data-stu-id="c01d2-117">This tutorial uses SQL Server.</span></span> <span data-ttu-id="c01d2-118">Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md).</span><span class="sxs-lookup"><span data-stu-id="c01d2-118">For a list of available providers see [Database Providers](../../providers/index.md).</span></span>
 
-* <span data-ttu-id="ab70f-117">Specificare un nome per il progetto e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="ab70f-117">Give the project a name and click **OK**</span></span>
+* <span data-ttu-id="c01d2-119">Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti</span><span class="sxs-lookup"><span data-stu-id="c01d2-119">Tools > NuGet Package Manager > Package Manager Console</span></span>
 
-## <a name="install-entity-framework"></a><span data-ttu-id="ab70f-118">Installare Entity Framework</span><span class="sxs-lookup"><span data-stu-id="ab70f-118">Install Entity Framework</span></span>
+* <span data-ttu-id="c01d2-120">Eseguire `Install-Package Microsoft.EntityFrameworkCore.SqlServer`</span><span class="sxs-lookup"><span data-stu-id="c01d2-120">Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`</span></span>
 
-<span data-ttu-id="ab70f-119">Per usare EF Core, installare il pacchetto per i provider di database che si vuole specificare come destinazione.</span><span class="sxs-lookup"><span data-stu-id="ab70f-119">To use EF Core, install the package for the database provider(s) you want to target.</span></span> <span data-ttu-id="ab70f-120">Questa procedura dettagliata usa SQL Server.</span><span class="sxs-lookup"><span data-stu-id="ab70f-120">This walkthrough uses SQL Server.</span></span> <span data-ttu-id="ab70f-121">Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md).</span><span class="sxs-lookup"><span data-stu-id="ab70f-121">For a list of available providers see [Database Providers](../../providers/index.md).</span></span>
+<span data-ttu-id="c01d2-121">Più avanti in questa esercitazione si useranno alcuni degli strumenti in Entity Framework Tools per gestire il database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-121">Later in this tutorial you use some Entity Framework Tools to maintain the database.</span></span> <span data-ttu-id="c01d2-122">Installare quindi anche il pacchetto degli strumenti.</span><span class="sxs-lookup"><span data-stu-id="c01d2-122">So install the tools package as well.</span></span>
 
-* <span data-ttu-id="ab70f-122">Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti</span><span class="sxs-lookup"><span data-stu-id="ab70f-122">Tools > NuGet Package Manager > Package Manager Console</span></span>
+* <span data-ttu-id="c01d2-123">Eseguire `Install-Package Microsoft.EntityFrameworkCore.Tools`</span><span class="sxs-lookup"><span data-stu-id="c01d2-123">Run `Install-Package Microsoft.EntityFrameworkCore.Tools`</span></span>
 
-* <span data-ttu-id="ab70f-123">Eseguire `Install-Package Microsoft.EntityFrameworkCore.SqlServer`</span><span class="sxs-lookup"><span data-stu-id="ab70f-123">Run `Install-Package Microsoft.EntityFrameworkCore.SqlServer`</span></span>
+## <a name="create-the-model"></a><span data-ttu-id="c01d2-124">Creare il modello</span><span class="sxs-lookup"><span data-stu-id="c01d2-124">Create the model</span></span>
 
-<span data-ttu-id="ab70f-124">Più avanti in questa procedura dettagliata verrà anche usato Entity Framework Tools per gestire il database,</span><span class="sxs-lookup"><span data-stu-id="ab70f-124">Later in this walkthrough we will also be using some Entity Framework Tools to maintain the database.</span></span> <span data-ttu-id="ab70f-125">quindi verrà anche installato il pacchetto di strumenti.</span><span class="sxs-lookup"><span data-stu-id="ab70f-125">So we will install the tools package as well.</span></span>
+<span data-ttu-id="c01d2-125">È ora possibile definire un contesto e le classi di entità che costituiscono il modello.</span><span class="sxs-lookup"><span data-stu-id="c01d2-125">Now it's time to define a context and entity classes that make up the model.</span></span>
 
-* <span data-ttu-id="ab70f-126">Eseguire `Install-Package Microsoft.EntityFrameworkCore.Tools`</span><span class="sxs-lookup"><span data-stu-id="ab70f-126">Run `Install-Package Microsoft.EntityFrameworkCore.Tools`</span></span>
+* <span data-ttu-id="c01d2-126">**Progetto > Aggiungi classe**</span><span class="sxs-lookup"><span data-stu-id="c01d2-126">**Project > Add Class...**</span></span>
 
-## <a name="create-your-model"></a><span data-ttu-id="ab70f-127">Creare il modello</span><span class="sxs-lookup"><span data-stu-id="ab70f-127">Create your model</span></span>
+* <span data-ttu-id="c01d2-127">Immettere *Model.cs* come nome e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="c01d2-127">Enter *Model.cs* as the name and click **OK**</span></span>
 
-<span data-ttu-id="ab70f-128">È ora possibile definire un contesto e le classi di entità che costituiscono il modello.</span><span class="sxs-lookup"><span data-stu-id="ab70f-128">Now it's time to define a context and entity classes that make up your model.</span></span>
+* <span data-ttu-id="c01d2-128">Sostituire tutti i contenuti del file con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="c01d2-128">Replace the contents of the file with the following code</span></span>
 
-* <span data-ttu-id="ab70f-129">Progetto > Aggiungi classe</span><span class="sxs-lookup"><span data-stu-id="ab70f-129">Project > Add Class...</span></span>
-
-* <span data-ttu-id="ab70f-130">Immettere *Model.cs* come nome e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="ab70f-130">Enter *Model.cs* as the name and click **OK**</span></span>
-
-* <span data-ttu-id="ab70f-131">Sostituire tutti i contenuti del file con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="ab70f-131">Replace the contents of the file with the following code</span></span>
-
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
-namespace EFGetStarted.ConsoleApp
-{
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
-        }
-    }
-
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-
-        public List<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-}
-```
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] 
 
 > [!TIP]  
-> <span data-ttu-id="ab70f-132">In una vera applicazione si inserisce ogni classe in un file separato e la stringa di connessione nel file `App.Config` e la si legge usando `ConfigurationManager`.</span><span class="sxs-lookup"><span data-stu-id="ab70f-132">In a real application you would put each class in a separate file and put the connection string in the `App.Config` file and read it out using `ConfigurationManager`.</span></span> <span data-ttu-id="ab70f-133">Per ragioni di semplicità, in questa esercitazione viene inserito tutto in un solo file.</span><span class="sxs-lookup"><span data-stu-id="ab70f-133">For the sake of simplicity, we are putting everything in a single code file for this tutorial.</span></span>
+> <span data-ttu-id="c01d2-129">In una vera applicazione ogni classe verrebbe inserita in un file separato e la stringa di connessione in un file di configurazione o in una variabile di ambiente.</span><span class="sxs-lookup"><span data-stu-id="c01d2-129">In a real application you would put each class in a separate file and put the connection string in a configuration file or environment variable.</span></span> <span data-ttu-id="c01d2-130">Per ragioni di semplicità, in questa esercitazione viene inserito tutto in un solo file.</span><span class="sxs-lookup"><span data-stu-id="c01d2-130">For the sake of simplicity, everything is in a single code file for this tutorial.</span></span>
 
-## <a name="create-your-database"></a><span data-ttu-id="ab70f-134">Creare il database</span><span class="sxs-lookup"><span data-stu-id="ab70f-134">Create your database</span></span>
+## <a name="create-the-database"></a><span data-ttu-id="c01d2-131">Creare il database</span><span class="sxs-lookup"><span data-stu-id="c01d2-131">Create the database</span></span>
 
-<span data-ttu-id="ab70f-135">Dopo avere creato un modello, è possibile usare le migrazioni per creare un database.</span><span class="sxs-lookup"><span data-stu-id="ab70f-135">Now that you have a model, you can use migrations to create a database for you.</span></span>
+<span data-ttu-id="c01d2-132">Dopo avere creato un modello, è possibile usare le migrazioni per creare un database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-132">Now that you have a model, you can use migrations to create a database.</span></span>
 
-* <span data-ttu-id="ab70f-136">Strumenti –> Gestione pacchetti NuGet –> Console di Gestione pacchetti</span><span class="sxs-lookup"><span data-stu-id="ab70f-136">Tools –> NuGet Package Manager –> Package Manager Console</span></span>
+* <span data-ttu-id="c01d2-133">**Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti**</span><span class="sxs-lookup"><span data-stu-id="c01d2-133">**Tools > NuGet Package Manager > Package Manager Console**</span></span>
 
-* <span data-ttu-id="ab70f-137">Eseguire `Add-Migration MyFirstMigration` per effettuare lo scaffolding di una migrazione per poter creare il set iniziale di tabelle per il modello.</span><span class="sxs-lookup"><span data-stu-id="ab70f-137">Run `Add-Migration MyFirstMigration` to scaffold a migration to create the initial set of tables for your model.</span></span>
+* <span data-ttu-id="c01d2-134">Eseguire `Add-Migration InitialCreate` per effettuare lo scaffolding di una migrazione per creare il set iniziale di tabelle per il modello.</span><span class="sxs-lookup"><span data-stu-id="c01d2-134">Run `Add-Migration InitialCreate` to scaffold a migration to create the initial set of tables for the model.</span></span>
 
-* <span data-ttu-id="ab70f-138">Eseguire `Update-Database` per applicare la nuova migrazione al database.</span><span class="sxs-lookup"><span data-stu-id="ab70f-138">Run `Update-Database` to apply the new migration to the database.</span></span> <span data-ttu-id="ab70f-139">Poiché il database non esiste ancora, verrà creato automaticamente prima di applicare la migrazione.</span><span class="sxs-lookup"><span data-stu-id="ab70f-139">Because your database doesn't exist yet, it will be created for you before the migration is applied.</span></span>
+* <span data-ttu-id="c01d2-135">Eseguire `Update-Database` per applicare la nuova migrazione al database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-135">Run `Update-Database` to apply the new migration to the database.</span></span> <span data-ttu-id="c01d2-136">Poiché il database non esiste ancora, verrà creato automaticamente prima di applicare la migrazione.</span><span class="sxs-lookup"><span data-stu-id="c01d2-136">Because the database doesn't exist yet, it will be created before the migration is applied.</span></span>
 
 > [!TIP]  
-> <span data-ttu-id="ab70f-140">Se si apporteranno modifiche al modello in futuro, sarà possibile usare il comando `Add-Migration` per eseguire lo scaffolding di una nuova migrazione e poter apportare le corrispondenti modifiche dello schema al database.</span><span class="sxs-lookup"><span data-stu-id="ab70f-140">If you make future changes to your model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database.</span></span> <span data-ttu-id="ab70f-141">Dopo avere controllato il codice di scaffolding e avere apportato eventuali modifiche necessarie, è possibile usare il comando `Update-Database` per applicare le modifiche al database.</span><span class="sxs-lookup"><span data-stu-id="ab70f-141">Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.</span></span>
+> <span data-ttu-id="c01d2-137">Se si apportano modifiche al modello, è possibile usare il comando `Add-Migration` per eseguire lo scaffolding di una nuova migrazione per apportare le modifiche dello schema corrispondenti nel database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-137">If you make changes to the model, you can use the `Add-Migration` command to scaffold a new migration to make the corresponding schema changes to the database.</span></span> <span data-ttu-id="c01d2-138">Dopo avere controllato il codice di scaffolding e avere apportato eventuali modifiche necessarie, è possibile usare il comando `Update-Database` per applicare le modifiche al database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-138">Once you have checked the scaffolded code (and made any required changes), you can use the `Update-Database` command to apply the changes to the database.</span></span>
 >
-><span data-ttu-id="ab70f-142">EF usa una tabella `__EFMigrationsHistory` nel database per tenere traccia delle migrazioni che sono già state applicate al database.</span><span class="sxs-lookup"><span data-stu-id="ab70f-142">EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.</span></span>
+> <span data-ttu-id="c01d2-139">EF usa una tabella `__EFMigrationsHistory` nel database per tenere traccia delle migrazioni che sono già state applicate al database.</span><span class="sxs-lookup"><span data-stu-id="c01d2-139">EF uses a `__EFMigrationsHistory` table in the database to keep track of which migrations have already been applied to the database.</span></span>
 
-## <a name="use-your-model"></a><span data-ttu-id="ab70f-143">Usare il modello</span><span class="sxs-lookup"><span data-stu-id="ab70f-143">Use your model</span></span>
+## <a name="use-the-model"></a><span data-ttu-id="c01d2-140">Usare il modello</span><span class="sxs-lookup"><span data-stu-id="c01d2-140">Use the model</span></span>
 
-<span data-ttu-id="ab70f-144">È ora possibile usare il modello per eseguire l'accesso ai dati.</span><span class="sxs-lookup"><span data-stu-id="ab70f-144">You can now use your model to perform data access.</span></span>
+<span data-ttu-id="c01d2-141">È ora possibile usare il modello per eseguire l'accesso ai dati.</span><span class="sxs-lookup"><span data-stu-id="c01d2-141">You can now use the model to perform data access.</span></span>
 
-* <span data-ttu-id="ab70f-145">Aprire *Program.cs*</span><span class="sxs-lookup"><span data-stu-id="ab70f-145">Open *Program.cs*</span></span>
+* <span data-ttu-id="c01d2-142">Aprire *Program.cs*</span><span class="sxs-lookup"><span data-stu-id="c01d2-142">Open *Program.cs*</span></span>
 
-* <span data-ttu-id="ab70f-146">Sostituire tutti i contenuti del file con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="ab70f-146">Replace the contents of the file with the following code</span></span>
+* <span data-ttu-id="c01d2-143">Sostituire tutti i contenuti del file con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="c01d2-143">Replace the contents of the file with the following code</span></span>
 
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-``` csharp
-using System;
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)]
 
-namespace EFGetStarted.ConsoleApp
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (var db = new BloggingContext())
-            {
-                db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
-                var count = db.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);
+* <span data-ttu-id="c01d2-144">**Debug > Avvia senza eseguire debug**</span><span class="sxs-lookup"><span data-stu-id="c01d2-144">**Debug > Start Without Debugging**</span></span>
 
-                Console.WriteLine();
-                Console.WriteLine("All blogs in database:");
-                foreach (var blog in db.Blogs)
-                {
-                    Console.WriteLine(" - {0}", blog.Url);
-                }
-            }
-        }
-    }
-}
-```
+  <span data-ttu-id="c01d2-145">Si può notare che un blog viene salvato nel database e quindi che i dettagli di tutti i blog vengono visualizzati nella console.</span><span class="sxs-lookup"><span data-stu-id="c01d2-145">You see that one blog is saved to the database and then the details of all blogs are printed to the console.</span></span>
 
-* <span data-ttu-id="ab70f-147">Debug > Avvia senza eseguire debug</span><span class="sxs-lookup"><span data-stu-id="ab70f-147">Debug > Start Without Debugging</span></span>
+  ![immagine](_static/output-new-db.png)
 
-<span data-ttu-id="ab70f-148">Si noterà che un blog è salvato nel database e quindi che i dettagli di tutti i blog vengono visualizzati nella console.</span><span class="sxs-lookup"><span data-stu-id="ab70f-148">You will see that one blog is saved to the database and then the details of all blogs are printed to the console.</span></span>
+## <a name="additional-resources"></a><span data-ttu-id="c01d2-147">Risorse aggiuntive</span><span class="sxs-lookup"><span data-stu-id="c01d2-147">Additional Resources</span></span>
 
-![immagine](_static/output-new-db.png)
+* [<span data-ttu-id="c01d2-148">EF Core in .NET Framework con un database esistente</span><span class="sxs-lookup"><span data-stu-id="c01d2-148">EF Core on .NET Framework with an existing database</span></span>](xref:core/get-started/full-dotnet/existing-db)
+* <span data-ttu-id="c01d2-149">[EF Core in .NET Core con un nuovo database - SQLite](xref:core/get-started/netcore/new-db-sqlite): esercitazione su EF per la console multipiattaforma.</span><span class="sxs-lookup"><span data-stu-id="c01d2-149">[EF Core on .NET Core with a new database - SQLite](xref:core/get-started/netcore/new-db-sqlite) -  a cross-platform console EF tutorial.</span></span>
