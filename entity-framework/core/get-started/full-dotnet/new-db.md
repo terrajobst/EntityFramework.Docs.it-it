@@ -2,127 +2,84 @@
 title: Introduzione a .NET Framework - Nuovo database - EF Core
 author: rowanmiller
 ms.author: divega
-ms.date: 10/27/2016
+ms.date: 08/06/2018
 ms.assetid: 52b69727-ded9-4a7b-b8d5-73f3acfbbad3
 ms.technology: entity-framework-core
 uid: core/get-started/full-dotnet/new-db
-ms.openlocfilehash: bd7054c6834ae11bfdc352d63654e4304771e432
-ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
+ms.openlocfilehash: 088ac915041489242eb8090e7bf3a2bdc8036534
+ms.sourcegitcommit: 902257be9c63c427dc793750a2b827d6feb8e38c
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/26/2018
-ms.locfileid: "31812521"
+ms.lasthandoff: 08/07/2018
+ms.locfileid: "39614428"
 ---
 # <a name="getting-started-with-ef-core-on-net-framework-with-a-new-database"></a>Introduzione a EF Core in .NET Framework con un nuovo database
 
-In questa procedura dettagliata verrà compilata un'applicazione console che esegue l'accesso ai dati di base in un database Microsoft SQL Server usando Entity Framework. Si useranno le migrazioni per creare il database dal modello.
+In questa esercitazione verrà creata un'applicazione console che esegue l'accesso ai dati di base in un database di Microsoft SQL Server usando Entity Framework. Vengono usate le migrazioni per creare il database da un modello.
 
-> [!TIP]  
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb) di questo articolo in GitHub.
+[Visualizzare l'esempio di questo articolo su GitHub](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/GetStarted/FullNet/ConsoleApp.NewDb).
 
 ## <a name="prerequisites"></a>Prerequisiti
 
-Per completare la procedura dettagliata, sono necessari i prerequisiti seguenti:
-
-* [Visual Studio 2017](https://www.visualstudio.com/downloads/)
-
-* [Versione più recente di Gestione pacchetti NuGet](https://dist.nuget.org/index.html)
-
-* [Versione più recente di Windows PowerShell](https://docs.microsoft.com/powershell/scripting/setup/installing-windows-powershell)
+* [Visual Studio 2017 versione 15.7 o successive](https://www.visualstudio.com/downloads/)
 
 ## <a name="create-a-new-project"></a>Creare un nuovo progetto
 
-* Aprire Visual Studio
+* Aprire Visual Studio 2017
 
-* File > Nuovo > Progetto
+* **File > Nuovo > Progetto**
 
-* Scegliere Modelli > Visual C# > Desktop classico di Windows dal menu a sinistra
+* Scegliere **Installati > Visual C# > Desktop Windows** dal menu a sinistra
 
 * Selezionare il modello di progetto **App console (.NET Framework)**
 
-* Assicurarsi di specificare come destinazione **.NET Framework 4.5.1** o versione successiva
+* Assicurarsi che il progetto sia destinato a **.NET Framework 4.6.1** o versione successiva
 
-* Specificare un nome per il progetto e fare clic su **OK**
+* Denominare il progetto *ConsoleApp.NewDb* e fare clic su **OK**
 
 ## <a name="install-entity-framework"></a>Installare Entity Framework
 
-Per usare EF Core, installare il pacchetto per i provider di database che si vuole specificare come destinazione. Questa procedura dettagliata usa SQL Server. Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md).
+Per usare EF Core, installare il pacchetto per i provider di database che si vuole specificare come destinazione. Questa esercitazione usa SQL Server. Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md).
 
 * Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti
 
 * Eseguire `Install-Package Microsoft.EntityFrameworkCore.SqlServer`
 
-Più avanti in questa procedura dettagliata verrà anche usato Entity Framework Tools per gestire il database, quindi verrà anche installato il pacchetto di strumenti.
+Più avanti in questa esercitazione si useranno alcuni degli strumenti in Entity Framework Tools per gestire il database. Installare quindi anche il pacchetto degli strumenti.
 
 * Eseguire `Install-Package Microsoft.EntityFrameworkCore.Tools`
 
-## <a name="create-your-model"></a>Creare il modello
+## <a name="create-the-model"></a>Creare il modello
 
 È ora possibile definire un contesto e le classi di entità che costituiscono il modello.
 
-* Progetto > Aggiungi classe
+* **Progetto > Aggiungi classe**
 
 * Immettere *Model.cs* come nome e fare clic su **OK**
 
 * Sostituire tutti i contenuti del file con il codice seguente
 
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] -->
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
-namespace EFGetStarted.ConsoleApp
-{
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFGetStarted.ConsoleApp.NewDb;Trusted_Connection=True;");
-        }
-    }
-
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-
-        public List<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-}
-```
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Model.cs)] 
 
 > [!TIP]  
-> In una vera applicazione si inserisce ogni classe in un file separato e la stringa di connessione nel file `App.Config` e la si legge usando `ConfigurationManager`. Per ragioni di semplicità, in questa esercitazione viene inserito tutto in un solo file.
+> In una vera applicazione ogni classe verrebbe inserita in un file separato e la stringa di connessione in un file di configurazione o in una variabile di ambiente. Per ragioni di semplicità, in questa esercitazione viene inserito tutto in un solo file.
 
-## <a name="create-your-database"></a>Creare il database
+## <a name="create-the-database"></a>Creare il database
 
 Dopo avere creato un modello, è possibile usare le migrazioni per creare un database.
 
-* Strumenti –> Gestione pacchetti NuGet –> Console di Gestione pacchetti
+* **Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti**
 
-* Eseguire `Add-Migration MyFirstMigration` per effettuare lo scaffolding di una migrazione per poter creare il set iniziale di tabelle per il modello.
+* Eseguire `Add-Migration InitialCreate` per effettuare lo scaffolding di una migrazione per creare il set iniziale di tabelle per il modello.
 
 * Eseguire `Update-Database` per applicare la nuova migrazione al database. Poiché il database non esiste ancora, verrà creato automaticamente prima di applicare la migrazione.
 
 > [!TIP]  
-> Se si apporteranno modifiche al modello in futuro, sarà possibile usare il comando `Add-Migration` per eseguire lo scaffolding di una nuova migrazione e poter apportare le corrispondenti modifiche dello schema al database. Dopo avere controllato il codice di scaffolding e avere apportato eventuali modifiche necessarie, è possibile usare il comando `Update-Database` per applicare le modifiche al database.
+> Se si apportano modifiche al modello, è possibile usare il comando `Add-Migration` per eseguire lo scaffolding di una nuova migrazione per apportare le modifiche dello schema corrispondenti nel database. Dopo avere controllato il codice di scaffolding e avere apportato eventuali modifiche necessarie, è possibile usare il comando `Update-Database` per applicare le modifiche al database.
 >
->EF usa una tabella `__EFMigrationsHistory` nel database per tenere traccia delle migrazioni che sono già state applicate al database.
+> EF usa una tabella `__EFMigrationsHistory` nel database per tenere traccia delle migrazioni che sono già state applicate al database.
 
-## <a name="use-your-model"></a>Usare il modello
+## <a name="use-the-model"></a>Usare il modello
 
 È ora possibile usare il modello per eseguire l'accesso ai dati.
 
@@ -130,36 +87,15 @@ Dopo avere creato un modello, è possibile usare le migrazioni per creare un dat
 
 * Sostituire tutti i contenuti del file con il codice seguente
 
-<!-- [!code-csharp[Main](samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)] -->
-``` csharp
-using System;
+  [!code-csharp[Main](../../../../samples/core/GetStarted/FullNet/ConsoleApp.NewDb/Program.cs)]
 
-namespace EFGetStarted.ConsoleApp
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            using (var db = new BloggingContext())
-            {
-                db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
-                var count = db.SaveChanges();
-                Console.WriteLine("{0} records saved to database", count);
+* **Debug > Avvia senza eseguire debug**
 
-                Console.WriteLine();
-                Console.WriteLine("All blogs in database:");
-                foreach (var blog in db.Blogs)
-                {
-                    Console.WriteLine(" - {0}", blog.Url);
-                }
-            }
-        }
-    }
-}
-```
+  Si può notare che un blog viene salvato nel database e quindi che i dettagli di tutti i blog vengono visualizzati nella console.
 
-* Debug > Avvia senza eseguire debug
+  ![immagine](_static/output-new-db.png)
 
-Si noterà che un blog è salvato nel database e quindi che i dettagli di tutti i blog vengono visualizzati nella console.
+## <a name="additional-resources"></a>Risorse aggiuntive
 
-![immagine](_static/output-new-db.png)
+* [EF Core in .NET Framework con un database esistente](xref:core/get-started/full-dotnet/existing-db)
+* [EF Core in .NET Core con un nuovo database - SQLite](xref:core/get-started/netcore/new-db-sqlite): esercitazione su EF per la console multipiattaforma.
