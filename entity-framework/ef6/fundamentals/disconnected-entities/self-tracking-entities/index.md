@@ -2,19 +2,13 @@
 title: Entità con rilevamento automatico - EF6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
-caps.latest.revision: 3
-ms.openlocfilehash: 2fb4e9f4d4008c57e90c49a011bebb320eb2bb58
-ms.sourcegitcommit: 45494121254ad4fdcec613d1dd22d850068d6f39
+ms.openlocfilehash: 8b555d211facd737aedf120a1ecfdc88d3903107
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "37913525"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42998016"
 ---
 # <a name="self-tracking-entities"></a>Entità con rilevamento automatico
 
@@ -36,7 +30,7 @@ Per iniziare, visitare la pagina [Self-Tracking Entities Walkthrough](walkthroug
 
 ## <a name="considerations-when-working-with-self-tracking-entities"></a>Considerazioni relative all'utilizzo delle entità con rilevamento automatico  
 > [!IMPORTANT]
-> Non è più consigliabile usare il modello di entità con rilevamento automatico. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
 Quando si utilizzano le entità con rilevamento automatico, tenere presenti le considerazioni seguenti.  
 
