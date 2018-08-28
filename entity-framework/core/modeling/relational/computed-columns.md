@@ -1,36 +1,34 @@
 ---
-title: Colonne calcolate - Core a Entity Framework
+title: Colonne calcolate - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: e9d81f06-805d-45c9-97c2-3546df654829
-ms.technology: entity-framework-core
 uid: core/modeling/relational/computed-columns
-ms.openlocfilehash: 95312504286bd34cc666b5a21273835c4b35d379
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: b88efdf69e5100e4eff55f3a41925d2d8e7c3178
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052481"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42993953"
 ---
-# <a name="computed-columns"></a><span data-ttu-id="3d794-102">Colonne calcolate</span><span class="sxs-lookup"><span data-stu-id="3d794-102">Computed Columns</span></span>
+# <a name="computed-columns"></a><span data-ttu-id="01daf-102">Colonne calcolate</span><span class="sxs-lookup"><span data-stu-id="01daf-102">Computed Columns</span></span>
 
 > [!NOTE]  
-> <span data-ttu-id="3d794-103">La configurazione di questa sezione è applicabile a database relazionali in generale.</span><span class="sxs-lookup"><span data-stu-id="3d794-103">The configuration in this section is applicable to relational databases in general.</span></span> <span data-ttu-id="3d794-104">I metodi di estensione qui verranno rese disponibili quando si installa un provider di database relazionali (a causa di condiviso *Microsoft.EntityFrameworkCore.Relational* pacchetto).</span><span class="sxs-lookup"><span data-stu-id="3d794-104">The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).</span></span>
+> <span data-ttu-id="01daf-103">La configurazione di questa sezione è applicabile in generale ai database relazionali.</span><span class="sxs-lookup"><span data-stu-id="01daf-103">The configuration in this section is applicable to relational databases in general.</span></span> <span data-ttu-id="01daf-104">I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).</span><span class="sxs-lookup"><span data-stu-id="01daf-104">The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).</span></span>
 
-<span data-ttu-id="3d794-105">Una colonna calcolata è una colonna il cui valore viene calcolato nel database.</span><span class="sxs-lookup"><span data-stu-id="3d794-105">A computed column is a column whose value is calculated in the database.</span></span> <span data-ttu-id="3d794-106">Una colonna calcolata può utilizzare altre colonne nella tabella per calcolare il relativo valore.</span><span class="sxs-lookup"><span data-stu-id="3d794-106">A computed column can use other columns in the table to calculate its value.</span></span>
+<span data-ttu-id="01daf-105">Una colonna calcolata è una colonna il cui valore viene calcolato nel database.</span><span class="sxs-lookup"><span data-stu-id="01daf-105">A computed column is a column whose value is calculated in the database.</span></span> <span data-ttu-id="01daf-106">Una colonna calcolata può utilizzare altre colonne nella tabella per la quale calcolare il relativo valore.</span><span class="sxs-lookup"><span data-stu-id="01daf-106">A computed column can use other columns in the table to calculate its value.</span></span>
 
-## <a name="conventions"></a><span data-ttu-id="3d794-107">Convenzioni</span><span class="sxs-lookup"><span data-stu-id="3d794-107">Conventions</span></span>
+## <a name="conventions"></a><span data-ttu-id="01daf-107">Convenzioni</span><span class="sxs-lookup"><span data-stu-id="01daf-107">Conventions</span></span>
 
-<span data-ttu-id="3d794-108">Per convenzione, le colonne calcolate non vengono create nel modello.</span><span class="sxs-lookup"><span data-stu-id="3d794-108">By convention, computed columns are not created in the model.</span></span>
+<span data-ttu-id="01daf-108">Per convenzione, le colonne calcolate non vengono create nel modello.</span><span class="sxs-lookup"><span data-stu-id="01daf-108">By convention, computed columns are not created in the model.</span></span>
 
-## <a name="data-annotations"></a><span data-ttu-id="3d794-109">Annotazioni dei dati</span><span class="sxs-lookup"><span data-stu-id="3d794-109">Data Annotations</span></span>
+## <a name="data-annotations"></a><span data-ttu-id="01daf-109">Annotazioni dei dati</span><span class="sxs-lookup"><span data-stu-id="01daf-109">Data Annotations</span></span>
 
-<span data-ttu-id="3d794-110">Colonne calcolate non possono essere configurate con le annotazioni dei dati.</span><span class="sxs-lookup"><span data-stu-id="3d794-110">Computed columns can not be configured with Data Annotations.</span></span>
+<span data-ttu-id="01daf-110">Le colonne calcolate non possono essere configurate con le annotazioni dei dati.</span><span class="sxs-lookup"><span data-stu-id="01daf-110">Computed columns can not be configured with Data Annotations.</span></span>
 
-## <a name="fluent-api"></a><span data-ttu-id="3d794-111">Microsoft Office Fluent API</span><span class="sxs-lookup"><span data-stu-id="3d794-111">Fluent API</span></span>
+## <a name="fluent-api"></a><span data-ttu-id="01daf-111">API Fluent</span><span class="sxs-lookup"><span data-stu-id="01daf-111">Fluent API</span></span>
 
-<span data-ttu-id="3d794-112">Per specificare che una proprietà deve eseguire il mapping a una colonna calcolata, è possibile utilizzare l'API Fluent.</span><span class="sxs-lookup"><span data-stu-id="3d794-112">You can use the Fluent API to specify that a property should map to a computed column.</span></span>
+<span data-ttu-id="01daf-112">È possibile usare l'API Fluent per specificare che una proprietà deve eseguire il mapping a una colonna calcolata.</span><span class="sxs-lookup"><span data-stu-id="01daf-112">You can use the Fluent API to specify that a property should map to a computed column.</span></span>
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs?highlight=9)] -->
 ``` csharp
