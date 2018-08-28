@@ -2,19 +2,13 @@
 title: Definizione DbSet - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 4528a509-ace7-4dfb-8065-1b833f5e03a0
-caps.latest.revision: 3
-ms.openlocfilehash: 8a495c6ce74d9a346a84b0e10fb28395f4dce07b
-ms.sourcegitcommit: 00cb52625b57c1ea339ded1454179fe89b6bcfea
+ms.openlocfilehash: cc45ed1ceb20bc90090adb3e93c10651c69c9a6a
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/16/2018
-ms.locfileid: "39123270"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42993857"
 ---
 # <a name="defining-dbsets"></a>La definizione di DbSet
 Quando lo sviluppo con il flusso di lavoro di Code First per definire una classe DbContext derivata che rappresenta la sessione con il database ed espone un elemento DbSet per ogni tipo nel modello. In questo argomento illustra i vari modi, è possibile definire le proprietà DbSet.  

@@ -3,14 +3,13 @@ title: Creazione DbContext in fase di progettazione - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/27/2017
-ms.technology: entity-framework-core
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: 648ca990252fb32d8cf181a7ae672d07a81f56bb
-ms.sourcegitcommit: 0935ff275ae739243297f5b97eb21414398125c6
+ms.openlocfilehash: 66fec7605b6ac2da0af1e801f8a1dca0789aea35
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/23/2018
-ms.locfileid: "39201919"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42993718"
 ---
 <a name="design-time-dbcontext-creation"></a>Creazione DbContext in fase di progettazione
 ==============================
@@ -22,7 +21,7 @@ Esistono diversi modi, provare gli strumenti per creare il `DbContext`:
 -------------------------
 Se il progetto di avvio è un'app ASP.NET Core, strumenti di tentare di ottenere l'oggetto DbContext da provider di servizi dell'applicazione.
 
-Lo strumento tenta innanzitutto di ottenere il provider di servizi richiamando `Program.BuildWebHost()` e l'accesso di `IWebHost.Services` proprietà.
+Gli strumenti tenta innanzitutto di ottenere il provider di servizi richiamando `Program.BuildWebHost()` e l'accesso di `IWebHost.Services` proprietà.
 
 > [!NOTE]
 > Quando si crea una nuova applicazione ASP.NET Core 2.0, questo hook è incluso per impostazione predefinita. Nelle versioni precedenti di EF Core e ASP.NET Core, strumenti di provano a richiamare `Startup.ConfigureServices` direttamente per ottenere il provider di servizi dell'applicazione, ma questo modello non sono più funzioni correttamente nelle applicazioni ASP.NET Core 2.0. Se si esegue l'aggiornamento di un'applicazione di ASP.NET Core 1.x a 2.0, è possibile [modificare il `Program` classe seguire il nuovo modello][3].

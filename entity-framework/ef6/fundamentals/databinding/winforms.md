@@ -2,19 +2,13 @@
 title: Associazione dati con Windows Form - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
-caps.latest.revision: 3
-ms.openlocfilehash: b17bc91fd7d665f6d75bf5f1e5798ddd16aa345d
-ms.sourcegitcommit: 45494121254ad4fdcec613d1dd22d850068d6f39
+ms.openlocfilehash: 7ceb8e85fe3d8f5ab9a5e58ef9c84599585d8f77
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39121316"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42994529"
 ---
 # <a name="databinding-with-winforms"></a>Associazione dati con Windows Form
 Questa procedura dettagliata illustra come associare tipi POCO ai controlli Windows Form (WinForms) sotto forma di "master-dettagli". L'applicazione usa Entity Framework per popolare gli oggetti con i dati dal database, tenere traccia delle modifiche e rendere persistenti i dati nel database.

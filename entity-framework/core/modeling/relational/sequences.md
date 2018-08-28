@@ -1,36 +1,34 @@
 ---
-title: Sequenza - Core a Entity Framework
+title: Sequenze - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 94f81a92-3c72-4e14-912a-f99310374e42
-ms.technology: entity-framework-core
 uid: core/modeling/relational/sequences
-ms.openlocfilehash: 98a40aeecbec0fd9fb9cc108d6b5f98178dea403
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: eb9d9896966af0ad6b778047a1ed6af7358e8eb2
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052711"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42994516"
 ---
 # <a name="sequences"></a>Sequenze
 
 > [!NOTE]  
-> La configurazione di questa sezione è applicabile a database relazionali in generale. I metodi di estensione qui verranno rese disponibili quando si installa un provider di database relazionali (a causa di condiviso *Microsoft.EntityFrameworkCore.Relational* pacchetto).
+> La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Una sequenza genera un valori numerici in sequenza nel database. Le sequenze non sono associate a una tabella specifica.
+Una sequenza che genera l'errore un valori numerici in sequenza nel database. Le sequenze non sono associate a una tabella specifica.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, le sequenze non verranno introdotti per il modello.
+Per convenzione, le sequenze non vengano inserite al modello.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
 Non è possibile configurare una sequenza utilizzando le annotazioni dei dati.
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
-Per creare una sequenza nel modello, è possibile utilizzare l'API Fluent.
+È possibile usare l'API Fluent per creare una sequenza nel modello.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/Sequence.cs?highlight=7)] -->
 ``` csharp
@@ -52,7 +50,7 @@ public class Order
 }
 ```
 
-È inoltre possibile configurare altri aspetti della sequenza, ad esempio il relativo schema, il valore iniziale e incremento.
+È anche possibile configurare altri aspetti della sequenza, quali lo schema, il valore iniziale e incremento.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceConfigured.cs?highlight=7,8,9)] -->
 ``` csharp
@@ -69,7 +67,7 @@ class MyContext : DbContext
 }
 ```
 
-Una volta che viene introdotta una sequenza, è possibile utilizzare, per generare i valori per le proprietà nel modello. Ad esempio, è possibile utilizzare [valori predefiniti](default-values.md) per inserire il valore successivo dalla sequenza.
+Una volta che viene introdotta una sequenza, è possibile usarlo per generare valori per le proprietà nel modello. Ad esempio, è possibile usare [valori predefiniti](default-values.md) per inserire il valore successivo dalla sequenza.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/SequenceUsed.cs?highlight=11,12,13)] -->
 ``` csharp

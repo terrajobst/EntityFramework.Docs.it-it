@@ -1,20 +1,19 @@
 ---
-title: "\U0001F527Creare ed eliminare le API - Core a Entity Framework"
+title: "\U0001F527 Creare ed eliminare le API - EF Core"
 author: bricelam
 ms.author: bricelam
 ms.date: 11/10/2017
-ms.technology: entity-framework-core
-ms.openlocfilehash: 765a4322b5878fa51fe01a2a71bd265a39727e10
-ms.sourcegitcommit: b467368cc350e6059fdc0949e042a41cb11e61d9
+ms.openlocfilehash: 1e0d348d770982f22b558b92eb926d4b4b8547e9
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
-ms.locfileid: "26053821"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42994150"
 ---
-# <a name="-create-and-drop-apis"></a>🔧Creare ed eliminare le API
+# <a name="-create-and-drop-apis"></a>🔧 Creare ed eliminare le API
 
 > [!NOTE]
-> Questo argomento non è ancora stato scritto. È possibile tenere traccia dello stato di questo [problema] [ 1] tramite il nostro pubblico GitHub problema di arresto. Informazioni su come [contribuiscono] [ 2] su GitHub.
+> Questo argomento non è ancora stato scritto. È possibile tenere traccia dello stato di questo [problema] [ 1] tramite pagina GitHub pubblico. Informazioni su come è possibile [contribuiscono] [ 2] su GitHub.
 
 
   [1]: https://github.com/aspnet/EntityFramework.Docs/issues/549
