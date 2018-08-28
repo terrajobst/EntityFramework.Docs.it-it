@@ -1,32 +1,30 @@
 ---
-title: Proprietà obbligatorie o facoltative - Core a Entity Framework
+title: Proprietà obbligatorie o facoltative - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: ddaa0a54-9f43-4c34-aae3-f95c96c69842
-ms.technology: entity-framework-core
 uid: core/modeling/required-optional
-ms.openlocfilehash: 2af1d49e12ef980f81cb9c00556dee471673ccae
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: b6716a5b03e1afc2933e317d606ef50f986c22c7
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052851"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995497"
 ---
 # <a name="required-and-optional-properties"></a>Proprietà obbligatorie e facoltative
 
-Una proprietà è considerata facoltativa se è valido per contenere `null`. Se `null` non è un valore valido per poter essere assegnati a una proprietà, quindi è considerato una proprietà obbligatoria.
+Una proprietà è considerata facoltativa se è valido per contenere `null`. Se `null` non è un valore valido da assegnare a una proprietà, quindi viene considerato come una proprietà obbligatoria.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, una proprietà il cui tipo CLR può contenere null verrà configurata come facoltativi (`string`, `int?`, `byte[]`, ecc.). Le proprietà il cui tipo CLR non può contenere null verranno configurate come richiesto (`int`, `decimal`, `bool`, ecc.).
+Per convenzione, una proprietà il cui tipo CLR può contenere null verrà configurata come facoltativi (`string`, `int?`, `byte[]`e così via.). Le proprietà il cui tipo CLR non può contenere null verranno configurate come richiesto (`int`, `decimal`, `bool`e così via.).
 
 > [!NOTE]  
-> Una proprietà il cui tipo CLR non può contenere null non possa essere configurata come facoltativi. La proprietà verrà considerata sempre richiesto da Entity Framework.
+> Una proprietà il cui tipo CLR non può contenere null non possa essere configurata come facoltativi. La proprietà verrà considerata sempre richiesti da Entity Framework.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-È possibile utilizzare le annotazioni dei dati per indicare che una proprietà è obbligatoria.
+È possibile usare le annotazioni dei dati per indicare che la proprietà è obbligatoria.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/DataAnnotations/Samples/Required.cs?highlight=4)] -->
 ``` csharp
@@ -38,9 +36,9 @@ public class Blog
 }
 ```
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
-È possibile utilizzare l'API Fluent per indicare che una proprietà è obbligatoria.
+È possibile usare l'API Fluent per indicare che la proprietà è obbligatoria.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Required.cs?highlight=7,8,9)] -->
 ``` csharp

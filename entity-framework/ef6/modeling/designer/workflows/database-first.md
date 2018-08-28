@@ -2,19 +2,13 @@
 title: Prima di tutto - database Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: cc6ffdb3-388d-4e79-a201-01ec2577c949
-caps.latest.revision: 3
-ms.openlocfilehash: 17bba5fe9883a1bee0f8b9624dfa35da889e6005
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: c60108c09fcbaaa1f86e77fa52cb13fe018975e1
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39120854"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995910"
 ---
 # <a name="database-first"></a>Prima di tutto di database
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo di Database First con Entity Framework. Database prima di tutto consente di decodificare un modello da un database esistente. Il modello viene archiviato in un file EDMX (file con estensione edmx) e può essere visualizzato e modificato in Entity Framework Designer. Le classi che si interagiscono con nell'applicazione vengono generate automaticamente dal file con estensione EDMX.

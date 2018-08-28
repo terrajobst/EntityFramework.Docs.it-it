@@ -2,19 +2,13 @@
 title: Testabilità ed Entity Framework 4.0
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 9430e2ab-261c-4e8e-8545-2ebc52d7a247
-caps.latest.revision: 3
-ms.openlocfilehash: 61773f8a23ff54ddb78aeeb5656c669b12f91478
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: 17a9f09022531a81042979464de05fbbd2570759
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39121185"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995229"
 ---
 # <a name="testability-and-entity-framework-40"></a>Testabilità ed Entity Framework 4.0
 Scott Allen
@@ -979,8 +973,8 @@ In questo white paper sono stati illustrati diversi approcci per la creazione di
 -   Martin Fowler, " [fittizi e stub](http://martinfowler.com/articles/mocksArentStubs.html)"
 -   Martin Fowler, " [Test Double](http://martinfowler.com/bliki/TestDouble.html)"
 -   Jeremy Miller, " [lo stato rispetto a test l'interazione](http://codebetter.com/blogs/jeremy.miller/articles/129544.aspx)"
--   Moq, \<http://code.google.com/p/moq/>
+-   [Moq](http://code.google.com/p/moq/)
 
 ### <a name="biography"></a>Biografia
 
-Scott Allen è un membro del personale tecnico in Pluralsight e fondatore di OdeToCode.com. In 15 anni di sviluppo del software commerciale, Scott ha lavorato su soluzioni per tutti i dati da dispositivi con embedded 8 bit per le applicazioni web ASP.NET altamente scalabile. È possibile contattare Scott sul suo blog all'indirizzo OdeToCode o su Twitter all'indirizzo \< http://twitter.com/OdeToCode>.
+Scott Allen è un membro del personale tecnico in Pluralsight e fondatore di OdeToCode.com. In 15 anni di sviluppo del software commerciale, Scott ha lavorato su soluzioni per tutti i dati da dispositivi con embedded 8 bit per le applicazioni web ASP.NET altamente scalabile. È possibile contattare Scott sul suo blog all'indirizzo OdeToCode o su Twitter all'indirizzo [ http://twitter.com/OdeToCode ](http://twitter.com/OdeToCode).

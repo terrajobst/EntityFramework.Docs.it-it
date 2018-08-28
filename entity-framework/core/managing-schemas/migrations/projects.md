@@ -1,30 +1,30 @@
 ---
-title: Migrazioni di più progetti - Core a Entity Framework
+title: Migrazioni con progetti multipli - EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
-ms.technology: entity-framework-core
-ms.openlocfilehash: 3684e86cce0005056380d89604d038c734054d14
-ms.sourcegitcommit: ced2637bf8cc5964c6daa6c7fcfce501bf9ef6e8
+ms.openlocfilehash: 76e88dd486b1c53dc69a24e35710511bf9cb673b
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/22/2017
-ms.locfileid: "27161227"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42997987"
 ---
-<a name="using-a-separate-project"></a>Utilizzo di un progetto separato
+<a name="using-a-separate-project"></a>Usando un progetto separato
 ========================
-Si consiglia di archiviare le migrazioni in un assembly diverso da quello contenente il `DbContext`. È anche possibile utilizzare questa strategia per gestire più set di migrazioni, ad esempio, una per lo sviluppo e un'altra per gli aggiornamenti di versione di rilascio.
+È possibile archiviare le migrazioni in un assembly diverso da quello contenente il `DbContext`. È anche possibile usare questa strategia per gestire più set di migrazioni, ad esempio, uno per lo sviluppo e altro per gli aggiornamenti di versione di rilascio.
 
 Per eseguire questa operazione...
 
 1. Creare una nuova libreria di classi.
 
-2. Aggiungere un riferimento all'assembly DbContext.
+2. Aggiungere un riferimento all'assembly di DbContext.
 
-3. Spostare i file di snapshot di modello e le migrazioni alla libreria di classi.
-   * Se non sono stati aggiunti, aggiungerne uno al progetto DbContext quindi spostarlo.
+3. Spostare le migrazioni e i file di snapshot del modello alla libreria di classi.
+   > [!TIP]
+   > Se non si dispone di alcuna migrazione esistente, generarne uno del progetto contenente l'oggetto DbContext, spostarlo. Questo è importante perché se l'assembly di migrazioni non contiene una migrazione esistente, il comando Add-Migration sarà Impossibile trovare l'oggetto DbContext.
 
-4. Configurare l'assembly di migrazioni:
+4. Configurare l'assembly delle migrazioni:
 
    ``` csharp
    options.UseSqlServer(
@@ -37,11 +37,11 @@ Per eseguire questa operazione...
 
      ``` xml
      <PropertyGroup>
-       <OutputPath>..\MyStarupProject\bin\$(Configuration)\</OutputPath>
+       <OutputPath>..\MyStartupProject\bin\$(Configuration)\</OutputPath>
      </PropertyGroup>
      ```
 
-Se sono state eseguite tutte le operazioni in modo corretto, sarà possibile aggiungere le migrazioni di nuovo al progetto.
+Se è stato eseguito tutto correttamente, sarà possibile aggiungere le nuove migrazioni al progetto.
 
 ``` powershell
 Add-Migration NewMigration -Project MyApp.Migrations

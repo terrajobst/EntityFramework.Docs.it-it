@@ -2,19 +2,13 @@
 title: Specifica di SSDL - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: a4af4b1a-40f4-48cc-b2e0-fa8f5d9d5419
-caps.latest.revision: 3
-ms.openlocfilehash: a9977c80d9a9401afdcad2284a705bcb28790fb8
-ms.sourcegitcommit: 9ae4473425c5e76337c9d032b0e5dbfedf1fcf57
+ms.openlocfilehash: 35c560d88e5078a7fc4c07b76020f3ad7d0735e1
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/09/2018
-ms.locfileid: "39121449"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995279"
 ---
 # <a name="ssdl-specification"></a>Specifica SSDL
 Store Schema Definition Language (SSDL) è un linguaggio basato su XML che descrive il modello di archiviazione di un'applicazione Entity Framework.
@@ -419,7 +413,7 @@ Nella tabella seguente vengono descritti gli attributi che possono essere applic
 |:---------------|:------------|:-----------------------------------------------------------------------------------------|
 | **Name**       | Yes         | Nome del set di entità.                                                              |
 | **Elemento EntityType** | Yes         | Nome completo del tipo di entità per il quale il set di entità contiene delle istanze. |
-| **Schema**     | No          | Schema del database.                                                                     |
+| **schema**     | No          | Schema del database.                                                                     |
 | **Tabella**      | No          | Tabella del database.                                                                      |
 
 > [!NOTE]
@@ -517,7 +511,7 @@ Nella tabella seguente vengono descritti gli attributi che possono essere applic
 | **NiladicFunction**        | No          | **True** se la funzione è senza parametri<sup>2</sup> funzione; **False** in caso contrario.                                                                                                                                   |
 | **IsComposable**           | No          | **True** se la funzione è componibile<sup>3</sup> funzione; **False** in caso contrario.                                                                                                                                |
 | **ParameterTypeSemantics** | No          | Enumerazione che definisce la semantica dei tipi utilizzata per risolvere gli overload della funzione. L'enumerazione è definita nel file manifesto del provider per ogni definizione di funzione. Il valore predefinito è **AllowImplicitConversion**. |
-| **Schema**                 | No          | Nome dello schema in cui viene definita la stored procedure.                                                                                                                                                   |
+| **schema**                 | No          | Nome dello schema in cui viene definita la stored procedure.                                                                                                                                                   |
 
 <sup>1</sup> una funzione predefinita è una funzione definita nel database. Per informazioni sulle funzioni definite nel modello di archiviazione, vedere l'elemento CommandText (SSDL).
 

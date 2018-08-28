@@ -1,24 +1,22 @@
 ---
-title: Chiavi primarie - Core a Entity Framework
+title: Chiavi primarie - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: c78f8f42-564a-45a4-aca7-3ede9f7ed2bc
-ms.technology: entity-framework-core
 uid: core/modeling/relational/primary-keys
-ms.openlocfilehash: fcb1871149c0f20a2576864028b4171904de1982
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 916f3adbcd08cb1037c7fbf68e99630feb321a61
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052721"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42998068"
 ---
 # <a name="primary-keys"></a>Chiavi primarie
 
 > [!NOTE]  
-> La configurazione di questa sezione è applicabile a database relazionali in generale. I metodi di estensione qui verranno rese disponibili quando si installa un provider di database relazionali (a causa di condiviso *Microsoft.EntityFrameworkCore.Relational* pacchetto).
+> La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Un vincolo di chiave primaria è stato introdotto per la chiave di ogni tipo di entità.
+Un vincolo di chiave primaria è stata introdotta per la chiave di ogni tipo di entità.
 
 ## <a name="conventions"></a>Convenzioni
 
@@ -26,11 +24,11 @@ Per convenzione, la chiave primaria nel database verrà denominata `PK_<type nam
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-Nessun aspetti specifici del database relazionale di una chiave primaria possono essere configurati tramite le annotazioni dei dati.
+Alcuni aspetti specifici alcun database relazionale di una chiave primaria non possono essere configurati utilizzando le annotazioni dei dati.
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
-È possibile utilizzare l'API Fluent per configurare il nome del vincolo di chiave primaria nel database.
+È possibile usare l'API Fluent per configurare il nome del vincolo di chiave primaria nel database.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/KeyName.cs?highlight=9)] -->
 ``` csharp

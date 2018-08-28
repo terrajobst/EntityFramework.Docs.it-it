@@ -1,26 +1,25 @@
 ---
-title: Tabella di cronologia di migrazioni personalizzato - Core EF
+title: Tabella di cronologia personalizzata migrazioni - Entity Framework Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/7/2017
-ms.technology: entity-framework-core
-ms.openlocfilehash: cb9892241f3d7f1fae6293bd60a8a5c3e7120969
-ms.sourcegitcommit: b467368cc350e6059fdc0949e042a41cb11e61d9
+ms.openlocfilehash: 7ee76cadd6fac4ec403918e88460e43067ae5815
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
-ms.locfileid: "26053811"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995696"
 ---
-<a name="custom-migrations-history-table"></a>Tabella di cronologia di migrazioni personalizzato
+<a name="custom-migrations-history-table"></a>Tabella di cronologia migrazioni personalizzato
 ===============================
-Per impostazione predefinita, Core EF tiene traccia di quali migrazione applicata al database registrandoli in una tabella denominata `__EFMigrationsHistory`. Per vari motivi, si desidera personalizzare la tabella per adattarlo alle proprie esigenze.
+Per impostazione predefinita, EF Core tiene traccia di quali migrazioni sono state applicate al database registrandoli in una tabella denominata `__EFMigrationsHistory`. Per vari motivi, è possibile personalizzare questa tabella in base alle proprie esigenze.
 
 > [!IMPORTANT]
-> Se si personalizza la tabella di cronologia di migrazioni *dopo* applicando le migrazioni, l'utente è responsabile per l'aggiornamento della tabella esistente nel database.
+> Se si personalizza la tabella di cronologia migrazioni *dopo* applicare le migrazioni, è responsabile per l'aggiornamento la tabella esistente nel database.
 
 <a name="schema-and-table-name"></a>Nome dello schema e della tabella
 ----------------------
-È possibile modificare lo schema e il nome di tabella utilizzando il `MigrationsHistoryTable()` metodo `OnConfiguring()` (o `ConfigureServices()` su ASP.NET Core). Di seguito è riportato un esempio di utilizzo del provider di Entity Framework Core di SQL Server.
+È possibile modificare lo schema e nome della tabella usando il `MigrationsHistoryTable()` nel metodo `OnConfiguring()` (o `ConfigureServices()` in ASP.NET Core). Di seguito è riportato un esempio con il provider di EF Core di SQL Server.
 
 ``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -31,7 +30,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder options)
 
 <a name="other-changes"></a>Altre modifiche
 -------------
-Per configurare altri aspetti della tabella, eseguire l'override e sostituire la specifica del provider `IHistoryRepository` servizio. Di seguito è riportato un esempio di modificare il nome di colonna MigrationId di *Id* in SQL Server.
+Per configurare altri aspetti della tabella, eseguire l'override e sostituire le specifiche del provider `IHistoryRepository` servizio. Di seguito è riportato un esempio di modificare il nome della colonna MigrationId *Id* in SQL Server.
 
 ``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -41,7 +40,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder options)
 ```
 
 > [!WARNING]
-> `SqlServerHistoryRepository`si trova all'interno di uno spazio dei nomi interno e potrebbe cambiare nelle versioni future.
+> `SqlServerHistoryRepository` si trova all'interno di uno spazio dei nomi interna e potrebbe cambiare nelle versioni future.
 
 ``` csharp
 class MyHistoryRepository : SqlServerHistoryRepository

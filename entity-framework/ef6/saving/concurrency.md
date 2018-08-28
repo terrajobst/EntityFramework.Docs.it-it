@@ -2,19 +2,13 @@
 title: Gestione dei conflitti di concorrenza - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 2318e4d3-f561-4720-bbc3-921556806476
-caps.latest.revision: 3
-ms.openlocfilehash: b8608dbb4cadd60ff4ff4984583f8a9d843b3949
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: f233af217287dd6bf35e5b7fea8e44974168b312
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39120783"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42997810"
 ---
 # <a name="handling-concurrency-conflicts"></a>Gestione dei conflitti di concorrenza
 Ottimistica concorrenza implica ottimisticamente tenta di salvare l'entità al database nella speranza che i dati non è stata modificata l'entità è stata caricata. Se si scopre che i dati sono stati modificati, viene generata un'eccezione e il conflitto è necessario risolvere prima di provare a salvare di nuovo. Questo argomento illustra come gestire tali eccezioni in Entity Framework. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  

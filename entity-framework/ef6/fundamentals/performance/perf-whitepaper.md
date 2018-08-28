@@ -2,19 +2,13 @@
 title: Considerazioni sulle prestazioni per EF4 EF5 ed EF6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-caps.latest.revision: 4
-ms.openlocfilehash: c01cf2b28e56fb73783bd9ed0d133bffa0a7dbe7
-ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
+ms.openlocfilehash: f71a13ec06ad46259b3f33216367723b53314a5c
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/10/2018
-ms.locfileid: "39122891"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42996748"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>Considerazioni sulle prestazioni per Entity Framework 4, 5 e 6
 David Obando, Eric Dettinger e ad altri utenti

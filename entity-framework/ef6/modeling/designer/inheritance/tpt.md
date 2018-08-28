@@ -2,19 +2,13 @@
 title: Finestra di progettazione TPT (ereditarietà)-Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: efc78c31-b4ea-4ea3-a0cd-c69eb507020e
-caps.latest.revision: 3
-ms.openlocfilehash: c3ccb44f931b830a96a553d5af1e722a9ca4bbf0
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: 68980fa89446940b8b7f5f73c519d38e727a9039
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39121191"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42996348"
 ---
 # <a name="designer-tpt-inheritance"></a>Finestra di progettazione TPT (ereditarietà)
 Questa procedura dettagliata viene illustrato come implementare l'ereditarietà di (TPT) per ogni tipo di tabella nel modello usando Entity Framework Designer (Entity Framework Designer). L'ereditarietà tabella per tipo prevede l'utilizzo di una tabella separata nel database per la gestione dei dati relativi alle proprietà non ereditate e alle proprietà chiave di ogni tipo della gerarchia di ereditarietà.

@@ -2,19 +2,13 @@
 title: Entity Framework glossario - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
-caps.latest.revision: 3
-ms.openlocfilehash: cbd61838afc23dfb37cee7c624c65476c5270099
-ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
+ms.openlocfilehash: 4ad56c4d655e004d97c3537707fa6b13c7acf88e
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/10/2018
-ms.locfileid: "39121460"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42997719"
 ---
 # <a name="entity-framework-glossary"></a>Glossario di Entity Framework
 ## <a name="code-first"></a>Code First
@@ -32,7 +26,7 @@ Creazione di un modello di Entity Framework, tramite la finestra di progettazion
 ## <a name="eager-loading"></a>Caricamento eager
 Modello di caricamento dei dati correlati in una query per un tipo di entità carica anche entità correlate come parte della query.
 
-## <a name="ef-designer"></a>Finestra di progettazione di Entity Framework
+## <a name="ef-designer"></a>EF Designer
 Una finestra di progettazione visiva di Visual Studio che consente di creare un modello di Entity Framework usando le caselle e linee.
 
 ## <a name="entity"></a>Entità

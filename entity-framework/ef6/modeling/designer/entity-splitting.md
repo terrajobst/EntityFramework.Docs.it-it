@@ -2,19 +2,13 @@
 title: Separazione delle entità della finestra di progettazione - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
-caps.latest.revision: 3
-ms.openlocfilehash: 386b739363fb78641d5ebd8130fd19008bc8c9f6
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: 214561f0a0381bced3ceae0b6acfcd45f5dd65c5
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39121107"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42995619"
 ---
 # <a name="designer-entity-splitting"></a>Suddivisione di entità della finestra di progettazione
 Questa procedura dettagliata illustra come eseguire il mapping di un tipo di entità a due tabelle modificando un modello con Entity Framework Designer (Entity Framework Designer). È possibile eseguire il mapping di un'entità a più tabelle quando le tabelle in questione condividono una chiave comune. I concetti relativi all'esecuzione del mapping di un tipo di entità a due tabelle possono essere facilmente estesi anche all'esecuzione del mapping a più di due tabelle.

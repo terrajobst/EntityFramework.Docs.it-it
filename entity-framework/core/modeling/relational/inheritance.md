@@ -1,17 +1,15 @@
 ---
-title: Ereditarietà (Database relazionale) - Core a Entity Framework
+title: Ereditarietà (Database relazionale) - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
-ms.technology: entity-framework-core
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: 22eed0002b5903d3cfd18a7e4af0fcd2d46a5c4c
-ms.sourcegitcommit: d2434edbfa6fbcee7287e33b4915033b796e417e
+ms.openlocfilehash: 019893ec8268ef9e59d581799a13d63610c80616
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/12/2018
-ms.locfileid: "29152363"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42996322"
 ---
 # <a name="inheritance-relational-database"></a>Ereditarietà (Database relazionale)
 
@@ -21,15 +19,15 @@ ms.locfileid: "29152363"
 Ereditarietà nel modello di Entity Framework viene utilizzato per controllare la modalità di rappresentazione di ereditarietà nelle classi di entità nel database.
 
 > [!NOTE]  
-> Attualmente, solo il criterio di tabella per gerarchia (Implementerà) viene implementato in EF Core. Altri modelli comuni come tabella per tipo (tabella per tipo) e -per-concreto-tipo di tabella (TPC) non sono ancora disponibili.
+> Attualmente, solo il criterio di tabella per gerarchia (TPH) viene implementato in EF Core. Altri modelli comuni, ad esempio tabella per tipo (TPT) e tabella-per-tipo concreto (TP) non sono ancora disponibili.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, ereditarietà verrà mappato usando il modello di tabella per ogni-gerarchia (TPH). Implementerà Usa una singola tabella per archiviare i dati per tutti i tipi nella gerarchia. Una colonna discriminatore viene utilizzata per identificare il tipo di ogni riga rappresenta.
+Per convenzione, verrà mappata ereditarietà usando il modello di tabella per gerarchia (TPH). Tabella per gerarchia utilizza una singola tabella per archiviare i dati per tutti i tipi nella gerarchia. Consente di identificare il tipo di ogni riga rappresenta una colonna discriminatore.
 
-Core EF installerà ereditarietà solo se due o più tipi ereditati sono inclusi in modo esplicito nel modello (vedere [ereditarietà](../inheritance.md) per altri dettagli).
+EF Core configurerà ereditarietà solo se due o più tipi ereditati sono inclusi in modo esplicito nel modello (vedere [ereditarietà](../inheritance.md) per altri dettagli).
 
-Di seguito è riportato un esempio che illustra uno scenario semplice di ereditarietà e i dati archiviati in una tabella di database relazionale utilizzando il modello della tabella per gerarchia. Il *discriminatore* colonna identifica il tipo di *Blog* viene archiviato in ogni riga.
+Di seguito è riportato un esempio che illustra uno scenario di ereditarietà semplice e i dati archiviati in una tabella di database relazionali adottando il modello di tabella per gerarchia. Il *discriminatore* colonna identifica il tipo di *Blog* viene archiviato in ogni riga.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/Conventions/Samples/InheritanceDbSets.cs)] -->
 ``` csharp
@@ -55,11 +53,11 @@ public class RssBlog : Blog
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-Per configurare l'ereditarietà, è possibile utilizzare le annotazioni dei dati.
+È possibile usare le annotazioni dei dati per configurare l'ereditarietà.
 
 ## <a name="fluent-api"></a>API Fluent
 
-Per configurare il nome e il tipo di colonna discriminatore e i valori utilizzati per identificare ogni tipo nella gerarchia, è possibile utilizzare l'API Fluent.
+È possibile usare l'API Fluent per configurare il nome e il tipo della colonna discriminatore e i valori che vengono usati per identificare ogni tipo nella gerarchia.
 
 <!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/InheritanceTPHDiscriminator.cs?highlight=7,8,9,10)] -->
 ``` csharp
@@ -88,9 +86,9 @@ public class RssBlog : Blog
 }
 ```
 
-## <a name="configuring-the-discriminator-property"></a>Configurazione proprietà discriminator
+## <a name="configuring-the-discriminator-property"></a>Configurazione della proprietà discriminator
 
-Negli esempi precedenti, viene creato il discriminatore come un [nascondere proprietà](xref:core/modeling/shadow-properties) su entità di base della gerarchia. Poiché si tratta di una proprietà nel modello, può essere configurato come altre proprietà. Ad esempio, per impostare la lunghezza massima, quando viene utilizzato il valore predefinito, del discriminatore per convenzione:
+Negli esempi precedenti, il discriminatore viene creato come un [proprietà shadow](xref:core/modeling/shadow-properties) nell'entità di base della gerarchia. Poiché si tratta di una proprietà nel modello, può essere configurato esattamente come le altre proprietà. Ad esempio, per impostare la lunghezza massima quando viene usato il valore predefinito, discriminatore da convenzione:
 
 ```C#
 modelBuilder.Entity<Blog>()
@@ -98,7 +96,7 @@ modelBuilder.Entity<Blog>()
     .HasMaxLength(200);
 ```
 
-Il discriminatore può anche essere mappato a una proprietà CLR effettiva nell'entità. Ad esempio:
+Il discriminatore può anche eseguire il mapping a una proprietà CLR effettiva nell'entità. Ad esempio:
 ```C#
 class MyContext : DbContext
 {
@@ -124,7 +122,7 @@ public class RssBlog : Blog
 }
 ```
 
-Combinando queste due operazioni è possibile eseguire il mapping del discriminatore per una proprietà reale sia configurarlo:
+Combinando questi due elementi è possibile eseguire il mapping del discriminatore per una proprietà reale e configurarla:
 ```C#
 modelBuilder.Entity<Blog>(b =>
 {

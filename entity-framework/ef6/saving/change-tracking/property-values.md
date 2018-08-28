@@ -2,19 +2,13 @@
 title: Utilizzo dei valori delle proprietà - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
-ms.prod: entity-framework
-ms.author: divega
-ms.manager: avickers
-ms.technology: entity-framework-6
-ms.topic: article
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-caps.latest.revision: 3
-ms.openlocfilehash: 07b71c9efe4e1fc3fd25a52c9cfb25f61e92f859
-ms.sourcegitcommit: f05e7b62584cf228f17390bb086a61d505712e1b
+ms.openlocfilehash: a9b969950ec7dcfb86a2abc9c8bd6cc24899948c
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/08/2018
-ms.locfileid: "39120848"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42998303"
 ---
 # <a name="working-with-property-values"></a>Utilizzo di valori di proprietà
 Per la maggior parte Entity Framework si occuperà di stato, i valori originali e i valori correnti delle proprietà delle istanze di entità con rilevamento. Tuttavia, potrebbero esserci alcuni casi, ad esempio gli scenari disconnessi, in cui si desidera visualizzare o modificare le informazioni che EF ha le proprietà. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  

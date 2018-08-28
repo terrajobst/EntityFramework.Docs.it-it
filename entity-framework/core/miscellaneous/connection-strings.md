@@ -1,25 +1,23 @@
 ---
-title: Stringhe di connessione - Core a Entity Framework
+title: Stringhe di connessione - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
-ms.technology: entity-framework-core
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: b4ed01f0452d74ac49d3fde780caa5f1b25a6e97
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 942865effba7b491dd950886ea30b69a86f1186c
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052531"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42997671"
 ---
 # <a name="connection-strings"></a>Stringhe di connessione
 
-La maggior parte dei provider di database richiede una qualche forma di stringa di connessione per connettersi al database. In alcuni casi la stringa di connessione contiene informazioni riservate che devono essere protetti. È necessario anche modificare la stringa di connessione quando si sposta l'applicazione tra ambienti, ad esempio sviluppo, test e produzione.
+La maggior parte dei provider di database richiede una qualche forma di stringa di connessione per connettersi al database. In alcuni casi questa stringa di connessione contiene informazioni riservate che devono essere protetti. È necessario anche modificare la stringa di connessione come si trasferiscono le applicazioni tra ambienti, ad esempio sviluppo, test e produzione.
 
 ## <a name="net-framework-applications"></a>Applicazioni .NET framework
 
-Applicazioni .NET framework, ad esempio Windows Form, WPF, Console e ASP.NET 4, dispongono di un modello di stringa di connessione già testate. La stringa di connessione deve essere aggiunti al file app. config delle applicazioni (Web. config se si utilizza ASP.NET). Se la stringa di connessione contiene informazioni riservate, ad esempio nome utente e password, è possibile proteggere il contenuto del file di configurazione mediante [configurazione protetta](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
+Le applicazioni .NET framework, ad esempio WinForms, WPF, Console e ASP.NET 4, hanno un modello di stringa di connessione collaudate e testate. La stringa di connessione deve essere aggiunti al file app. config delle applicazioni (Web. config se si usa ASP.NET). Se la stringa di connessione contiene informazioni riservate, ad esempio nome utente e password, è possibile proteggere il contenuto del file di configurazione utilizzando [la configurazione protetta](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -33,9 +31,9 @@ Applicazioni .NET framework, ad esempio Windows Form, WPF, Console e ASP.NET 4, 
 ```
 
 > [!TIP]  
-> Il `providerName` impostazione non è obbligatorio nei componenti di base di EF le stringhe di connessione in App. config perché il provider di database viene configurato tramite codice.
+> Il `providerName` impostazione non è necessaria in stringhe di connessione EF Core archiviate nel file app. config perché il provider di database viene configurato tramite codice.
 
-Sarà quindi possibile leggere la stringa di connessione utilizzando il `ConfigurationManager` API del contesto `OnConfiguring` metodo. Potrebbe essere necessario aggiungere un riferimento di `System.Configuration` assembly framework per poter usare questa API.
+È quindi possibile leggere la stringa di connessione usando il `ConfigurationManager` API nel contesto `OnConfiguring` (metodo). Potrebbe essere necessario aggiungere un riferimento al `System.Configuration` assembly del framework per poter usare questa API.
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -52,7 +50,7 @@ public class BloggingContext : DbContext
 
 ## <a name="universal-windows-platform-uwp"></a>Piattaforma UWP (Universal Windows Platform)
 
-Le stringhe di connessione in un'applicazione UWP sono in genere una connessione specifica solo un nome di file locale di SQLite. Sono in genere non contengono informazioni riservate e non è necessario essere modificati in quanto un'applicazione viene distribuita. Di conseguenza, queste stringhe di connessione sono in genere supportate da rendere disponibile nel codice, come illustrato di seguito. Se si desidera spostarli fuori dal codice UWP supporta il concetto di impostazioni, vedere il [sezione Impostazioni App della documentazione UWP](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data) per informazioni dettagliate.
+Stringhe di connessione in un'applicazione UWP sono in genere una connessione di SQLite che specifica solo un nome di file locale. Sono in genere non contengono informazioni riservate e non è necessario essere modificata come un'applicazione viene distribuita. Di conseguenza, queste stringhe di connessione sono in genere accettabile deve rimanere nel codice, come illustrato di seguito. Se si desidera spostarli di fuori di codice di piattaforma UWP supporta il concetto di impostazioni, vedere la [sezione di impostazioni dell'App della documentazione di UWP](https://docs.microsoft.com/windows/uwp/app-settings/store-and-retrieve-app-data) per informazioni dettagliate.
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -69,7 +67,7 @@ public class BloggingContext : DbContext
 
 ## <a name="aspnet-core"></a>ASP.NET Core
 
-In ASP.NET Core, il sistema di configurazione è molto flessibile e può essere archiviata la stringa di connessione `appsettings.json`, una variabile di ambiente, l'archivio segreto utente o un'altra origine di configurazione. Vedere il [sezione di configurazione della documentazione di ASP.NET Core](https://docs.asp.net/en/latest/fundamentals/configuration.html) per altri dettagli. L'esempio seguente mostra la stringa di connessione archiviata nella `appsettings.json`.
+In ASP.NET Core è molto flessibile, il sistema di configurazione e la stringa di connessione può essere archiviata in `appsettings.json`, una variabile di ambiente, l'archivio user secret o un'altra origine di configurazione. Vedere le [sezione di configurazione della documentazione di ASP.NET Core](https://docs.asp.net/en/latest/fundamentals/configuration.html) per altri dettagli. L'esempio seguente mostra la stringa di connessione archiviata nella `appsettings.json`.
 
 ``` json
 {
@@ -79,7 +77,7 @@ In ASP.NET Core, il sistema di configurazione è molto flessibile e può essere 
 }
 ```
 
-Il contesto viene in genere configurato `Startup.cs` con la stringa di connessione da leggere dalla configurazione. Si noti il `GetConnectionString()` metodo cerca un valore di configurazione, la cui chiave è `ConnectionStrings:<connection string name>`.
+Il contesto è generalmente configurato nel `Startup.cs` con la stringa di connessione da leggere dalla configurazione. Si noti il `GetConnectionString()` metodo cerca un valore di configurazione la cui chiave è `ConnectionStrings:<connection string name>`.
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)

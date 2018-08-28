@@ -1,25 +1,23 @@
 ---
-title: Tra cui & esclusione delle proprietà - Core a Entity Framework
+title: Inclusione ed esclusione di proprietà - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: e9dff604-3469-4a05-8f9e-18ac281d82a9
-ms.technology: entity-framework-core
 uid: core/modeling/included-properties
-ms.openlocfilehash: a6eaea4319f6a4d30c223265bf75a88731a38443
-ms.sourcegitcommit: 01a75cd483c1943ddd6f82af971f07abde20912e
+ms.openlocfilehash: 07b70e4517b67490e04a9ec9fa22b9b5d5217681
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/27/2017
-ms.locfileid: "26052491"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42998255"
 ---
-# <a name="including--excluding-properties"></a>Tra cui & esclusione delle proprietà
+# <a name="including--excluding-properties"></a>Inclusione ed esclusione di proprietà
 
-Tra cui una proprietà nel modello indica che EF i metadati relativi a tale proprietà e verrà eseguito un tentativo di lettura e scrittura di valori dal/al database.
+Tra cui una proprietà nel modello significa che Entity Framework include metadati sulla proprietà e tenterà di leggere e scrivere i valori da e verso il database.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, le proprietà pubbliche con un metodo Get e set verranno inclusi nel modello.
+Per convenzione, le proprietà pubbliche con metodi get e un setter verranno inclusi nel modello.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
@@ -37,9 +35,9 @@ public class Blog
 }
 ```
 
-## <a name="fluent-api"></a>Microsoft Office Fluent API
+## <a name="fluent-api"></a>API Fluent
 
-È possibile utilizzare l'API Fluent per escludere una proprietà dal modello.
+È possibile usare l'API Fluent per escludere una proprietà dal modello.
 
 <!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IgnoreProperty.cs?highlight=7,8)] -->
 ``` csharp
