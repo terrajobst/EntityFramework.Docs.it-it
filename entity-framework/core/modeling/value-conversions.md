@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 02/19/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/value-conversions
-ms.openlocfilehash: d6b51a0a70ee527844b6fe995f39bec534dbaba8
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 2a1956221ecc920feba796e4d95cc97259e89c53
+ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996288"
+ms.lasthandoff: 08/29/2018
+ms.locfileid: "43152510"
 ---
 # <a name="value-conversions"></a>Conversioni dei valori
 
@@ -27,7 +27,7 @@ Le conversioni vengono definite utilizzando due `Func` alberi delle espressioni:
 ## <a name="configuring-a-value-converter"></a>Configurazione di un convertitore di valori
 
 Le conversioni dei valori definite nella proprietà nel `OnModelCreating` del `DbContext`. Si consideri, ad esempio, un tipo di entità e di enumerazione definito come:
-```Csharp
+``` csharp
 public class Rider
 {
     public int Id { get; set; }
@@ -43,7 +43,7 @@ public enum EquineBeast
 }
 ```
 Quindi le conversioni possono essere definite in `OnModelCreating` per archiviare i valori di enumerazione sotto forma di stringhe (ad esempio, "Asino", "Muli",...) nel database:
-```Csharp
+``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
@@ -60,7 +60,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ## <a name="the-valueconverter-class"></a>La classe di ValueConverter
 
 La chiamata `HasConversion` come illustrato in precedenza verrà creato un `ValueConverter` dell'istanza e impostarla sulla proprietà. Il `ValueConverter` invece può essere creato in modo esplicito. Ad esempio:
-```Csharp
+``` csharp
 var converter = new ValueConverter<EquineBeast, string>(
     v => v.ToString(),
     v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
@@ -82,7 +82,7 @@ EF Core include un set di pre-definite `ValueConverter` classi, presenti nel `Mi
 * `BoolToStringConverter` -Bool in stringhe, ad esempio "Y" e "N"
 * `BoolToTwoValuesConverter` -Bool a due valori
 * `BytesToStringConverter` -Matrice di byte alla stringa con codifica Base64
-* `CastingConverter` -Le conversioni che richiedono solo un cast Csharp
+* `CastingConverter` -Le conversioni che richiedono solo un cast di tipo
 * `CharToStringConverter` -Char stringa singolo carattere
 * `DateTimeOffsetToBinaryConverter` -DateTimeOffset valore a 64 bit con codifica binaria
 * `DateTimeOffsetToBytesConverter` -DateTimeOffset matrice di byte
@@ -101,7 +101,7 @@ EF Core include un set di pre-definite `ValueConverter` classi, presenti nel `Mi
 * `TimeSpanToTicksConverter` -Intervallo di tempo da segni di graduazione
 
 Si noti che `EnumToStringConverter` è incluso in questo elenco. Ciò significa che non è necessario specificare la conversione in modo esplicito, come illustrato in precedenza. Usare invece solo il convertitore incorporato:
-```Csharp
+``` csharp
 var converter = new EnumToStringConverter<EquineBeast>();
 
 modelBuilder
@@ -114,14 +114,14 @@ Si noti che tutti i convertitori predefiniti sono senza stati e pertanto una sin
 ## <a name="pre-defined-conversions"></a>Conversioni predefinite
 
 Per le conversioni comune per il quale esiste un convertitore di tipi incorporati non è necessario specificare in modo esplicito il convertitore. Al contrario, configurare solo il tipo di provider debba essere usate ed Entity Framework la userà automaticamente il convertitore predefinito appropriato. Enumerazione per le conversioni di stringa vengono usati come un esempio precedente, ma EF verranno effettivamente eseguire questa operazione automaticamente se è configurato il tipo di provider:
-```Csharp
+``` csharp
 modelBuilder
     .Entity<Rider>()
     .Property(e => e.Mount)
     .HasConversion<string>();
 ```
 La stessa operazione, è possibile specificare in modo esplicito il tipo di colonna. Ad esempio, se il tipo di entità è definito come in modo che:
-```Csharp
+``` csharp
 public class Rider
 {
     public int Id { get; set; }

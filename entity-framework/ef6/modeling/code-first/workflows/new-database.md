@@ -3,18 +3,18 @@ title: Code First per un nuovo Database - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
-ms.openlocfilehash: bb44a3300bc8ffc9d7050c4784e7b76b29c61796
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 50c6a4710bc50879304f64e781a46c4836f86882
+ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994618"
+ms.lasthandoff: 08/29/2018
+ms.locfileid: "43152478"
 ---
 # <a name="code-first-to-a-new-database"></a>Code First per un nuovo Database
-Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle troppo. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
+Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
 
 ## <a name="watch-the-video"></a>Guarda il video
-Questo video viene fornita un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle troppo. Codice prima di tutto consente di definire il modello di utilizzo di classi c# o VB.Net. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
+Questo video viene fornita un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello di utilizzo di classi c# o VB.Net. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
 
 **Presentato da**: [Rowan Miller](http://romiller.com/)
 

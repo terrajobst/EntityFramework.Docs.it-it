@@ -3,12 +3,12 @@ title: Asincrono di query e save - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: 758f8bc3d14fc1f60f14ff14f4251aeed057c518
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 64051dea740b2183cb904d7fb4293d7048c218ca
+ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994463"
+ms.lasthandoff: 08/29/2018
+ms.locfileid: "43152437"
 ---
 # <a name="async-query-and-save"></a>Asincrono di query e salvare
 > [!NOTE]
@@ -137,7 +137,7 @@ Ora che abbiamo un modello di EF, è possibile scrivere codice che lo usa per es
 
 Questo codice chiama il **PerformDatabaseOperations** metodo che consente di salvare un nuovo **Blog** per il database, quindi recupera tutti i **blog** dal database e li visualizza per il **Console**. Al termine, il programma scrive un'offerta del giorno per il **Console**.
 
-Poiché il codice è sincrona, è possibile osservare il flusso di esecuzione seguenti quando si esegue il programma:
+Poiché il codice sincrono, è possibile osservare il seguente flusso di esecuzione quando si esegue il programma:
 
 1.  **SaveChanges** inizia a eseguire il push di nuove **Blog** al database
 2.  **SaveChanges** completa

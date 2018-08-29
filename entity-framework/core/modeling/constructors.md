@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
-ms.openlocfilehash: 0536393d074d82583f47faae13cc22498193cb7e
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 1b36197465fb9a6571a306d36eb1e9d885a5399e
+ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994893"
+ms.lasthandoff: 08/29/2018
+ms.locfileid: "43152465"
 ---
 # <a name="entity-types-with-constructors"></a>Tipi di entità con costruttori
 
@@ -25,7 +25,7 @@ A partire da EF Core 2.1, è ora possibile definire un costruttore con parametri
 
 Si consideri un tipico modello/Post di Blog:
 
-```Csharp
+``` csharp
 public class Blog
 {
     public int Id { get; set; }
@@ -50,7 +50,7 @@ public class Post
 
 Quando Entity Framework Core crea istanze di questi tipi, ad esempio per i risultati di una query, verrà prima chiamare il costruttore senza parametri predefinito e quindi impostare ciascuna proprietà sul valore dal database. Tuttavia, se EF Core consente di trovare un costruttore con parametri con i nomi dei parametri e i tipi che corrispondono a quelle di eseguito il mapping delle proprietà, quindi chiamerà invece il costruttore con parametri con valori di tali proprietà e non imposterà ogni proprietà in modo esplicito. Ad esempio:
 
-```Csharp
+``` csharp
 public class Blog
 {
     public Blog(int id, string name, string author)
@@ -99,7 +99,7 @@ Una volta che vengono impostate tramite il costruttore è più sensato per rende
 * Usando i valori di chiave generati automaticamente richiede una proprietà chiave che è di lettura-scrittura, poiché il valore della chiave deve essere impostato per il generatore di chiavi durante l'inserimento di nuove entità.
 
 Un modo semplice per evitare queste operazioni è usare Setter privati. Ad esempio:
-```Csharp
+``` csharp
 public class Blog
 {
     public Blog(int id, string name, string author)
@@ -139,7 +139,7 @@ EF Core considera una proprietà con setter privati di lettura / scrittura, il c
 
 Un'alternativa all'uso di Setter privati consiste nel rendere proprietà realmente di sola lettura e aggiungere mapping di più esplicito in OnModelCreating. In modo analogo, alcune proprietà possono essere rimosso completamente e sostituite con solo campi. Ad esempio, prendere in considerazione questi tipi di entità:
 
-```Csharp
+``` csharp
 public class Blog
 {
     private int _id;
@@ -174,7 +174,7 @@ public class Post
 }
 ```
 E questa configurazione in OnModelCreating:
-```Csharp
+``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity<Blog>(
@@ -215,7 +215,7 @@ EF Core può anche inserire "servizi" nel costruttore del tipo di entità. Di se
 
 Ad esempio, un oggetto DbContext inserito è utilizzabile per accedere in modo selettivo del database per ottenere informazioni sulle entità correlate senza il caricamento di tutti. Nell'esempio seguente questo viene usato per ottenere il numero di post di blog senza caricare i post di:
 
-```Csharp
+``` csharp
 public class Blog
 {
     public Blog()
