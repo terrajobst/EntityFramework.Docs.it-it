@@ -5,51 +5,51 @@ ms.author: anpete
 ms.date: 11/03/2017
 ms.technology: entity-framework-core
 uid: core/querying/filters
-ms.openlocfilehash: 4e3c3c99d155f69e00fed99c415f519808ea1a68
-ms.sourcegitcommit: 6e379265e4f087fb7cf180c824722c81750554dc
+ms.openlocfilehash: 6b7a4069917c93015a218c131ff0d0a3920fb69d
+ms.sourcegitcommit: 4467032fd6ca223e5965b59912d74cf88a1dd77f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2017
-ms.locfileid: "26053901"
+ms.lasthandoff: 08/01/2018
+ms.locfileid: "42447640"
 ---
-# <a name="global-query-filters"></a><span data-ttu-id="3c83e-102">Filtri di query globali</span><span class="sxs-lookup"><span data-stu-id="3c83e-102">Global Query Filters</span></span>
+# <a name="global-query-filters"></a><span data-ttu-id="5b867-102">Filtri di query globali</span><span class="sxs-lookup"><span data-stu-id="5b867-102">Global Query Filters</span></span>
 
-<span data-ttu-id="3c83e-103">I filtri di query globali sono predicati di query LINQ (un'espressione booleana in genere passata all'operatore di query *Where* di LINQ) applicati ai tipi di entità nel modello di metadati (solitamente in *OnModelCreating*).</span><span class="sxs-lookup"><span data-stu-id="3c83e-103">Global query filters are LINQ query predicates (a boolean expression typically passed to the LINQ *Where* query operator) applied to Entity Types in the metadata model (usually in *OnModelCreating*).</span></span> <span data-ttu-id="3c83e-104">Questi filtri vengono automaticamente applicati a qualsiasi query LINQ che interessa questi tipi di entità, inclusi quelli a cui si fa riferimento in modo indiretto, ad esempio tramite l'uso di riferimenti alle proprietà Include o di navigazione diretta.</span><span class="sxs-lookup"><span data-stu-id="3c83e-104">Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references.</span></span> <span data-ttu-id="3c83e-105">Alcune applicazioni comuni di questa funzionalità sono:</span><span class="sxs-lookup"><span data-stu-id="3c83e-105">Some common applications of this feature are:</span></span>
+<span data-ttu-id="5b867-103">I filtri di query globali sono predicati di query LINQ (un'espressione booleana in genere passata all'operatore di query *Where* di LINQ) applicati ai tipi di entità nel modello di metadati (solitamente in *OnModelCreating*).</span><span class="sxs-lookup"><span data-stu-id="5b867-103">Global query filters are LINQ query predicates (a boolean expression typically passed to the LINQ *Where* query operator) applied to Entity Types in the metadata model (usually in *OnModelCreating*).</span></span> <span data-ttu-id="5b867-104">Questi filtri vengono automaticamente applicati a qualsiasi query LINQ che interessa questi tipi di entità, inclusi quelli a cui si fa riferimento in modo indiretto, ad esempio tramite l'uso di riferimenti alle proprietà Include o di navigazione diretta.</span><span class="sxs-lookup"><span data-stu-id="5b867-104">Such filters are automatically applied to any LINQ queries involving those Entity Types, including Entity Types referenced indirectly, such as through the use of Include or direct navigation property references.</span></span> <span data-ttu-id="5b867-105">Alcune applicazioni comuni di questa funzionalità sono:</span><span class="sxs-lookup"><span data-stu-id="5b867-105">Some common applications of this feature are:</span></span>
 
-* <span data-ttu-id="3c83e-106">**Eliminazione temporanea**, un tipo di entità definisce una proprietà *IsDeleted*.</span><span class="sxs-lookup"><span data-stu-id="3c83e-106">**Soft delete** - An Entity Type defines an *IsDeleted* property.</span></span>
-* <span data-ttu-id="3c83e-107">**Multi-tenancy**, un tipo di entità definisce una proprietà *TenantId*.</span><span class="sxs-lookup"><span data-stu-id="3c83e-107">**Multi-tenancy** - An Entity Type defines a *TenantId* property.</span></span>
+* <span data-ttu-id="5b867-106">**Eliminazione temporanea**, un tipo di entità definisce una proprietà *IsDeleted*.</span><span class="sxs-lookup"><span data-stu-id="5b867-106">**Soft delete** - An Entity Type defines an *IsDeleted* property.</span></span>
+* <span data-ttu-id="5b867-107">**Multi-tenancy**, un tipo di entità definisce una proprietà *TenantId*.</span><span class="sxs-lookup"><span data-stu-id="5b867-107">**Multi-tenancy** - An Entity Type defines a *TenantId* property.</span></span>
 
-## <a name="example"></a><span data-ttu-id="3c83e-108">Esempio</span><span class="sxs-lookup"><span data-stu-id="3c83e-108">Example</span></span>
+## <a name="example"></a><span data-ttu-id="5b867-108">Esempio</span><span class="sxs-lookup"><span data-stu-id="5b867-108">Example</span></span>
 
-<span data-ttu-id="3c83e-109">L'esempio seguente mostra come usare i filtri di query globali per implementare i comportamenti di query per eliminazione temporanea e multi-tenancy in un modello di blog semplice.</span><span class="sxs-lookup"><span data-stu-id="3c83e-109">The following example shows how to use Global Query Filters to implement soft-delete and multi-tenancy query behaviors in a simple blogging model.</span></span>
-
-> [!TIP]
-> <span data-ttu-id="3c83e-110">È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFrameworkCore/tree/dev/samples/QueryFilters) di questo articolo in GitHub.</span><span class="sxs-lookup"><span data-stu-id="3c83e-110">You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/dev/samples/QueryFilters) on GitHub.</span></span>
-
-<span data-ttu-id="3c83e-111">Prima di tutto, definire le entità:</span><span class="sxs-lookup"><span data-stu-id="3c83e-111">First, define the entities:</span></span>
-
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Entities)]
-
-<span data-ttu-id="3c83e-112">Si noti la dichiarazione di un campo __tenantId_ per l'entità _Blog_.</span><span class="sxs-lookup"><span data-stu-id="3c83e-112">Note the declaration of a __tenantId_ field on the _Blog_ entity.</span></span> <span data-ttu-id="3c83e-113">Questo verrà usato per associare ogni istanza di Blog a un tenant specifico.</span><span class="sxs-lookup"><span data-stu-id="3c83e-113">This will be used to associate each Blog instance with a specific tenant.</span></span> <span data-ttu-id="3c83e-114">Viene anche definita una proprietà _IsDeleted_ per il tipo di entità _Post_.</span><span class="sxs-lookup"><span data-stu-id="3c83e-114">Also defined is an _IsDeleted_ property on the _Post_ entity type.</span></span> <span data-ttu-id="3c83e-115">Questa proprietà viene usata per tenere traccia dell'eliminazione temporanea di un'istanza di _Post_.</span><span class="sxs-lookup"><span data-stu-id="3c83e-115">This is used this to keep track of whether a _Post_ instance has been "soft-deleted".</span></span> <span data-ttu-id="3c83e-116">Ad esempio L'istanza è contrassegnata come eliminata senza rimuovere fisicamente i dati sottostanti.</span><span class="sxs-lookup"><span data-stu-id="3c83e-116">I.e. The instance is marked as deleted withouth physically removing the underlying data.</span></span>
-
-<span data-ttu-id="3c83e-117">A questo punto, configurare i filtri di query in _OnModelCreating_ usando l'API ```HasQueryFilter```.</span><span class="sxs-lookup"><span data-stu-id="3c83e-117">Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilter``` API.</span></span>
-
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#Configuration)]
-
-<span data-ttu-id="3c83e-118">Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno ora applicate automaticamente a tutte le query LINQ per tali tipi.</span><span class="sxs-lookup"><span data-stu-id="3c83e-118">The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.</span></span>
+<span data-ttu-id="5b867-109">L'esempio seguente mostra come usare i filtri di query globali per implementare i comportamenti di query per eliminazione temporanea e multi-tenancy in un modello di blog semplice.</span><span class="sxs-lookup"><span data-stu-id="5b867-109">The following example shows how to use Global Query Filters to implement soft-delete and multi-tenancy query behaviors in a simple blogging model.</span></span>
 
 > [!TIP]
-> <span data-ttu-id="3c83e-119">Si noti l'uso del campo a livello di istanza di DbContext ```_tenantId```, usato per impostare il tenant corrente.</span><span class="sxs-lookup"><span data-stu-id="3c83e-119">Note the use of a DbContext instance level field: ```_tenantId``` used to set the current tenant.</span></span> <span data-ttu-id="3c83e-120">I filtri a livello di modello useranno il valore dell'istanza di contesto corretta,</span><span class="sxs-lookup"><span data-stu-id="3c83e-120">Model-level filters will use the value from the correct context instance.</span></span> <span data-ttu-id="3c83e-121">Ad esempio L'istanza che esegue la query.</span><span class="sxs-lookup"><span data-stu-id="3c83e-121">I.e. The instance that is executing the query.</span></span>
+> <span data-ttu-id="5b867-110">È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryFilters) di questo articolo in GitHub.</span><span class="sxs-lookup"><span data-stu-id="5b867-110">You can view this article's [sample](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryFilters) on GitHub.</span></span>
 
-## <a name="disabling-filters"></a><span data-ttu-id="3c83e-122">Disabilitazione dei filtri</span><span class="sxs-lookup"><span data-stu-id="3c83e-122">Disabling Filters</span></span>
+<span data-ttu-id="5b867-111">Prima di tutto, definire le entità:</span><span class="sxs-lookup"><span data-stu-id="5b867-111">First, define the entities:</span></span>
 
-<span data-ttu-id="3c83e-123">È possibile disabilitare i filtri per singole query LINQ usando l'operatore ```IgnoreQueryFilters()```.</span><span class="sxs-lookup"><span data-stu-id="3c83e-123">Filters may be disabled for individual LINQ queries by using the ```IgnoreQueryFilters()``` operator.</span></span>
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Entities)]
 
-[!code-csharp[Main](../../../efcore-dev/samples/QueryFilters/Program.cs#IgnoreFilters)]
+<span data-ttu-id="5b867-112">Si noti la dichiarazione di un campo __tenantId_ per l'entità _Blog_.</span><span class="sxs-lookup"><span data-stu-id="5b867-112">Note the declaration of a __tenantId_ field on the _Blog_ entity.</span></span> <span data-ttu-id="5b867-113">Questo verrà usato per associare ogni istanza di Blog a un tenant specifico.</span><span class="sxs-lookup"><span data-stu-id="5b867-113">This will be used to associate each Blog instance with a specific tenant.</span></span> <span data-ttu-id="5b867-114">Viene anche definita una proprietà _IsDeleted_ per il tipo di entità _Post_.</span><span class="sxs-lookup"><span data-stu-id="5b867-114">Also defined is an _IsDeleted_ property on the _Post_ entity type.</span></span> <span data-ttu-id="5b867-115">Questa proprietà viene usata per tenere traccia dell'eliminazione temporanea di un'istanza di _Post_.</span><span class="sxs-lookup"><span data-stu-id="5b867-115">This is used to keep track of whether a _Post_ instance has been "soft-deleted".</span></span> <span data-ttu-id="5b867-116">L'istanza è contrassegnata come eliminata senza rimuovere fisicamente i dati sottostanti.</span><span class="sxs-lookup"><span data-stu-id="5b867-116">That is, the instance is marked as deleted without physically removing the underlying data.</span></span>
 
-## <a name="limitations"></a><span data-ttu-id="3c83e-124">Limitazioni</span><span class="sxs-lookup"><span data-stu-id="3c83e-124">Limitations</span></span>
+<span data-ttu-id="5b867-117">A questo punto, configurare i filtri di query in _OnModelCreating_ usando l'API ```HasQueryFilter```.</span><span class="sxs-lookup"><span data-stu-id="5b867-117">Next, configure the query filters in _OnModelCreating_ using the ```HasQueryFilter``` API.</span></span>
 
-<span data-ttu-id="3c83e-125">I filtri di query globali presentano le limitazioni seguenti:</span><span class="sxs-lookup"><span data-stu-id="3c83e-125">Global query filters have the following limitations:</span></span>
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#Configuration)]
 
-* <span data-ttu-id="3c83e-126">I filtri non possono contenere riferimenti a proprietà di navigazione.</span><span class="sxs-lookup"><span data-stu-id="3c83e-126">Filters cannot contain references to navigation properties.</span></span>
-* <span data-ttu-id="3c83e-127">I filtri possono essere definiti solo per il tipo di entità radice di una gerarchia di ereditarietà.</span><span class="sxs-lookup"><span data-stu-id="3c83e-127">Filters can only be defined for the root Entity Type of an inheritance hierarchy.</span></span>
+<span data-ttu-id="5b867-118">Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno ora applicate automaticamente a tutte le query LINQ per tali tipi.</span><span class="sxs-lookup"><span data-stu-id="5b867-118">The predicate expressions passed to the _HasQueryFilter_ calls will now automatically be applied to any LINQ queries for those types.</span></span>
+
+> [!TIP]
+> <span data-ttu-id="5b867-119">Si noti l'uso del campo a livello di istanza di DbContext ```_tenantId```, usato per impostare il tenant corrente.</span><span class="sxs-lookup"><span data-stu-id="5b867-119">Note the use of a DbContext instance level field: ```_tenantId``` used to set the current tenant.</span></span> <span data-ttu-id="5b867-120">I filtri a livello di modello useranno il valore dell'istanza del contesto corretta, ovvero l'istanza che esegue la query.</span><span class="sxs-lookup"><span data-stu-id="5b867-120">Model-level filters will use the value from the correct context instance (that is, the instance that is executing the query).</span></span>
+
+## <a name="disabling-filters"></a><span data-ttu-id="5b867-121">Disabilitazione dei filtri</span><span class="sxs-lookup"><span data-stu-id="5b867-121">Disabling Filters</span></span>
+
+<span data-ttu-id="5b867-122">È possibile disabilitare i filtri per singole query LINQ usando l'operatore ```IgnoreQueryFilters()```.</span><span class="sxs-lookup"><span data-stu-id="5b867-122">Filters may be disabled for individual LINQ queries by using the ```IgnoreQueryFilters()``` operator.</span></span>
+
+[!code-csharp[Main](../../../efcore-repo/samples/QueryFilters/Program.cs#IgnoreFilters)]
+
+## <a name="limitations"></a><span data-ttu-id="5b867-123">Limitazioni</span><span class="sxs-lookup"><span data-stu-id="5b867-123">Limitations</span></span>
+
+<span data-ttu-id="5b867-124">I filtri di query globali presentano le limitazioni seguenti:</span><span class="sxs-lookup"><span data-stu-id="5b867-124">Global query filters have the following limitations:</span></span>
+
+* <span data-ttu-id="5b867-125">I filtri non possono contenere riferimenti a proprietà di navigazione.</span><span class="sxs-lookup"><span data-stu-id="5b867-125">Filters cannot contain references to navigation properties.</span></span>
+* <span data-ttu-id="5b867-126">I filtri possono essere definiti solo per il tipo di entità radice di una gerarchia di ereditarietà.</span><span class="sxs-lookup"><span data-stu-id="5b867-126">Filters can only be defined for the root Entity Type of an inheritance hierarchy.</span></span>
