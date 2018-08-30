@@ -6,12 +6,12 @@ ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 ms.technology: entity-framework-core
 uid: core/querying/related-data
-ms.openlocfilehash: 5f1fb9376300739ab0e306d9d60e7ec71aa2d2e7
-ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
+ms.openlocfilehash: 05833055f4744940364da4fdea7ded9a90d67508
+ms.sourcegitcommit: a3aec015e0ad7ee31e0f75f00bbf2d286a3ac5c1
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/26/2018
-ms.locfileid: "31812651"
+ms.lasthandoff: 07/18/2018
+ms.locfileid: "42447711"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
 
@@ -64,52 +64,52 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 
 Dato il modello seguente:
 
-```Csharp
-    public class SchoolContext : DbContext
+```csharp
+public class SchoolContext : DbContext
+{
+    public DbSet<Person> People { get; set; }
+    public DbSet<School> Schools { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public DbSet<Person> People { get; set; }
-        public DbSet<School> Schools { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<School>().HasMany(s => s.Students).WithOne(s => s.School);
-        }
+        modelBuilder.Entity<School>().HasMany(s => s.Students).WithOne(s => s.School);
     }
+}
 
-    public class Person
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+public class Person
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
 
-    public class Student : Person
-    {
-        public School School { get; set; }
-    }
+public class Student : Person
+{
+    public School School { get; set; }
+}
 
-    public class School
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
+public class School
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
 
-        public List<Student> Students { get; set; }
-    }
+    public List<Student> Students { get; set; }
+}
 ```
 
 Il contenuto della navigazione `School` di tutte le entità People che sono Student può essere caricato in modalità eager usando vari modelli:
 
 - Cast
-  ```Csharp
+  ```csharp
   context.People.Include(person => ((Student)person).School).ToList()
   ```
 
 - Operatore `as`
-  ```Csharp
+  ```csharp
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
 - Overload di `Include` che accetta parametri di tipo `string`
-  ```Csharp
+  ```csharp
   context.People.Include("Student").ToList()
   ```
 
@@ -154,20 +154,20 @@ Ciò consente di eseguire operazioni quali l'esecuzione di un operatore di aggre
 > Questa funzionalità è stata introdotta in EF Core 2.1.
 
 Il modo più semplice per usare il caricamento lazy consiste nell'installare il pacchetto [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) e abilitarlo con una chiamata a `UseLazyLoadingProxies`. Ad esempio:
-```Csharp
+```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
         .UseLazyLoadingProxies()
         .UseSqlServer(myConnectionString);
 ```
 O quando si usa AddDbContext:
-```Csharp
-    .AddDbContext<BloggingContext>(
-        b => b.UseLazyLoadingProxies()
-              .UseSqlServer(myConnectionString));
+```csharp
+.AddDbContext<BloggingContext>(
+    b => b.UseLazyLoadingProxies()
+          .UseSqlServer(myConnectionString));
 ```
 EF Core abiliterà quindi il caricamento lazy per qualsiasi proprietà di navigazione che può essere sottoposta a override, ovvero deve essere `virtual` e in una classe ereditabile. Ad esempio, nelle entità seguenti, le proprietà di navigazione `Post.Blog` e `Blog.Posts` vengono caricate in modalità lazy.
-```Csharp
+```csharp
 public class Blog
 {
     public int Id { get; set; }
@@ -188,7 +188,7 @@ public class Post
 ### <a name="lazy-loading-without-proxies"></a>Caricamento lazy senza proxy
 
 I proxy di caricamento lazy operano inserendo il servizio `ILazyLoader` in un'entità, come descritto in [Costruttori di tipi di entità](../modeling/constructors.md). Ad esempio:
-```Csharp
+```csharp
 public class Blog
 {
     private ICollection<Post> _posts;
@@ -209,7 +209,7 @@ public class Blog
 
     public ICollection<Post> Posts
     {
-        get => LazyLoader?.Load(this, ref _posts);
+        get => LazyLoader.Load(this, ref _posts);
         set => _posts = value;
     }
 }
@@ -235,13 +235,13 @@ public class Post
 
     public Blog Blog
     {
-        get => LazyLoader?.Load(this, ref _blog);
+        get => LazyLoader.Load(this, ref _blog);
         set => _blog = value;
     }
 }
 ```
-In questo caso non è richiesto che i tipi di entità vengano ereditati o che le proprietà di navigazione siano virtuali e le istanze di entità possono essere create con `new` per eseguire il caricamento lazy dopo il collegamento a un contesto. Tuttavia, è necessario un riferimento al servizio `ILazyLoader`, che associa i tipi di entità all'assembly di EF Core. Per evitare questo, EF Core consente l'inserimento del metodo `ILazyLoader.Load` come delegato. Ad esempio:
-```Csharp
+In questo caso non è richiesto che i tipi di entità vengano ereditati o che le proprietà di navigazione siano virtuali e le istanze di entità possono essere create con `new` per eseguire il caricamento lazy dopo il collegamento a un contesto. Tuttavia, è necessario un riferimento al servizio `ILazyLoader`, che viene definito nel pacchetto [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/). Questo pacchetto contiene un set minimo di tipi in modo che vi sia un impatto minimo per le dipendenze. Tuttavia, per evitare completamente di dipendere da pacchetti di EF Core nei tipi di entità, è possibile inserire il metodo `ILazyLoader.Load` come delegato. Ad esempio:
+```csharp
 public class Blog
 {
     private ICollection<Post> _posts;
@@ -262,7 +262,7 @@ public class Blog
 
     public ICollection<Post> Posts
     {
-        get => LazyLoader?.Load(this, ref _posts);
+        get => LazyLoader.Load(this, ref _posts);
         set => _posts = value;
     }
 }
@@ -288,13 +288,13 @@ public class Post
 
     public Blog Blog
     {
-        get => LazyLoader?.Load(this, ref _blog);
+        get => LazyLoader.Load(this, ref _blog);
         set => _blog = value;
     }
 }
 ```
 Il codice precedente usa un metodo di estensione `Load` per chiarire l'uso del delegato:
-```Csharp
+```csharp
 public static class PocoLoadingExtensions
 {
     public static TRelated Load<TRelated>(
@@ -315,7 +315,7 @@ public static class PocoLoadingExtensions
 
 ## <a name="related-data-and-serialization"></a>Dati correlati e serializzazione
 
-Dato che EF Core correggerà automaticamente le proprietà di navigazione, è possibile che il grafo degli oggetti contenga cicli. Ad esempio, il caricamento di un blog e di post correlati risulterà in un oggetto blog che fa riferimento a una raccolta di post. Ognuno di tali post avrà un riferimento al blog.
+Dato che EF Core correggerà automaticamente le proprietà di navigazione, è possibile che il grafo degli oggetti contenga cicli. Ad esempio, il caricamento di un blog e dei post correlati risulterà in un oggetto blog che fa riferimento a una raccolta di post. Ognuno di tali post avrà un riferimento al blog.
 
 Alcuni framework di serializzazione non consentono tali cicli. Ad esempio, Json.NET genererà l'eccezione seguente se viene rilevato un ciclo.
 
@@ -323,7 +323,7 @@ Alcuni framework di serializzazione non consentono tali cicli. Ad esempio, Json.
 
 Se si usa ASP.NET Core, è possibile configurare Json.NET per ignorare i cicli trovati nel grafo degli oggetti. Questa operazione viene eseguita nel metodo `ConfigureServices(...)` in `Startup.cs`.
 
-``` csharp
+```csharp
 public void ConfigureServices(IServiceCollection services)
 {
     ...

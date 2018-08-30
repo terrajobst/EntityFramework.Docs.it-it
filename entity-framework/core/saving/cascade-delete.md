@@ -6,12 +6,12 @@ ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 ms.technology: entity-framework-core
 uid: core/saving/cascade-delete
-ms.openlocfilehash: 0fc8929c56d4c657b7fb1e3c8e4b1a71659220c9
-ms.sourcegitcommit: 507a40ed050fee957bcf8cf05f6e0ec8a3b1a363
+ms.openlocfilehash: 7e1c87ae3a955c22b267a108ea7c2bb504e9acc3
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/26/2018
-ms.locfileid: "31812677"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "42447769"
 ---
 # <a name="cascade-delete"></a>Eliminazione a catena
 
@@ -32,23 +32,27 @@ Esistono tre azioni che EF può eseguire quando viene eliminata un'entità princ
 
 Per la seconda azione indicata in precedenza, l'impostazione di un valore di chiave esterna su Null non è valida se la chiave esterna non ammette valori Null. (Una chiave esterna che non ammette valori Null equivale a una relazione obbligatoria.) In questi casi, EF Core rileva che proprietà di chiave esterna è stata contrassegnata come Null fino a quando non viene chiamato SaveChanges e in quel momento viene generata un'eccezione in quanto la modifica non può essere salvata in modo permanente nel database. La situazione è simile alla segnalazione di una violazione di vincolo dal database.
 
-Sono disponibili quattro comportamenti di eliminazione, elencati nelle tabelle seguenti. Per le relazioni facoltative (chiave esterna che ammette valori Null), _è_ possibile salvare un valore di chiave esterna Null, con gli effetti seguenti:
+Sono disponibili quattro comportamenti di eliminazione, elencati nelle tabelle seguenti.
+
+### <a name="optional-relationships"></a>Relazioni facoltative
+Per le relazioni facoltative (chiave esterna che ammette valori Null), _è_ possibile salvare un valore di chiave esterna Null, con gli effetti seguenti:
 
 | Nome del comportamento               | Effetto sull'entità dipendente/figlio in memoria    | Effetto sull'entità dipendente/figlio nel database  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
 | **Cascade**                 | Le entità vengono eliminate                   | Le entità vengono eliminate                   |
-| **ClientSetNull** (impostazione predefinita) | Le proprietà di chiave esterna vengono impostate su Null | Nessuno                                   |
+| **ClientSetNull** (impostazione predefinita) | Le proprietà di chiave esterna vengono impostate su Null | nessuno                                   |
 | **SetNull**                 | Le proprietà di chiave esterna vengono impostate su Null | Le proprietà di chiave esterna vengono impostate su Null |
-| **Restrict**                | Nessuno                                   | Nessuno                                   |
+| **Restrict**                | nessuno                                   | nessuno                                   |
 
+### <a name="required-relationships"></a>Relazioni obbligatorie
 Per le relazioni obbligatorie (chiave esterna che non ammette valori Null), _non_ è possibile salvare un valore di chiave esterna Null, con gli effetti seguenti:
 
 | Nome del comportamento         | Effetto sull'entità dipendente/figlio in memoria | Effetto sull'entità dipendente/figlio nel database |
 |:----------------------|:------------------------------------|:--------------------------------------|
 | **Cascade** (impostazione predefinita) | Le entità vengono eliminate                | Le entità vengono eliminate                  |
-| **ClientSetNull**     | SaveChanges genera un'eccezione                  | Nessuno                                  |
+| **ClientSetNull**     | SaveChanges genera un'eccezione                  | nessuno                                  |
 | **SetNull**           | SaveChanges genera un'eccezione                  | SaveChanges genera un'eccezione                    |
-| **Restrict**          | Nessuno                                | Nessuno                                  |
+| **Restrict**          | nessuno                                | nessuno                                  |
 
 Nelle tabelle precedenti, la condizione *Nessuno* può comportare una violazione di vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma non viene eseguita alcuna azione per modificare la chiave esterna di un'entità dipendente/figlio, il database genererà probabilmente eccezioni durante SaveChanges a causa di una violazione del vincolo di chiave esterna.
 

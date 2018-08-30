@@ -6,12 +6,12 @@ ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 ms.technology: entity-framework-core
 uid: core/saving/transactions
-ms.openlocfilehash: fe4c0d6ad7ccb2e97dc94fbf2eb26a41e7fbcb19
-ms.sourcegitcommit: 7113e8675f26cbb546200824512078bf360225df
+ms.openlocfilehash: 6e6ded74e15187b387e8e0b2ad00cb47a84ff7e8
+ms.sourcegitcommit: 6cf6493d81b6d81b0b0f37a00e0fc23ec7189158
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/28/2018
-ms.locfileid: "30202497"
+ms.lasthandoff: 06/12/2018
+ms.locfileid: "42447725"
 ---
 # <a name="using-transactions"></a>Uso delle transazioni
 
@@ -32,35 +32,7 @@ Per la maggior parte delle applicazioni, questo comportamento predefinito è suf
 
 Non tutti i provider di database supportano le transazioni. Alcuni provider possono generare eccezioni o non eseguire alcuna operazione quando vengono chiamate API per le transazioni.
 
-<!-- [!code-csharp[Main](samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?highlight=3,17,18,19)] -->
-``` csharp
-        using (var context = new BloggingContext())
-        {
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                try
-                {
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-                    context.SaveChanges();
-
-                    context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-                    context.SaveChanges();
-
-                    var blogs = context.Blogs
-                        .OrderBy(b => b.Url)
-                        .ToList();
-
-                    // Commit transaction if all commands succeed, transaction will auto-rollback
-                    // when disposed if either commands fails
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    // TODO: Handle failure
-                }
-            }
-        }
-```
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/ControllingTransaction/Sample.cs?name=Transaction&highlight=3,17,18,19)]
 
 ## <a name="cross-context-transaction-relational-databases-only"></a>Transazione tra contesti diversi (solo database relazionali)
 
@@ -121,11 +93,11 @@ L'esempio seguente mostra come eseguire un'operazione ADO.NET SqlClient e un'ope
 
 È possibile usare le transazioni di ambiente, se è necessario coordinarle in un ambito più ampio.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/AmbientTransaction/Sample.cs?name=Transaction&highlight=1,24,25,26)]
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/AmbientTransaction/Sample.cs?name=Transaction&highlight=1,2,3,26,27,28)]
 
 È anche supportato l'inserimento in una transazione esplicita.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/CommitableTransaction/Sample.cs?name=Transaction&highlight=1,13,26,27,28)]
+[!code-csharp[Main](../../../samples/core/Saving/Saving/Transactions/CommitableTransaction/Sample.cs?name=Transaction&highlight=1,15,28,29,30)]
 
 ### <a name="limitations-of-systemtransactions"></a>Limitazioni di System.Transactions  
 

@@ -6,16 +6,16 @@ ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 ms.technology: entity-framework-core
 uid: core/querying/raw-sql
-ms.openlocfilehash: 29b7e20e875bf791a88a92636c1df4bc4e31656b
-ms.sourcegitcommit: 038acd91ce2f5a28d76dcd2eab72eeba225e366d
+ms.openlocfilehash: a1d554795dcd8a3e5b44e89ac014f538598461cc
+ms.sourcegitcommit: bdd06c9a591ba5e6d6a3ec046c80de98f598f3f3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/14/2018
-ms.locfileid: "34163213"
+ms.lasthandoff: 07/10/2018
+ms.locfileid: "42447702"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
-Entity Framework Core consente di ricorrere a query SQL non elaborate quando si lavora con un database relazionale. Ciò può essere utile se la query da eseguire non può essere espressa usando LINQ oppure se l'uso di una query LINQ comporta l'invio di codice SQL non efficiente al database.
+Entity Framework Core consente di ricorrere a query SQL non elaborate quando si lavora con un database relazionale. Ciò può essere utile se la query da eseguire non può essere espressa usando LINQ oppure se l'uso di una query LINQ comporta l'invio di codice SQL non efficiente al database. Le query SQL non elaborate possono restituire tipi di entità o, a partire da EF Core 2.1, [tipi di query](xref:core/modeling/query-types) che fanno parte del modello.
 
 > [!TIP]  
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
@@ -23,7 +23,6 @@ Entity Framework Core consente di ricorrere a query SQL non elaborate quando si 
 ## <a name="limitations"></a>Limitazioni
 
 Esistono alcune limitazioni da tenere presenti quando si usano query SQL non elaborate:
-* Le query SQL possono essere usate solo per restituire i tipi di entità che fanno parte del modello. Nel backlog è previsto un miglioramento per [abilitare la restituzione di tipi ad hoc da query SQL non elaborate](https://github.com/aspnet/EntityFramework/issues/1862).
 
 * La query SQL deve restituire i dati per tutte le proprietà del tipo di entità o query.
 
@@ -31,12 +30,12 @@ Esistono alcune limitazioni da tenere presenti quando si usano query SQL non ela
 
 * La query SQL non può contenere dati correlati. Tuttavia, in molti casi è possibile estendere la query usando l'operatore `Include` per restituire i dati correlati (vedere [Inclusione di dati correlati](#including-related-data)).
 
-* Le istruzioni `SELECT` passate a questo metodo devono essere in genere componibili. Se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate come una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
+* Le istruzioni `SELECT` passate a questo metodo devono essere in genere componibili. Se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
   * Un punto e virgola finale
   * In SQL Server, un hint a livello di query finale, ad esempio `OPTION (HASH JOIN)`
   * In SQL Server, una clausola `ORDER BY` non accompagnata da `TOP 100 PERCENT` nella clausola `SELECT`
 
-* Le istruzioni SQL diverse da `SELECT` vengono riconosciute automaticamente come non componibili. Di conseguenza, i risultati completi delle stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicati dopo `FromSql` vengono valutati in memoria. 
+* Le istruzioni SQL diverse da `SELECT` vengono riconosciute automaticamente come non componibili. Di conseguenza, i risultati completi delle stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicati dopo `FromSql` vengono valutati in memoria.
 
 ## <a name="basic-raw-sql-queries"></a>Query SQL non elaborate di base
 
