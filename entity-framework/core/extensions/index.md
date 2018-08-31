@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 7/3/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: e9f9a6cbbceeb0379ddb5588b564b0d2a962795f
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: e88bd01f79e05a9a3b0c0bbeecca89df178098a6
+ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995513"
+ms.lasthandoff: 08/29/2018
+ms.locfileid: "43152452"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
@@ -37,6 +37,12 @@ Entity Developer è una potente finestra di progettazione ORM per ADO.NET Entity
 Estensione di Visual Studio 2017+. È possibile decompilare DbContext e le classi POCO da un database esistente o un progetto di database di SQL Server e visualizzare e controllare DbContext in vari modi.
 
 [Wiki di GitHub](https://github.com/ErikEJ/SqlCeToolbox/wiki/EF-Core-Power-Tools)
+
+### <a name="entity-framework-visual-editor"></a>Entity Framework Visual Editor
+
+Estensione di Visual Studio 2017 che aggiunge una finestra di progettazione ORM per la progettazione visiva di classi di Entity Framework 6, Core 2.0 e Core 2.1. Il codice viene generato usando i modelli T4, quindi può essere completamente personalizzato per soddisfare qualsiasi esigenza. Sono supportate l'ereditarietà e le associazioni unidirezionali e bidirezionali, così come le enumerazioni e la possibilità di usare una codifica a colori per le classi e di aggiungere blocchi di testo per spiegare parti potenzialmente arcane del progetto.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
 
 ## <a name="extensions"></a>Estensioni
 
