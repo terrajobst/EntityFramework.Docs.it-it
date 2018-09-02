@@ -1,17 +1,15 @@
 ---
 title: Transazioni - EF Core
 author: rowanmiller
-ms.author: divega
 ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
-ms.technology: entity-framework-core
 uid: core/saving/transactions
-ms.openlocfilehash: 6e6ded74e15187b387e8e0b2ad00cb47a84ff7e8
-ms.sourcegitcommit: 6cf6493d81b6d81b0b0f37a00e0fc23ec7189158
+ms.openlocfilehash: 7083a1228420416a1b60d9744ca2dad2339be53f
+ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/12/2018
-ms.locfileid: "42447725"
+ms.lasthandoff: 08/27/2018
+ms.locfileid: "42993605"
 ---
 # <a name="using-transactions"></a>Uso delle transazioni
 
@@ -106,4 +104,4 @@ L'esempio seguente mostra come eseguire un'operazione ADO.NET SqlClient e un'ope
    > [!IMPORTANT]  
    > È consigliabile verificare che il comportamento dell'API con il provider sia corretto prima di basarsi su di essa per la gestione delle transazioni. In caso contrario, è consigliabile contattare il gestore del provider del database. 
 
-2. A partire dalla versione 2.1, l'implementazione di System.Transactions in .NET Core non include il supporto per le transazioni distribuite, quindi non è possibile usare `TransactionScope` o `CommitableTransaction` per coordinare le transazioni tra più gestori di risorse. 
+2. A partire dalla versione 2.1, l'implementazione di System.Transactions in .NET Core non include il supporto per le transazioni distribuite, quindi non è possibile usare `TransactionScope` o `CommittableTransaction` per coordinare le transazioni tra più gestori di risorse. 
