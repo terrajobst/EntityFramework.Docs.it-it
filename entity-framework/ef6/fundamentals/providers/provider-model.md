@@ -3,12 +3,12 @@ title: Il modello di provider di Entity Framework 6 - Entity Framework 6
 author: divega
 ms.date: 2018-06-27
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
-ms.openlocfilehash: ebe9b426b164f619b716ac221d1d94354f8b1fe5
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: e8b0552ec083d8ab276aa9de109650f423160269
+ms.sourcegitcommit: a81aed575372637997b18a0f9466d8fefb33350a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997737"
+ms.lasthandoff: 09/06/2018
+ms.locfileid: "43821387"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>Il modello di provider di Entity Framework 6
 
@@ -34,7 +34,7 @@ Entity Framework dipende dalla presenza di un tipo derivato da [DbProviderFactor
 
 Entity Framework dipende dalla presenza di un tipo derivato da DbProviderServices per fornire funzionalità aggiuntive necessarie da Entity Framework sopra la funzionalità già fornita dal provider ADO.NET. Nelle versioni precedenti di Entity Framework la classe DbProviderServices faceva parte di .NET Framework e in spazio dei nomi è stata trovata. Avvio con Entity Framework 6 di questa classe fa ora parte del file EntityFramework. dll e sia nello spazio dei nomi System.Data.Entity.Core.Common.
 
-Altre informazioni sulle funzionalità fondamentali di un'implementazione di DbProviderServices sono reperibile nella [MSDN](http://msdn.microsoft.com/en-us/library/ee789835.aspx). Tuttavia, si noti che al momento della scrittura di queste informazioni non viene aggiornato per EF6 Sebbene la maggior parte dei concetti sono ancora valida. Le implementazioni di SQL Server e SQL Server Compact di DbProviderServices vengono controllate anche in per il [open source codebase](https://gihtub.com/aspnet/EntityFramework6/) e può essere usato come riferimento utile per le altre implementazioni.
+Altre informazioni sulle funzionalità fondamentali di un'implementazione di DbProviderServices sono reperibile nella [MSDN](http://msdn.microsoft.com/en-us/library/ee789835.aspx). Tuttavia, si noti che al momento della scrittura di queste informazioni non viene aggiornato per EF6 Sebbene la maggior parte dei concetti sono ancora valida. Le implementazioni di SQL Server e SQL Server Compact di DbProviderServices vengono controllate anche in per il [open source codebase](https://github.com/aspnet/EntityFramework6/) e può essere usato come riferimento utile per le altre implementazioni.
 
 Nelle versioni precedenti di Entity Framework è stato ottenuto l'implementazione di DbProviderServices per utilizzare direttamente da un provider ADO.NET. Tale operazione viene eseguita eseguendo il cast DbProviderFactory a IServiceProvider e chiamare il metodo GetService. Ciò strettamente il provider di Entity Framework per l'elemento DbProviderFactory. Questo accoppiamento bloccato EF venga spostato all'esterno di .NET Framework e pertanto per Entity Framework 6 è stato rimosso l'accoppiamento stretto e un'implementazione di DbProviderServices è ora registrata direttamente nel file di configurazione dell'applicazione o in basata su codice configurazione, come descritto più dettagliatamente la _DbProviderServices registrazione_ sezione riportata di seguito.
 
