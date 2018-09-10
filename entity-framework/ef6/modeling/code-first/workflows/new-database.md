@@ -3,12 +3,12 @@ title: Code First per un nuovo Database - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
-ms.openlocfilehash: 50c6a4710bc50879304f64e781a46c4836f86882
-ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
+ms.openlocfilehash: 8ed1bfbc3536acc0d83b9c8ecdd180aeb44eff83
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/29/2018
-ms.locfileid: "43152478"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251050"
 ---
 # <a name="code-first-to-a-new-database"></a>Code First per un nuovo Database
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
@@ -199,13 +199,13 @@ Questi sono solo le convenzioni predefinite e sono disponibili vari modi per mod
 -   Fare clic con il pulsante destro sul **connessioni dati** e selezionare **Aggiungi connessione...**
 -   Se si è ancora connessi a un database da Esplora Server prima che è necessario selezionare Microsoft SQL Server come origine dati
 
-    ![SelectDataSource](~/ef6/media/selectdatasource.png)
+    ![Seleziona l'origine dati](~/ef6/media/selectdatasource.png)
 
 -   Connettersi a LocalDB o SQL Express, in base alla quale è stato installato
 
 È ora possibile controllare lo schema che Code First ha creato.
 
-![SchemaInitial](~/ef6/media/schemainitial.png)
+![Schema iniziale](~/ef6/media/schemainitial.png)
 
 DbContext elaborati quali classi da includere nel modello esaminando le proprietà DbSet che è stato definito. Viene quindi utilizzato il set predefinito di convenzioni Code First per determinare i nomi di tabella e colonna, determinare i tipi di dati, trovare le chiavi primarie e così via. Più avanti in questa procedura dettagliata esamineremo come è possibile eseguire l'override di queste convenzioni.
 
@@ -266,7 +266,7 @@ namespace CodeFirstNewDatabaseSample.Migrations
 
 La nuova colonna Url viene ora aggiunto alla tabella nel database di blog:
 
-![SchemaWithUrl](~/ef6/media/schemawithurl.png)
+![Schema con Url](~/ef6/media/schemawithurl.png)
 
 ## <a name="6-data-annotations"></a>6. Annotazioni dei dati
 
@@ -316,7 +316,7 @@ public class User
 
 La nuova tabella viene ora aggiunto al database:
 
-![SchemaWithUsers](~/ef6/media/schemawithusers.png)
+![Schema con gli utenti](~/ef6/media/schemawithusers.png)
 
 L'elenco completo di annotazioni supportate da Entity Framework è:
 
@@ -365,7 +365,7 @@ public class BloggingContext : DbContext
 
 La colonna DisplayName è stata rinominata per visualizzare\_nome:
 
-![SchemaWithDisplayNameRenamed](~/ef6/media/schemawithdisplaynamerenamed.png)
+![Schema con il nome visualizzato rinominato](~/ef6/media/schemawithdisplaynamerenamed.png)
 
 ## <a name="summary"></a>Riepilogo
 

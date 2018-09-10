@@ -3,12 +3,12 @@ title: Supporto di enum - Entity Framework Designer - EF6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
-ms.openlocfilehash: d4c5528c4dc13ab7189421feebf84c2cb2f4b2bb
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: a94a497e8c5b3213dd7eb4215de90164d437507d
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995637"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250635"
 ---
 # <a name="enum-support---ef-designer"></a>Supporto di enum - finestra di progettazione di Entity Framework
 > [!NOTE]
@@ -70,11 +70,11 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
 1.  In Entity Framework Designer, fare clic su proprietà Name, selezionare **convertire all'enumerazione**
 
-    ![ConvertToEnum](~/ef6/media/converttoenum.png)
+    ![Converti in Enum](~/ef6/media/converttoenum.png)
 
 2.  Nel **Enum aggiungere** finestra di dialogo digitare **DepartmentNames** per nome del tipo di enumerazione, modificare il tipo sottostante per **Int32**, e quindi aggiungere i membri seguenti per il tipo: inglese, Matematiche e la convenienza
 
-    ![AddEnumType](~/ef6/media/addenumtype.png)
+    ![Aggiungere il tipo di enumerazione](~/ef6/media/addenumtype.png)
 
 3.  Premere **OK**
 4.  Salvare il modello e compilare il progetto
@@ -85,7 +85,7 @@ Se si osserva la finestra Proprietà, si noterà che il tipo della proprietà de
 
 Se si passa alla finestra Browser modello, si noterà che il tipo è stato inoltre aggiunto il nodo di tipi di enumerazione.
 
-![Modelbrowser non](~/ef6/media/modelbrowser.png)
+![Finestra Browser modello](~/ef6/media/modelbrowser.png)
 
 >[!NOTE]
 > È anche possibile aggiungere nuovi tipi di enumerazione da questa finestra facendo clic sul pulsante destro del mouse e selezionando **Aggiungi tipo Enum**. Dopo aver creato il tipo verrà visualizzato nell'elenco dei tipi e sarebbe in grado di associare a una proprietà
