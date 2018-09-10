@@ -3,12 +3,12 @@ title: La definizione di Query - finestra di progettazione di Entity Framework -
 author: divega
 ms.date: 2016-10-23
 ms.assetid: e52a297e-85aa-42f6-a922-ba960f8a4b22
-ms.openlocfilehash: 60d5310589bb9bc3fdb971673422e80537357e55
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 8415a265cdbe078422e0467ee97da955a81b873d
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996307"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250972"
 ---
 # <a name="defining-query---ef-designer"></a>Definizione di Query - finestra di progettazione di Entity Framework
 Questa procedura dettagliata illustra come aggiungere una definizione di un tipo di query e un'entità corrispondente a un modello usando la finestra di progettazione di Entity Framework. Una query di definizione viene comunemente utilizzata per fornire funzionalità simili a quelle fornite da una vista di database, ma la vista viene definita nel modello, non il database. Una query di definizione consente di eseguire un'istruzione SQL specificata nella **DefiningQuery** elemento di un file con estensione edmx. Per altre informazioni, vedere **DefiningQuery** nel [SSDL Specification](~/ef6/modeling/designer/advanced/edmx/ssdl-spec.md).
@@ -54,11 +54,11 @@ Questa procedura dettagliata Usa Visual Studio 2012 o versioni successiva.
 -   In Esplora soluzioni fare doppio clic il **DefiningQueryModel.edmx** del file e selezionare **Apri con...** .
 -   Selezionare **Editor XML (testo)**.
 
-    ![XMLEditor](~/ef6/media/xmleditor.png)
+    ![Editor XML](~/ef6/media/xmleditor.png)
 
 -   Fare clic su **Sì** se viene richiesto con il messaggio seguente:
 
-    ![Warning2](~/ef6/media/warning2.png)
+    ![Avviso 2](~/ef6/media/warning2.png)
 
  
 
@@ -136,7 +136,7 @@ Aprire il modello nella finestra di progettazione di Entity Framework.
 -   Fare doppio clic il DefiningQueryModel.edmx.
 -   Pronunciare **Sì** per il messaggio seguente:
 
-    ![Warning2](~/ef6/media/warning2.png)
+    ![Avviso 2](~/ef6/media/warning2.png)
 
  
 
@@ -172,7 +172,7 @@ In questo passaggio si userà la finestra Dettagli Mapping per eseguire il mappi
     Il **Dettagli Mapping** viene visualizzata la finestra.
 -   Selezionare **GradeReport** dalle **&lt;aggiungere una tabella o vista&gt;** nell'elenco a discesa (sotto **tabella**s).  
     Mapping tra concettuale predefinito e di archiviazione **GradeReport** vengono visualizzati il tipo di entità.  
-    ![MappingDetails3](~/ef6/media/mappingdetails.png)
+    ![Mapping Details3](~/ef6/media/mappingdetails.png)
 
 Di conseguenza, il **EntitySetMapping** elemento viene aggiunto alla sezione del mapping del file con estensione edmx. 
 

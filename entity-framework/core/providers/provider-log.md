@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 44b200223153fca44cb2cfa3e78b3bedc7b4a552
-ms.sourcegitcommit: a81aed575372637997b18a0f9466d8fefb33350a
+ms.openlocfilehash: 5da1043310e2858638c81a0654a9cab23e39c220
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/06/2018
-ms.locfileid: "43821335"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250816"
 ---
 # <a name="provider-impacting-changes"></a>Modifiche che influiscono sul provider
 
@@ -19,9 +19,9 @@ Questa pagina contiene collegamenti per eseguire il pull le richieste effettuate
 
 Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usato il [ `providers-beware` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) e [ `providers-fyi` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) etichette nei nostri problemi e richieste pull.
 
-### <a name="21-----22"></a>2.1---> 2.2
+## <a name="21-----22"></a>2.1---> 2.2
 
-#### <a name="test-only-changes"></a>Modifiche apportate a solo scopo di test
+### <a name="test-only-changes"></a>Modifiche apportate a solo scopo di test
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/12057 -Consenti personalizzabile delimeters SQL nei test
   * Testare le modifiche che consentono di BuiltInDataTypesTestBase non strict confronti completi dei punti a virgola mobile
@@ -40,7 +40,7 @@ Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usat
   * Questa modifica include alcuni test di refactoring che può richiedere ai provider di react
 
 
-#### <a name="test-and-product-code-changes"></a>Modifiche al codice di test e prodotto
+### <a name="test-and-product-code-changes"></a>Modifiche al codice di test e prodotto
 
 * https://github.com/aspnet/EntityFrameworkCore/pull/12109 -Consolidare RelationalTypeMapping.Clone metodi
   * Le modifiche in 2.1 per il RelationalTypeMapping consentite per semplificare il lavoro per le classi derivate. Non si ritiene che questo era di rilievo ai provider, ma i provider possono sfruttare i vantaggi di questa modifica nel relativo tipo derivato mapping di classi.
@@ -50,4 +50,5 @@ Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usat
   * Consente di mapping dei tipi e membri perché i traduttori possano essere registrati di fuori del provider
     * I provider devono chiamare base. FindMapping() nella propria implementazione ITypeMappingSource per farli funzionare
   * Seguire questo modello per aggiungere il supporto spaziale per il provider che è coerenza per tutti i provider.
-
+* https://github.com/aspnet/EntityFrameworkCore/pull/13199 -Aggiungere debug avanzato per la creazione di provider del servizio
+  * Consente a DbContextOptionsExtensions implementare una nuova interfaccia che può aiutare le persone a comprendere il motivo per cui il provider di servizi interna è in fase di ricompilazione

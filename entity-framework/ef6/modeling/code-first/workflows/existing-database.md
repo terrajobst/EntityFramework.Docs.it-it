@@ -3,12 +3,12 @@ title: Code First per un Database esistente - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
-ms.openlocfilehash: 29f959265e0fd0d5e14c156519e6931fd8da0677
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: fedfb921919582e2cdb5f3bc497f11889b972ad6
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995090"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251076"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First per un Database esistente
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un database esistente. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
@@ -33,15 +33,15 @@ In genere quando si intende usare un database esistente che verrà già creato, 
 -   Fare clic con il pulsante destro sul **connessioni dati -&gt; Aggiungi connessione...**
 -   Se si è ancora connessi a un database da **Esplora Server** prima di, devi selezionare **Microsoft SQL Server** come origine dati
 
-    ![SelectDataSource](~/ef6/media/selectdatasource.png)
+    ![Seleziona l'origine dati](~/ef6/media/selectdatasource.png)
 
 -   Connettersi all'istanza di Local DB e immettere **Blogging** come nome del database
 
-    ![LocalDBConnection](~/ef6/media/localdbconnection.png)
+    ![Connessione di Local DB](~/ef6/media/localdbconnection.png)
 
 -   Selezionare **OK** e verrà richiesto se si desidera creare un nuovo database, selezionare **Sì**
 
-    ![CreateDatabaseDialog](~/ef6/media/createdatabasedialog.png)
+    ![Creare una finestra di dialogo Database](~/ef6/media/createdatabasedialog.png)
 
 -   Il nuovo database verrà ora visualizzato in Esplora Server, su di esso e scegliere **nuova Query**
 -   Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**
@@ -92,15 +92,15 @@ Dobbiamo usare Entity Framework Tools per Visual Studio per consentire agli uten
 -   Verrà avviata la **procedura guidata Entity Data Model**
 -   Selezionare **Code First dal Database** e fare clic su **successivo**
 
-    ![WizardOneCFE](~/ef6/media/wizardonecfe.png)
+    ![Cluster virtuali una CFE procedura guidata](~/ef6/media/wizardonecfe.png)
 
 -   Selezionare la connessione al database creato nella prima sezione e fare clic su **successivo**
 
-    ![WizardTwoCFE](~/ef6/media/wizardtwocfe.png)
+    ![Cluster virtuali CFE due guidata](~/ef6/media/wizardtwocfe.png)
 
 -   Fare clic sulla casella di controllo accanto a **tabelle** per importare tutte le tabelle e fare clic su **fine**
 
-    ![WizardThreeCFE](~/ef6/media/wizardthreecfe.png)
+    ![Cluster virtuali CFE tre guidata](~/ef6/media/wizardthreecfe.png)
 
 Una volta che un numero di elementi viene completato il processo di reverse engineering verranno aggiunti al progetto, è possibile ottenere un quadro di ciò che è stato aggiunto.
 

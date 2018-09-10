@@ -3,12 +3,12 @@ title: Il modello di provider di Entity Framework 6 - Entity Framework 6
 author: divega
 ms.date: 2018-06-27
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
-ms.openlocfilehash: e8b0552ec083d8ab276aa9de109650f423160269
-ms.sourcegitcommit: a81aed575372637997b18a0f9466d8fefb33350a
+ms.openlocfilehash: 7d9e2f49b9ef59fb63b024646911ec0d8dfcfc60
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/06/2018
-ms.locfileid: "43821387"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251104"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>Il modello di provider di Entity Framework 6
 
@@ -24,13 +24,13 @@ Con Entity Framework 6 ora viene fornito il codice di base che precedentemente f
 
 Un provider di Entity Framework è davvero una raccolta di servizi specifici del provider definito da tipi CLR che questi servizi estendono da (per una classe di base) o implementano (per un'interfaccia). Due di questi servizi sono fondamentali e necessaria per funzionare correttamente a Entity Framework. Gli altri sono facoltativi e devono solo essere implementati se è necessaria la funzionalità specifiche e/o le implementazioni predefinite di questi servizi non funziona per il server di database specifici vengano specificate come destinazione.
 
-### <a name="fundamental-provider-types"></a>Tipi fondamentali provider
+## <a name="fundamental-provider-types"></a>Tipi fondamentali provider
 
-#### <a name="dbproviderfactory"></a>Classe DbProviderFactory
+### <a name="dbproviderfactory"></a>Classe DbProviderFactory
 
 Entity Framework dipende dalla presenza di un tipo derivato da [DbProviderFactory](http://msdn.microsoft.com/en-us/library/system.data.common.dbproviderfactory.aspx) per l'esecuzione di tutti gli accessi di basso livello di database. DbProviderFactory non è in realtà parte di Entity Framework, ma è invece una classe in .NET Framework che fornisce un punto di ingresso per i provider ADO.NET che può essere usata da Entity Framework, altri O/RMs o direttamente da un'applicazione per ottenere le istanze di connessioni, comandi, parametri e altre astrazioni di ADO.NET in un provider indipendente dalla modalità. Altre informazioni sulla classe DbProviderFactory un reperibile nella [documentazione di MSDN per ADO.NET](http://msdn.microsoft.com/en-us/library/a6cd7c08.aspx).
 
-#### <a name="dbproviderservices"></a>DbProviderServices
+### <a name="dbproviderservices"></a>DbProviderServices
 
 Entity Framework dipende dalla presenza di un tipo derivato da DbProviderServices per fornire funzionalità aggiuntive necessarie da Entity Framework sopra la funzionalità già fornita dal provider ADO.NET. Nelle versioni precedenti di Entity Framework la classe DbProviderServices faceva parte di .NET Framework e in spazio dei nomi è stata trovata. Avvio con Entity Framework 6 di questa classe fa ora parte del file EntityFramework. dll e sia nello spazio dei nomi System.Data.Entity.Core.Common.
 
@@ -38,33 +38,33 @@ Altre informazioni sulle funzionalità fondamentali di un'implementazione di DbP
 
 Nelle versioni precedenti di Entity Framework è stato ottenuto l'implementazione di DbProviderServices per utilizzare direttamente da un provider ADO.NET. Tale operazione viene eseguita eseguendo il cast DbProviderFactory a IServiceProvider e chiamare il metodo GetService. Ciò strettamente il provider di Entity Framework per l'elemento DbProviderFactory. Questo accoppiamento bloccato EF venga spostato all'esterno di .NET Framework e pertanto per Entity Framework 6 è stato rimosso l'accoppiamento stretto e un'implementazione di DbProviderServices è ora registrata direttamente nel file di configurazione dell'applicazione o in basata su codice configurazione, come descritto più dettagliatamente la _DbProviderServices registrazione_ sezione riportata di seguito.
 
-### <a name="additional-services"></a>Servizi aggiuntivi
+## <a name="additional-services"></a>Servizi aggiuntivi
 
 Oltre ai servizi fondamentali descritti in precedenza esistono anche molti altri servizi usati da Entity Framework che sono specifiche del provider sempre o talvolta. Le implementazioni specifiche del provider predefinito di questi servizi possono essere fornite da un'implementazione di DbProviderServices. Le applicazioni possono anche sostituire le implementazioni di questi servizi, o fornire implementazioni quando un tipo di DbProviderServices non fornisce un valore predefinito. Come descritto più dettagliatamente il _risoluzione di altri servizi_ sezione riportata di seguito.
 
 I tipi di servizio aggiuntiva che un provider può essere di interesse a un provider sono elencati di seguito. Informazioni dettagliate su ognuno di questi tipi di servizio sono reperibile nella documentazione dell'API.
 
-#### <a name="idbexecutionstrategy"></a>IDbExecutionStrategy
+### <a name="idbexecutionstrategy"></a>IDbExecutionStrategy
 
 Si tratta di un servizio facoltativo che consente a un provider implementare nuovi tentativi o altri comportamenti quando vengono eseguiti query e comandi sul database. Se non viene fornita alcuna implementazione, quindi EF verranno semplicemente eseguire i comandi e propaga le eccezioni generate. Per SQL Server questo servizio viene utilizzato per fornire un criterio di ripetizione dei tentativi che risulta particolarmente utile durante l'esecuzione per i server di database basato sul cloud, ad esempio SQL Azure.
 
-#### <a name="idbconnectionfactory"></a>IDbConnectionFactory
+### <a name="idbconnectionfactory"></a>IDbConnectionFactory
 
 Si tratta di un servizio facoltativo che consente a un provider creare oggetti DbConnection per convenzione quando viene fornito solo un nome di database. Si noti che anche se questo servizio può essere risolto da un'implementazione di DbProviderServices fin Entity Framework 4.1 e può anche essere impostata esplicitamente nel file config o nel codice. Il provider recupera solo possibilità di risolvere il servizio se registrato come provider predefinito (vedere _il provider predefinito_ sotto) e, se non è stata impostata una factory di connessione predefinito in un' posizione.
 
-#### <a name="dbspatialservices"></a>DbSpatialServices
+### <a name="dbspatialservices"></a>DbSpatialServices
 
 Si tratta di un servizi facoltativi che consente a un provider aggiungere il supporto per i tipi spaziali di geografia e geometria. Affinché un'applicazione per l'uso di Entity Framework con i tipi spaziali, è necessario specificare un'implementazione di questo servizio. DbSptialServices viene chiesta in due modi. In primo luogo, specifico del provider servizi spaziali vengono richiesti utilizzando un oggetto DbProviderInfo (che contiene invariante token del manifesto e nome) come chiave. In secondo luogo, è possibile chiedere DbSpatialServices per senza chiave. Ciò consente di risolvere il "globale spaziale provider" che viene usato quando si creano tipi di DbGeography o DbGeometry autonomi.
 
-#### <a name="migrationsqlgenerator"></a>MigrationSqlGenerator
+### <a name="migrationsqlgenerator"></a>MigrationSqlGenerator
 
 Si tratta di un servizio facoltativo che consente migrazioni di Entity Framework da utilizzare per la generazione di SQL utilizzato per la creazione e modifica di schemi di database da Code First. Un'implementazione è necessaria per supportare le migrazioni. Se viene fornita un'implementazione quindi verrà inoltre utilizzato quando i database vengono creati usando gli inizializzatori di database o il metodo Database.Create.
 
-#### <a name="funcdbconnection-string-historycontextfactory"></a>Func < DbConnection, stringa, HistoryContextFactory >
+### <a name="funcdbconnection-string-historycontextfactory"></a>Func < DbConnection, stringa, HistoryContextFactory >
 
 Si tratta di un servizio facoltativo che consente a un provider configurare il mapping del HistoryContext al `__MigrationHistory` tabella utilizzata dal migrazioni di Entity Framework. Il HistoryContext è un primo oggetto DbContext di codice e può essere configurato usando l'API fluent normale per modificare elementi come il nome della tabella e le specifiche di mapping di colonna. L'implementazione predefinita di questo servizio restituito da Entity Framework per tutti i provider potrebbe funzionare per un server di database specificata se tutte le tabelle e colonne mapping predefiniti sono supportati da tale provider. In tal caso il provider non è necessario fornire un'implementazione di questo servizio.
 
-#### <a name="idbproviderfactoryresolver"></a>IDbProviderFactoryResolver
+### <a name="idbproviderfactoryresolver"></a>IDbProviderFactoryResolver
 
 Si tratta di un servizio facoltativo per l'acquisizione di DbProviderFactory corretto da un oggetto DbConnection specificato. L'implementazione predefinita di questo servizio restituito da Entity Framework per tutti i provider deve funzionare per tutti i provider. Tuttavia, durante l'esecuzione in .NET 4, l'elemento DbProviderFactory non accessibile pubblicamente da uno se relativo DbConnections. Pertanto, Entity Framework Usa alcune regole euristiche per ricercare i provider registrati per trovare una corrispondenza. È possibile che per alcuni provider di questi sistemi euristici avrà esito negativo e in questi casi il provider deve fornire una nuova implementazione.
 

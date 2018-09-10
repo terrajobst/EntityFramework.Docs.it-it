@@ -3,12 +3,12 @@ title: Connessione tentativi e la resilienza per la logica - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
-ms.openlocfilehash: 47181292873009c7bce2047787503258ffa35d9d
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: d7e58abfa17c5537cdc9b0068e7c2a3c2e390038
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997485"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250518"
 ---
 # <a name="connection-resiliency-and-retry-logic"></a>Logica di tentativi e la resilienza di connessione
 > [!NOTE]
@@ -68,11 +68,9 @@ Il SqlAzureExecutionStrategy verranno effettuati tentativi immediatamente la pri
 
 Le strategie di esecuzione riproverà solo un numero limitato di eccezioni che sono in genere tansient, sarà comunque necessario gestire gli altri errori, oltre a rilevare l'eccezione RetryLimitExceeded nel caso in cui un errore non è temporaneo o richiede troppo tempo risolvere se stessa.  
 
-## <a name="limitations"></a>Limitazioni  
-
 Esistono alcune note delle limitazioni quando si usa una strategia di esecuzione di nuovo tentativo:  
 
-### <a name="streaming-queries-are-not-supported"></a>Non sono supportate le query di streaming  
+## <a name="streaming-queries-are-not-supported"></a>Non sono supportate le query di streaming  
 
 Per impostazione predefinita, Entity Framework 6 e versioni successive nel buffer i risultati della query anziché streaming li. Se si desidera avere risultati trasmessi è possibile usare il metodo AsStreaming per modificare un LINQ in query di entità in streaming.  
 
@@ -88,11 +86,9 @@ using (var db = new BloggingContext())
 
 Flusso non è supportato quando viene registrata una nuovo tentativo strategia di esecuzione. Questa limitazione esiste perché la connessione è stato possibile eliminare più tramite i risultati restituiti. In questo caso, EF deve eseguire di nuovo l'intera query ma non dispone di alcun modo affidabile di sapere quali risultati già restituiti (dati potrebbero essere cambiato dall'invio della query iniziale, i risultati potrebbero tornare in un ordine diverso, i risultati potrebbero non avere un identificatore univoco e così via.).  
 
-### <a name="user-initiated-transactions-not-supported"></a>Le transazioni non supportate avviata dall'utente  
+## <a name="user-initiated-transactions-are-not-supported"></a>Non sono supportate le transazioni avviate dall'utente  
 
 Dopo aver configurato una strategia di esecuzione che genera nuovi tentativi, esistono alcune limitazioni per l'utilizzo di transazioni.  
-
-#### <a name="whats-supported-efs-default-transaction-behavior"></a>Che cos'è supportato: il comportamento della transazione di predefinito di Entity Framework  
 
 Per impostazione predefinita, Entity Framework eseguirà gli aggiornamenti di database all'interno di una transazione. Non è necessario eseguire alcuna operazione per abilitare questa opzione, EF sempre viene eseguito automaticamente.  
 
@@ -106,8 +102,6 @@ using (var db = new BloggingContext())
     db.SaveChanges();
 }
 ```  
-
-#### <a name="whats-not-supported-user-initiated-transactions"></a>Che cosa non è supportata: le transazioni avviata dall'utente  
 
 Se non si usa una strategia di esecuzione di nuovo tentativo è possibile eseguire il wrapping di più operazioni in una singola transazione. Ad esempio, il codice seguente esegue il wrapping di due chiamate a SaveChanges in un'unica transazione. Se qualsiasi parte di questa operazione ha esito negativo, nessuna delle modifiche vengono applicate.  
 
@@ -130,9 +124,7 @@ using (var db = new BloggingContext())
 
 Ciò non è supportato quando si usa una strategia di esecuzione di nuovo tentativo perché EF non tiene conto di qualsiasi operazione precedente e su come eseguire un nuovo tentativo. Ad esempio, se il secondo metodo SaveChanges, l'errore EF non è più ha le informazioni necessarie per ripetere la prima chiamata a SaveChanges.  
 
-#### <a name="possible-workarounds"></a>Possibili soluzioni alternative  
-
-##### <a name="suspend-execution-strategy"></a>Sospendere una strategia di esecuzione  
+### <a name="workaround-suspend-execution-strategy"></a>Soluzione temporanea: Sospendere una strategia di esecuzione  
 
 Una possibile soluzione alternativa consiste nel sospendere la strategia di esecuzione nuovo tentativo per il frammento di codice che deve usare un utente avviate delle transazioni. Il modo più semplice per eseguire questa operazione consiste nell'aggiungere un flag SuspendExecutionStrategy al codice in base a classe di configurazione e modifica l'espressione lambda strategia di esecuzione per restituire la strategia di esecuzione (non-retying) predefinito quando il flag è impostato.  
 
@@ -193,7 +185,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-##### <a name="manually-call-execution-strategy"></a>Chiamare manualmente strategia di esecuzione  
+### <a name="workaround-manually-call-execution-strategy"></a>Soluzione alternativa: Chiamare manualmente una strategia di esecuzione  
 
 Un'altra possibilità è usare la strategia di esecuzione e assegnargli l'intero set di logica da eseguire, in modo che è possibile riprovare a eseguire tutto ciò che in caso di una delle operazioni manualmente. Tuttavia è necessario sospendere la strategia di esecuzione - uso della tecnica illustrato in precedenza, in modo che i contesti utilizzati all'interno del blocco di codice non irreversibile non tentano di ripetere.  
 

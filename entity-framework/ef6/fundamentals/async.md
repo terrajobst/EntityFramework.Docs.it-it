@@ -3,12 +3,12 @@ title: Asincrono di query e save - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: 64051dea740b2183cb904d7fb4293d7048c218ca
-ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
+ms.openlocfilehash: 35604fc16ea37415d39801831aa162d0d42c2a2f
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/29/2018
-ms.locfileid: "43152437"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250751"
 ---
 # <a name="async-query-and-save"></a>Asincrono di query e salvare
 > [!NOTE]
@@ -145,7 +145,7 @@ Poiché il codice sincrono, è possibile osservare il seguente flusso di esecuzi
 4.  Query restituisce e i risultati vengono scritti **Console**
 5.  Offerta del giorno verrà scritti in **Console**
 
-![SyncOutput](~/ef6/media/syncoutput.png) 
+![Uscita sincronizzazione](~/ef6/media/syncoutput.png) 
 
  
 
@@ -227,7 +227,7 @@ Ora che il codice è asincrono, è possibile osservare un flusso di esecuzione d
 4.  Query per tutti i **blog** viene inviato al database *anche in questo caso, il thread gestito è libero di eseguire altre operazioni mentre viene elaborata la query nel database. Poiché tutte le altre esecuzione è stata completata, il thread appena arresterà alla chiamata di attesa tuttavia.*
 5.  Query restituisce e i risultati vengono scritti **Console**
 
-![AsyncOutput](~/ef6/media/asyncoutput.png) 
+![Output asincroni](~/ef6/media/asyncoutput.png) 
 
  
 

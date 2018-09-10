@@ -3,12 +3,12 @@ title: Migrazioni Code First in Entity Framework 6 - ambienti di Team
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
-ms.openlocfilehash: 42f52e63fd6cfc1f02d6a721594f4a161eea9a7b
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 31f8476c64d36d4d1cf3d18deb59ebc482dcc975
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997299"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251232"
 ---
 # <a name="code-first-migrations-in-team-environments"></a>Migrazioni Code First in ambienti di Team
 > [!NOTE]
@@ -54,7 +54,7 @@ La chiave per l'utilizzo corretto delle migrazioni in un ambiente di team è una
 
 Quando si aggiunge la prima migrazione al progetto, si esegue simile **Add-Migration prima** nella Console di gestione pacchetti. I passaggi di alto livello che esegue questo comando sono illustrati in precedenza.
 
-![FirstMigration](~/ef6/media/firstmigration.png)
+![Prima della migrazione](~/ef6/media/firstmigration.png)
 
 Il modello corrente viene calcolato dal codice (1). Gli oggetti di database necessari vengono quindi calcolati le differenze tra modelli (2): poiché si tratta della prima migrazione il modello sono diversi usi soli un modello vuoto per il confronto. Le modifiche necessarie vengono passate al generatore di codice per compilare il codice di migrazione necessarie (3) che viene quindi aggiunto alla soluzione Visual Studio (4).
 
@@ -66,7 +66,7 @@ A questo punto è probabilmente verrebbe eseguito **Update-Database** per render
 
 In un secondo momento si tornare indietro e apportare alcune modifiche al modello: in questo esempio si aggiungerà un **Url** proprietà **Blog**. È quindi necessario eseguire un comando, ad esempio **Add-Migration AddUrl** per eseguire lo scaffolding di una migrazione per il database corrispondente di applicare le modifiche. I passaggi di alto livello che esegue questo comando sono illustrati in precedenza.
 
-![SecondMigration](~/ef6/media/secondmigration.png)
+![Seconda migrazione](~/ef6/media/secondmigration.png)
 
 Come in precedenza, il modello corrente viene calcolato dal codice (1). Tuttavia, questa volta sono presenti le migrazioni esistenti in modo che il modello precedente viene recuperato dalla migrazione più recente (2). Questi due modelli sono addedgroups per trovare le modifiche del database necessarie (3) e quindi il completamento del processo come indicato in precedenza.
 
@@ -96,14 +96,14 @@ Primo verrà ora esaminato un esempio concreto di un conflitto di merge. Microso
 
 Si terrà traccia il modello di EF e le migrazioni attraverso una serie di modifiche. Per un punto di partenza, entrambi gli sviluppatori sono sincronizzati con il repository del controllo codice sorgente, come illustrato nella figura seguente.
 
-![StartingPoint](~/ef6/media/startingpoint.png)
+![Punto di partenza](~/ef6/media/startingpoint.png)
 
 Per gli sviluppatori \#1 e per gli sviluppatori \#2 ora apporta alcune modifiche al modello di Entity Framework nel proprio codice locale base. Per gli sviluppatori \#aggiunge 1 una **Rating** proprietà **Blog** – e genera un **AddRating** migrazione per applicare le modifiche al database. Per gli sviluppatori \#2 aggiunge una **lettori** proprietà **Blog** – e genera il corrispondente **AddReaders** migrazione. Entrambi gli sviluppatori di eseguire **Update-Database**, per applicare le modifiche ai database locali e quindi continuare a sviluppare l'applicazione.
 
 > [!NOTE]
 > Le migrazioni sono precedute da un timestamp, in modo che il nostro grafico rappresenta che la migrazione AddReaders dello sviluppatore \#2 dopo la migrazione AddRating proviene Developer \#1. Se per gli sviluppatori \#1 o \#2 non generato la stabilita prima migrazione alcuna differenza per i problemi dell'utilizzo di un team o il processo per eseguire il merge che vedremo nella prossima sezione.
 
-![LocalChanges](~/ef6/media/localchanges.png)
+![Modifiche locali](~/ef6/media/localchanges.png)
 
 È un giorno fortunato per sviluppatore \#1 in tempo reale per inviare le modifiche prima di tutto. Poiché non ve ne ha archiviato poiché vengono sincronizzati con i repository, può solo inviare le modifiche senza eseguire alcuna operazione di unione.
 
@@ -147,7 +147,7 @@ Per questo approccio, a partire dal momento in cui che si può notare, che è ne
 
 Ecco lo stato di sviluppatore \#2 locale del codebase dopo aver usato questo approccio.
 
-![MergeMigration](~/ef6/media/mergemigration.png)
+![Migrazione di tipo merge](~/ef6/media/mergemigration.png)
 
 ### <a name="option-2-update-the-model-snapshot-in-the-last-migration"></a>Opzione 2: Aggiornare lo snapshot del modello nell'ultima migrazione
 
@@ -176,7 +176,7 @@ Per questo approccio, a partire dal momento in cui che si può notare, che è ne
 
 Ecco lo stato di sviluppatore \#2 locale del codebase dopo aver usato questo approccio.
 
-![UpdatedMetadata](~/ef6/media/updatedmetadata.png)
+![Aggiornamento dei metadati](~/ef6/media/updatedmetadata.png)
 
 ## <a name="summary"></a>Riepilogo
 

@@ -3,12 +3,12 @@ title: Finestra di progettazione CUD Stored procedure - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
-ms.openlocfilehash: 7a3176e1057816dd11ced5fc545aa3baa672bd03
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 36c9b97b77fec30136cba1d850a0259c689e69ae
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993889"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250920"
 ---
 # <a name="designer-cud-stored-procedures"></a>Finestra di progettazione CUD Stored procedure
 Questa procedura dettagliata mostra come eseguire il mapping di creazione\\inserire, aggiornare ed eliminare le operazioni (CUD) di un tipo di entità alle stored procedure mediante Entity Framework Designer (Entity Framework Designer).  Per impostazione predefinita, Entity Framework genera automaticamente le istruzioni SQL per le operazioni CUD, ma è anche possibile mappare le stored procedure a queste operazioni.  
@@ -54,7 +54,7 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 -   Selezionare anche le seguenti stored procedure con il **funzioni e Stored procedure** nodo: **DeletePerson**, **InsertPerson**, e **UpdatePerson** . 
 -   Partire da Visual Studio 2012 nella finestra di progettazione di Entity Framework supporta l'importazione bulk di stored procedure. Il **Importa selezionate stored procedure e funzioni nel modello di entità** è selezionata per impostazione predefinita. Poiché in questo esempio è stata stored procedure che inseriscono, aggiornano ed eliminano i tipi di entità, non si desidera importare tali e verrà deselezionare questa casella di controllo. 
 
-    ![ImportSProcs](~/ef6/media/importsprocs.jpg)
+    ![Importare S Procs](~/ef6/media/importsprocs.jpg)
 
 -   Scegliere **Fine**.
     La finestra di progettazione di Entity Framework, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato.
@@ -72,7 +72,7 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 -   Premere **INVIO**.
 -   Per impostazione predefinita **NewPersonID** viene eseguito il mapping alla chiave di entità **PersonID**. Come indicato dalle frecce, che mostrano la direzione del mapping, per la proprietà viene specificato il valore della colonna dei risultati.
 
-    ![MappingDetails](~/ef6/media/mappingdetails.png)
+    ![Dettagli di mapping](~/ef6/media/mappingdetails.png)
 
 -   Fare clic su **&lt;seleziona Update Function&gt;** e selezionare **UpdatePerson** dall'elenco a discesa risultante.
 -   Vengono visualizzati i mapping predefiniti tra i parametri delle stored procedure e le proprietà dell'entità.

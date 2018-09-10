@@ -3,12 +3,12 @@ title: Più diagrammi per ogni modello - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: b95db5c8-de8d-43bd-9ccc-5df6a5e25e1b
-ms.openlocfilehash: f27afbd3b44ff3eb8044ab960f10b2856a603ee3
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: e23bf92ce3199b2162ca9a42bd0f797375179d77
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993778"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250959"
 ---
 # <a name="multiple-diagrams-per-model"></a>Più diagrammi per ogni modello
 > [!NOTE]
@@ -39,7 +39,7 @@ La finestra della superficie di progettazione visiva viene aperto automaticament
 
 Lo screenshot seguente mostra un file con estensione edmx aperto in Entity Framework Designer. Lo screenshot Mostra la superficie di progettazione visiva (a sinistra) e il **Browser modello** finestra (a destra).
 
-![EFDesigner2](~/ef6/media/efdesigner2.png)
+![Entity Framework Designer 2](~/ef6/media/efdesigner2.png)
 
 Per annullare un'operazione eseguita nella finestra di progettazione di Entity Framework, fare clic Ctrl-Z.
 

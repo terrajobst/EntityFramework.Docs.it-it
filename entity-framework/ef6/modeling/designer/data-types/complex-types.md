@@ -3,19 +3,19 @@ title: I tipi complessi - Entity Framework Designer - EF6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
-ms.openlocfilehash: d35504cbe60823249d54385962568802b3e41308
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 2a516bd14131fd035a4d005e0fdf140f7ff4d65f
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994853"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250829"
 ---
 # <a name="complex-types---ef-designer"></a>Tipi complessi - finestra di progettazione di Entity Framework
 Questo argomento viene illustrato come eseguire il mapping dei tipi complessi con Entity Framework Designer (Entity Framework Designer) e su come eseguire una query per le entità che contengono le proprietà del tipo complesso.
 
 L'immagine seguente mostra le finestre principali che vengono usate quando si lavora con la finestra di progettazione di Entity Framework.
 
-![EFDesigner](~/ef6/media/efdesigner.png)
+![EF Designer](~/ef6/media/efdesigner.png)
 
 > [!NOTE]
 > Quando si compila il modello concettuale, avvisi relativi a entità non mappata e associazioni vengano visualizzati nell'elenco errori. È possibile ignorare questi avvisi perché dopo aver scelto di generare il database dal modello, gli errori non verranno più visualizzato.
@@ -45,7 +45,7 @@ Viene aggiunto un nuovo tipo complesso con le proprietà selezionate per il **Br
 
 Una proprietà complessa del tipo appena creato sostituisce le proprietà selezionate. Tutti i mapping delle proprietà vengono mantenuti.
 
-![Refactor2](~/ef6/media/refactor2.png)
+![Effettuare il refactoring 2](~/ef6/media/refactor2.png)
 
 ## <a name="create-a-new-complex-type"></a>Creare un nuovo tipo complesso
 
@@ -53,7 +53,7 @@ Una proprietà complessa del tipo appena creato sostituisce le proprietà selezi
 
 Fare doppio clic il **i tipi complessi** cartella nella finestra Browser modello, scegliere **AddNew tipo complesso...** . In alternativa, è possibile selezionare i **i tipi complessi** cartella e premere il **Inserisci** sulla tastiera.
 
-![AddNewComplextype](~/ef6/media/addnewcomplextype.png)
+![Aggiungi tipo nuovo complesso](~/ef6/media/addnewcomplextype.png)
 
 Un nuovo tipo complesso verrà aggiunto nella cartella con un nome predefinito. È ora possibile aggiungere proprietà al tipo.
 
@@ -65,7 +65,7 @@ Le proprietà di un tipo complesso possono essere tipi scalari o tipi complessi 
 
 -   Fare doppio clic su un tipo complesso nella finestra Browser modello, scegliere **Add**, quindi scegliere **proprietà scalare** oppure **proprietà complessa**, quindi selezionare il tipo di proprietà desiderata. In alternativa, è possibile selezionare un tipo complesso e quindi premere il **Inserisci** sulla tastiera.  
 
-    ![AddPropertiestoComplexType](~/ef6/media/addpropertiestocomplextype.png)
+    ![Aggiungere proprietà al tipo complesso](~/ef6/media/addpropertiestocomplextype.png)
 
     Una nuova proprietà verrà aggiunta al tipo complesso con un nome predefinito.
 
@@ -108,7 +108,7 @@ Quando si rinomina un tipo complesso, tutti i riferimenti al tipo presenti nell'
     Verrà visualizzato un elenco a discesa di tutte le proprietà scalari.
 7.  Selezionare la proprietà appropriata.
 
-    ![MapComplexType](~/ef6/media/mapcomplextype.png)
+    ![Eseguire il mapping di tipo complesso](~/ef6/media/mapcomplextype.png)
 
 8.  Ripetere i passaggi 6 e 7 per ogni colonna della tabella.
 
@@ -121,14 +121,14 @@ Le importazioni di funzioni sono basate sulle stored procedure. Per mappare un'i
 
 -   Fare doppio clic su una funzione importata che si desidera eseguire il mapping a un tipo complesso.
 
-    ![FunctionImports](~/ef6/media/functionimports.png)
+    ![Importazioni di funzioni](~/ef6/media/functionimports.png)
 
 -   Specificare le impostazioni per la nuova importazione di funzioni come segue:
     -   Specificare la stored procedure per il quale si sta creando un'importazione di funzioni nel **nome Stored Procedure** campo. Questo campo è un elenco a discesa in cui sono visualizzate tutte le stored procedure contenute nel modello di archiviazione.
     -   Specificare il nome dell'oggetto function import nel **nome Function Import** campo.
     -   Selezionare **complessi** come il valore restituito digitare e quindi specificare il tipo restituito complesso specifico scegliendo il tipo appropriato nell'elenco a discesa.
 
-        ![EditFunctionImport](~/ef6/media/editfunctionimport.png)
+        ![Importazione di funzioni di modifica](~/ef6/media/editfunctionimport.png)
 
 -   Fare clic su **OK**.
     L'importazione di funzioni viene creata nel modello concettuale.

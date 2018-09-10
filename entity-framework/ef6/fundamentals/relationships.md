@@ -3,12 +3,12 @@ title: Le relazioni, le proprietà di navigazione e le chiavi esterne - Entity F
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: a1653afd609280ab572ef88a9fcf8a6275b79fd6
-ms.sourcegitcommit: a81aed575372637997b18a0f9466d8fefb33350a
+ms.openlocfilehash: 53f428360be4ea2e11a42676d22e584633ceedbc
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/06/2018
-ms.locfileid: "43821400"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251219"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>Le relazioni, le proprietà di navigazione e le chiavi esterne
 Questo argomento offre una panoramica del modo in cui Entity Framework gestisce le relazioni tra entità. Offre inoltre alcune indicazioni su come eseguire il mapping e modificare le relazioni.
@@ -19,7 +19,7 @@ Nei database relazionali, le relazioni (dette anche associazioni) tra le tabelle
 
 L'immagine seguente mostra due tabelle che fanno parte di relazione uno-a-molti. Il **Course** tabella è la tabella dipendente perché contiene la **DepartmentID** colonna che si collega al **reparto** tabella.
 
-![Database2](~/ef6/media/database2.png)
+![Tabelle di reparto e Course](~/ef6/media/database2.png)
 
 Entity Framework, un'entità può essere associata ad altre entità tramite un'associazione o la relazione. Ogni relazione contiene due entità finali che descrivono il tipo di entità e la molteplicità del tipo (uno, zero-o-uno o molti) per le due entità nella relazione. La relazione che potrebbero essere regolata da un vincolo referenziale, che descrive quale entità finale nella relazione riveste il ruolo principale e che è un ruolo dipendente.
 
@@ -33,7 +33,7 @@ Quando le colonne chiave esterna non sono incluse nel modello, le informazioni d
 
 L'immagine seguente illustra un modello concettuale con Entity Framework Designer è stato creato. Il modello contiene due entità che partecipano alla relazione uno-a-molti. Entrambe le entità dispongono di proprietà di navigazione. **Corsi** è l'entità depend e ha il **DepartmentID** proprietà di chiave esterna definita.
 
-![RelationshipEFDesigner](~/ef6/media/relationshipefdesigner.png)
+![Tabelle di reparto e Course con le proprietà di navigazione](~/ef6/media/relationshipefdesigner.png)
 
 Il frammento di codice seguente viene illustrato lo stesso modello di cui è stato creato con Code First.
 

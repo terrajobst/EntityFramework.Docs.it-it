@@ -3,12 +3,12 @@ title: Ereditarietà tabella per gerarchia della finestra di progettazione - Ent
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
-ms.openlocfilehash: 9a546f6450b5aa3b03c062d1ab2c6f9257ba8292
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 1eb935414b20d6e93e9d470ccc845bc13626ed3a
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995004"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250843"
 ---
 # <a name="designer-tph-inheritance"></a>Ereditarietà tabella per gerarchia della finestra di progettazione
 Questa procedura dettagliata viene illustrato come implementare l'ereditarietà di tabella per gerarchia (TPH) nel modello concettuale con Entity Framework Designer (Entity Framework Designer). Ereditarietà tabella per gerarchia utilizza una tabella di database per gestire i dati per tutti i tipi di entità in una gerarchia di ereditarietà.
@@ -54,7 +54,7 @@ Entity Designer, che fornisce un'area di progettazione per la modifica del model
 
 Vale a dire come il **persona** l'aspetto di tabella nel database.
 
-![PersonTable](~/ef6/media/persontable.png) 
+![Tabella Person](~/ef6/media/persontable.png) 
 
 ## <a name="implement-table-per-hierarchy-inheritance"></a>Implementare l'ereditarietà tabella per gerarchia
 
@@ -94,14 +94,14 @@ Sono stati aggiunti due nuovi tipi di entità all'area di progettazione. Una fre
 -   Nel **operatore** della colonna della **Dettagli Mapping** finestra selezionare = nell'elenco a discesa.
 -   Nel **valore/proprietà** colonna, digitare **insegnante**. Il risultato finale dovrebbe essere simile al seguente:
 
-    ![MappingDetails2](~/ef6/media/mappingdetails2.png)
+    ![Dettagli di mapping](~/ef6/media/mappingdetails2.png)
 
 -   Ripetere questi passaggi per la **studente** tipo di entità, ma la condizione uguale alla marca **studente** valore.  
     *Il motivo, desiderassimo per rimuovere il **discriminatore** proprietà, è perché non è possibile associare più di una volta una colonna di tabella. Questa colonna verrà utilizzata per eseguire il mapping condizionale, pertanto non può essere usato per il mapping anche di proprietà. L'unico modo può essere utilizzato per entrambi, se una condizione Usa un' **Is Null** oppure **Is Not Null** confronto.*
 
 A questo punto l'ereditarietà tabella per gerarchia risulta implementata.
 
-![FinalTPH](~/ef6/media/finaltph.png)
+![Finale della tabella per gerarchia](~/ef6/media/finaltph.png)
 
 ## <a name="use-the-model"></a>Usare il modello
 

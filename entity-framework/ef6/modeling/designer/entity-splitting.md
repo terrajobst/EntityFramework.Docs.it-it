@@ -3,19 +3,19 @@ title: Separazione delle entità della finestra di progettazione - Entity Framew
 author: divega
 ms.date: 2016-10-23
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
-ms.openlocfilehash: 214561f0a0381bced3ceae0b6acfcd45f5dd65c5
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 06199be977276cd3656e2550df79bac24276ec51
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995619"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250598"
 ---
 # <a name="designer-entity-splitting"></a>Suddivisione di entità della finestra di progettazione
 Questa procedura dettagliata illustra come eseguire il mapping di un tipo di entità a due tabelle modificando un modello con Entity Framework Designer (Entity Framework Designer). È possibile eseguire il mapping di un'entità a più tabelle quando le tabelle in questione condividono una chiave comune. I concetti relativi all'esecuzione del mapping di un tipo di entità a due tabelle possono essere facilmente estesi anche all'esecuzione del mapping a più di due tabelle.
 
 L'immagine seguente mostra le finestre principali che vengono usate quando si lavora con la finestra di progettazione di Entity Framework.
 
-![EFDesigner](~/ef6/media/efdesigner.png)
+![EF Designer](~/ef6/media/efdesigner.png)
 
 ## <a name="prerequisites"></a>Prerequisiti
 
@@ -93,7 +93,7 @@ In questo passaggio si aggiornerà il **Person** tipo di entità per combinare d
 -   Nell'area di progettazione, selezionare la **PersonInfo** entità e premere **eliminare** pulsante sulla tastiera.
 -   Fare clic su **No** quando viene richiesto se si desidera rimuovere il **PersonInfo** tabella dal modello, si sta tentando di eseguire il mapping al **persona** entità.
 
-    ![DeleteTables](~/ef6/media/deletetables.png)
+    ![Eliminare le tabelle](~/ef6/media/deletetables.png)
 
 I passaggi successivi presuppongono il **Dettagli Mapping** finestra. Se non è possibile visualizzare questa finestra, fare doppio clic su area di progettazione e seleziona **Dettagli Mapping**.
 
@@ -103,7 +103,7 @@ I passaggi successivi presuppongono il **Dettagli Mapping** finestra. Se non è 
 
 Il **Person** tipo di entità è stato mappato il **persona** e **PersonInfo** tabelle.
 
-![Mapping2](~/ef6/media/mapping2.png)
+![Mapping 2](~/ef6/media/mapping2.png)
 
 ## <a name="use-the-model"></a>Usare il modello
 
@@ -136,9 +136,9 @@ Le istruzioni T-SQL seguenti sono state eseguite sul database come risultato del
 
 -   I seguenti due **Inserisci** le istruzioni sono state eseguite in seguito all'esecuzione rapida. SaveChanges (). Adottano i dati dal **Person** entità e la divisione tra la **persona** e **PersonInfo** tabelle.
 
-    ![Insert1](~/ef6/media/insert1.png)
+    ![Inserisci 1](~/ef6/media/insert1.png)
 
-    ![Insert2](~/ef6/media/insert2.png)
+    ![Inserisci 2](~/ef6/media/insert2.png)
 -   Quanto segue **seleziona** è stata eseguita come risultato l'enumerazione degli utenti del database. Combina i dati di **Person** e **PersonInfo** tabella.
 
     ![Seleziona](~/ef6/media/select.png)

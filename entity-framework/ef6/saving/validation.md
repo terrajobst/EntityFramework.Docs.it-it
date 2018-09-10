@@ -3,12 +3,12 @@ title: Convalida - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
-ms.openlocfilehash: eec834888e2e3efaadc8acf9d4f64307f394ea4a
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 65639b0f91f54ee2cd1336f6b6cd4caf45ede680
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994445"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251024"
 ---
 # <a name="data-validation"></a>Convalida dei dati
 > [!NOTE]
@@ -54,7 +54,7 @@ Codice Usa prima di tutto le annotazioni dall'assembly System.ComponentModel.Dat
 
 Senza codice aggiuntivo o modifiche di markup dell'applicazione, un'applicazione MVC esistente eseguirà la convalida lato client, anche in modo dinamico la creazione di un messaggio utilizzando i nomi di proprietà e l'annotazione.
 
-![figure01](~/ef6/media/figure01.png)
+![Figura 1](~/ef6/media/figure01.png)
 
 Nel post di eseguire il metodo di questa visualizzazione di creazione, Entity Framework consente di salvare il nuovo post di blog nel database, ma la convalida lato client di MVC viene attivata prima che l'applicazione raggiunga tale codice.
 
@@ -153,7 +153,7 @@ Il costruttore ValidationResult accetta una stringa che rappresenta il messaggio
 
 A differenza di convalida fornita dall'API Fluent, il risultato della convalida verrà riconosciuto dalla visualizzazione e il gestore di eccezioni che ho utilizzato in precedenza per aggiungere l'errore in ModelState non è necessario. Perché ValidationResult impostare entrambi i nomi delle proprietà, il HtmlHelpers MVC visualizzare il messaggio di errore per entrambe le proprietà.
 
-![figure02](~/ef6/media/figure02.png)
+![Figura 2](~/ef6/media/figure02.png)
 
 ## <a name="dbcontextvalidateentity"></a>DbContext.ValidateEntity
 

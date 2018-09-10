@@ -3,12 +3,12 @@ title: Scelte rapide da tastiera della finestra di progettazione di Framework di
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 3c76cdd5-17c5-4c54-a6a5-cf21b974636b
-ms.openlocfilehash: 70c9705956b58f4d00908dd9cca6ad0e0a078fc6
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: e3a9d968c26841c143b1b7b0ba9a168ecd13f469
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997763"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251128"
 ---
 # <a name="entity-framework-designer-keyboard-shortcuts"></a>Tasti di scelta rapida della finestra di progettazione di Entity Framework
 Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle diverse schermate di Entity Framework Tools per Visual Studio.
@@ -17,7 +17,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ### <a name="step-one-choose-model-contents"></a>Passaggio 1: Scegli contenuto Model
 
-![WizardOne](~/ef6/media/wizardone.png)
+![Una procedura guidata](~/ef6/media/wizardone.png)
 
 | Collegamento  | Operazione                                                     | Note                                               |
 |:----------|:-----------------------------------------------------------|:----------------------------------------------------|
@@ -27,7 +27,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ### <a name="step-two-choose-your-connection"></a>Passaggio 2: Scegliere la connessione
 
-![WizardTwo](~/ef6/media/wizardtwo.png)
+![Procedura guidata due](~/ef6/media/wizardtwo.png)
 
 | Collegamento  | Operazione                                                     | Note                                                   |
 |:----------|:-----------------------------------------------------------|:--------------------------------------------------------|
@@ -41,7 +41,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ### <a name="step-three-choose-your-version"></a>Il terzo passaggio: Scegliere la versione in uso
 
-![WizardThree](~/ef6/media/wizardthree.png)
+![Procedura guidata tre](~/ef6/media/wizardthree.png)
 
 | Collegamento  | Operazione                                             | Note                                                                                 |
 |:----------|:---------------------------------------------------|:--------------------------------------------------------------------------------------|
@@ -51,7 +51,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ### <a name="step-four-choose-your-database-objects-and-settings"></a>Passaggio 4: Scegliere le impostazioni e oggetti di Database
 
-![WizardFour](~/ef6/media/wizardfour.png)
+![Procedura guidata quattro](~/ef6/media/wizardfour.png)
 
 | Collegamento  | Operazione                                                                                    | Note                                                               |
 |:----------|:------------------------------------------------------------------------------------------|:--------------------------------------------------------------------|
@@ -70,7 +70,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ## <a name="ef-designer-surface"></a>Nell'area di progettazione di Entity Framework
 
-![DesignerSurface](~/ef6/media/designersurface.png)
+![Nell'area di progettazione](~/ef6/media/designersurface.png)
 
 | Collegamento                                                                                | Operazione                      | Note                                                                                                                                                                                                                               |
 |:----------------------------------------------------------------------------------------|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -113,7 +113,7 @@ Questa pagina fornisce un elenco di scelta rapida da tastiera disponibili nelle 
 
 ## <a name="mapping-details-window"></a>Finestra Dettagli Mapping
 
-![MappingDetailsShortcuts](~/ef6/media/mappingdetailsshortcuts.png)
+![Mapping dei tasti di scelta rapida in dettaglio](~/ef6/media/mappingdetailsshortcuts.png)
 
 | Collegamento                  | Operazione         | Note                                                                                                                                 |
 |:--------------------------|:---------------|:--------------------------------------------------------------------------------------------------------------------------------------|

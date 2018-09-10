@@ -3,12 +3,12 @@ title: Codice personalizzato prima convenzioni - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: dd2bdbd9-ae9e-470a-aeb8-d0ba160499b7
-ms.openlocfilehash: 79450790c6d3c8ce7fad209e3946e81d3fad4b75
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: a0e8080037cf86640275f498ed159c847ff5c057
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995828"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251063"
 ---
 # <a name="custom-code-first-conventions"></a>Convenzioni del primo codice personalizzato
 > [!NOTE]
@@ -115,7 +115,7 @@ Una funzionalità interessante del metodo IsKey è costituito da sommano tra lor
 
 Questo codice configurerà i tipi nel modello a dispone di una chiave composta costituita la colonna chiave int e la colonna di nome di stringa. Se si visualizza il modello nella finestra di progettazione si presenta come segue:
 
-![compositeKey](~/ef6/media/compositekey.png)
+![Chiave composta](~/ef6/media/compositekey.png)
 
 Un altro esempio di convenzioni proprietà consiste nel configurare tutte le proprietà di data/ora nel mio modello per eseguire il mapping a un tipo datetime2 in SQL Server invece di data/ora. È possibile ottenere questo risultato con gli elementi seguenti:
 
@@ -292,7 +292,7 @@ Per impostazione predefinita i dipendenti e manager viene eseguito il mapping al
 
 Il codice precedente eseguirà il mapping a una struttura di tabella che è simile a quanto segue:
 
-![tptExample](~/ef6/media/tptexample.jpg)
+![Esempio di tabella per tipo](~/ef6/media/tptexample.jpg)
 
 È possibile evitare questo problema e gestire il mapping di tabella per gerarchia predefinita, in due modi:
 

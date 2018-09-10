@@ -3,12 +3,12 @@ title: La gestione degli errori di commit transaction - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
-ms.openlocfilehash: a22a651851bc46e2bf1fe652b3b9a921ec22b70b
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: f912777104c2e925122c05046d4d65660de8b8a8
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996837"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250861"
 ---
 # <a name="handling-transaction-commit-failures"></a>Gestione degli errori di commit delle transazioni
 > [!NOTE]
@@ -50,23 +50,23 @@ Benché EF eseguirà sforzo possibile escludere le righe della tabella quando no
 
 Prima di 6.1 di Entity Framework non era meccanismo per gestire gli errori di commit all'interno del prodotto di Entity Framework. Esistono diversi modi per gestire questa situazione che può essere applicata alle versioni precedenti di Entity Framework 6:  
 
-### <a name="option-1---do-nothing"></a>Opzione 1: non eseguire alcuna operazione  
+* Opzione 1: non eseguire alcuna operazione  
 
-La probabilità di un errore di connessione durante il commit della transazione è bassa, pertanto potrebbe essere accettabile per l'applicazione viene eseguita solo se questa condizione si verifica effettivamente.  
+  La probabilità di un errore di connessione durante il commit della transazione è bassa, pertanto potrebbe essere accettabile per l'applicazione viene eseguita solo se questa condizione si verifica effettivamente.  
 
-## <a name="option-2---use-the-database-to-reset-state"></a>Opzione 2: usare il database per reimpostare lo stato  
+* Opzione 2: usare il database per reimpostare lo stato  
 
-1. Eliminare DbContext corrente  
-2. Creare un nuovo DbContext e ripristinare lo stato dell'applicazione dal database  
-3. Informare l'utente che l'ultima operazione potrebbe non siano stata completata correttamente  
+  1. Eliminare DbContext corrente  
+  2. Creare un nuovo DbContext e ripristinare lo stato dell'applicazione dal database  
+  3. Informare l'utente che l'ultima operazione potrebbe non siano stata completata correttamente  
 
-## <a name="option-3---manually-track-the-transaction"></a>Opzione 3: tenere manualmente traccia della transazione  
+* Opzione 3: tenere manualmente traccia della transazione  
 
-1. Aggiungere una tabella con rilevamento nel database usato per tenere traccia dello stato delle transazioni.  
-2. Inserire una riga nella tabella all'inizio di ogni transazione.  
-3. Se la connessione non riesce durante il commit, verificare la presenza della riga corrispondente nel database.  
-    - Se la riga è presente, continua a funzionare normalmente, come la transazione è stato eseguito il commit  
-    - Se la riga è assente, è possibile usare una strategia di esecuzione per ripetere l'operazione corrente.  
-4. Se il commit ha esito positivo, eliminare la riga corrispondente per evitare la crescita della tabella.  
+  1. Aggiungere una tabella con rilevamento nel database usato per tenere traccia dello stato delle transazioni.  
+  2. Inserire una riga nella tabella all'inizio di ogni transazione.  
+  3. Se la connessione non riesce durante il commit, verificare la presenza della riga corrispondente nel database.  
+     - Se la riga è presente, continua a funzionare normalmente, come la transazione è stato eseguito il commit  
+     - Se la riga è assente, è possibile usare una strategia di esecuzione per ripetere l'operazione corrente.  
+  4. Se il commit ha esito positivo, eliminare la riga corrispondente per evitare la crescita della tabella.  
 
 [Questo post di blog](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contiene codice di esempio per questa operazione in SQL Azure.  

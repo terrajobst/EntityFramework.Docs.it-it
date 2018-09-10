@@ -3,12 +3,12 @@ title: Automatica le migrazioni Code First - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 0eb86787-2161-4cb4-9cb8-67c5d6e95650
-ms.openlocfilehash: f358a4df04b03399e9e54ffdf0389e43d715af1c
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 256d1c774a2165dc12daf3d04550566c1a44b751
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996095"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250452"
 ---
 # <a name="automatic-code-first-migrations"></a>Migrazioni automatiche Code First
 Processi di migrazione automatiche consente di usare migrazioni Code First senza un file di codice nel progetto per ogni modifica apportata. Non tutte le modifiche possono essere applicate automaticamente, ad esempio Rinomina colonna richiede l'uso di una migrazione basata su codice.
@@ -85,7 +85,7 @@ Per iniziare a usare le migrazioni sono necessari un progetto e un modello Code 
 
 -   Eseguire l'applicazione e si noterà che un **MigrationsAutomaticCodeDemo.BlogContext** database viene creato automaticamente.
 
-    ![DatabaseLocalDB](~/ef6/media/databaselocaldb.png)
+    ![Database LocalDB](~/ef6/media/databaselocaldb.png)
 
 ## <a name="enabling-migrations"></a>Abilitare le migrazioni
 

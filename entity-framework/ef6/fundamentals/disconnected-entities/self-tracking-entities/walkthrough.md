@@ -3,12 +3,12 @@ title: Procedura dettagliata entità - Entity Framework 6 con rilevamento automa
 author: divega
 ms.date: 2016-10-23
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
-ms.openlocfilehash: 64ca9ae42df1a1c740131e254b8f80f67b2f9f97
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 1c450bbb20c246d9b9d58707ac03eb48eadfa970
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995421"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44251284"
 ---
 # <a name="self-tracking-entities-walkthrough"></a>Procedura dettagliata rilevamento automatico di entità
 > [!IMPORTANT]
@@ -142,7 +142,7 @@ Successivamente, si userà per aggiungere un nuovo progetto e generare le classi
 -   Selezionare il **STETemplate.tt** file
 -   Fare clic sulla freccia a discesa accanto al **Add** e selezionare **Aggiungi come collegamento**
 
-    ![AddLinkedTemplate](~/ef6/media/addlinkedtemplate.png)
+    ![Aggiungere modello collegato](~/ef6/media/addlinkedtemplate.png)
 
 Eseguiremo, inoltre, per assicurarsi che le classi di entità vengono generate nella directory lo stesso spazio dei nomi come contesto. Solo questo riduce il numero dell'utilizzo delle istruzioni che è necessario aggiungere in tutta la nostra applicazione.
 
@@ -552,4 +552,4 @@ Sarà quindi possibile scrivere codice per utilizzare il servizio.
 -   Fare doppio clic sui **STESample.WPFTest** del progetto nelle **Esplora soluzioni** e selezionare **Debug -&gt; Avvia nuova istanza**
 -   È possibile modificare i dati utilizzando la schermata e salvare il file tramite il servizio utilizzando il **salvare** pulsante
 
-![WPF](~/ef6/media/wpf.png)
+![Finestra principale di WPF](~/ef6/media/wpf.png)
