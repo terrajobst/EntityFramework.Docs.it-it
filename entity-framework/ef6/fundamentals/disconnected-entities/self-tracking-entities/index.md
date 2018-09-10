@@ -3,12 +3,12 @@ title: Entità con rilevamento automatico - EF6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
-ms.openlocfilehash: 8b555d211facd737aedf120a1ecfdc88d3903107
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: bd22df9e14fe71ae065baf1d747b1642dd7bafce
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42998016"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250864"
 ---
 # <a name="self-tracking-entities"></a>Entità con rilevamento automatico
 
@@ -28,7 +28,7 @@ Questo elemento di modello genera due file con estensione tt (modello di testo):
 
 Per iniziare, visitare la pagina [Self-Tracking Entities Walkthrough](walkthrough.md) (Entità con rilevamento automatico - Procedura dettagliata).  
 
-## <a name="considerations-when-working-with-self-tracking-entities"></a>Considerazioni relative all'utilizzo delle entità con rilevamento automatico  
+## <a name="functional-considerations-when-working-with-self-tracking-entities"></a>Considerazioni funzionali per l'uso delle entità con rilevamento automatico  
 > [!IMPORTANT]
 > L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
@@ -46,7 +46,7 @@ Quando si utilizzano le entità con rilevamento automatico, tenere presenti le c
 - Le entità con rilevamento automatico non sono abilitate per eseguire il caricamento lazy.  
 - La serializzazione binaria e la serializzazione agli oggetti della gestione dello stato di ASP.NET non sono supportate dalle entità con rilevamento automatico. Tuttavia, è possibile personalizzare il modello in modo da aggiungere il supporto per la serializzazione binaria. Per altre informazioni, vedere [Using Binary Serialization and ViewState with Self-Tracking Entities](http://go.microsoft.com/fwlink/?LinkId=199208) (Uso della serializzazione binaria e di ViewState con le entità con rilevamento automatico).  
 
-### <a name="security-considerations"></a>Considerazioni sulla sicurezza  
+## <a name="security-considerations"></a>Considerazioni sulla sicurezza  
 
 Quando si usano le entità con rilevamento automatico tenere a mente di queste considerazioni sulla sicurezza:  
 

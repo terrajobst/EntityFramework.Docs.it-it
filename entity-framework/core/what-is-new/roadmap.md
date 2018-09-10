@@ -4,21 +4,33 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: cd4b7ddaafe9501c4bb9f2496e87f619d239ab62
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: fd9086c9911cdb0890117d44c2787780aad9a7cb
+ms.sourcegitcommit: a81aed575372637997b18a0f9466d8fefb33350a
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995260"
+ms.lasthandoff: 09/06/2018
+ms.locfileid: "43821361"
 ---
 # <a name="entity-framework-core-roadmap"></a>Roadmap per Entity Framework Core
 
 > [!IMPORTANT]
 > Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
 
+## <a name="last-release-ef-core-21"></a>Ultima versione: EF Core 2.1
+
 La versione stabile di EF Core 2.1 è stata rilasciata il 30 maggio 2018. È possibile trovare altre informazioni su questa versione in [Novità di EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
 
-Il [processo di pianificazione del rilascio](#release-planning-process) per la versione successiva alla 2.1 non è stato ancora completato.
+## <a name="future-releases"></a>Versioni future
+
+### <a name="ef-core-22"></a>EF Core 2.2
+
+Questa versione include numerose correzioni di bug e un numero relativamente ridotto di nuove funzionalità. Le informazioni su questa versione sono disponibili nell'[annuncio della Guida di orientamento di EF Core 2.2](https://github.com/aspnet/Announcements/issues/308). 
+
+### <a name="ef-core-30"></a>EF Core 3.0
+
+Il [processo di pianificazione delle versioni](#release-planning-process) per la versione successiva alla 2.2 non è stato ancora completato, ma è in fase di pianificazione il rilascio di una versione principale, allineata con .NET Core 3.0 e ASP.NET 3.0. 
+
+Usare [questa query nello strumento di gestione dei problemi](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) per visualizzare gli elementi di lavoro provvisoriamente assegnati a questa versione futura.
 
 ## <a name="schedule"></a>Pianificazione
 
