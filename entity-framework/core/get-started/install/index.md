@@ -1,116 +1,135 @@
 ---
-title: Installazione di EF Core
+title: Installazione di Entity Framework Core
 author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 30ca81a0ede65506a6684d2322d31332115b1ed3
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 7831e6a54e885cf0b89ef3eef2cd81a9292df606
+ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996928"
+ms.lasthandoff: 09/09/2018
+ms.locfileid: "44250322"
 ---
-# <a name="installing-ef-core"></a><span data-ttu-id="ce4c4-102">Installazione di EF Core</span><span class="sxs-lookup"><span data-stu-id="ce4c4-102">Installing EF Core</span></span>
+# <a name="installing-entity-framework-core"></a><span data-ttu-id="51693-102">Installazione di Entity Framework Core</span><span class="sxs-lookup"><span data-stu-id="51693-102">Installing Entity Framework Core</span></span>
 
-## <a name="prerequisites"></a><span data-ttu-id="ce4c4-103">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="ce4c4-103">Prerequisites</span></span>
+## <a name="prerequisites"></a><span data-ttu-id="51693-103">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="51693-103">Prerequisites</span></span>
 
-<span data-ttu-id="ce4c4-104">Per sviluppare applicazioni .NET Core 2.1 (incluse le applicazioni ASP.NET Core 2.1 destinate a .NET Core) è necessario scaricare e installare una versione di [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) appropriata per la piattaforma in uso.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-104">In order to develop .NET Core 2.1 applications (including ASP.NET Core 2.1 applications that target .NET Core) you will need to download and install a version of the [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core) that is appropriate to your platform.</span></span> <span data-ttu-id="ce4c4-105">**Questo vale anche se è stato già installato Visual Studio 2017 versione 15.7.**</span><span class="sxs-lookup"><span data-stu-id="ce4c4-105">**This is true even if you have installed Visual Studio 2017 version 15.7.**</span></span>
+* <span data-ttu-id="51693-104">Per sviluppare app destinate a .NET Core 2.1, installare [.NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).</span><span class="sxs-lookup"><span data-stu-id="51693-104">To develop apps that target .NET Core 2.1, install [the .NET Core 2.1 SDK](https://www.microsoft.com/net/download/core).</span></span> <span data-ttu-id="51693-105">Il SDK deve essere installato anche se è presente la versione più recente di Visual Studio 2017.</span><span class="sxs-lookup"><span data-stu-id="51693-105">The SDK has to be installed even if you have the latest version of Visual Studio 2017.</span></span>
 
-<span data-ttu-id="ce4c4-106">Per usare EF Core 2.1 o qualsiasi altra libreria .NET Standard 2.0 con una piattaforma .NET diversa da .NET 2.1 (ad esempio con .NET Framework 4.6.1 o versione successiva) è necessaria una versione di NuGet che supporta .NET Standard 2.0 e i framework compatibili.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-106">In order to use EF Core 2.1 or any other .NET Standard 2.0 library with a .NET platform besides .NET Core 2.1 (for example, with .NET Framework 4.6.1 or greater) you will need a version of NuGet that is aware of the .NET Standard 2.0 and its compatible frameworks.</span></span> <span data-ttu-id="ce4c4-107">Ecco alcuni metodi per ottenere quanto sopra:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-107">Here are a few ways you can obtain this:</span></span>
+* <span data-ttu-id="51693-106">Per usare Visual Studio per lo sviluppo di app destinate a .NET Core 2.1, installare Visual Studio 2017 versione 15.7 o successiva.</span><span class="sxs-lookup"><span data-stu-id="51693-106">To use Visual Studio for development of apps that target .NET Core 2.1, install Visual Studio 2017 version 15.7 or later.</span></span>
 
-* <span data-ttu-id="ce4c4-108">Installare Visual Studio 2017 versione 15.7</span><span class="sxs-lookup"><span data-stu-id="ce4c4-108">Install Visual Studio 2017 version 15.7</span></span>
-* <span data-ttu-id="ce4c4-109">Se si usa Visual Studio 2015, [scaricare il client NuGet e aggiornarlo alla versione 3.6.0](https://www.nuget.org/downloads)</span><span class="sxs-lookup"><span data-stu-id="ce4c4-109">If you are using Visual Studio 2015, [download and upgrade NuGet client to version 3.6.0](https://www.nuget.org/downloads)</span></span>
+* <span data-ttu-id="51693-107">Per usare Entity Framework 2.1 nelle applicazioni ASP.NET Core, usare ASP.NET Core 2.1.</span><span class="sxs-lookup"><span data-stu-id="51693-107">To use Entity Framework 2.1 in ASP.NET Core applications, use ASP.NET Core 2.1.</span></span> <span data-ttu-id="51693-108">Le applicazioni che usano versioni precedenti di ASP.NET Core devono essere aggiornate alla versione 2.1.</span><span class="sxs-lookup"><span data-stu-id="51693-108">Applications that use earlier versions of ASP.NET Core must be updated to 2.1.</span></span>
 
-<span data-ttu-id="ce4c4-110">Per essere compatibili con le librerie .NET Standard 2.0, i progetti creati con versioni precedenti di Visual Studio e destinati a .NET Framework potrebbero richiedere modifiche aggiuntive:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-110">Projects created with previous versions of Visual Studio and targeting .NET Framework may need additional modifications in order to be compatible with .NET Standard 2.0 libraries:</span></span>
+* <span data-ttu-id="51693-109">È possibile usare Visual Studio 2015 per le app destinate a .NET Framework 4.6.1 o versioni successive.</span><span class="sxs-lookup"><span data-stu-id="51693-109">You can use Visual Studio 2015 for apps that target the .NET Framework 4.6.1 or later.</span></span> <span data-ttu-id="51693-110">Tuttavia è necessaria una versione di NuGet che supporta .NET Standard 2.0 e i framework compatibili.</span><span class="sxs-lookup"><span data-stu-id="51693-110">But you need a version of NuGet that is aware of the .NET Standard 2.0 and its compatible frameworks.</span></span> <span data-ttu-id="51693-111">Per ottenere questa configurazione in Visual Studio 2015 [aggiornare il client NuGet alla versione 3.6.0](https://www.nuget.org/downloads).</span><span class="sxs-lookup"><span data-stu-id="51693-111">To get that in Visual Studio 2015, [upgrade the NuGet client to version 3.6.0](https://www.nuget.org/downloads).</span></span>
 
-* <span data-ttu-id="ce4c4-111">Modificare il file di progetto e assicurarsi che la voce seguente sia visualizzata nel gruppo di proprietà iniziale:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-111">Edit the project file and make sure the following entry appears in the initial property group:</span></span>
-  ``` xml
-  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  ```
+## <a name="get-the-entity-framework-core-runtime"></a><span data-ttu-id="51693-112">Ottenere il runtime Entity Framework Core</span><span class="sxs-lookup"><span data-stu-id="51693-112">Get the Entity Framework Core runtime</span></span>
 
-* <span data-ttu-id="ce4c4-112">Per i progetti di test, assicurarsi anche che sia presente la voce seguente:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-112">For test projects, also make sure the following entry is present:</span></span>
-  ``` xml
-  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  ```
+<span data-ttu-id="51693-113">Per aggiungere le librerie di runtime di Entity Framework Core a un'applicazione, installare il pacchetto NuGet del provider di database da usare.</span><span class="sxs-lookup"><span data-stu-id="51693-113">To add EF Core runtime libraries to an application, install the NuGet package for the database provider you want to use.</span></span> <span data-ttu-id="51693-114">Per l'elenco dei provider supportati e dei nomi dei pacchetti NuGet corrispondenti, vedere [Provider di database](../../providers/index.md).</span><span class="sxs-lookup"><span data-stu-id="51693-114">For a list of supported providers and their NuGet package names, see [Database providers](../../providers/index.md).</span></span>
 
-## <a name="getting-the-bits"></a><span data-ttu-id="ce4c4-113">Ottenimento dei componenti</span><span class="sxs-lookup"><span data-stu-id="ce4c4-113">Getting the bits</span></span>
-<span data-ttu-id="ce4c4-114">Il metodo consigliato per l'aggiunta delle librerie di runtime di Entity Framework Core a un'applicazione è l'installazione di un provider di database EF Core da NuGet.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-114">The recommended way to add EF Core runtime libraries into an application is to install an EF Core database provider from NuGet.</span></span>
+<span data-ttu-id="51693-115">Per installare o aggiornare i pacchetti NuGet usare l'interfaccia della riga di comando di .NET Core, la finestra di dialogo Gestione pacchetti di Visual Studio o la console di gestione pacchetti di Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="51693-115">To install or update NuGet packages, use the .NET Core CLI, the Visual Studio Package Manager Dialog, or the Visual Studio Package Manager Console.</span></span>
 
-<span data-ttu-id="ce4c4-115">Oltre alle librerie di runtime è possibile installare strumenti che semplificano l'esecuzione di varie attività associate a EF Core nel progetto in fase di elaborazione, quali la creazione e l'applicazione di migrazioni e la creazione di un modello a partire da un database esistente.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-115">Besides the runtime libraries, you can install tools which make it easier to perform several EF Core-related tasks in your project at design time, such as creating and applying migrations, and creating a model based on an existing database.</span></span>
+<span data-ttu-id="51693-116">Per le applicazioni ASP.NET Core 2.1 i provider di SQL Server e in memoria vengono inclusi automaticamente, per cui non è necessario installarli separatamente.</span><span class="sxs-lookup"><span data-stu-id="51693-116">For ASP.NET Core 2.1 applications, the in-memory and SQL Server providers are automatically included, so there's no need to install them separately.</span></span>
 
 > [!TIP]  
-> <span data-ttu-id="ce4c4-116">Se si deve aggiornare un'applicazione che usa un provider di database di terze parti, verificare sempre se è disponibile un aggiornamento del provider compatibile con la versione di Entity Framework Core che si vuole usare.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-116">If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use.</span></span> <span data-ttu-id="ce4c4-117">Ad esempio, i provider di database per le versioni precedenti non sono compatibili con la versione 2.1 del runtime di Entity Framework Core.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-117">For example, database providers for previous versions are not compatible with version 2.1 of the EF Core runtime.</span></span>  
+> <span data-ttu-id="51693-117">Se si deve aggiornare un'applicazione che usa un provider di database di terze parti, verificare sempre se è disponibile un aggiornamento del provider compatibile con la versione di Entity Framework Core che si vuole usare.</span><span class="sxs-lookup"><span data-stu-id="51693-117">If you need to update an application that is using a third-party database provider, always check for an update of the provider that is compatible with the version of EF Core you want to use.</span></span> <span data-ttu-id="51693-118">Ad esempio, i provider di database per le versioni precedenti non sono compatibili con la versione 2.1 del runtime di Entity Framework Core.</span><span class="sxs-lookup"><span data-stu-id="51693-118">For example, database providers for previous versions are not compatible with version 2.1 of the EF Core runtime.</span></span>  
 
-> [!TIP]  
-> <span data-ttu-id="ce4c4-118">Le applicazioni destinate ad ASP.NET Core 2.1 possono usare EF Core 2.1 senza dipendenze aggiuntive oltre ai provider di database di terze parti.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-118">Applications targeting ASP.NET Core 2.1 can use EF Core 2.1 without additional dependencies besides third party database providers.</span></span> <span data-ttu-id="ce4c4-119">Le applicazioni destinate a versioni precedenti di ASP.NET Core possono usare EF Core 2.1 dopo l'aggiornamento ad ASP.NET Core 2.1.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-119">Applications targeting previous versions of ASP.NET Core need to upgrade to ASP.NET Core 2.1 in order to use EF Core 2.1.</span></span>
+### <a name="net-core-cli"></a><span data-ttu-id="51693-119">Interfaccia della riga di comando di .NET Core</span><span class="sxs-lookup"><span data-stu-id="51693-119">.NET Core CLI</span></span>
 
-<a name="cli"></a>
-### <a name="cross-platform-development-using-the-net-core-command-line-interface-cli"></a><span data-ttu-id="ce4c4-120">Sviluppo multipiattaforma con l'interfaccia della riga di comando (CLI) .NET Core</span><span class="sxs-lookup"><span data-stu-id="ce4c4-120">Cross-platform development using the .NET Core Command Line Interface (CLI)</span></span>
-
-<span data-ttu-id="ce4c4-121">Per sviluppare applicazioni destinate a [.NET Core](https://www.microsoft.com/net/download/core), è possibile scegliere di usare i [comandi dell'interfaccia della riga di comando `dotnet`](https://docs.microsoft.com/dotnet/core/tools/) in combinazione con l'editor di testo di preferenza oppure un ambiente di sviluppo integrato (IDE) come Visual Studio, Visual Studio per Mac o Visual Studio Code.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-121">To develop applications that target [.NET Core](https://www.microsoft.com/net/download/core) you can choose to use the [`dotnet` CLI commands](https://docs.microsoft.com/dotnet/core/tools/) in combination with your favorite text editor, or an Integrated Development Environment (IDE) such as Visual Studio, Visual Studio for Mac, or Visual Studio Code.</span></span>
-
-> [!IMPORTANT]  
-> <span data-ttu-id="ce4c4-122">Le applicazioni destinate a .NET Core richiedono versioni specifiche di Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-122">Applications that target .NET Core require specific versions of Visual Studio.</span></span> <span data-ttu-id="ce4c4-123">Ad esempio, lo sviluppo per .NET Core 1.x richiede Visual Studio 2017, mentre lo sviluppo per .NET Core 2.1 richiede Visual Studio 2017 versione 15.7.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-123">For example, .NET Core 1.x development requires Visual Studio 2017, while .NET Core 2.1 development requires Visual Studio 2017 version 15.7.</span></span>
-
-<span data-ttu-id="ce4c4-124">Per installare o aggiornare il provider SQL Server in un'applicazione .NET Core multipiattaforma, passare alla directory dell'applicazione ed eseguire le operazioni seguenti dalla riga di comando:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-124">To install or upgrade the SQL Server provider in a cross-platform .NET Core application, switch to the application's directory and run the following in a command line:</span></span>
+<span data-ttu-id="51693-120">Il seguente comando dell'interfaccia della riga di comando di .NET Core installa o aggiorna il provider SQL Server:</span><span class="sxs-lookup"><span data-stu-id="51693-120">The following .NET Core CLI command installs or updates the SQL Server provider:</span></span>
 
 ``` Console
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-<span data-ttu-id="ce4c4-125">È possibile indicare l'installazione di una versione specifica nel comando `dotnet add package` mediante il modificatore `-v`.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-125">You can indicate a specific version install in the `dotnet add package` command, using the `-v` modifier.</span></span> <span data-ttu-id="ce4c4-126">Ad esempio, per installare i pacchetti di EF Core 2.1 aggiungere `-v 2.1.0` al comando.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-126">For example, to install EF Core 2.1 packages, append `-v 2.1.0` to the command.</span></span>
+<span data-ttu-id="51693-121">È possibile indicare una versione specifica nel comando `dotnet add package` mediante il modificatore `-v`.</span><span class="sxs-lookup"><span data-stu-id="51693-121">You can indicate a specific version in the `dotnet add package` command, using the `-v` modifier.</span></span> <span data-ttu-id="51693-122">Ad esempio, per installare i pacchetti di EF Core 2.1.0 aggiungere `-v 2.1.0` al comando.</span><span class="sxs-lookup"><span data-stu-id="51693-122">For example, to install EF Core 2.1.0 packages, append `-v 2.1.0` to the command.</span></span>
 
-<span data-ttu-id="ce4c4-127">EF Core include un set di [comandi aggiuntivi per l'infrastruttura CLI `dotnet`](../../miscellaneous/cli/dotnet.md), a partire da `dotnet ef`.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-127">EF Core includes a set of [additional commands for the `dotnet` CLI](../../miscellaneous/cli/dotnet.md), starting with `dotnet ef`.</span></span> <span data-ttu-id="ce4c4-128">Gli strumenti dell'interfaccia della riga di comando di .NET Core per Entity Framework Core richiedono un pacchetto denominato `Microsoft.EntityFrameworkCore.Design`.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-128">The .NET Core CLI tools for EF Core require a package called `Microsoft.EntityFrameworkCore.Design`.</span></span> <span data-ttu-id="ce4c4-129">È possibile aggiungerlo al progetto usando:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-129">You can add it to the project using:</span></span>
+### <a name="visual-studio-nuget-package-manager-dialog"></a><span data-ttu-id="51693-123">Finestra di dialogo Gestione pacchetti NuGet in Visual Studio</span><span class="sxs-lookup"><span data-stu-id="51693-123">Visual Studio NuGet Package Manager Dialog</span></span>
+
+* <span data-ttu-id="51693-124">Nel menu selezionare **Progetto > Gestisci pacchetti NuGet**</span><span class="sxs-lookup"><span data-stu-id="51693-124">From the menu, select **Project > Manage NuGet Packages**</span></span>
+
+* <span data-ttu-id="51693-125">Fare clic sulla scheda **Sfoglia** o sulla scheda **Aggiornamenti**</span><span class="sxs-lookup"><span data-stu-id="51693-125">Click on the **Browse** or the **Updates** tab</span></span>
+
+* <span data-ttu-id="51693-126">Per installare o aggiornare il provider SQL Server selezionare il pacchetto `Microsoft.EntityFrameworkCore.SqlServer` e confermare.</span><span class="sxs-lookup"><span data-stu-id="51693-126">To install or update the SQL Server provider, select the `Microsoft.EntityFrameworkCore.SqlServer` package, and confirm.</span></span>
+
+<span data-ttu-id="51693-127">Per altre informazioni, vedere [Finestra di dialogo Gestione pacchetti NuGet](https://docs.microsoft.com/nuget/tools/package-manager-ui).</span><span class="sxs-lookup"><span data-stu-id="51693-127">For more information, see [NuGet Package Manager Dialog](https://docs.microsoft.com/nuget/tools/package-manager-ui).</span></span>
+
+### <a name="visual-studio-nuget-package-manager-console"></a><span data-ttu-id="51693-128">Console di Gestione pacchetti NuGet di Visual Studio</span><span class="sxs-lookup"><span data-stu-id="51693-128">Visual Studio NuGet Package Manager Console</span></span>
+
+* <span data-ttu-id="51693-129">Nel menu selezionare **Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti**</span><span class="sxs-lookup"><span data-stu-id="51693-129">From the menu, select **Tools > NuGet Package Manager > Package Manager Console**</span></span>
+
+* <span data-ttu-id="51693-130">Per installare il provider SQL Server eseguire il comando seguente nella console di Gestione pacchetti:</span><span class="sxs-lookup"><span data-stu-id="51693-130">To install the SQL Server provider, run the following command in the Package Manager Console:</span></span>
+
+  ``` PowerShell  
+  Install-Package Microsoft.EntityFrameworkCore.SqlServer
+  ```
+* <span data-ttu-id="51693-131">Per aggiornare il provider, usare il comando `Update-Package`.</span><span class="sxs-lookup"><span data-stu-id="51693-131">To update the provider, use the `Update-Package` command.</span></span>
+
+* <span data-ttu-id="51693-132">Per indicare una versione specifica usare il modificatore `-Version`.</span><span class="sxs-lookup"><span data-stu-id="51693-132">To specify a specific version, use the `-Version` modifier.</span></span> <span data-ttu-id="51693-133">Ad esempio, per installare i pacchetti di EF Core 2.1.0 aggiungere `-Version 2.1.0` ai comandi</span><span class="sxs-lookup"><span data-stu-id="51693-133">For example, to install EF Core 2.1.0 packages, append `-Version 2.1.0` to the commands</span></span>
+
+<span data-ttu-id="51693-134">Per altre informazioni, vedere [Console di Gestione pacchetti](https://docs.microsoft.com/nuget/tools/package-manager-console).</span><span class="sxs-lookup"><span data-stu-id="51693-134">For more information, see [Package Manager Console](https://docs.microsoft.com/nuget/tools/package-manager-console).</span></span>
+
+## <a name="get-entity-framework-core-tools"></a><span data-ttu-id="51693-135">Ottenere strumenti di Entity Framework Core</span><span class="sxs-lookup"><span data-stu-id="51693-135">Get Entity Framework Core tools</span></span>
+
+<span data-ttu-id="51693-136">Oltre alle librerie di runtime, è possibile installare nel progetto strumenti che svolgono attività associate a EF Core in fase di progettazione.</span><span class="sxs-lookup"><span data-stu-id="51693-136">Besides the runtime libraries, you can install tools that can perform some EF Core-related tasks in your project at design time.</span></span> <span data-ttu-id="51693-137">È ad esempio possibile creare migrazioni, applicare migrazioni e creare un modello basato su un database esistente.</span><span class="sxs-lookup"><span data-stu-id="51693-137">For example, you can create migrations, apply migrations, and create a model based on an existing database.</span></span>
+
+<span data-ttu-id="51693-138">Sono disponibili due set di strumenti:</span><span class="sxs-lookup"><span data-stu-id="51693-138">Two sets of tools are available:</span></span>
+* <span data-ttu-id="51693-139">Gli [strumenti dell'interfaccia della riga di comando (CLI)](../../miscellaneous/cli/dotnet.md) di .NET Core possono essere usati in Windows, Linux o macOS.</span><span class="sxs-lookup"><span data-stu-id="51693-139">The .NET Core [command-line interface (CLI) tools](../../miscellaneous/cli/dotnet.md) can be used on Windows, Linux, or macOS.</span></span> <span data-ttu-id="51693-140">Questi comandi iniziano con `dotnet ef`.</span><span class="sxs-lookup"><span data-stu-id="51693-140">These commands begin with `dotnet ef`.</span></span> 
+* <span data-ttu-id="51693-141">Gli [strumenti della console di Gestione pacchetti](../../miscellaneous/cli/powershell.md) vengono eseguiti in Visual Studio 2017 su Windows.</span><span class="sxs-lookup"><span data-stu-id="51693-141">The [Package Manager Console tools](../../miscellaneous/cli/powershell.md)  run in Visual Studio 2017 on Windows.</span></span> <span data-ttu-id="51693-142">Questi comandi iniziano con un verbo, ad esempio `Add-Migration`, `Update-Database`.</span><span class="sxs-lookup"><span data-stu-id="51693-142">These commands start with a verb, for example `Add-Migration`, `Update-Database`.</span></span>
+
+<span data-ttu-id="51693-143">Sebbene sia possibile usare i comandi `dotnet ef` della console di Gestione pacchetti, quando si usa Visual Studio risulta più pratico usare gli strumenti della console di Gestione pacchetti:</span><span class="sxs-lookup"><span data-stu-id="51693-143">Although you can use the `dotnet ef` commands from the Package Manager Console, it's more convenient to use the Package Manager Console tools when you're using Visual Studio:</span></span>
+* <span data-ttu-id="51693-144">Tali strumenti funzionano automaticamente con il progetto corrente selezionato nella console di Gestione pacchetti, senza richiedere il passaggio manuale da una directory all'altra.</span><span class="sxs-lookup"><span data-stu-id="51693-144">They automatically work with the current project selected in the Package Manager Console without requiring manually switching directories.</span></span>  
+* <span data-ttu-id="51693-145">Dopo il completamento del comando, i file generati vengono aperti automaticamente in Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="51693-145">They automatically open files generated by the commands in Visual Studio after the command is completed.</span></span>
+
+<a name="cli"></a>
+
+### <a name="get-the-cli-tools"></a><span data-ttu-id="51693-146">Ottenere gli strumenti dell'interfaccia della riga di comando (CLI)</span><span class="sxs-lookup"><span data-stu-id="51693-146">Get the CLI tools</span></span>
+
+<span data-ttu-id="51693-147">I comandi `dotnet ef` sono inclusi in .NET Core SDK, ma per abilitarli è necessario installare il pacchetto `Microsoft.EntityFrameworkCore.Design`:</span><span class="sxs-lookup"><span data-stu-id="51693-147">The `dotnet ef` commands are included in the .NET Core SDK, but to enable the commands you have to install the `Microsoft.EntityFrameworkCore.Design` package:</span></span>
 
  ``` Console    
 dotnet add package Microsoft.EntityFrameworkCore.Design 
 ``` 
 
+<span data-ttu-id="51693-148">Per le app ASP.NET Core 2.1 questo pacchetto è incluso automaticamente.</span><span class="sxs-lookup"><span data-stu-id="51693-148">For ASP.NET Core 2.1 apps, this package is included automatically.</span></span>
+
+<span data-ttu-id="51693-149">Come descritto in precedenza in [Prerequisiti](#prerequisites), è necessario installare anche .NET Core 2.1 SDK.</span><span class="sxs-lookup"><span data-stu-id="51693-149">As explained earlier in [Prerequisites](#prerequisites), you also need to install the .NET Core 2.1 SDK.</span></span>
+
 > [!IMPORTANT]      
-> <span data-ttu-id="ce4c4-130">Usare sempre le versioni dei pacchetti degli strumenti corrispondenti alla versione principale dei pacchetti di runtime.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-130">Always use the version of the tools package that matches the major version of the runtime packages.</span></span>
+> <span data-ttu-id="51693-150">Usare sempre le versioni dei pacchetti degli strumenti corrispondenti alla versione principale dei pacchetti di runtime.</span><span class="sxs-lookup"><span data-stu-id="51693-150">Always use the version of the tools package that matches the major version of the runtime packages.</span></span>
 
-<a name="visual-studio"></a>
-### <a name="visual-studio-development"></a><span data-ttu-id="ce4c4-131">Sviluppo in Visual Studio</span><span class="sxs-lookup"><span data-stu-id="ce4c4-131">Visual Studio development</span></span>
+### <a name="get-the-package-manager-console-tools"></a><span data-ttu-id="51693-151">Ottenere gli strumenti della console di Gestione pacchetti</span><span class="sxs-lookup"><span data-stu-id="51693-151">Get the Package Manager Console tools</span></span>
 
-<span data-ttu-id="ce4c4-132">In Visual Studio è possibile sviluppare molti tipi diversi di applicazioni destinate a .NET Core, .NET Framework o altre piattaforme supportate da EF Core.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-132">You can develop many different types of applications that target .NET Core, .NET Framework, or other platforms supported by EF Core using Visual Studio.</span></span>
+<span data-ttu-id="51693-152">Per ottenere gli strumenti della console di Gestione pacchetti per EF Core, installare il pacchetto `Microsoft.EntityFrameworkCore.Tools`:</span><span class="sxs-lookup"><span data-stu-id="51693-152">To get the Package Manager Console tools for EF Core, install the `Microsoft.EntityFrameworkCore.Tools` package:</span></span>
 
-<span data-ttu-id="ce4c4-133">Esistono due modi per installare un provider di database EF Core nell'applicazione da Visual Studio:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-133">There are two ways you can install an EF Core database provider in your application from Visual Studio:</span></span>
+ ``` Console    
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+``` 
 
-#### <a name="using-nugets-package-manager-user-interfacehttpsdocsmicrosoftcomnugettoolspackage-manager-ui"></a><span data-ttu-id="ce4c4-134">Mediante [l'interfaccia Gestione pacchetti NuGet](https://docs.microsoft.com/nuget/tools/package-manager-ui)</span><span class="sxs-lookup"><span data-stu-id="ce4c4-134">Using NuGet's [Package Manager User Interface](https://docs.microsoft.com/nuget/tools/package-manager-ui)</span></span>
+<span data-ttu-id="51693-153">Per le app ASP.NET Core 2.1 questo pacchetto è incluso automaticamente.</span><span class="sxs-lookup"><span data-stu-id="51693-153">For ASP.NET Core 2.1 apps, this package is included automatically.</span></span>
 
-* <span data-ttu-id="ce4c4-135">Selezionare il menu **Progetto > Gestisci pacchetti NuGet**</span><span class="sxs-lookup"><span data-stu-id="ce4c4-135">Select on the menu **Project > Manage NuGet Packages**</span></span>
+## <a name="upgrading-to-ef-core-21"></a><span data-ttu-id="51693-154">Aggiornamento a EF Core 2.1</span><span class="sxs-lookup"><span data-stu-id="51693-154">Upgrading to EF Core 2.1</span></span>
 
-* <span data-ttu-id="ce4c4-136">Fare clic sulla scheda **Sfoglia** o sulla scheda **Aggiornamenti**</span><span class="sxs-lookup"><span data-stu-id="ce4c4-136">Click on the **Browse** or the **Updates** tab</span></span>
+<span data-ttu-id="51693-155">Se si aggiorna un'applicazione esistente a EF Core 2.1, potrebbe essere necessario rimuovere manualmente alcuni riferimenti a pacchetti EF Core meno recenti:</span><span class="sxs-lookup"><span data-stu-id="51693-155">If you're upgrading an existing application to EF Core 2.1, some references to older EF Core packages may need to be removed manually:</span></span>
 
-* <span data-ttu-id="ce4c4-137">Selezionare il pacchetto `Microsoft.EntityFrameworkCore.SqlServer` e la versione desiderata e confermare</span><span class="sxs-lookup"><span data-stu-id="ce4c4-137">Select the `Microsoft.EntityFrameworkCore.SqlServer` package and the desired version and confirm</span></span>
+* <span data-ttu-id="51693-156">I pacchetti della fase di progettazione per provider di database quali `Microsoft.EntityFrameworkCore.SqlServer.Design` non sono più necessari né supportati in EF Core 2.1, ma non vengono rimossi automaticamente quando si aggiornano gli altri pacchetti.</span><span class="sxs-lookup"><span data-stu-id="51693-156">Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported in EF Core 2.1, but aren't automatically removed when upgrading the other packages.</span></span>
 
-#### <a name="using-nugets-package-manager-console-pmchttpsdocsmicrosoftcomnugettoolspackage-manager-console"></a><span data-ttu-id="ce4c4-138">Mediante la [Console di Gestione pacchetti (PMC)](https://docs.microsoft.com/nuget/tools/package-manager-console) di NuGet</span><span class="sxs-lookup"><span data-stu-id="ce4c4-138">Using NuGet's [Package Manager Console (PMC)](https://docs.microsoft.com/nuget/tools/package-manager-console)</span></span>
+* <span data-ttu-id="51693-157">Gli strumenti dell'interfaccia della riga di comando di .NET sono ora inclusi in .NET SDK, in modo che il riferimento a tale pacchetto possa essere rimosso dal file *csproj*:</span><span class="sxs-lookup"><span data-stu-id="51693-157">The .NET CLI tools are now included in the .NET SDK, so the reference to that package can be removed from the *.csproj* file:</span></span>
 
-* <span data-ttu-id="ce4c4-139">Selezionare il menu **Strumenti > Gestione pacchetti NuGet > Console di Gestione pacchetti**</span><span class="sxs-lookup"><span data-stu-id="ce4c4-139">Select on the menu **Tools > NuGet Package Manager > Package Manager Console**</span></span>
-
-* <span data-ttu-id="ce4c4-140">Nella Console di Gestione pacchetti, digitare ed eseguire il comando seguente:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-140">Type and run the following command in the PMC:</span></span>
-
-  ``` PowerShell  
-  Install-Package Microsoft.EntityFrameworkCore.SqlServer
   ```
-* <span data-ttu-id="ce4c4-141">In alternativa è possibile usare il comando `Update-Package` per aggiornare un pacchetto già installato a una versione più recente</span><span class="sxs-lookup"><span data-stu-id="ce4c4-141">You can use the `Update-Package` command instead to update a package that is already installed to a more recent  version</span></span>
+  <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  ```
 
-* <span data-ttu-id="ce4c4-142">Per specificare una versione specifica, è possibile usare il modificatore `-Version`.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-142">To specify a specific version, you can use the `-Version` modifier.</span></span> <span data-ttu-id="ce4c4-143">Ad esempio, per installare i pacchetti di EF Core 2.1 aggiungere `-Version 2.1.0` ai comandi.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-143">For example, to install EF Core 2.1 packages, append `-Version 2.1.0` to the commands</span></span>
+<span data-ttu-id="51693-158">Nel caso di applicazioni destinate a .NET Framework e create in versioni precedenti di Visual Studio, assicurarsi che siano compatibili con le librerie .NET Standard 2.0:</span><span class="sxs-lookup"><span data-stu-id="51693-158">For applications that target the .NET Framework and were created by earlier versions of Visual Studio, make sure that they are compatible with .NET Standard 2.0 libraries:</span></span>
 
-#### <a name="tools"></a><span data-ttu-id="ce4c4-144">Strumenti</span><span class="sxs-lookup"><span data-stu-id="ce4c4-144">Tools</span></span>
+  * <span data-ttu-id="51693-159">Modificare il file di progetto e assicurarsi che la voce seguente sia visualizzata nel gruppo di proprietà iniziale:</span><span class="sxs-lookup"><span data-stu-id="51693-159">Edit the project file and make sure the following entry appears in the initial property group:</span></span>
 
-<span data-ttu-id="ce4c4-145">È anche disponibile una versione PowerShell dei [comandi EF Core eseguiti nella Console di Gestione pacchetti](../../miscellaneous/cli/powershell.md) in Visual Studio, con funzionalità simili a quelle dei comandi `dotnet ef`.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-145">There is also a PowerShell version of the [EF Core commands which run inside the PMC](../../miscellaneous/cli/powershell.md) in Visual Studio, with similar capabilities to the `dotnet ef` commands.</span></span> 
+    ``` xml
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    ```
 
-> [!TIP]  
-> <span data-ttu-id="ce4c4-146">Sebbene sia possibile usare i comandi `dotnet ef` della Console di Gestione pacchetti in Visual Studio, è molto più comodo usare la versione PowerShell:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-146">Although it is possible to use the `dotnet ef` commands from the PMC in Visual Studio, it is far more convenient to use the PowerShell version:</span></span>
-> * <span data-ttu-id="ce4c4-147">I comandi funzionano automaticamente con il progetto corrente selezionato nella Console di Gestione pacchetti, senza richiedere il passaggio manuale da una directory all'altra.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-147">They automatically work with the current project selected in the PMC without requiring manually switching directories.</span></span>  
-> * <span data-ttu-id="ce4c4-148">Dopo il completamento del comando, i file generati vengono aperti automaticamente in Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-148">They automatically open files generated by the commands in Visual Studio after the command is completed.</span></span>
+  * <span data-ttu-id="51693-160">Per i progetti di test, assicurarsi anche che sia presente la voce seguente:</span><span class="sxs-lookup"><span data-stu-id="51693-160">For test projects, also make sure the following entry is present:</span></span>
 
-> [!IMPORTANT]  
-> <span data-ttu-id="ce4c4-149">**Pacchetti deprecati in EF Core 2.1**: se si aggiorna un'applicazione esistente a EF Core 2.1, potrebbe essere necessario rimuovere manualmente alcuni riferimenti a pacchetti EF Core meno recenti:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-149">**Deprecated packages in EF Core 2.1:** If you're upgrading an existing application to EF Core 2.1, some references to older EF Core packages may need to be removed manually:</span></span>
-> * <span data-ttu-id="ce4c4-150">I pacchetti della fase di progettazione per provider di database quali `Microsoft.EntityFrameworkCore.SqlServer.Design` non sono più necessari né supportati in EF Core 2.1, ma non vengono rimossi automaticamente quando si aggiornano gli altri pacchetti.</span><span class="sxs-lookup"><span data-stu-id="ce4c4-150">Database provider design-time packages such as `Microsoft.EntityFrameworkCore.SqlServer.Design` are no longer required or supported in EF Core 2.1, but will not be automatically removed when upgrading the other packages.</span></span>
-> * <span data-ttu-id="ce4c4-151">Gli strumenti dell'interfaccia della riga di comando di .NET sono ora inclusi in .NET SDK, in modo che il riferimento a tale pacchetto possa essere rimosso dal file *csproj*:</span><span class="sxs-lookup"><span data-stu-id="ce4c4-151">The .NET CLI tools are now included in the .NET SDK, so the reference to that package can be removed from the *.csproj* file:</span></span>
->   ```
->   <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
->   ```
+    ``` xml
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    ```
