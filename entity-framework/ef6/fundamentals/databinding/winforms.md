@@ -3,12 +3,12 @@ title: Associazione dati con Windows Form - Entity Framework 6
 author: divega
 ms.date: 2016-10-23
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
-ms.openlocfilehash: 071172810f7dac45f42aca0efa7f329bac31e9cd
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 48e6d997875a25a5954484f854953df69a267d05
+ms.sourcegitcommit: 8d04a2ad98036f32ca70c77ce3040c5edb1cdf82
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44251193"
+ms.lasthandoff: 09/11/2018
+ms.locfileid: "44384852"
 ---
 # <a name="databinding-with-winforms"></a>Associazione dati con Windows Form
 Questa procedura dettagliata illustra come associare tipi POCO ai controlli Windows Form (WinForms) sotto forma di "master-dettagli". L'applicazione usa Entity Framework per popolare gli oggetti con i dati dal database, tenere traccia delle modifiche e rendere persistenti i dati nel database.
@@ -71,7 +71,7 @@ Le proprietà della raccolta devono implementare l'interfaccia IListSource per a
 
             IList IListSource.GetList()
             {
-                return _bindingList  (_bindingList = this.ToBindingList());
+                return _bindingList ?? (_bindingList = this.ToBindingList());
             }
         }
     }
