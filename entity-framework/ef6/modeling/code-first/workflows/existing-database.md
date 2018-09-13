@@ -1,14 +1,14 @@
 ---
 title: Code First per un Database esistente - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: a7e60b74-973d-4480-868f-500a3899932e
-ms.openlocfilehash: fedfb921919582e2cdb5f3bc497f11889b972ad6
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: f05420beb3dff2d632151fcbf48986b0d9cd18ff
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44251076"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490610"
 ---
 # <a name="code-first-to-an-existing-database"></a>Code First per un Database esistente
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un database esistente. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.

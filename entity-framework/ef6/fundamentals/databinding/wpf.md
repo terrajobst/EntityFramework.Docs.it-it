@@ -1,14 +1,14 @@
 ---
 title: Data Binding con WPF - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
-ms.openlocfilehash: e6df90db17d39d3aa91275800a6414fed40fb5db
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 5bd4a9b98a12de41e4ec37c2cc7dbdc537210893
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44251154"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490233"
 ---
 # <a name="databinding-with-wpf"></a>Data Binding con WPF
 Questa procedura dettagliata viene illustrato come associare controlli WPF in un form di "master-detail" tipi POCO. L'applicazione usa le API di Entity Framework per popolare gli oggetti con i dati dal database, tenere traccia delle modifiche e rendere persistenti i dati nel database.

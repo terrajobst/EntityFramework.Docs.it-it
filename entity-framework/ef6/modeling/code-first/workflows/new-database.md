@@ -1,14 +1,14 @@
 ---
 title: Code First per un nuovo Database - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
-ms.openlocfilehash: 8ed1bfbc3536acc0d83b9c8ecdd180aeb44eff83
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 6572574ad36094ac0960c429cfa8606b6aebb492
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44251050"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490748"
 ---
 # <a name="code-first-to-a-new-database"></a>Code First per un nuovo Database
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
@@ -20,7 +20,7 @@ Questo video viene fornita un'introduzione allo sviluppo Code First come destina
 
 **Video**: [WMV](http://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.wmv) | [MP4](http://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-mp4Video-CodeFirstNewDatabase.m4v) | [WMV (ZIP)](http://download.microsoft.com/download/B/A/5/BA57BADE-D558-4693-8F82-29E64E4084AB/HDI-ITPro-MSDN-winvideo-CodeFirstNewDatabase.zip)
 
-# <a name="pre-requisites"></a>Prerequisiti
+## <a name="pre-requisites"></a>Prerequisiti
 
 È necessario avere almeno Visual Studio 2010 o Visual Studio 2012 è installato per completare questa procedura dettagliata.
 

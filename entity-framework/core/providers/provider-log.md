@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 5da1043310e2858638c81a0654a9cab23e39c220
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: a637e5e2f75e16bc7b11b1a51abcbe16274a1c75
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44250816"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490772"
 ---
 # <a name="provider-impacting-changes"></a>Modifiche che influiscono sul provider
 
@@ -52,3 +52,7 @@ Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usat
   * Seguire questo modello per aggiungere il supporto spaziale per il provider che è coerenza per tutti i provider.
 * https://github.com/aspnet/EntityFrameworkCore/pull/13199 -Aggiungere debug avanzato per la creazione di provider del servizio
   * Consente a DbContextOptionsExtensions implementare una nuova interfaccia che può aiutare le persone a comprendere il motivo per cui il provider di servizi interna è in fase di ricompilazione
+* https://github.com/aspnet/EntityFrameworkCore/pull/13289 -Aggiunge CanConnect API per l'uso da controlli di integrità
+  * Questa richiesta pull viene aggiunto il concetto di `CanConnect` che verrà utilizzata da health di ASP.NET Core verifica per determinare se il database è disponibile. Per impostazione predefinita, l'implementazione relazionale chiama semplicemente `Exist`, anche se i provider possono implementare un elemento diverso se necessario. Provider relazionali dovrà implementare la nuova API in ordine per il controllo di integrità sia utilizzabile.
+* https://github.com/aspnet/EntityFrameworkCore/pull/13306 -Aggiornare base RelationalTypeMapping per non impostare dimensioni DbParameter
+  * Arrestare l'impostazione delle dimensioni per impostazione predefinita, in quanto può causare il troncamento. I provider potrebbero essere necessario aggiungere la propria logica se sono necessario impostare le dimensioni.

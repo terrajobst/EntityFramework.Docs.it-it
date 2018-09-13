@@ -1,14 +1,14 @@
 ---
 title: Le stringhe di connessione e modelli - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
-ms.openlocfilehash: dce414ea84f13235691abf0dcadef5c743d90f9d
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 2c9f084107e4de7f5439bf0082b46a3b538496e0
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994959"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490746"
 ---
 # <a name="connection-strings-and-models"></a>Modelli e le stringhe di connessione
 In questo argomento illustra come Entity Framework consente di individuare la connessione di database da usare e il modo in cui è possibile modificarlo. I modelli creati con Code First e la finestra di progettazione di Entity Framework sono descritte in questo argomento.  

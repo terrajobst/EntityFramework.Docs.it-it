@@ -1,14 +1,14 @@
 ---
 title: I tipi complessi - Entity Framework Designer - EF6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 9a8228ef-acfd-4575-860d-769d2c0e18a1
-ms.openlocfilehash: 2a516bd14131fd035a4d005e0fdf140f7ff4d65f
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: a3c5578acee23688c04772d2dd0a2221779af562
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44250829"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45489908"
 ---
 # <a name="complex-types---ef-designer"></a>Tipi complessi - finestra di progettazione di Entity Framework
 Questo argomento viene illustrato come eseguire il mapping dei tipi complessi con Entity Framework Designer (Entity Framework Designer) e su come eseguire una query per le entità che contengono le proprietà del tipo complesso.

@@ -1,14 +1,14 @@
 ---
 title: Le stored procedure con più set di risultati - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 1b3797f9-cd3d-4752-a55e-47b84b399dc1
-ms.openlocfilehash: 56c28f05bd7efe1b54d6cadd32afe0e9c6cf38b5
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 098ed88ba52e211965baf3660f0e51bd74c71efd
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44251011"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45489310"
 ---
 # <a name="stored-procedures-with-multiple-result-sets"></a>Stored procedure con più set di risultati
 In alcuni casi quando si utilizzano le stored procedure è necessario restituire più risultati impostano. Questo scenario viene comunemente usato per ridurre il numero di database di andata e ritorno necessari per creare una singola schermata. Prima EF5, Entity Framework consentirebbe la stored procedure da chiamare, ma solo restituisce il primo set di risultati al codice chiamante.
