@@ -1,14 +1,14 @@
 ---
 title: Impostazioni del File di configurazione - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
-ms.openlocfilehash: 88c2439f3a89c9fb9ee22f828789df4decf39cc5
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 949ad4f030205753c5fbf9b95f4d183d8c0d1fe7
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996503"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490876"
 ---
 # <a name="configuration-file-settings"></a>Impostazioni del File di configurazione
 Entity Framework consente una serie di impostazioni per essere specificati dal file di configurazione. In genere EF segue un principio 'convention over configuration': tutte le impostazioni descritte in questo post di un comportamento predefinito, è solo necessario preoccuparsi di modifica dell'impostazione quando il valore predefinito non soddisfa più i requisiti.  

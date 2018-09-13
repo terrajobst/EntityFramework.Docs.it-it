@@ -1,14 +1,14 @@
 ---
 title: Tutte le query SQL non elaborate, Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
-ms.openlocfilehash: 99893ca1c634ce6f2e4cf9dcb70b1a1e43532c60
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 6b00648939ccedffeed09b4e1d6e8d70fa262a36
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995734"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45490584"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 Entity Framework consente di eseguire una query usando LINQ con le classi di entità. Tuttavia, potrebbero esserci delle volte in cui si desidera eseguire query usando SQL non elaborate direttamente nel database. Ciò include la chiamata di stored procedure che possono essere utili per i modelli di Code First che attualmente non supportano il mapping a stored procedure. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  

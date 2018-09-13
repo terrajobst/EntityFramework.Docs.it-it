@@ -1,14 +1,14 @@
 ---
 title: Finestra di progettazione CUD Stored procedure - Entity Framework 6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
-ms.openlocfilehash: 36c9b97b77fec30136cba1d850a0259c689e69ae
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 35a00aa817c8643352c517c233977efd49e3baac
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44250920"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45489557"
 ---
 # <a name="designer-cud-stored-procedures"></a>Finestra di progettazione CUD Stored procedure
 Questa procedura dettagliata mostra come eseguire il mapping di creazione\\inserire, aggiornare ed eliminare le operazioni (CUD) di un tipo di entità alle stored procedure mediante Entity Framework Designer (Entity Framework Designer).  Per impostazione predefinita, Entity Framework genera automaticamente le istruzioni SQL per le operazioni CUD, ma è anche possibile mappare le stored procedure a queste operazioni.  
