@@ -3,12 +3,12 @@ title: Entità con rilevamento automatico - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
-ms.openlocfilehash: 3575977ceabe7d93ac48d5fac253eac1341e2353
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: b098736ef47e79c916f4bf054716022d5032eee5
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489700"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283810"
 ---
 # <a name="self-tracking-entities"></a>Entità con rilevamento automatico
 
@@ -39,12 +39,12 @@ Quando si utilizzano le entità con rilevamento automatico, tenere presenti le c
 - Quando si invia al servizio il grafico modificato nel client e si intende continuare a lavorare sullo stesso grafico nel client, è necessario scorrere manualmente il grafico e chiamare il metodo **AcceptChanges** su ogni oggetto per reimpostare la funzione di rilevamento delle modifiche.  
 
     > Se gli oggetti nel grafico contengono proprietà con valori generati dal database (ad esempio, valori di identità o concorrenza), Entity Framework sostituirà i valori di queste proprietà con i valori generati dal database dopo la chiamata al metodo **SaveChanges**. È possibile implementare l'operazione del servizio in modo che restituisca al client gli oggetti salvati o un elenco di valori di proprietà generati per gli oggetti. Il client dovrebbe quindi sostituire le istanze dell'oggetto o i valori di proprietà dell'oggetto con gli oggetti o i valori di proprietà restituiti dall'operazione del servizio.  
-- È possibile che l'unione di grafici da più richieste del servizio introduca oggetti con valori di chiave duplicati nel grafico risultante. Entity Framework non rimuove gli oggetti con chiavi duplicate quando viene chiamato il metodo **ApplyChanges**, ma genera un'eccezione. Per evitare di avere grafici con valori di chiave duplicati, seguire uno dei modelli descritti nel blog seguente: [Self-Tracking Entities: ApplyChanges and duplicate entities](http://go.microsoft.com/fwlink/?LinkID=205119&clcid=0x409) (Entità con rilevamento automatico: ApplyChanges ed entità duplicate).  
+- È possibile che l'unione di grafici da più richieste del servizio introduca oggetti con valori di chiave duplicati nel grafico risultante. Entity Framework non rimuove gli oggetti con chiavi duplicate quando viene chiamato il metodo **ApplyChanges**, ma genera un'eccezione. Per evitare di avere grafici con valori di chiave duplicati, seguire uno dei modelli descritti nel blog seguente: [Self-Tracking Entities: ApplyChanges and duplicate entities](https://go.microsoft.com/fwlink/?LinkID=205119&clcid=0x409) (Entità con rilevamento automatico: ApplyChanges ed entità duplicate).  
 - Quando si modifica la relazione tra oggetti impostando la proprietà della chiave esterna, la proprietà di navigazione di riferimento viene impostata su null e non viene sincronizzata con l'entità principale appropriata sul client. Dopo che il grafico è stato collegato al contesto dell'oggetto (ad esempio, dopo la chiamata al metodo **ApplyChanges**), le proprietà di chiave esterna e le proprietà di navigazione vengono sincronizzate.  
 
     > Non avere una proprietà di navigazione di riferimento sincronizzata con l'oggetto principale appropriato potrebbe essere un problema se è stata specificata l'eliminazione a catena sulla relazione di chiave esterna. L'eventuale eliminazione dell'oggetto principale non sarà propagata agli oggetti dipendenti. Se sono state specificate eliminazioni a catena, utilizzare le proprietà di navigazione per modificare le relazioni anziché impostare la proprietà della chiave esterna.  
 - Le entità con rilevamento automatico non sono abilitate per eseguire il caricamento lazy.  
-- La serializzazione binaria e la serializzazione agli oggetti della gestione dello stato di ASP.NET non sono supportate dalle entità con rilevamento automatico. Tuttavia, è possibile personalizzare il modello in modo da aggiungere il supporto per la serializzazione binaria. Per altre informazioni, vedere [Using Binary Serialization and ViewState with Self-Tracking Entities](http://go.microsoft.com/fwlink/?LinkId=199208) (Uso della serializzazione binaria e di ViewState con le entità con rilevamento automatico).  
+- La serializzazione binaria e la serializzazione agli oggetti della gestione dello stato di ASP.NET non sono supportate dalle entità con rilevamento automatico. Tuttavia, è possibile personalizzare il modello in modo da aggiungere il supporto per la serializzazione binaria. Per altre informazioni, vedere [Using Binary Serialization and ViewState with Self-Tracking Entities](https://go.microsoft.com/fwlink/?LinkId=199208) (Uso della serializzazione binaria e di ViewState con le entità con rilevamento automatico).  
 
 ## <a name="security-considerations"></a>Considerazioni sulla sicurezza  
 

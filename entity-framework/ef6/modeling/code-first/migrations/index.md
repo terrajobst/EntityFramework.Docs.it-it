@@ -3,12 +3,12 @@ title: Migrazioni Code First - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
-ms.openlocfilehash: 0e2f33d3402929c93a339ea26dcade875da52a61
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 389da6c54e063a5dc598f98f8ac92cfc0e686019
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490286"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283849"
 ---
 # <a name="code-first-migrations"></a>Migrazioni Code First
 Migrazioni Code First rappresenta il metodo più adatto per far evolvere lo schema del database dell'applicazione quando si usa il flusso di lavoro Code First. Le migrazioni offrono un set di strumenti che consentono di:
@@ -96,7 +96,7 @@ Per iniziare a usare le migrazioni sono necessari un progetto e un modello Code 
     public string Url { get; set; }
 ```
 
-Se si esegue di nuovo l'applicazione, viene generata un'eccezione InvalidOperationException con il messaggio *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* [*http://go.microsoft.com/fwlink/?LinkId=238269*](http://go.microsoft.com/fwlink/?LinkId=238269)*) (Il modello di creazione del contesto 'BlogContext' è stato modificato dopo la creazione del database. È possibile usare Migrazioni Code First per aggiornare il database).*
+Se si esegue di nuovo l'applicazione, viene generata un'eccezione InvalidOperationException con il messaggio *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* [*http://go.microsoft.com/fwlink/?LinkId=238269*](https://go.microsoft.com/fwlink/?LinkId=238269)*) (Il modello di creazione del contesto 'BlogContext' è stato modificato dopo la creazione del database. È possibile usare Migrazioni Code First per aggiornare il database).*
 
 Come suggerisce l'eccezione, è ora possibile iniziare a usare Migrazioni Code First. Il primo passaggio consiste nell'abilitare le migrazioni per il contesto.
 
