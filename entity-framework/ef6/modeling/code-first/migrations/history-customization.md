@@ -3,12 +3,12 @@ title: Personalizzare la tabella di cronologia migrazioni - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
-ms.openlocfilehash: 6644bf2b0ac703a9f3a779b17b31d79d40cc5b69
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: e3faefc4b812ec4bc440ed2bb48747053d8cb1b3
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489211"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283693"
 ---
 # <a name="customizing-the-migrations-history-table"></a>La tabella di cronologia le migrazioni di personalizzazione
 > [!NOTE]
@@ -69,7 +69,7 @@ Si supponga di che voler rinominare la tabella di cronologia le migrazioni e ins
     }
 ```
 
-Una volta pronto il HistoryContext personalizzato è necessario apportare EF consapevole registrandolo tramite [configurazione basata su codice](http://msdn.com/data/jj680699):
+Una volta pronto il HistoryContext personalizzato è necessario apportare EF consapevole registrandolo tramite [configurazione basata su codice](https://msdn.com/data/jj680699):
 
 ``` csharp
     using System.Data.Entity;

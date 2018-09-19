@@ -3,12 +3,12 @@ title: Automatica le migrazioni Code First - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 0eb86787-2161-4cb4-9cb8-67c5d6e95650
-ms.openlocfilehash: 21f77ef49db2485047292b3928b4f63d49dbb180
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 2713afaf09707b7696e90464aac9945c2d82d274
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489986"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283914"
 ---
 # <a name="automatic-code-first-migrations"></a>Migrazioni automatiche Code First
 Processi di migrazione automatiche consente di usare migrazioni Code First senza un file di codice nel progetto per ogni modifica apportata. Non tutte le modifiche possono essere applicate automaticamente, ad esempio Rinomina colonna richiede l'uso di una migrazione basata su codice.
@@ -97,7 +97,7 @@ Per iniziare a usare le migrazioni sono necessari un progetto e un modello Code 
     public string Url { get; set; }
 ```
 
-Se si esegue di nuovo l'applicazione, viene generata un'eccezione InvalidOperationException con il messaggio *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* [*http://go.microsoft.com/fwlink/?LinkId=238269*](http://go.microsoft.com/fwlink/?LinkId=238269)*) (Il modello di creazione del contesto 'BlogContext' è stato modificato dopo la creazione del database. È possibile usare Migrazioni Code First per aggiornare il database).*
+Se si esegue di nuovo l'applicazione, viene generata un'eccezione InvalidOperationException con il messaggio *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* [*http://go.microsoft.com/fwlink/?LinkId=238269*](https://go.microsoft.com/fwlink/?LinkId=238269)*) (Il modello di creazione del contesto 'BlogContext' è stato modificato dopo la creazione del database. È possibile usare Migrazioni Code First per aggiornare il database).*
 
 Come suggerisce l'eccezione, è ora possibile iniziare a usare Migrazioni Code First. Poiché si vuole usare migrazioni automatiche dobbiamo specificare il **– EnableAutomaticMigrations** passare.
 

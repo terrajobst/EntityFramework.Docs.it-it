@@ -3,12 +3,12 @@ title: Test con un framework di simulazione - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: bd66a638-d245-44d4-8e71-b9c6cb335cc7
-ms.openlocfilehash: b50d0afb52ae1c496f2734ecc015cdaaa060aff7
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 20799b55b2dffe27637c4fb84df06cee174e6dd9
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489973"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46284096"
 ---
 # <a name="testing-with-a-mocking-framework"></a>Test con un framework di simulazione
 > [!NOTE]
@@ -235,7 +235,7 @@ Entity Framework 6 è stato introdotto un set di metodi di estensione che può e
 
 Poiché le query Entity Framework prevedono l'utilizzo di LINQ, vengono definiti i metodi di estensione per interfaccia IQueryable e IEnumerable. Tuttavia, poiché solo sono progettate per essere usato con Entity Framework si potrebbe ricevere l'errore seguente se si prova a utilizzarli su una query LINQ che non sia una query Entity Framework:
 
-> L'origine IQueryable non implementa IDbAsyncEnumerable{0}. Solo le origini che implementano IDbAsyncEnumerable possono essere utilizzate per le operazioni asincrone di Entity Framework. Per altre informazioni, vedere [ http://go.microsoft.com/fwlink/?LinkId=287068 ](http://go.microsoft.com/fwlink/?LinkId=287068).  
+> L'origine IQueryable non implementa IDbAsyncEnumerable{0}. Solo le origini che implementano IDbAsyncEnumerable possono essere utilizzate per le operazioni asincrone di Entity Framework. Per altre informazioni, vedere [ http://go.microsoft.com/fwlink/?LinkId=287068 ](https://go.microsoft.com/fwlink/?LinkId=287068).  
 
 Mentre i metodi asincroni sono supportati solo durante l'esecuzione di una query Entity Framework, è possibile usarli nello unit test quando esegue il test in esecuzione su una in-memoria doppia di un elemento DbSet.  
 

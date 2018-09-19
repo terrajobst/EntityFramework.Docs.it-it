@@ -3,12 +3,12 @@ title: Tutte le query SQL non elaborate, Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9e1ee76e-2499-408c-81e8-9b6c5d1945a0
-ms.openlocfilehash: 6b00648939ccedffeed09b4e1d6e8d70fa262a36
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 168aee67186535bf2a50705e86bfc5a88147e369
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490584"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283784"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 Entity Framework consente di eseguire una query usando LINQ con le classi di entità. Tuttavia, potrebbero esserci delle volte in cui si desidera eseguire query usando SQL non elaborate direttamente nel database. Ciò include la chiamata di stored procedure che possono essere utili per i modelli di Code First che attualmente non supportano il mapping a stored procedure. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
@@ -82,4 +82,4 @@ Si noti che tutte le modifiche apportate ai dati nel database di utilizzando Exe
 
 ### <a name="output-parameters"></a>Parametri di output  
 
-Se si utilizzano parametri di output, i relativi valori non sarà disponibili fino a quando i risultati sono stati letti completamente. Ciò è dovuto il comportamento sottostante di DbDataReader, vedere [recupero di dati mediante DataReader](http://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.  
+Se si utilizzano parametri di output, i relativi valori non sarà disponibili fino a quando i risultati sono stati letti completamente. Ciò è dovuto il comportamento sottostante di DbDataReader, vedere [recupero di dati mediante DataReader](https://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.  

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 11/15/2016
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: d6e31cf2b9b783ea503703536d159b34bf2e18c0
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: d5101d0622ddc2c90ddded16b9ec6cc4eb814c36
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997190"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283836"
 ---
 # <a name="connection-resiliency"></a>Resilienza della connessione
 
@@ -49,7 +49,7 @@ La soluzione consiste nel richiamare manualmente la strategia di esecuzione con 
 
 ## <a name="transaction-commit-failure-and-the-idempotency-issue"></a>Errore commit della transazione e il problema di idempotenza
 
-In generale, quando si verifica un errore di connessione corrente è rollback della transazione. Tuttavia, se la connessione viene eliminata mentre la transazione è in corso il commit risultante lo stato della transazione è sconosciuto. Vedere questo [post di blog](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) per altri dettagli.
+In generale, quando si verifica un errore di connessione corrente è rollback della transazione. Tuttavia, se la connessione viene eliminata mentre la transazione è in corso il commit risultante lo stato della transazione è sconosciuto. Vedere questo [post di blog](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) per altri dettagli.
 
 Per impostazione predefinita, la strategia di esecuzione ritenterà l'operazione come se è stato eseguito il rollback della transazione, ma se non è il caso ciò comporterà un'eccezione se il nuovo stato del database non è compatibile o potrebbe causare **danneggiamento dei dati** se la operazione non si basa su un determinato stato, ad esempio quando si inserisce una nuova riga con valori di chiave generati automaticamente.
 

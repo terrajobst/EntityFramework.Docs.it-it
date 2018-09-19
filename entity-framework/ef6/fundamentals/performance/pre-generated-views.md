@@ -3,19 +3,19 @@ title: Visualizzazioni pregenerate mapping - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 917ba9c8-6ddf-4631-ab8c-c4fb378c2fcd
-ms.openlocfilehash: cb374d007252710b42c31061bf15d7d32af0db27
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: da5d59ba5a899a0ee3a1eec3db0da1b4ece871d8
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489245"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46284109"
 ---
 # <a name="pre-generated-mapping-views"></a>Visualizzazioni pregenerate mapping
 Prima di Entity Framework può eseguire una query o salvare le modifiche all'origine dati, è necessario generare un set di visualizzazioni dei mapping di accesso al database. Queste visualizzazioni dei mapping di un siano dell'istruzione Entity SQL che rappresentano il database in modo astratto e fanno parte dei metadati memorizzati nella cache per ogni dominio dell'applicazione. Se si creano più istanze dello stesso contesto nel dominio dell'applicazione stessa, queste riutilizzeranno le visualizzazioni di mapping dai metadati memorizzati nella cache anziché rigenerarle. Poiché la generazione di visualizzazioni mapping è una parte significativa del costo complessivo dell'esecuzione della prima query, Entity Framework consente di pre-generare viste di mapping e includerli nel progetto compilato. Per altre informazioni, vedere [considerazioni sulle prestazioni (Entity Framework)](~/ef6/fundamentals/performance/perf-whitepaper.md).
 
 ## <a name="generating-mapping-views-with-the-ef-power-tools"></a>Generazione di visualizzazioni con EF Power Tools di Mapping
 
-Il modo più semplice per pregenerare le visualizzazioni è usare il [EF Power Tools](http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d). Una volta installati gli strumenti Power si avrà un'opzione di menu per generare visualizzazioni, come indicato di seguito.
+Il modo più semplice per pregenerare le visualizzazioni è usare il [EF Power Tools](https://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d). Una volta installati gli strumenti Power si avrà un'opzione di menu per generare visualizzazioni, come indicato di seguito.
 
 -   Per la **Code First** modelli fare doppio clic sul file di codice che contiene la classe DbContext.
 -   Per la **Entity Framework Designer** modelli fare doppio clic sul file EDMX.

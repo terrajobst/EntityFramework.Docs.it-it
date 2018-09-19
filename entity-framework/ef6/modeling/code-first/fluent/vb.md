@@ -3,12 +3,12 @@ title: API Fluent con VB.NET - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 763dc6a2-764a-4600-896c-f6f13abf56ec
-ms.openlocfilehash: cbdd32696fb88d3de6cf1966040e5dda49fe19cd
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 6aa74fa72296f66f0b069b9b5ee7e2e016570525
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489471"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283745"
 ---
 # <a name="fluent-api-with-vbnet"></a>API Fluent con Visual Basic.NET
 Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent. Questa procedura dettagliata illustra come eseguire la configurazione dell'API fluent con Visual Basic.NET.
@@ -22,7 +22,7 @@ Questa pagina si presuppone una conoscenza di base di Code First. Vedere le proc
 
 È necessario avere almeno Visual Studio 2010 o Visual Studio 2012 è installato per completare questa procedura dettagliata.
 
-Se si usa Visual Studio 2010, è necessario anche avere [NuGet](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installato
+Se si usa Visual Studio 2010, è necessario anche avere [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installato
 
 ## <a name="create-the-application"></a>Creare l'applicazione
 
@@ -139,7 +139,7 @@ Si sta per iniziare a utilizzando tipi di Entity Framework, pertanto è necessar
 
 -   * * Progetto –&gt; **Gestisci pacchetti NuGet...**
 > [!NOTE]
-> Se non si dispone di **Gestisci pacchetti NuGet...** opzione, è necessario installare il [versione più recente di NuGet](http://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
+> Se non si dispone di **Gestisci pacchetti NuGet...** opzione, è necessario installare il [versione più recente di NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
 -   Selezionare il **Online** scheda
 -   Selezionare il **EntityFramework** pacchetto
 -   Fare clic su **installare**

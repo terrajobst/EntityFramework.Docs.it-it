@@ -3,12 +3,12 @@ title: Query della finestra di progettazione di Stored procedure - Entity Framew
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
-ms.openlocfilehash: 6284b10261e6f3b9bf69d1c15e121988e4976d48
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 04478ea1c8cd43a7ba4ee788e464992af3de7f64
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489947"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283901"
 ---
 # <a name="designer-query-stored-procedures"></a>Query della finestra di progettazione di Stored procedure
 Questa procedura dettagliata mostra come usare Entity Framework Designer (Entity Framework Designer) per importare le stored procedure in un modello e quindi chiamare le stored procedure importate per recuperare i risultati. 
@@ -100,4 +100,4 @@ The department name is Engineering
 <a name="output-parameters"></a>Parametri di output
 -----------------
 
-Se si utilizzano parametri di output, i relativi valori non sarà disponibili fino a quando i risultati sono stati letti completamente. Ciò è dovuto il comportamento sottostante di DbDataReader, vedere [recupero di dati mediante DataReader](http://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.
+Se si utilizzano parametri di output, i relativi valori non sarà disponibili fino a quando i risultati sono stati letti completamente. Ciò è dovuto il comportamento sottostante di DbDataReader, vedere [recupero di dati mediante DataReader](https://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.

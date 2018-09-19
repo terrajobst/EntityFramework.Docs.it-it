@@ -3,12 +3,12 @@ title: Convenzioni basato su modello - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 0fc4eef8-29b8-4192-9c77-08fd33d3db3a
-ms.openlocfilehash: fb79164f71cb3afff705a83f5078a13d043abca8
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 80b722730b4ca6c9d00a8611b6c9027e8bc9fe61
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490935"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283707"
 ---
 # <a name="model-based-conventions"></a>Convenzioni basato su modello
 > [!NOTE]
@@ -146,7 +146,7 @@ public class ForeignKeyNamingConvention : IStoreModelConvention<AssociationType>
 
 ## <a name="extending-existing-conventions"></a>Estensione convenzioni esistente   
 
-Se è necessario scrivere una convenzione simile a una delle convenzioni di Entity Framework già si applica al modello è sempre possibile estendere tale convenzione per evitare la necessità di riscriverlo completamente.  Un esempio di ciò consiste nel sostituire l'Id esistente corrispondente convenzione con uno personalizzato.   Un ulteriore vantaggio di eseguire l'override della convenzione chiave è che verrà chiamato il metodo sottoposto a override solo se è presente alcuna chiave già rilevata o configurata in modo esplicito. Un elenco di convenzioni utilizzate da Entity Framework è disponibile qui: [ http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx ](http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx).  
+Se è necessario scrivere una convenzione simile a una delle convenzioni di Entity Framework già si applica al modello è sempre possibile estendere tale convenzione per evitare la necessità di riscriverlo completamente.  Un esempio di ciò consiste nel sostituire l'Id esistente corrispondente convenzione con uno personalizzato.   Un ulteriore vantaggio di eseguire l'override della convenzione chiave è che verrà chiamato il metodo sottoposto a override solo se è presente alcuna chiave già rilevata o configurata in modo esplicito. Un elenco di convenzioni utilizzate da Entity Framework è disponibile qui: [ http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx ](https://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx).  
 
 ``` csharp
 using System.Data.Entity;
@@ -209,4 +209,4 @@ public class BlogContext : DbContext
 
 ## <a name="notes"></a>Note  
 
-Un elenco di convenzioni applicate da Entity Framework è disponibile nella documentazione MSDN qui: [ http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx ](http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx).  Questo elenco viene effettuato il pull direttamente dal codice sorgente.  Il codice sorgente per Entity Framework 6 è disponibile nel [GitHub](https://github.com/aspnet/entityframework6/) e molte delle convenzioni utilizzate da Entity Framework sono buon punto di partenza per modelli personalizzato basato su convenzioni.  
+Un elenco di convenzioni applicate da Entity Framework è disponibile nella documentazione MSDN qui: [ http://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx ](https://msdn.microsoft.com/library/system.data.entity.modelconfiguration.conventions.aspx).  Questo elenco viene effettuato il pull direttamente dal codice sorgente.  Il codice sorgente per Entity Framework 6 è disponibile nel [GitHub](https://github.com/aspnet/entityframework6/) e molte delle convenzioni utilizzate da Entity Framework sono buon punto di partenza per modelli personalizzato basato su convenzioni.  

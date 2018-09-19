@@ -3,18 +3,18 @@ title: La gestione degli errori di commit transaction - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
-ms.openlocfilehash: 71d5649dd993bb95e24165a55d812c71a37f03f3
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 27e75e6a1919ee2300fe76cfcdf67cceaad887b3
+ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489388"
+ms.lasthandoff: 09/18/2018
+ms.locfileid: "46283654"
 ---
 # <a name="handling-transaction-commit-failures"></a>Gestione degli errori di commit delle transazioni
 > [!NOTE]
 > **EF6.1 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 6.1. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-Come parte di 6.1 viene introdotto una nuova funzionalità di resilienza di connessione per Entity Framework: la possibilità di rilevare e correggere automaticamente quando gli errori di connessione temporanei interessano l'acknowledgement del commit della transazione. I dettagli completi dello scenario sono meglio descritti nel post di blog [connettività del Database SQL e il problema di idempotenza](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx).  In breve, lo scenario è che, quando viene generata un'eccezione durante il commit di una transazione, ci sono due le cause possibili:  
+Come parte di 6.1 viene introdotto una nuova funzionalità di resilienza di connessione per Entity Framework: la possibilità di rilevare e correggere automaticamente quando gli errori di connessione temporanei interessano l'acknowledgement del commit della transazione. I dettagli completi dello scenario sono meglio descritti nel post di blog [connettività del Database SQL e il problema di idempotenza](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx).  In breve, lo scenario è che, quando viene generata un'eccezione durante il commit di una transazione, ci sono due le cause possibili:  
 
 1. Il commit della transazione non riuscita nel server
 2. Il commit della transazione ha avuto esito positivo nel server, ma un problema di connettività ha impedito la notifica di esito positivo di raggiungere il client  
@@ -69,4 +69,4 @@ Prima di 6.1 di Entity Framework non era meccanismo per gestire gli errori di co
      - Se la riga è assente, è possibile usare una strategia di esecuzione per ripetere l'operazione corrente.  
   4. Se il commit ha esito positivo, eliminare la riga corrispondente per evitare la crescita della tabella.  
 
-[Questo post di blog](http://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contiene codice di esempio per questa operazione in SQL Azure.  
+[Questo post di blog](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contiene codice di esempio per questa operazione in SQL Azure.  
