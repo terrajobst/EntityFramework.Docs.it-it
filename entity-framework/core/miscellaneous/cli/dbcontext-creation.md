@@ -13,7 +13,7 @@ ms.locfileid: "42993718"
 ---
 <a name="design-time-dbcontext-creation"></a>Creazione DbContext in fase di progettazione
 ==============================
-Alcuni dei comandi degli strumenti di Entity Framework Core (ad esempio, il [migrazioni] [ 1] comandi) richiedono un oggetto derivato `DbContext` istanza deve essere creato in fase di progettazione per raccogliere i dettagli relativi all'applicazione tipi di entità e sul relativo mapping a uno schema di database. Nella maggior parte dei casi, è consigliabile che il `DbContext` creato in questo modo è configurata in modo analogo a come sarebbe [configurato in fase di esecuzione][2].
+Alcuni dei comandi degli strumenti di Entity Framework Core (ad esempio, il [migrazioni][1] comandi) richiedono un oggetto derivato `DbContext` istanza deve essere creato in fase di progettazione per raccogliere i dettagli relativi all'applicazione tipi di entità e sul relativo mapping a uno schema di database. Nella maggior parte dei casi, è consigliabile che il `DbContext` creato in questo modo è configurata in modo analogo a come sarebbe [configurato in fase di esecuzione][2].
 
 Esistono diversi modi, provare gli strumenti per creare il `DbContext`:
 
@@ -26,11 +26,11 @@ Gli strumenti tenta innanzitutto di ottenere il provider di servizi richiamando 
 > [!NOTE]
 > Quando si crea una nuova applicazione ASP.NET Core 2.0, questo hook è incluso per impostazione predefinita. Nelle versioni precedenti di EF Core e ASP.NET Core, strumenti di provano a richiamare `Startup.ConfigureServices` direttamente per ottenere il provider di servizi dell'applicazione, ma questo modello non sono più funzioni correttamente nelle applicazioni ASP.NET Core 2.0. Se si esegue l'aggiornamento di un'applicazione di ASP.NET Core 1.x a 2.0, è possibile [modificare il `Program` classe seguire il nuovo modello][3].
 
-Il `DbContext` se stesso e tutte le dipendenze nel costruttore devono essere registrati come servizi in provider di servizi dell'applicazione. Ciò può essere ottenuta facilmente facendo in modo che [costruttore sulla `DbContext` che accetta un'istanza di `DbContextOptions<TContext>` come argomento] [ 4] e l'uso di [ `AddDbContext<TContext>` (metodo)] [5].
+Il `DbContext` se stesso e tutte le dipendenze nel costruttore devono essere registrati come servizi in provider di servizi dell'applicazione. Ciò può essere ottenuta facilmente facendo in modo che [costruttore sulla `DbContext` che accetta un'istanza di `DbContextOptions<TContext>` come argomento][4] e l'uso di [`AddDbContext<TContext>` (metodo)][5].
 
 <a name="using-a-constructor-with-no-parameters"></a>Usando un costruttore senza parametri
 --------------------------------------
-Se DbContext non può essere ottenuto dal provider del servizio dell'applicazione, gli strumenti di cercare derivato `DbContext` tipo all'interno del progetto. Quindi provano a creare un'istanza con un costruttore senza parametri. Questo può essere il costruttore predefinito se la `DbContext` viene configurato usando il [ `OnConfiguring` ] [ 6] (metodo).
+Se DbContext non può essere ottenuto dal provider del servizio dell'applicazione, gli strumenti di cercare derivato `DbContext` tipo all'interno del progetto. Quindi provano a creare un'istanza con un costruttore senza parametri. Questo può essere il costruttore predefinito se la `DbContext` viene configurato usando il [`OnConfiguring`][6] (metodo).
 
 <a name="from-a-design-time-factory"></a>Da una factory in fase di progettazione
 --------------------------
@@ -57,7 +57,7 @@ namespace MyProject
 ```
 
 > [!NOTE]
-> Il `args` parametro non viene attualmente utilizzato. È presente [un problema] [ 7] la possibilità di specificare gli argomenti in fase di progettazione da strumenti di rilevamento.
+> Il `args` parametro non viene attualmente utilizzato. È presente [un problema][7] la possibilità di specificare gli argomenti in fase di progettazione da strumenti di rilevamento.
 
 Una factory in fase di progettazione può essere particolarmente utile se è necessario configurare DbContext in modo diverso per la fase di progettazione più in fase di esecuzione se il `DbContext` accetta costruttore i parametri aggiuntivi non sono registrati nell'inserimento di dipendenze, se non si usa l'inserimento delle dipendenze del tutto o se per alcuni motivo si preferisce non hanno una `BuildWebHost` metodo nell'applicazione ASP.NET Core `Main` classe.
 
