@@ -3,12 +3,12 @@ title: Impostazioni del File di configurazione - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
-ms.openlocfilehash: 949ad4f030205753c5fbf9b95f4d183d8c0d1fe7
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: faba4e406b9f26f5bed6149f75c59da362d84692
+ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490876"
+ms.lasthandoff: 09/27/2018
+ms.locfileid: "47415783"
 ---
 # <a name="configuration-file-settings"></a>Impostazioni del File di configurazione
 Entity Framework consente una serie di impostazioni per essere specificati dal file di configurazione. In genere EF segue un principio 'convention over configuration': tutte le impostazioni descritte in questo post di un comportamento predefinito, è solo necessario preoccuparsi di modifica dell'impostazione quando il valore predefinito non soddisfa più i requisiti.  
@@ -153,7 +153,7 @@ La sezione di configurazione consente di specificare una factory di connessione 
 
 Quando è stato installato il pacchetto NuGet di Entity Framework è stata registrata una factory di connessione predefinita che punta a SQL Express o LocalDB, a seconda di quale è stato installato.  
 
-Per impostare una factory di connessione, si specifica il nome completo del tipo dell'assembly nel **deafultConnectionFactory** elemento.  
+Per impostare una factory di connessione, si specifica il nome completo del tipo dell'assembly nel **defaultConnectionFactory** elemento.  
 
 > [!NOTE]
 > Nome di assembly completo è il nome completo dello spazio dei nomi, seguito da una virgola, quindi l'assembly che il tipo si trova in. Facoltativamente è possibile specificare anche la versione dell'assembly, delle impostazioni cultura e token di chiave pubblica.  

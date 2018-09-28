@@ -3,12 +3,12 @@ title: Annotazioni dei dati First - EF6 del codice
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 38ae52543ed99e5a1c1da7d19a2e15d168e3a1bd
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 54e27f1b866da14d68db66ca5eca5a6dde819e26
+ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490115"
+ms.lasthandoff: 09/27/2018
+ms.locfileid: "47415809"
 ---
 # <a name="code-first-data-annotations"></a>Annotazioni dei dati per Code First
 > [!NOTE]
@@ -319,13 +319,13 @@ Ecco la tabella dopo che è stato rigenerato. Il nome della tabella è stato mod
 Una funzionalità di database più importanti è la possibilità di disporre di proprietà calcolate. Se si esegue il mapping di Code First alle classi di tabelle contenenti colonne calcolate, non si desidera che Entity Framework per tentare di aggiornare le colonne. Ma si desidera restituire questi valori dal database dopo aver inserito o i dati aggiornati a Entity Framework. È possibile utilizzare l'annotazione DatabaseGenerated per contrassegnare tutte le proprietà nella classe con l'enumerazione calcolata. Ne sono altre enumerazioni e identità.
 
 ``` csharp
-    [DatabaseGenerated(DatabaseGenerationOption.Computed)]
+    [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated { get; set; }
 ```
 
 È possibile usare database generati nelle colonne timestamp o byte quando codice genera prima di tutto il database, in caso contrario, è consigliabile utilizzare solo questo posizionando i database esistenti perché codice prima di tutto sarà in grado di determinare la formula per la colonna calcolata.
 
-Leggere sopra che per impostazione predefinita, una proprietà chiave che è un numero intero diventerà una chiave di identità nel database. Sarebbe lo stesso come impostazione DatabaseGenerated su DatabaseGenerationOption.Identity. Se si desidera che non sia una chiave di identità, è possibile impostare il valore per DatabaseGenerationOption.None.
+Leggere sopra che per impostazione predefinita, una proprietà chiave che è un numero intero diventerà una chiave di identità nel database. Sarebbe lo stesso come impostazione DatabaseGenerated su DatabaseGeneratedOption.Identity. Se si desidera che non sia una chiave di identità, è possibile impostare il valore per DatabaseGeneratedOption.None.
 
  
 
