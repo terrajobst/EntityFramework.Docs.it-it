@@ -3,12 +3,12 @@ title: Considerazioni sulle prestazioni per EF4 EF5 ed EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-ms.openlocfilehash: a58461a6d18d9d53c002b5d45cecbff7b0cdf81e
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: fb184fe8720b552a2050607bb17648f0413c31d1
+ms.sourcegitcommit: c568d33214fc25c76e02c8529a29da7a356b37b4
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490259"
+ms.lasthandoff: 09/30/2018
+ms.locfileid: "47459591"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>Considerazioni sulle prestazioni per Entity Framework 4, 5 e 6
 David Obando, Eric Dettinger e ad altri utenti
@@ -88,11 +88,11 @@ Per i modelli di piccole dimensioni, semplici il costo può essere sufficienteme
 
 ### <a name="23-using-pre-generated-views-to-decrease-model-load-time"></a>Il tempo di caricamento 2,3 mediante Pre-Generated le viste per ridurre i modelli
 
-#### <a name="231-pre-generated-views-using-the-entity-framework-power-tools"></a>2.3.1 le visualizzazioni pregenerate tramite Entity Framework Power Tools
+Per informazioni dettagliate su come usare le visualizzazioni pregenerate su Entity Framework 6 visitare [Pre-Generated Mapping viste](~/ef6/fundamentals/performance/pre-generated-views.md)
 
-È anche possibile utilizzare Entity Framework Power Tools per generare visualizzazioni di file EDMX e Code First modelli facendo clic sul file della classe modello e utilizzare il menu di Entity Framework per selezionare "Genera visualizzazioni". Entity Framework Power Tools funzionano solo sui contesti di DbContext derivata ed è reperibile in \< http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d>.
+#### <a name="231-pre-generated-views-using-the-entity-framework-power-tools-community-edition"></a>2.3.1 le visualizzazioni pregenerate con la Community Edition di Entity Framework Power Tools
 
-Per altre informazioni su come usare le visualizzazioni pregenerate su Entity Framework 6 visita [Pre-Generated Mapping viste](~/ef6/fundamentals/performance/pre-generated-views.md).
+È possibile usare la [Entity Framework 6 Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition) per generare visualizzazioni di file EDMX e Code First modelli facendo clic sul file della classe modello e utilizzare il menu di Entity Framework per selezionare "Genera visualizzazioni". L'edizione Community di Entity Framework Power Tools funzionano solo sui contesti di DbContext derivata.
 
 #### <a name="232-how-to-use-pre-generated-views-with-a-model-created-by-edmgen"></a>2.3.2 come usare le visualizzazioni pregenerate con un modello creato da EDMGen
 
@@ -100,26 +100,20 @@ EDMGen è un'utilità che viene fornito con .NET e funziona con Entity Framework
 
 Se si apportano manualmente le modifiche ai file di schema per il modello, è necessario generare di nuovo il file di viste. È possibile farlo eseguendo EDMGen con il **/mode:ViewGeneration** flag.
 
-Per altre informazioni, vedere [procedura: Pre-Generate viste per migliorare le prestazioni delle Query](https://msdn.microsoft.com/library/bb896240.aspx).
-
 #### <a name="233-how-to-use-pre-generated-views-with-an-edmx-file"></a>2.3.3 come usare le visualizzazioni Pre-Generated con un file EDMX
 
 È inoltre possibile utilizzare EDMGen per generare visualizzazioni per un file EDMX: l'argomento di cui viene fatto riferimento in precedenza MSDN viene descritto come aggiungere un evento di pre-compilazione per eseguire questa operazione - ma questo è complicato e vi sono casi in cui non è possibile. È in genere più semplice usare un modello T4 per generare le viste quando il modello è in un file edmx.
 
-Blog del team di ADO.NET è una richiesta post che descrive come usare un modello T4 per la generazione di visualizzazioni ( \< http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>). Questo post include un modello che può essere scaricato e aggiunti al progetto. Il modello è stato scritto per la prima versione di Entity Framework, in modo che non è garantite per lavorare con le versioni più recenti di Entity Framework. Tuttavia, è possibile scaricare un set più aggiornato dei modelli di generazione di visualizzazione per Entity Framework 4 e 5from Visual Studio Gallery:
+Blog del team di ADO.NET è una richiesta post che descrive come usare un modello T4 per la generazione di visualizzazioni ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>). Questo post include un modello che può essere scaricato e aggiunti al progetto. Il modello è stato scritto per la prima versione di Entity Framework, in modo che non è garantite per lavorare con le versioni più recenti di Entity Framework. Tuttavia, è possibile scaricare un set più aggiornato dei modelli di generazione di visualizzazione per Entity Framework 4 e 5from Visual Studio Gallery:
 
 -   VB.NET: \<http://visualstudiogallery.msdn.microsoft.com/118b44f2-1b91-4de2-a584-7a680418941d>
 -   C\#: \<http://visualstudiogallery.msdn.microsoft.com/ae7730ce-ddab-470f-8456-1b313cd2c44d>
 
-Se si usa Entity Framework 6 è possibile ottenere la visualizzazione generazione T4 i modelli Visual Studio Gallery all'indirizzo \< http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>.
-
-#### <a name="234-how-to-use-pre-generated-views-with-a-code-first-model"></a>2.3.4 come usare Pre-Generated viste con un modello Code First
-
-È anche possibile usare le visualizzazioni pregenerate con un progetto di Code First. Entity Framework Power Tools è in grado di generare un file di visualizzazioni per il progetto Code First. È possibile trovare Entity Framework Power Tools in Visual Studio Gallery al \< http://visualstudiogallery.msdn.microsoft.com/72a60b14-1581-4b9b-89f2-846072eff19d/>.
+Se si usa Entity Framework 6 è possibile ottenere la visualizzazione generazione T4 i modelli Visual Studio Gallery all'indirizzo \<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>.
 
 ### <a name="24-reducing-the-cost-of-view-generation"></a>2.4 riducendo i costi di generazione di visualizzazioni
 
-Usando le visualizzazioni pregenerate sposta il costo della generazione di visualizzazioni dal caricamento del modello (fase di esecuzione) in fase di compilazione. Anche se ciò migliora le prestazioni di avvio in fase di esecuzione, si continuerà a verificarsi i problemi della generazione di visualizzazioni mentre si sta sviluppando. Esistono alcuni suggerimenti aggiuntivi che consentono di ridurre il costo della generazione di visualizzazioni, sia in fase di compilazione e fase di esecuzione.
+Usando le visualizzazioni pregenerate sposta il costo della generazione di visualizzazioni dal modello di caricamento (fase di esecuzione) in fase di progettazione. Anche se ciò migliora le prestazioni di avvio in fase di esecuzione, si continuerà a verificarsi i problemi della generazione di visualizzazioni mentre si sta sviluppando. Esistono alcuni suggerimenti aggiuntivi che consentono di ridurre il costo della generazione di visualizzazioni, sia in fase di compilazione e fase di esecuzione.
 
 #### <a name="241-using-foreign-key-associations-to-reduce-view-generation-cost"></a>2.4.1 utilizzando associazioni di chiavi esterne per ridurre i costi di generazione di visualizzazione
 
@@ -139,12 +133,12 @@ Con Entity Framework 6, generazione di visualizzazioni per il modello con le chi
 
 Quando si utilizza EDMGen o Entity Designer in Visual Studio, si ottengono le chiavi esterne per impostazione predefinita, e sono necessari solo un singolo flag casella di controllo o della riga di comando per passare tra le chiavi esterne e IAs.
 
-Se si dispone di un modello Code First di grandi dimensioni, con associazioni indipendenti avrà lo stesso effetto sulla generazione di visualizzazione. Per evitare questo impatto, incluse le proprietà di chiave esterna per le classi per gli oggetti dipendenti, anche se alcuni sviluppatori prenderà in considerazione questa opzione per essere possano contaminare relativo modello a oggetti. È possibile trovare altre informazioni su questo argomento in \< http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>.
+Se si dispone di un modello Code First di grandi dimensioni, con associazioni indipendenti avrà lo stesso effetto sulla generazione di visualizzazione. Per evitare questo impatto, incluse le proprietà di chiave esterna per le classi per gli oggetti dipendenti, anche se alcuni sviluppatori prenderà in considerazione questa opzione per essere possano contaminare relativo modello a oggetti. È possibile trovare altre informazioni su questo argomento in \<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>.
 
 | Quando si usa      | Eseguire questa operazione                                                                                                                                                                                                                                                                                                                              |
 |:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Finestra di progettazione entità | Dopo l'aggiunta di un'associazione tra due entità, assicurarsi di avere un vincolo referenziale. I vincoli referenziali indicano a Entity Framework di usare le chiavi esterne anziché associazioni indipendenti. Per altri dettagli, visitare \< http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
-| EDMGen          | Quando si utilizza EDMGen per generare i file dal database, verrà rispettate e aggiunte al modello di conseguenza le chiavi esterne. Per altre informazioni sulle differenti opzioni esposte da EDMGen visita [ http://msdn.microsoft.com/library/bb387165.aspx ](https://msdn.microsoft.com/library/bb387165.aspx).                           |
+| Finestra di progettazione entità | Dopo l'aggiunta di un'associazione tra due entità, assicurarsi di avere un vincolo referenziale. I vincoli referenziali indicano a Entity Framework di usare le chiavi esterne anziché associazioni indipendenti. Per altri dettagli, visitare \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
+| EDMGen          | Quando si utilizza EDMGen per generare i file dal database, verrà rispettate e aggiunte al modello di conseguenza le chiavi esterne. Per altre informazioni sulle differenti opzioni esposte da EDMGen visita [http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx).                           |
 | Code First      | Vedere la sezione "Relazione convenzione" i [convenzioni del primo codice](~/ef6/modeling/code-first/conventions/built-in.md) argomento per informazioni su come includere proprietà di chiave esterna per oggetti dipendenti quando si utilizza Code First.                                                                                              |
 
 #### <a name="242-moving-your-model-to-a-separate-assembly"></a>2.4.2 lo spostamento del modello in un assembly separato
@@ -404,7 +398,7 @@ Entity Framework supporta anche la memorizzazione nella cache dei metadati. Ques
 4.  ItemCollection viene periodicamente verificata per l'uso. Se è stato stabilito che un'area di lavoro non eseguito di recente, si verrà contrassegnato per la pulizia in avanti sweep cache.
 5.  La semplice creazione di un EntityConnection causerà una cache dei metadati da creare (anche se le raccolte di elementi in esso non verrà inizializzate fino a quando non viene aperta la connessione). Questa area di lavoro rimane in memoria fino a quando non determina l'algoritmo di memorizzazione nella cache non è "in uso".
 
-Il Team di consulenza clienti ha scritto un post di blog che descrive conterrà un riferimento a un oggetto ItemCollection per evitare "deprecation" quando si usano modelli di grandi dimensioni: \< http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>.
+Il Team di consulenza clienti ha scritto un post di blog che descrive conterrà un riferimento a un oggetto ItemCollection per evitare "deprecation" quando si usano modelli di grandi dimensioni: \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>.
 
 #### <a name="342-the-relationship-between-metadata-caching-and-query-plan-caching"></a>3.4.2 la relazione tra i metadati e pianificare la memorizzazione nella cache di Query
 
@@ -419,7 +413,7 @@ Questa implementazione della memorizzazione nella cache di secondo livello è un
 #### <a name="351-additional-references-for-results-caching-with-the-wrapping-provider"></a>3.5.1 ulteriori riferimenti per i risultati la memorizzazione nella cache con il provider di ritorno a capo
 
 -   Julie Lerman ha scritto un articolo di MSDN "Second-Level la memorizzazione nella cache in Entity Framework e Windows Azure" che include la procedura per aggiornare il provider di ritorno a capo di esempio per usare la memorizzazione nella cache di Windows Server AppFabric: [https://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
--   Se si lavora con Entity Framework 5, il blog del team dispone di una richiesta post che descrive come eseguire le operazioni in esecuzione con il provider di memorizzazione nella cache per Entity Framework 5: \< http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>. Include inoltre un modello T4 che facilitano l'automazione aggiungendo il 2 ° a livello di memorizzazione nella cache al progetto.
+-   Se si lavora con Entity Framework 5, il blog del team dispone di una richiesta post che descrive come eseguire le operazioni in esecuzione con il provider di memorizzazione nella cache per Entity Framework 5: \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>. Include inoltre un modello T4 che facilitano l'automazione aggiungendo il 2 ° a livello di memorizzazione nella cache al progetto.
 
 ## <a name="4-autocompiled-queries"></a>4 autocompilati query
 
@@ -879,15 +873,15 @@ Un'altra considerazione sulle prestazioni quando si usa Entity Framework è la s
 
 Se il modello utilizza TPT (ereditarietà), le query che vengono generate saranno più complesse rispetto a quelli che vengono generati con le altre strategie di ereditarietà, potrebbe essere in tempi di esecuzione sull'archivio.  In genere richiederà più tempo per generare le query su un modello di tabella per tipo e per materializzare gli oggetti risultanti.
 
-Vedere "Considerazioni sulle prestazioni quando si usa l'ereditarietà tabella per tipo (tabella per tipo) in Entity Framework" post di blog MSDN: \< http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>.
+Vedere "Considerazioni sulle prestazioni quando si usa l'ereditarietà tabella per tipo (tabella per tipo) in Entity Framework" post di blog MSDN: \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>.
 
 #### <a name="711-------avoiding-tpt-in-model-first-or-code-first-applications"></a>7.1.1 evitando TPT nelle applicazioni Code First o Model First
 
 Quando si crea un modello in un database esistente che dispone di uno schema di tabella per tipo, non è necessario numerose opzioni. Tuttavia, quando si crea un'applicazione con Code First o Model First, è opportuno evitare TPT (ereditarietà) per evitare problemi di prestazioni.
 
-Quando si usa il primo modello nella creazione guidata finestra di progettazione entità, si otterrà TPT per qualsiasi tipo di ereditarietà nel modello. Se si desidera passare a una strategia di ereditarietà tabella per gerarchia con Model First, è possibile usare "Entity Designer Database generazione Power Pack" disponibile da Visual Studio Gallery ( \< http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
+Quando si usa il primo modello nella creazione guidata finestra di progettazione entità, si otterrà TPT per qualsiasi tipo di ereditarietà nel modello. Se si desidera passare a una strategia di ereditarietà tabella per gerarchia con Model First, è possibile usare "Entity Designer Database generazione Power Pack" disponibile da Visual Studio Gallery ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
 
-Quando si utilizza Code First per configurare il mapping di un modello con ereditarietà, Entity Framework userà una tabella per gerarchia per impostazione predefinita, pertanto tutte le entità nella gerarchia di ereditarietà sarà possibile eseguire il mapping alla stessa tabella. Vedere la sezione "Mapping con l'API Fluent" dell'articolo "Code prima nell'entità Framework4.1" in MSDN Magazine ( [ http://msdn.microsoft.com/magazine/hh126815.aspx ](https://msdn.microsoft.com/magazine/hh126815.aspx)) per altri dettagli.
+Quando si utilizza Code First per configurare il mapping di un modello con ereditarietà, Entity Framework userà una tabella per gerarchia per impostazione predefinita, pertanto tutte le entità nella gerarchia di ereditarietà sarà possibile eseguire il mapping alla stessa tabella. Vedere la sezione "Mapping con l'API Fluent" dell'articolo "Code prima nell'entità Framework4.1" in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) per altri dettagli.
 
 ### <a name="72-------upgrading-from-ef4-to-improve-model-generation-time"></a>7.2 l'aggiornamento da EF4 per migliorare la generazione del modello di tempo
 
@@ -907,7 +901,7 @@ Vale la pena notare che durante la generazione SSDL, il carico è quasi interame
 
 ### <a name="73-------splitting-large-models-with-database-first-and-model-first"></a>7.3 suddividendo i modelli di grandi dimensioni con il Database prima di tutto e Model First
 
-Man mano che aumenta le dimensioni del modello, nell'area di progettazione diventa risulti troppo affollato e difficili da usare. In genere, si consideri un modello con più di 300 entità troppo grande per l'utilizzo efficiente della finestra di progettazione. Post di blog seguente vengono descritte diverse opzioni per la divisione di modelli di grandi dimensioni: \< http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>.
+Man mano che aumenta le dimensioni del modello, nell'area di progettazione diventa risulti troppo affollato e difficili da usare. In genere, si consideri un modello con più di 300 entità troppo grande per l'utilizzo efficiente della finestra di progettazione. Post di blog seguente vengono descritte diverse opzioni per la divisione di modelli di grandi dimensioni: \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>.
 
 Il post è stato scritto per la prima versione di Entity Framework, ma i passaggi sono comunque applicabili.
 
@@ -923,7 +917,7 @@ L'impostazione del campo ContextTypeName impedisce anche un problema funzionale 
 
 Entity Framework consente di utilizzare classi di dati personalizzate insieme al modello di dati senza apportare alcuna modifica alle classi di dati. Pertanto è possibile pertanto utilizzare oggetti POCO (Plain-Old CLR Object), ad esempio gli oggetti di dominio esistenti, con il modello di dati. Queste classi di dati POCO (noto anche come oggetti che non riconoscono la persistenza), che vengono eseguito il mapping a entità definite in un modello di dati, supportano la maggior parte della stessa query, inseriscono, aggiornano ed eliminare i comportamenti come tipi di entità generati dagli strumenti di Entity Data Model.
 
-Entity Framework è anche possibile creare le classi proxy derivate dai tipi POCO, che vengono usati quando si desidera abilitare le funzionalità, ad esempio il caricamento lazy e automatica rilevamento delle modifiche nelle entità POCO. Le classi POCO devono soddisfare determinati requisiti per consentire a Entity Framework di usare un proxy, come descritto qui: [ http://msdn.microsoft.com/library/dd468057.aspx ](https://msdn.microsoft.com/library/dd468057.aspx).
+Entity Framework è anche possibile creare le classi proxy derivate dai tipi POCO, che vengono usati quando si desidera abilitare le funzionalità, ad esempio il caricamento lazy e automatica rilevamento delle modifiche nelle entità POCO. Le classi POCO devono soddisfare determinati requisiti per consentire a Entity Framework di usare un proxy, come descritto qui: [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx).
 
 Proxy di rilevamento delle probabilità informerà il gestore di stato oggetto ogni volta che le proprietà delle entità presenta il valore modificato, in modo che Entity Framework riconosce lo stato effettivo delle entità di tutto il tempo. Questa operazione viene eseguita aggiungendo gli eventi di notifica al corpo dei metodi setter della proprietà e quando il gestore di stato oggetto l'elaborazione di tali eventi. Si noti che la creazione di un proxy di entità viene in genere essere più costoso rispetto alla creazione di un'entità POCO non proxy a causa di un ulteriore set di eventi creati da Entity Framework.
 
@@ -1187,7 +1181,7 @@ finally
 }
 ```
 
-Prima di spegnere AutoDetectChanges, è importante comprendere che ciò potrebbe causare Entity Framework potrebbe perdere la possibilità di monitorare determinate informazioni sulle modifiche che hanno luogo sulle entità. Se vengono gestite in modo non corretto, ciò potrebbe causare un'incoerenza dei dati nell'applicazione. Per altre informazioni su come disattivare AutoDetectChanges, leggere \< http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>.
+Prima di spegnere AutoDetectChanges, è importante comprendere che ciò potrebbe causare Entity Framework potrebbe perdere la possibilità di monitorare determinate informazioni sulle modifiche che hanno luogo sulle entità. Se vengono gestite in modo non corretto, ciò potrebbe causare un'incoerenza dei dati nell'applicazione. Per altre informazioni su come disattivare AutoDetectChanges, leggere \<http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>.
 
 ### <a name="93------context-per-request"></a>9.3 contesto per ogni richiesta
 
@@ -1234,7 +1228,7 @@ Nella query di esempio precedente, la differenza nelle prestazioni è inferiore 
 
 Supporto di Entity Framework 6 introdotte delle operazioni asincrone quando in esecuzione in .NET 4.5 o versioni successive. Nella maggior parte, le applicazioni con i/o correlati contesa sarà più vantaggioso utilizzare query asincrona e operazioni di salvataggio. Se l'applicazione non subisca una contesa dei / o, l'utilizzo di async verrà, nei casi migliori, eseguire in modo sincrono e restituiscono il risultato nella stessa quantità di tempo come una chiamata sincrona, o nel peggiore dei casi, semplicemente rinvia l'esecuzione di un'attività asincrona e aggiungere tim extra e per il completamento dello scenario.
 
-Per informazioni sull'attività di programmazione asincrono utili per decidere se async consentirà di migliorare le prestazioni dell'applicazione visitati [ http://msdn.microsoft.com/library/hh191443.aspx ](https://msdn.microsoft.com/library/hh191443.aspx). Per altre informazioni sull'uso delle operazioni asincrone in Entity Framework, vedere [Async Query e salvataggio](~/ef6/fundamentals/async.md
+Per informazioni sull'attività di programmazione asincrono utili per decidere se async consentirà di migliorare le prestazioni dell'applicazione visitati [http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx). Per altre informazioni sull'uso delle operazioni asincrone in Entity Framework, vedere [Async Query e salvataggio](~/ef6/fundamentals/async.md
 ).
 
 ### <a name="96------ngen"></a>9.6 NGEN
@@ -1255,17 +1249,17 @@ Se si sceglie di usare EDMX rispetto a Code First, è importante sapere che la f
 
 ### <a name="101-using-the-visual-studio-profiler"></a>10.1 usando il Profiler di Visual Studio
 
-Se si sono verificati problemi di prestazioni con Entity Framework, è possibile utilizzare un profiler simile a quello incorporato in Visual Studio per vedere dove l'applicazione trascorre del tempo. Questo è lo strumento è stato usato per generare i grafici a torta nel post di blog "Analisi delle prestazioni di ADO.NET Entity Framework - parte 1" ( \< http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) che mostra dove Entity Framework Usa il tempo durante le query a freddo e a caldo.
+Se si sono verificati problemi di prestazioni con Entity Framework, è possibile utilizzare un profiler simile a quello incorporato in Visual Studio per vedere dove l'applicazione trascorre del tempo. Questo è lo strumento è stato usato per generare i grafici a torta nel post di blog "Analisi delle prestazioni di ADO.NET Entity Framework - parte 1" ( \<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) che mostra dove Entity Framework Usa il tempo durante le query a freddo e a caldo.
 
-Il post di blog "Profilatura Entity Framework con il Profiler di 2010 Visual Studio" scritto dagli adattatori dati e modellazione Customer Advisory Team illustra un esempio reale di come usavano il profiler per analizzare un problema di prestazioni.  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>. Questo post è stato scritto per un'applicazione windows. Se si desidera profilare un'applicazione web potrebbero funzionare meglio di lavoro da Visual Studio gli strumenti di Windows Performance Recorder (WPR) e Windows Performance Analyzer (WPA). WPR e WPA fanno parte di Windows Performance Toolkit incluso in Windows Assessment and Deployment Kit ( [ http://www.microsoft.com/en-US/download/details.aspx?id=39982 ](https://www.microsoft.com/en-US/download/details.aspx?id=39982)).
+Il post di blog "Profilatura Entity Framework con il Profiler di 2010 Visual Studio" scritto dagli adattatori dati e modellazione Customer Advisory Team illustra un esempio reale di come usavano il profiler per analizzare un problema di prestazioni.  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>. Questo post è stato scritto per un'applicazione windows. Se si desidera profilare un'applicazione web potrebbero funzionare meglio di lavoro da Visual Studio gli strumenti di Windows Performance Recorder (WPR) e Windows Performance Analyzer (WPA). WPR e WPA fanno parte di Windows Performance Toolkit incluso in Windows Assessment and Deployment Kit ( [http://www.microsoft.com/en-US/download/details.aspx?id=39982](https://www.microsoft.com/en-US/download/details.aspx?id=39982)).
 
 ### <a name="102-applicationdatabase-profiling"></a>10.2 profilatura Database e dell'applicazione
 
 Strumenti come profiler incorporato in Visual Studio indicano dove l'applicazione trascorre del tempo.  È disponibile un altro tipo di profiler che esegue l'analisi dinamica dell'applicazione in esecuzione, in produzione o di pre-produzione in base alle esigenze e si esegue la ricerca di problemi più comuni e anti-modelli di accesso al database.
 
-Due profiler disponibile in commercio sono il Profiler di Entity Framework ( \< http://efprof.com>) ORMProfiler e ( \< http://ormprofiler.com>).
+Due profiler disponibile in commercio sono il Profiler di Entity Framework ( \<http://efprof.com>) ORMProfiler e ( \<http://ormprofiler.com>).
 
-Se l'applicazione è un'applicazione MVC con Code First, è possibile usare MiniProfiler di StackExchange. Scott Hanselman descrive questo strumento nel suo blog all'indirizzo: \< http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>.
+Se l'applicazione è un'applicazione MVC con Code First, è possibile usare MiniProfiler di StackExchange. Scott Hanselman descrive questo strumento nel suo blog all'indirizzo: \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>.
 
 Per altre informazioni sulla profilatura delle attività del database dell'applicazione, vedere articolo di MSDN Magazine di Julie intitolata [attività di profilatura del Database in Entity Framework](https://msdn.microsoft.com/magazine/gg490349.aspx).
 
@@ -1296,7 +1290,7 @@ Se si vuole abilitare la registrazione del database senza dover ricompilare e si
   </interceptors>
 ```
 
-Per altre informazioni su come aggiungere la registrazione senza ricompilare Vai a \< http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>.
+Per altre informazioni su come aggiungere la registrazione senza ricompilare Vai a \<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>.
 
 ## <a name="11-appendix"></a>Appendice 11
 
