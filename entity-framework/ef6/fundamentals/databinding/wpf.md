@@ -3,12 +3,12 @@ title: Data Binding con WPF - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e90d48e6-bea5-47ef-b756-7b89cce4daf0
-ms.openlocfilehash: 5bd4a9b98a12de41e4ec37c2cc7dbdc537210893
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 1933988277d3be8fecc02fced3293f2b7f80c901
+ms.sourcegitcommit: ae399f9f3d1bae2c446b552247bd3af3ca5a2cf9
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490233"
+ms.lasthandoff: 10/04/2018
+ms.locfileid: "48575665"
 ---
 # <a name="databinding-with-wpf"></a>Data Binding con WPF
 Questa procedura dettagliata viene illustrato come associare controlli WPF in un form di "master-detail" tipi POCO. L'applicazione usa le API di Entity Framework per popolare gli oggetti con i dati dal database, tenere traccia delle modifiche e rendere persistenti i dati nel database.
@@ -31,7 +31,7 @@ Se necessario, è possibile [ripristinare la generazione di codice basato su Obj
 
 È necessario disporre di Visual Studio 2013, Visual Studio 2012 o Visual Studio 2010 per poter completare questa procedura dettagliata.
 
-Se si usa Visual Studio 2010, è necessario anche installare NuGet. Per altre informazioni, vedere [installazione di NuGet](http://docs.nuget.org/docs/start-here/installing-nuget).  
+Se si usa Visual Studio 2010, è necessario anche installare NuGet. Per altre informazioni, vedere [installazione di NuGet](https://docs.microsoft.com/nuget/install-nuget-client-tools).  
 
 ## <a name="create-the-application"></a>Creare l'applicazione
 
@@ -252,12 +252,12 @@ Aggiungere le classi definite nel modello come origini dati per questa applicazi
 
     ![Data Sources](~/ef6/media/datasources.png)
 
--   Selezionare la * * categoria * * dei dati di origine e trascinarla nel form.
+-   Selezionare il **categoria** origine dati e trascinarlo nel form.
 
 Di seguito è accaduto quando abbiamo trascinato per questa origine:
 
--   Il **categoryViewSource** risorse e il * * controllo categoryDataGrid * * sono stati aggiunti a XAML. Per altre informazioni sulle DataViewSources, vedere http://bea.stollnitz.com/blog/?p=387.
--   La proprietà DataContext sull'elemento della griglia padre è stata impostata su "{StaticResource **categoryViewSource** }".  Il **categoryViewSource** risorsa viene usata come origine del binding per l'outer\\elemento griglia padre. Gli elementi della griglia interni ereditano quindi il valore di DataContext dall'elemento padre della griglia (del categoryDataGrid ItemsSource è impostata su "{Binding}"). 
+-   Il **categoryViewSource** risorse e il **categoryDataGrid** controllo sono stati aggiunti per XAML 
+-   La proprietà DataContext sull'elemento della griglia padre è stata impostata su "{StaticResource **categoryViewSource** }". Il **categoryViewSource** risorsa viene usata come origine del binding per l'outer\\elemento griglia padre. Gli elementi della griglia interni ereditano quindi il valore di DataContext dall'elemento padre della griglia (del categoryDataGrid ItemsSource è impostata su "{Binding}")
 
 ``` xml
     <Window.Resources>
@@ -282,7 +282,7 @@ Di seguito è accaduto quando abbiamo trascinato per questa origine:
 
 Ora che abbiamo una griglia per visualizzare le categorie è possibile aggiungere una griglia di dettagli per visualizzare i prodotti associati.
 
--   Selezionare la * * prodotti * * proprietà sotto la * * categoria * * dei dati di origine e trascinarla nel form.
+-   Selezionare il **prodotti** proprietà sotto il **categoria** origine dati e trascinarlo nel form.
     -   Il **categoryProductsViewSource** risorse e **productDataGrid** griglia vengono aggiunti a XAML
     -   Il percorso di associazione per questa risorsa è impostato su prodotti
     -   Framework di associazione dati WPF assicura che solo i prodotti correlati alla categoria selezionata viene visualizzata **productDataGrid**
@@ -305,7 +305,7 @@ Il modulo dovrebbe essere simile al seguente:
 
 Verrà visualizzata per il code-behind del form, ora si modificherà il codice per usare il ProductContext per eseguire l'accesso ai dati. Aggiornare il codice per MainWindow come illustrato di seguito.
 
-Il codice dichiara un'istanza con esecuzione prolungata **ProductContext**. Il **ProductContext** oggetto viene usato per eseguire query e salvare i dati nel database. Il **Dispose**() sulle **ProductContext** istanza viene quindi chiamata da sottoposto a override **OnClosing** (metodo). I commenti del codice forniscono dettagli sulle operazioni eseguite dal codice.
+Il codice dichiara un'istanza con esecuzione prolungata **ProductContext**. Il **ProductContext** oggetto viene usato per eseguire query e salvare i dati nel database. Il **Dispose ()** nel **ProductContext** istanza viene quindi chiamata da sottoposto a override **OnClosing** (metodo). I commenti del codice forniscono dettagli sulle operazioni eseguite dal codice.
 
 ``` csharp
     using System.Data.Entity;
@@ -389,6 +389,10 @@ Il codice dichiara un'istanza con esecuzione prolungata **ProductContext**. Il *
 
 -   Premere il **salvare** consente di salvare i dati nel database
 
-Dopo la chiamata a di DbContext **SaveChanges**(), gli ID vengono popolati con i valori del database generato. Perché abbiamo chiamato **Refresh**() dopo **SaveChanges**() la **DataGrid** controlli vengono aggiornati con i nuovi valori.
+Dopo la chiamata a di DbContext **SaveChanges ()**, gli ID vengono popolati con i valori del database generato. Perché abbiamo chiamato **Refresh()** dopo **SaveChanges ()** il **DataGrid** controlli vengono aggiornati con i nuovi valori.
 
 ![Finestra principale con gli ID popolati](~/ef6/media/screen2.png)
+
+## <a name="additional-resources"></a>Risorse aggiuntive
+
+Per altre informazioni sul data binding alle raccolte con WPF, vedere [in questo argomento](https://docs.microsoft.com/dotnet/framework/wpf/data/data-binding-overview#binding-to-collections) nella documentazione di WPF.  
