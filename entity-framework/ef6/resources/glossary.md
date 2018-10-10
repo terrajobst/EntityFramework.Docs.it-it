@@ -3,12 +3,12 @@ title: Entity Framework glossario - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
-ms.openlocfilehash: 298913891fb372bf57d7504c5a54f1dc83ea1a80
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 9ed7a2d841c625de35de57edb4e57e69b89a3db9
+ms.sourcegitcommit: 5d74ac575f813110db6d870720f50dd7606446bc
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490694"
+ms.lasthandoff: 10/09/2018
+ms.locfileid: "48881267"
 ---
 # <a name="entity-framework-glossary"></a>Glossario di Entity Framework
 ## <a name="code-first"></a>Code First
