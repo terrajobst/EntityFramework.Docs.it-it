@@ -1,66 +1,72 @@
 ---
 title: Introduzione a Entity Framework 6 - EF6
 author: divega
-ms.date: 2016-10-23
+ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
-ms.openlocfilehash: 0087899d2fc65bc91ad36e35d5157e50b5c4bd2d
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: c25bf16bd2c39530d54b286b7743ceb83c941e4d
+ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42998084"
+ms.lasthandoff: 09/13/2018
+ms.locfileid: "45489290"
 ---
-# <a name="get-started-with-entity-framework-6"></a><span data-ttu-id="5f10b-102">Introduzione a Entity Framework 6</span><span class="sxs-lookup"><span data-stu-id="5f10b-102">Get started with Entity Framework 6</span></span>
+# <a name="get-started-with-entity-framework-6"></a><span data-ttu-id="1c284-102">Introduzione a Entity Framework 6</span><span class="sxs-lookup"><span data-stu-id="1c284-102">Get started with Entity Framework 6</span></span>
 
-<span data-ttu-id="5f10b-103">Questa guida contiene una raccolta di collegamenti ad articoli della documentazione, procedure dettagliate e video selezionati per iniziare a usare rapidamente il prodotto:</span><span class="sxs-lookup"><span data-stu-id="5f10b-103">This guide contains a collection of links to selected documentation articles, walkthroughs and videos that can help you get started quickly:</span></span>
+<span data-ttu-id="1c284-103">Questa guida contiene una raccolta di collegamenti ad articoli della documentazione, procedure dettagliate e video selezionati per iniziare a usare rapidamente il prodotto.</span><span class="sxs-lookup"><span data-stu-id="1c284-103">This guide contains a collection of links to selected documentation articles, walkthroughs and videos that can help you get started quickly.</span></span>
 
-## <a name="get-entity-frameworkef6fundamentalsinstallmd"></a>[<span data-ttu-id="5f10b-104">Ottenere Entity Framework</span><span class="sxs-lookup"><span data-stu-id="5f10b-104">Get Entity Framework</span></span>](~/ef6/fundamentals/install.md)
-<span data-ttu-id="5f10b-105">Viene descritto come aggiungere Entity Framework alle applicazioni e, se si vuole usare EF Designer, assicurarsi che venga installato in Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="5f10b-105">Here you will learn how to add Entity Framework to your applications and, if you want to use the EF Designer, make sure you get it installed in Visual Studio.</span></span>
+## <a name="fundamentals"></a><span data-ttu-id="1c284-104">Concetti fondamentali</span><span class="sxs-lookup"><span data-stu-id="1c284-104">Fundamentals</span></span>
 
-## <a name="creating-a-model-code-first-the-ef-designer-and-the-ef-workflowsef6modelingindexmd"></a>[<span data-ttu-id="5f10b-106">Creazione di un modello: flussi di lavoro di Code First, EF Designer ed EF</span><span class="sxs-lookup"><span data-stu-id="5f10b-106">Creating a Model: Code First, the EF Designer, and the EF Workflows</span></span>](~/ef6/modeling/index.md)
-<span data-ttu-id="5f10b-107">Si preferisce specificare il modello EF scrivendo codice o tracciando caselle e linee?</span><span class="sxs-lookup"><span data-stu-id="5f10b-107">Do you prefer to specify your EF model writing code or drawing boxes and lines?</span></span>
-<span data-ttu-id="5f10b-108">Si userà EF per mappare gli oggetti in un database esistente o si vuole che EF crei un database specifico per gli oggetti?</span><span class="sxs-lookup"><span data-stu-id="5f10b-108">Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?</span></span>
-<span data-ttu-id="5f10b-109">Di seguito sono descritti due approcci diversi per usare EF6: EF Designer e Code First.</span><span class="sxs-lookup"><span data-stu-id="5f10b-109">Here your learn about two different approaches to use EF6: EF Designer and Code First.</span></span>
-<span data-ttu-id="5f10b-110">Seguire la discussione e guardare il video che illustra le differenze.</span><span class="sxs-lookup"><span data-stu-id="5f10b-110">Make sure you follow the discussion and watch the video about the difference.</span></span>
+* [<span data-ttu-id="1c284-105">Ottenere Entity Framework</span><span class="sxs-lookup"><span data-stu-id="1c284-105">Get Entity Framework</span></span>](~/ef6/fundamentals/install.md)
 
-## <a name="working-with-dbcontextef6fundamentalsworking-with-dbcontextmd"></a>[<span data-ttu-id="5f10b-111">Utilizzo di DbContext</span><span class="sxs-lookup"><span data-stu-id="5f10b-111">Working with DbContext</span></span>](~/ef6/fundamentals/working-with-dbcontext.md)
-<span data-ttu-id="5f10b-112">DbContext è il principale tipo di Entity Framework che è necessario imparare a usare.</span><span class="sxs-lookup"><span data-stu-id="5f10b-112">DbContext is the first and most important EF type that you need to learn how to use.</span></span> <span data-ttu-id="5f10b-113">Svolge la funzione di launchpad delle query del database e tiene traccia delle modifiche apportate agli oggetti in modo che possano essere salvate in modo permanente nel database.</span><span class="sxs-lookup"><span data-stu-id="5f10b-113">It serves as the launchpad for database queries and keeps track of changes you make to objects so that they can be persisted back to the database.</span></span>
+  <span data-ttu-id="1c284-106">Viene descritto come aggiungere Entity Framework alle applicazioni e, se si vuole usare EF Designer, assicurarsi che venga installato in Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="1c284-106">Here you will learn how to add Entity Framework to your applications and, if you want to use the EF Designer, make sure you get it installed in Visual Studio.</span></span>
 
-## <a name="ask-a-questionef6resourcesget-helpmd"></a>[<span data-ttu-id="5f10b-114">Poni una domanda</span><span class="sxs-lookup"><span data-stu-id="5f10b-114">Ask a Question</span></span>](~/ef6/resources/get-help.md)
-<span data-ttu-id="5f10b-115">È possibile ricevere assistenza dagli esperti e contribuire con le proprie risposte alla community.</span><span class="sxs-lookup"><span data-stu-id="5f10b-115">Find out how to get help from the experts and contribute your own answers to the community.</span></span>
+* [<span data-ttu-id="1c284-107">Creazione di un modello: flussi di lavoro di Code First, EF Designer ed EF</span><span class="sxs-lookup"><span data-stu-id="1c284-107">Creating a Model: Code First, the EF Designer, and the EF Workflows</span></span>](~/ef6/modeling/index.md)
 
-## <a name="contributehttpgithubcomaspnetentityframework6"></a>[<span data-ttu-id="5f10b-116">Collaborare</span><span class="sxs-lookup"><span data-stu-id="5f10b-116">Contribute</span></span>](http://github.com/aspnet/EntityFramework6/)
-<span data-ttu-id="5f10b-117">Entity Framework 6 usa un modello di sviluppo aperto.</span><span class="sxs-lookup"><span data-stu-id="5f10b-117">Entity Framework 6 uses an open development model.</span></span> <span data-ttu-id="5f10b-118">Nel repository GitHub sono disponibili informazioni su come migliorare ulteriormente Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="5f10b-118">Find out how you can help make EF even better by visiting our GitHub repository.</span></span>
+  <span data-ttu-id="1c284-108">Si preferisce specificare il modello EF scrivendo codice o tracciando caselle e linee?</span><span class="sxs-lookup"><span data-stu-id="1c284-108">Do you prefer to specify your EF model writing code or drawing boxes and lines?</span></span>
+<span data-ttu-id="1c284-109">Si userà EF per mappare gli oggetti in un database esistente o si vuole che EF crei un database specifico per gli oggetti?</span><span class="sxs-lookup"><span data-stu-id="1c284-109">Are you going to use EF to map your objects to an existing database or would you like EF to create a database tailored for your objects?</span></span>
+<span data-ttu-id="1c284-110">Di seguito sono descritti due approcci diversi per usare EF6: EF Designer e Code First.</span><span class="sxs-lookup"><span data-stu-id="1c284-110">Here your learn about two different approaches to use EF6: EF Designer and Code First.</span></span>
+<span data-ttu-id="1c284-111">Seguire la discussione e guardare il video che illustra le differenze.</span><span class="sxs-lookup"><span data-stu-id="1c284-111">Make sure you follow the discussion and watch the video about the difference.</span></span>
 
-## <a name="index-of-walkthroughs"></a><span data-ttu-id="5f10b-119">Indice delle procedure dettagliate</span><span class="sxs-lookup"><span data-stu-id="5f10b-119">Index of Walkthroughs</span></span>
+* [<span data-ttu-id="1c284-112">Utilizzo di DbContext</span><span class="sxs-lookup"><span data-stu-id="1c284-112">Working with DbContext</span></span>](~/ef6/fundamentals/working-with-dbcontext.md)
 
-- <span data-ttu-id="5f10b-120">Code First</span><span class="sxs-lookup"><span data-stu-id="5f10b-120">Code First</span></span>
-  - [<span data-ttu-id="5f10b-121">Code First nel flusso di lavoro di un database esistente</span><span class="sxs-lookup"><span data-stu-id="5f10b-121">Code First to an Existing Database Workflow</span></span>](~/ef6/modeling/code-first/workflows/existing-database.md)
-  - [<span data-ttu-id="5f10b-122">Code First nel flusso di lavoro di un nuovo database</span><span class="sxs-lookup"><span data-stu-id="5f10b-122">Code First to a New Database Workflow</span></span>](~/ef6/modeling/code-first/workflows/new-database.md)
-  - [<span data-ttu-id="5f10b-123">Mapping delle enumerazioni usando Code First</span><span class="sxs-lookup"><span data-stu-id="5f10b-123">Mapping Enums Using Code First</span></span>](~/ef6/modeling/code-first/data-types/enums.md)
-  - [<span data-ttu-id="5f10b-124">Mapping dei tipi spaziali usando Code First</span><span class="sxs-lookup"><span data-stu-id="5f10b-124">Mapping Spatial Types Using Code First</span></span>](~/ef6/modeling/code-first/data-types/spatial.md)
-  - [<span data-ttu-id="5f10b-125">Creazione di convenzioni Code First personalizzate</span><span class="sxs-lookup"><span data-stu-id="5f10b-125">Writing Custom Code First Conventions</span></span>](~/ef6/modeling/code-first/conventions/custom.md)
-  - [<span data-ttu-id="5f10b-126">Uso della configurazione Fluent di Code First con Visual Basic</span><span class="sxs-lookup"><span data-stu-id="5f10b-126">Using Code First Fluent Configuration with Visual Basic</span></span>](~/ef6/modeling/code-first/fluent/vb.md)
-  - [<span data-ttu-id="5f10b-127">Migrazioni Code First</span><span class="sxs-lookup"><span data-stu-id="5f10b-127">Code First Migrations</span></span>](~/ef6/modeling/code-first/migrations/index.md)
-  - [<span data-ttu-id="5f10b-128">Migrazioni Code First in ambienti team</span><span class="sxs-lookup"><span data-stu-id="5f10b-128">Code First Migrations in Team Environments</span></span>](~/ef6/modeling/code-first/migrations/teams.md)
-  - <span data-ttu-id="5f10b-129">[Migrazioni Code First automatiche](~/ef6/modeling/code-first/migrations/automatic.md) (non consigliato)</span><span class="sxs-lookup"><span data-stu-id="5f10b-129">[Automatic Code First Migrations](~/ef6/modeling/code-first/migrations/automatic.md) (This is no longer recommended)</span></span>
+  <span data-ttu-id="1c284-113">DbContext è il principale tipo di Entity Framework che è necessario imparare a usare.</span><span class="sxs-lookup"><span data-stu-id="1c284-113">DbContext is the first and most important EF type that you need to learn how to use.</span></span> <span data-ttu-id="1c284-114">Svolge la funzione di launchpad delle query del database e tiene traccia delle modifiche apportate agli oggetti in modo che possano essere salvate in modo permanente nel database.</span><span class="sxs-lookup"><span data-stu-id="1c284-114">It serves as the launchpad for database queries and keeps track of changes you make to objects so that they can be persisted back to the database.</span></span>
 
-- <span data-ttu-id="5f10b-130">EF Designer</span><span class="sxs-lookup"><span data-stu-id="5f10b-130">EF Designer</span></span>
-  - [<span data-ttu-id="5f10b-131">Flusso di lavoro di Database First</span><span class="sxs-lookup"><span data-stu-id="5f10b-131">Database First Workflow</span></span>](~/ef6/modeling/designer/workflows/database-first.md)
-  - [<span data-ttu-id="5f10b-132">Flusso di lavoro di Model First</span><span class="sxs-lookup"><span data-stu-id="5f10b-132">Model First Workflow</span></span>](~/ef6/modeling/designer/workflows/model-first.md)
-  - [<span data-ttu-id="5f10b-133">Mapping delle enumerazioni</span><span class="sxs-lookup"><span data-stu-id="5f10b-133">Mapping Enums</span></span>](~/ef6/modeling/designer/data-types/enums.md)
-  - [<span data-ttu-id="5f10b-134">Mapping dei tipi spaziali</span><span class="sxs-lookup"><span data-stu-id="5f10b-134">Mapping Spatial Types</span></span>](~/ef6/modeling/designer/data-types/spatial.md)
-  - [<span data-ttu-id="5f10b-135">Mapping dell'ereditarietà della tabella per gerarchia</span><span class="sxs-lookup"><span data-stu-id="5f10b-135">Table-Per Hierarchy Inheritance Mapping</span></span>](~/ef6/modeling/designer/inheritance/tph.md)
-  - [<span data-ttu-id="5f10b-136">Mapping dell'ereditarietà della tabella per tipo</span><span class="sxs-lookup"><span data-stu-id="5f10b-136">Table-Per Type Inheritance Mapping</span></span>](~/ef6/modeling/designer/inheritance/tpt.md)
-  - [<span data-ttu-id="5f10b-137">Mapping di stored procedure per gli aggiornamenti</span><span class="sxs-lookup"><span data-stu-id="5f10b-137">Stored Procedure Mapping for Updates</span></span>](~/ef6/modeling/designer/stored-procedures/cud.md)
-  - [<span data-ttu-id="5f10b-138">Mapping di stored procedure per le query</span><span class="sxs-lookup"><span data-stu-id="5f10b-138">Stored Procedure Mapping for Query</span></span>](~/ef6/modeling/designer/stored-procedures/query.md)
-  - [<span data-ttu-id="5f10b-139">Suddivisione di entità</span><span class="sxs-lookup"><span data-stu-id="5f10b-139">Entity Splitting</span></span>](~/ef6/modeling/designer/entity-splitting.md)
-  - [<span data-ttu-id="5f10b-140">Suddivisione di tabelle</span><span class="sxs-lookup"><span data-stu-id="5f10b-140">Table Splitting</span></span>](~/ef6/modeling/designer/table-splitting.md)
-  - <span data-ttu-id="5f10b-141">[Query di definizione](~/ef6/modeling/designer/advanced/defining-query.md) (informazioni avanzate)</span><span class="sxs-lookup"><span data-stu-id="5f10b-141">[Defining Query](~/ef6/modeling/designer/advanced/defining-query.md) (Advanced)</span></span>
-  - <span data-ttu-id="5f10b-142">[Funzioni con valori di tabella](~/ef6/modeling/designer/advanced/tvfs.md) (informazioni avanzate)</span><span class="sxs-lookup"><span data-stu-id="5f10b-142">[Table-Valued Functions](~/ef6/modeling/designer/advanced/tvfs.md) (Advanced)</span></span>
+* [<span data-ttu-id="1c284-115">Poni una domanda</span><span class="sxs-lookup"><span data-stu-id="1c284-115">Ask a Question</span></span>](~/ef6/resources/get-help.md)
 
-- <span data-ttu-id="5f10b-143">Concetti fondamentali</span><span class="sxs-lookup"><span data-stu-id="5f10b-143">Fundamentals</span></span>
-  - [<span data-ttu-id="5f10b-144">Query e salvataggio asincroni</span><span class="sxs-lookup"><span data-stu-id="5f10b-144">Async Query and Save</span></span>](~/ef6/fundamentals/async.md)
-  - [<span data-ttu-id="5f10b-145">Data binding con WinForms</span><span class="sxs-lookup"><span data-stu-id="5f10b-145">Databinding with WinForms</span></span>](~/ef6/fundamentals/databinding/winforms.md)
-  - [<span data-ttu-id="5f10b-146">Data binding con WPF</span><span class="sxs-lookup"><span data-stu-id="5f10b-146">Databinding with WPF</span></span>](~/ef6/fundamentals/databinding/wpf.md)
-  - <span data-ttu-id="5f10b-147">[Scenari disconnessi con entità con rilevamento automatico](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md) (non consigliato)</span><span class="sxs-lookup"><span data-stu-id="5f10b-147">[Disconnected scenarios with Self-Tracking Entities](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md) (This is no longer recommended)</span></span>
+  <span data-ttu-id="1c284-116">È possibile ricevere assistenza dagli esperti e contribuire con le proprie risposte alla community.</span><span class="sxs-lookup"><span data-stu-id="1c284-116">Find out how to get help from the experts and contribute your own answers to the community.</span></span>
+
+* [<span data-ttu-id="1c284-117">Collaborare</span><span class="sxs-lookup"><span data-stu-id="1c284-117">Contribute</span></span>](http://github.com/aspnet/EntityFramework6/)
+
+  <span data-ttu-id="1c284-118">Entity Framework 6 usa un modello di sviluppo aperto.</span><span class="sxs-lookup"><span data-stu-id="1c284-118">Entity Framework 6 uses an open development model.</span></span> <span data-ttu-id="1c284-119">Nel repository GitHub sono disponibili informazioni su come migliorare ulteriormente Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="1c284-119">Find out how you can help make EF even better by visiting our GitHub repository.</span></span>
+
+## <a name="code-first-resources"></a><span data-ttu-id="1c284-120">Risorse per Code First</span><span class="sxs-lookup"><span data-stu-id="1c284-120">Code First resources</span></span>
+
+  - [<span data-ttu-id="1c284-121">Code First nel flusso di lavoro di un database esistente</span><span class="sxs-lookup"><span data-stu-id="1c284-121">Code First to an Existing Database Workflow</span></span>](~/ef6/modeling/code-first/workflows/existing-database.md)
+  - [<span data-ttu-id="1c284-122">Code First nel flusso di lavoro di un nuovo database</span><span class="sxs-lookup"><span data-stu-id="1c284-122">Code First to a New Database Workflow</span></span>](~/ef6/modeling/code-first/workflows/new-database.md)
+  - [<span data-ttu-id="1c284-123">Mapping delle enumerazioni usando Code First</span><span class="sxs-lookup"><span data-stu-id="1c284-123">Mapping Enums Using Code First</span></span>](~/ef6/modeling/code-first/data-types/enums.md)
+  - [<span data-ttu-id="1c284-124">Mapping dei tipi spaziali usando Code First</span><span class="sxs-lookup"><span data-stu-id="1c284-124">Mapping Spatial Types Using Code First</span></span>](~/ef6/modeling/code-first/data-types/spatial.md)
+  - [<span data-ttu-id="1c284-125">Creazione di convenzioni Code First personalizzate</span><span class="sxs-lookup"><span data-stu-id="1c284-125">Writing Custom Code First Conventions</span></span>](~/ef6/modeling/code-first/conventions/custom.md)
+  - [<span data-ttu-id="1c284-126">Uso della configurazione Fluent di Code First con Visual Basic</span><span class="sxs-lookup"><span data-stu-id="1c284-126">Using Code First Fluent Configuration with Visual Basic</span></span>](~/ef6/modeling/code-first/fluent/vb.md)
+  - [<span data-ttu-id="1c284-127">Migrazioni Code First</span><span class="sxs-lookup"><span data-stu-id="1c284-127">Code First Migrations</span></span>](~/ef6/modeling/code-first/migrations/index.md)
+  - [<span data-ttu-id="1c284-128">Migrazioni Code First in ambienti team</span><span class="sxs-lookup"><span data-stu-id="1c284-128">Code First Migrations in Team Environments</span></span>](~/ef6/modeling/code-first/migrations/teams.md)
+  - <span data-ttu-id="1c284-129">[Migrazioni Code First automatiche](~/ef6/modeling/code-first/migrations/automatic.md) (non consigliato)</span><span class="sxs-lookup"><span data-stu-id="1c284-129">[Automatic Code First Migrations](~/ef6/modeling/code-first/migrations/automatic.md) (This is no longer recommended)</span></span>
+
+## <a name="ef-designer-resources"></a><span data-ttu-id="1c284-130">Risorse per EF Designer</span><span class="sxs-lookup"><span data-stu-id="1c284-130">EF Designer resources</span></span>
+  - [<span data-ttu-id="1c284-131">Flusso di lavoro di Database First</span><span class="sxs-lookup"><span data-stu-id="1c284-131">Database First Workflow</span></span>](~/ef6/modeling/designer/workflows/database-first.md)
+  - [<span data-ttu-id="1c284-132">Flusso di lavoro di Model First</span><span class="sxs-lookup"><span data-stu-id="1c284-132">Model First Workflow</span></span>](~/ef6/modeling/designer/workflows/model-first.md)
+  - [<span data-ttu-id="1c284-133">Mapping delle enumerazioni</span><span class="sxs-lookup"><span data-stu-id="1c284-133">Mapping Enums</span></span>](~/ef6/modeling/designer/data-types/enums.md)
+  - [<span data-ttu-id="1c284-134">Mapping dei tipi spaziali</span><span class="sxs-lookup"><span data-stu-id="1c284-134">Mapping Spatial Types</span></span>](~/ef6/modeling/designer/data-types/spatial.md)
+  - [<span data-ttu-id="1c284-135">Mapping dell'ereditarietà della tabella per gerarchia</span><span class="sxs-lookup"><span data-stu-id="1c284-135">Table-Per Hierarchy Inheritance Mapping</span></span>](~/ef6/modeling/designer/inheritance/tph.md)
+  - [<span data-ttu-id="1c284-136">Mapping dell'ereditarietà della tabella per tipo</span><span class="sxs-lookup"><span data-stu-id="1c284-136">Table-Per Type Inheritance Mapping</span></span>](~/ef6/modeling/designer/inheritance/tpt.md)
+  - [<span data-ttu-id="1c284-137">Mapping di stored procedure per gli aggiornamenti</span><span class="sxs-lookup"><span data-stu-id="1c284-137">Stored Procedure Mapping for Updates</span></span>](~/ef6/modeling/designer/stored-procedures/cud.md)
+  - [<span data-ttu-id="1c284-138">Mapping di stored procedure per le query</span><span class="sxs-lookup"><span data-stu-id="1c284-138">Stored Procedure Mapping for Query</span></span>](~/ef6/modeling/designer/stored-procedures/query.md)
+  - [<span data-ttu-id="1c284-139">Suddivisione di entità</span><span class="sxs-lookup"><span data-stu-id="1c284-139">Entity Splitting</span></span>](~/ef6/modeling/designer/entity-splitting.md)
+  - [<span data-ttu-id="1c284-140">Suddivisione di tabelle</span><span class="sxs-lookup"><span data-stu-id="1c284-140">Table Splitting</span></span>](~/ef6/modeling/designer/table-splitting.md)
+  - <span data-ttu-id="1c284-141">[Query di definizione](~/ef6/modeling/designer/advanced/defining-query.md) (informazioni avanzate)</span><span class="sxs-lookup"><span data-stu-id="1c284-141">[Defining Query](~/ef6/modeling/designer/advanced/defining-query.md) (Advanced)</span></span>
+  - <span data-ttu-id="1c284-142">[Funzioni con valori di tabella](~/ef6/modeling/designer/advanced/tvfs.md) (informazioni avanzate)</span><span class="sxs-lookup"><span data-stu-id="1c284-142">[Table-Valued Functions](~/ef6/modeling/designer/advanced/tvfs.md) (Advanced)</span></span>
+
+## <a name="other-resources"></a><span data-ttu-id="1c284-143">Altre risorse</span><span class="sxs-lookup"><span data-stu-id="1c284-143">Other resources</span></span>
+  - [<span data-ttu-id="1c284-144">Query e salvataggio asincroni</span><span class="sxs-lookup"><span data-stu-id="1c284-144">Async Query and Save</span></span>](~/ef6/fundamentals/async.md)
+  - [<span data-ttu-id="1c284-145">Data binding con WinForms</span><span class="sxs-lookup"><span data-stu-id="1c284-145">Databinding with WinForms</span></span>](~/ef6/fundamentals/databinding/winforms.md)
+  - [<span data-ttu-id="1c284-146">Data binding con WPF</span><span class="sxs-lookup"><span data-stu-id="1c284-146">Databinding with WPF</span></span>](~/ef6/fundamentals/databinding/wpf.md)
+  - <span data-ttu-id="1c284-147">[Scenari disconnessi con entità con rilevamento automatico](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md) (non consigliato)</span><span class="sxs-lookup"><span data-stu-id="1c284-147">[Disconnected scenarios with Self-Tracking Entities](~/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md) (This is no longer recommended)</span></span>
