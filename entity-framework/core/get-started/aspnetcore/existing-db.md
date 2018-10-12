@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: 79a73e38fdc9c4268c21de66571d6272f33e9457
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 84e2e4bc1bdc774fa059fa893e0f8ac128931feb
+ms.sourcegitcommit: ad1bdea58ed35d0f19791044efe9f72f94189c18
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997036"
+ms.lasthandoff: 09/28/2018
+ms.locfileid: "47447183"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>Introduzione a EF Core in ASP.NET Core con un database esistente
 
@@ -171,6 +171,12 @@ Per rendere `BloggingContext` disponibile per i controller MVC, registrarlo come
 * Fare clic su **Crea nuovo**
 * Immettere un **URL** per il nuovo blog e fare clic su **Crea**
 
-![immagine](_static/create.png)
+  ![Pagina Crea](_static/create.png)
 
-![immagine](_static/index-existing-db.png)
+  ![Pagina di indice](_static/index-existing-db.png)
+
+## <a name="next-steps"></a>Passaggi successivi
+
+Per altre informazioni su come eseguire lo scaffolding di un contesto e delle classi di entità, vedere gli articoli seguenti:
+* [Informazioni di riferimento sugli strumenti di Entity Framework Core - Interfaccia della riga di comando di .NET](xref:core/miscellaneous/cli/dotnet#dotnet-ef-dbcontext-scaffold)
+* [Informazioni di riferimento sugli strumenti di Entity Framework Core - Console di Gestione pacchetti](xref:core/miscellaneous/cli/powershell#scaffold-dbcontext)
