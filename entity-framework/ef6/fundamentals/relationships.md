@@ -3,12 +3,12 @@ title: Le relazioni, le proprietà di navigazione e le chiavi esterne - Entity F
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: a98c1bf798a8a6d2c748408d7363d5f884e7e6e9
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 46c2d11b5704ec7ae82a423ae042b87f5efe436f
+ms.sourcegitcommit: 8b42045cd21f80f425a92f5e4e9dd4972a31720b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490545"
+ms.lasthandoff: 10/14/2018
+ms.locfileid: "49315659"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>Le relazioni, le proprietà di navigazione e le chiavi esterne
 Questo argomento offre una panoramica del modo in cui Entity Framework gestisce le relazioni tra entità. Offre inoltre alcune indicazioni su come eseguire il mapping e modificare le relazioni.
@@ -153,7 +153,7 @@ In Entity Framework che si utilizza in genere usare le proprietà di navigazione
 > In un'associazione di chiavi esterne, quando si carica un'entità finale correlata di un oggetto dipendente, l'oggetto correlato sarà caricato in base al valore della chiave esterna dell'oggetto dipendente attualmente in memoria:
 
 ``` csharp
-    // Get the course where currently DepartmentID = 1.
+    // Get the course where currently DepartmentID = 2.
     Course course2 = context.Courses.First(c=>c.DepartmentID == 2);
 
     // Use DepartmentID foreign key property
