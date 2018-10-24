@@ -6,12 +6,12 @@ description: Introduzione a .NET Core con Entity Framework Core
 ms.date: 08/03/2018
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 uid: core/get-started/netcore/new-db-sqlite
-ms.openlocfilehash: 51f5752eebce5603c663072f7b36dfecd4ddf227
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: ec20040917a2bca8177924b6905b1cd79e5cd9da
+ms.sourcegitcommit: 7a7da65404c9338e1e3df42576a13be536a6f95f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993692"
+ms.lasthandoff: 10/06/2018
+ms.locfileid: "48834735"
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a>Introduzione a EF Core nell'app console .NET Core con un nuovo database
 
@@ -29,9 +29,16 @@ Visualizzare l'esempio di questo articolo su GitHub https://github.com/aspnet/En
 
   ``` Console
   dotnet new console -o ConsoleApp.SQLite
+  ```
+## <a name="change-the-current-directory"></a>Selezionare la directory corrente
+
+Nei passaggi successivi è necessario eseguire i comandi `dotnet` nell'applicazione.
+
+* La directory corrente viene modificata nella directory dell'applicazione, come di seguito riportato:
+
+  ``` Console
   cd ConsoleApp.SQLite/
   ```
-
 ## <a name="install-entity-framework-core"></a>Installare Entity Framework Core
 
 Per usare EF Core, installare il pacchetto per i provider di database che si vuole specificare come destinazione. Questa procedura dettagliata usa SQLite. Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md).
@@ -57,7 +64,7 @@ Suggerimento: in una vera applicazione, ogni classe verrebbe inserita in un file
 
 ## <a name="create-the-database"></a>Creare il database
 
-Dopo avere creato un modello,usare le [migrazioni](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations) per creare un database.
+Dopo avere creato un modello,usare le [migrazioni](xref:core/managing-schemas/migrations/index) per creare un database.
 
 * Eseguire `dotnet ef migrations add InitialCreate` per effettuare lo scaffolding di una migrazione e creare il set iniziale di tabelle per il modello.
 * Eseguire `dotnet ef database update` per applicare la nuova migrazione al database. Questo comando crea il database prima di applicare le migrazioni.
@@ -70,7 +77,7 @@ Il database SQLite *blogging.db** si trova nella directory del progetto.
 
   [!code-csharp[Main](../../../../samples/core/GetStarted/NetCore/ConsoleApp.SQLite/Program.cs)]
 
-* Eseguire il test dell'app:
+* Testare l'app dalla console. Vedere la [nota di Visual Studio](#vs) per eseguire l'app da Visual Studio.
 
   `dotnet run`
 
@@ -86,12 +93,24 @@ Il database SQLite *blogging.db** si trova nella directory del progetto.
 
 ### <a name="changing-the-model"></a>Modifica del modello:
 
-- Se si apportano modifiche al modello, è possibile usare il comando `dotnet ef migrations add` per eseguire lo scaffolding di una nuova [migrazione](https://docs.microsoft.com/aspnet/core/data/ef-mvc/migrations#introduction-to-migrations). Dopo avere controllato il codice di scaffolding e avere apportato le eventuali modifiche necessarie, è possibile usare il comando `dotnet ef database update` per applicare le modifiche dello schema al database.
+- Se si apportano modifiche al modello, è possibile usare il comando `dotnet ef migrations add` per eseguire lo scaffolding di una nuova [migrazione](xref:core/managing-schemas/migrations/index). Dopo avere controllato il codice di scaffolding e avere apportato le eventuali modifiche necessarie, è possibile usare il comando `dotnet ef database update` per applicare le modifiche dello schema al database.
 - EF Core usa una tabella `__EFMigrationsHistory` nel database per tenere traccia delle migrazioni che sono già state applicate al database.
 - Il motore di database SQLite non supporta determinate modifiche dello schema, supportate dalla maggior parte degli altri database relazionali. Ad esempio l'operazione `DropColumn` non è supportata. Le migrazioni EF Core generano codice per queste operazioni. Se tuttavia si prova ad applicarle a un database o di generare uno script, EF Core produce eccezioni. Vedere [SQLite Limitations](../../providers/sqlite/limitations.md) (Limitazioni di SQLite). Per lo sviluppo di nuovo codice, prendere in considerazione la possibilità di eliminare il database e di crearne uno nuovo invece di usare le migrazioni quando il modello viene modificato.
 
+<a name="vs"></a>
+### <a name="run-from-visual-studio"></a>Eseguire da Visual Studio
+
+Per eseguire questo esempio da Visual Studio, è necessario impostare la directory di lavoro manualmente in modo che diventi la radice del progetto. Se la directory di lavoro non viene impostata, viene generata l'eccezione `Microsoft.Data.Sqlite.SqliteException` seguente: `SQLite Error 1: 'no such table: Blogs'`.
+
+Per impostare la directory di lavoro:
+
+* In **Esplora soluzioni** fare clic con il pulsante destro del mouse sul progetto e scegliere **Proprietà**.
+* Selezionare la scheda **Debug** nel riquadro sinistro.
+* Impostare la **directory di lavoro** sul percorso del progetto.
+* Salvare le modifiche.
+
 ## <a name="additional-resources"></a>Risorse aggiuntive
 
-* [Introduzione ad ASP.NET Core MVC in Mac o Linux](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app-xplat/index)
-* [Introduzione ad ASP.NET Core MVC con Visual Studio](https://docs.microsoft.com/aspnet/core/tutorials/first-mvc-app/index)
-* [Introduzione ad ASP.NET Core ed Entity Framework Core con Visual Studio](https://docs.microsoft.com/aspnet/core/data/ef-mvc/index)
+* [Esercitazione: Introduzione a EF Core in .ASP.NET Core con un nuovo database usando SQLite](xref:core/get-started/aspnetcore/new-db)
+* [Esercitazione: Introduzione all'uso di Razor Pages in ASP.NET Core](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
+* [Esercitazione: Razor Pages con EF Core in ASP.NET Core ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
