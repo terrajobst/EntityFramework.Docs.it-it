@@ -3,21 +3,21 @@ title: Uso delle entità disconnesse - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
-ms.openlocfilehash: beb3847ce507a2112ac0d396a2023c7c4e2fca7d
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 11ca2a9a4161e02d32d98bf03dd4cf28545334b7
+ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489934"
+ms.lasthandoff: 10/25/2018
+ms.locfileid: "50022171"
 ---
 # <a name="working-with-disconnected-entities"></a>Uso delle entità disconnesse
 In un'applicazione basata su Entity Framework il rilevamento delle modifiche applicate alle entità rilevate viene eseguito da una classe contesto. Se si chiama il metodo SaveChanges le modifiche rilevate dal contesto vengono rese persistenti per il database. Quando si usano le applicazioni a più livelli, gli oggetti entità vengono modificati generalmente durante la disconnessione dal contesto ed è necessario decidere come tenere traccia delle modifiche e come segnalare le modifiche al contesto. Questo argomento descrive diverse opzioni disponibili quando si usa Entity Framework con entità disconnesse.   
 
 ## <a name="web-service-frameworks"></a>Framework di servizi Web
 
-Le tecnologie dei servizi Web supportano in genere criteri che possono essere usati per rendere persistenti le modifiche in oggetti singoli disconnessi. Ad esempio, l'API Web ASP.NET consente di codificare le azioni del controller che possono includere chiamate a Entity Framework per rendere persistenti le modifiche apportate a un oggetto in un database. In effetti, gli strumenti per l'API Web in Visual Studio semplificano lo scaffolding di un controller dell'API Web dal modello di Entity Framework 6. Per altre informazioni, vedere [Uso di API Web con Entity Framework 6](https://docs.microsoft.com/en-us/aspnet/web-api/overview/data/using-web-api-with-entity-framework/).   
+Le tecnologie dei servizi Web supportano in genere criteri che possono essere usati per rendere persistenti le modifiche in oggetti singoli disconnessi. Ad esempio, l'API Web ASP.NET consente di codificare le azioni del controller che possono includere chiamate a Entity Framework per rendere persistenti le modifiche apportate a un oggetto in un database. In effetti, gli strumenti per l'API Web in Visual Studio semplificano lo scaffolding di un controller dell'API Web dal modello di Entity Framework 6. Per altre informazioni, vedere [Uso di API Web con Entity Framework 6](https://docs.microsoft.com/aspnet/web-api/overview/data/using-web-api-with-entity-framework/).   
 
-In passato, erano disponibili altre tecnologie di servizi Web che offrivano l'integrazione con Entity Framework, come ad esempio [WCF Data Services](https://docs.microsoft.com/dotnet/framework/data/wcf/create-a-data-service-using-an-adonet-ef-data-wcf) e [Servizi RIA](https://docs.microsoft.com/en-us/previous-versions/dotnet/wcf-ria/ee707344(v=vs.91)).
+In passato, erano disponibili altre tecnologie di servizi Web che offrivano l'integrazione con Entity Framework, come ad esempio [WCF Data Services](https://docs.microsoft.com/dotnet/framework/data/wcf/create-a-data-service-using-an-adonet-ef-data-wcf) e [Servizi RIA](https://docs.microsoft.com/previous-versions/dotnet/wcf-ria/ee707344(v=vs.91)).
 
 ## <a name="low-level-ef-apis"></a>API Entity Framework di basso livello
 

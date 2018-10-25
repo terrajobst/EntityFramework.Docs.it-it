@@ -3,12 +3,12 @@ title: Implementazioni di .NET supportate - EF Core
 author: rowanmiller
 ms.date: 08/30/2017
 uid: core/platforms/index
-ms.openlocfilehash: 347965818f0eab9a86411f66eaaf10cb3aa8d652
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 8fc25f4a35794162c92fd292990c24e977d1bf1b
+ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42996438"
+ms.lasthandoff: 10/25/2018
+ms.locfileid: "50022262"
 ---
 # <a name="net-implementations-supported-by-ef-core"></a>Implementazioni di .NET supportate da Entity Framework Core
 
@@ -41,7 +41,7 @@ Quando si usa EF Core nella piattaforma UWP:
 
 * Per ottimizzare le prestazioni delle query, evitare i tipi anonimi nelle query LINQ. Per distribuire un'applicazione UWP nell'App Store, un'applicazione deve essere compilata con .NET Native. Le query con tipi anonimi hanno prestazioni peggiori in .NET Native.
 
-* Per ottimizzare le prestazioni di `SaveChanges()`, usare [ChangeTrackingStrategy.ChangingAndChangedNotifications](/dotnet/api/microsoft.entityframeworkcore.changetrackingstrategy) e implementare [INotifyPropertyChanged](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged.aspx), [INotifyPropertyChanging ](https://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanging.aspx) e [INotifyCollectionChanged](https://msdn.microsoft.com/en-us/library/system.collections.specialized.inotifycollectionchanged.aspx) nei tipi di entità.
+* Per ottimizzare le prestazioni di `SaveChanges()`, usare [ChangeTrackingStrategy.ChangingAndChangedNotifications](/dotnet/api/microsoft.entityframeworkcore.changetrackingstrategy) e implementare [INotifyPropertyChanged](https://msdn.microsoft.com/library/system.componentmodel.inotifypropertychanged.aspx), [INotifyPropertyChanging ](https://msdn.microsoft.com/library/system.componentmodel.inotifypropertychanging.aspx) e [INotifyCollectionChanged](https://msdn.microsoft.com/library/system.collections.specialized.inotifycollectionchanged.aspx) nei tipi di entità.
 
 ## <a name="report-issues"></a>Segnalare i problemi
 
