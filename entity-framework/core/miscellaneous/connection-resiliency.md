@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 11/15/2016
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: d5101d0622ddc2c90ddded16b9ec6cc4eb814c36
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 729cf9b8c038ea2adba8c79c68d9f6fb1676fefa
+ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283836"
+ms.lasthandoff: 10/25/2018
+ms.locfileid: "50022184"
 ---
 # <a name="connection-resiliency"></a>Resilienza della connessione
 
@@ -46,6 +46,10 @@ Tuttavia, se il codice avvia una transazione tramite `BeginTransaction()` si sta
 La soluzione consiste nel richiamare manualmente la strategia di esecuzione con un delegato che rappresenta tutti gli elementi che deve essere eseguito. Se si verifica un errore temporaneo, la strategia di esecuzione richiamerà nuovamente il delegato.
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#ManualTransaction)]
+
+Questo approccio può essere utilizzato anche con transazioni di ambiente.
+
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#AmbientTransaction)]
 
 ## <a name="transaction-commit-failure-and-the-idempotency-issue"></a>Errore commit della transazione e il problema di idempotenza
 
