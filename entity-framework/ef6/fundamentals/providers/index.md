@@ -3,12 +3,12 @@ title: Provider di Entity Framework - EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-ms.openlocfilehash: c9afb32caeeef5111b32251c62019460b62f48b3
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 0cfe6c30d6533b0207f78a031d342847a7f68632
+ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489440"
+ms.lasthandoff: 10/25/2018
+ms.locfileid: "50022223"
 ---
 # <a name="entity-framework-6-providers"></a>Provider di Entity Framework 6
 > [!NOTE]
@@ -68,7 +68,7 @@ Il "tipo" in questa registrazione è il nome qualificato dall'assembly del tipo 
 
 ### <a name="code-based-registration"></a>Registrazione basata su codice
 
-A partire da Entity Framework 6, la configurazione a livello di applicazione per Entity Framework può essere specificata nel codice. Per i dettagli completi, vedere _[Entity Framework - configurazione basata su codice](https://msdn.microsoft.com/en-us/data/jj680699)_. La normale modalità di registrazione di un provider di Entity Framework tramite la configurazione basata su codice consiste nel creare una nuova classe che deriva da System.Data.Entity.DbConfiguration e inserirla nello stesso assembly della classe DbContext. La classe DbConfiguration registrerà quindi il provider nel proprio costruttore. Ad esempio, per la registrazione del provider SQL Compact, la classe DbConfiguration ha questo aspetto:
+A partire da Entity Framework 6, la configurazione a livello di applicazione per Entity Framework può essere specificata nel codice. Per i dettagli completi, vedere _[Entity Framework - configurazione basata su codice](https://msdn.microsoft.com/data/jj680699)_. La normale modalità di registrazione di un provider di Entity Framework tramite la configurazione basata su codice consiste nel creare una nuova classe che deriva da System.Data.Entity.DbConfiguration e inserirla nello stesso assembly della classe DbContext. La classe DbConfiguration registrerà quindi il provider nel proprio costruttore. Ad esempio, per la registrazione del provider SQL Compact, la classe DbConfiguration ha questo aspetto:
 
 ``` csharp
     public class MyConfiguration : DbConfiguration
