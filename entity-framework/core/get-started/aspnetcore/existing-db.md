@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: 84e2e4bc1bdc774fa059fa893e0f8ac128931feb
-ms.sourcegitcommit: ad1bdea58ed35d0f19791044efe9f72f94189c18
+ms.openlocfilehash: bba2742c3f3b6da93dd4b4f170a3878fc0473bc8
+ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/28/2018
-ms.locfileid: "47447183"
+ms.lasthandoff: 10/25/2018
+ms.locfileid: "50022197"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>Introduzione a EF Core in ASP.NET Core con un database esistente
 
@@ -59,7 +59,7 @@ Questa esercitazione usa un database **Blogging** nell'istanza di LocalDb come d
 
 Per installare EF Core, installare il pacchetto per i provider di database di EF Core che si vuole usare come destinazione. Per un elenco di provider disponibili, vedere [Provider di database](../../providers/index.md). 
 
-Per questa esercitazione, non è necessario installare un pacchetto di provider perché l'esercitazione usa SQL Server. Il pacchetto del provider SQL Server è incluso nel [metapacchetto Microsoft.AspnetCore.App](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/metapackage-app?view=aspnetcore-2.1).
+Per questa esercitazione, non è necessario installare un pacchetto di provider perché l'esercitazione usa SQL Server. Il pacchetto del provider SQL Server è incluso nel [metapacchetto Microsoft.AspnetCore.App](https://docs.microsoft.com/aspnet/core/fundamentals/metapackage-app?view=aspnetcore-2.1).
 
 ## <a name="reverse-engineer-your-model"></a>Decompilare il modello
 
@@ -173,7 +173,7 @@ Per rendere `BloggingContext` disponibile per i controller MVC, registrarlo come
 
   ![Pagina Crea](_static/create.png)
 
-  ![Pagina di indice](_static/index-existing-db.png)
+  ![Pagina Index (Indice)](_static/index-existing-db.png)
 
 ## <a name="next-steps"></a>Passaggi successivi
 

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 942865effba7b491dd950886ea30b69a86f1186c
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 7bb39d260f700e5087673e92a50377dc68151710
+ms.sourcegitcommit: 85ccc9ed42d4aaf7525c6312058c5c9ebdaed3ae
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997671"
+ms.lasthandoff: 10/27/2018
+ms.locfileid: "50191342"
 ---
 # <a name="connection-strings"></a>Stringhe di connessione
 
@@ -77,7 +77,7 @@ In ASP.NET Core è molto flessibile, il sistema di configurazione e la stringa d
 }
 ```
 
-Il contesto è generalmente configurato nel `Startup.cs` con la stringa di connessione da leggere dalla configurazione. Si noti il `GetConnectionString()` metodo cerca un valore di configurazione la cui chiave è `ConnectionStrings:<connection string name>`.
+Il contesto è generalmente configurato nel `Startup.cs` con la stringa di connessione da leggere dalla configurazione. Si noti il `GetConnectionString()` metodo cerca un valore di configurazione la cui chiave è `ConnectionStrings:<connection string name>`. È necessario importare il [Microsoft.Extensions.Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration) dello spazio dei nomi per usare questo metodo di estensione.
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
