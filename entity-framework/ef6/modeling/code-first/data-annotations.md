@@ -3,12 +3,12 @@ title: Annotazioni dei dati First - EF6 del codice
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 54e27f1b866da14d68db66ca5eca5a6dde819e26
-ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
+ms.openlocfilehash: 8d85ef85f56a23d9b3b526554417dc9dd360e139
+ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/27/2018
-ms.locfileid: "47415809"
+ms.lasthandoff: 11/03/2018
+ms.locfileid: "50980041"
 ---
 # <a name="code-first-data-annotations"></a>Annotazioni dei dati per Code First
 > [!NOTE]
@@ -30,26 +30,26 @@ Illustrerò DataAnnotations prima del codice con una semplice coppia di classi: 
 ``` csharp
     public class Blog
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string BloggerName { get; set;}
-        public virtual ICollection<Post> Posts { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string BloggerName { get; set;}
+        public virtual ICollection<Post> Posts { get; set; }
     }
 
     public class Post
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public DateTime DateCreated { get; set; }
-        public string Content { get; set; }
-        public int BlogId { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Content { get; set; }
+        public int BlogId { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 ```
 
 Così come sono, le classi di Blog e Post seguono la convenzione prima di codice in modo facile e non richiedono modifiche specifiche per abilitare la compatibilità di Entity Framework. Tuttavia, è possibile utilizzare anche le annotazioni per a Entity Framework vengono fornite ulteriori informazioni sulle classi e il database a cui eseguono il mapping.
 
- 
+ 
 
 ## <a name="key"></a>Chiave
 
@@ -60,11 +60,11 @@ Le classi post di Blog e Post seguono questa convenzione. Cosa accade se non si 
 ``` csharp
     public class Blog
     {
-        [Key]
-        public int PrimaryTrackingKey { get; set; }
-        public string Title { get; set; }
-        public string BloggerName { get; set;}
-        public virtual ICollection<Post> Posts { get; set; }
+        [Key]
+        public int PrimaryTrackingKey { get; set; }
+        public string Title { get; set; }
+        public string BloggerName { get; set;}
+        public virtual ICollection<Post> Posts { get; set; }
     }
 ```
 
@@ -155,11 +155,11 @@ L'attributo obbligatorio influirà anche database generato, rendendo la propriet
 >[!NOTE]
 > In alcuni casi potrebbe non essere possibile per la colonna nel database sia non nullable, anche se la proprietà è obbligatoria. Ad esempio, quando tramite una data di strategia ereditarietà tabella per gerarchia per i tipi più viene archiviato in una singola tabella. Se un tipo derivato include una proprietà obbligatoria la colonna può essere reso non nullable poiché non tutti i tipi nella gerarchia disporrà di questa proprietà.
 
- 
+ 
 
 ![Blog su tabella](~/ef6/media/jj591583-figure03.png)
 
- 
+ 
 
 ## <a name="maxlength-and-minlength"></a>MaxLength e MinLength
 
@@ -187,7 +187,7 @@ Annotazione sul lato client, MVC ed Entity Framework 4.1 lato server annotazione
 
 ![Creare una pagina con messaggio di errore personalizzato](~/ef6/media/jj591583-figure05.png)
 
- 
+ 
 
 ## <a name="notmapped"></a>NotMapped
 
@@ -204,7 +204,7 @@ Convenzione primo codice determina che tutte le proprietà di un tipo di dati su
     }
 ```
 
- 
+ 
 
 ## <a name="complextype"></a>ComplexType
 
@@ -215,12 +215,12 @@ Non è insolito per descrivere le entità di dominio in un set di classi e quind
     {
         public DateTime? DateCreated { get; set; }
 
-        [MaxLength(250)]
-        public string Description { get; set; }
+        [MaxLength(250)]
+        public string Description { get; set; }
     }
 ```
 
-Si noti che BlogDetails non dispone di qualsiasi tipo di proprietà di chiave. Nella progettazione basata su domini, BlogDetails si intende un oggetto valore. Entity Framework fa riferimento a oggetti valore come tipi complessi.  I tipi complessi non possono essere rilevati in modo indipendente.
+Si noti che BlogDetails non dispone di qualsiasi tipo di proprietà di chiave. Nella progettazione basata su domini, BlogDetails si intende un oggetto valore. Entity Framework fa riferimento a oggetti valore come tipi complessi.  I tipi complessi non possono essere rilevati in modo indipendente.
 
 Tuttavia come proprietà nella classe Blog BlogDetails verrà rilevato come parte di un oggetto di Blog. Affinché code first per riconoscere questo, è necessario contrassegnare la classe BlogDetails come ComplexType.
 
@@ -230,15 +230,15 @@ Tuttavia come proprietà nella classe Blog BlogDetails verrà rilevato come part
     {
         public DateTime? DateCreated { get; set; }
 
-        [MaxLength(250)]
-        public string Description { get; set; }
+        [MaxLength(250)]
+        public string Description { get; set; }
     }
 ```
 
 A questo punto è possibile aggiungere una proprietà nella classe Blog per rappresentare il BlogDetails per tale blog.
 
 ``` csharp
-        public BlogDetails BlogDetail { get; set; }
+        public BlogDetails BlogDetail { get; set; }
 ```
 
 Nel database, la tabella Blog conterrà tutte le proprietà del blog incluse le proprietà contenute nella relativa proprietà BlogDetail. Per impostazione predefinita, ognuno di essi è preceduto con il nome del tipo complesso, BlogDetail.
@@ -247,7 +247,7 @@ Nel database, la tabella Blog conterrà tutte le proprietà del blog incluse le 
 
 Un'altra interessante ricordare è che anche se la proprietà DateCreated è stata definita come un valore DateTime che non ammette valori null nella classe, il campo di database corrispondente è nullable. È necessario usare l'annotazione necessaria se si vuole interessano lo schema del database.
 
- 
+ 
 
 ## <a name="concurrencycheck"></a>ConcurrencyCheck
 
@@ -256,11 +256,11 @@ L'annotazione ConcurrencyCheck consente di contrassegnare una o più proprietà 
 Di seguito viene illustrato il funzionamento ConcurrencyCheck aggiungendola alla proprietà BloggerName.
 
 ``` csharp
-    [ConcurrencyCheck, MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
+    [ConcurrencyCheck, MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
     public string BloggerName { get; set; }
 ```
 
-Quando viene chiamato SaveChanges, a causa di annotazione ConcurrencyCheck sul campo BloggerName, il valore originale di tale proprietà verrà utilizzato nell'aggiornamento. Il comando tenterà di individuare la riga corretta da un filtro non solo sul valore della chiave, ma anche sul valore originale di BloggerName.  Ecco le parti critiche del comando di aggiornamento inviate al database, in cui è possibile visualizzare il comando verrà aggiornata la riga contenente un PrimaryTrackingKey è 1 e un BloggerName di "Julie", ovvero il valore originale quando questo blog è stato recuperato dal database.
+Quando viene chiamato SaveChanges, a causa di annotazione ConcurrencyCheck sul campo BloggerName, il valore originale di tale proprietà verrà utilizzato nell'aggiornamento. Il comando tenterà di individuare la riga corretta da un filtro non solo sul valore della chiave, ma anche sul valore originale di BloggerName.  Ecco le parti critiche del comando di aggiornamento inviate al database, in cui è possibile visualizzare il comando verrà aggiornata la riga contenente un PrimaryTrackingKey è 1 e un BloggerName di "Julie", ovvero il valore originale quando questo blog è stato recuperato dal database.
 
 ``` SQL
     where (([PrimaryTrackingKey] = @4) and ([BloggerName] = @5))
@@ -269,7 +269,7 @@ Quando viene chiamato SaveChanges, a causa di annotazione ConcurrencyCheck sul c
 
 Se un utente è stato modificato il nome blogger per tale blog nel frattempo, questo aggiornamento avrà esito negativo e si otterrà un DbUpdateConcurrencyException che sarà necessario gestire.
 
- 
+ 
 
 ## <a name="timestamp"></a>TimeStamp
 
@@ -286,7 +286,7 @@ risultati nel codice creando innanzitutto una colonna timestamp non ammettono va
 
 ![Blog di tabella con colonna timestamp](~/ef6/media/jj591583-figure07.png)
 
- 
+ 
 
 ## <a name="table-and-column"></a>Tabelle e colonne
 
@@ -302,7 +302,7 @@ La classe è denominata Blog e per convenzione, code presuppone prima di tutto c
 L'annotazione di colonna è una TEPSA ulteriori nello specificare gli attributi di una colonna mappata. È possibile stabilire un nome, tipo di dati o anche l'ordine in cui viene visualizzata una colonna nella tabella. Ecco un esempio di attributo di colonna.
 
 ``` csharp
-    [Column(“BlogDescription", TypeName="ntext")]
+    [Column("BlogDescription", TypeName="ntext")]
     public String Description {get;set;}
 ```
 
@@ -312,7 +312,7 @@ Ecco la tabella dopo che è stato rigenerato. Il nome della tabella è stato mod
 
 ![Blog su tabelle e colonne rinominate](~/ef6/media/jj591583-figure08.png)
 
- 
+ 
 
 ## <a name="databasegenerated"></a>DatabaseGenerated
 
@@ -327,7 +327,7 @@ Una funzionalità di database più importanti è la possibilità di disporre di 
 
 Leggere sopra che per impostazione predefinita, una proprietà chiave che è un numero intero diventerà una chiave di identità nel database. Sarebbe lo stesso come impostazione DatabaseGenerated su DatabaseGeneratedOption.Identity. Se si desidera che non sia una chiave di identità, è possibile impostare il valore per DatabaseGeneratedOption.None.
 
- 
+ 
 
 ## <a name="index"></a>Indice
 
@@ -389,7 +389,7 @@ Gli indici che si estendono su più colonne vengono specificati usando lo stesso
     }
 ```
 
- 
+ 
 
 ## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>Gli attributi di relazione: InverseProperty e perché ForeignKey
 
@@ -398,25 +398,25 @@ Gli indici che si estendono su più colonne vengono specificati usando lo stesso
 
 Convenzione primo codice si occuperà delle relazioni nel modello più comune, ma vi sono casi in cui è necessario supporto.
 
-Modifica del nome della proprietà della chiave nella classe Blog creata un problema con le relazioni con i Post. 
+Modifica del nome della proprietà della chiave nella classe Blog creata un problema con le relazioni con i Post. 
 
 Durante la generazione del database, codice innanzitutto rileva la proprietà BlogId nella classe Post e lo riconosce, per la convenzione che corrisponde a un nome e il "Id", come una chiave esterna per la classe di Blog. Ma è presente nessuna proprietà BlogId nella classe blog. La soluzione al problema consiste nel creare una proprietà di navigazione nel Post e usare il DataAnnotation esterna per consentire codice innanzitutto comprendere come creare la relazione tra le due classi, usando la proprietà Post.BlogId, nonché come specificare i vincoli nel database.
 
 ``` csharp
     public class Post
     {
-            public int Id { get; set; }
-            public string Title { get; set; }
-            public DateTime DateCreated { get; set; }
-            public string Content { get; set; }
-            public int BlogId { get; set; }
-            [ForeignKey("BlogId")]
-            public Blog Blog { get; set; }
-            public ICollection<Comment> Comments { get; set; }
+            public int Id { get; set; }
+            public string Title { get; set; }
+            public DateTime DateCreated { get; set; }
+            public string Content { get; set; }
+            public int BlogId { get; set; }
+            [ForeignKey("BlogId")]
+            public Blog Blog { get; set; }
+            public ICollection<Comment> Comments { get; set; }
     }
 ```
 
-Il vincolo nel database Mostra una relazione tra InternalBlogs.PrimaryTrackingKey e Posts.BlogId. 
+Il vincolo nel database Mostra una relazione tra InternalBlogs.PrimaryTrackingKey e Posts.BlogId. 
 
 ![relazione tra InternalBlogs.PrimaryTrackingKey e Posts.BlogId](~/ef6/media/jj591583-figure09.png)
 
@@ -434,10 +434,10 @@ Nella classe Post, è possibile tenere traccia di chi ha scritto un post di blog
 ``` csharp
     public class Person
     {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public List<Post> PostsWritten { get; set; }
-            public List<Post> PostsUpdated { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public List<Post> PostsWritten { get; set; }
+            public List<Post> PostsUpdated { get; set; }
     }
 ```
 
@@ -459,7 +459,7 @@ Poiché la proprietà PostsWritten di persona riconosce che si riferisce al tipo
 
 ![Post di tabelle senza chiavi esterne aggiuntive](~/ef6/media/jj591583-figure11.png)
 
- 
+ 
 
 ## <a name="summary"></a>Riepilogo
 

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 393349c05ffaf42c6d2520e73abce23def6becc0
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: f5a9ae17471391442170d8c40264e4db6922cb08
+ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995938"
+ms.lasthandoff: 11/03/2018
+ms.locfileid: "50980002"
 ---
 # <a name="configuring-a-dbcontext"></a>Configurazione di un DbContext
 
@@ -25,7 +25,7 @@ Mentre qualsiasi criterio di ricerca che fornisce le informazioni necessarie per
 
 `DbContext` deve avere un'istanza di `DbContextOptions` per poter eseguire qualsiasi operazione. Il `DbContextOptions` istanza contiene le informazioni di configurazione, ad esempio:
 
-- Il provider di database da utilizzare, in genere selezionata richiamando un metodo, ad esempio `UseSqlServer` o `UseSqlite`
+- Il provider di database da utilizzare, in genere selezionata richiamando un metodo, ad esempio `UseSqlServer` o `UseSqlite`. Questi metodi di estensione richiedono che il pacchetto di provider corrispondente, ad esempio `Microsoft.EntityFrameworkCore.SqlServer` o `Microsoft.EntityFrameworkCore.Sqlite`. I metodi sono definiti nel `Microsoft.EntityFrameworkCore` dello spazio dei nomi.
 - Qualsiasi stringa di connessione necessaria o identificatore dell'istanza del database, in genere passata come argomento al metodo di selezione del provider indicato in precedenza
 - Tutti i selettori comportamento opzionale a livello del provider, in genere anche concatenati all'interno della chiamata al metodo di selezione del provider
 - Tutti i selettori generali comportamento di EF Core, in genere concatenati dopo o prima del metodo di selezione del provider
