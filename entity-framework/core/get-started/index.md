@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 uid: core/get-started/index
-ms.openlocfilehash: c8d53b47d215c0db673c9058e9d78a7e2e7b895f
-ms.sourcegitcommit: 0d36e8ff0892b7f034b765b15e041f375f88579a
+ms.openlocfilehash: 744ea587207775f3a5b9f7b14ba5959c55539c13
+ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/09/2018
-ms.locfileid: "44250738"
+ms.lasthandoff: 11/03/2018
+ms.locfileid: "50980015"
 ---
 # <a name="getting-started-with-entity-framework-core"></a>Introduzione a Entity Framework Core
 
@@ -19,7 +19,7 @@ Riepilogo delle operazioni necessarie per aggiungere EF Core ad applicazioni in 
 
 ## <a name="step-by-step-tutorials"></a>Esercitazioni dettagliate
 
-Le esercitazioni introduttive seguenti non richiedono alcuna conoscenza di Entity Framework Core o di un IDE specifico. Contengono le procedure dettagliate per creare un'applicazione semplice che esegue query e salva i dati di un database. Le esercitazioni offrono informazioni sui diversi sistemi operativi e tipi di applicazione.
+Le esercitazioni introduttive seguenti non richiedono alcuna conoscenza di Entity Framework Core o di un ambiente di sviluppo integrato (IDE) specifico. Contengono le procedure dettagliate per creare un'applicazione semplice che esegue query e salva i dati da un database. Le esercitazioni offrono informazioni sui diversi sistemi operativi e tipi di applicazione.
 
 Entity Framework Core consente di creare un modello basato su un database esistente o di creare un database in base al modello dell'utente. Sono disponibili esercitazioni che illustrano entrambi gli approcci.
 
