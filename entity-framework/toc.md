@@ -72,7 +72,7 @@
 ##### [Uso di un progetto separato](core/managing-schemas/migrations/projects.md)
 ##### [Più provider](core/managing-schemas/migrations/providers.md)
 ##### [Tabella di cronologia personalizzata](core/managing-schemas/migrations/history-table.md)
-#### [🔧 API di creazione ed eliminazione](core/managing-schemas/ensure-created.md)
+#### [API di creazione ed eliminazione](core/managing-schemas/ensure-created.md)
 #### [🔧 Reverse Engineering](core/managing-schemas/scaffolding.md)
 
 ### [Esecuzione di query su dati](core/querying/index.md)
