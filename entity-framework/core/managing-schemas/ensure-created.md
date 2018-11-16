@@ -2,24 +2,24 @@
 title: Creare ed eliminare le API - EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/10/2017
-ms.openlocfilehash: 336f6fd655603a2474a58dfef377e121d9b04c3a
-ms.sourcegitcommit: a088421ecac4f5dc5213208170490181ae2f5f0f
+ms.date: 11/7/2018
+ms.openlocfilehash: 40d9e3aa0aba1bf2bc341f01dd815ed7cb7b48fa
+ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/08/2018
-ms.locfileid: "51285639"
+ms.lasthandoff: 11/15/2018
+ms.locfileid: "51688629"
 ---
 # <a name="create-and-drop-apis"></a>Creare ed eliminare le API
 
-I metodi EnsureCreated ed EnsureDeleted forniscono una semplice alternativa [migrazioni](migrations/index.md) per la gestione dello schema del database. Ciò è utile negli scenari quando i dati sono temporanei e possono essere eliminati quando viene modificato lo schema. Ad esempio durante la creazione di prototipi, nei test o per le cache locale.
+I metodi EnsureCreated ed EnsureDeleted forniscono una semplice alternativa [migrazioni](migrations/index.md) per la gestione dello schema del database. Questi metodi sono utili negli scenari quando i dati sono temporanei e possono essere eliminati quando viene modificato lo schema. Ad esempio durante la creazione di prototipi, nei test o per le cache locale.
 
-Alcuni provider (in particolare quelli non relazionali) non supporta le migrazioni. Per questo motivo, EnsureCreated è spesso il modo più semplice per inizializzare lo schema del database.
+Alcuni provider (in particolare quelli non relazionali) non supporta le migrazioni. Per questi provider, EnsureCreated è spesso il modo più semplice per inizializzare lo schema del database.
 
 > [!WARNING]
 > Le migrazioni ed EnsureCreated non funzionano bene insieme. Se si usano le migrazioni, non usare EnsureCreated per inizializzare lo schema.
 
-Transizione da EnsureCreated alle migrazioni non è un'esperienza senza problemi. Il simpelest per ottenere questo risultato consiste nell'eliminare il database e ricrearlo con le migrazioni. Se si prevede di usare le migrazioni in futuro, è consigliabile iniziare le migrazioni anziché EnsureCreated.
+Transizione da EnsureCreated alle migrazioni non è un'esperienza senza problemi. Il modo più semplice per farlo è eliminare il database e ricrearlo con le migrazioni. Se si prevede di usare le migrazioni in futuro, è consigliabile iniziare le migrazioni anziché EnsureCreated.
 
 ## <a name="ensuredeleted"></a>EnsureDeleted
 

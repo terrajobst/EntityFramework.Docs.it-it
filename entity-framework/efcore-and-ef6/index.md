@@ -5,12 +5,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
-ms.openlocfilehash: 0f9f0d4708fa283855eddf2cfc231b37356e413e
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: d5fe9b388707f653fdeb2d6a5daa7215ced71c1d
+ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022350"
+ms.lasthandoff: 11/15/2018
+ms.locfileid: "51688719"
 ---
 # <a name="compare-ef-core--ef6"></a>Confronto tra EF Core e EF6
 
@@ -57,7 +57,7 @@ La colonna EF Core contiene la versione del prodotto in cui la funzionalità è 
 | Generazione di chiavi: database                              | Yes      | 1.0                                   |
 | Generazione di chiavi: client                                |          | 1.0                                   |
 | Tipi complessi/di proprietà                                   | Yes      | 2.0                                   |
-| Dati spaziali                                          | Yes      |                                       |
+| Dati spaziali                                          | Yes      | 2.2                                   |
 | Visualizzazione grafica del modello                      | Yes      |                                       |
 | Editor di modello grafico                                | Yes      |                                       |
 | Formato del modello: codice                                    | Yes      | 1.0                                   |
