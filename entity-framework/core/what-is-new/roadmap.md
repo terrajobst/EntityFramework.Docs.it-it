@@ -4,33 +4,27 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: 36d5fa8009de0aadba3b636630e1d5bddf41723c
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: a12d628a28515f0c6710bfa59bc6dcdf41fcb58b
+ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490831"
+ms.lasthandoff: 11/15/2018
+ms.locfileid: "51688589"
 ---
 # <a name="entity-framework-core-roadmap"></a>Roadmap per Entity Framework Core
 
 > [!IMPORTANT]
 > Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
 
-## <a name="last-release-ef-core-21"></a>Ultima versione: EF Core 2.1
-
-La versione stabile di EF Core 2.1 è stata rilasciata il 30 maggio 2018. È possibile trovare altre informazioni su questa versione in [Novità di EF Core 2.1](xref:core/what-is-new/ef-core-2.1).
-
-## <a name="future-releases"></a>Versioni future
-
 ### <a name="ef-core-22"></a>EF Core 2.2
 
-Questa versione include numerose correzioni di bug e un numero relativamente ridotto di nuove funzionalità. Le informazioni su questa versione sono disponibili nell'[annuncio della Guida di orientamento di EF Core 2.2](https://github.com/aspnet/Announcements/issues/308). 
+Questa versione include numerose correzioni di bug e un numero relativamente ridotto di nuove funzionalità. Questa versione è prevista per la fine dell'anno 2018. Informazioni dettagliate su questa versione sono disponibili in [Nuove funzionalità di EF Core 2.2](xref:core/what-is-new/ef-core-2.2). 
 
 ### <a name="ef-core-30"></a>EF Core 3.0
 
-Il [processo di pianificazione delle versioni](#release-planning-process) per la versione successiva alla 2.2 non è stato ancora completato, ma è in fase di pianificazione il rilascio di una versione principale, allineata con .NET Core 3.0 e ASP.NET 3.0. 
+È previsto l'allineamento della versione principale di EF Core con .NET Core 3.0 e ASP.NET 3.0, ma non è ancora stato completato il [processo di pianificazione della versione](#release-planning-process) corrispondente.
 
-Usare [questa query nello strumento di gestione dei problemi](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) per visualizzare gli elementi di lavoro provvisoriamente assegnati a questa versione futura.
+Usare [questa query nella pagina di registrazione dei problemi](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) per visualizzare gli elementi di lavoro provvisoriamente assegnati alla versione 3.0.
 
 ## <a name="schedule"></a>Pianificazione
 
@@ -38,30 +32,40 @@ La pianificazione per EF Core è sincronizzata con la [pianificazione di .NET Co
 
 ## <a name="backlog"></a>Backlog
 
-Per gestire l'elenco dettagliato dei problemi e delle funzionalità in una pagina di registrazione dei problemi, viene usato lo strumento [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc). I clienti possono commentare e votare le voci di questo elenco.
+Il [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) (attività cardine di backlog) nella pagina di registrazione dei problemi contiene i problemi su cui Microsoft prevede di lavorare prima o poi oppure che potrebbero essere affrontati da qualcuno nella community.
+I clienti sono invitati a inviare commenti e voti per questi problemi.
+I collaboratori che hanno intenzione di lavorare a questi problemi sono invitati ad avviare prima di tutto una discussione in merito a come approcciarli.
 
-La tendenza è di lasciare aperti i problemi di cui si prevede di occuparsi in tempi ragionevoli o che possono essere presi in carico da un membro della community. Ciò tuttavia implica l'impegno a risolvere i problemi entro una data precisa solo quando questi vengono assegnati a un'attività cardine specifica nell'ambito del [processo di pianificazione delle versioni](#release-planning-process).
+Non esiste mai la garanzia che Microsoft lavori a una determinata funzionalità in una versione specifica di EF Core.
+Come in tutti i progetti software, le priorità, le pianificazioni dei rilasci e le risorse disponibili possono cambiare in qualsiasi momento.
+Se Microsoft intende risolvere un problema in un intervallo di tempo specifico, tuttavia, questo verrà assegnato a un'attività cardine di rilascio invece che all'attività cardine di backlog.
+I problemi vengono regolarmente spostati tra le attività cardine di backlog e di rilascio nell'ambito del [processo di pianificazione delle versioni](#release-planning-process).
 
-Se non si prevede di implementare una funzionalità, è probabile che il problema corrispondente nell'elenco venga chiuso. Un problema chiuso può essere ripreso in considerazione in seguito se si ottengono nuove informazioni su di esso.
-
-Ciò premesso, al momento non sono disponibili informazioni sufficienti per affermare che una funzionalità specifica verrà risolta entro una data o una versione precisa. Come in tutti i progetti software, priorità, pianificazioni dei rilasci e risorse disponibili possono cambiare in qualsiasi momento.
+È probabile che un problema venga chiuso se è previsto che non venga mai affrontato.
+Ma è possibile che un problema precedentemente chiuso venga ripreso in considerazione se si ricevono nuove informazioni al riguardo.
 
 ## <a name="release-planning-process"></a>Processo di pianificazione delle versioni
 
-Viene chiesto spesso in che modo vengano scelte le funzionalità da inserire in una versione specifica. È certo che il backlog non viene convertito automaticamente in piani di rilascio. La presenza di una funzionalità in EF6, poi, non significa che tale funzionalità verrà necessariamente implementata in EF Core.
+Viene chiesto spesso in che modo vengano scelte le funzionalità da inserire in una versione specifica.
+È certo che il backlog non viene convertito automaticamente in piani di rilascio.
+La presenza di una funzionalità in EF6, poi, non significa che tale funzionalità verrà necessariamente implementata in EF Core.
 
-In questa sede è difficile descrivere in dettaglio l'intero processo di pianificazione di un rilascio, sia perché gran parte di questo è costituito dalla discussione relativa a funzionalità specifiche, alle opportunità che offrono e alla loro priorità, sia perché il processo stesso di solito si evolve a ogni rilascio. È tuttavia relativamente facile riepilogare le domande più frequenti a cui si tenta di rispondere quando si deve decidere su cosa lavorare:
+È difficile descrivere in dettaglio l'intero processo seguito per pianificare un rilascio.
+Gran parte del processo implica la discussione delle funzionalità, opportunità e priorità specifiche e il processo stesso si evolve anche per ogni rilascio.
+È tuttavia possibile riepilogare le domande più frequenti a cui si tenta di rispondere quando si deve decidere su cosa lavorare:
 
-1. **Quanti sviluppatori si pensa che useranno la funzionalità e quanto questa migliorerà le loro applicazioni o la loro esperienza?** Per rispondere a questa domanda viene aggregato feedback proveniente da numerose fonti, una delle quali sono i commenti e i voti ai problemi.
+1. **Quanti sviluppatori si pensa che useranno la funzionalità e quanto questa migliorerà le loro applicazioni o la loro esperienza?** Per rispondere a questa domanda vengono raccolti i commenti e suggerimenti provenienti da numerose fonti, una delle quali sono i commenti e i voti per i problemi.
 
-2. **Quali sono le soluzioni alternative utilizzabili finché questa funzionalità non viene implementata?** Molti sviluppatori, ad esempio, sono in grado di eseguire il mapping di una tabella di join per ovviare alla mancanza di supporto molti-a-molti nativo. Non tutti gli sviluppatori sono in grado di farlo, naturalmente, ma molti lo sono e questo è un fattore che conta.
+2. **Quali sono le soluzioni alternative utilizzabili finché questa funzionalità non viene implementata?** Molti sviluppatori, ad esempio, possono eseguire il mapping di una tabella di join per ovviare alla mancanza del supporto molti-a-molti nativo. Ovviamente, non tutti gli sviluppatori vogliono farlo, ma molti possono e ciò è un fattore di cui tenere conto per la decisione.
 
-3. **L'implementazione di questa funzionalità consente un'evoluzione dell'architettura di EF Core tale da facilitare l'implementazione di altre funzionalità?** La tendenza è di favorire le funzionalità che possono fungere da componenti di base per altre funzionalità. La suddivisione di tabelle implementata per i tipi i proprietà, ad esempio, consente di avvicinarsi all'implementazione del supporto delle tabelle per tipo.
+3. **L'implementazione di questa funzionalità consente un'evoluzione dell'architettura di EF Core tale da facilitare l'implementazione di altre funzionalità?** Vengono tendenzialmente favorite le funzionalità che rappresentano la base per altre funzionalità. Ad esempio, le entità contenitore di proprietà possono essere utili per procedere verso l'implementazione del supporto molti-a-molti e i costruttori di entità hanno reso possibile il supporto del caricamento lazy. 
 
-4. **La funzionalità rappresenta un punto di estensibilità?** La tendenza è di favorire i punti di estendibilità, poiché questi consentono agli sviluppatori di collegare i propri comportamenti in modo più semplice, ottenendo in questo modo alcune delle funzionalità mancanti. Si prevede di implementare questo in parte all'inizio del lavoro sul caricamento lazy.
+4. **La funzionalità rappresenta un punto di estensibilità?** Vengono tendenzialmente favoriti i punti di estendibilità rispetto alle normali funzionalità, perché consentono agli sviluppatori di collegare i propri comportamenti e di compensare eventuali funzionalità mancanti. 
 
-5. **Qual è la sinergia della funzionalità quando viene usata in combinazione con altri prodotti?** La tendenza è di favorire le funzionalità che consentono l'uso di EF Core con altri prodotti o che migliorano significativamente l'esperienza d'uso di altri prodotti, ad esempio .NET Core, la versione più recente di Visual Studio, Microsoft Azure e così via.
+5. **Qual è la sinergia della funzionalità quando viene usata in combinazione con altri prodotti?** Vengono favorite le funzionalità che consentono l'uso o che migliorano significativamente l'esperienza d'uso di EF Core con altri prodotti, ad esempio .NET Core, la versione più recente di Visual Studio, Microsoft Azure e così via.
 
-6. **Quali sono le capacità delle persone disponibili a lavorare su una funzionalità e come è possibile sfruttare al meglio queste risorse?** Ogni membro del team EF e anche i collaboratori della community hanno diversi livelli di esperienza in aree diverse ed è quindi necessario pianificare di conseguenza. Anche se si volesse usufruire della collaborazione di tutti su una funzionalità specifica, ad esempio le traslazioni GroupBy o il supporto molti-a-molti, questo non sarebbe pratico.
+6. **Quali sono le competenze delle persone disponibili a lavorare su una funzionalità e come è possibile sfruttare al meglio queste risorse?** Ogni membro del team EF e i collaboratori della community hanno diversi livelli di esperienza in aree diverse ed è quindi necessario pianificare di conseguenza. Anche se si volesse usufruire della collaborazione di tutti su una funzionalità specifica, ad esempio le traslazioni GroupBy o il supporto molti-a-molti, questo non sarebbe pratico.
 
-Come già accennato, questo processo si evolve a ogni rilascio. L'intenzione per il futuro è di aggiungere maggiori opportunità per i membri della community di sviluppatori di offrire il proprio input per i piani di rilascio, ad esempio semplificando l'esame delle bozze proposte delle funzionalità e del piano di rilascio stesso.
+Come accennato in precedenza, il processo si evolve a ogni rilascio.
+In futuro si tenterà di aggiungere maggiori opportunità per i membri della community per fornire input per i piani di rilascio.
+Ad esempio, Microsoft vorrebbe renderne più semplice la revisione delle bozze di progettazione delle funzionalità e del piano di rilascio stesso.
