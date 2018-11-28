@@ -3,12 +3,12 @@ title: API Fluent - configurazione e Mapping dei tipi e le proprietà - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 648ed274-c501-4630-88e0-d728ab5c4057
-ms.openlocfilehash: 031376d2fc4778e6f0fa2434ab7ccfd45d436c4a
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 7371cc99142ccf8fc6bea237d7d58d1e67fcecec
+ms.sourcegitcommit: 75f8a179ac9a70ad390fc7ab2a6c5e714e701b8b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490196"
+ms.lasthandoff: 11/27/2018
+ms.locfileid: "52339803"
 ---
 # <a name="fluent-api---configuring-and-mapping-properties-and-types"></a>API Fluent - configurazione e di Mapping dei tipi e proprietà
 Quando si lavora con Code First di Entity Framework per eseguire il mapping alle tabelle mediante un set di convenzioni incorporato in Entity Framework le classi POCO è il comportamento predefinito. In alcuni casi, tuttavia, non è possibile o non si desidera seguire queste convenzioni ed è necessario eseguire il mapping di entità a un valore diverso da ciò che determinano le convenzioni.  
@@ -24,7 +24,7 @@ L'API Office fluent code first in genere avviene eseguendo l'override di [OnMode
 A partire da Entity Framework 6 è possibile utilizzare il metodo HasDefaultSchema su DbModelBuilder per specificare lo schema del database da utilizzare per tutte le tabelle, stored procedure e così via. Verrà ignorata per tutti gli oggetti che è configurato in modo esplicito uno schema diverso per questa impostazione predefinita.  
 
 ``` csharp
-modelBuilder.HasDefaultSchema(“sales”);
+modelBuilder.HasDefaultSchema("sales");
 ```  
 
 ### <a name="custom-conventions-ef6-onwards"></a>Convenzioni personalizzate (6 e versioni successive)  
