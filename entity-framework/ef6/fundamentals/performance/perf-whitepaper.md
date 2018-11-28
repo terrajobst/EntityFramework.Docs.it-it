@@ -1143,7 +1143,7 @@ Come con il caricamento lazy, il compromesso sarà più query per i payload più
 
 Entity Framework attualmente non supporta il caricamento lazy di proprietà scalare o complessa. Tuttavia, nei casi in cui si dispone di una tabella che include un oggetto di grandi dimensioni, ad esempio un BLOB, è possibile utilizzare la suddivisione di tabelle per separare le proprietà di grandi dimensioni in un'entità distinta. Ad esempio, si supponga di che avere una tabella Product che include una colonna photo varbinary. Se non è spesso necessario accedere a questa proprietà nelle query, è possibile usare per importare solo le parti dell'entità che è in genere suddivisione di tabelle. L'entità che rappresenta la foto del prodotto verrà caricato solo quando serve in modo esplicito.
 
-Un'ottima risorsa che illustra come abilitare la suddivisione di tabelle è post di blog di Gil Fink "Tabella la suddivisione in Entity Framework": \< http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>.
+Un'ottima risorsa che illustra come abilitare la suddivisione di tabelle è post di blog di Gil Fink "Tabella la suddivisione in Entity Framework": \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>.
 
 ## <a name="9-other-considerations"></a>9 altre considerazioni
 
