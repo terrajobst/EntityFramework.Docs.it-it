@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 11/02/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/data-seeding
-ms.openlocfilehash: 791f7afff36aac52fe2ffdc16ab580db22011b99
-ms.sourcegitcommit: 082946dcaa1ee5174e692dbfe53adeed40609c6a
+ms.openlocfilehash: 8f28dfea12461572ade8fbf3910ebd216dafb389
+ms.sourcegitcommit: fa863883f1193d2118c2f9cee90808baa5e3e73e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2018
-ms.locfileid: "51028096"
+ms.lasthandoff: 12/04/2018
+ms.locfileid: "52857429"
 ---
 # <a name="data-seeding"></a>Seeding dei dati
 
@@ -54,7 +54,7 @@ Dopo aver aggiunto i dati al modello [migrazioni](xref:core/managing-schemas/mig
 > [!TIP]
 > Se è necessario applicare le migrazioni come parte di una distribuzione automatizzata è possibile [creare uno script SQL](xref:core/managing-schemas/migrations/index#generate-sql-scripts) che può essere visualizzato in anteprima prima dell'esecuzione.
 
-In alternativa, è possibile usare `context.Database.EnsureCreated()` per creare un nuovo database che contiene i dati di seeding, ad esempio per un database di test o quando si utilizza il provider in memoria o in qualsiasi database di non-relazione. Si noti che se il database esiste già, `EnsureCreated()` né aggiornerà lo schema, né i dati di seeding del database. Per i database relazionali non devono chiamare `EnsureCreated()` se si prevede di usare le migrazioni.
+In alternativa, è possibile usare `context.Database.EnsureCreated()` per creare un nuovo database che contiene i dati di seeding, ad esempio per un database di test o quando si utilizza il provider in memoria o in qualsiasi database di non-relazione. Si noti che se il database esiste già, `EnsureCreated()` aggiornerà né i dati dello schema o valore di inizializzazione nel database. Per i database relazionali non devono chiamare `EnsureCreated()` se si prevede di usare le migrazioni.
 
 Questo tipo di dati di seeding viene gestito mediante le migrazioni e lo script per aggiornare i dati che si trova già nel database deve essere generato senza stabilire la connessione al database. Ciò impone alcune limitazioni:
 * Il valore della chiave primaria deve essere specificata anche se in genere generato dal database. Da utilizzare per rilevare le modifiche dei dati tra le migrazioni.

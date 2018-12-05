@@ -3,12 +3,12 @@ title: Migrazioni Code First in Entity Framework 6 - ambienti di Team
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
-ms.openlocfilehash: f5216a80928625040d6719f0e97ae786e5e33e05
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 53460b6cdd454099ccf93b4e2133e4ea21278a64
+ms.sourcegitcommit: fa863883f1193d2118c2f9cee90808baa5e3e73e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490506"
+ms.lasthandoff: 12/04/2018
+ms.locfileid: "52857468"
 ---
 # <a name="code-first-migrations-in-team-environments"></a>Migrazioni Code First in ambienti di Team
 > [!NOTE]
@@ -82,7 +82,7 @@ Esistono diversi motivi, a che Entity Framework mantiene lo snapshot modello int
     -   Si desidera aggiungere un inserite e aggiornate alla colonna a una o più delle tabelle, ma non si vuole includere queste colonne nel modello di Entity Framework. Se le migrazioni preso in esame il database che verrebbe continuamente tenta di eliminare queste colonne ogni volta che è stato eseguito lo scaffolding di una migrazione. Usa lo snapshot del modello, Entity Framework rileverà unicamente legittime modifiche al modello.
     -   Si desidera modificare il corpo di una stored procedure usata per gli aggiornamenti da includere alcune registrazioni. Se le migrazioni esaminato questa stored procedure dal database tenterebbe continuamente di ripristinare la definizione che si aspetta di Entity Framework. Usando lo snapshot del modello, Entity Framework sempre eseguirà lo scaffolding di codice per modificare la stored procedure quando si modifica la forma della procedura nel modello di Entity Framework.
     -   Questi stessi principi valgono per l'aggiunta di indici aggiuntivi, incluse le tabelle aggiuntive nel database, il mapping di Entity Framework per una vista di database che si trova su una tabella e così via.
--   Il modello di Entity Framework contiene solo la forma del database. L'intero modello consente migrazioni esaminare le informazioni sulle proprietà e le classi nel modello e sul relativo mapping alle tabelle e colonne. Queste informazioni consentono di essere più intelligente nel codice che esegue lo scaffolding delle migrazioni. Ad esempio, se si modifica il nome della colonna che esegue il mapping di una proprietà per le migrazioni possa rilevare la ridenominazione dalla che è la stessa proprietà – qualcosa che non può essere eseguita se si ha solo lo schema del database. 
+-   Il modello di Entity Framework contiene solo la forma del database. L'intero modello consente migrazioni esaminare le informazioni sulle proprietà e le classi nel modello e sul relativo mapping alle tabelle e colonne. Queste informazioni consentono di essere più intelligente nel codice che esegue lo scaffolding delle migrazioni. Ad esempio, se si modifica il nome della colonna che esegue il mapping di una proprietà per le migrazioni possa rilevare la ridenominazione dalla che è la stessa proprietà – qualcosa che non può essere eseguita se si ha solo lo schema del database. 
 
 ## <a name="what-causes-issues-in-team-environments"></a>Qual è la causa problemi negli ambienti di team
 
@@ -109,7 +109,7 @@ Per gli sviluppatori \#1 e per gli sviluppatori \#2 ora apporta alcune modifiche
 
 ![Invia](~/ef6/media/submit.png)
 
-È ora per sviluppatore \#2 da inviare. Non sono pertanto fortunati. Perché un altro utente ha inviato le modifiche perché sono sincronizzati, dovranno ottenga le modifiche e di tipo merge. Il controllo del codice sorgente probabilmente sarà in grado di unire automaticamente le modifiche a livello di codice perché sono molto semplici. Lo stato di sviluppatore \#2 locale del repository dopo la sincronizzazione è illustrata nella figura seguente. 
+È ora per sviluppatore \#2 da inviare. Non sono pertanto fortunati. Perché un altro utente ha inviato le modifiche perché sono sincronizzati, dovranno ottenga le modifiche e di tipo merge. Il controllo del codice sorgente probabilmente sarà in grado di unire automaticamente le modifiche a livello di codice perché sono molto semplici. Lo stato di sviluppatore \#2 locale del repository dopo la sincronizzazione è illustrata nella figura seguente. 
 
 ![Eseguire il pull](~/ef6/media/pull.png)
 
@@ -140,8 +140,7 @@ Per questo approccio, a partire dal momento in cui che si può notare, che è ne
 1.  Verificare che eventuali modifiche apportate al modello in sospeso nella base di codice locale sono stati scritti di una migrazione. In questo modo, che non perdere eventuali modifiche legittime quando giunge il momento per generare la migrazione vuota.
 2.  Sincronizzazione con controllo del codice sorgente.
 3.  Eseguire **Update-Database** per applicare eventuali migrazioni nuove che sono archiviati altri sviluppatori.
-    **
-    *Nota: * * * se non si ottengono tutti gli avvisi dal comando Update-Database, quindi si sono verificati alcun nuovo migrazioni da altri sviluppatori e non è necessario eseguire alcuna ulteriore operazione di unione.*
+    **_Nota:_**  *se non si ottengono tutti gli avvisi dal comando Update-Database, quindi si sono verificati alcun nuovo migrazioni da altri sviluppatori e non è necessario eseguire alcuna ulteriore operazione di unione.*
 4.  Eseguire **Add-Migration &lt;seleziona\_una\_nome&gt; – IgnoreChanges** (ad esempio, **Merge Add-Migration – IgnoreChanges**). Questo genera una migrazione con tutti i metadati (incluso uno snapshot del modello corrente), ma ignorerà le modifiche viene rilevato durante il confronto dei modelli di corrente in base allo snapshot nelle migrazioni ultimo (vale a dire si ottiene un valore vuoto **backup** e **Verso il basso** (metodo)).
 5.  Continuare a sviluppare o inviare al controllo del codice sorgente (dopo che eseguono gli unit test naturalmente).
 
@@ -162,14 +161,11 @@ Per questo approccio, a partire dal momento in cui che si può notare, che è ne
 1.  Verificare che eventuali modifiche apportate al modello in sospeso nella base di codice locale sono stati scritti di una migrazione. In questo modo, che non perdere eventuali modifiche legittime quando giunge il momento per generare la migrazione vuota.
 2.  Sincronizzazione con il controllo del codice sorgente.
 3.  Eseguire **Update-Database** per applicare eventuali migrazioni nuove che sono archiviati altri sviluppatori.
-    **
-    *Nota: * * * se non si ottengono tutti gli avvisi dal comando Update-Database, quindi si sono verificati alcun nuovo migrazioni da altri sviluppatori e non è necessario eseguire alcuna ulteriore operazione di unione.*
+    **_Nota:_**  *se non si ottengono tutti gli avvisi dal comando Update-Database, quindi si sono verificati alcun nuovo migrazioni da altri sviluppatori e non è necessario eseguire alcuna ulteriore operazione di unione.*
 4.  Eseguire **Update-Database-TargetMigration &lt;secondo\_ultima\_migrazione&gt;**  (nell'esempio è stato seguito questo sarebbe **Update-Database: TargetMigration AddRating**). Questo ruoli di cui eseguire il backup il database allo stato del secondo ultima migrazione, in modo efficace 'senza applica' l'ultima migrazione dal database.
-    **
-    *Nota: * * * questo passaggio è obbligatorio per renderlo più sicuro modificare i metadati della migrazione perché i metadati vengono archiviati anche nel \_ \_MigrationsHistoryTable del database. È per questo motivo è consigliabile usare questa opzione solo se l'ultima migrazione è solo nella base di codici locale. Se altri database era l'ultima migrazione applicata è anche necessario il rollback e riapplicare l'ultima migrazione per aggiornare i metadati.* 
+    **_Nota:_**  *questo passaggio è obbligatorio per renderlo più sicuro modificare i metadati della migrazione perché i metadati vengono archiviati anche nel \_ \_MigrationsHistoryTable del database. È per questo motivo è consigliabile usare questa opzione solo se l'ultima migrazione è solo nella base di codici locale. Se altri database era l'ultima migrazione applicata è anche necessario il rollback e riapplicare l'ultima migrazione per aggiornare i metadati.* 
 5.  Eseguire **Add-Migration &lt;completo\_name\_inclusi\_timestamp\_del\_ultima\_migrazione** &gt; (nell'esempio è stato seguito il risultato sarà simile **Add-Migration 201311062215252\_AddReaders**).
-    **
-    *Nota: * * * è necessario includere il timestamp in modo che le migrazioni sappia che si desidera modificare la migrazione esistente anziché lo scaffolding di una nuova.*
+    **_Nota:_**  *è necessario includere il timestamp in modo che le migrazioni sappia che si desidera modificare la migrazione esistente anziché lo scaffolding di una nuova.*
     Verranno aggiornati i metadati per l'ultima migrazione in modo che corrisponda al modello corrente. Si otterrà il seguente messaggio di avviso quando il comando viene completato, ma questo è esattamente ciò che si desidera. "*Solo il codice di progettazione per la migrazione ' 201311062215252\_AddReaders' è stato nuovamente sottoposto a scaffolding. Per lo scaffolding nuovamente l'intera migrazione, usare il parametro - Force. "*
 6.  Eseguire **Update-Database** di riapplicare l'ultima migrazione con i metadati aggiornati.
 7.  Continuare a sviluppare o inviare al controllo del codice sorgente (dopo che eseguono gli unit test naturalmente).
