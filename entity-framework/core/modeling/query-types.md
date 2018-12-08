@@ -4,12 +4,12 @@ author: anpete
 ms.date: 02/26/2018
 ms.assetid: 9F4450C5-1A3F-4BB6-AC19-9FAC64292AAD
 uid: core/modeling/query-types
-ms.openlocfilehash: 3328082dbc62aa80eb5fb29d2e57df1eef248d1f
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: cb391343e6f24092ae0874003c0ef2935dd4e03f
+ms.sourcegitcommit: 8dd71a57a01c439431164c163a0722877d0e5cd8
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489492"
+ms.lasthandoff: 12/07/2018
+ms.locfileid: "53028180"
 ---
 # <a name="query-types"></a>Tipi di query
 > [!NOTE]
@@ -56,28 +56,28 @@ Mapping di un tipo di query a un oggetto di database viene eseguito mediante il 
 Nell'esempio seguente viene illustrato come utilizzare il tipo di Query per eseguire query di una vista di database.
 
 > [!TIP]
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFrameworkCore/tree/master/samples/QueryTypes) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/QueryTypes) di questo articolo in GitHub.
 
 In primo luogo, definiamo un semplice modello di post di Blog e Post:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Entities)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Entities)]
 
 Successivamente, viene definita una vista di database semplici che ci consentirà di eseguire una query il numero di post associati a ciascun blog:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#View)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#View)]
 
 Successivamente, viene definita una classe che contenga il risultato della vista di database:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#QueryType)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#QueryType)]
 
 Successivamente, si configura il tipo di query nel _OnModelCreating_ usando il `modelBuilder.Query<T>` API.
 Utilizziamo standard configurazione fluent API per configurare il mapping per il tipo di Query:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Configuration)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Configuration)]
 
 Infine, è possibile eseguire una query la visualizzazione del database nella modalità standard:
 
-[!code-csharp[Main](../../../efcore-repo/samples/QueryTypes/Program.cs#Query)]
+[!code-csharp[Main](../../../samples/core/QueryTypes/Program.cs#Query)]
 
 > [!TIP]
 > Si noti che inoltre abbiamo definito una proprietà di query a livello di contesto (DbQuery) di agire come un utente root per le query su questo tipo.
