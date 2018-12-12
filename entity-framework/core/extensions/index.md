@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 07/03/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 1edc7a20f54b2d26f899c93e98dfaf6d62c29f86
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 67eae6cb943b974cc9cd581b8054836d2e37b1e9
+ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490727"
+ms.lasthandoff: 12/10/2018
+ms.locfileid: "53181994"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
@@ -43,6 +43,19 @@ Estensione di Visual Studio 2017+. È possibile decompilare DbContext e le class
 Estensione di Visual Studio 2017 che aggiunge una finestra di progettazione ORM per la progettazione visiva di classi di Entity Framework 6, Core 2.0 e Core 2.1. Il codice viene generato usando i modelli T4, quindi può essere completamente personalizzato per soddisfare qualsiasi esigenza. Sono supportate l'ereditarietà e le associazioni unidirezionali e bidirezionali, così come le enumerazioni e la possibilità di usare una codifica a colori per le classi e di aggiungere blocchi di testo per spiegare parti potenzialmente arcane del progetto.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
+
+### <a name="catfactory"></a>CatFactory
+
+CatFactory è un motore di scaffolding per .NET Core ed Entity Framework Core. Il concetto alla base di CatFactory è l'esportazione di un database esistente dall'istanza di SQL Server e successivamente la rappresentazione nei modelli per il database, le entità di scaffolding, le configurazioni, i repository e altro ancora.
+
+[Repository GitHub](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
+
+### <a name="loresofts-entity-framework-core-generator"></a>Generatore Entity Framework Core di LoreSoft
+
+Entity Framework Core Generator (efg) è uno strumento dell'interfaccia della riga di comando di .NET Core in grado di generare modelli di EF Core da un database esistente, molto simile a `dotnet ef dbcontext scaffold`. È tuttavia diverso in quanto supporta anche il codice sicuro di [rigenerazione](https://efg.loresoft.com/en/latest/regeneration/). La rigenerazione viene eseguita tramite la sostituzione dell'area o il parsing dei file di mapping. Lo strumento supporta anche la generazione di modelli di visualizzazione, la convalida e il codice di mapping degli oggetti. Per altre informazioni, vedere l'esercitazione e i collegamenti alla documentazione del prodotto.
+
+[Esercitazione](http://www.loresoft.com/Generate-ASP-NET-Web-API)
+[Documentazione](https://efg.loresoft.com/en/latest/)
 
 ## <a name="extensions"></a>Estensioni
 
