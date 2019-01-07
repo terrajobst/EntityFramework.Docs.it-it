@@ -4,27 +4,53 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: a12d628a28515f0c6710bfa59bc6dcdf41fcb58b
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: f18de8e8cb4fbe81bb2f983a00c9dd2f46be6073
+ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688589"
+ms.lasthandoff: 12/10/2018
+ms.locfileid: "53182020"
 ---
 # <a name="entity-framework-core-roadmap"></a>Roadmap per Entity Framework Core
 
 > [!IMPORTANT]
 > Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
 
-### <a name="ef-core-22"></a>EF Core 2.2
-
-Questa versione include numerose correzioni di bug e un numero relativamente ridotto di nuove funzionalità. Questa versione è prevista per la fine dell'anno 2018. Informazioni dettagliate su questa versione sono disponibili in [Nuove funzionalità di EF Core 2.2](xref:core/what-is-new/ef-core-2.2). 
-
 ### <a name="ef-core-30"></a>EF Core 3.0
 
-È previsto l'allineamento della versione principale di EF Core con .NET Core 3.0 e ASP.NET 3.0, ma non è ancora stato completato il [processo di pianificazione della versione](#release-planning-process) corrispondente.
+Dopo il rilascio di EF Core 2.2, l'obiettivo principale è ora EF Core 3.0, che verrà allineato a .NET Core 3.0 e ASP.NET 3.0.
 
-Usare [questa query nella pagina di registrazione dei problemi](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) per visualizzare gli elementi di lavoro provvisoriamente assegnati alla versione 3.0.
+Non sono ancora state completate nuove funzionalità, quindi i  [pacchetti di EF Core 3.0 Preview 1 pubblicati in NuGet Gallery](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/3.0.0-preview.18572.1)  a dicembre 2018 contengono solo [correzioni di bug, miglioramenti secondari e le modifiche apportate in preparazione del lavoro per la versione 3.0](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed+label%3Aclosed-fixed).
+
+In effetti, è ancora necessario mettere a punto la [pianificazione del rilascio](#release-planning-process) per la versione 3.0, per assicurarsi di includere il set di funzionalità appropriato completabile nel tempo previsto.
+Altre informazioni verranno condivise non appena la situazione è più chiara, ma ecco alcuni dei temi e delle funzionalità generali previsti:
+
+- **Miglioramenti di LINQ ([#12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795))**: LINQ consente di scrivere query di database senza uscire dal linguaggio preferito, sfruttando i vantaggi delle informazioni complete sui tipi per ottenere IntelliSense e il controllo dei tipi in fase di compilazione.
+  LINQ consente però di scrivere anche un numero illimitato di query complesse e ciò ha sempre rappresentato una grande sfida per i provider LINQ.
+  Nelle prime versioni di EF Core, questa complicazione è stata risolta in parte, cercando di individuare quali parti di una query possono essere convertite in SQL e consentendo quindi l'esecuzione del resto della query in memoria nel client.
+  L'esecuzione sul lato client può essere appropriata in alcuni casi, ma in molti altri casi può causare query inefficienti che potrebbero non essere identificate fino a quando un'applicazione viene distribuita nell'ambiente di produzione.
+  In EF Core 3.0 sono previste modifiche sostanziali del funzionamento dell'implementazione di LINQ e delle procedure per testarla.
+  Gli obiettivi sono di ottenere una maggiore solidità (ad esempio, per evitare di compromettere il funzionamento delle query con il rilascio di patch), nonché di riuscire a convertire più espressioni correttamente in SQL, per generare query efficienti in un maggior numero di casi e per evitare che query inefficienti non vengano rilevate.
+
+- **Supporto di Cosmos DB ([#8443](https://github.com/aspnet/EntityFrameworkCore/issues/8443))**: è in corso lo sviluppo di un provider Cosmos DB per EF Core, per consentire agli sviluppatori che hanno familiarità con il modello di programmazione di EF di selezionare facilmente Azure Cosmos DB come destinazione per il database dell'applicazione.
+  L'obiettivo è quello di rendere alcuni dei vantaggi di Cosmos DB, ad esempio la distribuzione globale, la disponibilità "AlwaysOn", la scalabilità elastica e la bassa latenza, ancora più accessibili per gli sviluppatori .NET.
+  Il provider abiliterà la maggior parte delle funzionalità di EF Core, come il rilevamento delle modifiche automatico, LINQ e le conversioni dei valori, con l'API SQL in Cosmos DB. Questo progetto è stato avviato prima di EF Core 2.2 e [sono state pubblicate alcune versioni di anteprima del provider](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
+  Il nuovo piano prevede di continuare a sviluppare il provider insieme a EF Core 3.0.   
+
+- **Supporto di C# 8.0 ([#12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047))**: lo scopo è consentire ai clienti Microsoft di sfruttare alcune delle [nuove funzionalità previste per C# 8.0](https://blogs.msdn.microsoft.com/dotnet/2018/11/12/building-c-8-0/), ad esempio i flussi asincroni (tra cui await for each) e i tipi riferimento nullable durante l'uso di EF Core.
+
+- **Decompilazione delle viste di database in tipi query ([#1679](https://github.com/aspnet/EntityFrameworkCore/issues/1679))**: in EF Core 2.1 è stato aggiunto il supporto per i tipi query, che possono rappresentare dati leggibili dal database, ma non aggiornabili.
+  I tipi query sono particolarmente utili per il mapping delle viste di database, quindi per EF Core 3.0 è prevista l'automatizzazione della creazione dei tipi query per le viste di database.
+
+- **Entità elenco proprietà ([#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) e [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914))**: questa funzionalità riguarda l'abilitazione di entità che archiviano dati in proprietà indicizzate anziché in proprietà regolari, nonché la possibilità di usare istanze della stessa classe .NET (in modo potenzialmente semplice come `Dictionary<string, object>`) per rappresentare tipi di entità diversi nello stesso modello di EF Core.
+  Questa funzionalità è un trampolino di lancio per il supporto delle relazioni molti-a-molti senza un'entità di join, ovvero uno dei miglioramenti più richiesti per EF Core.
+
+- **EF 6.3 in .NET Core ([EF6 #271](https://github.com/aspnet/EntityFramework6/issues/271))**: siamo consapevoli che molte applicazioni esistenti usano versioni precedenti di EF e che la loro conversione per EF Core al solo scopo di sfruttare i vantaggi di .NET Core può talvolta richiedere notevoli sforzi.
+  Per questo motivo, la prossima versione di EF 6 verrà adattata per supportare l'esecuzione in .NET Core 3.0.
+  Lo scopo è quello di facilitare la conversione delle applicazioni esistenti con modifiche minime.
+  Esisteranno alcune limitazioni (ad esempio, saranno necessari nuovi provider e il supporto spaziale con SQL Server non verrà abilitato) e non sono previste nuove funzionalità per EF 6.
+
+Nel frattempo, è possibile usare [questa query nella pagina di registrazione dei problemi](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.0.0+sort%3Areactions-%2B1-desc) per visualizzare gli elementi di lavoro provvisoriamente assegnati alla versione 3.0.
 
 ## <a name="schedule"></a>Pianificazione
 
