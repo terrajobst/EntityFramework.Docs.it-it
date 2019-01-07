@@ -3,12 +3,12 @@ title: Personalizzare la tabella di cronologia migrazioni - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: ed5518f0-a9a6-454e-9e98-a4fa7748c8d0
-ms.openlocfilehash: e3faefc4b812ec4bc440ed2bb48747053d8cb1b3
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: eb19f367611a86f685557a6741a5f2f0bad6b718
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283693"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058747"
 ---
 # <a name="customizing-the-migrations-history-table"></a>La tabella di cronologia le migrazioni di personalizzazione
 > [!NOTE]
@@ -19,7 +19,7 @@ ms.locfileid: "46283693"
 
 ## <a name="what-is-migrations-history-table"></a>Che cos'è la tabella di cronologia migrazioni?
 
-Tabella di cronologia migrazioni è una tabella utilizzata dal migrazioni Code First per archiviare informazioni dettagliate sulle migrazioni applicate al database. Per impostazione predefinita è il nome della tabella nel database \_ \_MigrationHistory e viene creato quando si applica al primo non di migrazione del database. In Entity Framework 5 questa tabella è una tabella di sistema se l'applicazione utilizzata database Microsoft Sql Server. Questo è stato modificato in Entity Framework 6 tuttavia e la tabella di cronologia migrazioni non è più contrassegnata una tabella di sistema.
+Tabella di cronologia migrazioni è una tabella utilizzata dal migrazioni Code First per archiviare informazioni dettagliate sulle migrazioni applicate al database. Per impostazione predefinita è il nome della tabella nel database \_ \_MigrationHistory e viene creato quando si applica la prima migrazione al database. In Entity Framework 5 questa tabella è una tabella di sistema se l'applicazione utilizzata database Microsoft Sql Server. Questo è stato modificato in Entity Framework 6 tuttavia e la tabella di cronologia migrazioni non è più contrassegnata una tabella di sistema.
 
 ## <a name="why-customize-migrations-history-table"></a>Il motivo per cui personalizzare la tabella di cronologia migrazioni?
 
@@ -43,7 +43,7 @@ In primo luogo, è necessario creare una classe derivata dalla classe System.Dat
 >[!NOTE]
 > In genere quando si configurano modelli EF non occorre chiamare base. Orderingcontext.cs dal metodo OnModelCreating sottoposto a override in quanto il DbContext.OnModelCreating() contiene un corpo vuoto. Ciò non avviene quando si configura la tabella di cronologia delle migrazioni. In questo caso la prima operazione da eseguire nell'override Orderingcontext.cs è effettivamente chiamare base. Orderingcontext.cs. La tabella di cronologia migrazioni verrà configurato in modo predefinito che quindi possibile perfezionare nel metodo di overriding.
 
-Si supponga di che voler rinominare la tabella di cronologia le migrazioni e inserirlo in uno schema personalizzato denominato "admin". Anche l'amministratore del database desidera è possibile rinominare la colonna MigrationId migrazione\_ID.  È possibile ottenere questo risultato creando la seguente classe derivata da HistoryContext:
+Si supponga di che voler rinominare la tabella di cronologia le migrazioni e inserirlo in uno schema personalizzato denominato "admin". Anche l'amministratore del database desidera è possibile rinominare la colonna MigrationId migrazione\_ID.  È possibile ottenere questo risultato creando la seguente classe derivata da HistoryContext:
 
 ``` csharp
     using System.Data.Common;

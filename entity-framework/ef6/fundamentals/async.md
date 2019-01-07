@@ -3,12 +3,12 @@ title: Asincrono di query e save - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: 4ed4f5c13341f33ccff8325a5ddacd8f7b195a76
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: de702365251fd05c423c8590ccaefa7d8542ad02
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283823"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058760"
 ---
 # <a name="async-query-and-save"></a>Asincrono di query e salvare
 > [!NOTE]
@@ -76,7 +76,7 @@ Verrà usato il [flusso di lavoro di Code First](~/ef6/modeling/code-first/workf
     }
 ```
 
- 
+ 
 
 ## <a name="create-a-synchronous-program"></a>Creare un programma sincrono
 
@@ -96,7 +96,6 @@ Ora che abbiamo un modello di EF, è possibile scrivere codice che lo usa per es
             {
                 PerformDatabaseOperations();
 
-                Console.WriteLine();
                 Console.WriteLine("Quote of the day");
                 Console.WriteLine(" Don't worry about the world coming to an end today... ");
                 Console.WriteLine(" It's already tomorrow in Australia.");
@@ -115,16 +114,18 @@ Ora che abbiamo un modello di EF, è possibile scrivere codice che lo usa per es
                     {
                         Name = "Test Blog #" + (db.Blogs.Count() + 1)
                     });
+                    Console.WriteLine("Calling SaveChanges.");
                     db.SaveChanges();
+                    Console.WriteLine("SaveChanges completed.");
 
                     // Query for all blogs ordered by name
+                    Console.WriteLine("Executing query.");
                     var blogs = (from b in db.Blogs
                                 orderby b.Name
                                 select b).ToList();
 
                     // Write all blogs out to Console
-                    Console.WriteLine();
-                    Console.WriteLine("All blogs:");
+                    Console.WriteLine("Query completed with following results:");
                     foreach (var blog in blogs)
                     {
                         Console.WriteLine(" " + blog.Name);
@@ -145,20 +146,20 @@ Poiché il codice sincrono, è possibile osservare il seguente flusso di esecuzi
 4.  Query restituisce e i risultati vengono scritti **Console**
 5.  Offerta del giorno verrà scritti in **Console**
 
-![Uscita sincronizzazione](~/ef6/media/syncoutput.png) 
+![Uscita sincronizzazione](~/ef6/media/syncoutput.png) 
 
- 
+ 
 
 ## <a name="making-it-asynchronous"></a>Rendendo asincrona
 
 Ora che abbiamo il nostro programma sia operativa, è possibile iniziare ad apportarvi usare di nuovo async e await parole chiave. Sono state apportate le modifiche seguenti al file Program.cs
 
-1.  La riga 2: L'uso istruzione per il **Data. Entity** dello spazio dei nomi fornisce l'accesso ai metodi di estensione asincrono Entity Framework.
-2.  Riga 4: L'uso istruzione per il **Tasks** dello spazio dei nomi consente di utilizzare il **attività** tipo.
-3.  Riga 12 & 18: vengono acquisiti come attività che monitori l'avanzamento della **PerformSomeDatabaseOperations** (riga 12) e quindi blocca l'esecuzione del programma per questa attività a una volta completata tutto il lavoro per il programma viene creato (riga 18).
+1.  Riga 2: L'usando l'istruzione per il **Data. Entity** dello spazio dei nomi fornisce l'accesso ai metodi di estensione asincrono Entity Framework.
+2.  Riga 4: L'usando l'istruzione per il **Tasks** dello spazio dei nomi consente di utilizzare il **attività** tipo.
+3.  Riga 12 & 18: Vengono acquisiti come attività che monitori l'avanzamento della **PerformSomeDatabaseOperations** (riga 12) e quindi blocca l'esecuzione del programma per questa attività a una volta completata tutto il lavoro per il programma viene creato (riga 18).
 4.  Riga 25: Abbiamo update **PerformSomeDatabaseOperations** essere contrassegnato come **async** e restituire un **attività**.
 5.  Riga 35: È ora stiamo chiamando la versione asincrona di SaveChanges e in attesa del relativo completamento.
-6.  Riga 42: È ora stiamo chiamando la versione asincrona di ToList e in attesa del risultato.
+6.  Riga 42: Stiamo chiamando ora la versione asincrona di ToList e in attesa del risultato.
 
 Per un elenco completo dei metodi di estensione disponibile nello spazio dei nomi di Data. Entity, fare riferimento alla classe QueryableExtensions. *È anche necessario aggiungere "using Data. Entity" al usando le istruzioni.*
 
@@ -227,9 +228,9 @@ Ora che il codice è asincrono, è possibile osservare un flusso di esecuzione d
 4.  Query per tutti i **blog** viene inviato al database *anche in questo caso, il thread gestito è libero di eseguire altre operazioni mentre viene elaborata la query nel database. Poiché tutte le altre esecuzione è stata completata, il thread appena arresterà alla chiamata di attesa tuttavia.*
 5.  Query restituisce e i risultati vengono scritti **Console**
 
-![Output asincroni](~/ef6/media/asyncoutput.png) 
+![Output asincroni](~/ef6/media/asyncoutput.png) 
 
- 
+ 
 
 ## <a name="the-takeaway"></a>Le informazioni
 

@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 02/26/2018
 ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 58da3b6b951b3fa4aa04ec75f5759555c1f0cde5
-ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
+ms.openlocfilehash: fe7e07b8bd483fb3f9b672ee78ef7541f06a21a4
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/03/2018
-ms.locfileid: "50980028"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058773"
 ---
 # <a name="owned-entity-types"></a>Tipi di entità di proprietà
 
@@ -50,7 +50,7 @@ Per comprendere come EF Core controlla questi oggetti, è utile pensare che una 
 ## <a name="collections-of-owned-types"></a>Raccolte di tipi di proprietà
 
 >[!NOTE]
-> Questa funzionalità è una novità di EF Core 2.2.
+> Questa funzionalità è stata introdotta in EF Core 2.2.
 
 Per configurare una raccolta di tipi di proprietà `OwnsMany` deve essere usato in `OnModelCreating`. Tuttavia la chiave primaria non verrà configurata per convenzione, in modo che sia possibile specificare in modo esplicito. Accade spesso di usare una chiave complessa per questi tipi di entità che includa la chiave esterna per il proprietario e una proprietà aggiuntiva univoca che può anche essere nello stato shadow:
 
@@ -126,4 +126,4 @@ Alcune di queste limitazioni sono fondamentali per l'uso di tipi di entità come
 
 ### <a name="shortcomings-in-previous-versions"></a>Limitazioni nelle versioni precedenti
 - In EF Core 2.0, le esplorazioni di proprietà di tipi di entità non possono essere dichiarati in tipi di entità derivati, a meno che l'entità di proprietà vengono mappate in modo esplicito a una tabella separata dalla gerarchia di proprietario. Questa limitazione è stata rimossa in EF Core 2.1
-- En EF Core 2.0 e 2.1 unico riferimento le esplorazioni di tipi di proprietà erano supportate. Questa limitazione è stata rimossa in EF Core 2.2
+- In EF Core 2.0 e 2.1 unico riferimento erano supportate le esplorazioni di tipi di proprietà. Questa limitazione è stata rimossa in EF Core 2.2
