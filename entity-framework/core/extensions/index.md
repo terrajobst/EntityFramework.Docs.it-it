@@ -1,19 +1,19 @@
 ---
 title: Strumenti ed estensioni - EF Core
 author: ErikEJ
-ms.date: 07/03/2018
+ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 67eae6cb943b974cc9cd581b8054836d2e37b1e9
-ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
+ms.openlocfilehash: 414773284df7c208b9a2acf0536fda459bdf775b
+ms.sourcegitcommit: 7bde8e6ad3c4565a4638646ce04bcf5e66f7b5fd
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/10/2018
-ms.locfileid: "53181994"
+ms.lasthandoff: 01/07/2019
+ms.locfileid: "54069230"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
-Gli strumenti e le estensioni offrono funzionalità aggiuntive per Entity Framework Core.
+Questi strumenti ed estensioni offrono funzionalità aggiuntive per Entity Framework Core 2.0 e versioni successive.
 
 > [!IMPORTANT]  
 > Le estensioni sono composte da diversi tipi di origine e non vengono mantenute nell'ambito del progetto di Entity Framework Core. Quando si prende in considerazione un'estensione di terze parti, valutarne con cura gli aspetti relativi a qualità, licenze, compatibilità, supporto e così via, per essere certi che soddisfi i propri requisiti.
@@ -28,31 +28,31 @@ LLBLGen Pro è una soluzione per la modellazione delle entità con supporto per 
 
 ### <a name="devart-entity-developer"></a>Devart Entity Developer
 
-Entity Developer è una potente finestra di progettazione ORM per ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access e LINQ to SQL. È possibile usare approcci di tipo Model-First e Database-First per progettare il modello ORM e generare per quest'ultimo codice C# o Visual Basic .NET. Introduce nuove modalità di progettazione dei modelli ORM, ottimizza la produttività e semplifica lo sviluppo delle applicazioni di database.
+Entity Developer è una potente finestra di progettazione ORM per ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access e LINQ to SQL. Supporta la progettazione visiva di modelli EF Core, usando l'approccio con precedenza del modello o precedenza del database e la generazione di codice C# o Visual Basic. 
 
 [Sito Web](https://www.devart.com/entitydeveloper/)
 
 ### <a name="ef-core-power-tools"></a>EF Core Power Tools
 
-Estensione di Visual Studio 2017+. È possibile decompilare DbContext e le classi POCO da un database esistente o un progetto di database di SQL Server e visualizzare e controllare DbContext in vari modi.
+EF Core Power Tools è un'estensione di Visual Studio 2017 che visualizza diverse attività di progettazione di EF Core in un'interfaccia utente intuitiva. Include la decompilazione di classi DbContext e classi di entità da database esistenti e [pacchetti di applicazione livello dati SQL Server](https://docs.microsoft.com/sql/relational-databases/data-tier-applications/data-tier-applications), la gestione delle migrazioni del database e le visualizzazioni del modello.
 
-[Wiki di GitHub](https://github.com/ErikEJ/SqlCeToolbox/wiki/EF-Core-Power-Tools)
+[Wiki di GitHub](https://github.com/ErikEJ/EFCorePowerTools/wiki)
 
 ### <a name="entity-framework-visual-editor"></a>Entity Framework Visual Editor
 
-Estensione di Visual Studio 2017 che aggiunge una finestra di progettazione ORM per la progettazione visiva di classi di Entity Framework 6, Core 2.0 e Core 2.1. Il codice viene generato usando i modelli T4, quindi può essere completamente personalizzato per soddisfare qualsiasi esigenza. Sono supportate l'ereditarietà e le associazioni unidirezionali e bidirezionali, così come le enumerazioni e la possibilità di usare una codifica a colori per le classi e di aggiungere blocchi di testo per spiegare parti potenzialmente arcane del progetto.
+Entity Framework Visual Editor è un'estensione di Visual Studio 2017 che aggiunge una finestra di progettazione ORM per la progettazione visiva di classi di Entity Framework 6 ed EF Core. Il codice viene generato usando i modelli T4, pertanto può essere personalizzato per soddisfare qualsiasi esigenza. Supporta l'ereditarietà, le associazioni unidirezionali e bidirezionali, le enumerazioni e la possibilità di usare una codifica a colori per le classi e di aggiungere blocchi di testo, per spiegare parti potenzialmente molto complesse del progetto.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=michaelsawczyn.EFDesigner)
 
 ### <a name="catfactory"></a>CatFactory
 
-CatFactory è un motore di scaffolding per .NET Core ed Entity Framework Core. Il concetto alla base di CatFactory è l'esportazione di un database esistente dall'istanza di SQL Server e successivamente la rappresentazione nei modelli per il database, le entità di scaffolding, le configurazioni, i repository e altro ancora.
+CatFactory è un motore di scaffolding per .NET Core in grado di automatizzare la generazione di classi, entità, configurazioni di mapping e classi repository DbContext da un database SQL Server.
 
 [Repository GitHub](https://github.com/hherzl/CatFactory.EntityFrameworkCore)
 
 ### <a name="loresofts-entity-framework-core-generator"></a>Generatore Entity Framework Core di LoreSoft
 
-Entity Framework Core Generator (efg) è uno strumento dell'interfaccia della riga di comando di .NET Core in grado di generare modelli di EF Core da un database esistente, molto simile a `dotnet ef dbcontext scaffold`. È tuttavia diverso in quanto supporta anche il codice sicuro di [rigenerazione](https://efg.loresoft.com/en/latest/regeneration/). La rigenerazione viene eseguita tramite la sostituzione dell'area o il parsing dei file di mapping. Lo strumento supporta anche la generazione di modelli di visualizzazione, la convalida e il codice di mapping degli oggetti. Per altre informazioni, vedere l'esercitazione e i collegamenti alla documentazione del prodotto.
+Il Generatore Entity Framework Core (efg) è uno strumento della riga di comando di .NET Core che genera modelli EF Core da un database esistente con modalità simili a `dotnet ef dbcontext scaffold`, ma supporta anche la [rigenerazione](https://efg.loresoft.com/en/latest/regeneration/) del codice sicuro tramite la sostituzione dell'area o tramite l'analisi dei file di mapping. Lo strumento supporta la generazione di modelli di visualizzazione, la convalida e il codice mapper degli oggetti. 
 
 [Esercitazione](http://www.loresoft.com/Generate-ASP-NET-Web-API)
 [Documentazione](https://efg.loresoft.com/en/latest/)
@@ -61,91 +61,62 @@ Entity Framework Core Generator (efg) è uno strumento dell'interfaccia della ri
 
 ### <a name="microsoftentityframeworkcoreautohistory"></a>Microsoft.EntityFrameworkCore.AutoHistory
 
-Plug-in per Microsoft.EntityFrameworkCore per supportare la registrazione automatica della cronologia delle modifiche dei dati.
+Libreria di plug-in che consente di registrare automaticamente le modifiche ai dati eseguite da EF Core in una tabella di cronologia.
 
 [Repository GitHub](https://github.com/Arch/AutoHistory/)
 
 ### <a name="microsoftentityframeworkcoredynamiclinq"></a>Microsoft.EntityFrameworkCore.DynamicLinq
 
-Estensioni Linq dinamiche per Microsoft.EntityFrameworkCore con aggiunta del supporto asincrono
+Porta .NET Core/.NET Standard di System.Linq.Dynamic che include il supporto asincrono con EF Core.
+System.Linq.Dynamic nasce come esempio Microsoft, che indica come costruire dinamicamente query LINQ da espressioni stringa anziché tramite codice.
 
- [Repository GitHub](https://github.com/StefH/System.Linq.Dynamic.Core/)
-
-### <a name="efcorepractices"></a>EFCore.Practices
-
-Tentativo di acquisire alcune procedure consigliate in un'API che supporta i test, tra cui un piccolo framework per l'analisi delle query N+1.
-
-[Repository GitHub](https://github.com/riezebosch/efcore-practices/tree/master/src/EFCore.Practices/)
+[Repository GitHub](https://github.com/StefH/System.Linq.Dynamic.Core/)
 
 ### <a name="efsecondlevelcachecore"></a>EFSecondLevelCache.Core
 
-Libreria con memorizzazione nella cache di secondo livello. La memorizzazione nella cache di secondo livello è una cache della query. I risultati dei comandi EF verranno memorizzati nella cache, in modo che gli stessi comandi EF recupereranno i dati dalla cache anziché eseguirli di nuovo sul database.
+Estensione che consente di archiviare i risultati delle query di EF Core in una cache di secondo livello, in modo che le esecuzioni successive delle stesse query evitino l'accesso al database e recuperino i dati direttamente dalla cache.
 
 [Repository GitHub](https://github.com/VahidN/EFSecondLevelCache.Core/)
 
-### <a name="detachedentityframework"></a>Detached.EntityFramework
-
-Carica e salva i grafici di un'intera entità scollegata, ovvero l'entità con i relativi elenchi ed entità figlio. Ispirato da [GraphDiff](https://github.com/refactorthis/GraphDiff/). L'idea prevede anche l'aggiunta di alcuni plug-in per semplificare alcune attività ripetitive, ad esempio il controllo e l'impaginazione.
-
-[Repository GitHub](https://github.com/leonardoporro/Detached/)
-
 ### <a name="entityframeworkcoreprimarykey"></a>EntityFrameworkCore.PrimaryKey
 
-Recupero della chiave primaria (incluse le chiavi composte) da qualsiasi entità come dizionario.
+Questa libreria consente il recupero dei valori chiave primaria (incluse le chiavi composte) da qualsiasi entità come dizionario.
 
 [Repository GitHub](https://github.com/NickStrupat/EntityFramework.PrimaryKey/)
 
-### <a name="entityframeworkcorerx"></a>EntityFrameworkCore.Rx
-
-Wrapper di estensione reattivi per gli oggetti osservabili delle entità di Entity Framework.
-
-[Repository GitHub](https://github.com/NickStrupat/EntityFramework.Rx/)
-
-### <a name="entityframeworkcoretriggers"></a>EntityFrameworkCore.Triggers
-
-Aggiungere trigger alle entità con eventi di inserimento, aggiornamento ed eliminazione. Esistono tre eventi per ogni oggetto: prima, dopo e in caso di errore.
-
-[Repository GitHub](https://github.com/NickStrupat/EntityFramework.Triggers/)
-
 ### <a name="entityframeworkcoretypedoriginalvalues"></a>EntityFrameworkCore.TypedOriginalValues
 
-Ottenere l'accesso tipizzato all'elemento OriginalValue delle proprietà dell'entità. Le proprietà semplici e complesse sono supportate, la navigazione e le raccolte non lo sono.
+Questa libreria consente l'accesso fortemente tipizzato ai valori originali delle proprietà dell'entità. 
 
 [Repository GitHub](https://github.com/NickStrupat/EntityFramework.TypedOriginalValues/)
 
 ### <a name="geco"></a>Geco
 
-Geco offre un generatore di modelli di reverse engineering con supporto per pluralizzazione e singolarizzazione e modelli modificabili basati su stringhe C# 6.0 interpolate e in esecuzione su .Net Core. Offre anche un generatore di script di inizializzazione con script merge SQL e uno strumento di esecuzione script.
+Geco (Generator Console) è un generatore di codice semplice basato su un progetto di console, che viene eseguito in .NET Core e usa stringhe interpolate C# per la generazione di codice. Geco include un generatore di modelli inversi per EF Core con supporto di pluralizzazione, singolarizzazione e modelli modificabili. Include anche un generatore di script per dati di inizializzazione e uno strumento di pulizia database.
 
 [Repository GitHub](https://github.com/iQuarc/Geco)
 
 ### <a name="linqkitmicrosoftentityframeworkcore"></a>LinqKit.Microsoft.EntityFrameworkCore
 
-LinqKit.Microsoft.EntityFrameworkCore è un set gratuito di estensioni per utenti esperti di LINQ to SQL ed EntityFrameworkCore. Con supporto Include(...) e IDbAsync.
+LinqKit.Microsoft.EntityFrameworkCore è una versione della libreria LINQKit compatibile con EF Core. LINQKit è un set gratuito di estensioni per gli utenti avanzati di LINQ to SQL ed Entity Framework. Supporta funzionalità avanzate, quali la creazione dinamica di espressioni predicato e l'uso di variabili espressione nelle sottoquery.  
 
 [Repository GitHub](https://github.com/scottksmith95/LINQKit/)
 
 ### <a name="neinlinqentityframeworkcore"></a>NeinLinq.EntityFrameworkCore
 
-NeinLinq.EntityFrameworkCore offre estensioni utili per l'uso dei provider LINQ, ad esempio Entity Framework, che supportano solo un subset limitato di funzioni .NET, riusando le funzioni, riscrivendo le query, rendendole anche null-safe, e compilando le query dinamiche usando predicati e selettori traducibili.
+NeinLinq estende i provider LINQ, ad esempio Entity Framework, e consente il riuso delle funzioni, la riscrittura di query e la creazione di query dinamiche usando predicati e selettori traducibili.
 
 [Repository GitHub](https://github.com/axelheer/nein-linq/)
 
 ### <a name="microsoftentityframeworkcoreunitofwork"></a>Microsoft.EntityFrameworkCore.UnitOfWork
 
-Plug-in per Microsoft.EntityFrameworkCore supportare il repository, i modelli di unità di lavoro e più database con transazione distribuita supportata.
+Plug-in per Microsoft.EntityFrameworkCore che supporta repository, modelli di unità di lavoro e più database con la transazione distribuita supportata.
 
 [Repository GitHub](https://github.com/Arch/UnitOfWork/)
 
-### <a name="entityframeworklazyloading"></a>EntityFramework.LazyLoading
-
-Caricamento lazy per EF Core 1.1
-
-[Repository GitHub](https://github.com/darxis/EntityFramework.LazyLoading)
-
 ### <a name="efcorebulkextensions"></a>EFCore.BulkExtensions
 
-Estensioni EntityFrameworkCore per operazioni in blocco (inserimento, aggiornamento, eliminazione).
+Estensioni EF Core per operazioni in blocco (inserimento, aggiornamento, eliminazione).
 
 [Repository GitHub](https://github.com/borisdj/EFCore.BulkExtensions)
 
@@ -154,3 +125,33 @@ Estensioni EntityFrameworkCore per operazioni in blocco (inserimento, aggiorname
 Aggiunge la pluralizzazione in fase di progettazione a EF Core.
 
 [Repository GitHub](https://github.com/bricelam/EFCore.Pluralizer)
+
+### <a name="pomelofoundationpomeloentityframeworkcoreextensionstosql"></a>PomeloFoundation/Pomelo.EntityFrameworkCore.Extensions.ToSql
+
+Metodo di estensione semplice che consente di ottenere l'istruzione SQL che verrebbe generata da EF Core per una determinata query LINQ in scenari semplici. Il metodo ToSql è limitato agli scenari semplici, perché EF Core può generare più istruzioni SQL per una singola query LINQ, nonché diverse istruzioni SQL a seconda dei valori di parametro.
+
+[Repository GitHub](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.Extensions.ToSql)
+
+### <a name="toolbeltentityframeworkcoreindexattribute"></a>Toolbelt.EntityFrameworkCore.IndexAttribute
+
+Ripresa dell'attributo [Index] per EF Core (con estensione per la compilazione del modello).
+
+[Repository GitHub](https://github.com/jsakamoto/EntityFrameworkCore.IndexAttribute)
+
+### <a name="efcoreinmemoryhelpers"></a>EfCore.InMemoryHelpers
+
+Definisce un wrapper per il Provider di database in memoria EF Core. Ne rende il funzionamento più simile a quello di un provider relazionale.
+
+[Repository GitHub](https://github.com/SimonCropp/EfCore.InMemoryHelpers)
+
+### <a name="efcoretemporalsupport"></a>EFCore.TemporalSupport
+
+Implementazione di supporto temporale per EF Core.
+
+[Repository GitHub](https://github.com/cpoDesign/EFCore.TemporalSupport)
+
+### <a name="entityframeworkcorecacheable"></a>EntityFrameworkCore.Cacheable
+
+Cache della query di secondo livello ad alte prestazioni per EF Core.
+
+[Repository GitHub](https://github.com/SteffenMangold/EntityFrameworkCore.Cacheable)
