@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 uid: core/saving/transactions
-ms.openlocfilehash: 7083a1228420416a1b60d9744ca2dad2339be53f
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 4c50d6694c6678678c0af8defe2601abee923af1
+ms.sourcegitcommit: 5f11a5fa5d2cde81a4e4d0d5c3a60aa74b83cbd4
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993605"
+ms.lasthandoff: 01/11/2019
+ms.locfileid: "54226192"
 ---
 # <a name="using-transactions"></a>Uso delle transazioni
 
@@ -99,7 +99,7 @@ L'esempio seguente mostra come eseguire un'operazione ADO.NET SqlClient e un'ope
 
 ### <a name="limitations-of-systemtransactions"></a>Limitazioni di System.Transactions  
 
-1. EF Core si basa sui provider di database per implementare il supporto per System.Transactions. Anche se il supporto è piuttosto comune tra i provider ADO.NET per .NET Framework, l'API è stata aggiunta solo di recente a .NET Core e il supporto di conseguenza non è ancora molto diffuso. Se un provider non implementa il supporto per System.Transactions, è possibile che le chiamate a queste API vengano ignorate completamente. SqlClient per .NET Core offre questo supporto dalla versione 2.1 in poi. SqlClient per .NET 2.0 Core genererà un'eccezione se si tenta di usare la funzionalità. 
+1. EF Core si basa sui provider di database per implementare il supporto per System.Transactions. Anche se il supporto è piuttosto comune tra i provider ADO.NET per .NET Framework, l'API è stata aggiunta solo di recente a .NET Core e il supporto di conseguenza non è ancora molto diffuso. Se un provider non implementa il supporto per System.Transactions, è possibile che le chiamate a queste API vengano ignorate completamente. SqlClient per .NET Core offre questo supporto dalla versione 2.1 in poi. SqlClient per .NET Core 2.0 genererà un'eccezione se si tenta di usare la funzionalità. 
 
    > [!IMPORTANT]  
    > È consigliabile verificare che il comportamento dell'API con il provider sia corretto prima di basarsi su di essa per la gestione delle transazioni. In caso contrario, è consigliabile contattare il gestore del provider del database. 

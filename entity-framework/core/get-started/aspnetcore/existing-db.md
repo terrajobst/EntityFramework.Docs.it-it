@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: 23cd53b0e162afc5db0243b7032bb9c5f18bfb35
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: c8acb95395968f710e6b896de6c3598cb7b23676
+ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688693"
+ms.lasthandoff: 01/06/2019
+ms.locfileid: "54058786"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>Introduzione a EF Core in ASP.NET Core con un database esistente
 
@@ -48,7 +48,7 @@ Questa esercitazione usa un database **Blogging** nell'istanza di LocalDb come d
 * **File > Nuovo > Progetto**
 * Scegliere **Installati > Visual C# > Web** dal menu a sinistra
 * Selezionare il modello di progetto **Applicazione Web ASP.NET Core**
-* Immettere **EFGetStarted.AspNetCore.ExistingDb** come nome e fare clic su **OK**
+* Immettere **EFGetStarted.AspNetCore.ExistingDb** come nome (deve corrispondere esattamente allo spazio dei nomi usato successivamente nel codice) e quindi fare clic su **OK** 
 * Attendere che venga visualizzata la finestra di dialogo **Nuova applicazione Web ASP.NET Core**
 * Assicurarsi che l'elenco a discesa dei framework di destinazione sia impostato su **.NET Core** e che l'elenco a discesa delle versioni sia impostato su **ASP.NET Core 2.1**
 * Selezionare il modello **Applicazione Web (MVC)**
