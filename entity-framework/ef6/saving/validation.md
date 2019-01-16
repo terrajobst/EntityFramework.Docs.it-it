@@ -1,48 +1,49 @@
 ---
-title: Convalida - Entity Framework 6
+title: Validation - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
-ms.openlocfilehash: 3aeb33763819544618c4a3068bb278c9b23409b6
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 98d7bd08d841ee400afb62e1079f1a965f65e139
+ms.sourcegitcommit: b4a5ed177b86bf7f81602106dab6b4acc18dfc18
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490641"
+ms.lasthandoff: 01/15/2019
+ms.locfileid: "54316647"
 ---
 # <a name="data-validation"></a>Convalida dei dati
 > [!NOTE]
 > **EF4.1 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 4.1. Se si usa una versione precedente, alcune o tutte le informazioni non è applicabile
 
-Il contenuto in questa pagina è stato adattato dalla e l'articolo è stato scritto originariamente da Julie Lerman ([http://thedatafarm.com](http://thedatafarm.com)).
+Il contenuto in questa pagina è stato adattato da un articolo scritto originariamente di Julie Lerman ([http://thedatafarm.com](http://thedatafarm.com)).
 
 Entity Framework fornisce una vasta gamma di funzionalità di convalida che può alimentare tramite a un'interfaccia utente per la convalida lato client o essere utilizzato per la convalida sul lato server. Quando si usa codice prima di tutto, è possibile specificare le convalide mediante annotazione o configurazioni di API fluent. Le convalide aggiuntive e più complesso, può essere specificate nel codice e funzionerà se il modello vanta oltre dal codice in primo luogo, a partire dal modello o prima di tutto il database.
 
 ## <a name="the-model"></a>Il modello
 
-Illustrerò le convalide con una semplice coppia di classi: post di Blog e Post.
+Illustrerò le convalide con una semplice coppia di classi: Post di blog e Post.
 
 ``` csharp
     public class Blog
       {
-          public int Id { get; set; }
-          public string Title { get; set; }
-          public string BloggerName { get; set; }
-          public DateTime DateCreated { get; set; }
-          public virtual ICollection<Post> Posts { get; set; }
-          }
-      }
+          public int Id { get; set; }
+          public string Title { get; set; }
+          public string BloggerName { get; set; }
+          public DateTime DateCreated { get; set; }
+          public virtual ICollection<Post> Posts { get; set; }
+          }
+      }
 
-      public class Post
-      {
-          public int Id { get; set; }
-          public string Title { get; set; }
-          public DateTime DateCreated { get; set; }
-          public string Content { get; set; }
-          public int BlogId { get; set; }
-          public ICollection<Comment> Comments { get; set; }
-      }
+      public class Post
+      {
+          public int Id { get; set; }
+          public string Title { get; set; }
+          public DateTime DateCreated { get; set; }
+          public string Content { get; set; }
+          public int BlogId { get; set; }
+          public ICollection<Comment> Comments { get; set; }
+      }
 ```
+
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
 Codice Usa prima di tutto le annotazioni dall'assembly System.ComponentModel.DataAnnotations come un metodo di configurazione di classi di code first. Tra queste annotazioni sono quelli che forniscono regole, ad esempio obbligatori, MinLength o MaxLength. Un numero di applicazioni client .NET supporta anche queste annotazioni, ad esempio, ASP.NET MVC. È possibile ottenere entrambi server e lato la convalida lato client con queste annotazioni. Ad esempio, è possibile forzare la proprietà del titolo del Blog su una proprietà obbligatoria.
@@ -64,7 +65,7 @@ Un modo semplice per eseguire il test è per disabilitare la funzionalità di co
 
 ``` xml
     <appSettings>
-        <add key="ClientValidationEnabled"value="false"/>
+        <add key="ClientValidationEnabled"value="false"/>
         ...
     </appSettings>
 ```
@@ -79,16 +80,16 @@ Applicazione delle configurazioni di API Fluent come codice prima di tutto è la
 
 ``` csharp
     public class BlogContext : DbContext
-      {
-          public DbSet<Blog> Blogs { get; set; }
-          public DbSet<Post> Posts { get; set; }
-          public DbSet<Comment> Comments { get; set; }
+      {
+          public DbSet<Blog> Blogs { get; set; }
+          public DbSet<Post> Posts { get; set; }
+          public DbSet<Comment> Comments { get; set; }
 
-          protected override void OnModelCreating(DbModelBuilder modelBuilder)
-          {
-              modelBuilder.Entity<Blog>().Property(p => p.BloggerName).HasMaxLength(10);
-          }
-        }
+          protected override void OnModelCreating(DbModelBuilder modelBuilder)
+          {
+              modelBuilder.Entity<Blog>().Property(p => p.BloggerName).HasMaxLength(10);
+          }
+        }
 ```
 
 Gli errori di convalida generati sulla base delle configurazioni API Fluent non reach dell'interfaccia utente, ma è può acquisisce automaticamente nel codice e quindi rispondere di conseguenza.
@@ -99,18 +100,18 @@ Alcuni gestione Ecco delle eccezioni codice di errore nella classe BlogControlle
     [HttpPost]
     public ActionResult Edit(int id, Blog blog)
     {
-        try
-        {
-            db.Entry(blog).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        catch(DbEntityValidationException ex)
-        {
-            var error = ex.EntityValidationErrors.First().ValidationErrors.First();
-            this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            return View();
-        }
+        try
+        {
+            db.Entry(blog).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        catch(DbEntityValidationException ex)
+        {
+            var error = ex.EntityValidationErrors.First().ValidationErrors.First();
+            this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            return View();
+        }
     }
 ```
 
@@ -130,23 +131,23 @@ Nell'esempio seguente, la classe Blog è stato esteso per implementare IValidata
 
 ``` csharp
     public class Blog : IValidatableObject
-     {
-         public int Id { get; set; }
-         [Required]
-         public string Title { get; set; }
-         public string BloggerName { get; set; }
-         public DateTime DateCreated { get; set; }
-         public virtual ICollection<Post> Posts { get; set; }
+     {
+         public int Id { get; set; }
+         [Required]
+         public string Title { get; set; }
+         public string BloggerName { get; set; }
+         public DateTime DateCreated { get; set; }
+         public virtual ICollection<Post> Posts { get; set; }
 
-         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-         {
-             if (Title == BloggerName)
-             {
-                 yield return new ValidationResult
-                  ("Blog Title cannot match Blogger Name", new[] { "Title", “BloggerName” });
-             }
-         }
-     }
+         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+         {
+             if (Title == BloggerName)
+             {
+                 yield return new ValidationResult
+                  ("Blog Title cannot match Blogger Name", new[] { "Title", “BloggerName” });
+             }
+         }
+     }
 ```
 
 Il costruttore ValidationResult accetta una stringa che rappresenta il messaggio di errore e una matrice di stringhe che rappresentano i nomi dei membri che sono associati con la convalida. Poiché questa convalida controlla il titolo e il BloggerName, vengono restituiti entrambi i nomi delle proprietà.
@@ -168,27 +169,27 @@ DbEntityValidationResult ospita un DbEntityEntry e un ICollection di DbValidatio
         System.Data.Entity.Infrastructure.DbEntityEntry entityEntry,
         IDictionary\<object, object> items)
     {
-        var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
-        if (entityEntry.Entity is Post && entityEntry.State == EntityState.Added)
-        {
-            Post post = entityEntry.Entity as Post;
-            //check for uniqueness of post title
-            if (Posts.Where(p => p.Title == post.Title).Count() > 0)
+        var result = new DbEntityValidationResult(entityEntry, new List<DbValidationError>());
+        if (entityEntry.Entity is Post && entityEntry.State == EntityState.Added)
+        {
+            Post post = entityEntry.Entity as Post;
+            //check for uniqueness of post title
+            if (Posts.Where(p => p.Title == post.Title).Count() > 0)
             {
-                result.ValidationErrors.Add(
-                        new System.Data.Entity.Validation.DbValidationError("Title",
-                        "Post title must be unique."));
+                result.ValidationErrors.Add(
+                        new System.Data.Entity.Validation.DbValidationError("Title",
+                        "Post title must be unique."));
             }
-        }
+        }
 
-        if (result.ValidationErrors.Count > 0)
+        if (result.ValidationErrors.Count > 0)
         {
-            return result;
-        }
-        else
+            return result;
+        }
+        else
         {
-         return base.ValidateEntity(entityEntry, items);
-        }
+         return base.ValidateEntity(entityEntry, items);
+        }
     }
 ```
 
@@ -198,19 +199,19 @@ Una chiamata a SaveChanges attiva tutte le convalide contenute in questo articol
 
 Attiva tutte le convalide, quelli definiti per le annotazioni o l'API Fluent, la convalida creata in IValidatableObject (ad esempio, Blog.Validate) e le convalide eseguite nel DbContext.ValidateEntity DbContext.GetValidationErrors metodo.
 
-Il codice seguente chiama GetValidationErrors nell'istanza corrente di un oggetto DbContext. ValidationErrors sono raggruppate per tipo di entità in DbValidationRestuls. Il codice esegue l'iterazione prima di tutto tramite il DbValidationResults restituito dal metodo e quindi ogni ValidationError all'interno.
+Il codice seguente chiama GetValidationErrors nell'istanza corrente di un oggetto DbContext. ValidationErrors sono raggruppate per tipo di entità in DbValidationResults. Il codice esegue l'iterazione prima di tutto tramite il DbValidationResults restituito dal metodo e quindi ogni ValidationError all'interno.
 
 ``` csharp
     foreach (var validationResults in db.GetValidationErrors())
-        {
-            foreach (var error in validationResults.ValidationErrors)
-            {
-                Debug.WriteLine(
+        {
+            foreach (var error in validationResults.ValidationErrors)
+            {
+                Debug.WriteLine(
                                   "Entity Property: {0}, Error {1}",
-                                  error.PropertyName,
+                                  error.PropertyName,
                                   error.ErrorMessage);
-            }
-        }
+            }
+        }
 ```
 
 ## <a name="other-considerations-when-using-validation"></a>Altre considerazioni relative all'uso della convalida
