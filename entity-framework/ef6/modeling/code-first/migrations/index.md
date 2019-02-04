@@ -3,12 +3,12 @@ title: Migrazioni Code First - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 36591d8f-36e1-4835-8a51-90f34f633d1e
-ms.openlocfilehash: f408ef861a2992783142fa1483d1433ca710399a
-ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
+ms.openlocfilehash: e5a91af73bab9d45b0f1f4242ce503c6b6f407f6
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/27/2018
-ms.locfileid: "47415796"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668700"
 ---
 # <a name="code-first-migrations"></a>Migrazioni Code First
 Migrazioni Code First rappresenta il metodo più adatto per far evolvere lo schema del database dell'applicazione quando si usa il flusso di lavoro Code First. Le migrazioni offrono un set di strumenti che consentono di:
@@ -288,7 +288,7 @@ Sebbene fino ad ora sia sempre stato eseguito l'aggiornamento alla migrazione pi
 
 Si supponga di volere eseguire la migrazione del database allo stato in cui si trovava dopo l'esecuzione della migrazione **AddBlogUrl**. È possibile usare l'opzione **-TargetMigration** per eseguire il downgrade alla migrazione specifica.
 
--   Eseguire il comando **Update-Database -TargetMigration: AddBlogUrl** nella console di Gestione pacchetti.
+-   Eseguire il comando **Update-Database –TargetMigration: AddBlogUrl** nella console di Gestione pacchetti.
 
 Il comando esegue lo script di downgrade per le migrazioni **AddBlogAbstract** e **AddPostClass**.
 
@@ -330,7 +330,7 @@ Durante la distribuzione dell'applicazione è possibile scegliere di aggiornare 
         {
             static void Main(string[] args)
             {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion\<BlogContext, Configuration>());
+                Database.SetInitializer(new MigrateDatabaseToLatestVersion<BlogContext, Configuration>());
 
                 using (var db = new BlogContext())
                 {
