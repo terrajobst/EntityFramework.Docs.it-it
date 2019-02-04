@@ -3,12 +3,12 @@ title: Connessione tentativi e la resilienza per la logica - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
-ms.openlocfilehash: 09ebed18b43f864af36b6931f45638f3a3056229
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 7d6aa870cc32a2b344457fbb04525a7c2c8d1c61
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490805"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668765"
 ---
 # <a name="connection-resiliency-and-retry-logic"></a>Logica di tentativi e la resilienza di connessione
 > [!NOTE]
@@ -124,7 +124,7 @@ using (var db = new BloggingContext())
 
 Ciò non è supportato quando si usa una strategia di esecuzione di nuovo tentativo perché EF non tiene conto di qualsiasi operazione precedente e su come eseguire un nuovo tentativo. Ad esempio, se il secondo metodo SaveChanges, l'errore EF non è più ha le informazioni necessarie per ripetere la prima chiamata a SaveChanges.  
 
-### <a name="workaround-suspend-execution-strategy"></a>Soluzione temporanea: Sospendere una strategia di esecuzione  
+### <a name="workaround-suspend-execution-strategy"></a>Soluzione alternativa: Sospendere una strategia di esecuzione  
 
 Una possibile soluzione alternativa consiste nel sospendere la strategia di esecuzione nuovo tentativo per il frammento di codice che deve usare un utente avviate delle transazioni. Il modo più semplice per eseguire questa operazione consiste nell'aggiungere un flag SuspendExecutionStrategy al codice in base a classe di configurazione e modifica l'espressione lambda strategia di esecuzione per restituire la strategia di esecuzione (non-retying) predefinito quando il flag è impostato.  
 
@@ -149,7 +149,7 @@ namespace Demo
         {
             get
             {
-                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy")  false;
+                return (bool?)CallContext.LogicalGetData("SuspendExecutionStrategy") ?? false;
             }
             set
             {
@@ -185,7 +185,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-### <a name="workaround-manually-call-execution-strategy"></a>Soluzione alternativa: Chiamare manualmente una strategia di esecuzione  
+### <a name="workaround-manually-call-execution-strategy"></a>Soluzione alternativa: Chiamare manualmente strategia di esecuzione  
 
 Un'altra possibilità è usare la strategia di esecuzione e assegnargli l'intero set di logica da eseguire, in modo che è possibile riprovare a eseguire tutto ciò che in caso di una delle operazioni manualmente. Tuttavia è necessario sospendere la strategia di esecuzione - uso della tecnica illustrato in precedenza, in modo che i contesti utilizzati all'interno del blocco di codice non irreversibile non tentano di ripetere.  
 

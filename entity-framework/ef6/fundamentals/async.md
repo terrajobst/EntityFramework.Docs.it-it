@@ -3,12 +3,12 @@ title: Asincrono di query e save - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: de702365251fd05c423c8590ccaefa7d8542ad02
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 89c7b9d533d37b4c9e123f37d8ab27c67ba26cc8
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058760"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668713"
 ---
 # <a name="async-query-and-save"></a>Asincrono di query e salvare
 > [!NOTE]
@@ -223,7 +223,7 @@ Ora che il codice è asincrono, è possibile osservare un flusso di esecuzione d
 
 1.  **SaveChanges** inizia a eseguire il push di nuove **Blog** al database *dopo il comando viene inviato al database non più di calcolo è necessario tempo sul thread gestito corrente. Il **PerformDatabaseOperations** metodo viene restituito (anche se non è stata completata l'esecuzione) e continua il flusso di programma nel metodo Main.*
 2.  **Offerta del giorno Console verrà scritti**
-    *perché è presente non altre operazioni da eseguire nel metodo Main, il thread gestito è bloccato in attesa chiamare fino al completamento dell'operazione sul database. Al termine, la parte restante del nostro **PerformDatabaseOperations** * verrà eseguito.
+    *perché è presente non altre operazioni da eseguire nel metodo Main, il thread gestito è bloccato in attesa chiamare fino al completamento dell'operazione sul database. Al termine, la parte restante del nostro **PerformDatabaseOperations** verrà eseguito.*
 3.  **SaveChanges** completa
 4.  Query per tutti i **blog** viene inviato al database *anche in questo caso, il thread gestito è libero di eseguire altre operazioni mentre viene elaborata la query nel database. Poiché tutte le altre esecuzione è stata completata, il thread appena arresterà alla chiamata di attesa tuttavia.*
 5.  Query restituisce e i risultati vengono scritti **Console**

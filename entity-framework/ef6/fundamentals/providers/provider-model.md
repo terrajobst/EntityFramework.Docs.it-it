@@ -3,12 +3,12 @@ title: Il modello di provider di Entity Framework 6 - Entity Framework 6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 066832F0-D51B-4655-8BE7-C983C557E0E4
-ms.openlocfilehash: d07a8689fe968bb1512095a59a61abc7ac346a31
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 8cbf6f87e0936f374c3d8a0c15a0e1d9c828f764
+ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022324"
+ms.lasthandoff: 02/03/2019
+ms.locfileid: "55668752"
 ---
 # <a name="the-entity-framework-6-provider-model"></a>Il modello di provider di Entity Framework 6
 
@@ -26,9 +26,9 @@ Un provider di Entity Framework è davvero una raccolta di servizi specifici del
 
 ## <a name="fundamental-provider-types"></a>Tipi fondamentali provider
 
-### <a name="dbproviderfactory"></a>Classe DbProviderFactory
+### <a name="dbproviderfactory"></a>DbProviderFactory
 
-Entity Framework dipende dalla presenza di un tipo derivato da [DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx) per l'esecuzione di tutti gli accessi di basso livello di database. DbProviderFactory non è in realtà parte di Entity Framework, ma è invece una classe in .NET Framework che fornisce un punto di ingresso per i provider ADO.NET che può essere usata da Entity Framework, altri O/RMs o direttamente da un'applicazione per ottenere le istanze di connessioni, comandi, parametri e altre astrazioni di ADO.NET in un provider indipendente dalla modalità. Altre informazioni sulla classe DbProviderFactory un reperibile nella [documentazione di MSDN per ADO.NET](https://msdn.microsoft.com/library/a6cd7c08.aspx).
+Entity Framework dipende dalla presenza di un tipo derivato da [DbProviderFactory](https://msdn.microsoft.com/library/system.data.common.dbproviderfactory.aspx) per l'esecuzione di tutti gli accessi di basso livello di database. DbProviderFactory non è in realtà parte di Entity Framework, ma è invece una classe in .NET Framework che fornisce un punto di ingresso per i provider ADO.NET che può essere usata da Entity Framework, altri O/RMs o direttamente da un'applicazione per ottenere le istanze di connessioni, comandi, parametri e altre astrazioni di ADO.NET in un provider indipendente dalla modalità. Altre informazioni sulla classe DbProviderFactory sono reperibile nel [documentazione di MSDN per ADO.NET](https://msdn.microsoft.com/library/a6cd7c08.aspx).
 
 ### <a name="dbproviderservices"></a>DbProviderServices
 
@@ -60,7 +60,7 @@ Si tratta di un servizi facoltativi che consente a un provider aggiungere il sup
 
 Si tratta di un servizio facoltativo che consente migrazioni di Entity Framework da utilizzare per la generazione di SQL utilizzato per la creazione e modifica di schemi di database da Code First. Un'implementazione è necessaria per supportare le migrazioni. Se viene fornita un'implementazione quindi verrà inoltre utilizzato quando i database vengono creati usando gli inizializzatori di database o il metodo Database.Create.
 
-### <a name="funcdbconnection-string-historycontextfactory"></a>Func < DbConnection, stringa, HistoryContextFactory >
+### <a name="funcdbconnection-string-historycontextfactory"></a>Func<DbConnection, string, HistoryContextFactory>
 
 Si tratta di un servizio facoltativo che consente a un provider configurare il mapping del HistoryContext al `__MigrationHistory` tabella utilizzata dal migrazioni di Entity Framework. Il HistoryContext è un primo oggetto DbContext di codice e può essere configurato usando l'API fluent normale per modificare elementi come il nome della tabella e le specifiche di mapping di colonna. L'implementazione predefinita di questo servizio restituito da Entity Framework per tutti i provider potrebbe funzionare per un server di database specificata se tutte le tabelle e colonne mapping predefiniti sono supportati da tale provider. In tal caso il provider non è necessario fornire un'implementazione di questo servizio.
 
