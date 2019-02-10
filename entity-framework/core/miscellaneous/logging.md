@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f6e35c6d-45b7-4258-be1d-87c1bb67438d
 uid: core/miscellaneous/logging
-ms.openlocfilehash: 65501b5ac03ae544c51b7fc1a07fa9eea849f1e3
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 0a996403afdbe076b1690c98eeb305b40c4d1f4a
+ms.sourcegitcommit: 109a16478de498b65717a6e09be243647e217fb3
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022145"
+ms.lasthandoff: 02/10/2019
+ms.locfileid: "55985574"
 ---
 # <a name="logging"></a>Registrazione
 
@@ -24,12 +24,15 @@ EF Core si integra automaticamente con i meccanismi di registrazione di ASP.NET 
 
 EF Core attualmente la registrazione richiede una ILoggerFactory che a sua volta è configurato con uno o più ILoggerProvider. Provider di utilizzo comune vengono forniti nei pacchetti seguenti:
 
-* [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): un logger di console semplice.
-* [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): servizi App di Azure supporta 'Log di diagnostica' e 'Log di flusso' funzionalità.
-* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): i log per un monitor di debugger usando System.Diagnostics.Debug.WriteLine().
-* [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): i log al registro eventi di Windows.
-* [EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): supporta EventSource/EventListener.
-* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): i log a un listener di traccia utilizzando System.Diagnostics.TraceSource.TraceEvent().
+* [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): Un logger di console semplice.
+* [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): Supporta la funzionalità 'Log di flusso' e 'Log di diagnostica' servizi App di Azure.
+* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): I log a un debugger monitorare System.Diagnostics.Debug.WriteLine().
+* [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): Log per il registro eventi di Windows.
+* [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): Supporta EventSource/EventListener.
+* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Un listener di traccia utilizzando System.Diagnostics.TraceSource.TraceEvent(). log.
+
+> [!NOTE]
+> Nell'esempio di codice di esempio Usa un `ConsoleLoggerProvider` costruttore che ha stato obsoleta nella versione 2.2. Sostituzioni appropriate per API di registrazione obsoleta saranno disponibili nella versione 3.0. Nel frattempo, è consigliabile ignorare ed eliminare gli avvisi.
 
 Dopo aver installato i pacchetti appropriati, l'applicazione deve creare un'istanza singleton/globale di un LoggerFactory. Ad esempio, usando il logger della console:
 
@@ -43,6 +46,9 @@ L'istanza singleton/globale andrebbero poi registrata con EF Core nel `DbContext
 > È molto importante che le applicazioni non creano una nuova istanza ILoggerFactory per ogni istanza del contesto. Questa operazione comporterà una perdita di memoria e una riduzione delle prestazioni.
 
 ## <a name="filtering-what-is-logged"></a>Il filtro elementi registrati
+
+> [!NOTE]
+> Nell'esempio di codice di esempio Usa un `ConsoleLoggerProvider` costruttore che ha stato obsoleta nella versione 2.2. Sostituzioni appropriate per API di registrazione obsoleta saranno disponibili nella versione 3.0. Nel frattempo, è consigliabile ignorare ed eliminare gli avvisi.
 
 Il modo più semplice per filtrare elementi registrati consiste nel configurare, quando si registra il ILoggerProvider. Ad esempio:
 
