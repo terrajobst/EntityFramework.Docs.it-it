@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 5bddddfbc2fe8d0ba99914f03b28bde4076fae42
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 343162596780e6146b57f73a38221701009cd855
+ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058714"
+ms.lasthandoff: 02/06/2019
+ms.locfileid: "55760509"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
@@ -17,23 +17,6 @@ Entity Framework Core consente di ricorrere a query SQL non elaborate quando si 
 
 > [!TIP]  
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
-
-## <a name="limitations"></a>Limitazioni
-
-Esistono alcune limitazioni da tenere presenti quando si usano query SQL non elaborate:
-
-* La query SQL deve restituire i dati per tutte le proprietà del tipo di entità o query.
-
-* I nomi delle colonne nel set di risultati devono corrispondere ai nomi di colonna a cui sono mappate le proprietà. Si noti che questo comportamento è diverso da EF6 in cui il mapping di proprietà/colonne viene ignorato per le query SQL non elaborate e i nomi di colonna del set di risultati devono corrispondere ai nomi di proprietà.
-
-* La query SQL non può contenere dati correlati. Tuttavia, in molti casi è possibile estendere la query usando l'operatore `Include` per restituire i dati correlati (vedere [Inclusione di dati correlati](#including-related-data)).
-
-* Le istruzioni `SELECT` passate a questo metodo devono essere in genere componibili: se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
-  * Un punto e virgola finale
-  * In SQL Server, un hint a livello di query finale, ad esempio `OPTION (HASH JOIN)`
-  * In SQL Server, una clausola `ORDER BY` non accompagnata da `TOP 100 PERCENT` nella clausola `SELECT`
-
-* Le istruzioni SQL diverse da `SELECT` vengono riconosciute automaticamente come non componibili. Di conseguenza, i risultati completi delle stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicati dopo `FromSql` vengono valutati in memoria.
 
 ## <a name="basic-raw-sql-queries"></a>Query SQL non elaborate di base
 
@@ -109,9 +92,25 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-### <a name="including-related-data"></a>Inclusione di dati correlati
+## <a name="change-tracking"></a>Rilevamento modifiche
 
-La composizione con operatori LINQ può essere usata per includere dati correlati nella query.
+Le query che usano `FromSql()` osservano le stesse regole di rilevamento modifiche di qualsiasi altra query LINQ in EF Core. Se ad esempio la query proietta tipi di entità, i risultati vengono rilevati per impostazione predefinita.  
+
+L'esempio seguente usa una query SQL non elaborata che effettua selezioni da una funzione con valori di tabella (TVF), quindi disabilita il rilevamento delle modifiche mediante la chiamata di .AsNoTracking():
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var searchTerm = ".NET";
+
+var blogs = context.Query<SearchBlogsDto>()
+    .FromSql($"SELECT * FROM dbo.SearchBlogs({searchTerm})")
+    .AsNoTracking()
+    .ToList();
+```
+
+## <a name="including-related-data"></a>Inclusione di dati correlati
+
+Il metodo `Include()` può essere usato per includere dati correlati, come in qualsiasi altra query LINQ:
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -122,6 +121,23 @@ var blogs = context.Blogs
     .Include(b => b.Posts)
     .ToList();
 ```
+
+## <a name="limitations"></a>Limitazioni
+
+Esistono alcune limitazioni da tenere presenti quando si usano query SQL non elaborate:
+
+* La query SQL deve restituire i dati per tutte le proprietà del tipo di entità o query.
+
+* I nomi delle colonne nel set di risultati devono corrispondere ai nomi di colonna a cui sono mappate le proprietà. Si noti che questo comportamento è diverso da EF6 in cui il mapping di proprietà/colonne viene ignorato per le query SQL non elaborate e i nomi di colonna del set di risultati devono corrispondere ai nomi di proprietà.
+
+* La query SQL non può contenere dati correlati. Tuttavia, in molti casi è possibile estendere la query usando l'operatore `Include` per restituire i dati correlati (vedere [Inclusione di dati correlati](#including-related-data)).
+
+* Le istruzioni `SELECT` passate a questo metodo devono essere in genere componibili: se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
+  * Un punto e virgola finale
+  * In SQL Server, un hint a livello di query finale, ad esempio `OPTION (HASH JOIN)`
+  * In SQL Server, una clausola `ORDER BY` non accompagnata da `TOP 100 PERCENT` nella clausola `SELECT`
+
+* Le istruzioni SQL diverse da `SELECT` vengono riconosciute automaticamente come non componibili. Di conseguenza, i risultati completi delle stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicati dopo `FromSql` vengono valutati in memoria.
 
 > [!WARNING]  
 > **Usare sempre la parametrizzazione per le query SQL non elaborate:** le API che accettano una stringa SQL non elaborata come `FromSql` e `ExecuteSqlCommand` consentono di passare facilmente i valori come parametri. Oltre a convalidare l'input dell'utente, usare sempre la parametrizzazione per qualsiasi valore usato in query/comandi SQL non elaborati. Se si usa la concatenazione di stringhe per compilare in modo dinamico qualsiasi parte della stringa di query, si è responsabili della convalida di qualsiasi input per la protezione da attacchi SQL injection.
