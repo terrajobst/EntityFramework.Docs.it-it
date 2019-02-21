@@ -6,12 +6,12 @@ description: Introduzione a .NET Core con Entity Framework Core
 ms.date: 08/03/2018
 ms.assetid: 099d179e-dd7b-4755-8f3c-fcde914bf50b
 uid: core/get-started/netcore/new-db-sqlite
-ms.openlocfilehash: 6cebe14e179cb6998592f5d3823c114b3bda0138
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: a0df80a8fe96be4f8cc3177919e2b087e14cb49c
+ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022311"
+ms.lasthandoff: 02/16/2019
+ms.locfileid: "56325327"
 ---
 # <a name="getting-started-with-ef-core-on-net-core-console-app-with-a-new-database"></a>Introduzione a EF Core nell'app console .NET Core con un nuovo database
 
@@ -69,7 +69,7 @@ Dopo avere creato un modello,usare le [migrazioni](xref:core/managing-schemas/mi
 * Eseguire `dotnet ef migrations add InitialCreate` per effettuare lo scaffolding di una migrazione e creare il set iniziale di tabelle per il modello.
 * Eseguire `dotnet ef database update` per applicare la nuova migrazione al database. Questo comando crea il database prima di applicare le migrazioni.
 
-Il database SQLite *blogging.db** si trova nella directory del progetto.
+Il database SQLite *blogging.db* si trova nella directory del progetto.
 
 ## <a name="use-the-model"></a>Usare il modello
 
@@ -111,6 +111,6 @@ Per impostare la directory di lavoro:
 
 ## <a name="additional-resources"></a>Risorse aggiuntive
 
-* [Esercitazione: Introduzione a EF Core in .ASP.NET Core con un nuovo database usando SQLite](xref:core/get-started/aspnetcore/new-db)
+* [Esercitazione: Introduzione a EF Core in ASP.NET Core con un nuovo database usando SQLite](xref:core/get-started/aspnetcore/new-db)
 * [Esercitazione: Introduzione all'uso di Razor Pages in ASP.NET Core](https://docs.microsoft.com/aspnet/core/tutorials/razor-pages/razor-pages-start)
 * [Esercitazione: Razor Pages con EF Core in ASP.NET Core ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
