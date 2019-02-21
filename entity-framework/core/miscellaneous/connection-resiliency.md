@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 11/15/2016
 ms.assetid: e079d4af-c455-4a14-8e15-a8471516d748
 uid: core/miscellaneous/connection-resiliency
-ms.openlocfilehash: 729cf9b8c038ea2adba8c79c68d9f6fb1676fefa
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: 6d8cf117dfd94524a53e10bb4a23c2a44c4c8e7b
+ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022184"
+ms.lasthandoff: 02/21/2019
+ms.locfileid: "56459172"
 ---
 # <a name="connection-resiliency"></a>Resilienza della connessione
 
@@ -17,9 +17,21 @@ Resilienza della connessione ritenta automaticamente i comandi di database non r
 
 Ad esempio, il provider SQL Server include una strategia di esecuzione che viene personalizzata in modo specifico per SQL Server (incluso SQL Azure). Si è a conoscenza dei tipi di eccezioni che possono essere ripetuti e offre impostazioni predefinite ragionevoli per numero massimo di tentativi, intervallo tra tentativi e così via.
 
-Una strategia di esecuzione viene specificata quando si configurano le opzioni per il contesto. Si tratta in genere nel `OnConfiguring` metodo del contesto derivato o in `Startup.cs` per un'applicazione ASP.NET Core.
+Una strategia di esecuzione viene specificata quando si configurano le opzioni per il contesto. Si tratta in genere nel `OnConfiguring` metodo del contesto derivato:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#OnConfiguring)]
+
+o in `Startup.cs` per un'applicazione ASP.NET Core:
+
+``` csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<PicnicContext>(
+        options => options.UseSqlServer(
+            "<connection string>",
+            providerOptions => providerOptions.EnableRetryOnFailure()));
+}
+```
 
 ## <a name="custom-execution-strategy"></a>Strategia di esecuzione personalizzata
 

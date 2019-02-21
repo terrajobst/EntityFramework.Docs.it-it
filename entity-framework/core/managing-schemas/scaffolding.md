@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: ef729c0c26d5a1f57099f339eb51cda7e83289df
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: 6e61d2ebcf5ada365dcdb264bc371199574e12fa
+ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688680"
+ms.lasthandoff: 02/21/2019
+ms.locfileid: "56459185"
 ---
 # <a name="reverse-engineering"></a>Reverse Engineering
 
@@ -79,7 +79,7 @@ I nomi di tabella e colonna sono fisse per adattarlo meglio le convenzioni di de
 
 Per impostazione predefinita, i tipi di entità sono configurati con l'API Fluent. Specificare `-DataAnnotations` (console di gestione pacchetti) o `--data-annotations` (CLI) per usare invece le annotazioni dei dati quando possibile.
 
-Ad esempio, tramite l'API Fluent eseguirà lo scaffolding di questo.
+Ad esempio, tramite l'API Fluent eseguirà lo scaffolding questo:
 
 ``` csharp
 entity.Property(e => e.Title)
@@ -87,7 +87,7 @@ entity.Property(e => e.Title)
     .HasMaxLength(160);
 ```
 
-Durante l'utilizzo di annotazioni dei dati eseguirà lo scaffolding questo.
+Durante l'utilizzo di annotazioni dei dati eseguirà lo scaffolding questo:
 
 ``` csharp
 [Required]
