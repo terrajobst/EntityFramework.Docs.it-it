@@ -3,12 +3,12 @@ title: Annotazioni dei dati First - EF6 del codice
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80abefbd-23c9-4fce-9cd3-520e5df9856e
-ms.openlocfilehash: 8d85ef85f56a23d9b3b526554417dc9dd360e139
-ms.sourcegitcommit: 39080d38e1adea90db741257e60dc0e7ed08aa82
+ms.openlocfilehash: e6b017306b4f66f5bac2a9964e11391da28ceb40
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/03/2018
-ms.locfileid: "50980041"
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463282"
 ---
 # <a name="code-first-data-annotations"></a>Annotazioni dei dati per Code First
 > [!NOTE]
@@ -25,7 +25,7 @@ Questo articolo è incentrato sull'uso di DataAnnotations (nello spazio dei nomi
 
 ## <a name="the-model"></a>Il modello
 
-Illustrerò DataAnnotations prima del codice con una semplice coppia di classi: post di Blog e Post.
+Illustrerò DataAnnotations prima del codice con una semplice coppia di classi: Post di blog e Post.
 
 ``` csharp
     public class Blog
@@ -176,7 +176,7 @@ L'annotazione di proprietà MaxLength influirà il database impostando la lunghe
 
 ![Tabella di blog con lunghezza massima in BloggerName colonna](~/ef6/media/jj591583-figure04.png)
 
-Annotazione sul lato client, MVC ed Entity Framework 4.1 lato server annotazione entrambi rispetterà la convalida, nuovamente in modo dinamico la creazione di un messaggio di errore: "il campo BloggerName deve essere un tipo stringa o matrice con una lunghezza massima di '10'." Tale messaggio è un po' lungo. Molte annotazioni consentono di specificare un messaggio di errore con l'attributo di messaggio di errore.
+Annotazione sul lato client, MVC ed Entity Framework 4.1 lato server annotazione entrambi rispetta questa convalida, nuovamente in modo dinamico la creazione di un messaggio di errore: "Il campo BloggerName deve essere un tipo stringa o matrice con una lunghezza massima di '10'." Tale messaggio è un po' lungo. Molte annotazioni consentono di specificare un messaggio di errore con l'attributo di messaggio di errore.
 
 ``` csharp
     [MaxLength(10, ErrorMessage="BloggerName must be 10 characters or less"),MinLength(5)]
@@ -245,9 +245,6 @@ Nel database, la tabella Blog conterrà tutte le proprietà del blog incluse le 
 
 ![Blog di tabella con tipi complessi](~/ef6/media/jj591583-figure06.png)
 
-Un'altra interessante ricordare è che anche se la proprietà DateCreated è stata definita come un valore DateTime che non ammette valori null nella classe, il campo di database corrispondente è nullable. È necessario usare l'annotazione necessaria se si vuole interessano lo schema del database.
-
- 
 
 ## <a name="concurrencycheck"></a>ConcurrencyCheck
 
@@ -374,7 +371,7 @@ Per impostazione predefinita, gli indici non sono univoche, ma è possibile usar
 
 ### <a name="multiple-column-indexes"></a>Indici più colonne
 
-Gli indici che si estendono su più colonne vengono specificati usando lo stesso nome in più annotazioni di indice per una determinata tabella. Quando si creano indici su più colonne, è necessario specificare un ordine per le colonne nell'indice. Ad esempio, il codice seguente crea un indice multicolonna sul **Rating** e **BlogId** chiamato **IX\_BlogAndRating**. **BlogId** è la prima colonna nell'indice e **Rating** è il secondo.
+Gli indici che si estendono su più colonne vengono specificati usando lo stesso nome in più annotazioni di indice per una determinata tabella. Quando si creano indici su più colonne, è necessario specificare un ordine per le colonne nell'indice. Ad esempio, il codice seguente crea un indice multicolonna sul **Rating** e **BlogId** chiamato **IX\_BlogIdAndRating**. **BlogId** è la prima colonna nell'indice e **Rating** è il secondo.
 
 ``` csharp
     public class Post
@@ -391,7 +388,7 @@ Gli indici che si estendono su più colonne vengono specificati usando lo stesso
 
  
 
-## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>Gli attributi di relazione: InverseProperty e perché ForeignKey
+## <a name="relationship-attributes-inverseproperty-and-foreignkey"></a>Attributi di relazione: InverseProperty e perché ForeignKey
 
 > [!NOTE]
 > Questa pagina fornisce informazioni sulla configurazione di relazioni nel modello Code First con annotazioni dei dati. Per informazioni generali sulle relazioni in Entity Framework e su come accedere e modificare dati tramite relazioni, vedere [relazioni di & proprietà di navigazione](~/ef6/fundamentals/relationships.md). *
@@ -441,7 +438,7 @@ Nella classe Post, è possibile tenere traccia di chi ha scritto un post di blog
     }
 ```
 
-Prima di tutto codice non è in grado di associare le proprietà, le due classi di per sé. La tabella di database per i post deve avere una chiave esterna per la persona del CreatedBy e uno per la persona UpdatedBy ma il codice innanzitutto creare quattro proprietà di chiave esterna verrà: persona\_Id, Person\_Id1, CreatedBy\_Id e UpdatedBy\_ID.
+Prima di tutto codice non è in grado di associare le proprietà, le due classi di per sé. La tabella di database per i post deve avere una chiave esterna per la persona del CreatedBy e una per persona UpdatedBy ma prima di tutto il codice creerà quattro proprietà di chiave esterna: Persona\_Id, Person\_Id1, CreatedBy\_Id e UpdatedBy\_ID.
 
 ![Post di tabella con le chiavi esterne aggiuntive](~/ef6/media/jj591583-figure10.png)
 

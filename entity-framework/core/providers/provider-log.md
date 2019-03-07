@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: a87eca72aa58487415eea11e4f83de1a19e73506
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: cda5cc170646abc3e9d9a70d729237c01f028259
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022337"
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463204"
 ---
 # <a name="provider-impacting-changes"></a>Modifiche che influiscono sul provider
 
@@ -19,7 +19,15 @@ Questa pagina contiene collegamenti per eseguire il pull le richieste effettuate
 
 Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usato il [ `providers-beware` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) e [ `providers-fyi` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) etichette nei nostri problemi e richieste pull.
 
-## <a name="21-----22"></a>2.1---> 2.2
+## <a name="22-----30"></a>2.2 ---> 3.0
+
+* https://github.com/aspnet/EntityFrameworkCore/pull/14022
+  * API obsolete rimosse e gli overload di parametro facoltativo compressa
+  * DatabaseColumn.GetUnderlyingStoreType() rimosso
+* https://github.com/aspnet/EntityFrameworkCore/pull/14589
+  * Rimuovere API obsolete
+
+## <a name="21-----22"></a>2.1 ---> 2.2
 
 ### <a name="test-only-changes"></a>Modifiche apportate a solo scopo di test
 
@@ -56,7 +64,7 @@ Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usat
   * Questa richiesta pull viene aggiunto il concetto di `CanConnect` che verrà utilizzata da health di ASP.NET Core verifica per determinare se il database è disponibile. Per impostazione predefinita, l'implementazione relazionale chiama semplicemente `Exist`, anche se i provider possono implementare un elemento diverso se necessario. Provider relazionali dovrà implementare la nuova API in ordine per il controllo di integrità sia utilizzabile.
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13306](https://github.com/aspnet/EntityFrameworkCore/pull/13306) -Aggiornare base RelationalTypeMapping per non impostare dimensioni DbParameter
   * Arrestare l'impostazione delle dimensioni per impostazione predefinita, in quanto può causare il troncamento. I provider potrebbero essere necessario aggiungere la propria logica se sono necessario impostare le dimensioni.
-* [https://github.com/aspnet/EntityFrameworkCore/pull/13372](https://github.com/aspnet/EntityFrameworkCore/pull/13372) -RevEng: Specificare sempre il tipo di colonna per le colonne decimale
+* https://github.com/aspnet/EntityFrameworkCore/pull/13372 -RevEng: Specificare sempre il tipo di colonna per le colonne decimale
   * Configurare sempre il tipo di colonna per le colonne decimale in codice con scaffolding anziché la configurazione per convenzione.
   * I provider non dovrebbero richiedere eventuali modifiche estremità.
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13469](https://github.com/aspnet/EntityFrameworkCore/pull/13469) -Aggiunge CaseExpression per la generazione di espressioni CASE SQL
