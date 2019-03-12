@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 343162596780e6146b57f73a38221701009cd855
-ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
+ms.openlocfilehash: ad7ac3099cfd4c49b88acfbbff61f2af9294b6ec
+ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/06/2019
-ms.locfileid: "55760509"
+ms.lasthandoff: 03/06/2019
+ms.locfileid: "57463243"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
@@ -140,4 +140,6 @@ Esistono alcune limitazioni da tenere presenti quando si usano query SQL non ela
 * Le istruzioni SQL diverse da `SELECT` vengono riconosciute automaticamente come non componibili. Di conseguenza, i risultati completi delle stored procedure vengono sempre restituiti al client e tutti gli operatori LINQ applicati dopo `FromSql` vengono valutati in memoria.
 
 > [!WARNING]  
-> **Usare sempre la parametrizzazione per le query SQL non elaborate:** le API che accettano una stringa SQL non elaborata come `FromSql` e `ExecuteSqlCommand` consentono di passare facilmente i valori come parametri. Oltre a convalidare l'input dell'utente, usare sempre la parametrizzazione per qualsiasi valore usato in query/comandi SQL non elaborati. Se si usa la concatenazione di stringhe per compilare in modo dinamico qualsiasi parte della stringa di query, si è responsabili della convalida di qualsiasi input per la protezione da attacchi SQL injection.
+> **Usare sempre la parametrizzazione per le query SQL non elaborate:** Oltre a convalidare l'input dell'utente, usare sempre la parametrizzazione per qualsiasi valore usato in query/comandi SQL non elaborati. le API che accettano una stringa SQL non elaborata come `FromSql` e `ExecuteSqlCommand` consentono di passare facilmente i valori come parametri. Gli overload di `FromSql` e `ExecuteSqlCommand` che accettano FormattableString consentono anche di usare la sintassi dell'interpolazione di stringhe in modo da proteggersi dagli attacchi SQL injection. 
+> 
+> Se si usa la concatenazione o l'interpolazione di stringhe per creare dinamicamente qualsiasi parte della stringa di query o si passa l'input utente a istruzioni o stored procedure in grado di eseguire tali input come SQL dinamico, è responsabilità dell'utente convalidare l'input per proteggersi dagli attacchi SQL injection.
