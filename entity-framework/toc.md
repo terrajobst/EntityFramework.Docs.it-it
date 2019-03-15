@@ -15,7 +15,7 @@
 #### [EF Core 3.0 (anteprima)](core/what-is-new/ef-core-3.0/index.md)
 ##### [Nuove funzionalità](core/what-is-new/ef-core-3.0/features.md)
 ##### [Modifiche che causano un'interruzione](core/what-is-new/ef-core-3.0/breaking-changes.md)
-#### [EF Core 2.2 (ultima versione stabile)](core/what-is-new/ef-core-2.2.md)
+#### [EF Core 2.2 (versione più recente)](core/what-is-new/ef-core-2.2.md)
 #### [EF Core 2.1](core/what-is-new/ef-core-2.1.md)
 #### [EF Core 2.0](core/what-is-new/ef-core-2.0.md)
 #### [EF Core 1.1](core/what-is-new/ef-core-1.1.md)
