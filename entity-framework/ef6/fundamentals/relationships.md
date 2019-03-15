@@ -3,12 +3,12 @@ title: Le relazioni, le proprietà di navigazione e le chiavi esterne - Entity F
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: 46c2d11b5704ec7ae82a423ae042b87f5efe436f
-ms.sourcegitcommit: 8b42045cd21f80f425a92f5e4e9dd4972a31720b
+ms.openlocfilehash: 416eb1fb590330ba292a858347e26b83dddc74df
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/14/2018
-ms.locfileid: "49315659"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829200"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>Le relazioni, le proprietà di navigazione e le chiavi esterne
 Questo argomento offre una panoramica del modo in cui Entity Framework gestisce le relazioni tra entità. Offre inoltre alcune indicazioni su come eseguire il mapping e modificare le relazioni.
@@ -29,7 +29,7 @@ Le proprietà di navigazione consentono di passare un'associazione tra due tipi 
 
 Quando le colonne chiave esterna non sono incluse nel modello, le informazioni di associazione viene gestite come un oggetto indipendente. Le relazioni vengono rilevate tramite riferimenti a oggetti anziché le proprietà di chiave esterna. Questo tipo di associazione viene chiamato un *associazione indipendente*. Il modo più comune per modificare un' *associazione indipendente* consiste nel modificare le proprietà di navigazione generate per ogni entità che partecipa all'associazione.
 
-È possibile scegliere di utilizzare uno o entrambi i tipi di associazioni nel modello. Tuttavia, se si dispone di una relazione molti-a-molti pura che è connesso da una tabella di join che contiene solo chiavi esterne, il EF utilizzerà un'associazione indipendente per gestire tale relazione molti-a-molti.   
+È possibile scegliere di utilizzare uno o entrambi i tipi di associazioni nel modello. Tuttavia, se si dispone di una relazione molti-a-molti pura che è connesso da una tabella di join che contiene solo chiavi esterne, il EF utilizzerà un'associazione indipendente per gestire tale relazione molti-a-molti.   
 
 L'immagine seguente illustra un modello concettuale con Entity Framework Designer è stato creato. Il modello contiene due entità che partecipano alla relazione uno-a-molti. Entrambe le entità dispongono di proprietà di navigazione. **Corsi** è l'entità depend e ha il **DepartmentID** proprietà di chiave esterna definita.
 
@@ -51,7 +51,7 @@ public class Department
 {
    public Department()
    {
-     this.Course = new HashSet<Course>();
+     this.Courses = new HashSet<Course>();
    }  
    public int DepartmentID { get; set; }
    public string Name { get; set; }
