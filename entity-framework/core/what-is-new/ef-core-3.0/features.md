@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: cf0d2cf032b9aa319fe706aece5b1ea66a5d6251
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: b6774f615b04bf9579aac5dea217e7321631da0c
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463363"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829187"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>Nuove funzionalità incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -75,7 +75,7 @@ Questa caratteristica li rende la scelta ideale per le viste di database nella m
 Il lavoro su questa funzionalità è iniziato ma non è incluso nell'anteprima corrente. 
 
 questa funzionalità riguarda l'abilitazione di entità che archiviano dati in proprietà indicizzate anziché in proprietà regolari, nonché la possibilità di usare istanze della stessa classe .NET (in modo potenzialmente semplice come `Dictionary<string, object>`) per rappresentare tipi di entità diversi nello stesso modello di EF Core.
-Questa funzionalità è un trampolino di lancio per il supporto delle relazioni molti-a-molti senza un'entità di join, ovvero uno dei miglioramenti più richiesti per EF Core.
+Questa funzionalità è un trampolino di lancio per il supporto delle relazioni molti-a-molti senza un'entità di join ([problema n. 1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)), ovvero uno dei miglioramenti più richiesti per EF Core.
 
 ## <a name="ef-63-on-net-core"></a>EF 6.3 in .NET Core 
 

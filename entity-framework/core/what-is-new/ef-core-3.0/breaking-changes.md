@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: a7e1a03bf1131cd53123f5cc39b07bed94619b44
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: 748db8a71a04a2d696ef21a03319906b9fc776be
+ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463371"
+ms.lasthandoff: 03/14/2019
+ms.locfileid: "57829226"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -22,11 +22,10 @@ Le interruzioni nelle nuove funzionalità introdotte da un'anteprima 3.0 a un'al
 
 ## <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
 
-[Problema n. 12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
+[Problema n. 14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
+[Vedere anche il problema n. 12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-> [!IMPORTANT]
-> Questo è un annuncio preliminare dell'interruzione.
-L'interruzione non è ancora presente in alcuna anteprima 3.0.
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -98,8 +97,14 @@ Questa modifica è stata apportata per ridurre i disturbi a livello di registraz
 **Mitigazioni**
 
 Questo evento di registrazione è definito da `RelationalEventId.CommandExecuting` con l'ID evento 20100.
-Per registrare di nuovo SQL a livello `Info`, attivare la registrazione a livello `Debug` e applicare un filtro per l'evento specifico.
-
+Per registrare SQL di nuovo al livello `Info`, configurare in modo esplicito il livello in `OnConfiguring` o `AddDbContext`.
+Ad esempio:
+```C#
+protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    => optionsBuilder
+        .UseSqlServer(connectionString)
+        .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Info)));
+```
 
 ## <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>I valori di chiave temporanei non sono più impostati nelle istanze di entità
 
@@ -439,6 +444,28 @@ modelBuilder
     .HasField("_id");
 ```
 
+## <a name="adddbcontextadddbcontextpool-no-longer-call-addlogging-and-addmemorycache"></a>AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache
+
+[Problema n. 14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, la chiamata di `AddDbContext` oppure `AddDbContextPool` comporta anche la registrazione dei servizi di registrazione e memorizzazione nella cache con inserimento delle dipendenze tramite chiamate a [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) e [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
+
+**Nuovo comportamento**
+
+A partire da EF Core 3.0, `AddDbContext` e `AddDbContextPool` non registreranno più questi servizi con inserimento delle dipendenze.
+
+**Perché?**
+
+EF Core 3.0 non richiede che questi servizi siano inclusi nel contenitore di inserimento delle dipendenze dell'applicazione. Tuttavia, se `ILoggerFactory` è registrato nel contenitore di inserimento delle dipendenze dell'applicazione, verrà ancora usato da EF Core.
+
+**Mitigazioni**
+
+Se l'applicazione necessita di questi servizi, registrarli in modo esplicito con il contenitore di inserimento delle dipendenze usando [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) o [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
+
 ## <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry esegue ora un DetectChanges locale
 
 [Problema n. 13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
@@ -610,6 +637,43 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     optionsBuilder
         .ConfigureWarnings(w => w.Log(CoreEventId.ManyServiceProvidersCreatedWarning));
 }
+```
+
+## <a name="new-behavior-for-hasonehasmany-called-with-a-single-string"></a>Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa
+
+[Problema n. 9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, il codice che chiama `HasOne` o `HasMany` con una singola stringa era interpretato in modo poco chiaro.
+Ad esempio:
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
+```
+
+Apparentemente, il codice mette in relazione `Samuri` con un altro tipo di entità tramite la proprietà di navigazione `Entrance`, che può essere privata.
+
+In realtà, il codice tenta di creare una relazione con un tipo di entità denominato `Entrance` senza proprietà di navigazione.
+
+**Nuovo comportamento**
+
+A partire da EF Core 3.0, il codice sopra riportato ora esegue quello che avrebbe dovuto fare in precedenza.
+
+**Perché?**
+
+Il comportamento precedente era molto poco chiaro, soprattutto durante la lettura del codice di configurazione e la ricerca di errori.
+
+**Mitigazioni**
+
+Questa modifica causerà problemi solo nelle applicazioni che configurano relazioni in modo esplicito usando stringhe per i nomi dei tipi e senza specificare in modo esplicito la proprietà di navigazione.
+Non è uno scenario comune.
+Il comportamento precedente può essere ottenuto passando esplicitamente `null` per il nome della proprietà di navigazione.
+Ad esempio:
+
+```C#
+modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
 ## <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>L'annotazione Relational:TypeMapping è ora TypeMapping
