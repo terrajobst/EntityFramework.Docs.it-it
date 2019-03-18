@@ -3,16 +3,16 @@ title: Entity Framework glossario - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
-ms.openlocfilehash: 9ed7a2d841c625de35de57edb4e57e69b89a3db9
-ms.sourcegitcommit: 5d74ac575f813110db6d870720f50dd7606446bc
+ms.openlocfilehash: 4e42e5870879524b814cecdc361e688d36f0180f
+ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2018
-ms.locfileid: "48881267"
+ms.lasthandoff: 03/18/2019
+ms.locfileid: "58131393"
 ---
 # <a name="entity-framework-glossary"></a>Glossario di Entity Framework
 ## <a name="code-first"></a>Code First
-Creazione di un modello di Entity Framework usando il codice. Il modello può avere come destinazione e di database esistente o di un nuovo database.
+Creazione di un modello di Entity Framework usando il codice. Il modello può essere destinata a un database esistente o un nuovo database.
 
 ## <a name="context"></a>Contesto
 Una classe che rappresenta una sessione con il database, consentendo di eseguire una query e salvare i dati. Un contesto deriva dalla classe ObjectContext o DbContext.
@@ -71,10 +71,10 @@ Un'entità compilata da un modello di generazione di codice che consente lo svil
 ## <a name="table-per-concrete-type-tpc"></a>Tipo di tabella per tipo concreto (TP)
 Un metodo di mapping dell'ereditarietà in cui viene eseguito il mapping ciascun tipo non astratto nella gerarchia per separare tabella nel database.
 
-## <a name="table-per-hierarchy-tph"></a>Tabella per gerarchia (TPH)
+## <a name="table-per-hierarchy-tph"></a>Table-per-hierarchy (TPH)
 Un metodo di mapping dell'ereditarietà in cui tutti i tipi nella gerarchia vengono mappati alla stessa tabella nel database. Discriminatore colonna/e viene usato per identificare il tipo di ogni riga è associato.
 
-## <a name="table-per-type-tpt"></a>Tabella per tipo TPT)
+## <a name="table-per-type-tpt"></a>Table-per-type (TPT)
 Un metodo di mapping dell'ereditarietà in cui le proprietà comuni di tutti i tipi nella gerarchia vengono mappate alla stessa tabella nel database, ma le proprietà univoche per ogni tipo vengono eseguito il mapping a una tabella separata.
 
 ## <a name="type-discovery"></a>Individuazione del tipo
