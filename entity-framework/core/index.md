@@ -4,13 +4,8 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
-ms.openlocfilehash: 982f69077a68495c48b7a9cce833dd7d4119e252
-ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
-ms.translationtype: HT
-ms.contentlocale: it-IT
-ms.lasthandoff: 02/16/2019
-ms.locfileid: "56325314"
 ---
+
 # <a name="entity-framework-core"></a>Entity Framework Core
 
 Entity Framework (EF) Core è una versione semplice, estendibile, [open source](https://github.com/aspnet/EntityFrameworkCore) e multipiattaforma della tecnologia di accesso ai dati di grande diffusione Entity Framework.
@@ -21,9 +16,9 @@ EF Core supporta molti motori di database. Per informazioni dettagliate, vedere 
 
 ## <a name="the-model"></a>Il modello
 
-Con Entity Framework Core, l'accesso ai dati viene eseguito tramite un modello. Un modello è costituito da classi di entità e da un contesto derivato che rappresenta una sessione con il database che consente di eseguire una query e salvare i dati. Per altre informazioni, vedere [Creazione di un modello](modeling/index.md).
+Con Entity Framework Core, l'accesso ai dati viene eseguito tramite un modello. Un modello è costituito da classi di entità e da un contesto dell'oggetto che rappresenta una sessione con il database che consente di eseguire una query e salvare i dati. Per altre informazioni, vedere [Creazione di un modello](modeling/index.md).
 
-È possibile generare un modello da un database esistente, gestire il codice di un modello in modo che corrisponda al database o usare migrazioni di Entity Framework per creare un database a partire dal modello (e svilupparlo, come le modifiche del modello nel tempo).
+È possibile generare un modello da un database esistente, gestire il codice di un modello in modo che corrisponda al database o usare migrazioni di Entity Framework per creare un database a partire dal modello e quindi svilupparlo man mano che il modello cambia nel tempo.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +33,8 @@ namespace Intro
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(
+                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
         }
     }
 
