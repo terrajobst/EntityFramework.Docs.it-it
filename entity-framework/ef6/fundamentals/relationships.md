@@ -3,12 +3,12 @@ title: Le relazioni, le proprietà di navigazione e le chiavi esterne - Entity F
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: 416eb1fb590330ba292a858347e26b83dddc74df
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 8292ae7af8d760240715854611d92ab340bf1ca7
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829200"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319192"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>Le relazioni, le proprietà di navigazione e le chiavi esterne
 Questo argomento offre una panoramica del modo in cui Entity Framework gestisce le relazioni tra entità. Offre inoltre alcune indicazioni su come eseguire il mapping e modificare le relazioni.
@@ -147,7 +147,7 @@ Se si utilizzano entità POCO senza proxy, è necessario assicurarsi che il **De
 
 ## <a name="loading-related-objects"></a>Caricamento di oggetti correlati
 
-In Entity Framework che si utilizza in genere usare le proprietà di navigazione per caricare entità correlate dall'associazione definita per l'entità restituita. Per altre informazioni, vedere [caricamento di oggetti correlati](~/ef6/querying/related-data.md).
+In Entity Framework è in genere usare le proprietà di navigazione per caricare entità correlate dall'associazione definita per l'entità restituita. Per altre informazioni, vedere [caricamento di oggetti correlati](~/ef6/querying/related-data.md).
 
 > [!NOTE]
 > In un'associazione di chiavi esterne, quando si carica un'entità finale correlata di un oggetto dipendente, l'oggetto correlato sarà caricato in base al valore della chiave esterna dell'oggetto dipendente attualmente in memoria:

@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 70fe2d934901f5366c96904b08f49a35f6590b47
-ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
+ms.openlocfilehash: 0f8389decbc1995cc629d24c5baa197255cd328a
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/18/2019
-ms.locfileid: "58131402"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319140"
 ---
 # <a name="provider-impacting-changes"></a>Modifiche che influiscono sul provider
 
@@ -28,6 +28,8 @@ Questo log è iniziata con le modifiche da 2.1 a 2.2. Prima di 2.1 è stato usat
   * Rimuovere API obsolete
 * https://github.com/aspnet/EntityFrameworkCore/pull/15044
   * Le sottoclassi di CharTypeMapping potrebbero essere stato interrotte a causa di modifiche al comportamento necessarie per la correzione di alcuni bug nell'implementazione di base.
+* https://github.com/aspnet/EntityFrameworkCore/pull/15090
+  * Aggiunta di una classe di base per IDatabaseModelFactory e aggiornato in modo da usare un oggetto parametro per prevenire interruzioni future.
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
