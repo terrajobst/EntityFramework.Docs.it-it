@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 4e042acb805c743ee794f4e61105b8d2136973b1
-ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
+ms.openlocfilehash: 6beaebf2c6859fcf91e963bfae02f029f8f51147
+ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/03/2019
-ms.locfileid: "55668726"
+ms.lasthandoff: 03/19/2019
+ms.locfileid: "58131444"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
 
@@ -52,7 +52,7 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IncludeTree)]
 
-È possibile che si vogliano includere più entità correlate per una delle entità incluse. Ad esempio, quando si eseguono query per `Blog`, è necessario includere `Posts` e poi si può anche decidere di includere `Author` e `Tags` per `Posts`. A tale scopo, occorre specificare ogni percorso di inclusione iniziando dalla radice. Ad esempio, `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Questo non significa che si otterranno join ridondanti. Nella maggior parte dei casi EF consoliderà i join durante la generazione di SQL.
+È possibile che si vogliano includere più entità correlate per una delle entità incluse. Quando ad esempio si eseguono query per `Blogs`, è necessario includere `Posts` e poi si può anche decidere di includere `Author` e `Tags` per `Posts`. A tale scopo, occorre specificare ogni percorso di inclusione iniziando dalla radice. Ad esempio, `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Questo non significa che si otterranno join ridondanti. Nella maggior parte dei casi EF consoliderà i join durante la generazione di SQL.
 
 [!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 

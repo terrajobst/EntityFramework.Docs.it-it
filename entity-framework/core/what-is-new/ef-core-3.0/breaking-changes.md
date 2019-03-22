@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 748db8a71a04a2d696ef21a03319906b9fc776be
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 534ac95cccc03e9797ba766e601e2fe86eaf8061
+ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829226"
+ms.lasthandoff: 03/21/2019
+ms.locfileid: "58319218"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -653,7 +653,7 @@ Ad esempio:
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
 
-Apparentemente, il codice mette in relazione `Samuri` con un altro tipo di entità tramite la proprietà di navigazione `Entrance`, che può essere privata.
+Apparentemente, il codice mette in relazione `Samurai` con un altro tipo di entità tramite la proprietà di navigazione `Entrance`, che può essere privata.
 
 In realtà, il codice tenta di creare una relazione con un tipo di entità denominato `Entrance` senza proprietà di navigazione.
 
@@ -785,3 +785,83 @@ Questa modifica è stata apportata per rendere coerente la versione di SQLite us
 **Mitigazioni**
 
 Per usare la versione di SQLite nativa in iOS, configurare `Microsoft.Data.Sqlite` per l'uso di un'aggregazione `SQLitePCLRaw` diversa.
+
+## <a name="char-values-are-now-stored-as-text-on-sqlite"></a>I valori char vengono ora archiviati come testo in SQLite
+
+[Problema n. 15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+I valori char in precedenza venivano archiviati come valori interi in SQLite. Un valore char di *A* veniva ad esempio archiviato come valore intero 65.
+
+**Nuovo comportamento**
+
+I valori char vengono ora archiviati come testo.
+
+**Perché?**
+
+L'archiviazione dei valori come testo è un'operazione più naturale e rende il database più compatibile con altre tecnologie.
+
+**Mitigazioni**
+
+È possibile eseguire la migrazione dei database esistenti al nuovo formato eseguendo SQL nel modo seguente.
+
+``` sql
+UPDATE MyTable
+SET CharColumn = char(CharColumn)
+WHERE typeof(CharColumn) = 'integer';
+```
+
+In EF Core è anche possibile continuare a usare il comportamento precedente configurando un convertitore di valori in queste proprietà.
+
+``` csharp
+modelBuilder
+    .Entity<MyEntity>()
+    .Property(e => e.CharProperty)
+    .HasConversion(
+        c => (long)c,
+        i => (char)i);
+```
+
+Microsoft.Data.Sqlite rimane comunque in grado di leggere i valori di caratteri presenti sia nelle colonne di valori interi sia in quelle di testo, quindi alcuni scenari potrebbero non richiedere alcuna azione.
+
+## <a name="migration-ids-are-now-generated-using-the-invariant-cultures-calendar"></a>Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica
+
+[Problema n. 12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Gli ID di migrazione venivano inavvertitamente generati usando con il calendario delle impostazioni cultura correnti.
+
+**Nuovo comportamento**
+
+Gli ID di migrazione ora vengono sempre generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica (calendario gregoriano).
+
+**Perché?**
+
+L'ordine delle migrazioni è importante quando si esegue l'aggiornamento del database o si risolvono i conflitti di unione. L'uso del calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica evita i problemi che possono verificarsi quando i membri del team hanno calendari di sistema diversi.
+
+**Mitigazioni**
+
+Questa modifica interessa gli utenti che usano un calendario non gregoriano in cui l'anno ha un'estensione superiore al calendario gregoriano (come il calendario buddista tailandese). Gli ID di migrazione esistenti dovranno essere aggiornati in modo che le nuove migrazioni vengano collocate dopo le migrazioni esistenti.
+
+L'ID di migrazione è disponibile nell'attributo di migrazione presente nei file di progettazione delle migrazioni.
+
+``` diff
+ [DbContext(typeof(MyDbContext))]
+-[Migration("25620318122820_MyMigration")]
++[Migration("20190318122820_MyMigration")]
+ partial class MyMigration
+ {
+```
+
+È necessario aggiornare anche la tabella della cronologia delle migrazioni.
+
+``` sql
+UPDATE __EFMigrationsHistory
+SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
+```
