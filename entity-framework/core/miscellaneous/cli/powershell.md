@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 09/18/2018
 uid: core/miscellaneous/cli/powershell
-ms.openlocfilehash: 468698d1bbd17d4ad10b1b1601bfbc315a01c1ff
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.openlocfilehash: cb05e3fb66adf96f8a6778711a76520d0be24c71
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688706"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419770"
 ---
 # <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Riferimenti - Console di gestione pacchetti in Visual Studio agli strumenti di Entity Framework Core
 
@@ -130,7 +130,7 @@ Nella tabella seguente vengono illustrati i parametri che sono comuni a tutti i 
 
 | Parametro                 | Descrizione                                                                                                                                                                                                          |
 |:--------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -Contesto \<stringa >        | Il `DbContext` classe da utilizzare. Nome della classe solo o nome completo con gli spazi dei nomi.  Se questo parametro viene omesso, EF Core consente di trovare la classe del contesto. Se sono presenti più classi di contesto, questo parametro è obbligatorio. |
+| -Contesto \<stringa >        | Classe `DbContext` da usare. Nome della classe solo o nome completo con gli spazi dei nomi.  Se questo parametro viene omesso, EF Core consente di trovare la classe del contesto. Se sono presenti più classi di contesto, questo parametro è obbligatorio. |
 | -Progetto \<stringa >        | Il progetto di destinazione. Se questo parametro viene omesso, il **progetto predefinito** per **Console di gestione pacchetti** viene usato come progetto di destinazione.                                                                             |
 | -StartupProject \<stringa > | Il progetto di avvio. Se questo parametro viene omesso, il **progetto di avvio** nelle **proprietà della soluzione** viene usato come progetto di destinazione.                                                                                 |
 | -Verbose                  | Visualizzare output dettagliato.                                                                                                                                                                                                 |
@@ -163,7 +163,7 @@ Parametri:
 
 ## <a name="get-dbcontext"></a>Get-DbContext
 
-Elenchi disponibili `DbContext` tipi.
+Ottiene informazioni su un `DbContext` tipo.
 
 ## <a name="remove-migration"></a>Remove-Migration
 
@@ -188,8 +188,8 @@ Parametri:
 | -OutputDir \<stringa >               | La directory in cui inserire file nella. I percorsi sono relativi alla directory del progetto.                                                                                                                                                                                             |
 | -ContextDir \<stringa >              | La directory di inserire il `DbContext` del file in. I percorsi sono relativi alla directory del progetto.                                                                                                                                                                              |
 | -Contesto \<stringa >                 | Il nome del `DbContext` classe da generare.                                                                                                                                                                                                                          |
-| -Schemi \<String [] >               | Gli schemi delle tabelle per generare i tipi di entità per. Se questo parametro viene omesso, vengono inclusi tutti gli schemi.                                                                                                                                                             |
-| -Tabelle \<String [] >                | Generare tipi di entità per le tabelle. Se questo parametro viene omesso, vengono incluse tutte le tabelle.                                                                                                                                                                         |
+| -Schemas \<String[]>               | Gli schemi delle tabelle per generare i tipi di entità per. Se questo parametro viene omesso, vengono inclusi tutti gli schemi.                                                                                                                                                             |
+| -Tables \<String[]>                | Generare tipi di entità per le tabelle. Se questo parametro viene omesso, vengono incluse tutte le tabelle.                                                                                                                                                                         |
 | -DataAnnotations                   | Usare gli attributi per configurare il modello (se possibile). Se questo parametro viene omesso, viene utilizzato solo l'API fluent.                                                                                                                                                      |
 | -UseDatabaseNames                  | Usare nomi di tabella e colonna esattamente come appaiono nel database. Se questo parametro viene omesso, vengono modificati i nomi di database per più da vicino è conforme alle convenzioni di stile nome c#.                                                                                       |
 | -Force                             | Sovrascrivi file esistenti.                                                                                                                                                                                                                                               |
@@ -214,9 +214,9 @@ Parametri:
 
 | Parametro                | Descrizione                                                                                                                                                                                                                |
 |:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-From* \<stringa >        | La migrazione inizia. Le migrazioni possono essere identificate in base al nome o ID. Il numero 0 rappresenta un caso speciale che si intende *prima della migrazione prima*. Il valore predefinito è 0.                                                              |
-| *-A* \<stringa >          | La migrazione finale. Per impostazione predefinita all'ultima migrazione.                                                                                                                                                                      |
-| <nobr>-Idempotenti</nobr> | Generare uno script che può essere utilizzato in un database in ogni operazione di migrazione.                                                                                                                                                         |
+| *-From* \<String>        | La migrazione inizia. Le migrazioni possono essere identificate in base al nome o ID. Il numero 0 rappresenta un caso speciale che si intende *prima della migrazione prima*. Il valore predefinito è 0.                                                              |
+| *-To* \<String>          | La migrazione finale. Per impostazione predefinita all'ultima migrazione.                                                                                                                                                                      |
+| <nobr>-Idempotent</nobr> | Generare uno script che può essere utilizzato in un database in ogni operazione di migrazione.                                                                                                                                                         |
 | -Output \<stringa >        | File in cui scrivere il risultato. Se questo parametro viene omesso, il file viene creato con un nome generato nella stessa cartella quando vengono creati i file di runtime dell'app, ad esempio: */obj/Debug/netcoreapp2.1/ghbkztfz.sql/*. |
 
 > [!TIP]
@@ -261,4 +261,4 @@ Update-Database -Migration 20180904195021_InitialCreate
 ## <a name="additional-resources"></a>Risorse aggiuntive
 
 * [Migrazioni](xref:core/managing-schemas/migrations/index)
-* [Reverse Engineering](xref:core/managing-schemas/scaffolding)
+* [Reverse engineering](xref:core/managing-schemas/scaffolding)

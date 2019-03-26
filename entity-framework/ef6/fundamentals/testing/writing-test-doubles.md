@@ -3,12 +3,12 @@ title: Test con il proprio copie di test - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 2158dc73585c2720e7293096b0478c73edf522d9
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 9db56e28cd89084fece36c3e5a2c1b4495991d01
+ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490909"
+ms.lasthandoff: 03/25/2019
+ms.locfileid: "58419731"
 ---
 # <a name="testing-with-your-own-test-doubles"></a>Test con il proprio copie di test
 > [!NOTE]
@@ -43,7 +43,7 @@ Questo articolo riporta i listati di codice completo che è possibile copiare in
 
 ## <a name="creating-a-context-interface"></a>Creazione di un'interfaccia di contesto  
 
-Dobbiamo esaminare test di un servizio che utilizza un Entity Framework model. Per poter essere in grado di sostituire il contesto di Entity Framework con una versione in memoria per il test, verranno definiti un'interfaccia che il contesto di Entity Framework (e relativo valore double in memoria) verrà imeplement.  
+Dobbiamo esaminare test di un servizio che utilizza un Entity Framework model. Per poter essere in grado di sostituire il contesto di Entity Framework con una versione in memoria per il test, si definirà un'interfaccia che consente di implementare il contesto di Entity Framework (e relativo valore double in memoria).
 
 Il servizio che si intende testare query e modificare i dati usando le proprietà DbSet del contesto e anche chiamare il metodo SaveChanges per eseguire il push delle modifiche al database. Quindi, verrà incluso questi membri sull'interfaccia.  
 
