@@ -99,7 +99,7 @@ Si noti che molte delle [a livello di applicazione delle modifiche di rilievo](.
   * Questa richiesta pull viene aggiunto il concetto di `CanConnect` che verrà utilizzata da health di ASP.NET Core verifica per determinare se il database è disponibile. Per impostazione predefinita, l'implementazione relazionale chiama semplicemente `Exist`, anche se i provider possono implementare un elemento diverso se necessario. Provider relazionali dovrà implementare la nuova API in ordine per il controllo di integrità sia utilizzabile.
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13306](https://github.com/aspnet/EntityFrameworkCore/pull/13306) -Aggiornare base RelationalTypeMapping per non impostare dimensioni DbParameter
   * Arrestare l'impostazione delle dimensioni per impostazione predefinita, in quanto può causare il troncamento. I provider potrebbero essere necessario aggiungere la propria logica se sono necessario impostare le dimensioni.
-* https://github.com/aspnet/EntityFrameworkCore/pull/13372 -RevEng: Specificare sempre il tipo di colonna per le colonne decimale
+* (https://github.com/aspnet/EntityFrameworkCore/pull/13372) -RevEng: Specificare sempre il tipo di colonna per le colonne decimale
   * Configurare sempre il tipo di colonna per le colonne decimale in codice con scaffolding anziché la configurazione per convenzione.
   * I provider non dovrebbero richiedere eventuali modifiche estremità.
 * [https://github.com/aspnet/EntityFrameworkCore/pull/13469](https://github.com/aspnet/EntityFrameworkCore/pull/13469) -Aggiunge CaseExpression per la generazione di espressioni CASE SQL
