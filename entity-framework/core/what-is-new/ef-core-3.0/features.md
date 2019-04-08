@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: b6774f615b04bf9579aac5dea217e7321631da0c
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 7501a806271c9734e85e31845f260f2d512da077
+ms.sourcegitcommit: a8b04050033c5dc46c076b7e21b017749e0967a8
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829187"
+ms.lasthandoff: 04/02/2019
+ms.locfileid: "58867957"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>Nuove funzionalità incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -50,6 +50,31 @@ Il provider abiliterà la maggior parte delle funzionalità di EF Core, come il 
 Questo progetto è stato avviato prima di EF Core 2.2 e [sono state pubblicate alcune versioni di anteprima del provider](https://blogs.msdn.microsoft.com/dotnet/2018/10/17/announcing-entity-framework-core-2-2-preview-3/).
 Il nuovo piano prevede di continuare a sviluppare il provider insieme a EF Core 3.0. 
 
+## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative
+
+[Problema n. 9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+Questa funzionalità verrà introdotta in EF Core 3.0 anteprima 4.
+
+Si consideri il modello seguente:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+
+A partire da EF Core 3.0, se `OrderDetails` è di proprietà di `Order` o mappato in modo esplicito alla stessa tabella, sarà possibile aggiungere un `Order` senza `OrderDetails` e tutte le proprietà di `OrderDetails`, ad eccezione della chiave primaria, verranno mappate a colonne che ammettono i valori Null.
+In fase di query, EF Core imposterà `OrderDetails` su `null` se una delle relative proprietà obbligatorie non ha un valore o se non sono presenti proprietà obbligatorie oltre alla chiave primaria e tutte le proprietà sono `null`.
+
 ## <a name="c-80-support"></a>Supporto di C# 8.0
 
 [Problema n. 12047](https://github.com/aspnet/EntityFrameworkCore/issues/12047)
@@ -68,7 +93,7 @@ Questa funzionalità è inclusa nell'anteprima corrente.
 I [tipi di query](xref:core/modeling/query-types), introdotti in EF Core 2.1 e considerati tipi di entità senza chiavi in EF Core 3.0, rappresentano i dati che possono essere letti dal database, ma non aggiornati.
 Questa caratteristica li rende la scelta ideale per le viste di database nella maggior parte degli scenari, quindi si prevede di automatizzare la creazione dei tipi di entità senza chiavi durante la decompilazione delle viste di database.
 
-## <a name="property-bag-entities"></a>Entità elenco proprietà 
+## <a name="property-bag-entities"></a>Entità elenco proprietà
 
 [Problemi n. 13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) e [9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
 
@@ -77,7 +102,7 @@ Il lavoro su questa funzionalità è iniziato ma non è incluso nell'anteprima c
 questa funzionalità riguarda l'abilitazione di entità che archiviano dati in proprietà indicizzate anziché in proprietà regolari, nonché la possibilità di usare istanze della stessa classe .NET (in modo potenzialmente semplice come `Dictionary<string, object>`) per rappresentare tipi di entità diversi nello stesso modello di EF Core.
 Questa funzionalità è un trampolino di lancio per il supporto delle relazioni molti-a-molti senza un'entità di join ([problema n. 1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)), ovvero uno dei miglioramenti più richiesti per EF Core.
 
-## <a name="ef-63-on-net-core"></a>EF 6.3 in .NET Core 
+## <a name="ef-63-on-net-core"></a>EF 6.3 in .NET Core
 
 [Problema EF6 n. 271](https://github.com/aspnet/EntityFramework6/issues/271)
 

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 0ad43db794902cf1f46bfe8f117fbd36e06f3c44
-ms.sourcegitcommit: a709054b2bc7a8365201d71f59325891aacd315f
+ms.openlocfilehash: 3024c0101c9d886ef844d1b7dc85aaf1be27e86b
+ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/14/2019
-ms.locfileid: "57829174"
+ms.lasthandoff: 04/04/2019
+ms.locfileid: "58914078"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
@@ -64,7 +64,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-È anche possibile costruire un DbParameter e fornirlo come valore del parametro. In questo modo è possibile usare parametri denominati nella stringa di query SQL.
+È anche possibile costruire un DbParameter e fornirlo come valore del parametro:
 
 <!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -72,6 +72,17 @@ var user = new SqlParameter("user", "johndoe");
 
 var blogs = context.Blogs
     .FromSql("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+    .ToList();
+```
+
+In questo modo è possibile usare parametri denominati nella stringa di query SQL, operazione che risulta utile quando una stored procedure include parametri facoltativi:
+
+<!-- [!code-csharp[Main](samples/core/Querying/Querying/RawSQL/Sample.cs)] -->
+``` csharp
+var user = new SqlParameter("user", "johndoe");
+
+var blogs = context.Blogs
+    .FromSql("EXECUTE dbo.GetMostPopularBlogs @filterByUser=@user", user)
     .ToList();
 ```
 
@@ -132,7 +143,7 @@ Esistono alcune limitazioni da tenere presenti quando si usano query SQL non ela
 
 * La query SQL non può contenere dati correlati. Tuttavia, in molti casi è possibile estendere la query usando l'operatore `Include` per restituire i dati correlati (vedere [Inclusione di dati correlati](#including-related-data)).
 
-* Le istruzioni `SELECT` passate a questo metodo devono essere in genere componibili: se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
+* `SELECT` le istruzioni passate a questo metodo devono essere in genere componibili: se EF Core deve valutare operatori di query aggiuntivi nel server (ad esempio, per convertire gli operatori LINQ applicati dopo `FromSql`), le istruzioni SQL fornite verranno considerate una sottoquery. Questo significa che le istruzioni SQL passate non devono contenere caratteri o opzioni non validi in una sottoquery, ad esempio:
   * Un punto e virgola finale
   * In SQL Server, un hint a livello di query finale, ad esempio `OPTION (HASH JOIN)`
   * In SQL Server, una clausola `ORDER BY` non accompagnata da `TOP 100 PERCENT` nella clausola `SELECT`

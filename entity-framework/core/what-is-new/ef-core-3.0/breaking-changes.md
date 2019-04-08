@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 7ed55d4cae36f6b25059a5b218db4b0d5e2fb266
-ms.sourcegitcommit: 645785187ae23ddf7d7b0642c7a4da5ffb0c7f30
+ms.openlocfilehash: fd593b2832a5a6ffe27cd4493127b5d405f684ba
+ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/25/2019
-ms.locfileid: "58419744"
+ms.lasthandoff: 04/04/2019
+ms.locfileid: "58914127"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -75,6 +75,46 @@ Gli sviluppatori possono ora controllare anche in modo preciso quando vengono ag
 **Mitigazioni**
 
 Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione supportata, aggiungere in modo esplicito un riferimento al pacchetto al provider di database di EF Core che verrà usato dall'applicazione.
+
+## <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati
+
+[Problema n. 10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, erano disponibili overload per questi nomi di metodo per supportare l'uso con una stringa normale o una stringa che deve essere interpolata in SQL e parametri.
+
+**Nuovo comportamento**
+
+A partire da EF Core 3.0, usare `FromSqlRaw`, `ExecuteSqlRaw` e `ExecuteSqlRawAsync` per creare una query con parametri in cui i parametri vengono passati separatamente dalla stringa di query.
+Ad esempio:
+
+```C#
+context.Products.FromSqlRaw(
+    "SELECT * FROM Products WHERE Name = {0}",
+    product.Name);
+```
+
+Usare `FromSqlInterpolated`, `ExecuteSqlInterpolated`, e `ExecuteSqlInterpolatedAsync` per creare una query con parametri in cui i parametri vengono passati come parte di una stringa di query interpolata.
+Ad esempio:
+
+```C#
+context.Products.FromSqlInterpolated(
+    $"SELECT * FROM Products WHERE Name = {product.Name}");
+```
+
+Si noti che entrambe le query precedenti produrranno lo stesso codice SQL con parametri con gli stessi parametri SQL.
+
+**Perché?**
+
+Con gli overload di metodi come questi, è molto semplice chiamare accidentalmente il metodo con stringa non elaborata anche se l'intento era chiamare il metodo con stringa interpolata e viceversa.
+Il risultato potrebbero essere query senza parametri, quando invece è prevista la parametrizzazione.
+
+**Mitigazioni**
+
+Passare all'uso dei nuovi nomi di metodo.
 
 ## <a name="query-execution-is-logged-at-debug-level"></a>L'esecuzione di query viene registrata a livello di debug
 
@@ -291,6 +331,156 @@ Ciò consente di eliminare ambiguità e confusione su metodi come `HasForeignKey
 
 Modificare la configurazione delle relazioni dei tipi di proprietà per usare la superficie della nuova API come illustrato nell'esempio precedente.
 
+## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative
+
+[Problema n. 9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Si consideri il modello seguente:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+```
+Prima di EF Core 3.0, se `OrderDetails` è di proprietà di `Order` o viene mappato in modo esplicito alla stessa tabella, era sempre necessaria un'istanza di `OrderDetails` per l'aggiunta di un nuovo `Order`.
+
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, EF Core consente di aggiungere un `Order` senza un `OrderDetails` ed esegue il mapping di tutte le proprietà di `OrderDetails`, tranne che la chiave primaria, a colonne che ammettono valori Null.
+In fase di query, EF Core imposta `OrderDetails` su `null` se una delle relative proprietà obbligatorie non ha un valore o se non sono presenti proprietà obbligatorie oltre alla chiave primaria e tutte le proprietà sono `null`.
+
+**Mitigazioni**
+
+Se il modello include una tabella condivisa dipendente con tutte le colonne facoltative, ma è previsto che la navigazione che punta a essa non sia `null`, l'applicazione deve essere modificata per gestire casi in cui la navigazione è `null`. Se questo non è possibile, è consigliabile aggiungere una proprietà obbligatoria al tipo di entità o assegnare un valore non `null` ad almeno una proprietà.
+
+## <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà
+
+[Problema n. 14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Si consideri il modello seguente:
+```C#
+public class Order
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public byte[] Version { get; set; }
+    public OrderDetails Details { get; set; }
+}
+
+public class OrderDetails
+{
+    public int Id { get; set; }
+    public string ShippingAddress { get; set; }
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Order>()
+        .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
+}
+```
+Prima di EF Core 3.0, se `OrderDetails` è di proprietà di `Order` o è mappato in modo esplicito alla stessa tabella, il solo aggiornamento di `OrderDetails` non aggiornerà il valore `Version` nel client e l'aggiornamento successivo avrà esito negativo.
+
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, EF Core propaga il nuovo valore `Version` a `Order` se è proprietario di `OrderDetails`. In caso contrario, viene generata un'eccezione durante la convalida del modello.
+
+**Perché?**
+
+Questa modifica è stata apportata per evitare un valore del token di concorrenza non aggiornato quando viene aggiornata solo una delle entità mappate alla stessa tabella.
+
+**Mitigazioni**
+
+Tutte le entità che condividono la tabella devono includere una proprietà mappata alla colonna del token di concorrenza. È possibile crearne una in stato shadow:
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<OrderDetails>()
+        .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
+}
+```
+
+## <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati
+
+[Problema n. 13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Si consideri il modello seguente:
+```C#
+public abstract class EntityBase
+{
+    public int Id { get; set; }
+}
+
+public abstract class OrderBase : EntityBase
+{
+    public int ShippingAddress { get; set; }
+}
+
+public class BulkOrder : OrderBase
+{
+}
+
+public class Order : OrderBase
+{
+}
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>();
+    modelBuilder.Entity<Order>();
+}
+```
+
+Prima di EF Core 3.0, per la proprietà `ShippingAddress` sarebbe stato eseguito il mapping a colonne separate per `BulkOrder` e `Order` per impostazione predefinita.
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, EF Core crea solo una colonna per `ShippingAddress`.
+
+**Perché?**
+
+Il comportamento precedente non era previsto.
+
+**Mitigazioni**
+
+È ancora possibile eseguire il mapping esplicito della proprietà a una colonna separata per i tipi derivati:
+
+```C#
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Ignore<OrderBase>();
+    modelBuilder.Entity<EntityBase>();
+    modelBuilder.Entity<BulkOrder>()
+        .Property(o => o.ShippingAddress).HasColumnName("BulkShippingAddress");
+    modelBuilder.Entity<Order>()
+        .Property(o => o.ShippingAddress).HasColumnName("ShippingAddress");
+}
+```
+
 ## <a name="the-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property"></a>La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza
 
 [Problema n. 13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
@@ -312,7 +502,6 @@ public class Order
     public int Id { get; set; }
     public int CustomerId { get; set; }
 }
-
 ```
 Nelle versioni precedenti a EF Core 3.0 veniva usata la proprietà `CustomerId` per la chiave esterna per convenzione.
 Tuttavia, se `Order` è un tipo di proprietà, `CustomerId` sarebbe la chiave primaria e ciò non è in genere auspicabile.
@@ -359,6 +548,58 @@ Questa modifica è stata apportata per evitare una definizione errata della prop
 **Mitigazioni**
 
 Se la proprietà è stata progettata per essere la chiave esterna e di conseguenza parte della chiave primaria, configurarla in modo esplicito come chiave esterna.
+
+## <a name="database-connection-is-now-closed-if-not-used-anymore-before-the-transactionscope-has-been-completed"></a>La connessione al database viene ora chiusa se non viene più usata prima del completamento di TransactionScope
+
+[Problema n. 14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, se il contesto apre la connessione all'interno di un `TransactionScope`, la connessione rimane aperta mentre è attivo il `TransactionScope` corrente.
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+
+        // Old behavior: Connection is still open at this point
+        
+        var categories = context.ProductCategories().ToList();
+    }
+}
+```
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, EF Core chiude la connessione non appena non viene più usata.
+
+**Perché?**
+
+Questa modifica consente di usare più contesti nello stesso `TransactionScope`. Il nuovo comportamento corrisponde anche a EF6.
+
+**Mitigazioni**
+
+Se la connessione deve rimanere aperta, la chiamata esplicita di `OpenConnection()` garantirà che EF Core non la chiuda prematuramente:
+
+```C#
+using (new TransactionScope())
+{
+    using (AdventureWorks context = new AdventureWorks())
+    {
+        context.Database.OpenConnection();
+        context.ProductCategories.Add(new ProductCategory());
+        context.SaveChanges();
+        
+        var categories = context.ProductCategories().ToList();
+        context.Database.CloseConnection();
+    }
+}
+```
 
 ## <a name="each-property-uses-independent-in-memory-integer-key-generation"></a>Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti
 
@@ -566,7 +807,7 @@ Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
-`IDbContextOptionsExtensionWithDebugInfo` era un'interfaccia facoltativa aggiuntiva estesa da `IDbContextOptionsExtension` che consentiva di evitare le modifiche che causavano interruzioni nell'interfaccia durante il ciclo di versioni 2.x.
+`IDbContextOptionsExtensionWithDebugInfo` era un'interfaccia facoltativa aggiuntiva estesa da `IDbContextOptionsExtension` che consentiva di evitare modifiche che causavano interruzioni nell'interfaccia durante il ciclo di produzione delle versioni 2.x.
 
 **Nuovo comportamento**
 
@@ -675,6 +916,36 @@ Ad esempio:
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
+
+## <a name="the-return-type-for-several-async-methods-has-been-changed-from-task-to-valuetask"></a>Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask
+
+[Problema n. 15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+I metodi asincroni seguenti in precedenza restituivano il tipo `Task<T>`:
+
+* `DbContext.FindAsync()`
+* `DbSet.FindAsync()`
+* `DbContext.AddAsync()`
+* `DbSet.AddAsync()`
+* `ValueGenerator.NextValueAsync()` (e classi derivate)
+
+**Nuovo comportamento**
+
+I metodi indicati in precedenza ora restituiscono il tipo `ValueTask<T>` sullo stesso `T` come in precedenza.
+
+**Perché?**
+
+Questa modifica riduce il numero delle allocazioni di heap sostenute quando si richiamano questi metodi, con un miglioramento generale delle prestazioni.
+
+**Mitigazioni**
+
+Le applicazioni semplicemente in attesa delle API precedenti devono solo essere ricompilate e non sono richieste modifiche del codice sorgente.
+Per scenari di utilizzo più complessi (ad esempio, il passaggio del tipo `Task` restituito a `Task.WhenAny()`) è richiesto in genere che il tipo `ValueTask<T>` restituito venga convertito in `Task<T>` chiamando `AsTask()` su di esso.
+Si noti che in questo modo si annulla la riduzione delle allocazioni consentita da questa modifica.
 
 ## <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>L'annotazione Relational:TypeMapping è ora TypeMapping
 
