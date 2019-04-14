@@ -65,6 +65,7 @@
 #### [Conversioni di valori](core/modeling/value-conversions.md)
 #### [Seeding dei dati](core/modeling/data-seeding.md)
 #### [Costruttori di tipi di entità](core/modeling/constructors.md)
+#### [Suddivisione di tabelle](core/modeling/table-splitting.md)
 #### [Tipi di entità di proprietà](core/modeling/owned-entities.md)
 #### [Tipi di query](core/modeling/query-types.md)
 #### [Alternanza di modelli con lo stesso DbContext](core/modeling/dynamic-model.md)
