@@ -3,12 +3,12 @@ title: Configurazione basata su codice - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
-ms.openlocfilehash: c317f112f713612f7b9aef3764a0bd004fef5424
-ms.sourcegitcommit: 735715f10cc8a231c213e4f055d79f0effd86570
+ms.openlocfilehash: 079a4ab30af74eac8b1f51ece5801ff40a867a29
+ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/16/2019
-ms.locfileid: "56325353"
+ms.lasthandoff: 04/16/2019
+ms.locfileid: "59619285"
 ---
 # <a name="code-based-configuration"></a>Configurazione basata su codice
 > [!NOTE]
@@ -106,7 +106,7 @@ A tale scopo, Entity Framework consente a un gestore eventi da registrare che co
 - All'avvio dell'app (prima che venga utilizzato Entity Framework) il plug-in o provider deve registrare il metodo del gestore eventi per questo evento. (Si noti che ciò deve verificarsi prima che l'applicazione usa Entity Framework).  
 - Il gestore dell'evento effettua una chiamata a ReplaceService per ogni servizio che deve essere sostituito.  
 
-Repalce IDbConnectionFactory e DbProviderService, ad esempio, si potrebbe registrare un gestore simile al seguente:  
+Per sostituire IDbConnectionFactory e DbProviderService, ad esempio, si potrebbe registrare un gestore simile al seguente:  
 
 ``` csharp
 DbConfiguration.Loaded += (_, a) =>
