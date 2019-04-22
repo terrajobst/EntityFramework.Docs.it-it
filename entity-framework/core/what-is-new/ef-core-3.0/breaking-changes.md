@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: fd593b2832a5a6ffe27cd4493127b5d405f684ba
-ms.sourcegitcommit: ce44f85a5bce32ef2d3d09b7682108d3473511b3
+ms.openlocfilehash: 4b251638de43af6525f3e6faa0bd4113ab1714b9
+ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/04/2019
-ms.locfileid: "58914127"
+ms.lasthandoff: 04/16/2019
+ms.locfileid: "59619259"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -242,6 +242,28 @@ Ad esempio:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+
+## <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>Semantica più chiara per DeleteBehavior.Restrict
+
+[Problema n. 12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 5.
+
+**Comportamento precedente**
+
+Prima della versione 3.0, `DeleteBehavior.Restrict` creava chiavi esterne nel database con la semantica `Restrict`, ma modificava anche la correzione interna in modo non ovvio.
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, `DeleteBehavior.Restrict` assicura che le chiavi esterne vengano create con la semantica `Restrict`, ovvero non a cascata e con generazione di un'eccezione in caso di violazione di vincolo, senza influire sulla correzione interna di Entity Framework.
+
+**Perché?**
+
+Questa modifica è stata apportata per migliorare l'esperienza di uso di `DeleteBehavior` in modo intuitivo, senza effetti collaterali imprevisti.
+
+**Mitigazioni**
+
+Il comportamento precedente può essere ripristinato tramite `DeleteBehavior.ClientNoAction`.
 
 ## <a name="query-types-are-consolidated-with-entity-types"></a>I tipi di query vengono consolidati con tipi di entità
 
@@ -685,6 +707,52 @@ modelBuilder
     .HasField("_id");
 ```
 
+## <a name="field-only-property-names-should-match-the-field-name"></a>I nomi delle proprietà solo campo devono corrispondere al nome di campo
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, era possibile specificare una proprietà con un valore stringa e se non veniva trovata alcuna proprietà con tale nome nel tipo CLR, EF Core tentava di trovare una corrispondenza con un campo tramite regole di convenzione.
+```C#
+private class Blog
+{
+    private int _id;
+    public string Name { get; set; }
+}
+```
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id");
+```
+
+**Nuovo comportamento**
+
+A partire da EF Core 3.0, una proprietà solo campo deve corrispondere esattamente al nome del campo.
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("_id");
+```
+
+**Perché?**
+
+Questa modifica è stata introdotta per evitare di usare lo stesso campo per due proprietà con nome simile. Le regole di corrispondenza per le proprietà solo campo sono state anche uniformate a quelle per le proprietà mappate a proprietà CLR.
+
+**Mitigazioni**
+
+Le proprietà solo campo devono avere lo stesso nome del campo a cui vengono mappate.
+In un'anteprima successiva di EF Core 3.0 è prevista la riabilitazione della possibilità di configurare in modo esplicito un nome di campo diverso dal nome della proprietà:
+
+```C#
+modelBuilder
+    .Entity<Blog>()
+    .Property("Id")
+    .HasField("_id");
+```
+
 ## <a name="adddbcontextadddbcontextpool-no-longer-call-addlogging-and-addmemorycache"></a>AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache
 
 [Problema n. 14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
@@ -807,7 +875,7 @@ Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
-`IDbContextOptionsExtensionWithDebugInfo` era un'interfaccia facoltativa aggiuntiva estesa da `IDbContextOptionsExtension` che consentiva di evitare modifiche che causavano interruzioni nell'interfaccia durante il ciclo di produzione delle versioni 2.x.
+`IDbContextOptionsExtensionWithDebugInfo` era un'interfaccia facoltativa aggiuntiva estesa da `IDbContextOptionsExtension` che consentiva di evitare le modifiche che causavano interruzioni nell'interfaccia durante il ciclo di versioni 2.x.
 
 **Nuovo comportamento**
 
@@ -1010,11 +1078,35 @@ Usare `HasIndex().ForSqlServerInclude()`.
 
 **Perché?**
 
-Questa modifica è stata apportata per consolidare l'API per gli indici con `Includes` in un'unica posizione per tutti i provider di database.
+Questa modifica è stata apportata per consolidare l'API per gli indici con `Include` in un'unica posizione per tutti i provider di database.
 
 **Mitigazioni**
 
 Usare la nuova API, come illustrato in precedenza.
+
+## <a name="metadata-api-changes"></a>Modifiche dell'API dei metadati
+
+[Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+
+**Nuovo comportamento**
+
+Le proprietà seguenti sono state convertite in metodi di estensione:
+
+* `IEntityType.QueryFilter` -> `GetQueryFilter()`
+* `IEntityType.DefiningQuery` -> `GetDefiningQuery()`
+* `IProperty.IsShadowProperty` -> `IsShadowProperty()`
+* `IProperty.BeforeSaveBehavior` -> `GetBeforeSaveBehavior()`
+* `IProperty.AfterSaveBehavior` -> `GetAfterSaveBehavior()`
+
+**Perché?**
+
+Questa modifica semplifica l'implementazione delle interfacce menzionate in precedenza.
+
+**Mitigazioni**
+
+Usare i nuovi metodi di estensione.
 
 ## <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite
 
