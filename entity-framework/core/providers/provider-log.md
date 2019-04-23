@@ -6,12 +6,12 @@ ms.date: 08/08/2018
 ms.assetid: 7CEF496E-A5B0-4F5F-B68E-529609B23EF9
 ms.technology: entity-framework-core
 uid: core/providers/provider-log
-ms.openlocfilehash: 9ef87a737111053df0359f3b2d7a4f82d25c578a
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: 61a58bd6119763d90731fac62343b983af510cb6
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/18/2019
-ms.locfileid: "58867944"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929875"
 ---
 # <a name="provider-impacting-changes"></a>Modifiche che influiscono sul provider
 
@@ -62,6 +62,7 @@ Si noti che molte delle [a livello di applicazione delle modifiche di rilievo](.
   * Convenzione impostare i servizi sono stati modificati. I provider devono ora ereditano da "ProviderConventionSet" o "RelationalConventionSet".
   * Le personalizzazioni possono essere aggiunti tramite `IConventionSetCustomizer` servizi, ma ciò è dovrà essere utilizzato da altre estensioni, non i provider.
   * Le convenzioni usate in fase di esecuzione devono essere risolte dal `IConventionSetBuilder`.
+* https://github.com/aspnet/EntityFrameworkCore/pull/15288 -Seeding dei dati è stata sottoposta a refactoring in un'API pubblica per evitare la necessità di usare tipi interni. Questo dovrebbe influire solo i provider non relazionali, poiché il seeding viene gestito dalla classe relazionale di base per tutti i provider relazionali.
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
@@ -82,7 +83,6 @@ Si noti che molte delle [a livello di applicazione delle modifiche di rilievo](.
   * Provider di questi test potrebbe essere necessario rispondere
 * [https://github.com/aspnet/EntityFrameworkCore/pull/12141](https://github.com/aspnet/EntityFrameworkCore/pull/12141) -Restituire il contesto per il pool anziché eliminare in test funzionali
   * Questa modifica include alcuni test di refactoring che può richiedere ai provider di react
-
 
 ### <a name="test-and-product-code-changes"></a>Modifiche al codice di test e prodotto
 
