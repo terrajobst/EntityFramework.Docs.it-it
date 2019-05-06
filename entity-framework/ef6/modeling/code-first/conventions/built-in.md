@@ -11,7 +11,7 @@ ms.lasthandoff: 09/13/2018
 ms.locfileid: "45491000"
 ---
 # <a name="code-first-conventions"></a>Convenzioni del primo codice
-Code First consente di descrivere un modello utilizzando le classi di c# o Visual Basic .NET. La forma di base del modello viene rilevata usando convenzioni. Le convenzioni sono set di regole che consentono di configurare automaticamente un modello concettuale basato sulle definizioni di classe quando si lavora con Code First. Le convenzioni sono definite nello spazio dei nomi System.Data.Entity.ModelConfiguration.Conventions.  
+Code First consente di descrivere un modello utilizzando le classi di C# o Visual Basic .NET. La forma di base del modello viene rilevata usando convenzioni. Le convenzioni sono set di regole che consentono di configurare automaticamente un modello concettuale basato sulle definizioni di classe quando si lavora con Code First. Le convenzioni sono definite nello spazio dei nomi System.Data.Entity.ModelConfiguration.Conventions.  
 
 È possibile configurare ulteriormente il modello utilizzando le annotazioni dei dati o l'API fluent. La precedenza viene assegnata alla configurazione tramite l'API fluent, seguito da convenzioni e le annotazioni dei dati. Per altre informazioni, vedere [annotazioni dei dati](~/ef6/modeling/code-first/data-annotations.md), [API Fluent - relazioni](~/ef6/modeling/code-first/fluent/relationships.md), [API Fluent - tipi di & proprietà](~/ef6/modeling/code-first/fluent/types-and-properties.md) e [API Fluent con VB.NET](~/ef6/modeling/code-first/fluent/vb.md).  
 

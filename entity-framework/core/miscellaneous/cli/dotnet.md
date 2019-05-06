@@ -209,7 +209,7 @@ Opzioni:
 | `-o`            | `--output-dir <PATH>`                    | La directory per inserire i file di classe di entità in. I percorsi sono relativi alla directory del progetto.                                                                                       |
 |                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | Gli schemi delle tabelle per generare i tipi di entità per. Per specificare più schemi, ripetere `--schema` per ognuno di essi. Se questa opzione viene omessa, vengono inclusi tutti gli schemi.          |
 | `-t`            | `--table <TABLE_NAME>`...                | Generare tipi di entità per le tabelle. Per specificare più tabelle, ripetere `-t` o `--table` per ognuno di essi. Se si omette questa opzione, tutte le tabelle vengono incluse.                |
-|                 | `--use-database-names`                   | Usare nomi di tabella e colonna esattamente come appaiono nel database. Se questa opzione viene omessa, vengono modificati i nomi di database per più da vicino è conforme alle convenzioni di stile nome c#. |
+|                 | `--use-database-names`                   | Usare nomi di tabella e colonna esattamente come appaiono nel database. Se questa opzione viene omessa, vengono modificati i nomi di database per più da vicino è conforme alle convenzioni di stile nome C#. |
 
 Nell'esempio seguente esegue scaffolding delle tutti gli schemi e tabelle e inserisce i nuovi file nei *modelli* cartella.
 

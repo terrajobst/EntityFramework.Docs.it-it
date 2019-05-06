@@ -14,7 +14,7 @@ ms.locfileid: "46284122"
 Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello usando C\# o classi di Visual Basic.NET. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
 
 ## <a name="watch-the-video"></a>Guarda il video
-Questo video viene fornita un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello di utilizzo di classi c# o VB.Net. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
+Questo video viene fornita un'introduzione allo sviluppo Code First come destinazione di un nuovo database. Questo scenario include come destinazione di un database che non esiste e Code First creerà un database vuoto che Code First la aggiungerà nuove tabelle per. Codice prima di tutto consente di definire il modello di utilizzo di classi C# o VB.Net. Configurazione aggiuntiva, facoltativamente, può essere eseguita usando gli attributi delle classi e proprietà o tramite un'API fluent.
 
 **Presentato da**: [Rowan Miller](http://romiller.com/)
 
