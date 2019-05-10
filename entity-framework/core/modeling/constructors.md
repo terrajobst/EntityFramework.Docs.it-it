@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
-ms.openlocfilehash: 1b36197465fb9a6571a306d36eb1e9d885a5399e
-ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
+ms.openlocfilehash: 5bf49718f02c1860871b1f4c255ec4d98fce2fc7
+ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/29/2018
-ms.locfileid: "43152465"
+ms.lasthandoff: 05/08/2019
+ms.locfileid: "65405252"
 ---
 # <a name="entity-types-with-constructors"></a>Tipi di entità con costruttori
 
@@ -90,7 +90,7 @@ Alcuni aspetti da considerare:
 * Non tutte le proprietà devono avere i parametri del costruttore. Ad esempio, la proprietà Post.Content non è impostata per qualsiasi parametro di costruttore, in modo che Entity Framework Core verrà impostato dopo la chiamata al costruttore in modo normale.
 * I tipi di parametro e nomi devono corrispondere i tipi di proprietà e i nomi, ad eccezione del fatto che le proprietà possono essere convenzione Pascal, mentre i parametri sono maiuscole/minuscole camel.
 * EF Core non è possibile impostare le proprietà di navigazione (ad esempio Blog o post precedente) usando un costruttore.
-* Il costruttore può essere public, private, o avere eventuali altri accessibilità.
+* Il costruttore può essere public, private, o avere eventuali altri accessibilità. Tuttavia, i proxy di caricamento lazy richiedono che il costruttore è accessibile dalla classe proxy che eredita. In genere, ciò significa rendendo pubblici o protetti.
 
 ### <a name="read-only-properties"></a>Proprietà di sola lettura
 
