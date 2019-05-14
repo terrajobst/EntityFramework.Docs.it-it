@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 834C9729-7F6E-4355-917D-DE3EE9FE149E
 uid: core/what-is-new/roadmap
-ms.openlocfilehash: e9d1a707c643036fa15b1e0e46730eadefd65518
-ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
+ms.openlocfilehash: 937bfff4cbc3ec0b2235a78cb2f1f246697128d5
+ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/14/2019
-ms.locfileid: "59562468"
+ms.lasthandoff: 04/22/2019
+ms.locfileid: "59929784"
 ---
 # <a name="entity-framework-core-roadmap"></a>Roadmap per Entity Framework Core
 
@@ -19,7 +19,7 @@ ms.locfileid: "59562468"
 ## <a name="ef-core-30"></a>EF Core 3.0
 
 Ora che EF Core 2.2 è superato, l'attenzione si concentra principalmente su EF Core 3.0.
-Vedere le [novità di EF Core 3.0](xref:core/what-is-new/ef-core-3.0/index) per informazioni sulle [nuove funzionalità](xref:core/what-is-new/ef-core-3.0/features) pianificate e sulle [modifiche che causano interruzioni ](xref:core/what-is-new/ef-core-3.0/breaking-changes) intenzionali incluse nella versione.
+Vedere [Novità di EF Core 3.0](xref:core/what-is-new/ef-core-3.0/index) per informazioni sulle [nuove funzionalità](xref:core/what-is-new/ef-core-3.0/features) pianificate e le [modifiche che causano interruzioni](xref:core/what-is-new/ef-core-3.0/breaking-changes) intenzionali incluse in questa versione.
 
 ## <a name="schedule"></a>Pianificazione
 
@@ -49,7 +49,7 @@ La presenza di una funzionalità in EF6, poi, non significa che tale funzionalit
 Gran parte del processo implica la discussione delle funzionalità, opportunità e priorità specifiche e il processo stesso si evolve anche per ogni rilascio.
 È tuttavia possibile riepilogare le domande più frequenti a cui si tenta di rispondere quando si deve decidere su cosa lavorare:
 
-1. **Quanti sviluppatori si pensa che useranno la funzionalità e quanto questa migliorerà le loro applicazioni o la loro esperienza?** Per rispondere a questa domanda vengono raccolti i commenti e suggerimenti provenienti da numerose fonti, una delle quali sono i commenti e i voti per i problemi.
+1. **Quanti sviluppatori si pensa che useranno la funzionalità e quanto questa migliorerà le loro applicazioni o la loro esperienza?** Per rispondere a questa domanda vengono raccolti commenti e suggerimenti provenienti da numerose fonti, una delle quali sono i commenti e i voti per i problemi.
 
 2. **Quali sono le soluzioni alternative utilizzabili finché questa funzionalità non viene implementata?** Molti sviluppatori, ad esempio, possono eseguire il mapping di una tabella di join per ovviare alla mancanza del supporto molti-a-molti nativo. Ovviamente, non tutti gli sviluppatori vogliono farlo, ma molti possono e ciò è un fattore di cui tenere conto per la decisione.
 

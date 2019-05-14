@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 4b251638de43af6525f3e6faa0bd4113ab1714b9
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.openlocfilehash: b1b5e286e08a8b6b4efe225a176e76023f9fdd20
+ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/16/2019
-ms.locfileid: "59619259"
+ms.lasthandoff: 05/08/2019
+ms.locfileid: "65405237"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -76,6 +76,35 @@ Gli sviluppatori possono ora controllare anche in modo preciso quando vengono ag
 
 Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione supportata, aggiungere in modo esplicito un riferimento al pacchetto al provider di database di EF Core che verrà usato dall'applicazione.
 
+## <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>Lo strumento della riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK
+
+[Problema n. 14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
+
+Questa modifica è stato introdotta in EF Core 3.0-preview 4 e nella versione corrispondente di .NET Core SDK.
+
+**Comportamento precedente**
+
+Prima della versione 3.0, lo strumento `dotnet ef` era incluso in .NET Core SDK ed era immediatamente disponibile dalla riga di comando di qualsiasi progetto senza richiedere passaggi aggiuntivi. 
+
+**Nuovo comportamento**
+
+A partire dalla versione 3.0, .NET SDK non includere lo strumento `dotnet ef` pertanto, prima di poterlo usare, è necessario installarlo in modo esplicito come strumento locale o globale. 
+
+**Perché?**
+
+Questa modifica consente di distribuire e aggiornare `dotnet ef` come uno strumento della riga di comando di .NET in NuGet, coerentemente con il fatto che anche EF Core 3.0 viene distribuito come pacchetto NuGet.
+
+**Mitigazioni**
+
+Per essere in grado di gestire le migrazioni o eseguire lo scaffolding di `DbContext`, installare `dotnet-ef` usando il comando `dotnet tool install`.
+Per installarlo come strumento globale, ad esempio, digitare questo comando:
+
+  ``` console
+  $ dotnet tool install --global dotnet-ef --version <exact-version>
+  ```
+
+È inoltre possibile ottenerlo come strumento locale quando si ripristinano le dipendenze di un progetto che lo dichiara come dipendenza di strumenti utilizzando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
+
 ## <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati
 
 [Problema n. 10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
@@ -109,7 +138,7 @@ Si noti che entrambe le query precedenti produrranno lo stesso codice SQL con pa
 
 **Perché?**
 
-Con gli overload di metodi come questi, è molto semplice chiamare accidentalmente il metodo con stringa non elaborata anche se l'intento era chiamare il metodo con stringa interpolata e viceversa.
+Con gli overload di metodi come questi, è molto facile chiamare accidentalmente il metodo con stringa non elaborata anche se l'intento era chiamare il metodo con stringa interpolata e viceversa.
 Il risultato potrebbero essere query senza parametri, quando invece è prevista la parametrizzazione.
 
 **Mitigazioni**
