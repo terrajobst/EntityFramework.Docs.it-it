@@ -3,12 +3,12 @@ title: Considerazioni sulle prestazioni per EF4 EF5 ed EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-ms.openlocfilehash: 4c1f03533cf6df49555c3ef8d09d5949b9a3335c
-ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
+ms.openlocfilehash: f8fa1001c85366e169cf50e89efdb65bd92b671e
+ms.sourcegitcommit: f277883a5ed28eba57d14aaaf17405bc1ae9cf94
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/21/2019
-ms.locfileid: "56459211"
+ms.lasthandoff: 05/18/2019
+ms.locfileid: "65874615"
 ---
 # <a name="performance-considerations-for-ef-4-5-and-6"></a>Considerazioni sulle prestazioni per Entity Framework 4, 5 e 6
 David Obando, Eric Dettinger e ad altri utenti
@@ -119,9 +119,9 @@ Usando le visualizzazioni pregenerate sposta il costo della generazione di visua
 
 Abbiamo visto un numero di case in cambio le associazioni nel modello da associazioni indipendenti per associazioni di chiavi esterne notevolmente migliorato il tempo impiegato nella generazione di visualizzazioni.
 
-Per illustrare questo miglioramento, viene generato due versioni del modello Navision utilizzando EDMGen. *Nota: seeappendix Cfor una descrizione del modello Navision.* Il modello Navision è interessante per questo esercizio a causa di un relativo quantità molto elevata di entità e relazioni tra di essi.
+Per illustrare questo miglioramento, viene generato due versioni del modello Navision utilizzando EDMGen. *Nota: vedere l'appendice C per una descrizione del modello Navision.* Il modello Navision è interessante per questo esercizio a causa di un relativo quantità molto elevata di entità e relazioni tra di essi.
 
-È stata generata una versione di questo modello di dimensioni molto grande con associazioni di chiavi esterne e l'altro è stato generato con associazioni indipendenti. Abbiamo quindi programmato il tempo impiegato per generare le visualizzazioni per ogni modello. Test Framework5 entità utilizzato il metodo GenerateViews() dalla classe EntityViewGenerator per generare le visualizzazioni, mentre il test di Entity Framework 6 usato il metodo GenerateViews() dalla classe StorageMappingItemCollection sia. Ciò a causa di un codice ristrutturazione che si sono verificati nella codebase Entity Framework 6.
+È stata generata una versione di questo modello di dimensioni molto grande con associazioni di chiavi esterne e l'altro è stato generato con associazioni indipendenti. Abbiamo quindi programmato il tempo impiegato per generare le visualizzazioni per ogni modello. Entity Framework 5 test usato il metodo GenerateViews() dalla classe EntityViewGenerator per generare le visualizzazioni, mentre il test di Entity Framework 6 usato il metodo GenerateViews() dalla classe StorageMappingItemCollection sia. Ciò a causa di un codice ristrutturazione che si sono verificati nella codebase Entity Framework 6.
 
 Usa Entity Framework 5, generazione di visualizzazioni per il modello con le chiavi esterne sono necessari 65 minuti in un computer di laboratorio. Non è noto quanto tempo ci sarebbero voluti per generare le visualizzazioni per il modello utilizzato associazioni indipendenti. È stato lasciato il test in esecuzione per più di un mese prima che il computer è stato riavviato nel nostro laboratorio per installare gli aggiornamenti mensili.
 
@@ -240,7 +240,7 @@ Si noti che il timer di eliminazione della cache viene avviato quando sono prese
 
 #### <a name="323-test-metrics-demonstrating-query-plan-caching-performance"></a>3.2.3 le metriche che illustra il piano di query la memorizzazione nella cache delle prestazioni dei test
 
-Per illustrare l'effetto del piano di query la cache per le prestazioni dell'applicazione, abbiamo eseguito un test in cui viene eseguito un numero di query Entity SQL rispetto al modello Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query, che sono stati eseguiti. In questo test, è innanzitutto scorrere l'elenco delle query ed eseguite una volta ciascuno per aggiungerli alla cache (se è abilitata la memorizzazione nella cache). Questo passaggio è untimed. Successivamente, abbiamo sospensione il thread principale per oltre 60 secondi per consentire cache iperparametri per avvengono; Infine, viene iterato più il tempo di elenco un 2nd per eseguire le query memorizzate nella cache. Inoltre, egli cache dei piani di SQL Server viene scaricato prima che ogni set di query viene eseguita in modo che i tempi che si ottengono con precisione riflettono il vantaggio dato dalla cache dei piani di query.
+Per illustrare l'effetto del piano di query la cache per le prestazioni dell'applicazione, abbiamo eseguito un test in cui viene eseguito un numero di query Entity SQL rispetto al modello Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query, che sono stati eseguiti. In questo test, è innanzitutto scorrere l'elenco delle query ed eseguite una volta ciascuno per aggiungerli alla cache (se è abilitata la memorizzazione nella cache). Questo passaggio è untimed. Successivamente, abbiamo sospensione il thread principale per oltre 60 secondi per consentire cache iperparametri per avvengono; Infine, viene iterato più il tempo di elenco un 2nd per eseguire le query memorizzate nella cache. Inoltre, la cache dei piani di SQL Server viene scaricata prima dell'esecuzione di ogni set di query in modo che i tempi che si ottengono con precisione riflettono il vantaggio dato dalla cache dei piani di query.
 
 ##### <a name="3231-test-results"></a>3.2.3.1 i risultati dei test
 
@@ -487,7 +487,7 @@ Una versione più veloce di questo stesso codice comporta la chiamata di Skip co
 
 ``` csharp
 var customers = context.Customers.OrderBy(c => c.LastName);
-for (var i = 0; i \< count; ++i)
+for (var i = 0; i < count; ++i)
 {
     var currentCustomer = customers.Skip(() => i).FirstOrDefault();
     ProcessCustomer(currentCustomer);
