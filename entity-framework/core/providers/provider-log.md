@@ -62,7 +62,7 @@ Si noti che molte delle [a livello di applicazione delle modifiche di rilievo](.
   * Convenzione impostare i servizi sono stati modificati. I provider devono ora ereditano da "ProviderConventionSet" o "RelationalConventionSet".
   * Le personalizzazioni possono essere aggiunti tramite `IConventionSetCustomizer` servizi, ma ciò è dovrà essere utilizzato da altre estensioni, non i provider.
   * Le convenzioni usate in fase di esecuzione devono essere risolte dal `IConventionSetBuilder`.
-* https://github.com/aspnet/EntityFrameworkCore/pull/15288 -Seeding dei dati è stata sottoposta a refactoring in un'API pubblica per evitare la necessità di usare tipi interni. Questo dovrebbe influire solo i provider non relazionali, poiché il seeding viene gestito dalla classe relazionale di base per tutti i provider relazionali.
+* [https://github.com/aspnet/EntityFrameworkCore/pull/15288](https://github.com/aspnet/EntityFrameworkCore/pull/15288) -Seeding dei dati è stata sottoposta a refactoring in un'API pubblica per evitare la necessità di usare tipi interni. Questo dovrebbe influire solo i provider non relazionali, poiché il seeding viene gestito dalla classe relazionale di base per tutti i provider relazionali.
 
 ## <a name="21-----22"></a>2.1 ---> 2.2
 
