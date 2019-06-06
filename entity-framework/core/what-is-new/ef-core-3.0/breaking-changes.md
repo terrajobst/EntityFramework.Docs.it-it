@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: b1b5e286e08a8b6b4efe225a176e76023f9fdd20
-ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
+ms.openlocfilehash: faae0153e0f2bdd42d3b316582dfcab88d9ceb5b
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/08/2019
-ms.locfileid: "65405237"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452291"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -88,7 +88,7 @@ Prima della versione 3.0, lo strumento `dotnet ef` era incluso in .NET Core SDK 
 
 **Nuovo comportamento**
 
-A partire dalla versione 3.0, .NET SDK non includere lo strumento `dotnet ef` pertanto, prima di poterlo usare, è necessario installarlo in modo esplicito come strumento locale o globale. 
+A partire dalla versione 3.0, .NET SDK non include lo strumento `dotnet ef` pertanto, prima di poterlo usare, è necessario installarlo in modo esplicito come strumento locale o globale. 
 
 **Perché?**
 
@@ -1215,7 +1215,7 @@ SET GuidColumn = hex(substr(GuidColumn, 4, 1)) ||
 WHERE typeof(GuidColumn) == 'blob';
 ```
 
-In EF Core è anche possibile continuare a usare il comportamento precedente configurando un convertitore di valori in queste proprietà.
+In EF Core è anche possibile continuare a usare il comportamento precedente configurando un convertitore di valori per queste proprietà.
 
 ``` csharp
 modelBuilder
@@ -1256,7 +1256,7 @@ SET CharColumn = char(CharColumn)
 WHERE typeof(CharColumn) = 'integer';
 ```
 
-In EF Core è anche possibile continuare a usare il comportamento precedente configurando un convertitore di valori in queste proprietà.
+In EF Core è anche possibile continuare a usare il comportamento precedente configurando un convertitore di valori per queste proprietà.
 
 ``` csharp
 modelBuilder
@@ -1277,7 +1277,7 @@ Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
-Gli ID di migrazione venivano inavvertitamente generati usando con il calendario delle impostazioni cultura correnti.
+Gli ID di migrazione venivano inavvertitamente generati usando il calendario delle impostazioni cultura correnti.
 
 **Nuovo comportamento**
 

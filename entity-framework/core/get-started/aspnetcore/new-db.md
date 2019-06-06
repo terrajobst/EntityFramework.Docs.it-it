@@ -5,12 +5,12 @@ ms.author: riande
 ms.date: 08/03/2018
 ms.assetid: e153627f-f132-4c11-b13c-6c9a607addce
 uid: core/get-started/aspnetcore/new-db
-ms.openlocfilehash: fbc1a00d6d6d0624bcbbfa1e51f4e21a915baaaa
-ms.sourcegitcommit: f277883a5ed28eba57d14aaaf17405bc1ae9cf94
+ms.openlocfilehash: 2eb1668b8c077fabc9cb21088452fd1bead7ff22
+ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/18/2019
-ms.locfileid: "65874572"
+ms.lasthandoff: 05/31/2019
+ms.locfileid: "66452244"
 ---
 # <a name="getting-started-with-ef-core-on-aspnet-core-with-a-new-database"></a>Introduzione a EF Core in ASP.NET Core con un nuovo database
 
@@ -226,8 +226,12 @@ dotnet run
 
   ![Pagina Index (Indice)](_static/index-new-db.png)
 
-## <a name="additional-resources"></a>Risorse aggiuntive
+## <a name="additional-tutorials"></a>Esercitazioni aggiuntive
 
-* [Esercitazione: Introduzione a EF Core in ASP.NET Core con un nuovo database usando SQLite](xref:core/get-started/netcore/new-db-sqlite)
-* [Introduzione all'uso di Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start) o [Introduzione ad ASP.NET Core MVC](/aspnet/core/tutorials/first-mvc-app/start-mvc)
-* [Esercitazione: Razor Pages con Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro) o [Introduzione a EF Core in un'app Web ASP.NET MVC](/aspnet/core/data/ef-mvc/intro)
+* [Introduzione a EF Core in ASP.NET Core con un nuovo database usando SQLite](xref:core/get-started/netcore/new-db-sqlite)
+* ASP.NET Core MVC:
+  * [Introduzione ad ASP.NET Core MVC](/aspnet/core/tutorials/first-mvc-app/start-mvc)
+  * [Introduzione a EF Core in un'app Web ASP.NET MVC](/aspnet/core/data/ef-mvc/intro)
+* [Razor Pages](/aspnet/core/razor-pages/index):
+  * [Introduzione all'uso di Razor Pages in ASP.NET Core](/aspnet/core/tutorials/razor-pages/razor-pages-start)
+  * [Razor Pages con Entity Framework Core in ASP.NET Core](https://docs.microsoft.com/aspnet/core/data/ef-rp/intro)
