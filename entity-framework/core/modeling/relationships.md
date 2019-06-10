@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
 uid: core/modeling/relationships
-ms.openlocfilehash: 9ef1a9269fc99f5b27a81c11a161ed5f9d74180d
-ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
+ms.openlocfilehash: 793401362788e865c89ce01b6246b1ba14c36c8a
+ms.sourcegitcommit: 8b9568211d37a1c36da9533fa1ac2ef063b0bf8c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/22/2019
-ms.locfileid: "59929937"
+ms.lasthandoff: 06/08/2019
+ms.locfileid: "66815005"
 ---
 # <a name="relationships"></a>Relazioni
 
@@ -140,6 +140,12 @@ Il listato di codice seguente viene illustrato come configurare una chiave ester
 È possibile usare l'overload dei valori della `HasForeignKey(...)` per configurare una proprietà shadow come chiave esterna (vedere [delle proprietà Shadow](shadow-properties.md) per altre informazioni). È consigliabile aggiungere in modo esplicito la proprietà shadow per il modello prima di usarlo come chiave esterna (come illustrato di seguito).
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/ShadowForeignKey.cs#Sample)]
+
+### <a name="without-navigation-property"></a>Senza proprietà di navigazione
+
+Non è necessario fornire una proprietà di navigazione. È possibile fornire semplicemente una chiave esterna su un lato della relazione.
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/Relationships/NoNavigation.cs?highlight=14-17)]
 
 ### <a name="principal-key"></a>Chiave dell'entità
 
