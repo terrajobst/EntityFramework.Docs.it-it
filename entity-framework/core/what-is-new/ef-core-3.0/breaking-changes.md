@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: faae0153e0f2bdd42d3b316582dfcab88d9ceb5b
-ms.sourcegitcommit: ea1cdec0b982b922a59b9d9301d3ed2b94baca0f
+ms.openlocfilehash: 9112d8d235237e68232aac54453d584af0edb524
+ms.sourcegitcommit: b188194a1901f4d086d05765cbc5c9b8c9dc5eed
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/31/2019
-ms.locfileid: "66452291"
+ms.lasthandoff: 06/11/2019
+ms.locfileid: "66829494"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -25,7 +25,7 @@ Le interruzioni nelle nuove funzionalità introdotte da un'anteprima 3.0 a un'al
 [Problema n. 14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [Vedere anche il problema n. 12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -80,7 +80,7 @@ Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione
 
 [Problema n. 14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
 
-Questa modifica è stato introdotta in EF Core 3.0-preview 4 e nella versione corrispondente di .NET Core SDK.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4 e nella versione corrispondente di .NET Core SDK.
 
 **Comportamento precedente**
 
@@ -144,6 +144,28 @@ Il risultato potrebbero essere query senza parametri, quando invece è prevista 
 **Mitigazioni**
 
 Passare all'uso dei nuovi nomi di metodo.
+
+## <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>I metodi FromSql possono essere specificati solo in radici di query
+
+[Problema n. 15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
+
+**Comportamento precedente**
+
+Prima di EF Core 3.0, il metodo `FromSql` poteva essere specificato in un punto qualsiasi nella query.
+
+**Nuovo comportamento**
+
+A partire da EF Core 3.0, i nuovi metodi `FromSqlRaw` e `FromSqlInterpolated` (che sostituiscono`FromSql`) possono essere specificati solo per radici di query, ad esempio direttamente in `DbSet<>`. Qualsiasi tentativo di specificarli altrove causerà un errore di compilazione.
+
+**Perché?**
+
+La specifica di `FromSql` in qualsiasi posizione diversa da un `DbSet` non ha alcun significato aggiuntivo oppure valore aggiunto e può causare ambiguità in determinati scenari.
+
+**Mitigazioni**
+
+Le chiamate di `FromSql` devono essere spostate in modo da comparire direttamente nel `DbSet` a cui si applicano.
 
 ## <a name="query-execution-is-logged-at-debug-level"></a>L'esecuzione di query viene registrata a livello di debug
 
@@ -276,7 +298,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 [Problema n. 12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 5.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 5.
 
 **Comportamento precedente**
 
@@ -386,7 +408,7 @@ Modificare la configurazione delle relazioni dei tipi di proprietà per usare la
 
 [Problema n. 9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -421,7 +443,7 @@ Se il modello include una tabella condivisa dipendente con tutte le colonne faco
 
 [Problema n. 14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -473,7 +495,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 [Problema n. 13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -604,7 +626,7 @@ Se la proprietà è stata progettata per essere la chiave esterna e di conseguen
 
 [Problema n. 14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -656,7 +678,7 @@ using (new TransactionScope())
 
 [Problema n. 6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -698,7 +720,7 @@ Questa modifica è stata apportata per impedire a EF Core di attivare per errore
 
 **Mitigazioni**
 
-È possibile ripristinare il comportamento delle versioni precedenti alla versione 3.0 tramite la configurazione della modalità di accesso delle proprietà nell'API Fluent modelBuilder.
+È possibile ripristinare il comportamento delle versioni precedenti alla versione 3.0 tramite la configurazione della modalità di accesso delle proprietà in `ModelBuilder`.
 Ad esempio:
 
 ```C#
@@ -709,7 +731,7 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 
 [Problema n. 12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -738,7 +760,7 @@ modelBuilder
 
 ## <a name="field-only-property-names-should-match-the-field-name"></a>I nomi delle proprietà solo campo devono corrispondere al nome di campo
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -786,7 +808,7 @@ modelBuilder
 
 [Problema n. 14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -836,7 +858,7 @@ Chiamare `ChgangeTracker.DetectChanges()` in modo esplicito prima di chiamare `E
 
 [Problema n. 14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -922,7 +944,7 @@ Tutte le implementazioni di `IDbContextOptionsExtension` dovranno essere aggiorn
 
 [Problema n. 12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -981,7 +1003,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 [Problema n. 9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1018,7 +1040,7 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 
 [Problema n. 15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1117,7 +1139,7 @@ Usare la nuova API, come illustrato in precedenza.
 
 [Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
-Questa modifica verrà introdotta in EF Core 3.0 anteprima 4.
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Nuovo comportamento**
 
@@ -1132,6 +1154,28 @@ Le proprietà seguenti sono state convertite in metodi di estensione:
 **Perché?**
 
 Questa modifica semplifica l'implementazione delle interfacce menzionate in precedenza.
+
+**Mitigazioni**
+
+Usare i nuovi metodi di estensione.
+
+## <a name="provider-specific-metadata-api-changes"></a>Modifiche dell'API dei metadati specifiche del provider
+
+[Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
+
+**Nuovo comportamento**
+
+I metodi di estensione specifici del provider verranno resi flat:
+
+* `IProperty.Relational().ColumnName` -> `IProperty.GetColumnName()`
+* `IEntityType.SqlServer().IsMemoryOptimized` -> `IEntityType.GetSqlServerIsMemoryOptimized()`
+* `PropertyBuilder.UseSqlServerIdentityColumn()` -> `PropertyBuilder.ForSqlServerUseIdentityColumn()`
+
+**Perché?**
+
+Questa modifica semplifica l'implementazione dei metodi di estensione menzionati in precedenza.
 
 **Mitigazioni**
 
