@@ -3,12 +3,12 @@ title: Utilizzo dei valori delle proprietà - Entity Framework 6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-ms.openlocfilehash: 97902021a671dea9854a365dc2f10eaecb9e5ab8
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: afde503bb4ed15fcf83a57053541cd5da8c89835
+ms.sourcegitcommit: 50521b4a2f71139e6a7210a69ac73da582ef46cf
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45488835"
+ms.lasthandoff: 06/27/2019
+ms.locfileid: "67416667"
 ---
 # <a name="working-with-property-values"></a>Utilizzo di valori di proprietà
 Per la maggior parte Entity Framework si occuperà di stato, i valori originali e i valori correnti delle proprietà delle istanze di entità con rilevamento. Tuttavia, potrebbero esserci alcuni casi, ad esempio gli scenari disconnessi, in cui si desidera visualizzare o modificare le informazioni che EF ha le proprietà. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
@@ -35,7 +35,7 @@ using (var context = new BloggingContext())
     string currentName1 = context.Entry(blog).Property(u => u.Name).CurrentValue;
 
     // Set the Name property to a new value
-    context.Entry(name).Property(u => u.Name).CurrentValue = "My Fancy Blog";
+    context.Entry(blog).Property(u => u.Name).CurrentValue = "My Fancy Blog";
 
     // Read the current value of the Name property using a string for the property name
     object currentName2 = context.Entry(blog).Property("Name").CurrentValue;
