@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
-ms.openlocfilehash: fa0695be29668789a179f9a0d6330f3361dbac29
-ms.sourcegitcommit: 6c4e06bc62d98442530e93a44725e38e59483d42
+ms.openlocfilehash: 0e35a2b3f89c92b717b8e05c8fa3ae5af5ce8fd3
+ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/17/2019
-ms.locfileid: "58131423"
+ms.lasthandoff: 06/24/2019
+ms.locfileid: "67333783"
 ---
 # <a name="entity-framework-core"></a>Entity Framework Core
 
@@ -23,7 +23,7 @@ EF Core supporta molti motori di database. Per informazioni dettagliate, vedere 
 
 Con Entity Framework Core, l'accesso ai dati viene eseguito tramite un modello. Un modello è costituito da classi di entità e da un contesto dell'oggetto che rappresenta una sessione con il database che consente di eseguire una query e salvare i dati. Per altre informazioni, vedere [Creazione di un modello](modeling/index.md).
 
-È possibile generare un modello da un database esistente, gestire il codice di un modello in modo che corrisponda al database o usare migrazioni di Entity Framework per creare un database a partire dal modello e quindi svilupparlo man mano che il modello cambia nel tempo.
+È possibile generare un modello da un database esistente, scrivere manualmente il codice di un modello in modo che corrisponda al database o usare [migrazioni di Entity Framework](managing-schemas/migrations/index.md) per creare un database a partire dal modello e quindi svilupparlo man mano che il modello cambia nel tempo.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
