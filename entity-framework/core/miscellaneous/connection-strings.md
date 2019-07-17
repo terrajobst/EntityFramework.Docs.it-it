@@ -1,15 +1,15 @@
 ---
-title: Connection Strings - EF Core
+title: Stringhe di connessione - EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
-ms.openlocfilehash: 52a8527170845d3e73ebcec518713ade3f3844f0
-ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
+ms.openlocfilehash: c306f9ca7a51fc9e3db18e883fd44f56dd1a3cb4
+ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/24/2019
-ms.locfileid: "67333845"
+ms.lasthandoff: 07/17/2019
+ms.locfileid: "68286454"
 ---
 # <a name="connection-strings"></a>Stringhe di connessione
 
@@ -17,7 +17,7 @@ La maggior parte dei provider di database richiede una qualche forma di stringa 
 
 ## <a name="net-framework-applications"></a>Applicazioni .NET framework
 
-Le applicazioni .NET framework, ad esempio WinForms, WPF, Console e ASP.NET 4, hanno un modello di stringa di connessione collaudate e testate. La stringa di connessione deve essere aggiunti al file app. config delle applicazioni (Web. config se si usa ASP.NET). Se la stringa di connessione contiene informazioni riservate, ad esempio nome utente e password, è possibile proteggere il contenuto del file di configurazione utilizzando [la configurazione protetta](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
+Le applicazioni .NET framework, ad esempio WinForms, WPF, Console e ASP.NET 4, hanno un modello di stringa di connessione collaudate e testate. La stringa di connessione deve essere aggiunti al file app. config dell'applicazione (Web. config se si usa ASP.NET). Se la stringa di connessione contiene informazioni riservate, ad esempio nome utente e password, è possibile proteggere il contenuto del file di configurazione utilizzando [la configurazione protetta](https://docs.microsoft.com/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
