@@ -1,38 +1,38 @@
 ---
-title: Connessione tentativi e la resilienza per la logica - Entity Framework 6
+title: Resilienza della connessione e logica di ripetizione dei tentativi-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 47d68ac1-927e-4842-ab8c-ed8c8698dff2
-ms.openlocfilehash: 7d6aa870cc32a2b344457fbb04525a7c2c8d1c61
-ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
+ms.openlocfilehash: a01216c3399ca4a04943563435eacd0047337a5f
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/03/2019
-ms.locfileid: "55668765"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306571"
 ---
-# <a name="connection-resiliency-and-retry-logic"></a>Logica di tentativi e la resilienza di connessione
+# <a name="connection-resiliency-and-retry-logic"></a>Resilienza della connessione e logica di ripetizione dei tentativi
 > [!NOTE]
 > **Solo EF6 e versioni successive**: funzionalità, API e altri argomenti discussi in questa pagina sono stati introdotti in Entity Framework 6. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-Applicazioni che si connettono a un server di database sono sempre state vulnerabili alle interruzioni di connessione a causa di errori di back-end e dall'instabilità della rete. Tuttavia, in un ambiente basato su LAN funziona con i server di database dedicato questi errori sono abbastanza rari che per la logica aggiuntiva per gestire tali errori non è spesso necessaria. Con l'avvento del cloud basati su server di database, ad esempio Database SQL di Azure e le connessioni su reti meno affidabile che è ora più comune per le interruzioni di connessione si verifichi. Probabilmente a causa di tecniche difensive che Usa database per garantire l'equità del servizio, ad esempio la limitazione delle richieste di connessione, o di instabilità della rete causando i timeout intermittenti e altri errori temporanei di cloud.  
+Le applicazioni che si connettono a un server di database sono sempre state vulnerabili alle interruzioni di connessione a causa di errori di back-end e di instabilità della rete Tuttavia, in un ambiente basato su LAN che utilizza server di database dedicati questi errori sono abbastanza rari che la logica aggiuntiva per gestire tali errori non è spesso necessaria. Con l'incremento dei server di database basati su cloud, ad esempio il database SQL di Windows Azure e le connessioni su reti meno affidabili, è ora più comune che si verifichino interruzioni di connessione. Questo problema può essere dovuto a tecniche difensive che i database cloud utilizzano per garantire la correttezza del servizio, ad esempio la limitazione della connessione, o l'instabilità della rete, causando timeout intermittenti e altri errori temporanei.  
 
-Resilienza della connessione si intende la possibilità di ritentare automaticamente i comandi che non riescono a causa di queste interruzioni di connessione a Entity Framework.  
+La resilienza delle connessioni si riferisce alla possibilità per EF di ritentare automaticamente i comandi che non riescono a causa di questi interruzioni di connessione  
 
 ## <a name="execution-strategies"></a>Strategie di esecuzione  
 
-Nuovi tentativi di connessione viene preso in considerazione da un'implementazione dell'interfaccia IDbExecutionStrategy. Le implementazioni del IDbExecutionStrategy saranno ritenuto responsabile per l'accettazione di un'operazione e, se si verifica un'eccezione, che determina se un nuovo tentativo è appropriato e nuovo tentativo in caso. Esistono quattro strategie di esecuzione forniti con Entity Framework:  
+Il tentativo di connessione viene gestito da un'implementazione dell'interfaccia IDbExecutionStrategy. Le implementazioni di IDbExecutionStrategy saranno responsabili dell'accettazione di un'operazione e, se si verifica un'eccezione, che determina se un nuovo tentativo è appropriato e se è in corso un nuovo tentativo. Con EF sono disponibili quattro strategie di esecuzione:  
 
-1. **DefaultExecutionStrategy**: questa strategia di esecuzione non ripeterà tutte le operazioni, è il valore predefinito per i database diversi da sql server.  
-2. **DefaultSqlExecutionStrategy**: si tratta di una strategia di esecuzione interna che viene usata per impostazione predefinita. Questa strategia non tenterà affatto, tuttavia, eseguirà il wrapping di tutte le eccezioni che potrebbero essere temporanee per informare gli utenti che desiderano abilitare la resilienza di connessione.  
-3. **DbExecutionStrategy**: questa classe può fungere da una classe di base per altre strategie di esecuzione, tra cui i proprio quelle personalizzate. Implementa un criterio di ripetizione esponenziale, in cui il numero di tentativi iniziale viene eseguita con zero ritardo e ritardo aumenta in misura esponenziale fino a quando non viene raggiunto il numero massimo di tentativi. Questa classe ha un metodo ShouldRetryOn astratto che può essere implementato nelle strategie di esecuzione derivata per controllare le eccezioni che devono essere riprovate.  
-4. **SqlAzureExecutionStrategy**: questa strategia di esecuzione eredita da DbExecutionStrategy e ritenterà in caso di eccezioni noti per essere eventualmente temporaneo quando si lavora con Database SQL di Azure.
+1. **DefaultExecutionStrategy**: questa strategia di esecuzione non tenta di eseguire alcuna operazione. si tratta dell'impostazione predefinita per i database diversi da SQL Server.  
+2. **DefaultSqlExecutionStrategy**: si tratta di una strategia di esecuzione interna utilizzata per impostazione predefinita. Questa strategia non esegue alcun tentativo, tuttavia, eseguirà il wrapping di tutte le eccezioni che potrebbero essere temporanee per informare gli utenti che potrebbero voler abilitare la resilienza della connessione.  
+3. **DbExecutionStrategy**: questa classe è adatta come classe base per altre strategie di esecuzione, incluse quelle personalizzate. Implementa un criterio di ripetizione esponenziale, dove il tentativo iniziale si verifica con un ritardo zero e il ritardo aumenta in modo esponenziale fino a quando non viene raggiunto il numero massimo di tentativi. Questa classe dispone di un metodo astratto ShouldRetryOn che può essere implementato in strategie di esecuzione derivate per controllare quali eccezioni devono essere ritentate.  
+4. **SqlAzureExecutionStrategy**: questa strategia di esecuzione eredita da DbExecutionStrategy e tenterà di ritentare le eccezioni che potrebbero essere transitorie quando si lavora con il database SQL di Azure.
 
 > [!NOTE]
-> Strategie di esecuzione 2 e 4 sono inclusi nel provider di Sql Server fornito con Entity Framework, ovvero nell'assembly EntityFramework. SqlServer e sono progettate per funzionare con SQL Server.  
+> Le strategie di esecuzione 2 e 4 sono incluse nel provider SQL Server fornito con EF, che si trova nell'assembly EntityFramework. SqlServer e sono progettate per funzionare con SQL Server.  
 
 ## <a name="enabling-an-execution-strategy"></a>Abilitazione di una strategia di esecuzione  
 
-È il modo più semplice per indicare a Entity Framework da usare una strategia di esecuzione con il metodo SetExecutionStrategy il [DbConfiguration](~/ef6/fundamentals/configuring/code-based.md) classe:  
+Il modo più semplice per indicare a EF di usare una strategia di esecuzione è con il metodo SetExecutionStrategy della classe [DbConfiguration](~/ef6/fundamentals/configuring/code-based.md) :  
 
 ``` csharp
 public class MyConfiguration : DbConfiguration
@@ -44,13 +44,13 @@ public class MyConfiguration : DbConfiguration
 }
 ```  
 
-Questo codice indica a Entity Framework da usare il SqlAzureExecutionStrategy quando ci si connette a SQL Server.  
+Questo codice indica a EF di usare SqlAzureExecutionStrategy durante la connessione a SQL Server.  
 
-## <a name="configuring-the-execution-strategy"></a>Configurare la strategia di esecuzione  
+## <a name="configuring-the-execution-strategy"></a>Configurazione della strategia di esecuzione  
 
-Il costruttore di SqlAzureExecutionStrategy può accettare due parametri, MaxRetryCount e MaxDelay. Conteggio MaxRetry è il numero massimo di volte in cui la strategia eseguirà un nuovo tentativo. Il MaxDelay è un oggetto TimeSpan che rappresenta il ritardo massimo tra i tentativi che utilizzerà la strategia di esecuzione.  
+Il costruttore di SqlAzureExecutionStrategy può accettare due parametri, MaxRetryCount e MaxDelay. MaxRetry count è il numero massimo di volte in cui la strategia tenterà di riprovare. MaxDelay è un intervallo di tempo che rappresenta il ritardo massimo tra i tentativi che la strategia di esecuzione utilizzerà.  
 
-Per impostare il numero massimo di tentativi per il ritardo massimo a 30 secondi e 1 si farebbe execue quanto segue:  
+Per impostare il numero massimo di tentativi su 1 e il ritardo massimo su 30 secondi, eseguire le operazioni seguenti:  
 
 ``` csharp
 public class MyConfiguration : DbConfiguration
@@ -64,15 +64,15 @@ public class MyConfiguration : DbConfiguration
 }
 ```  
 
-Il SqlAzureExecutionStrategy verranno effettuati tentativi immediatamente la prima volta che si verifica un errore temporaneo, ma verrà ritardata più tra i singoli tentativi fino a quando non un il numero massimo di tentativi limite viene superata o il tempo totale raggiunge il ritardo massimo.  
+Il SqlAzureExecutionStrategy tenterà immediatamente la prima volta che si verifica un errore temporaneo, ma ritarderà tra un tentativo e l'altro fino a quando non viene superato il limite massimo di tentativi o il tempo totale raggiunge il ritardo massimo.  
 
-Le strategie di esecuzione riproverà solo un numero limitato di eccezioni che sono in genere tansient, sarà comunque necessario gestire gli altri errori, oltre a rilevare l'eccezione RetryLimitExceeded nel caso in cui un errore non è temporaneo o richiede troppo tempo risolvere se stessa.  
+Le strategie di esecuzione ripeteranno solo un numero limitato di eccezioni generalmente temporanee, sarà comunque necessario gestire altri errori, oltre a intercettare l'eccezione RetryLimitExceeded per il caso in cui un errore non è temporaneo o impiega troppo tempo per la risoluzione stesso.  
 
-Esistono alcune note delle limitazioni quando si usa una strategia di esecuzione di nuovo tentativo:  
+Esistono alcune limitazioni quando si usa una strategia di esecuzione di ripetizione dei tentativi:  
 
-## <a name="streaming-queries-are-not-supported"></a>Non sono supportate le query di streaming  
+## <a name="streaming-queries-are-not-supported"></a>Le query di streaming non sono supportate  
 
-Per impostazione predefinita, Entity Framework 6 e versioni successive nel buffer i risultati della query anziché streaming li. Se si desidera avere risultati trasmessi è possibile usare il metodo AsStreaming per modificare un LINQ in query di entità in streaming.  
+Per impostazione predefinita, EF6 e versioni successive registreranno i risultati della query anziché eseguirne il flusso. Se si desidera che i risultati vengano trasmessi, è possibile utilizzare il metodo AsStreaming per modificare una query LINQ to Entities per la trasmissione.  
 
 ``` csharp
 using (var db = new BloggingContext())
@@ -84,15 +84,15 @@ using (var db = new BloggingContext())
 }
 ```  
 
-Flusso non è supportato quando viene registrata una nuovo tentativo strategia di esecuzione. Questa limitazione esiste perché la connessione è stato possibile eliminare più tramite i risultati restituiti. In questo caso, EF deve eseguire di nuovo l'intera query ma non dispone di alcun modo affidabile di sapere quali risultati già restituiti (dati potrebbero essere cambiato dall'invio della query iniziale, i risultati potrebbero tornare in un ordine diverso, i risultati potrebbero non avere un identificatore univoco e così via.).  
+Il flusso non è supportato quando viene registrata una strategia di esecuzione ritentata. Questa limitazione è dovuta al fatto che la connessione può essere trasformata in modo parziale attraverso i risultati restituiti. Quando si verifica questa situazione, EF deve eseguire di nuovo l'intera query, ma non dispone di un modo affidabile per sapere quali risultati sono già stati restituiti (i dati potrebbero essere stati modificati dopo l'invio della query iniziale, i risultati potrebbero essere restituiti in un ordine diverso, i risultati potrebbero non avere un identificatore univoco e così via).  
 
-## <a name="user-initiated-transactions-are-not-supported"></a>Non sono supportate le transazioni avviate dall'utente  
+## <a name="user-initiated-transactions-are-not-supported"></a>Le transazioni avviate dall'utente non sono supportate  
 
-Dopo aver configurato una strategia di esecuzione che genera nuovi tentativi, esistono alcune limitazioni per l'utilizzo di transazioni.  
+Una volta configurata una strategia di esecuzione che comporta nuovi tentativi, esistono alcune limitazioni relative all'utilizzo delle transazioni.  
 
-Per impostazione predefinita, Entity Framework eseguirà gli aggiornamenti di database all'interno di una transazione. Non è necessario eseguire alcuna operazione per abilitare questa opzione, EF sempre viene eseguito automaticamente.  
+Per impostazione predefinita, EF eseguirà tutti gli aggiornamenti del database all'interno di una transazione. Non è necessario eseguire alcuna operazione per abilitare questa operazione, EF esegue sempre questa operazione automaticamente.  
 
-Ad esempio, nel codice seguente SaveChanges viene eseguita automaticamente all'interno di una transazione. Se SaveChanges dovesse avere esito negativo dopo aver inserito tra il nuovo sito, quindi potrebbe essere eseguito il rollback della transazione e nessuna modifica applicata al database. Il contesto è anche disponibile in uno stato che consente a SaveChanges venga nuovamente chiamata per eseguire l'applicazione delle modifiche.  
+Ad esempio, nel codice SaveChanges seguente viene eseguito automaticamente all'interno di una transazione. Se il metodo SaveChanges ha esito negativo dopo l'inserimento di uno dei nuovi siti, viene eseguito il rollback della transazione e non viene applicata alcuna modifica al database. Il contesto viene inoltre lasciato in uno stato che consente di richiamare SaveChanges per ritentare l'applicazione delle modifiche.  
 
 ``` csharp
 using (var db = new BloggingContext())
@@ -103,7 +103,7 @@ using (var db = new BloggingContext())
 }
 ```  
 
-Se non si usa una strategia di esecuzione di nuovo tentativo è possibile eseguire il wrapping di più operazioni in una singola transazione. Ad esempio, il codice seguente esegue il wrapping di due chiamate a SaveChanges in un'unica transazione. Se qualsiasi parte di questa operazione ha esito negativo, nessuna delle modifiche vengono applicate.  
+Quando non si utilizza una strategia di esecuzione di ripetizione di tentativi, è possibile eseguire il wrapping di più operazioni in una singola transazione. Il codice seguente, ad esempio, esegue il wrapping di due chiamate SaveChanges in un'unica transazione. Se una parte di entrambe le operazioni ha esito negativo, non viene applicata nessuna delle modifiche.  
 
 ``` csharp
 using (var db = new BloggingContext())
@@ -122,11 +122,11 @@ using (var db = new BloggingContext())
 }
 ```  
 
-Ciò non è supportato quando si usa una strategia di esecuzione di nuovo tentativo perché EF non tiene conto di qualsiasi operazione precedente e su come eseguire un nuovo tentativo. Ad esempio, se il secondo metodo SaveChanges, l'errore EF non è più ha le informazioni necessarie per ripetere la prima chiamata a SaveChanges.  
+Questa operazione non è supportata quando si usa una strategia di esecuzione di ripetizione dei tentativi perché EF non è a conoscenza di alcuna operazione precedente e come riprovare. Se ad esempio il secondo SaveChanges ha avuto esito negativo, EF non dispone più delle informazioni necessarie per ripetere la prima chiamata a SaveChanges.  
 
-### <a name="workaround-suspend-execution-strategy"></a>Soluzione alternativa: Sospendere una strategia di esecuzione  
+### <a name="workaround-suspend-execution-strategy"></a>Soluzione alternativa: Sospendere la strategia di esecuzione  
 
-Una possibile soluzione alternativa consiste nel sospendere la strategia di esecuzione nuovo tentativo per il frammento di codice che deve usare un utente avviate delle transazioni. Il modo più semplice per eseguire questa operazione consiste nell'aggiungere un flag SuspendExecutionStrategy al codice in base a classe di configurazione e modifica l'espressione lambda strategia di esecuzione per restituire la strategia di esecuzione (non-retying) predefinito quando il flag è impostato.  
+Una possibile soluzione alternativa consiste nel sospendere la strategia di esecuzione del nuovo tentativo per il frammento di codice che deve usare una transazione avviata dall'utente. Il modo più semplice per eseguire questa operazione consiste nell'aggiungere un flag SuspendExecutionStrategy alla classe di configurazione basata su codice e modificare l'espressione lambda della strategia di esecuzione per restituire la strategia di esecuzione predefinita (non di rivendita) quando il flag è impostato.  
 
 ``` csharp
 using System.Data.Entity;
@@ -160,9 +160,9 @@ namespace Demo
 }
 ```  
 
-Si noti che si sta usando CallContext per archiviare il valore del flag. Questo fornisce funzionalità simili all'archiviazione thread-local, ma è possibile usare con il codice asincrono - tra cui query asincrona e risparmiare con Entity Framework.  
+Si noti che si sta usando CallContext per archiviare il valore del flag. Questo fornisce funzionalità simili all'archiviazione locale di thread, ma è sicuro da usare con codice asincrono, inclusa la query asincrona e Salva con Entity Framework.  
 
-È ora possibile sospendere la strategia di esecuzione per la sezione di codice che utilizza una transazione avviata dall'utente.  
+È ora possibile sospendere la strategia di esecuzione per la sezione di codice che usa una transazione avviata dall'utente.  
 
 ``` csharp
 using (var db = new BloggingContext())
@@ -185,11 +185,11 @@ using (var db = new BloggingContext())
 }
 ```  
 
-### <a name="workaround-manually-call-execution-strategy"></a>Soluzione alternativa: Chiamare manualmente strategia di esecuzione  
+### <a name="workaround-manually-call-execution-strategy"></a>Soluzione alternativa: Chiamare manualmente la strategia di esecuzione  
 
-Un'altra possibilità è usare la strategia di esecuzione e assegnargli l'intero set di logica da eseguire, in modo che è possibile riprovare a eseguire tutto ciò che in caso di una delle operazioni manualmente. Tuttavia è necessario sospendere la strategia di esecuzione - uso della tecnica illustrato in precedenza, in modo che i contesti utilizzati all'interno del blocco di codice non irreversibile non tentano di ripetere.  
+Un'altra opzione consiste nel usare manualmente la strategia di esecuzione e assegnarle l'intero set di logica da eseguire, in modo da poter ritentare tutti i tentativi se una delle operazioni ha esito negativo. È ancora necessario sospendere la strategia di esecuzione, usando la tecnica illustrata in precedenza, in modo che tutti i contesti usati all'interno del blocco di codice irreversibile non tentino di riprovare.  
 
-Si noti che i contesti devono essere creati all'interno del blocco di codice per effettuare altri tentativi. Ciò garantisce che sta iniziando con uno stato pulito per ogni nuovo tentativo.  
+Si noti che tutti i contesti devono essere costruiti all'interno del blocco di codice per poter essere ripetuti. In questo modo si inizia con uno stato pulito per ogni nuovo tentativo.  
 
 ``` csharp
 var executionStrategy = new SqlAzureExecutionStrategy();
