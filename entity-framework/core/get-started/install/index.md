@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: 5ebc4edba07063ad5e77154adcde5f2664c0d748
-ms.sourcegitcommit: 85d17524d8e022f933cde7fc848313f57dfd3eb8
+ms.openlocfilehash: db1b83a9222e00a5e226a134085b18247b31f29a
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/06/2019
-ms.locfileid: "55760522"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306477"
 ---
 # <a name="installing-entity-framework-core"></a>Installazione di Entity Framework Core
 
@@ -94,7 +94,7 @@ Gli strumenti CLI di .NET core richiedono .NET Core SDK, indicato in precedenza 
 
 I comandi `dotnet ef` sono inclusi nelle versioni correnti di .NET Core SDK, ma per abilitarli su un progetto specifico è necessario installare il pacchetto `Microsoft.EntityFrameworkCore.Design`:
 
- ``` Console    
+``` Console 
 dotnet add package Microsoft.EntityFrameworkCore.Design 
 ``` 
 
