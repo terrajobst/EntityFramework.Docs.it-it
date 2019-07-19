@@ -3,12 +3,12 @@ title: Filtri di query globali - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: 4afc9fb0338d34845639d57013ac710445321940
-ms.sourcegitcommit: 8f801993c9b8cd8a8fbfa7134818a8edca79e31a
+ms.openlocfilehash: e1cb9f5afc54aaa12e5880ace606277b00911c06
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/14/2019
-ms.locfileid: "59562442"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306464"
 ---
 # <a name="global-query-filters"></a>Filtri di query globali
 
@@ -31,20 +31,20 @@ Prima di tutto, definire le entità:
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Entities)]
 
-Si noti la dichiarazione di un campo __tenantId_ per l'entità _Blog_. Questo verrà usato per associare ogni istanza di Blog a un tenant specifico. Viene anche definita una proprietà _IsDeleted_ per il tipo di entità _Post_. Questa proprietà viene usata per tenere traccia dell'eliminazione temporanea di un'istanza di _Post_. L'istanza è contrassegnata come eliminata senza rimuovere fisicamente i dati sottostanti.
+Si noti la dichiarazione di un campo _tenantId_ per l'entità _Blog_. Questo verrà usato per associare ogni istanza di Blog a un tenant specifico. Viene anche definita una proprietà _IsDeleted_ per il tipo di entità _Post_. Questa proprietà viene usata per tenere traccia dell'eliminazione temporanea di un'istanza di _Post_. L'istanza è contrassegnata come eliminata senza rimuovere fisicamente i dati sottostanti.
 
-A questo punto, configurare i filtri di query in _OnModelCreating_ usando l'API ```HasQueryFilter```.
+A questo punto, configurare i filtri di query in _OnModelCreating_ usando l'API `HasQueryFilter`.
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#Configuration)]
 
 Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno ora applicate automaticamente a tutte le query LINQ per tali tipi.
 
 > [!TIP]
-> Si noti l'uso del campo a livello di istanza di DbContext ```_tenantId```, usato per impostare il tenant corrente. I filtri a livello di modello useranno il valore dell'istanza del contesto corretta, ovvero l'istanza che esegue la query.
+> Si noti l'uso del campo a livello di istanza di DbContext `_tenantId`, usato per impostare il tenant corrente. I filtri a livello di modello useranno il valore dell'istanza del contesto corretta, ovvero l'istanza che esegue la query.
 
 ## <a name="disabling-filters"></a>Disabilitazione dei filtri
 
-È possibile disabilitare i filtri per singole query LINQ usando l'operatore ```IgnoreQueryFilters()```.
+È possibile disabilitare i filtri per singole query LINQ usando l'operatore `IgnoreQueryFilters()`.
 
 [!code-csharp[Main](../../../samples/core/QueryFilters/Program.cs#IgnoreFilters)]
 
