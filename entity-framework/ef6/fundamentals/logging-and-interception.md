@@ -1,30 +1,30 @@
 ---
-title: Registrazione e l'intercettazione di operazioni di database - Entity Framework 6
+title: Registrazione e intercettazione delle operazioni di database-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b5ee7eb1-88cc-456e-b53c-c67e24c3f8ca
-ms.openlocfilehash: 3f06e073f3ab6e46883663620219e302d5db1d60
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: be32ed114269543ac36b256a202e0494d466e4f7
+ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490087"
+ms.lasthandoff: 07/18/2019
+ms.locfileid: "68306537"
 ---
-# <a name="logging-and-intercepting-database-operations"></a>Registrazione e l'intercettazione di operazioni di database
+# <a name="logging-and-intercepting-database-operations"></a>Registrazione e intercettazione delle operazioni di database
 > [!NOTE]
 > **Solo EF6 e versioni successive**: funzionalità, API e altri argomenti discussi in questa pagina sono stati introdotti in Entity Framework 6. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-A partire da Entity Framework 6, ogni volta che Entity Framework comando viene inviato un comando nel database possono essere intercettati dal codice dell'applicazione. Viene in genere utilizzato per l'accesso SQL, ma può anche essere utilizzato per modificare o interrompere il comando.  
+A partire da Entity Framework 6, in qualsiasi momento Entity Framework invia un comando al database, questo comando può essere intercettato dal codice dell'applicazione. Questa operazione viene usata più di frequente per la registrazione di SQL, ma può essere usata anche per modificare o interrompere il comando.  
 
-In particolare, Entity Framework include:  
+In particolare, EF include:  
 
-- Una proprietà di Log per il contesto simile a DataContext.Log in LINQ to SQL  
-- Un meccanismo per personalizzare la formattazione dell'output inviato al Registro  
-- Blocchi predefiniti di basso livello per l'intercettazione consente una maggiore flessibilità di controllo /  
+- Proprietà di log per il contesto simile a DataContext. log in LINQ to SQL  
+- Meccanismo per personalizzare il contenuto e la formattazione dell'output inviato al log  
+- Blocchi predefiniti di basso livello per l'intercettazione che offrono maggiore controllo/flessibilità  
 
-## <a name="context-log-property"></a>Proprietà di contesto del Log  
+## <a name="context-log-property"></a>Proprietà log del contesto  
 
-La proprietà DbContext.Database.Log può essere impostata su un delegato per qualsiasi metodo che accetta una stringa. In genere viene utilizzato con qualsiasi TextWriter impostandolo sul metodo di "Scrittura" di tale oggetto TextWriter. Tutti i SQL generato dal contesto corrente verrà registrato in tale writer. Ad esempio, il codice seguente registrerà SQL nella console:  
+La proprietà DbContext. database. log può essere impostata su un delegato per qualsiasi metodo che accetta una stringa. In genere viene usato con qualsiasi TextWriter impostando il metodo "Write" del TextWriter. Tutti i SQL generati dal contesto corrente verranno registrati nel writer. Il codice seguente, ad esempio, registrerà SQL sulla console:  
 
 ``` csharp
 using (var context = new BlogContext())
@@ -35,9 +35,9 @@ using (var context = new BlogContext())
 }
 ```  
 
-Si noti che tale contesto. Database. log è impostato su console. Write. Questo è tutto ciò che è necessaria per l'accesso SQL nella console.  
+Si noti che context. Database. log è impostato su console. Write. Questo è tutto ciò che serve per accedere a SQL alla console.  
 
-Aggiungere un semplice codice di aggiornamento/inserimento/query in modo che possiamo vedere alcuni output:  
+È ora possibile aggiungere un semplice codice di query/inserimento/aggiornamento per visualizzare un output:  
 
 ``` csharp
 using (var context = new BlogContext())
@@ -94,39 +94,39 @@ WHERE @@ROWCOUNT > 0 AND [Id] = scope_identity()
 -- Completed in 2 ms with result: SqlDataReader
 ```  
 
-(Si noti che questo è l'output presupponendo che le operazioni di inizializzazione del database è già verificato. Se l'inizializzazione del database non era già verificato, vi sarà molto più output che mostra tutte le operazioni migrazioni non dietro le quinte per cercare o creare un nuovo database.)  
+Si noti che si tratta dell'output presumendo che sia già stata eseguita l'inizializzazione del database. Se l'inizializzazione del database non è già stata eseguita, verrà visualizzato molto altro output che Mostra tutte le migrazioni di lavoro eseguite dietro le quinte per verificare o creare un nuovo database.  
 
-## <a name="what-gets-logged"></a>Ciò che viene registrato?  
+## <a name="what-gets-logged"></a>Cosa viene registrato?  
 
-Viene registrata quando è impostata la proprietà del Log di tutti gli elementi seguenti:  
+Quando viene impostata la proprietà log, verranno registrate tutte le operazioni seguenti:  
 
 - SQL per tutti i diversi tipi di comandi. Ad esempio:  
-    - Query, incluse le query LINQ normali, query eSQL e query non elaborate dai metodi, ad esempio SqlQuery  
-    - Gli inserimenti, aggiornamenti ed eliminazioni generate come parte del metodo SaveChanges  
-    - Relazioni caricano query, ad esempio quelli generati dal caricamento lazy  
+    - Query, incluse le query LINQ normali, le query eSQL e le query non elaborate da metodi come SQLQuery  
+    - Inserimenti, aggiornamenti ed eliminazioni generate come parte di SaveChanges  
+    - Relazione che carica query come quelle generate dal caricamento lazy  
 - Parametri  
-- Se viene eseguito in modo asincrono il comando  
-- Un timestamp che indica quando il comando avviato l'esecuzione  
-- Se il comando completato correttamente, non è riuscita generando un'eccezione o, per async, è stata annullata  
-- Alcune indicazioni del valore del risultato  
-- La quantità approssimativa del tempo che necessario per eseguire il comando. Si noti che questo è il tempo dall'invio del comando per ottenere l'oggetto del risultato. Non include il tempo per leggere i risultati.  
+- Indica se il comando viene eseguito in modo asincrono  
+- Timestamp che indica quando è iniziata l'esecuzione del comando  
+- Indica se il comando è stato completato correttamente, non è riuscito generando un'eccezione oppure, per async, è stato annullato  
+- Indicazione del valore del risultato  
+- Quantità approssimativa di tempo impiegato per eseguire il comando. Si noti che questo è il tempo di invio del comando per ottenere nuovamente l'oggetto risultato. Non è incluso il tempo necessario per leggere i risultati.  
 
-Esaminando l'output di esempio sopra riportato, ognuno dei quattro comandi registrati sono:  
+Esaminando l'output di esempio precedente, ognuno dei quattro comandi registrati è:  
 
-- La query risultante dalla chiamata al contesto. Blogs.First  
-    - Si noti che il metodo ToString dell'introduzione di SQL non avrebbero funzionato per questa query perché "First" non è incluso un oggetto IQueryable su cui chiamare ToString  
-- La query risultante dal caricamento lazy di blog. Post  
-    - Si noti che i dettagli dei parametri per il valore della chiave per cui il caricamento lazy è in corso  
-    - Vengono registrate solo le proprietà del parametro che sono impostate su valori non predefiniti. Ad esempio, la proprietà dimensioni solo viene visualizzata se è diverso da zero.  
-- Due comandi risultanti da SaveChangesAsync; una per l'aggiornamento modificare un titolo di post, l'altro per un'operazione di inserimento aggiungere un nuovo post  
-    - Si noti che i dettagli dei parametri per le proprietà di chiave esterna e il titolo  
+- Query risultante dalla chiamata al contesto. Blog. prima  
+    - Si noti che il metodo ToString per ottenere SQL non funzionava per questa query perché "First" non fornisce un oggetto IQueryable su cui è possibile chiamare ToString  
+- Query risultante dal caricamento lazy del Blog. Post  
+    - Si notino i dettagli del parametro per il valore della chiave per cui è in corso il caricamento lazy  
+    - Vengono registrate solo le proprietà del parametro impostate sui valori non predefiniti. Ad esempio, la proprietà Size viene visualizzata solo se è diverso da zero.  
+- Due comandi risultanti da SaveChangesAsync; uno per l'aggiornamento per modificare un titolo post, l'altro per un inserimento per aggiungere un nuovo post  
+    - Si notino i dettagli del parametro per le proprietà FK e title  
     - Si noti che questi comandi vengono eseguiti in modo asincrono  
 
 ## <a name="logging-to-different-places"></a>Registrazione in posizioni diverse  
 
-Come illustrato in precedenza la registrazione per la console è estremamente facile. È inoltre facile accedere alla memoria, file e così via usando diversi tipi di [TextWriter](https://msdn.microsoft.com/library/system.io.textwriter.aspx).  
+Come illustrato sopra, la registrazione alla console è molto semplice. È anche facile accedere a memoria, file e così via usando diversi tipi di TextWriter. [](https://msdn.microsoft.com/library/system.io.textwriter.aspx)  
 
-Se si ha familiarità con LINQ to SQL è possibile notare che in LINQ to SQL con la proprietà di Log è impostata su TextWriter oggetto effettivo (ad esempio, console. Out) mentre in Entity Framework è impostata la proprietà del Log a un metodo che accetta una stringa (ad esempio Write o Console.Out.Write). Il motivo è separare EF da TextWriter mediante l'accettazione di un delegato che può agire come un sink per le stringhe. Ad esempio, si supponga che si dispone già di alcuni framework di registrazione e definisce un metodo di registrazione come illustrato di seguito:  
+Se si ha familiarità con LINQ to SQL si può notare che in LINQ to SQL la proprietà log è impostata sull'oggetto TextWriter effettivo (ad esempio, console. out) mentre in EF la proprietà log è impostata su un metodo che accetta una stringa (ad esempio , Console. Write o console. out. Write). Il motivo è quello di separare EF da TextWriter accettando qualsiasi delegato che può fungere da sink per le stringhe. Si supponga, ad esempio, di avere già un Framework di registrazione e di definire un metodo di registrazione come il seguente:  
 
 ``` csharp
 public class MyLogger
@@ -138,7 +138,7 @@ public class MyLogger
 }
 ```  
 
-Ciò può essere associata a proprietà EF Log simile al seguente:  
+Questa operazione può essere collegata alla proprietà del log EF in questo modo:  
 
 ``` csharp
 var logger = new MyLogger();
@@ -147,19 +147,19 @@ context.Database.Log = s => logger.Log("EFApp", s);
 
 ## <a name="result-logging"></a>Registrazione risultati  
 
-Il logger predefinito registra il testo del comando (SQL), parametri e la riga "Executing" con un timestamp prima il comando viene inviato al database. Una riga "completata" che contiene il tempo trascorso è connesso seguendo l'esecuzione del comando.  
+Il logger predefinito registra il testo del comando (SQL), i parametri e la riga "in esecuzione" con un timestamp prima che il comando venga inviato al database. Una riga "completata" che contiene il tempo trascorso viene registrata dopo l'esecuzione del comando.  
 
-Si noti che per i comandi asincroni la riga "completata" non è connesso fino a quando l'attività asincrona in realtà viene completata, ha esito negativo o viene annullato.  
+Si noti che per i comandi asincroni la riga "completata" non viene registrata fino a quando l'attività asincrona non viene effettivamente completata, non riesce o viene annullata.  
 
-La riga "completata" contiene informazioni diverse a seconda del tipo di comando e indica se l'esecuzione è stata completata.  
+La riga "completata" contiene informazioni diverse a seconda del tipo di comando e se l'esecuzione ha avuto esito positivo o negativo.  
 
-### <a name="successful-execution"></a>Il completamento dell'esecuzione  
+### <a name="successful-execution"></a>Esecuzione completata  
 
-Per i comandi che completano correttamente l'output è "completato in x ms con risultato:" seguita da alcune indicazioni relative Qual era il risultato. Per i comandi che restituiscono il risultato di un lettore dati indicazione è il tipo della [DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx) restituito. Per i comandi che restituiscono un valore integer, ad esempio l'aggiornamento comando illustrato in precedenza il risultato visualizzato è integer.  
+Per i comandi che vengono completati correttamente, l'output è "completato in x ms con risultato:" seguito da un'indicazione del risultato. Per i comandi che restituiscono un lettore di dati, l'indicazione del risultato è il tipo di [DbDataReader](https://msdn.microsoft.com/library/system.data.common.dbdatareader.aspx) restituito. Per i comandi che restituiscono un valore integer, ad esempio il comando Update illustrato sopra, il risultato visualizzato è tale integer.  
 
 ### <a name="failed-execution"></a>Esecuzione non riuscita  
 
-Per i comandi che non soddisfano generando un'eccezione, l'output contiene il messaggio dell'eccezione. Ad esempio, uso SqlQuery per query su una tabella esistente verrà risultato nel registro output simile al seguente:  
+Per i comandi che hanno esito negativo generando un'eccezione, l'output contiene il messaggio dell'eccezione. Se ad esempio si usa sqlQuery per eseguire una query su una tabella esistente, l'output del log potrebbe essere simile al seguente:  
 
 ``` SQL
 SELECT * from ThisTableIsMissing
@@ -169,7 +169,7 @@ SELECT * from ThisTableIsMissing
 
 ### <a name="canceled-execution"></a>Esecuzione annullata  
 
-Per i comandi asincroni in cui l'attività viene annullata il risultato potrebbe essere un errore con un'eccezione, poiché si tratta di provider ADO.NET sottostante spesso funzionamento quando viene effettuato un tentativo di annullamento. Se ciò non accade e l'attività viene annullata normalmente quindi l'output avrà un aspetto simile al seguente:  
+Per i comandi asincroni in cui l'attività viene annullata, il risultato potrebbe essere un errore con un'eccezione, poiché si tratta spesso del provider ADO.NET sottostante quando viene eseguito un tentativo di annullamento. Se questa operazione non viene eseguita e l'attività viene annullata in modo corretto, l'output sarà simile al seguente:  
 
 ```  
 update Blogs set Title = 'No' where Id = -1
@@ -177,24 +177,24 @@ update Blogs set Title = 'No' where Id = -1
 -- Canceled in 1 ms
 ```  
 
-## <a name="changing-log-content-and-formatting"></a>Impostazione del contenuto dei log e la formattazione  
+## <a name="changing-log-content-and-formatting"></a>Modifica del contenuto e della formattazione del log  
 
-Dietro le quinte il database. log proprietà rende l'utilizzo di un oggetto DatabaseLogFormatter. Questo oggetto associa in modo efficace un'implementazione IDbCommandInterceptor (vedere sotto) a un delegato che accetta stringhe e un oggetto DbContext. Ciò significa che in DatabaseLogFormatter vengono chiamati prima e dopo l'esecuzione di comandi da Entity Framework. Questi metodi DatabaseLogFormatter raccogliere e formattare l'output di log e inviarlo al delegato.  
+In copre la proprietà database. log si avvale di un oggetto DatabaseLogFormatter. Questo oggetto associa efficacemente un'implementazione di IDbCommandInterceptor (vedere di seguito) a un delegato che accetta stringhe e un DbContext. Ciò significa che i metodi su DatabaseLogFormatter vengono chiamati prima e dopo l'esecuzione di comandi da EF. Questi metodi DatabaseLogFormatter raccolgono e formattano l'output del log e lo inviano al delegato.  
 
-### <a name="customizing-databaselogformatter"></a>Personalizzazione DatabaseLogFormatter  
+### <a name="customizing-databaselogformatter"></a>Personalizzazione di DatabaseLogFormatter  
 
-Modificando ciò che viene registrato e come viene formattato può essere ottenuto creando una nuova classe che deriva da DatabaseLogFormatter e sovrascrive i metodi appropriati. I metodi più comuni per eseguire l'override sono:  
+La modifica degli elementi registrati e della relativa formattazione può essere eseguita creando una nuova classe che deriva da DatabaseLogFormatter ed esegue l'override dei metodi in base alle esigenze. I metodi più comuni per eseguire l'override sono:  
 
-- LogCommand: eseguire l'Override di questa opzione per cambiare modalità di registrazione comandi prima che vengano eseguite. Per impostazione predefinita LogCommand chiama LogParameter per ogni parametro. è possibile scegliere di eseguire la stessa operazione nell'override o gestire parametri invece in modo diverso.  
-- LogResult: eseguire l'Override per modificare la modalità in cui è connesso il risultato dall'esecuzione di un comando.  
-- LogParameter: eseguire l'Override per modificare la formattazione e il contenuto della registrazione di parametro.  
+- LogCommand: esegue l'override di questo per modificare il modo in cui vengono registrati i comandi prima che vengano eseguiti. Per impostazione predefinita, LogCommand chiama LogParameter per ogni parametro; è possibile scegliere di eseguire la stessa operazione in sostituzione o di gestire i parametri in modo diverso.  
+- LogResult: esegue l'override di questo per modificare il modo in cui viene registrato il risultato dell'esecuzione di un comando.  
+- LogParameter: esegue l'override di questo per modificare la formattazione e il contenuto della registrazione dei parametri.  
 
-Ad esempio, di voler accedere un'unica riga prima di ogni comando viene inviato al database. Questa operazione può essere eseguita con due sostituzioni:  
+Si supponga, ad esempio, di voler registrare solo una singola riga prima che ogni comando venga inviato al database. Questa operazione può essere eseguita con due sostituzioni:  
 
-- Eseguire l'override LogCommand per formattare e scrivere la riga singola di SQL  
-- Eseguire l'override LogResult per non eseguire alcuna operazione.  
+- Eseguire l'override di LogCommand per formattare e scrivere la riga singola di SQL  
+- Eseguire l'override di LogResult per non eseguire alcuna operazione.  
 
-Il codice sarebbe simile al seguente:
+Il codice avrà un aspetto simile al seguente:
 
 ``` csharp
 public class OneLineFormatter : DatabaseLogFormatter
@@ -221,13 +221,13 @@ public class OneLineFormatter : DatabaseLogFormatter
 }
 ```  
 
-Per registrare l'output semplicemente chiamare il metodo di scrittura che invia output al delegato scrittura configurata.  
+Per registrare l'output, è sufficiente chiamare il metodo Write che invierà l'output al delegato di scrittura configurato.  
 
-(Si noti che questo codice esegue semplicistico per la rimozione di interruzioni di riga solo come esempio. Probabilmente non funzionerà correttamente per la visualizzazione di istruzioni SQL complesse.)  
+Si noti che questo codice consente di rimuovere semplicisticamente le interruzioni di riga solo come esempio. Probabilmente non funzionerà correttamente per la visualizzazione di SQL complesso.  
 
 ### <a name="setting-the-databaselogformatter"></a>Impostazione di DatabaseLogFormatter  
 
-Dopo aver creata una nuova classe DatabaseLogFormatter deve essere registrata con Entity Framework. Questa operazione viene eseguita utilizzando la configurazione basata su codice. In poche parole, ciò significa creare una nuova classe che deriva da DbConfiguration nello stesso assembly come la classe DbContext e chiamando quindi SetDatabaseLogFormatter nel costruttore di questa nuova classe. Ad esempio:  
+Una volta creata una nuova classe DatabaseLogFormatter, è necessario registrarla con EF. Questa operazione viene eseguita usando la configurazione basata su codice. In breve, ciò significa creare una nuova classe che deriva da DbConfiguration nello stesso assembly della classe DbContext e quindi chiamare SetDatabaseLogFormatter nel costruttore di questa nuova classe. Ad esempio:  
 
 ``` csharp
 public class MyDbConfiguration : DbConfiguration
@@ -240,9 +240,9 @@ public class MyDbConfiguration : DbConfiguration
 }
 ```  
 
-### <a name="using-the-new-databaselogformatter"></a>Usando il nuovo DatabaseLogFormatter  
+### <a name="using-the-new-databaselogformatter"></a>Uso del nuovo DatabaseLogFormatter  
 
-Questo nuovo DatabaseLogFormatter ora essere usato ogni volta che viene impostato database. log. Quindi, eseguire il codice della parte 1 ora genererà l'output seguente:  
+Questo nuovo DatabaseLogFormatter verrà ora usato ogni volta che viene impostato database. log. In questo modo, l'esecuzione del codice dalla parte 1 determinerà l'output seguente:  
 
 ```  
 Context 'BlogContext' is executing command 'SELECT TOP (1) [Extent1].[Id] AS [Id], [Extent1].[Title] AS [Title]FROM [dbo].[Blogs] AS [Extent1]WHERE (N'One Unicorn' = [Extent1].[Title]) AND ([Extent1].[Title] IS NOT NULL)'
@@ -253,58 +253,58 @@ Context 'BlogContext' is executing command 'insert [dbo].[Posts]([Title], [BlogI
 
 ## <a name="interception-building-blocks"></a>Blocchi predefiniti di intercettazione  
 
-Finora abbiamo esaminato come utilizzare DbContext.Database.Log per registrare il codice SQL generato da Entity Framework. Ma questo codice è effettivamente una facciata relativamente thin su alcuni blocchi predefiniti di basso livello per l'intercettazione più generale.  
+Fino a questo punto abbiamo esaminato come usare DbContext. database. log per registrare il database SQL generato da EF. Tuttavia, questo codice è in realtà una facciata relativamente sottile rispetto ad alcuni blocchi predefiniti di basso livello per un'intercettazione più generale.  
 
 ### <a name="interception-interfaces"></a>Interfacce di intercettazione  
 
-Il codice di intercettazione è basato sul concetto di interfacce di intercettazione. Queste interfacce di ereditano da IDbInterceptor e definiscono i metodi che vengono chiamati quando Entity Framework esegue una determinata azione. Si desidera avere un'interfaccia per ogni tipo di oggetto intercettato. Ad esempio, l'interfaccia IDbCommandInterceptor definisce i metodi che vengono chiamati prima EF effettua una chiamata a metodi correlati, ExecuteReader, ExecuteScalar ed ExecuteNonQuery. Analogamente, l'interfaccia definisce i metodi che vengono chiamati al completamento di ognuna di queste operazioni. La classe DatabaseLogFormatter che abbiamo visto in precedenza implementa questa interfaccia per registrare i comandi.  
+Il codice di intercettazione è basato sul concetto di interfacce di intercettazione. Queste interfacce ereditano da IDbInterceptor e definiscono metodi che vengono chiamati quando EF esegue un'azione. Lo scopo è quello di avere un'interfaccia per ogni tipo di oggetto intercettato. Ad esempio, l'interfaccia IDbCommandInterceptor definisce i metodi che vengono chiamati prima che EF effettua una chiamata a ExecuteNonQuery, ExecuteScalar, ExecuteReader e ai metodi correlati. Analogamente, l'interfaccia definisce i metodi che vengono chiamati al completamento di ciascuna di queste operazioni. La classe DatabaseLogFormatter esaminata in precedenza implementa questa interfaccia per registrare i comandi.  
 
-### <a name="the-interception-context"></a>Il contesto di intercettazione  
+### <a name="the-interception-context"></a>Contesto di intercettazione  
 
-Osservando i metodi definiti in una delle interfacce degli intercettori, è evidente che ogni chiamata è dato un oggetto di tipo DbInterceptionContext o un tipo derivato da questo oggetto, ad esempio DbCommandInterceptionContext\<\>. Questo oggetto contiene informazioni contestuali relativi all'azione che richiede di Entity Framework. Ad esempio, se viene intrapresa l'azione per conto di un oggetto DbContext, DbContext è incluso nel DbInterceptionContext. Analogamente, per i comandi che vengono eseguiti in modo asincrono, il flag IsAsync è nastavit DbCommandInterceptionContext.  
+Osservando i metodi definiti in una delle interfacce dell'intercettore è evidente che a ogni chiamata viene assegnato un oggetto di tipo DbInterceptionContext o un tipo derivato da questo, ad esempio\<DbCommandInterceptionContext\>. Questo oggetto contiene informazioni contestuali sull'azione che EF sta assumendo. Se, ad esempio, l'azione viene eseguita per conto di un DbContext, il DbContext viene incluso nel DbInterceptionContext. Analogamente, per i comandi eseguiti in modo asincrono, il flag asincrono viene impostato su DbCommandInterceptionContext.  
 
-### <a name="result-handling"></a>Gestione di risultati  
+### <a name="result-handling"></a>Gestione dei risultati  
 
-Il DbCommandInterceptionContext\< \> classe contiene una proprietà denominata risultati, OriginalResult, eccezioni e OriginalException. Queste proprietà vengono impostate su null/zero per le chiamate ai metodi che vengono chiamati prima che l'operazione viene eseguita l'intercettazione, vale a dire, per il... Esecuzione dei metodi. Se l'operazione viene eseguita e ha esito positivo, quindi risultato e OriginalResult vengono impostate sul risultato dell'operazione. Questi valori possono quindi essere osservati nel metodo di intercettazione che viene chiamati dopo che è stata eseguita l'operazione, vale a dire nel... Metodi eseguiti. Analogamente, se l'operazione genera, quindi le proprietà di eccezione e OriginalException verranno impostate.  
+La classe\< DbCommandInterceptionContext\> contiene le proprietà denominate result, OriginalResult, Exception e originalException. Queste proprietà vengono impostate su null/zero per le chiamate ai metodi di intercettazione che vengono chiamate prima dell'esecuzione dell'operazione, ovvero per... Esecuzione di metodi. Se l'operazione viene eseguita e ha esito positivo, result e OriginalResult vengono impostati sul risultato dell'operazione. Questi valori possono quindi essere osservati nei metodi di intercettazione che vengono chiamati dopo l'esecuzione dell'operazione, ovvero sul... Metodi eseguiti. Analogamente, se l'operazione genera, verranno impostate le proprietà Exception e originalException.  
 
-#### <a name="suppressing-execution"></a>Eliminazione di esecuzione  
+#### <a name="suppressing-execution"></a>Eliminazione dell'esecuzione  
 
-Se un intercettore imposta la proprietà Result prima ha eseguito il comando (in uno di... Esecuzione di metodi) quindi Entity Framework non tenta di eseguire effettivamente il comando, ma verrà usato invece solo il set di risultati. In altre parole, l'intercettore può eliminare l'esecuzione del comando ma EF continua come se fosse stato eseguito il comando.  
+Se un intercettore imposta la proprietà Result prima dell'esecuzione del comando (in uno dei... Eseguendo metodi), EF non tenterà di eseguire effettivamente il comando, ma userà invece il set di risultati. In altre parole, l'intercettore può impedire l'esecuzione del comando, ma EF continua come se il comando fosse stato eseguito.  
 
-Un esempio di come ciò è possibile usare è il comando batch che è stati condotti in genere con un provider di ritorno a capo. L'intercettore sarebbe per memorizzare il comando per un'esecuzione successiva come batch, ma sarebbe "fingono" di Entity Framework che ha eseguito il comando come di consueto. Si noti che richiede più di ciò per implementare l'invio in batch, ma questo è un esempio di come modificare il risultato di intercettazione è possibile usare.  
+Un esempio di come questa operazione può essere utilizzata è il batch dei comandi che è stato tradizionalmente eseguito con un provider di wrapping. L'intercettore archivia il comando per un'esecuzione successiva come batch, ma "finge" per EF che il comando è stato eseguito normalmente. Si noti che questa operazione richiede più di questo per implementare l'invio in batch, ma questo è un esempio di come è possibile usare la modifica del risultato dell'intercettazione.  
 
-L'esecuzione può essere evitata impostando la proprietà di eccezione in uno del... Esecuzione dei metodi. Ciò fa sì che EF continuare come se l'esecuzione dell'operazione non è riuscito generando l'eccezione specificata. Ciò, naturalmente, potrebbe essere l'applicazione in modo anomalo, ma potrebbe anche essere un'eccezione temporanea o un'altra eccezione che viene gestita da Entity Framework. Ad esempio, ciò potrebbe utilizzabile in ambienti di test per testare il comportamento di un'applicazione quando l'esecuzione del comando ha esito negativo.  
+L'esecuzione può anche essere eliminata impostando la proprietà Exception in uno dei... Esecuzione di metodi. Questo fa sì che EF continui come se l'esecuzione dell'operazione non fosse riuscita generando l'eccezione specificata. Questo può, ovviamente, causare l'arresto anomalo dell'applicazione, ma potrebbe anche essere un'eccezione temporanea o un'altra eccezione gestita da EF. Ad esempio, questo può essere usato negli ambienti di test per testare il comportamento di un'applicazione quando l'esecuzione del comando ha esito negativo.  
 
-#### <a name="changing-the-result-after-execution"></a>Modificare il risultato dopo l'esecuzione  
+#### <a name="changing-the-result-after-execution"></a>Modifica del risultato dopo l'esecuzione  
 
-Se un intercettore imposta la proprietà del risultato dopo avere eseguito il comando (in uno di... Eseguire i metodi) Entity Framework userà il risultato modificato anziché il risultato che è stata effettivamente restituito dall'operazione. Analogamente, se un intercettore imposta la proprietà di eccezione dopo avere eseguito il comando, quindi Entity Framework genererà l'eccezione di set come se l'operazione ha generato l'eccezione.  
+Se un intercettore imposta la proprietà Result dopo l'esecuzione del comando (in uno dei... Metodi eseguiti), EF utilizzerà il risultato modificato anziché il risultato effettivamente restituito dall'operazione. Analogamente, se un intercettore imposta la proprietà Exception dopo l'esecuzione del comando, EF genererà l'eccezione set come se l'operazione avesse generato l'eccezione.  
 
-Un intercettore può anche impostare la proprietà dell'eccezione su null per indicare che deve essere generata alcuna eccezione. Ciò può essere utile se l'esecuzione dell'operazione non riuscita, ma l'intercettore intenda continuare come se l'operazione ha avuto esito positivo a Entity Framework. Ciò comporta in genere anche impostando il risultato in modo che Entity Framework ha un valore di risultato per lavorare con man mano che continuano.  
+Un intercettore può inoltre impostare la proprietà Exception su null per indicare che non deve essere generata alcuna eccezione. Questo può essere utile se l'esecuzione dell'operazione non è riuscita, ma l'intercettore desidera che EF continui come se l'operazione avesse avuto esito positivo. Questa operazione comporta in genere anche l'impostazione del risultato, in modo che Entity Framework abbia un valore di risultato da usare come continuerà.  
 
-#### <a name="originalresult-and-originalexception"></a>OriginalResult e OriginalException  
+#### <a name="originalresult-and-originalexception"></a>OriginalResult ed OriginalException  
 
-Dopo avere eseguito un'operazione di Entity Framework imposta le proprietà di risultato e OriginalResult se l'esecuzione ha avuto esito positivo o le proprietà di eccezione e OriginalException se l'esecuzione non è riuscita con un'eccezione.  
+Dopo l'esecuzione di un'operazione da parte di EF, verranno impostate le proprietà Result e OriginalResult se l'esecuzione non ha esito negativo oppure le proprietà Exception e originalException se l'esecuzione non è riuscita con un'eccezione.  
 
-La proprietà OriginalResult e OriginalException sono di sola lettura e vengono impostate solo da Entity Framework dopo effettivamente l'esecuzione di un'operazione. Queste proprietà non possono essere impostate dagli intercettori. Ciò significa che qualsiasi intercettore può distinguere un'eccezione o un risultato che è stata impostata da alcuni altri intercettore anziché l'eccezione reale o un risultato che si è verificato durante l'operazione è stata eseguita.  
+Le proprietà OriginalResult e originalException sono di sola lettura e vengono impostate solo da EF dopo l'esecuzione effettiva di un'operazione. Queste proprietà non possono essere impostate dagli intercettori. Ciò significa che qualsiasi intercettore può distinguere tra un'eccezione o un risultato che è stato impostato da un altro intercettore anziché l'eccezione reale o il risultato che si è verificato durante l'esecuzione dell'operazione.  
 
-### <a name="registering-interceptors"></a>La registrazione degli intercettori  
+### <a name="registering-interceptors"></a>Registrazione degli intercettori  
 
-Dopo aver creata una classe che implementa uno o più delle interfacce di intercettazione può essere registrato con Entity Framework usando la classe DbInterception. Ad esempio:  
+Quando una classe che implementa una o più interfacce di intercettazione è stata creata, può essere registrata con EF usando la classe DbInterception. Ad esempio:  
 
 ``` csharp
 DbInterception.Add(new NLogCommandInterceptor());
 ```  
 
-Gli intercettori possono essere registrati a livello di dominio applicazione usando il meccanismo di configurazione basato sul codice DbConfiguration.  
+Gli intercettori possono essere registrati anche a livello di dominio dell'applicazione usando il meccanismo di configurazione basato sul codice DbConfiguration.  
 
-### <a name="example-logging-to-nlog"></a>Esempio: La registrazione NLog  
+### <a name="example-logging-to-nlog"></a>Esempio: Registrazione a NLog  
 
-È possibile inserire tutte queste insieme in un esempio che l'utilizzo IDbCommandInterceptor e [NLog](http://nlog-project.org/) per:  
+È necessario riunirle in un esempio che usa IDbCommandInterceptor e [NLog](http://nlog-project.org/) per:  
 
-- Registra un avviso per qualsiasi comando che viene eseguito in modalità non asincrona  
-- Registrare un errore per qualsiasi comando che genera un'eccezione quando eseguita  
+- Registra un avviso per qualsiasi comando eseguito in modo non asincrono  
+- Registra un errore per qualsiasi comando che genera un'eccezione durante l'esecuzione  
 
-Questa è la classe che esegue la registrazione, che deve essere registrata come illustrato in precedenza:  
+Ecco la classe che esegue la registrazione, che deve essere registrata come illustrato in precedenza:  
 
 ``` csharp
 public class NLogCommandInterceptor : IDbCommandInterceptor
@@ -368,4 +368,4 @@ public class NLogCommandInterceptor : IDbCommandInterceptor
 }
 ```  
 
-Si noti come questo codice Usa il contesto di intercettazione per rilevare quando un comando viene eseguito in modo non asincrono e per scoprire quando si è verificato un errore durante l'esecuzione di un comando.  
+Si noti che questo codice usa il contesto di intercettazione per individuare quando un comando viene eseguito in modo non asincrono e per individuare quando si è verificato un errore durante l'esecuzione di un comando.  
