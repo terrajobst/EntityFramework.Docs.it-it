@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 7cc0bd3946be2e63d9fb46a023bf6abe750ae0e3
-ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
+ms.openlocfilehash: c73663412efcd93c04892f193d4f5a2485724e22
+ms.sourcegitcommit: 755a15a789631cc4ea581e2262a2dcc49c219eef
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/17/2019
-ms.locfileid: "68286487"
+ms.lasthandoff: 07/25/2019
+ms.locfileid: "68497534"
 ---
 # <a name="breaking-changes-included-in-ef-core-30-currently-in-preview"></a>Modifiche che causano un'interruzione incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -20,7 +20,59 @@ Le modifiche all'API e al comportamento seguenti possono potenzialmente interrom
 Le modifiche che si prevede abbiano impatto solo sui provider di database sono documentate nelle [modifiche che influiscono sul provider](../../providers/provider-log.md).
 Le interruzioni nelle nuove funzionalità introdotte da un'anteprima 3.0 a un'altra anteprima 3.0 non sono documentate.
 
-## <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
+## <a name="summary"></a>Riepilogo
+
+| **Modifica di rilievo**                                                                                               | **Impatto** |
+|:------------------------------------------------------------------------------------------------------------------|------------|
+| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
+| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
+| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
+| [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
+| [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
+| [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
+| [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Medio      |
+| [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Medio      |
+| [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Medio      |
+| [Modifiche dell'API dei metadati](#metadata-api-changes) | Medio      |
+| [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
+| [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
+| [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Bassa      |
+| [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Bassa      |
+| [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Bassa      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Bassa      |
+| [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Bassa      |
+| [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Bassa      |
+| [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Bassa      |
+| [La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza](#fkp) | Bassa      |
+| [La connessione di database viene ora chiusa se non viene più usata prima del completamento di TransactionScope](#dbc) | Bassa      |
+| [I campi sottostanti vengono usati per impostazione predefinita](#backing-fields-are-used-by-default) | Bassa      |
+| [Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili](#throw-if-multiple-compatible-backing-fields-are-found) | Bassa      |
+| [I nomi delle proprietà solo campo devono corrispondere al nome di campo](#field-only-property-names-should-match-the-field-name) | Bassa      |
+| [AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache](#adddbc) | Bassa      |
+| [DbContext.Entry esegue ora un DetectChanges locale](#dbe) | Bassa      |
+| [Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita](#string-and-byte-array-keys-are-not-client-generated-by-default) | Bassa      |
+| [ILoggerFactory è ora un servizio con ambito](#ilf) | Bassa      |
+| [I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente](#lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded) | Bassa      |
+| [La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita](#excessive-creation-of-internal-service-providers-is-now-an-error-by-default) | Bassa      |
+| [Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa](#nbh) | Bassa      |
+| [Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask](#rtnt) | Bassa      |
+| [L'annotazione Relational:TypeMapping è ora TypeMapping](#rtt) | Bassa      |
+| [ToTable in un tipo derivato genera un'eccezione](#totable-on-a-derived-type-throws-an-exception) | Bassa      |
+| [EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite](#pragma) | Bassa      |
+| [Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3](#sqlite3) | Bassa      |
+| [I valori Guid vengono ora archiviati come TEXT in SQLite](#guid) | Bassa      |
+| [I valori char vengono ora archiviati come testo in SQLite](#char) | Bassa      |
+| [Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica](#migid) | Bassa      |
+| [Info/metadati dell'estensione rimossi da IDbContextOptionsExtension](#xinfo) | Bassa      |
+| [LogQueryPossibleExceptionWithAggregateOperator è stato rinominato](#lqpe) | Bassa      |
+| [Chiarimenti per l'API per i nomi di vincolo di chiave esterna](#clarify) | Bassa      |
+| [IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici](#irdc2) | Bassa      |
+| [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Bassa      |
+| [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Bassa      |
+| [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Bassa      |
+| [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Bassa      |
+
+### <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
 
 [Problema n. 14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [Vedere anche il problema n. 12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
@@ -51,7 +103,8 @@ Inoltre, la valutazione client automatica può causare problemi in cui il miglio
 
 Se una query non può essere convertita completamente, riscrivere la query in un formato che possa essere convertito o usare `AsEnumerable()`, `ToList()` o un elemento simile per riportare in modo esplicito i dati nel client dove possono essere quindi ulteriormente elaborati usando LINQ to Objects.
 
-## <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core
+<a name="no-longer"></a>
+### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core
 
 [Annunci problema n. 325](https://github.com/aspnet/Announcements/issues/325)
 
@@ -76,7 +129,8 @@ Gli sviluppatori possono ora controllare anche in modo preciso quando vengono ag
 
 Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione supportata, aggiungere in modo esplicito un riferimento al pacchetto al provider di database di EF Core che verrà usato dall'applicazione.
 
-## <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>Lo strumento della riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK
+<a name="dotnet-ef"></a>
+### <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>Lo strumento della riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK
 
 [Problema n. 14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
 
@@ -104,7 +158,8 @@ Per essere in grado di gestire le migrazioni o eseguire lo scaffolding di `DbCon
 
 È inoltre possibile ottenerlo come strumento locale quando si ripristinano le dipendenze di un progetto che lo dichiara come dipendenza di strumenti utilizzando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
 
-## <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati
+<a name="fromsql"></a>
+### <a name="fromsql-executesql-and-executesqlasync-have-been-renamed"></a>I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati
 
 [Problema n. 10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
 
@@ -144,7 +199,9 @@ Il risultato potrebbero essere query senza parametri, quando invece è prevista 
 
 Passare all'uso dei nuovi nomi di metodo.
 
-## <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>I metodi FromSql possono essere specificati solo in radici di query
+<a name="fromsql"></a>
+
+### <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>I metodi FromSql possono essere specificati solo in radici di query
 
 [Problema n. 15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
 
@@ -166,7 +223,9 @@ La specifica di `FromSql` in qualsiasi posizione diversa da un `DbSet` non ha al
 
 Le chiamate di `FromSql` devono essere spostate in modo da comparire direttamente nel `DbSet` a cui si applicano.
 
-## <a name="query-execution-is-logged-at-debug-level-reverted"></a>~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata
+<a name="qe"></a>
+
+### <a name="query-execution-is-logged-at-debug-level-reverted"></a>~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata
 
 [Problema n. 14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
@@ -180,7 +239,9 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .ConfigureWarnings(c => c.Log((RelationalEventId.CommandExecuting, LogLevel.Debug)));
 ```
 
-## <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>I valori di chiave temporanei non sono più impostati nelle istanze di entità
+<a name="tkv"></a>
+
+### <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>I valori di chiave temporanei non sono più impostati nelle istanze di entità
 
 [Problema n. 12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
 
@@ -208,7 +269,9 @@ Questo può essere evitato:
 * Ottenendo i valori di chiave temporanei effettivi dalle informazioni di rilevamento dell'entità.
 Ad esempio, `context.Entry(blog).Property(e => e.Id).CurrentValue` restituisce il valore temporaneo anche quando `blog.Id` non è stato impostato.
 
-## <a name="detectchanges-honors-store-generated-key-values"></a>DetectChanges rispetta i valori di chiave generati dall'archivio
+<a name="dc"></a>
+
+### <a name="detectchanges-honors-store-generated-key-values"></a>DetectChanges rispetta i valori di chiave generati dall'archivio
 
 [Problema n. 14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
 
@@ -247,8 +310,8 @@ Oppure con annotazioni dei dati:
 [DatabaseGenerated(DatabaseGeneratedOption.None)]
 public string Id { get; set; }
 ```
-
-## <a name="cascade-deletions-now-happen-immediately-by-default"></a>Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita
+<a name="cascade"></a>
+### <a name="cascade-deletions-now-happen-immediately-by-default"></a>Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita
 
 [Problema n. 10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
 
@@ -276,8 +339,8 @@ Ad esempio:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
-
-## <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>Semantica più chiara per DeleteBehavior.Restrict
+<a name="deletebehavior"></a>
+### <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>Semantica più chiara per DeleteBehavior.Restrict
 
 [Problema n. 12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
 
@@ -299,7 +362,8 @@ Questa modifica è stata apportata per migliorare l'esperienza di uso di `Delete
 
 Il comportamento precedente può essere ripristinato tramite `DeleteBehavior.ClientNoAction`.
 
-## <a name="query-types-are-consolidated-with-entity-types"></a>I tipi di query vengono consolidati con tipi di entità
+<a name="qt"></a>
+### <a name="query-types-are-consolidated-with-entity-types"></a>I tipi di query vengono consolidati con tipi di entità
 
 [Problema n. 14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
 
@@ -329,7 +393,8 @@ Non ne viene eseguita la configurazione per convenzione per evitare una configur
 * **`DbQuery<>`** - Usare `DbSet<>`.
 * **`DbContext.Query<>()`** - Usare `DbContext.Set<>()`.
 
-## <a name="configuration-api-for-owned-type-relationships-has-changed"></a>L'API di configurazione per le relazioni di tipo di proprietà è stata modificata
+<a name="config"></a>
+### <a name="configuration-api-for-owned-type-relationships-has-changed"></a>L'API di configurazione per le relazioni di tipo di proprietà è stata modificata
 
 [Problema n. 12444](https://github.com/aspnet/EntityFrameworkCore/issues/12444)
 [Problema n. 9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
@@ -387,7 +452,9 @@ Ciò consente di eliminare ambiguità e confusione su metodi come `HasForeignKey
 
 Modificare la configurazione delle relazioni dei tipi di proprietà per usare la superficie della nuova API come illustrato nell'esempio precedente.
 
-## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative
+<a name="de"></a>
+
+### <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative
 
 [Problema n. 9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
@@ -422,7 +489,9 @@ In fase di query, EF Core imposta `OrderDetails` su `null` se una delle relative
 
 Se il modello include una tabella condivisa dipendente con tutte le colonne facoltative, ma è previsto che la navigazione che punta a essa non sia `null`, l'applicazione deve essere modificata per gestire casi in cui la navigazione è `null`. Se questo non è possibile, è consigliabile aggiungere una proprietà obbligatoria al tipo di entità o assegnare un valore non `null` ad almeno una proprietà.
 
-## <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà
+<a name="aes"></a>
+
+### <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà
 
 [Problema n. 14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
 
@@ -474,7 +543,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-## <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati
+<a name="ip"></a>
+
+### <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati
 
 [Problema n. 13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
 
@@ -537,7 +608,9 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-## <a name="the-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property"></a>La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza
+<a name="fkp"></a>
+
+### <a name="the-foreign-key-property-convention-no-longer-matches-same-name-as-the-principal-property"></a>La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza
 
 [Problema n. 13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
 
@@ -605,7 +678,9 @@ Questa modifica è stata apportata per evitare una definizione errata della prop
 
 Se la proprietà è stata progettata per essere la chiave esterna e di conseguenza parte della chiave primaria, configurarla in modo esplicito come chiave esterna.
 
-## <a name="database-connection-is-now-closed-if-not-used-anymore-before-the-transactionscope-has-been-completed"></a>La connessione al database viene ora chiusa se non viene più usata prima del completamento di TransactionScope
+<a name="dbc"></a>
+
+### <a name="database-connection-is-now-closed-if-not-used-anymore-before-the-transactionscope-has-been-completed"></a>La connessione al database viene ora chiusa se non viene più usata prima del completamento di TransactionScope
 
 [Problema n. 14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
 
@@ -657,7 +732,9 @@ using (new TransactionScope())
 }
 ```
 
-## <a name="each-property-uses-independent-in-memory-integer-key-generation"></a>Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti
+<a name="each"></a>
+
+### <a name="each-property-uses-independent-in-memory-integer-key-generation"></a>Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti
 
 [Problema n. 6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
@@ -681,7 +758,7 @@ Questa modifica è stata apportata per allineare maggiormente la generazione di 
 Ciò può interrompere un'applicazione che si basa sull'impostazione di valori di chiave in memoria specifici.
 È consigliabile non basare l'applicazione su valori di chiave specifici o eseguire l'aggiornamento per passare al nuovo comportamento.
 
-## <a name="backing-fields-are-used-by-default"></a>I campi sottostanti vengono usati per impostazione predefinita
+### <a name="backing-fields-are-used-by-default"></a>I campi sottostanti vengono usati per impostazione predefinita
 
 [Problema n. 12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
 
@@ -710,7 +787,7 @@ Ad esempio:
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
 ```
 
-## <a name="throw-if-multiple-compatible-backing-fields-are-found"></a>Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili
+### <a name="throw-if-multiple-compatible-backing-fields-are-found"></a>Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili
 
 [Problema n. 12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
 
@@ -741,7 +818,7 @@ modelBuilder
     .HasField("_id");
 ```
 
-## <a name="field-only-property-names-should-match-the-field-name"></a>I nomi delle proprietà solo campo devono corrispondere al nome di campo
+### <a name="field-only-property-names-should-match-the-field-name"></a>I nomi delle proprietà solo campo devono corrispondere al nome di campo
 
 Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
@@ -787,7 +864,9 @@ modelBuilder
     .HasField("_id");
 ```
 
-## <a name="adddbcontextadddbcontextpool-no-longer-call-addlogging-and-addmemorycache"></a>AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache
+<a name="adddbc"></a>
+
+### <a name="adddbcontextadddbcontextpool-no-longer-call-addlogging-and-addmemorycache"></a>AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache
 
 [Problema n. 14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
@@ -809,7 +888,9 @@ EF Core 3.0 non richiede che questi servizi siano inclusi nel contenitore di ins
 
 Se l'applicazione necessita di questi servizi, registrarli in modo esplicito con il contenitore di inserimento delle dipendenze usando [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) o [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
-## <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry esegue ora un DetectChanges locale
+<a name="dbe"></a>
+
+### <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry esegue ora un DetectChanges locale
 
 [Problema n. 13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
 
@@ -837,7 +918,7 @@ Questa modifica è stata apportata per migliorare le prestazioni predefinite del
 
 Chiamare `ChgangeTracker.DetectChanges()` in modo esplicito prima di chiamare `Entry` per garantire il comportamento precedente alla versione 3.0.
 
-## <a name="string-and-byte-array-keys-are-not-client-generated-by-default"></a>Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita
+### <a name="string-and-byte-array-keys-are-not-client-generated-by-default"></a>Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita
 
 [Problema n. 14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
 
@@ -875,7 +956,9 @@ Oppure con annotazioni dei dati:
 public string Id { get; set; }
 ```
 
-## <a name="iloggerfactory-is-now-a-scoped-service"></a>ILoggerFactory è ora un servizio con ambito
+<a name="ilf"></a>
+
+### <a name="iloggerfactory-is-now-a-scoped-service"></a>ILoggerFactory è ora un servizio con ambito
 
 [Problema n. 14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
 
@@ -901,7 +984,7 @@ In questi casi la maggior parte delle operazioni continuano a essere eseguite co
 
 Se si verificano situazioni simili, inviare una segnalazione nello [strumento di gestione dei problemi in GitHub relativo a EF Core](https://github.com/aspnet/EntityFrameworkCore/issues) per comunicare in che modo viene usato `ILoggerFactory` per consentirci di comprendere meglio come evitare ulteriori interruzioni in futuro.
 
-## <a name="lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded"></a>I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente
+### <a name="lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded"></a>I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente
 
 [Problema n. 12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
 
@@ -928,7 +1011,7 @@ Questa modifica è stata apportata per rendere coerente e corretto il comportame
 
 Aggiornare il codice dell'applicazione per fare in modo che non venga tentato il caricamento lazy con un contesto eliminato oppure specificare una configurazione in modo che non venga eseguita alcuna operazione come descritto nel messaggio di eccezione.
 
-## <a name="excessive-creation-of-internal-service-providers-is-now-an-error-by-default"></a>La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita
+### <a name="excessive-creation-of-internal-service-providers-is-now-an-error-by-default"></a>La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita
 
 [Problema n. 10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
 
@@ -960,7 +1043,9 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 }
 ```
 
-## <a name="new-behavior-for-hasonehasmany-called-with-a-single-string"></a>Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa
+<a name="nbh"></a>
+
+### <a name="new-behavior-for-hasonehasmany-called-with-a-single-string"></a>Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa
 
 [Problema n. 9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
 
@@ -997,7 +1082,9 @@ Ad esempio:
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ```
 
-## <a name="the-return-type-for-several-async-methods-has-been-changed-from-task-to-valuetask"></a>Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask
+<a name="rtnt"></a>
+
+### <a name="the-return-type-for-several-async-methods-has-been-changed-from-task-to-valuetask"></a>Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask
 
 [Problema n. 15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
 
@@ -1027,7 +1114,9 @@ Le applicazioni semplicemente in attesa delle API precedenti devono solo essere 
 Per scenari di utilizzo più complessi (ad esempio, il passaggio del tipo `Task` restituito a `Task.WhenAny()`) è richiesto in genere che il tipo `ValueTask<T>` restituito venga convertito in `Task<T>` chiamando `AsTask()` su di esso.
 Si noti che in questo modo si annulla la riduzione delle allocazioni consentita da questa modifica.
 
-## <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>L'annotazione Relational:TypeMapping è ora TypeMapping
+<a name="rtt"></a>
+
+### <a name="the-relationaltypemapping-annotation-is-now-just-typemapping"></a>L'annotazione Relational:TypeMapping è ora TypeMapping
 
 [Problema n. 9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
 
@@ -1050,7 +1139,7 @@ Il mapping dei tipi non viene più usato solo per i provider di database relazio
 Ciò causa un'interruzione solo nelle applicazioni che accedono al mapping dei tipi direttamente come annotazione. Questa situazione non è comune.
 L'azione più appropriata per risolvere il problema consiste nell'usare la superficie dell'API per accedere al mapping dei tipi anziché l'annotazione.
 
-## <a name="totable-on-a-derived-type-throws-an-exception"></a>ToTable in un tipo derivato genera un'eccezione 
+### <a name="totable-on-a-derived-type-throws-an-exception"></a>ToTable in un tipo derivato genera un'eccezione 
 
 [Problema n. 11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
 
@@ -1073,7 +1162,7 @@ Questa modifica consente di evitare interruzioni future quando l'operazione dive
 
 Rimuovere qualsiasi tentativo di mapping di tipi derivati in altre tabelle.
 
-## <a name="forsqlserverhasindex-replaced-with-hasindex"></a>ForSqlServerHasIndex sostituito con HasIndex 
+### <a name="forsqlserverhasindex-replaced-with-hasindex"></a>ForSqlServerHasIndex sostituito con HasIndex 
 
 [Problema n. 12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
@@ -1096,7 +1185,7 @@ Questa modifica è stata apportata per consolidare l'API per gli indici con `Inc
 
 Usare la nuova API, come illustrato in precedenza.
 
-## <a name="metadata-api-changes"></a>Modifiche dell'API dei metadati
+### <a name="metadata-api-changes"></a>Modifiche dell'API dei metadati
 
 [Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
@@ -1120,7 +1209,9 @@ Questa modifica semplifica l'implementazione delle interfacce menzionate in prec
 
 Usare i nuovi metodi di estensione.
 
-## <a name="provider-specific-metadata-api-changes"></a>Modifiche dell'API dei metadati specifiche del provider
+<a name="provider"></a>
+
+### <a name="provider-specific-metadata-api-changes"></a>Modifiche dell'API dei metadati specifiche del provider
 
 [Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
@@ -1142,7 +1233,9 @@ Questa modifica semplifica l'implementazione dei metodi di estensione menzionati
 
 Usare i nuovi metodi di estensione.
 
-## <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite
+<a name="pragma"></a>
+
+### <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite
 
 [Problema n. 12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
 
@@ -1165,7 +1258,9 @@ Questa modifica è stata apportata poiché EF Core usa `SQLitePCLRaw.bundle_e_sq
 Le chiavi esterne sono abilitate per impostazione predefinita in SQLitePCLRaw.bundle_e_sqlite3, usato per impostazione predefinita per EF Core.
 Per gli altri casi, è possibile abilitare le chiavi esterne specificando `Foreign Keys=True` nella stringa di connessione.
 
-## <a name="microsoftentityframeworkcoresqlite-now-depends-on-sqlitepclrawbundleesqlite3"></a>Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3
+<a name="sqlite3"></a>
+
+### <a name="microsoftentityframeworkcoresqlite-now-depends-on-sqlitepclrawbundleesqlite3"></a>Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3
 
 **Comportamento precedente**
 
@@ -1183,7 +1278,9 @@ Questa modifica è stata apportata per rendere coerente la versione di SQLite us
 
 Per usare la versione di SQLite nativa in iOS, configurare `Microsoft.Data.Sqlite` per l'uso di un'aggregazione `SQLitePCLRaw` diversa.
 
-## <a name="guid-values-are-now-stored-as-text-on-sqlite"></a>I valori Guid vengono ora archiviati come TEXT in SQLite
+<a name="guid"></a>
+
+### <a name="guid-values-are-now-stored-as-text-on-sqlite"></a>I valori Guid vengono ora archiviati come TEXT in SQLite
 
 [Problema n. 15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
 
@@ -1233,7 +1330,9 @@ modelBuilder
 
 Microsoft.Data.Sqlite rimane in grado di leggere i valori Guid sia da colonne BLOB che TEXT. Tuttavia, poiché è stato modificato il formato predefinito per i parametri e le costanti, probabilmente sarà necessario intervenire per la maggior parte degli scenari che coinvolgono valori Guid.
 
-## <a name="char-values-are-now-stored-as-text-on-sqlite"></a>I valori char vengono ora archiviati come testo in SQLite
+<a name="char"></a>
+
+### <a name="char-values-are-now-stored-as-text-on-sqlite"></a>I valori char vengono ora archiviati come testo in SQLite
 
 [Problema n. 15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
 
@@ -1274,7 +1373,9 @@ modelBuilder
 
 Microsoft.Data.Sqlite rimane comunque in grado di leggere i valori di caratteri presenti sia nelle colonne di valori interi sia in quelle di testo, quindi alcuni scenari potrebbero non richiedere alcuna azione.
 
-## <a name="migration-ids-are-now-generated-using-the-invariant-cultures-calendar"></a>Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica
+<a name="migid"></a>
+
+### <a name="migration-ids-are-now-generated-using-the-invariant-cultures-calendar"></a>Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica
 
 [Problema n. 12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
 
@@ -1313,7 +1414,9 @@ UPDATE __EFMigrationsHistory
 SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 150))
 ```
 
-## <a name="userownumberforpaging-has-been-removed"></a>Il metodo UseRowNumberForPaging è stato rimosso
+<a name="urn"></a>
+
+### <a name="userownumberforpaging-has-been-removed"></a>Il metodo UseRowNumberForPaging è stato rimosso
 
 [Problema n. 16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
 
@@ -1335,7 +1438,9 @@ Questa modifica è stata apportata perché [SQL Server 2008 non è più un prodo
 
 È consigliabile eseguire l'aggiornamento a una versione più recente di SQL Server o usare un livello di compatibilità superiore, in modo che il codice SQL generato sia supportato. Detto questo, se non è possibile procedere in questo modo, [aggiungere un commento per il problema](https://github.com/aspnet/EntityFrameworkCore/issues/16400) con indicazioni dettagliate. Microsoft potrebbe rivedere questa decisione in base ai commenti e suggerimenti.
 
-## <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>Info/metadati dell'estensione rimossi da IDbContextOptionsExtension
+<a name="xinfo"></a>
+
+### <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>Info/metadati dell'estensione rimossi da IDbContextOptionsExtension
 
 [Problema n. 16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
 
@@ -1359,7 +1464,9 @@ Suddividendoli in una nuova classe di base astratta sarà più facile apportare 
 Aggiornare le estensioni per seguire il nuovo modello.
 Sono disponibili esempi nelle numerose implementazioni di `IDbContextOptionsExtension` per diversi tipi di estensioni nel codice sorgente di EF Core.
 
-## <a name="logquerypossibleexceptionwithaggregateoperator-has-been-renamed"></a>LogQueryPossibleExceptionWithAggregateOperator è stato rinominato
+<a name="lqpe"></a>
+
+### <a name="logquerypossibleexceptionwithaggregateoperator-has-been-renamed"></a>LogQueryPossibleExceptionWithAggregateOperator è stato rinominato
 
 [Problema n. 10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
 
@@ -1377,7 +1484,9 @@ Allineamento del nome di questo evento di avviso con tutti gli altri eventi di a
 
 Usare il nuovo nome. (Si noti che il numero di ID evento non è stato modificato.)
 
-## <a name="clarify-api-for-foreign-key-constraint-names"></a>Chiarimenti per l'API per i nomi di vincolo di chiave esterna
+<a name="clarify"></a>
+
+### <a name="clarify-api-for-foreign-key-constraint-names"></a>Chiarimenti per l'API per i nomi di vincolo di chiave esterna
 
 [Problema n. 10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
 
@@ -1407,7 +1516,9 @@ Questa modifica introduce coerenza per la denominazione in quest'area e chiarisc
 
 Usare il nuovo nome.
 
-## <a name="irelationaldatabasecreatorhastableshastablesasync-have-been-made-public"></a>IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici
+<a name="irdc2"></a>
+
+### <a name="irelationaldatabasecreatorhastableshastablesasync-have-been-made-public"></a>IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici
 
 [Problema n. 15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
 
@@ -1429,7 +1540,9 @@ Questi metodi vengono usati da EF per determinare se un database viene creato, m
 
 Modificare l'accessibilità di eventuali override.
 
-## <a name="microsoftentityframeworkcoredesign-is-now-a-developmentdependency-package"></a>Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency
+<a name="dip"></a>
+
+### <a name="microsoftentityframeworkcoredesign-is-now-a-developmentdependency-package"></a>Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency
 
 [Problema n. 11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
 
@@ -1459,7 +1572,9 @@ Se è necessario fare riferimento a questo pacchetto per eseguire l'override del
 </PackageReference>
 ```
 
-## <a name="sqlitepclraw-updated-to-version-200"></a>Aggiornamento di SQLitePCL.raw alla versione 2.0.0
+<a name="SQLitePCL"></a>
+
+### <a name="sqlitepclraw-updated-to-version-200"></a>Aggiornamento di SQLitePCL.raw alla versione 2.0.0
 
 [Problema n. 14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
 
@@ -1481,8 +1596,9 @@ La versione 2.0.0 di SQLitePCL.raw è destinata a .NET Standard 2.0. Era in prec
 
 SQLitePCL.raw versione 2.0.0 include alcune modifiche che causano un'interruzione. Per informazioni dettagliate, vedere le [note sulla versione](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md).
 
+<a name="NetTopologySuite"></a>
 
-## <a name="nettopologysuite-updated-to-version-200"></a>NetTopologySuite aggiornato alla versione 2.0.0
+### <a name="nettopologysuite-updated-to-version-200"></a>NetTopologySuite aggiornato alla versione 2.0.0
 
 [Problema n. 14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
 
@@ -1503,3 +1619,50 @@ La versione 2.0.0 di NetTopologySuite risolve vari problemi di usabilità riscon
 **Mitigazioni**
 
 NetTopologySuite versione 2.0.0 include alcune modifiche che causano un'interruzione. Per informazioni dettagliate, vedere le [note sulla versione](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001).
+
+<a name="mersa"></a>
+
+### <a name="multiple-ambiguous-self-referencing-relationships-must-be-configured"></a>Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse 
+
+[Problema n. 13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
+
+**Comportamento precedente**
+
+Un tipo di entità con più proprietà di navigazione unidirezionale che fanno riferimento a se stesse e più chiavi esterne corrispondenti è stato erroneamente configurato come relazione singola. Ad esempio:
+
+```C#
+public class User 
+{
+        public Guid Id { get; set; }
+        public User CreatedBy { get; set; }
+        public User UpdatedBy { get; set; }
+        public Guid CreatedById { get; set; }
+        public Guid? UpdatedById { get; set; }
+}
+```
+
+**Nuovo comportamento**
+
+Questo scenario viene ora rilevato nella compilazione del modello e viene generata un'eccezione indicante che il modello è ambiguo.
+
+**Perché?**
+
+Il modello risultante era ambiguo e sarà probabilmente errato in questo caso.
+
+**Mitigazioni**
+
+Usare la configurazione completa della relazione. Ad esempio:
+
+```C#
+modelBuilder
+     .Entity<User>()
+     .HasOne(e => e.CreatedBy)
+     .WithMany();
+ 
+ modelBuilder
+     .Entity<User>()
+     .HasOne(e => e.UpdatedBy)
+     .WithMany();
+```

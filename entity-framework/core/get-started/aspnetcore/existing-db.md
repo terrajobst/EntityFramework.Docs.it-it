@@ -1,17 +1,18 @@
 ---
 title: Guida introduttiva ad ASP.NET Core - Database esistente - EF Core
 author: rowanmiller
+description: Introduzione a EF Core in ASP.NET Core con un database esistente
 ms.date: 08/02/2018
 ms.assetid: 2bc68bea-ff77-4860-bf0b-cf00db6712a0
 uid: core/get-started/aspnetcore/existing-db
-ms.openlocfilehash: c8acb95395968f710e6b896de6c3598cb7b23676
-ms.sourcegitcommit: e66745c9f91258b2cacf5ff263141be3cba4b09e
+ms.openlocfilehash: 6b0ed0a9222644bee31d23234aa27b2084137f4a
+ms.sourcegitcommit: 755a15a789631cc4ea581e2262a2dcc49c219eef
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/06/2019
-ms.locfileid: "54058786"
+ms.lasthandoff: 07/25/2019
+ms.locfileid: "68497518"
 ---
-# <a name="getting-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>Introduzione a EF Core in ASP.NET Core con un database esistente
+# <a name="get-started-with-ef-core-on-aspnet-core-with-an-existing-database"></a>Guida introduttiva a EF Core in ASP.NET Core con un database esistente
 
 In questa esercitazione verrà creata un'applicazione ASP.NET Core MVC che esegue l'accesso ai dati di base usando Entity Framework Core. Si creerà un modello di Entity Framework tramite reverse engineering di un database esistente.
 
