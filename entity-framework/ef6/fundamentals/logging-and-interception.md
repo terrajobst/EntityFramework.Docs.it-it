@@ -124,7 +124,7 @@ Esaminando l'output di esempio precedente, ognuno dei quattro comandi registrati
 
 ## <a name="logging-to-different-places"></a>Registrazione in posizioni diverse  
 
-Come illustrato sopra, la registrazione alla console è molto semplice. È anche facile accedere a memoria, file e così via usando diversi tipi di TextWriter. [](https://msdn.microsoft.com/library/system.io.textwriter.aspx)  
+Come illustrato sopra, la registrazione alla console è molto semplice. È anche facile accedere a memoria, file e così via usando diversi tipi di [TextWriter](https://msdn.microsoft.com/library/system.io.textwriter.aspx)  
 
 Se si ha familiarità con LINQ to SQL si può notare che in LINQ to SQL la proprietà log è impostata sull'oggetto TextWriter effettivo (ad esempio, console. out) mentre in EF la proprietà log è impostata su un metodo che accetta una stringa (ad esempio , Console. Write o console. out. Write). Il motivo è quello di separare EF da TextWriter accettando qualsiasi delegato che può fungere da sink per le stringhe. Si supponga, ad esempio, di avere già un Framework di registrazione e di definire un metodo di registrazione come il seguente:  
 
