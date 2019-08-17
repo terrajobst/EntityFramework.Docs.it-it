@@ -1,21 +1,21 @@
 ---
-title: Caricamento di entità - EF6 correlati
+title: Caricamento di entità correlate-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
-ms.openlocfilehash: 2d33d9db8acc61f7d556e3eca46b1ea90198723e
-ms.sourcegitcommit: 15022dd06d919c29b1189c82611ea32f9fdc6617
+ms.openlocfilehash: f40034475ed6659b60ab4317605fd1d802218d69
+ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/27/2018
-ms.locfileid: "47415757"
+ms.lasthandoff: 08/17/2019
+ms.locfileid: "69565304"
 ---
-# <a name="loading-related-entities"></a>Il caricamento di entità correlate
-Entity Framework supporta tre modi per caricare i dati correlati - caricamento eager, il caricamento lazy e il caricamento esplicito. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
+# <a name="loading-related-entities"></a>Caricamento di entità correlate
+Entity Framework supporta tre modi per caricare dati correlati, caricamento lazy e caricamento esplicito. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
 
-## <a name="eagerly-loading"></a>Il caricamento in blocco  
+## <a name="eagerly-loading"></a>Caricamento eager  
 
-Il caricamento eager è il processo in base al quale una query per un tipo di entità carica anche entità correlate come parte della query. Il caricamento eager viene ottenuto mediante l'utilizzo del metodo Include. Ad esempio, le query seguenti caricherà i blog e tutti i post correlati per ciascun blog.  
+Il caricamento eager è il processo in base al quale una query per un tipo di entità carica anche le entità correlate come parte della query. Il caricamento eager viene effettuato tramite il metodo include. Ad esempio, le query seguenti caricherà i Blog e tutti i post correlati a ogni blog.  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -25,7 +25,7 @@ using (var context = new BloggingContext())
                         .Include(b => b.Posts)
                         .ToList();
 
-    // Load one blogs and its related posts
+    // Load one blog and its related posts
     var blog1 = context.Blogs
                        .Where(b => b.Name == "ADO.NET Blog")
                        .Include(b => b.Posts)
@@ -46,11 +46,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noti che Include un metodo di estensione nello spazio dei nomi di Data. Entity pertanto assicurarsi che si utilizza tale spazio dei nomi.  
+Si noti che include è un metodo di estensione nello spazio dei nomi System. Data. Entity, quindi assicurarsi di usare tale spazio dei nomi.  
 
-### <a name="eagerly-loading-multiple-levels"></a>Accuratamente il caricamento di più livelli  
+### <a name="eagerly-loading-multiple-levels"></a>Caricamento eager di più livelli  
 
-È anche possibile caricare rapidamente più livelli di entità correlate. Le query seguenti mostrano esempi di come eseguire questa operazione per le proprietà di navigazione di riferimento sia alle raccolte.  
+È anche possibile caricare con entusiasmo più livelli di entità correlate. Nelle query riportate di seguito vengono illustrati esempi di come eseguire questa operazione sia per le proprietà di navigazione di raccolta che di riferimento  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -79,11 +79,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noti che non è attualmente possibile filtrare quali entità correlate vengono caricate. Includere will inserire sempre in tutte le relative entità.  
+Si noti che non è attualmente possibile filtrare le entità correlate caricate. Includi porta sempre in tutte le entità correlate.  
 
 ## <a name="lazy-loading"></a>Caricamento lazy  
 
-Il caricamento lazy è il processo in base al quale un'entità o una raccolta di entità viene caricata automaticamente dal database la prima volta che si accede a una proprietà che fanno riferimento alle entità/entità. Quando si usano i tipi di entità POCO, il caricamento lazy viene realizzato mediante la creazione di istanze di tipi proxy derivato e quindi si esegue l'override proprietà virtuali per aggiungere l'hook del caricamento. Ad esempio, quando si usa la classe di entità Blog definita di seguito, i post correlati verranno caricati la prima volta che si accede alla proprietà di navigazione post:  
+Il caricamento lazy è il processo in base al quale un'entità o una raccolta di entità viene caricata automaticamente dal database la prima volta che si accede a una proprietà che fa riferimento all'entità o alle entità. Quando si usano i tipi di entità POCO, il caricamento lazy viene ottenuto creando istanze di tipi proxy derivati e quindi eseguendo l'override delle proprietà virtuali per aggiungere l'hook di caricamento. Ad esempio, quando si usa la classe di entità Blog definita di seguito, i post correlati verranno caricati la prima volta che si accede alla proprietà di navigazione post:  
 
 ``` csharp
 public class Blog
@@ -97,13 +97,13 @@ public class Blog
 }
 ```  
 
-### <a name="turn-lazy-loading-off-for-serialization"></a>Disattivare caricamento lazy off per la serializzazione  
+### <a name="turn-lazy-loading-off-for-serialization"></a>Disabilitare il caricamento lazy per la serializzazione  
 
-Serializzazione e il caricamento lazy non combinare correttamente e se non si presta attenzione possono finire l'esecuzione di query per l'intero database solo perché il caricamento lazy è abilitato. La maggior parte dei serializzatori funzionano l'accesso a ogni proprietà in un'istanza di un tipo. Accesso a proprietà attiva il caricamento lazy, in modo più entità vengono serializzate. Su tali entità sono accessibili e vengono caricate anche altre entità. È buona norma attivare lazy caricamento disattivato prima di serializzazione di un'entità. Le sezioni seguenti illustrano come eseguire questa operazione.  
+Il caricamento lazy e la serializzazione non sono combinati correttamente e, se non si presta attenzione, è possibile eseguire query per l'intero database solo perché il caricamento lazy è abilitato. La maggior parte dei serializzatori funziona accedendo a ogni proprietà in un'istanza di un tipo. L'accesso alle proprietà attiva il caricamento lazy, in modo che vengano serializzate più entità. È possibile accedere alle proprietà delle entità e vengono caricate anche altre entità. È consigliabile disattivare il caricamento lazy prima di serializzare un'entità. Le sezioni seguenti illustrano come eseguire questa operazione.  
 
-### <a name="turning-off-lazy-loading-for-specific-navigation-properties"></a>La disattivazione di caricamento lazy per le proprietà di navigazione specifici  
+### <a name="turning-off-lazy-loading-for-specific-navigation-properties"></a>Disattivazione del caricamento lazy per specifiche proprietà di navigazione  
 
-Il caricamento lazy di raccolta post può essere disattivato impostando la proprietà post non virtuale:  
+Il caricamento lazy della raccolta post può essere disattivato rendendo la proprietà post non virtuale:  
 
 ``` csharp
 public class Blog
@@ -117,11 +117,11 @@ public class Blog
 }
 ```  
 
-Il caricamento dei post di raccolta è possibile ancora usando il caricamento eager (vedere *accuratamente il caricamento* sopra) o il metodo Load (vedere *caricamento esplicito* sotto).  
+Il caricamento della raccolta dei post può ancora essere eseguito usando il caricamento eager (vedere *caricamento eager* sopra) o il metodo Load (vedere *caricamento esplicito* di seguito).  
 
-### <a name="turn-off-lazy-loading-for-all-entities"></a>Disattivare il caricamento lazy per tutte le entità  
+### <a name="turn-off-lazy-loading-for-all-entities"></a>Disattiva caricamento lazy per tutte le entità  
 
-Il caricamento lazy può essere disattivato per tutte le entità nel contesto impostando un flag della proprietà di configurazione. Ad esempio:  
+Il caricamento lazy può essere disattivato per tutte le entità nel contesto impostando un flag sulla proprietà di configurazione. Ad esempio:  
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -133,11 +133,11 @@ public class BloggingContext : DbContext
 }
 ```  
 
-Caricamento di entità correlate è possibile ancora usando il caricamento eager (vedere *accuratamente il caricamento* sopra) o il metodo Load (vedere *caricamento esplicito* sotto).  
+Il caricamento di entità correlate può comunque essere eseguito usando il caricamento eager (vedere *caricamento eager* sopra) o il metodo Load (vedere *caricamento esplicito* di seguito).  
 
 ## <a name="explicitly-loading"></a>Caricamento esplicito  
 
-Anche con il caricamento lazy disabilitato è comunque possibile in modo differito caricare entità correlate, ma deve essere eseguita con una chiamata esplicita. Per eseguire questa operazione è usare il metodo Load sulla voce dell'entità correlata. Ad esempio:  
+Anche con il caricamento lazy disabilitato, è comunque possibile caricare in modo differito le entità correlate, ma è necessario eseguire una chiamata esplicita. A tale scopo, utilizzare il metodo Load sulla voce dell'entità correlata. Ad esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -161,11 +161,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noti che il metodo di riferimento deve essere utilizzato quando un'entità dispone di una proprietà di navigazione a un'altra entità singola. D'altra parte, il metodo di raccolta deve essere utilizzato quando un'entità dispone di una proprietà di navigazione a una raccolta di altre entità.  
+Si noti che il metodo di riferimento deve essere utilizzato quando un'entità dispone di una proprietà di navigazione per un'altra entità singola. D'altra parte, il metodo di raccolta deve essere usato quando un'entità dispone di una proprietà di navigazione per una raccolta di altre entità.  
 
-### <a name="applying-filters-when-explicitly-loading-related-entities"></a>Applicare filtri quando si caricano in modo esplicito le entità correlate  
+### <a name="applying-filters-when-explicitly-loading-related-entities"></a>Applicazione di filtri quando si caricano in modo esplicito le entità correlate  
 
-Il metodo di Query fornisce l'accesso per la query sottostante che useranno Entity Framework durante il caricamento di entità correlate. È quindi possibile usare LINQ per applicare filtri alla query prima dell'esecuzione con una chiamata a un metodo di estensione LINQ, ad esempio ToList, carico e così via. Il metodo di Query può essere utilizzato con le proprietà di navigazione di riferimento sia insieme, ma è particolarmente utile per le raccolte in cui può essere utilizzato per caricare solo parte della raccolta. Ad esempio:  
+Il metodo di query consente di accedere alla query sottostante che Entity Framework utilizzerà per il caricamento di entità correlate. È quindi possibile usare LINQ per applicare filtri alla query prima di eseguirla con una chiamata a un metodo di estensione LINQ, ad esempio ToList, Load e così via. Il metodo di query può essere utilizzato sia con proprietà di navigazione di riferimento che di raccolta, ma è particolarmente utile per le raccolte in cui può essere utilizzato per caricare solo parte della raccolta. Ad esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -189,13 +189,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Quando si usa il metodo di Query è in genere è consigliabile disattivare il caricamento lazy per la proprietà di navigazione. Questo avviene perché in caso contrario, l'intera raccolta potrebbe automaticamente vengono caricata dal meccanismo di caricamento lazy prima o dopo che è stata eseguita la query filtrata.  
+Quando si usa il metodo di query, in genere è preferibile disattivare il caricamento lazy per la proprietà di navigazione. Questo perché, in caso contrario, l'intera raccolta potrebbe essere caricata automaticamente dal meccanismo di caricamento lazy prima o dopo l'esecuzione della query filtrata.  
 
-Si noti che mentre la relazione può essere specificata come stringa anziché un'espressione lambda, all'oggetto IQueryable restituita non generica quando viene usata una stringa e, pertanto il metodo di Cast è in genere necessaria prima di qualcosa di utile poter eseguire con esso.  
+Si noti che, mentre la relazione può essere specificata come stringa anziché come espressione lambda, l'oggetto IQueryable restituito non è generico quando viene utilizzata una stringa e quindi il metodo Cast è in genere necessario prima che qualsiasi operazione utile possa essere eseguita.  
 
-## <a name="using-query-to-count-related-entities-without-loading-them"></a>Uso di Query per contare le entità correlate senza il caricamento  
+## <a name="using-query-to-count-related-entities-without-loading-them"></a>Utilizzo di query per conteggiare entità correlate senza caricarle  
 
-In alcuni casi è utile conoscere il numero di entità è correlato a un'altra entità nel database senza effettivamente incorrere nel costo di caricamento di tutte le entità. Il metodo di Query con il metodo di conteggio di LINQ è utilizzabile a tale scopo. Ad esempio:  
+A volte è utile sapere quante entità sono correlate a un'altra entità nel database senza dover effettivamente sostenere il costo del caricamento di tutte le entità. Per eseguire questa operazione, è possibile usare il metodo di query con il metodo di conteggio LINQ. Ad esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())

@@ -1,46 +1,46 @@
 ---
-title: EF Core riferimenti per gli strumenti (.NET CLI) - EF Core
+title: Guida di riferimento agli strumenti di EF Core (.NET CLI)-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: 05c5f89fc79556e72a7e629c147aa817fe7d1a6b
-ms.sourcegitcommit: e90d6cfa3e96f10b8b5275430759a66a0c714ed1
+ms.openlocfilehash: 0278353640ea242df9e6ee5278c9dda78bfd341b
+ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/17/2019
-ms.locfileid: "68286459"
+ms.lasthandoff: 08/17/2019
+ms.locfileid: "69565272"
 ---
-# <a name="entity-framework-core-tools-reference---net-cli"></a>Riferimenti - CLI di .NET agli strumenti di Entity Framework Core
+# <a name="entity-framework-core-tools-reference---net-cli"></a>Riferimento agli strumenti di Entity Framework Core-interfaccia della riga di comando .NET
 
-Gli strumenti dell'interfaccia della riga di comando (CLI) per Entity Framework Core eseguono attività di sviluppo in fase di progettazione. Ad esempio, creano [migrazioni](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0#introduction-to-migrations), applicare le migrazioni e generare il codice per un modello basato su un database esistente. I comandi sono un'estensione per il multipiattaforma [dotnet](/dotnet/core/tools) comando, che fa parte delle [.NET Core SDK](https://www.microsoft.com/net/core). Questi strumenti funzionano con i progetti .NET Core.
+Gli strumenti dell'interfaccia della riga di comando (CLI) per Entity Framework Core eseguono attività di sviluppo in fase di progettazione. Ad esempio, creano [migrazioni](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0#introduction-to-migrations), applicano migrazioni e generano codice per un modello basato su un database esistente. I comandi sono un'estensione del comando [DotNet](/dotnet/core/tools) multipiattaforma, che fa parte del [.NET Core SDK](https://www.microsoft.com/net/core). Questi strumenti funzionano con i progetti .NET Core.
 
-Se si usa Visual Studio, è consigliabile la [strumenti della Console di gestione pacchetti](powershell.md) invece:
-* Funzionano automaticamente con il progetto corrente selezionato nella **Console di gestione pacchetti** senza la necessità di passare manualmente le directory.
-* Vengono aperti automaticamente i file generati da un comando dopo il completamento del comando.
+Se si usa Visual Studio, è consigliabile usare invece gli [strumenti della console di gestione pacchetti](powershell.md) :
+* Il progetto funziona automaticamente con il progetto corrente selezionato nella **console di gestione pacchetti** senza che sia necessario cambiare manualmente le directory.
+* Aprono automaticamente i file generati da un comando dopo il completamento del comando.
 
 ## <a name="installing-the-tools"></a>Installazione degli strumenti
 
-La procedura di installazione dipende dalla versione e il tipo di progetto:
+La procedura di installazione dipende dal tipo di progetto e dalla versione:
 
-* EF Core 3.x
-* ASP.NET Core 2.1 e versioni successive
-* EF Core 2.x
-* EF Core 1.x
+* EF Core 3. x
+* ASP.NET Core versione 2,1 e successive
+* EF Core 2. x
+* EF Core 1. x
 
-### <a name="ef-core-3x"></a>EF Core 3.x
+### <a name="ef-core-3x"></a>EF Core 3. x
 
-* `dotnet ef` deve essere installato come uno strumento globale o locale. La maggior parte degli sviluppatori installerà `dotnet ef` come strumento globale con il comando seguente:
+* `dotnet ef`deve essere installato come strumento globale o locale. La maggior parte degli `dotnet ef` sviluppatori verrà installata come strumento globale con il comando seguente:
 
   ``` console
-    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+  dotnet tool install --global dotnet-ef --version 3.0.0-*
   ```
 
-  È anche possibile usare `dotnet ef` come strumento locale. Per usarlo come uno strumento locale, ripristinare le dipendenze di un progetto che lo dichiara come gli strumenti di dipendenza utilizzando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
+  È anche possibile usare `dotnet ef` come strumento locale. Per usarlo come strumento locale, ripristinare le dipendenze di un progetto che lo dichiara come dipendenza degli strumenti usando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
 
-* Installare il [.NET Core SDK 3.0](https://dotnet.microsoft.com/download/dotnet-core/3.0)). il SDK è necessario installare anche se è la versione più recente di Visual Studio.
+* Installare la [.NET Core SDK 3,0](https://dotnet.microsoft.com/download/dotnet-core/3.0)). L'SDK deve essere installato anche se si dispone della versione più recente di Visual Studio.
 
-* Installare la versione più recente `Microsoft.EntityFrameworkCore.Design` pacchetto.
+* Installare il pacchetto `Microsoft.EntityFrameworkCore.Design` più recente.
 
   ``` Console
   dotnet add package Microsoft.EntityFrameworkCore.Design
@@ -48,37 +48,37 @@ La procedura di installazione dipende dalla versione e il tipo di progetto:
 
 ### <a name="aspnet-core-21"></a>ASP.NET Core 2.1 +
 
-* Installare l'oggetto corrente [.NET Core SDK](https://www.microsoft.com/net/download/core). Il SDK deve essere installato anche se è presente la versione più recente di Visual Studio 2017.
+* Installare la [.NET Core SDK](https://www.microsoft.com/net/download/core)corrente. Il SDK deve essere installato anche se è presente la versione più recente di Visual Studio 2017.
 
-  Questo è tutto ciò che serve per ASP.NET Core 2.1 + in quanto il `Microsoft.EntityFrameworkCore.Design` pacchetto è incluso nel [Microsoft.AspNetCore.App metapacchetto](/aspnet/core/fundamentals/metapackage-app).
+  Questo è tutto ciò che è necessario per ASP.NET Core 2.1 + perché `Microsoft.EntityFrameworkCore.Design` il pacchetto è incluso nel [metapacchetto Microsoft. AspNetCore. app](/aspnet/core/fundamentals/metapackage-app).
 
-### <a name="ef-core-2x-not-aspnet-core"></a>EF Core 2.x (non su ASP.NET Core)
+### <a name="ef-core-2x-not-aspnet-core"></a>EF Core 2. x (non ASP.NET Core)
 
-Il `dotnet ef` comandi sono inclusi in .NET Core SDK, ma per abilitare i comandi è necessario installare il `Microsoft.EntityFrameworkCore.Design` pacchetto.
+I `dotnet ef` comandi sono inclusi nel .NET Core SDK, ma per abilitare i comandi è necessario installare il `Microsoft.EntityFrameworkCore.Design` pacchetto.
 
-* Installare l'oggetto corrente [.NET Core SDK](https://www.microsoft.com/net/download/core). il SDK è necessario installare anche se è la versione più recente di Visual Studio.
+* Installare la [.NET Core SDK](https://www.microsoft.com/net/download/core)corrente. L'SDK deve essere installato anche se si dispone della versione più recente di Visual Studio.
 
-* Installare l'ultima versione stabile `Microsoft.EntityFrameworkCore.Design` pacchetto.
+* Installare il pacchetto stabile `Microsoft.EntityFrameworkCore.Design` più recente.
 
   ``` Console
   dotnet add package Microsoft.EntityFrameworkCore.Design
   ```
 
-### <a name="ef-core-1x"></a>EF Core 1.x
+### <a name="ef-core-1x"></a>EF Core 1. x
 
-* Installare .NET Core SDK versione 2.1.200. Nelle versioni successive non sono compatibili con gli strumenti CLI di EF Core 1.0 e 1.1.
+* Installare la versione di .NET Core SDK 2.1.200. Le versioni successive non sono compatibili con gli strumenti dell'interfaccia della riga di comando per EF Core 1,0 e 1,1.
 
-* Configurare l'applicazione alla versione del SDK Usa il 2.1.200 modificando relativi [Global. JSON](/dotnet/core/tools/global-json) file. In genere, questo file è incluso nella directory della soluzione (quello precedente del progetto).
+* Configurare l'applicazione per l'uso della versione di 2.1.200 SDK modificando il relativo file [Global. JSON](/dotnet/core/tools/global-json) . Questo file è in genere incluso nella directory della soluzione (uno sopra il progetto).
 
-* Modificare il file di progetto e aggiungere `Microsoft.EntityFrameworkCore.Tools.DotNet` come un `DotNetCliToolReference` elemento. Specificare l'ultima versione 1.x, ad esempio: 1.1.6. Vedere l'esempio di file di progetto alla fine di questa sezione.
+* Modificare il file di progetto e `Microsoft.EntityFrameworkCore.Tools.DotNet` aggiungerlo `DotNetCliToolReference` come elemento. Specificare la versione 1. x più recente, ad esempio: 1.1.6. Vedere l'esempio di file di progetto alla fine di questa sezione.
 
-* Installare l'ultima versione 1.x del `Microsoft.EntityFrameworkCore.Design` creare un pacchetto, ad esempio:
+* Installare la versione 1. x più recente del `Microsoft.EntityFrameworkCore.Design` pacchetto, ad esempio:
 
   ```console
   dotnet add package Microsoft.EntityFrameworkCore.Design -v 1.1.6
   ```
 
-  Con entrambi i riferimenti del pacchetto aggiunti, il file di progetto simile al seguente:
+  Con l'aggiunta di entrambi i riferimenti al pacchetto, il file di progetto ha un aspetto simile al seguente:
 
   ``` xml
   <Project Sdk="Microsoft.NET.Sdk">
@@ -98,11 +98,11 @@ Il `dotnet ef` comandi sono inclusi in .NET Core SDK, ma per abilitare i comandi
   </Project>
   ```
 
-  Un riferimento al pacchetto con `PrivateAssets="All"` non viene esposta ai progetti che fanno riferimento a questo progetto. Questa restrizione è particolarmente utile per i pacchetti che in genere vengono usati solo durante lo sviluppo.
+  Un riferimento al pacchetto `PrivateAssets="All"` con non viene esposto ai progetti che fanno riferimento a questo progetto. Questa restrizione è particolarmente utile per i pacchetti che in genere vengono usati solo durante lo sviluppo.
 
 ### <a name="verify-installation"></a>Verificare l'installazione
 
-Eseguire i comandi seguenti per verificare che siano installati correttamente gli strumenti CLI di EF Core:
+Eseguire i comandi seguenti per verificare che EF Core gli strumenti dell'interfaccia della riga di comando siano installati correttamente:
 
   ``` Console
   dotnet restore
@@ -125,52 +125,52 @@ Entity Framework Core .NET Command-line Tools 2.1.3-rtm-32065
 <Usage documentation follows, not shown.>
 ```
 
-## <a name="using-the-tools"></a>Usando gli strumenti
+## <a name="using-the-tools"></a>Uso degli strumenti
 
-Prima di usare gli strumenti, potrebbe essere necessario creare un progetto di avvio o impostare l'ambiente.
+Prima di utilizzare gli strumenti, potrebbe essere necessario creare un progetto di avvio o impostare l'ambiente.
 
 ### <a name="target-project-and-startup-project"></a>Progetto di destinazione e progetto di avvio
 
-I comandi di fare riferimento a un *project* e una *progetto di avvio*.
+I comandi fanno riferimento a un progetto e a un *progetto di avvio*.
 
-* Il *project* è noto anche come il *progetto di destinazione* perché è in cui i comandi aggiungono o rimuovono file. Per impostazione predefinita, il progetto nella directory corrente è il progetto di destinazione. È possibile specificare un altro progetto come progetto di destinazione usando il <nobr> `--project` </nobr> opzione.
+* Il *progetto* è anche noto come *progetto di destinazione* perché è il punto in cui i comandi aggiungono o rimuovono i file. Per impostazione predefinita, il progetto nella directory corrente è il progetto di destinazione. È possibile specificare un progetto diverso come progetto di destinazione utilizzando l' <nobr>`--project`</nobr> opzione.
 
-* Il *progetto di avvio* è quello che gli strumenti di compilare ed eseguire. Gli strumenti richiede l'esecuzione di codice dell'applicazione in fase di progettazione per ottenere informazioni sul progetto, ad esempio la stringa di connessione di database e la configurazione del modello. Per impostazione predefinita, il progetto nella directory corrente è il progetto di avvio. È possibile specificare un altro progetto come progetto di avvio usando il <nobr> `--startup-project` </nobr> opzione.
+* Il *progetto di avvio* è quello che gli strumenti compilano ed eseguono. Gli strumenti di devono eseguire il codice dell'applicazione in fase di progettazione per ottenere informazioni sul progetto, ad esempio la stringa di connessione al database e la configurazione del modello. Per impostazione predefinita, il progetto nella directory corrente è il progetto di avvio. È possibile specificare un progetto diverso come progetto di avvio usando l' <nobr>`--startup-project`</nobr> opzione.
 
-Il progetto di avvio e di un progetto di destinazione sono spesso dello stesso progetto. Uno scenario tipico in cui sono progetti separati è quando:
+Il progetto di avvio e il progetto di destinazione sono spesso lo stesso progetto. Uno scenario tipico in cui si trovano progetti distinti è quando:
 
-* Le classi di contesto ed entità di Entity Framework Core sono in una libreria di classi .NET Core.
-* Un'app console .NET Core o un'app web fa riferimento alla libreria di classi.
+* Il contesto EF Core e le classi di entità si trovano in una libreria di classi .NET Core.
+* Un'app console o Web .NET Core fa riferimento alla libreria di classi.
 
-È anche possibile [inserire il codice di migrazioni in una libreria di classi separata dal contesto di Entity Framework Core](xref:core/managing-schemas/migrations/projects).
+È anche possibile [inserire il codice delle migrazioni in una libreria di classi separata dal contesto EF Core](xref:core/managing-schemas/migrations/projects).
 
-### <a name="other-target-frameworks"></a>Altri framework di destinazione
+### <a name="other-target-frameworks"></a>Altri Framework di destinazione
 
-Gli strumenti dell'interfaccia della riga di lavoro con i progetti .NET Core e .NET Framework. Le app con il modello di EF Core in una libreria di classi .NET Standard potrebbero non avere un progetto di .NET Framework o .NET Core. Ad esempio, questo vale delle App Xamarin e (Universal Windows Platform). In questi casi, è possibile creare un progetto di app console .NET Core, il cui unico scopo è agire come progetto di avvio per gli strumenti. Il progetto può essere un progetto fittizio senza vero codice &mdash; , è necessario soltanto per fornire una destinazione per gli strumenti.
+Gli strumenti dell'interfaccia della riga di comando funzionano con progetti .NET Core e progetti .NET Framework. Le app che hanno il modello di EF Core in una libreria di classi .NET Standard potrebbero non avere un progetto .NET Core o .NET Framework. Ad esempio, questo vale per le app Novell e piattaforma UWP (Universal Windows Platform). In questi casi, è possibile creare un progetto di app console .NET Core il cui unico scopo è fungere da progetto di avvio per gli strumenti. Il progetto può essere un progetto fittizio senza codice &mdash; reale necessario per fornire una destinazione per gli strumenti.
 
-Perché è un progetto fittizio necessario? Come accennato in precedenza, gli strumenti di dovranno eseguire il codice dell'applicazione in fase di progettazione. A tale scopo, è necessario usare il runtime di .NET Core. Quando il modello di EF Core è in un progetto destinato a .NET Core o .NET Framework, gli strumenti di Entity Framework Core presi in prestito il runtime dal progetto. Che non possono eseguire se il modello di EF Core è in una libreria di classi .NET Standard. .NET Standard non è un'implementazione .NET effettiva; si tratta di una specifica di un set di API che le implementazioni di .NET devono supportare. .NET Standard non è pertanto sufficiente per gli strumenti di Entity Framework Core eseguire il codice dell'applicazione. Il progetto fittizio creato per essere utilizzato come progetto di avvio fornisce una piattaforma di destinazione concreta in cui gli strumenti possono caricare la libreria di classi .NET Standard.
+Perché è necessario un progetto fittizio? Come indicato in precedenza, gli strumenti devono eseguire il codice dell'applicazione in fase di progettazione. A tale scopo, è necessario usare il runtime di .NET Core. Quando il modello di EF Core si trova in un progetto destinato a .NET Core o .NET Framework, gli strumenti di EF Core prendono in prestito il runtime dal progetto. Questa operazione non può essere eseguita se il modello di EF Core si trova in una libreria di classi .NET Standard. Il .NET Standard non è un'implementazione .NET effettiva; si tratta di una specifica di un set di API che le implementazioni di .NET devono supportare. Pertanto .NET Standard non è sufficiente per gli strumenti EF Core per eseguire il codice dell'applicazione. Il progetto fittizio creato da usare come progetto di avvio fornisce una piattaforma di destinazione concreta in cui gli strumenti possono caricare la libreria di classi .NET Standard.
 
 ### <a name="aspnet-core-environment"></a>Ambiente ASP.NET Core
 
-Per specificare l'ambiente per i progetti ASP.NET Core, impostare il **ASPNETCORE_ENVIRONMENT** variabile di ambiente prima di eseguire comandi.
+Per specificare l'ambiente per ASP.NET Core progetti, impostare la variabile di ambiente **ASPNETCORE_ENVIRONMENT** prima di eseguire i comandi.
 
 ## <a name="common-options"></a>Opzioni comuni
 
 |                   | Opzione                            | Descrizione                                                                                                                                                                                                                                                   |
 |:------------------|:----------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |                   | `--json`                          | Mostra l'output JSON.                                                                                                                                                                                                                                             |
-| <nobr>`-c`</nobr> | `--context <DBCONTEXT>`           | Classe `DbContext` da usare. Nome della classe solo o nome completo con gli spazi dei nomi.  Se questa opzione viene omessa, EF Core troverà la classe del contesto. Se sono presenti più classi di contesto, questa opzione è obbligatoria.                                            |
-| `-p`              | `--project <PROJECT>`             | Percorso relativo alla cartella del progetto del progetto di destinazione.  Valore predefinito è la cartella corrente.                                                                                                                                                              |
-| `-s`              | `--startup-project <PROJECT>`     | Percorso relativo alla cartella del progetto del progetto di avvio. Valore predefinito è la cartella corrente.                                                                                                                                                              |
-|                   | `--framework <FRAMEWORK>`         | Il [Moniker Framework di destinazione](/dotnet/standard/frameworks#supported-target-framework-versions) per il [framework di destinazione](/dotnet/standard/frameworks).  Usare quando il file di progetto specifica più Framework di destinazione e si desidera selezionare uno di essi. |
-|                   | `--configuration <CONFIGURATION>` | La configurazione della build, ad esempio: `Debug` o `Release`.                                                                                                                                                                                                   |
-|                   | `--runtime <IDENTIFIER>`          | L'identificatore di ripristinare i pacchetti per il runtime di destinazione. Per un elenco degli identificatori di runtime (RID, Runtime Identifier), vedere il [catalogo RID](/dotnet/core/rid-catalog).                                                                                                      |
-| `-h`              | `--help`                          | Mostra le informazioni della Guida.                                                                                                                                                                                                                                        |
-| `-v`              | `--verbose`                       | Visualizzare output dettagliato.                                                                                                                                                                                                                                          |
-|                   | `--no-color`                      | Non leggano l'output.                                                                                                                                                                                                                                        |
-|                   | `--prefix-output`                 | Prefisso con il livello di output.                                                                                                                                                                                                                                     |
+| <nobr>`-c`</nobr> | `--context <DBCONTEXT>`           | Classe `DbContext` da usare. Solo il nome della classe o completo con gli spazi dei nomi.  Se questa opzione viene omessa, EF Core troverà la classe Context. Se sono presenti più classi di contesto, questa opzione è obbligatoria.                                            |
+| `-p`              | `--project <PROJECT>`             | Percorso relativo della cartella del progetto del progetto di destinazione.  Il valore predefinito è la cartella corrente.                                                                                                                                                              |
+| `-s`              | `--startup-project <PROJECT>`     | Percorso relativo della cartella di progetto del progetto di avvio. Il valore predefinito è la cartella corrente.                                                                                                                                                              |
+|                   | `--framework <FRAMEWORK>`         | [Moniker del Framework](/dotnet/standard/frameworks#supported-target-framework-versions) di destinazione per il [Framework di destinazione](/dotnet/standard/frameworks).  Usare quando il file di progetto specifica più framework di destinazione e si vuole selezionarne uno. |
+|                   | `--configuration <CONFIGURATION>` | Configurazione della build, ad esempio: `Debug` o `Release`.                                                                                                                                                                                                   |
+|                   | `--runtime <IDENTIFIER>`          | Identificatore del runtime di destinazione per cui ripristinare i pacchetti. Per un elenco degli identificatori di runtime (RID, Runtime Identifier), vedere il [catalogo RID](/dotnet/core/rid-catalog).                                                                                                      |
+| `-h`              | `--help`                          | Visualizzare le informazioni della guida.                                                                                                                                                                                                                                        |
+| `-v`              | `--verbose`                       | Mostra output dettagliato.                                                                                                                                                                                                                                          |
+|                   | `--no-color`                      | Non colora l'output.                                                                                                                                                                                                                                        |
+|                   | `--prefix-output`                 | Prefisso output con livello.                                                                                                                                                                                                                                     |
 
-## <a name="dotnet-ef-database-drop"></a>eliminazione del database ef dotnet
+## <a name="dotnet-ef-database-drop"></a>eliminazione database DotNet EF
 
 Elimina il database.
 
@@ -178,71 +178,71 @@ Opzioni:
 
 |                   | Opzione                   | Descrizione                                              |
 |:------------------|:-------------------------|:---------------------------------------------------------|
-| <nobr>`-f`</nobr> | <nobr>`--force`</nobr>   | Non verificare.                                           |
-|                   | <nobr>`--dry-run`</nobr> | Mostra in quale database verrà rimossa, ma non eliminarlo. |
+| <nobr>`-f`</nobr> | <nobr>`--force`</nobr>   | Non confermare.                                           |
+|                   | <nobr>`--dry-run`</nobr> | Indica il database da eliminare, ma non eliminarlo. |
 
-## <a name="dotnet-ef-database-update"></a>aggiornamento del database ef dotnet
+## <a name="dotnet-ef-database-update"></a>aggiornamento database DotNet EF
 
-Aggiorna il database per l'ultima migrazione o per una migrazione specificata.
+Aggiorna il database all'ultima migrazione o a una migrazione specificata.
 
 Argomenti:
 
 | Argomento      | Descrizione                                                                                                                                                                                                                                                     |
 |:--------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<MIGRATION>` | La migrazione di destinazione. Le migrazioni possono essere identificate in base al nome o ID. Il numero 0 rappresenta un caso speciale che si intende *prima della migrazione prima* e fa sì che tutte le migrazioni da ripristinare. Se non viene specificata alcuna migrazione, il comando predefinito all'ultima migrazione. |
+| `<MIGRATION>` | Migrazione di destinazione. Le migrazioni possono essere identificate in base al nome o all'ID. Il numero 0 è un caso speciale che indica *prima della prima migrazione* e comporta il ripristino di tutte le migrazioni. Se non viene specificata alcuna migrazione, l'impostazione predefinita del comando è l'ultima migrazione. |
 
-Negli esempi seguenti aggiornano il database per una migrazione specificata. Il primo Usa il nome della migrazione e il secondo Usa l'ID di migrazione:
+Gli esempi seguenti aggiornano il database a una migrazione specificata. Il primo usa il nome della migrazione e il secondo usa l'ID migrazione:
 
 ```console
 dotnet ef database update InitialCreate
 dotnet ef database update 20180904195021_InitialCreate
 ```
 
-## <a name="dotnet-ef-dbcontext-info"></a>informazioni sull'oggetto dbcontext di Entity Framework di dotnet
+## <a name="dotnet-ef-dbcontext-info"></a>informazioni su DotNet EF DbContext
 
 Ottiene informazioni su un `DbContext` tipo.
 
-## <a name="dotnet-ef-dbcontext-list"></a>elenco di dbcontext di Entity Framework dotnet
+## <a name="dotnet-ef-dbcontext-list"></a>elenco DbContext di DotNet EF
 
-Elenchi disponibili `DbContext` tipi.
+Elenca i `DbContext` tipi disponibili.
 
-## <a name="dotnet-ef-dbcontext-scaffold"></a>scaffolding dbcontext di Entity Framework di dotnet
+## <a name="dotnet-ef-dbcontext-scaffold"></a>impalcatura DbContext DotNet EF
 
-Genera il codice per un `DbContext` e tipi di entità per un database. Affinché questo comando generare un tipo di entità, la tabella di database deve avere una chiave primaria.
+Genera il codice per `DbContext` un tipo di entità e per un database. Affinché questo comando generi un tipo di entità, è necessario che la tabella di database disponga di una chiave primaria.
 
 Argomenti:
 
 | Argomento       | Descrizione                                                                                                                                                                                                             |
 |:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<CONNECTION>` | La stringa di connessione al database. Per progetti ASP.NET Core 2.x, il valore può essere *nome =\<nome della stringa di connessione >* . In tal caso il nome deriva dalle origini configurazione che sono configurati per il progetto. |
-| `<PROVIDER>`   | Il provider da utilizzare. In genere si tratta del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
+| `<CONNECTION>` | Stringa di connessione al database. Per i progetti ASP.NET Core 2. x, il valore può essere *nome\<= nome della stringa di connessione >* . In tal caso, il nome deriva dalle origini di configurazione configurate per il progetto. |
+| `<PROVIDER>`   | Provider da utilizzare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
 
 Opzioni:
 
 |                 | Opzione                                   | Descrizione                                                                                                                                                                    |
 |:----------------|:-----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <nobr>-d</nobr> | `--data-annotations`                     | Usare gli attributi per configurare il modello (se possibile). Se questa opzione viene omessa, viene utilizzato solo l'API fluent.                                                                |
-| `-c`            | `--context <NAME>`                       | Il nome del `DbContext` classe da generare.                                                                                                                                 |
-|                 | `--context-dir <PATH>`                   | La directory di inserire il `DbContext` file di classe. I percorsi sono relativi alla directory del progetto. Gli spazi dei nomi sono derivati dai nomi di cartella.                                 |
-| `-f`            | `--force`                                | Sovrascrivi file esistenti.                                                                                                                                                      |
-| `-o`            | `--output-dir <PATH>`                    | La directory per inserire i file di classe di entità in. I percorsi sono relativi alla directory del progetto.                                                                                       |
-|                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | Gli schemi delle tabelle per generare i tipi di entità per. Per specificare più schemi, ripetere `--schema` per ognuno di essi. Se questa opzione viene omessa, vengono inclusi tutti gli schemi.          |
-| `-t`            | `--table <TABLE_NAME>`...                | Generare tipi di entità per le tabelle. Per specificare più tabelle, ripetere `-t` o `--table` per ognuno di essi. Se si omette questa opzione, tutte le tabelle vengono incluse.                |
-|                 | `--use-database-names`                   | Usare nomi di tabella e colonna esattamente come appaiono nel database. Se questa opzione viene omessa, vengono modificati i nomi di database per più da vicino è conforme alle convenzioni di stile nome c#. |
+| <nobr>-d</nobr> | `--data-annotations`                     | Utilizzare gli attributi per configurare il modello (laddove possibile). Se questa opzione viene omessa, viene usata solo l'API Fluent.                                                                |
+| `-c`            | `--context <NAME>`                       | Nome della `DbContext` classe da generare.                                                                                                                                 |
+|                 | `--context-dir <PATH>`                   | Directory in cui inserire il `DbContext` file di classe. I percorsi sono relativi alla directory del progetto. Gli spazi dei nomi sono derivati dai nomi delle cartelle.                                 |
+| `-f`            | `--force`                                | Sovrascrivere i file esistenti.                                                                                                                                                      |
+| `-o`            | `--output-dir <PATH>`                    | Directory in cui inserire i file della classe di entità. I percorsi sono relativi alla directory del progetto.                                                                                       |
+|                 | <nobr>`--schema <SCHEMA_NAME>...`</nobr> | Schemi delle tabelle per cui generare i tipi di entità. Per specificare più schemi, ripetere `--schema` per ognuno di essi. Se questa opzione viene omessa, vengono inclusi tutti gli schemi.          |
+| `-t`            | `--table <TABLE_NAME>`...                | Tabelle per cui generare i tipi di entità. Per specificare più tabelle, ripetere `-t` o `--table` per ciascuna di esse. Se questa opzione viene omessa, vengono incluse tutte le tabelle.                |
+|                 | `--use-database-names`                   | Utilizzare i nomi di tabella e colonna esattamente come vengono visualizzati nel database. Se questa opzione viene omessa, i nomi dei database vengono modificati in modo da C# essere conformi alle convenzioni di stile del nome. |
 
-Nell'esempio seguente esegue scaffolding delle tutti gli schemi e tabelle e inserisce i nuovi file nei *modelli* cartella.
+Nell'esempio seguente vengono assemblati tutti gli schemi e le tabelle e vengono inseriti i nuovi file nella cartella Models.
 
 ```console
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models
 ```
 
-Nell'esempio seguente esegue scaffolding delle sole tabelle selezionate e crea il contesto in una cartella separata con il nome specificato:
+Nell'esempio seguente vengono create le impalcature solo per le tabelle selezionate e il contesto viene creato in una cartella separata con un nome specificato:
 
 ```console
 dotnet ef dbcontext scaffold "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models -t Blog -t Post --context-dir Context -c BlogContext
 ```
 
-## <a name="dotnet-ef-migrations-add"></a>aggiungere dotnet migrazioni di Entity Framework
+## <a name="dotnet-ef-migrations-add"></a>Aggiunta di migrazioni DotNet EF
 
 Aggiunge una nuova migrazione.
 
@@ -250,29 +250,29 @@ Argomenti:
 
 | Argomento | Descrizione                |
 |:---------|:---------------------------|
-| `<NAME>` | Il nome della migrazione. |
+| `<NAME>` | Nome della migrazione. |
 
 Opzioni:
 
 |                   | Opzione                             | Descrizione                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
-| <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | La directory e sub-spazio dei nomi da usare. I percorsi sono relativi alla directory del progetto. Il valore predefinito è "Migrazione". |
+| <nobr>`-o`</nobr> | <nobr>`--output-dir <PATH>`</nobr> | Directory (e spazio dei nomi secondario) da utilizzare. I percorsi sono relativi alla directory del progetto. Il valore predefinito è "Migrations". |
 
-## <a name="dotnet-ef-migrations-list"></a>elenco di dotnet ef migrations
+## <a name="dotnet-ef-migrations-list"></a>elenco migrazioni di DotNet EF
 
 Elenca le migrazioni disponibili.
 
-## <a name="dotnet-ef-migrations-remove"></a>rimuovere le migrazioni di Entity Framework di dotnet
+## <a name="dotnet-ef-migrations-remove"></a>Rimuovi migrazioni di DotNet EF
 
-Rimuove l'ultima migrazione (rollback le modifiche al codice che sono state eseguite per la migrazione).
+Rimuove l'ultima migrazione (esegue il rollback delle modifiche del codice eseguite per la migrazione).
 
 Opzioni:
 
 |                   | Opzione    | Descrizione                                                                     |
 |:------------------|:----------|:--------------------------------------------------------------------------------|
-| <nobr>`-f`</nobr> | `--force` | Ripristinare la migrazione (rollback delle modifiche che sono state applicate al database). |
+| <nobr>`-f`</nobr> | `--force` | Ripristinare la migrazione, ovvero eseguire il rollback delle modifiche applicate al database. |
 
-## <a name="dotnet-ef-migrations-script"></a>script di dotnet ef migrations
+## <a name="dotnet-ef-migrations-script"></a>script migrazioni DotNet EF
 
 Genera uno script SQL dalle migrazioni.
 
@@ -280,23 +280,23 @@ Argomenti:
 
 | Argomento | Descrizione                                                                                                                                                   |
 |:---------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<FROM>` | La migrazione inizia. Le migrazioni possono essere identificate in base al nome o ID. Il numero 0 rappresenta un caso speciale che si intende *prima della migrazione prima*. Il valore predefinito è 0. |
-| `<TO>`   | La migrazione finale. Per impostazione predefinita all'ultima migrazione.                                                                                                         |
+| `<FROM>` | Migrazione iniziale. Le migrazioni possono essere identificate in base al nome o all'ID. Il numero 0 è un caso speciale che indica *prima della prima migrazione*. Il valore predefinito è 0. |
+| `<TO>`   | Migrazione finale. L'impostazione predefinita è l'ultima migrazione.                                                                                                         |
 
 Opzioni:
 
 |                   | Opzione            | Descrizione                                                        |
 |:------------------|:------------------|:-------------------------------------------------------------------|
 | <nobr>`-o`</nobr> | `--output <FILE>` | File in cui scrivere lo script.                                   |
-| `-i`              | `--idempotent`    | Generare uno script che può essere utilizzato in un database in ogni operazione di migrazione. |
+| `-i`              | `--idempotent`    | Genera uno script che può essere utilizzato in un database in qualsiasi migrazione. |
 
-L'esempio seguente crea uno script per la migrazione InitialCreate:
+Nell'esempio seguente viene creato uno script per la migrazione di InitialCreate:
 
 ```console
 dotnet ef migrations script 0 InitialCreate
 ```
 
-Nell'esempio seguente crea uno script per tutte le migrazioni dopo la migrazione InitialCreate.
+Nell'esempio seguente viene creato uno script per tutte le migrazioni dopo la migrazione di InitialCreate.
 
 ```console
 dotnet ef migrations script 20180904195021_InitialCreate
