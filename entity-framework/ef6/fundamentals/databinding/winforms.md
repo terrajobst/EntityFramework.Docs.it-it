@@ -3,12 +3,12 @@ title: DataBinding con WinForms-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
-ms.openlocfilehash: ad55ef4d496bbfe30eafcab9811c92989066519f
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 3c7c58f5ded29c136bbdca1d81c64b07c53ce583
+ms.sourcegitcommit: 7391cc31193c1216ec9ed485709042ad0c2106cf
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306558"
+ms.lasthandoff: 08/23/2019
+ms.locfileid: "69985473"
 ---
 # <a name="databinding-with-winforms"></a>DataBinding con WinForms
 Questa procedura dettagliata illustra come associare tipi POCO a controlli Windows Form (WinForms) in un modulo "Master-Detail". L'applicazione utilizza Entity Framework per popolare gli oggetti con i dati del database, rilevare le modifiche e salvare in modo permanente i dati nel database.
@@ -254,7 +254,7 @@ EF genera codice dal modello usando i modelli T4. I modelli forniti con Visual S
 
 -   Fare doppio clic sul file ProductModel.tt per aprirlo nell'editor di Visual Studio
 -   Trovare e sostituire le due occorrenze di "**ICollection**" con "**ObservableListSource**". Si trovano a circa linee 296 e 484.
--   Trovare e sostituire la prima occorrenza di "**HashSet**" con "**ObservableListSource**". Questa occorrenza si trova approssimativamente alla riga 50. Non **sostituire la** seconda occorrenza di HashSet rilevata successivamente nel codice.
+-   Trovare e sostituire la prima occorrenza di "**HashSet**" con "**ObservableListSource**". Questa occorrenza si trova approssimativamente alla riga 50. Non sostituire la seconda occorrenza di HashSet rilevata successivamente nel codice.
 -   Salvare il file ProductModel.tt. Questa operazione dovrebbe causare la rigenerazione del codice per le entità. Se il codice non viene rigenerato automaticamente, fare clic con il pulsante destro del mouse su ProductModel.tt e scegliere "Esegui strumento personalizzato".
 
 Se ora si apre il file category.cs (annidato in ProductModel.TT), si noterà che la raccolta Products ha il tipo **ObservableListSource&lt;Product&gt;** .
@@ -263,7 +263,7 @@ Compilare il progetto.
 
 ## <a name="lazy-loading"></a>Caricamento lazy
 
-La  proprietà Products della classe **Category** e della proprietà **Category** della classe **Product** sono proprietà di navigazione. In Entity Framework, le proprietà di navigazione consentono di spostarsi in una relazione tra due tipi di entità.
+La proprietà Products della classe **Category** e della proprietà **Category** della classe **Product** sono proprietà di navigazione. In Entity Framework, le proprietà di navigazione consentono di spostarsi in una relazione tra due tipi di entità.
 
 EF offre la possibilità di caricare automaticamente le entità correlate dal database al primo accesso alla proprietà di navigazione. Con questo tipo di caricamento (denominato caricamento lazy), tenere presente che la prima volta che si accede a ogni proprietà di navigazione viene eseguita una query separata sul database se il contenuto non è già presente nel contesto.
 
@@ -280,8 +280,8 @@ Aggiungere le classi definite nel modello come origini dati per l'applicazione W
 
     ![origine dati](~/ef6/media/datasource.png)
 
--   Fare clic su **fine.** Se la *finestra Origini dati non viene visualizzata, selezionare * * * Visualizza-&gt; altre finestre-&gt; origini dati* 
-    *
+-   Fare clic su **fine.**
+    Se la finestra Origini dati non viene visualizzata, selezionare **Visualizza-&gt; altre finestre&gt; -origini dati**
 -   Premere l'icona Aggiungi, in modo che la finestra Origini dati non nasconda automaticamente. Se la finestra è già visibile, potrebbe essere necessario fare clic sul pulsante Aggiorna.
 
     ![Origine dati 2](~/ef6/media/datasource2.png)
