@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: b5ac31722f49589f1494a3d8d1c8a7011a4cf9ce
-ms.sourcegitcommit: a013e243a14f384999ceccaf9c779b8c1ae3b936
+ms.openlocfilehash: 2712845512d9eb349ef3a7e14f4365327db0fcd6
+ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2019
-ms.locfileid: "57463269"
+ms.lasthandoff: 08/17/2019
+ms.locfileid: "69565329"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -32,6 +32,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+Leggere la [sezione sulla suddivisione di tabelle](xref:core/modeling/table-splitting) per altre informazioni su questa funzionalità.
 
 ### <a name="owned-types"></a>Tipi di proprietà
 
@@ -91,7 +92,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
-Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità ```Post```. Si noti l'uso di una proprietà a livello di istanza DbContext: ```TenantId```. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
+Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti l'uso di una proprietà a livello di istanza DbContext: `TenantId`. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
 
 È possibile disabilitare i filtri per le singole query LINQ usando l'operatore IgnoreQueryFilters().
 
@@ -159,7 +160,7 @@ builder.ApplyConfiguration(new CustomerConfiguration());
 
 Il modello di base per l'uso di EF Core in un'applicazione ASP.NET Core in genere comporta la registrazione di un tipo DbContext personalizzato nel sistema di inserimento delle dipendenze e il successivo recupero delle istanze del tipo tramite i parametri del costruttore nei controller. Ciò significa che per ogni richiesta viene creata una nuova istanza di DbContext.
 
-La versione 2.0 presenta un nuovo modo di registrare i tipi DbContext personalizzati nell'inserimento delle dipendenze che introduce in modo trasparente un pool di istanze DbContext riutilizzabili. Per usare il pooling DbContext, usare ```AddDbContextPool``` anziché ```AddDbContext``` durante la registrazione del servizio:
+La versione 2.0 presenta un nuovo modo di registrare i tipi DbContext personalizzati nell'inserimento delle dipendenze che introduce in modo trasparente un pool di istanze DbContext riutilizzabili. Per usare il pooling DbContext, usare `AddDbContextPool` anziché `AddDbContext` durante la registrazione del servizio:
 
 ``` csharp
 services.AddDbContextPool<BloggingContext>(
@@ -172,7 +173,7 @@ Questo metodo è concettualmente simile al funzionamento del pool di connessioni
 
 ### <a name="limitations"></a>Limitazioni
 
-Il nuovo metodo introduce alcune limitazioni nelle operazioni possibili nel metodo ```OnConfiguring()``` di DbContext.
+Il nuovo metodo introduce alcune limitazioni nelle operazioni possibili nel metodo `OnConfiguring()` di DbContext.
 
 > [!WARNING]  
 > Evitare di usare il pooling DbContext se nella classe DbContext derivata si mantiene uno stato (ad esempio, campi privati) che non deve essere condiviso tra le richieste. Prima di aggiungere un'istanza di DbContext al pool, EF Core reimposterà solo lo stato di cui è a conoscenza.
@@ -218,7 +219,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 ### <a name="string-interpolation-in-fromsql-and-executesqlcommand"></a>Interpolazione di stringhe in FromSql e ExecuteSqlCommand
 
-C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: ```FromSql``` e ```ExecuteSqlCommand```. Questo nuovo supporto consente di usare l'interpolazione di stringhe C# in modo "sicuro", ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
+C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente di usare l'interpolazione di stringhe C# in modo "sicuro", ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
 Ecco un esempio:
 
