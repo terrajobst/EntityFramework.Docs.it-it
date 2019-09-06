@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 2712845512d9eb349ef3a7e14f4365327db0fcd6
-ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
-ms.translationtype: HT
+ms.openlocfilehash: 28b2180e898b91d233b590b1639674a464f8c679
+ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/17/2019
-ms.locfileid: "69565329"
+ms.lasthandoff: 09/04/2019
+ms.locfileid: "70271426"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -201,7 +201,7 @@ using (var db = new CustomerContext())
 }
 ```
 
-## <a name="change-tracking"></a>Rilevamento modifiche
+## <a name="change-tracking"></a>Change Tracking
 
 ### <a name="attach-can-track-a-graph-of-new-and-existing-entities"></a>Il metodo Attach consente di tracciare un grafo delle entità nuove ed esistenti
 
@@ -221,7 +221,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente di usare l'interpolazione di stringhe C# in modo "sicuro", ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
-Ecco un esempio:
+Di seguito è fornito un esempio:
 
 ``` csharp
 var city = "London";
@@ -303,7 +303,7 @@ Rende la soluzione più solida in Microsoft.Data.Sqlite per la distribuzione di 
 ### <a name="only-one-provider-per-model"></a>Un solo provider per modello
 Aumenta in modo significativo le modalità di interazione dei provider con il modello e semplifica il funzionamento di convenzioni, annotazioni e API Fluent con i diversi provider.
 
-EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai *concetti di metadati relazionali comuni* viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via.
+EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai *concetti di metadati relazionali comuni* viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via.
 
 ### <a name="consolidated-logging-and-diagnostics"></a>Registrazione e diagnostica consolidate
 
@@ -311,6 +311,6 @@ I meccanismi di registrazione (basati su ILogger) e diagnostica (basati su Diagn
 
 Nella versione 2.0 gli ID evento per i messaggi inviati a un ILogger sono stati modificati. Gli ID evento sono ora univoci nel codice EF Core. Questi messaggi ora seguono inoltre il modello standard per la registrazione strutturata usato, ad esempio, da MVC.
 
-Anche le categorie del logger sono state modificate. È ora disponibile un set di categorie ben noto accessibile tramite [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs).
+Anche le categorie del logger sono state modificate. È ora disponibile un set di categorie ben noto accessibile tramite [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/DbLoggerCategory.cs).
 
 Gli eventi DiagnosticSource ora usano gli stessi nomi di ID evento dei messaggi `ILogger` corrispondenti.

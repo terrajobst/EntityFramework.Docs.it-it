@@ -3,12 +3,12 @@ title: Filtri di query globali - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: e1cb9f5afc54aaa12e5880ace606277b00911c06
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
-ms.translationtype: HT
+ms.openlocfilehash: c9bbb8a5889834ea078ddb7e432863b3d0cf2ffe
+ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306464"
+ms.lasthandoff: 09/04/2019
+ms.locfileid: "70271451"
 ---
 # <a name="global-query-filters"></a>Filtri di query globali
 
@@ -41,6 +41,9 @@ Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno 
 
 > [!TIP]
 > Si noti l'uso del campo a livello di istanza di DbContext `_tenantId`, usato per impostare il tenant corrente. I filtri a livello di modello useranno il valore dell'istanza del contesto corretta, ovvero l'istanza che esegue la query.
+
+> [!NOTE]
+> Attualmente non è possibile definire più filtri query sulla stessa entità. verrà applicato solo l'ultimo. Tuttavia, è possibile definire un singolo filtro con più condizioni usando l'operatore _and_ logico ([ `&&` in C# ](https://docs.microsoft.com/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-)).
 
 ## <a name="disabling-filters"></a>Disabilitazione dei filtri
 
