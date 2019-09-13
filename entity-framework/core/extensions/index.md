@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 08231cd93002a6d1b3cebe20f4f7cf57ea085af2
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 43b98c1f09a89f7e5451e28cbf2f78a2cb1040e5
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306400"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921771"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
@@ -168,3 +168,9 @@ Estende DbContext con funzionalità quali: filtro di inclusione, controllo, memo
 Estende DbContext con operazioni in blocco ad alte prestazioni: BulkSaveChanges, BulkInsert, BulkUpdate, BulkDelete, BulkMerge e altre.
 
 [Sito Web](https://entityframework-extensions.net/)
+
+### <a name="reconciler"></a>Riconciliatore
+
+Aggiornare un grafo di entità nell'archivio con uno specificato inserendo, aggiornando e rimuovendo le rispettive entità.
+
+[Repository GitHub](https://github.com/jtheisen/reconciler)
