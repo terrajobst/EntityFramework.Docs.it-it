@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: a71aa01e81d9830d7b9e6cb01c200851100a15df
-ms.sourcegitcommit: 87e72899d17602f7526d6ccd22f3c8ee844145df
-ms.translationtype: HT
+ms.openlocfilehash: d61fa884f4669daa220ffc96ae59dd63518e6d5a
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/20/2019
-ms.locfileid: "69628420"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921681"
 ---
 # <a name="new-features-included-in-ef-core-30-currently-in-preview"></a>Nuove funzionalità incluse in EF Core 3.0 (attualmente in anteprima)
 
@@ -94,15 +94,6 @@ Questa funzionalità è inclusa nell'anteprima corrente.
 
 I [tipi di query](xref:core/modeling/query-types), introdotti in EF Core 2.1 e considerati tipi di entità senza chiavi in EF Core 3.0, rappresentano i dati che possono essere letti dal database, ma non aggiornati.
 Questa caratteristica li rende la scelta ideale per le viste di database nella maggior parte degli scenari, quindi si prevede di automatizzare la creazione dei tipi di entità senza chiavi durante la decompilazione delle viste di database.
-
-## <a name="property-bag-entities"></a>Entità elenco proprietà
-
-[Problemi n. 13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) e [9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914)
-
-Il lavoro su questa funzionalità è iniziato ma non è incluso nell'anteprima corrente. 
-
-questa funzionalità riguarda l'abilitazione di entità che archiviano dati in proprietà indicizzate anziché in proprietà regolari, nonché la possibilità di usare istanze della stessa classe .NET (in modo potenzialmente semplice come `Dictionary<string, object>`) per rappresentare tipi di entità diversi nello stesso modello di EF Core.
-Questa funzionalità è un trampolino di lancio per il supporto delle relazioni molti-a-molti senza un'entità di join ([problema n. 1368](https://github.com/aspnet/EntityFrameworkCore/issues/1368)), ovvero uno dei miglioramenti più richiesti per EF Core.
 
 ## <a name="ef-63-on-net-core"></a>EF 6.3 in .NET Core
 

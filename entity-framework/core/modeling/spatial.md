@@ -1,44 +1,44 @@
 ---
-title: Dati spaziali - EF Core
+title: Dati spaziali-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: cf488c6b7d94ca19018efe1c23ff410fe7eb594b
-ms.sourcegitcommit: 81c53ac43d8f15b900f117294ec71dc49fe028fa
+ms.openlocfilehash: 026df735473e31f1c1463c1fbc6f46c4fd6dfd4f
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/16/2018
-ms.locfileid: "51817910"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921727"
 ---
 # <a name="spatial-data"></a>Dati spaziali
 
 > [!NOTE]
-> Questa funzionalità è una novità di EF Core 2.2.
+> Questa funzionalità è stata aggiunta in EF Core 2,2.
 
-I dati spaziali rappresentano la posizione fisica e la forma degli oggetti. Molti database forniscono supporto per questo tipo di dati in modo che può essere indicizzato e sottoposti a query insieme agli altri dati. Gli scenari comuni includono l'esecuzione di query per gli oggetti all'interno di una determinata distanza da un percorso o selezionare l'oggetto il cui bordo contiene una posizione specificata. EF Core supporta il mapping ai tipi di dati spaziali utilizzando il [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) libreria spaziale.
+I dati spaziali rappresentano la posizione fisica e la forma degli oggetti. Molti database forniscono supporto per questo tipo di dati, in modo che possa essere indicizzato e sottoposto a query insieme ad altri dati. Gli scenari comuni includono l'esecuzione di query per gli oggetti all'interno di una distanza specificata da una posizione o la selezione dell'oggetto il cui bordo contiene una determinata posizione. EF Core supporta il mapping ai tipi di dati spaziali mediante la libreria spaziale [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) .
 
 ## <a name="installing"></a>Installazione di
 
 Per usare i dati spaziali con EF Core, è necessario installare il pacchetto NuGet di supporto appropriato. Il pacchetto che è necessario installare dipende dal provider in uso.
 
-Provider di EF Core                        | Pacchetto NuGet spaziali
+Provider di EF Core                        | Pacchetto NuGet spaziale
 --------------------------------------- | ---------------------
-Entityframeworkcore | [Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
-Microsoft    | [Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
+Microsoft.EntityFrameworkCore.SqlServer | [Microsoft. EntityFrameworkCore. SqlServer. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
+Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft. EntityFrameworkCore. sqlite. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
 Microsoft.EntityFrameworkCore.InMemory  | [NetTopologySuite](https://www.nuget.org/packages/NetTopologySuite)
-Npgsql   | [Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
+Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. EntityFrameworkCore. PostgreSQL. NetTopologySuite](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite)
 
-## <a name="reverse-engineering"></a>Decompilazione
+## <a name="reverse-engineering"></a>Reverse Engineering
 
-NuGet spaziali pacchetti anche abilitare [decompilazione](../managing-schemas/scaffolding.md) modelli con le proprietà spaziali, ma è necessario installare il pacchetto ***prima*** esecuzione `Scaffold-DbContext` o `dotnet ef dbcontext scaffold`. In caso contrario, si riceveranno gli avvisi relativi non trova i mapping dei tipi per le colonne e le colonne verranno ignorate.
+I pacchetti NuGet spaziali abilitano anche [Reverse Engineering](../managing-schemas/scaffolding.md) modelli con proprietà spaziali, ma è necessario installare il pacchetto ***prima*** di `Scaffold-DbContext` eseguire `dotnet ef dbcontext scaffold`o. In caso contrario, si riceveranno avvisi relativi alla mancata individuazione dei mapping dei tipi per le colonne e le colonne verranno ignorate.
 
 ## <a name="nettopologysuite-nts"></a>NetTopologySuite (NTS)
 
-NetTopologySuite è una libreria spaziale per .NET. EF Core Abilita mapping ai dati spaziali dei tipi nel database utilizzando tipi NTS nel modello.
+NetTopologySuite è una libreria spaziale per .NET. EF Core Abilita il mapping ai tipi di dati spaziali nel database usando i tipi NTS nel modello.
 
-Per abilitare il mapping a tipi di dati spaziali tramite NTS, chiamare il metodo UseNetTopologySuite sul generatore di opzioni del provider DbContext. Ad esempio, con SQL Server è necessario chiamarlo simile al seguente.
+Per abilitare il mapping ai tipi spaziali tramite NTS, chiamare il metodo UseNetTopologySuite nel generatore di opzioni DbContext del provider. Ad esempio, con SQL Server è possibile chiamarlo come questo.
 
 ``` csharp
 optionsBuilder.UseSqlServer(
@@ -46,9 +46,9 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è riportata la gerarchia dei tipi NTS che è possibile usare per le proprietà nel modello. Si trovano all'interno di `NetTopologySuite.Geometries` dello spazio dei nomi. Interfacce corrispondenti nel pacchetto GeoAPI (`GeoAPI.Geometries` dello spazio dei nomi) utilizzabili.
+Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è illustrata la gerarchia di tipi NTS che è possibile usare per le proprietà nel modello. Si trovano nello `NetTopologySuite.Geometries` spazio dei nomi.
 
-* Geometry
+* Geometria
   * Punto
   * LineString
   * Poligono
@@ -58,11 +58,11 @@ Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi d
     * MultiPolygon
 
 > [!WARNING]
-> CircularString e CompoundCurve CurePolygon non sono supportati da NTS.
+> CircularString, CompoundCurve e CurePolygon non sono supportati da NTS.
 
-Utilizzando il tipo di geometria di base consente qualsiasi tipo di forma da essere specificato dalla proprietà.
+L'utilizzo del tipo Geometry di base consente di specificare qualsiasi tipo di forma dalla proprietà.
 
-Le seguenti classi di entità può essere utilizzate per eseguire il mapping alle tabelle nel [database di esempio Wide World Importers](http://go.microsoft.com/fwlink/?LinkID=800630).
+Per eseguire il mapping alle tabelle nel [database di esempio Wide World Importers](http://go.microsoft.com/fwlink/?LinkID=800630), è possibile usare le classi di entità seguenti.
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -72,7 +72,7 @@ class City
 
     public string CityName { get; set; }
 
-    public IPoint Location { get; set; }
+    public Point Location { get; set; }
 }
 
 [Table("Countries", Schema = "Application"))]
@@ -83,13 +83,13 @@ class Country
     public string CountryName { get; set; }
 
     // Database includes both Polygon and MultiPolygon values
-    public IGeometry Border { get; set; }
+    public Geometry Border { get; set; }
 }
 ```
 
 ### <a name="creating-values"></a>Creazione di valori
 
-È possibile usare i costruttori per creare oggetti geometry. Tuttavia, NTS consiglia di usare invece una factory di geometria. Ciò consente di specificare un identificatore predefinito SRID (il sistema di riferimento spaziale usato dalle coordinate) e consente di controllare aspetti più avanzati, ad esempio il modello di precisione (usato durante i calcoli) e la sequenza di coordinate (determina quali coordinate: le dimensioni e sono disponibili misure).
+È possibile utilizzare i costruttori per creare oggetti Geometry; Tuttavia, NTS consiglia di usare invece una factory Geometry. In questo modo è possibile specificare un SRID predefinito (il sistema di riferimento spaziale usato dalle coordinate) e il controllo su elementi più avanzati, come il modello di precisione (usato durante i calcoli) e la sequenza di coordinate (determina le ordinate-dimensioni sono disponibili le misure e.
 
 ``` csharp
 var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
@@ -97,25 +97,24 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 ```
 
 > [!NOTE]
-> 4326 fa riferimento a WGS 84, uno standard usato in GPS e altri sistemi geografici.
+> 4326 si riferisce a WGS 84, uno standard usato in GPS e in altri sistemi geografici.
 
-### <a name="longitude-and-latitude"></a>Indicata con longitudine e latitudine
+### <a name="longitude-and-latitude"></a>Longitudine e latitudine
 
-Coordinate NTS sono in termini di valori X e Y. Per rappresentare la longitudine e latitudine, usare X per Y e la longitudine della latitudine. Si noti che si tratta **con le versioni precedenti** dal `latitude, longitude` formato in cui è in genere visualizzare questi valori.
+Le coordinate in NTS sono espresse in termini di valori X e Y. Per rappresentare la longitudine e la latitudine, usare X per longitudine e Y per la latitudine. Si noti che questa operazione è all' **indietro** rispetto `latitude, longitude` al formato in cui vengono in genere visualizzati questi valori.
 
-### <a name="srid-ignored-during-client-operations"></a>Identificatore SRID ignorato durante le operazioni client
+### <a name="srid-ignored-during-client-operations"></a>SRID ignorato durante le operazioni client
 
-NTS ignora i valori di identificatore SRID durante le operazioni. Si presuppone che un sistema di coordinate planare. Ciò significa che se si specificano le coordinate in termini di longitudine e latitudine, alcuni valori valutati client, ad esempio distanza, la lunghezza e area sarà espresso in gradi, non i contatori. Per i valori più significativi, è innanzitutto necessario proiettare le coordinate da un altro sistema di coordinate tramite una libreria come [ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) prima di calcolare tali valori.
+NTS ignora i valori SRID durante le operazioni. Si presuppone un sistema di coordinate planare. Ciò significa che se si specificano le coordinate in termini di longitudine e latitudine, alcuni valori valutati dal client, ad esempio distanza, lunghezza e area, saranno in gradi, non in metri. Per valori più significativi, è necessario innanzitutto proiettare le coordinate in un altro sistema di coordinate usando una libreria come [ProjNet4GeoAPI](https://github.com/NetTopologySuite/ProjNet4GeoAPI) prima di calcolare questi valori.
 
-Se un'operazione è valutato da Entity Framework Core con SQL server, unità del risultato verrà determinato dal database.
+Se un'operazione viene valutata dal server EF Core tramite SQL, l'unità risultante sarà determinata dal database.
 
-Ecco un esempio dell'uso ProjNet4GeoAPI per calcolare la distanza tra due città.
+Di seguito è riportato un esempio di utilizzo di ProjNet4GeoAPI per calcolare la distanza tra due città.
 
 ``` csharp
 static class GeometryExtensions
 {
-    static readonly IGeometryServices _geometryServices = NtsGeometryServices.Instance;
-    static readonly ICoordinateSystemServices _coordinateSystemServices
+    static readonly CoordinateSystemServices _coordinateSystemServices
         = new CoordinateSystemServices(
             new CoordinateSystemFactory(),
             new CoordinateTransformationFactory(),
@@ -123,7 +122,7 @@ static class GeometryExtensions
             {
                 // Coordinate systems:
 
-                // (3857 and 4326 included automatically)
+                [4326] = GeographicCoordinateSystem.WGS84.WKT,
 
                 // This coordinate system covers the area of our data.
                 // Different data requires a different coordinate system.
@@ -153,15 +152,37 @@ static class GeometryExtensions
                 "
             });
 
-    public static IGeometry ProjectTo(this IGeometry geometry, int srid)
+    public static Geometry ProjectTo(this Geometry geometry, int srid)
     {
-        var geometryFactory = _geometryServices.CreateGeometryFactory(srid);
         var transformation = _coordinateSystemServices.CreateTransformation(geometry.SRID, srid);
 
-        return GeometryTransform.TransformGeometry(
-            geometryFactory,
-            geometry,
-            transformation.MathTransform);
+        var result = geometry.Copy();
+        result.Apply(new MathTransformFilter(transformation.MathTransform));
+
+        return result;
+    }
+
+    class MathTransformFilter : ICoordinateSequenceFilter
+    {
+        readonly MathTransform _transform;
+
+        public MathTransformFilter(MathTransform transform)
+            => _transform = transform;
+
+        public bool Done => false;
+        public bool GeometryChanged => true;
+
+        public void Filter(CoordinateSequence seq, int i)
+        {
+            var result = _transform.Transform(
+                new[]
+                {
+                    seq.GetOrdinate(i, Ordinate.X),
+                    seq.GetOrdinate(i, Ordinate.Y)
+                });
+            seq.SetOrdinate(i, Ordinate.X, result[0]);
+            seq.SetOrdinate(i, Ordinate.Y, result[1]);
+        }
     }
 }
 ```
@@ -175,7 +196,7 @@ var distance = seattle.ProjectTo(2855).Distance(redmond.ProjectTo(2855));
 
 ## <a name="querying-data"></a>Esecuzione di query su dati
 
-In LINQ, i metodi NTS e le proprietà disponibili come funzioni di database verranno tradotto in SQL. Ad esempio, i metodi di distanza e Contains vengono convertiti nelle query seguenti. La tabella alla fine di questo articolo illustra quali membri sono supportati dai diversi provider di EF Core.
+In LINQ, i metodi e le proprietà NTS disponibili come funzioni di database verranno convertiti in SQL. Ad esempio, i metodi Distance e Contains vengono convertiti nelle query seguenti. La tabella alla fine di questo articolo illustra i membri supportati da vari provider di EF Core.
 
 ``` csharp
 var nearestCity = db.Cities
@@ -188,30 +209,30 @@ var currentCountry = db.Countries
 
 ## <a name="sql-server"></a>SQL Server
 
-Se si usa SQL Server, esistono alcuni aspetti aggiuntivi di che è necessario essere consapevoli.
+Se si usa SQL Server, è necessario tenere presenti alcuni aspetti aggiuntivi.
 
 ### <a name="geography-or-geometry"></a>Geografia o geometria
 
-Per impostazione predefinita, le proprietà spaziali sono mappate a `geography` colonne in SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
+Per impostazione predefinita, viene eseguito il mapping `geography` delle proprietà spaziali alle colonne in SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
 
-### <a name="geography-polygon-rings"></a>Anelli di poligono di geografia
+### <a name="geography-polygon-rings"></a>Anelli del poligono geografico
 
-Quando si usa il `geography` tipo di colonna, SQL Server impone requisiti aggiuntivi per l'anello esterno (o shell) e interni anelli (o aree libere). L'anello esterno deve essere orientata in senso antiorario e l'interno gli anelli in senso orario. NTS questa convalida prima di inviare i valori per il database.
+Quando si usa `geography` il tipo di colonna, SQL Server impone requisiti aggiuntivi sull'anello esterno (o sulla Shell) e sugli anelli interni (o buchi). L'anello esterno deve essere orientato in senso antiorario e gli anelli interni in senso orario. NTS convalida questa operazione prima di inviare valori al database.
 
 ### <a name="fullglobe"></a>FullGlobe
 
-SQL Server dispone di un tipo di geometria non standard per rappresentare l'intero globo quando si usa il `geography` tipo della colonna. Include inoltre un modo per rappresentare i poligoni in base l'intero globo (senza un anello esterno). Nessuna di queste sono supportata da NTS.
+SQL Server dispone di un tipo geometry non standard per rappresentare l'intero globo quando si utilizza `geography` il tipo di colonna. Offre anche un modo per rappresentare i poligoni in base al globo completo (senza anello esterno). Nessuno di questi è supportato da NTS.
 
 > [!WARNING]
-> FullGlobe e poligoni basati su di essa non sono supportati da NTS.
+> FullGlobe e i poligoni basati su di essi non sono supportati da NTS.
 
 ## <a name="sqlite"></a>SQLite
 
-Ecco alcune informazioni aggiuntive per chi usa SQLite.
+Di seguito sono riportate alcune informazioni aggiuntive per quelle che usano SQLite.
 
-### <a name="installing-spatialite"></a>Installazione SpatiaLite
+### <a name="installing-spatialite"></a>Installazione di SpatiaLite
 
-In Windows, la libreria nativa mod_spatialite viene distribuita come una dipendenza del pacchetto NuGet. Altre piattaforme è necessario installarlo separatamente. Questa operazione viene in genere eseguita usando un gestore di pacchetti software. Ad esempio, è possibile usare APT in Ubuntu e Homebrew in MacOS.
+In Windows la libreria mod_spatialite nativa viene distribuita come dipendenza del pacchetto NuGet. Altre piattaforme devono essere installate separatamente. Questa operazione viene in genere eseguita utilizzando una gestione pacchetti software. Ad esempio, è possibile usare APT in Ubuntu e homebrew in MacOS.
 
 ``` sh
 # Ubuntu
@@ -221,9 +242,9 @@ apt-get install libsqlite3-mod-spatialite
 brew install libspatialite
 ```
 
-### <a name="configuring-srid"></a>Configurazione di identificatore SRID
+### <a name="configuring-srid"></a>Configurazione di SRID
 
-In SpatiaLite, le colonne necessarie specificare un identificatore SRID per ogni colonna. Il valore predefinito è SRID `0`. Specificare un diverso SRID utilizzando il metodo ForSqliteHasSrid.
+In SpatiaLite le colonne devono specificare un identificatore SRID per colonna. L'identificatore SRID predefinito `0`è. Specificare un identificatore SRID diverso usando il metodo ForSqliteHasSrid.
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -232,83 +253,83 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 ### <a name="dimension"></a>Dimensione
 
-Simile a identificatore SRID, dimensione di una colonna (o nelle coordinate) viene specificate anche come parte della colonna. Le coordinate predefinito sono X e y. per abilitare aggiuntive nelle coordinate (Z e M) usando il metodo ForSqliteHasDimension.
+Analogamente a SRID, viene specificata anche una dimensione (o ordinata) di una colonna come parte della colonna. Le ordinate predefinite sono X e Y. abilitare le coordinate aggiuntive (Z e M) usando il metodo ForSqliteHasDimension.
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasDimension(Ordinates.XYZ);
 ```
 
-## <a name="translated-operations"></a>Operazioni tradotte
+## <a name="translated-operations"></a>Operazioni convertite
 
-Questa tabella mostra i membri cui NTS vengono convertiti in SQL da ogni provider di EF Core.
+Questa tabella mostra i membri NTS convertiti in SQL da ogni provider di EF Core.
 
-NetTopologySuite | SQL Server (geometry) | SQL Server (geography) | SQLite | Npgsql
+NetTopologySuite | SQL Server (geometria) | SQL Server (geography) | SQLite | Npgsql
 --- |:---:|:---:|:---:|:---:
-Geometry.Area | ✔ | ✔ | ✔ | ✔
-Geometry.AsBinary() | ✔ | ✔ | ✔ | ✔
-Geometry.AsText() | ✔ | ✔ | ✔ | ✔
-Geometry.Boundary | ✔ | | ✔ | ✔
-Geometry.Buffer(double) | ✔ | ✔ | ✔ | ✔
-Geometry.Buffer (double, int) | | | ✔
-Geometry.Centroid | ✔ | | ✔ | ✔
-Geometry.Contains(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.ConvexHull() | ✔ | ✔ | ✔ | ✔
-Geometry.CoveredBy(Geometry) | | | ✔ | ✔
-Geometry.Covers(Geometry) | | | ✔ | ✔
-Geometry.Crosses(Geometry) | ✔ | | ✔ | ✔
-Geometry.Difference(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Dimension | ✔ | ✔ | ✔ | ✔
-Geometry.Disjoint(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Distance(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Envelope | ✔ | | ✔ | ✔
-Geometry.EqualsExact(Geometry) | | | | ✔
-Geometry.EqualsTopologically(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.GeometryType | ✔ | ✔ | ✔ | ✔
-Geometry.GetGeometryN(int) | ✔ | | ✔ | ✔
-Geometry.InteriorPoint | ✔ | | ✔
-Geometry.Intersection(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Intersects(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.IsEmpty | ✔ | ✔ | ✔ | ✔
-Geometry.IsSimple | ✔ | | ✔ | ✔
-Geometry.IsValid | ✔ | ✔ | ✔ | ✔
-Geometry.IsWithinDistance double (Geometry) | ✔ | | ✔
-Geometry.Length | ✔ | ✔ | ✔ | ✔
-Geometry.NumGeometries | ✔ | ✔ | ✔ | ✔
-Geometry.NumPoints | ✔ | ✔ | ✔ | ✔
-Geometry.OgcGeometryType | ✔ | ✔ | ✔
-Geometry.Overlaps(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.PointOnSurface | ✔ | | ✔ | ✔
-Geometry.Relate (Geometry, stringa) | ✔ | | ✔ | ✔
-Geometry.Reverse() | | | ✔ | ✔
-Geometry.SRID | ✔ | ✔ | ✔ | ✔
-Geometry.SymmetricDifference(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.ToBinary() | ✔ | ✔ | ✔ | ✔
-Geometry.ToText() | ✔ | ✔ | ✔ | ✔
-Geometry.Touches(Geometry) | ✔ | | ✔ | ✔
-Geometry.Union() | | | ✔
-Geometry.Union(Geometry) | ✔ | ✔ | ✔ | ✔
-Geometry.Within(Geometry) | ✔ | ✔ | ✔ | ✔
-GeometryCollection.Count | ✔ | ✔ | ✔ | ✔
-GeometryCollection di tipo [int] | ✔ | ✔ | ✔ | ✔
-LineString.Count | ✔ | ✔ | ✔ | ✔
-LineString.EndPoint | ✔ | ✔ | ✔ | ✔
-LineString.GetPointN(int) | ✔ | ✔ | ✔ | ✔
-LineString.IsClosed | ✔ | ✔ | ✔ | ✔
-LineString.IsRing | ✔ | | ✔ | ✔
-LineString.StartPoint | ✔ | ✔ | ✔ | ✔
-MultiLineString.IsClosed | ✔ | ✔ | ✔ | ✔
-Point.M | ✔ | ✔ | ✔ | ✔
-Point | ✔ | ✔ | ✔ | ✔
-Point | ✔ | ✔ | ✔ | ✔
-Point.Z | ✔ | ✔ | ✔ | ✔
-Polygon.ExteriorRing | ✔ | ✔ | ✔ | ✔
-Polygon.GetInteriorRingN(int) | ✔ | ✔ | ✔ | ✔
-Polygon.NumInteriorRings | ✔ | ✔ | ✔ | ✔
+Geometry. area | ✔ | ✔ | ✔ | ✔
+Geometry. AsBinary () | ✔ | ✔ | ✔ | ✔
+Geometry. AsText () | ✔ | ✔ | ✔ | ✔
+Geometry. Boundary | ✔ | | ✔ | ✔
+Geometry. buffer (Double) | ✔ | ✔ | ✔ | ✔
+Geometry. buffer (Double, int) | | | ✔
+Geometry. baricentro | ✔ | | ✔ | ✔
+Geometry. Contains (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. ConvexHull () | ✔ | ✔ | ✔ | ✔
+Geometry. CoveredBy (Geometry) | | | ✔ | ✔
+Geometry. Covers (geometria) | | | ✔ | ✔
+Geometry. Crosses (geometria) | ✔ | | ✔ | ✔
+Geometry. Difference (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. Dimension | ✔ | ✔ | ✔ | ✔
+Geometry. unjoint (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. distance (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. Envelope | ✔ | | ✔ | ✔
+Geometry. EqualsExact (Geometry) | | | | ✔
+Geometry. EqualsTopologically (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. GeometryType | ✔ | ✔ | ✔ | ✔
+Geometry. getgeometryn (int) | ✔ | | ✔ | ✔
+Geometry. InteriorPoint | ✔ | | ✔
+Geometry. intersezione (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. Intersects (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. IsEmpty | ✔ | ✔ | ✔ | ✔
+Geometry. Simple | ✔ | | ✔ | ✔
+Geometry. IsValid | ✔ | ✔ | ✔ | ✔
+Geometry. IsWithinDistance (Geometry, Double) | ✔ | | ✔
+Geometry. length | ✔ | ✔ | ✔ | ✔
+Geometry. NumGeometries | ✔ | ✔ | ✔ | ✔
+Geometry. NumPoints | ✔ | ✔ | ✔ | ✔
+Geometry. OgcGeometryType | ✔ | ✔ | ✔
+Geometry. sovrapposizioni (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. PointOnSurface | ✔ | | ✔ | ✔
+Geometry. correlate (Geometry, String) | ✔ | | ✔ | ✔
+Geometry. Reverse () | | | ✔ | ✔
+Geometry. SRID | ✔ | ✔ | ✔ | ✔
+Geometry. SymmetricDifference (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. ToBinary () | ✔ | ✔ | ✔ | ✔
+Geometry. ToText () | ✔ | ✔ | ✔ | ✔
+Geometry. touchs (Geometry) | ✔ | | ✔ | ✔
+Geometry. Union () | | | ✔
+Geometry. Union (Geometry) | ✔ | ✔ | ✔ | ✔
+Geometry. Within (Geometry) | ✔ | ✔ | ✔ | ✔
+GeometryCollection. Count | ✔ | ✔ | ✔ | ✔
+GeometryCollection [int] | ✔ | ✔ | ✔ | ✔
+LineString. Count | ✔ | ✔ | ✔ | ✔
+LineString. EndPoint | ✔ | ✔ | ✔ | ✔
+LineString. getpointn (int) | ✔ | ✔ | ✔ | ✔
+LineString. di chiusura | ✔ | ✔ | ✔ | ✔
+LineString. Ring | ✔ | | ✔ | ✔
+LineString. StartPoint | ✔ | ✔ | ✔ | ✔
+MultiLineString. noclosed | ✔ | ✔ | ✔ | ✔
+Punto. M | ✔ | ✔ | ✔ | ✔
+Punto. X | ✔ | ✔ | ✔ | ✔
+Punto. Y | ✔ | ✔ | ✔ | ✔
+Point. Z | ✔ | ✔ | ✔ | ✔
+Poligono. ExteriorRing | ✔ | ✔ | ✔ | ✔
+Poligono. GetInteriorRingN (int) | ✔ | ✔ | ✔ | ✔
+Poligono. NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 ## <a name="additional-resources"></a>Risorse aggiuntive
 
 * [Dati spaziali in SQL Server](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
-* [Home page SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite)
-* [Documentazione di Npgsql spaziali](http://www.npgsql.org/efcore/mapping/nts.html)
+* [Home page di SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite)
+* [Documentazione spaziale di npgsql](http://www.npgsql.org/efcore/mapping/nts.html)
 * [Documentazione di PostGIS](http://postgis.net/documentation/)

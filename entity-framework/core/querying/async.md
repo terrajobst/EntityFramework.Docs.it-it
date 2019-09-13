@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 01/24/2017
 ms.assetid: b6429b14-cba0-4af4-878f-b829777c89cb
 uid: core/querying/async
-ms.openlocfilehash: de00e25279e29355a4eb3e55597a8578ceccecb6
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
-ms.translationtype: HT
+ms.openlocfilehash: 415c57df599f1cb1a255f01d1072890fedfd6d2b
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993565"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921686"
 ---
 # <a name="asynchronous-queries"></a>Query asincrone
 
@@ -23,4 +23,4 @@ Entity Framework Core fornisce un set di metodi di estensione asincroni che poss
 > [!IMPORTANT]  
 > I metodi di estensione asincroni di EF Core sono definiti nello spazio dei nomi `Microsoft.EntityFrameworkCore`. Questo spazio dei nomi deve essere importato affinché i metodi siano disponibili.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/Async/Sample.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Querying/Async/Sample.cs#Sample)]

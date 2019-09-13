@@ -1,21 +1,21 @@
 ---
-title: Suddivisione di tabelle della finestra di progettazione - Entity Framework 6
+title: Suddivisione di tabelle della finestra di progettazione-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
-ms.openlocfilehash: 8b0ca6778a06ed43b1365d2e5969ff15948f8004
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: f5e7532e6c0b473d8ce77cbd11e3e673b0af6cbe
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490695"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921788"
 ---
 # <a name="designer-table-splitting"></a>Suddivisione di tabelle della finestra di progettazione
-Questa procedura dettagliata illustra come eseguire il mapping di più tipi di entità a una singola tabella modificando un modello con Entity Framework Designer (Entity Framework Designer).
+In questa procedura dettagliata viene illustrato come eseguire il mapping di più tipi di entità a una singola tabella modificando un modello con il Entity Framework Designer (EF designer).
 
-Un motivo per cui che è possibile usare suddivisione di tabelle sta ritardando il caricamento di alcune proprietà quando si usa per caricare gli oggetti di caricamento lazy. È possibile separare le proprietà che potrebbero contenere grandi quantità di dati in un'entità distinta e caricare solo quando richiesto.
+Uno dei motivi per cui è consigliabile utilizzare la suddivisione delle tabelle è ritardare il caricamento di alcune proprietà quando si utilizza il caricamento lazy per caricare gli oggetti. È possibile separare le proprietà che potrebbero contenere quantità molto elevate di dati in un'entità distinta e caricarla solo quando necessario.
 
-L'immagine seguente mostra le finestre principali che vengono usate quando si lavora con la finestra di progettazione di Entity Framework.
+Nell'immagine seguente vengono illustrate le finestre principali che vengono usate quando si usa la finestra di progettazione EF.
 
 ![EF Designer](~/ef6/media/efdesigner.png)
 
@@ -24,64 +24,64 @@ L'immagine seguente mostra le finestre principali che vengono usate quando si la
 Per completare questa procedura dettagliata, è necessario disporre di:
 
 - Una versione recente di Visual Studio.
-- Il [database di esempio School](~/ef6/resources/school-database.md).
+- [Database di esempio School](~/ef6/resources/school-database.md).
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
-Questa procedura dettagliata Usa Visual Studio 2012.
+Questa procedura dettagliata usa Visual Studio 2012.
 
 -   Aprire Visual Studio 2012.
 -   Scegliere **Nuovo** dal menu **File**, quindi fare clic su **Progetto**.
--   Nel riquadro sinistro, fare clic su Visual C\#e quindi selezionare il modello di applicazione Console.
+-   Nel riquadro sinistro fare clic su Visual C\#e quindi selezionare il modello applicazione console.
 -   Immettere **TableSplittingSample** come nome del progetto e fare clic su **OK**.
 
-## <a name="create-a-model-based-on-the-school-database"></a>Creare un modello basato sul Database School
+## <a name="create-a-model-based-on-the-school-database"></a>Creare un modello basato sul database School
 
--   Fare clic sul nome del progetto in Esplora soluzioni, scegliere **Add**, quindi fare clic su **nuovo elemento**.
--   Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro dei modelli.
--   Immettere **TableSplittingModel.edmx** per il nome del file e quindi fare clic su **Add**.
--   Nella finestra di dialogo Scegli contenuto Model, selezionare **genera da database**, quindi fare clic su **successivo.**
--   Fare clic su nuova connessione. Nella finestra di dialogo proprietà di connessione, immettere il nome del server (ad esempio, **(localdb)\\mssqllocaldb**), selezionare il metodo di autenticazione, il tipo **School** per il nome del database e quindi Fare clic su **OK**.
-    La finestra di dialogo Seleziona connessione dati viene aggiornata con l'impostazione di connessione di database.
--   Nella finestra di dialogo Scegli oggetti di Database, espandere la **tabelle** nodo e selezionare il **persona** tabella. Verrà aggiunta la tabella specificata per il **School** modello.
--   Scegliere **Fine**.
+-   Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, scegliere **Aggiungi**, quindi fare clic su **nuovo elemento**.
+-   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
+-   Immettere **TableSplittingModel. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
+-   Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti.**
+-   Fare clic su nuova connessione. Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB\\) mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** come nome del database, quindi fare clic su **OK**.
+    La finestra di dialogo scegliere la connessione dati viene aggiornata con l'impostazione di connessione al database.
+-   Nella finestra di dialogo Seleziona oggetti di database espandere il nodo **tabelle** e controllare la tabella **Person** . La tabella specificata verrà aggiunta al modello **School** .
+-   Fare clic su **fine**.
 
-Entity Designer, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato. Tutti gli oggetti selezionati nella **Scegli oggetti di Database** nella finestra di dialogo vengono aggiunti al modello.
+Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella finestra di dialogo **Scegli oggetti** di database vengono aggiunti al modello.
 
 ## <a name="map-two-entities-to-a-single-table"></a>Eseguire il mapping di due entità a una singola tabella
 
-In questa sezione suddivideranno i **persona** entità in due entità e quindi eseguirne il mapping a una singola tabella.
+In questa sezione si suddividerà l'entità **Person** in due entità, quindi la si eseguirà il mapping a una singola tabella.
 
 > [!NOTE]
-> Il **persona** entità non contiene le proprietà che potrebbero contenere grandi quantità di dati; viene usata solo come esempio.
+> L'entità **Person** non contiene proprietà che possono contenere grandi quantità di dati; viene usato solo come esempio.
 
--   Fare doppio clic su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**, fare clic su **entità**.
-    Il **nuova entità** verrà visualizzata la finestra di dialogo.
--   Tipo di **HireInfo** per il **nome entità** e **PersonID** per il **proprietà Key** nome.
--   Fare clic su **OK**.
+-   Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**e fare clic su **entità**.
+    Verrà visualizzata la finestra di dialogo **nuova entità** .
+-   Digitare **HireInfo** per il **nome dell'entità** e **PersonID** per il nome della **proprietà della chiave** .
+-   Fare clic su **OK**.
 -   Nell'area di progettazione verrà creato e visualizzato un nuovo tipo di entità.
--   Selezionare il **HireDate** proprietà delle **persona** tipo di entità e premere **Ctrl + X** chiavi.
--   Selezionare il **HireInfo** entità e premere **Ctrl + V** chiavi.
--   Creare un'associazione tra **Person** e **HireInfo**. A tale scopo, fare doppio clic su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**, fare clic su **Association**.
--   Il **Aggiungi associazione** verrà visualizzata la finestra di dialogo. Il **PersonHireInfo** viene specificato per impostazione predefinita.
--   Specificare la molteplicità **1(One)** a entrambe le estremità della relazione.
--   Premere **OK**.
+-   Selezionare la ****  proprietà hiree del tipo di entità **Person** e premere i tasti **CTRL + X** .
+-   Selezionare l'entità **HireInfo** e premere **CTRL + V** .
+-   Creare un'associazione tra **Person** e **HireInfo**. A tale scopo, fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**e fare clic su **associazione**.
+-   Verrà visualizzata la finestra di dialogo **Aggiungi associazione** . Per impostazione predefinita, viene fornito il nome **PersonHireInfo** .
+-   Specificare la molteplicità **1 (una)** su entrambe le estremità della relazione.
+-   Fare clic su **OK**.
 
-Il passaggio successivo richiede la **Dettagli Mapping** finestra. Se non è possibile visualizzare questa finestra, fare doppio clic su area di progettazione e seleziona **Dettagli Mapping**.
+Il passaggio successivo richiede la finestra **Dettagli** mapping. Se questa finestra non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **Dettagli mapping**.
 
--   Selezionare il **HireInfo** tipo di entità e fare clic su **&lt;aggiungere una tabella o vista&gt;** nel **Dettagli Mapping** finestra.
--   Selezionare **Person** dalle **&lt;aggiungere una tabella o vista&gt;** elenco campo. L'elenco contiene tabelle o visualizzazioni a cui può essere mappato l'entità selezionata.
-    Le proprietà appropriate devono eseguire il mapping per impostazione predefinita.
+-   Selezionare il tipo di entità **HireInfo** e fare clic su **&lt;Aggiungi tabella&gt;o vista** nella finestra **Dettagli** mapping.
+-   Selezionare **Person** nell'   **&lt;elenco a discesa aggiungere una tabella&gt;o un**campo di visualizzazione. L'elenco contiene le tabelle o le viste a cui è possibile eseguire il mapping dell'entità selezionata.
+    Per impostazione predefinita, è necessario eseguire il mapping delle proprietà appropriate.
 
     ![Mapping](~/ef6/media/mapping.png)
 
--   Selezionare il **PersonHireInfo** associazione nell'area di progettazione.
--   Pulsante destro del mouse su area di progettazione e seleziona l'associazione **proprietà**.
--   Nel **delle proprietà** finestra, seleziona la **vincoli referenziali** proprietà e fare clic sul pulsante dei puntini di sospensione.
--   Selezionare **Person** dalle **dell'entità** elenco a discesa.
--   Premere **OK**.
+-   Selezionare l'associazione **PersonHireInfo** nell'area di progettazione.
+-   Fare clic con il pulsante destro del mouse sull'associazione nell'area di progettazione e scegliere **Proprietà**.
+-   Nella finestra **Proprietà** selezionare la proprietà **vincoli referenziali** , quindi fare clic sul pulsante con i puntini di sospensione.
+-   Selezionare **Person** dall'elenco a discesa **principale** .
+-   Fare clic su **OK**.
 
- 
+ 
 
 ## <a name="use-the-model"></a>Usare il modello
 
@@ -122,16 +122,16 @@ Il passaggio successivo richiede la **Dettagli Mapping** finestra. Se non è pos
 ```
 -   Compilare l'applicazione ed eseguirla.
 
-Le istruzioni T-SQL seguenti sono state eseguite nel **School** database come risultato dell'esecuzione di questa applicazione. 
+Le istruzioni T-SQL seguenti sono state eseguite nel database **School** in seguito all'esecuzione dell'applicazione. 
 
--   Quanto segue **Inserisci** è stata eseguita in seguito all'esecuzione rapida. SaveChanges () e che combina dati dal **Person** e **HireInfo** entità
+-   L' **inserimento** seguente è stato eseguito in seguito all'esecuzione del contesto. SaveChanges () e combina i dati delle entità **Person** e **HireInfo**
 
     ![INS](~/ef6/media/insert.png)
 
--   Quanto segue **seleziona** è stata eseguita in seguito all'esecuzione rapida. People.FirstOrDefault() e seleziona solo le colonne di cui è stato eseguito il mapping a **persona**
+-   L'istruzione **Select** seguente è stata eseguita in seguito all'esecuzione del contesto. People. FirstOrDefault () e seleziona solo le colonne di cui è stato eseguito il mapping a **Person**
 
     ![Selezionare 1](~/ef6/media/select1.png)
 
--   Quanto segue **selezionate** è stato eseguito come risultato l'accesso a existingPerson.Instructor di proprietà di navigazione e consente di selezionare solo le colonne mappate a **HireInfo**
+-   La seguente **selezione** è stata eseguita in seguito all'accesso alla proprietà di navigazione ExistingPerson. Instructor e seleziona solo le colonne mappate a **HireInfo**
 
     ![Selezionare 2](~/ef6/media/select2.png)

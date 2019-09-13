@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 590d16902329ffb3fff8026f8dfdcfc887f6dea3
-ms.sourcegitcommit: eefcab31142f61a7aaeac03ea90dcd39f158b8b8
-ms.translationtype: HT
+ms.openlocfilehash: 4bf9598f9b7e74c2835d3926215de9a7ef4e6f96
+ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/29/2019
-ms.locfileid: "64873197"
+ms.lasthandoff: 09/12/2019
+ms.locfileid: "70921800"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
 
@@ -25,7 +25,7 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 
 È possibile usare il metodo `Include` per specificare i dati correlati da includere nei risultati della query. Nell'esempio seguente la proprietà `Posts` dei blog restituiti nei risultati verrà popolata con i post correlati.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleInclude)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#SingleInclude)]
 
 > [!TIP]  
 > Entity Framework Core correggerà automaticamente le proprietà di navigazione per qualsiasi altra entità caricata in precedenza nell'istanza di contesto. Anche se i dati per una proprietà di navigazione non vengono inclusi in modo esplicito, la proprietà può comunque essere popolata se alcune o tutte le entità correlate sono state caricate in precedenza.
@@ -33,28 +33,28 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 
 È possibile includere dati correlati da più relazioni in una singola query.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleIncludes)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleIncludes)]
 
 ### <a name="including-multiple-levels"></a>Inclusione di più livelli
 
 È possibile eseguire il drill-down delle relazioni per includere più livelli di dati correlati tramite il metodo `ThenInclude`. L'esempio seguente carica tutti i blog, i post correlati e l'autore di ogni post.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#SingleThenInclude)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#SingleThenInclude)]
 
 > [!NOTE]  
 > Le versioni correnti di Visual Studio offrono opzioni di completamento del codice non corrette, a causa delle quali espressioni corrette possono essere contrassegnate con errori di sintassi quando si usa il metodo `ThenInclude` dopo una proprietà di navigazione della raccolta. Si tratta di un sintomo di un bug di IntelliSense registrato in https://github.com/dotnet/roslyn/issues/8237. È possibile ignorare questi errori di sintassi spuri, purché il codice sia corretto e possa essere compilato correttamente. 
 
 È possibile concatenare più chiamate a `ThenInclude` per continuare a includere ulteriori livelli di dati correlati.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleThenIncludes)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleThenIncludes)]
 
 È possibile combinare tutto ciò per includere dati correlati da più livelli e più nodi radice nella stessa query.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IncludeTree)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IncludeTree)]
 
 È possibile che si vogliano includere più entità correlate per una delle entità incluse. Quando ad esempio si eseguono query per `Blogs`, è necessario includere `Posts` e poi si può anche decidere di includere `Author` e `Tags` per `Posts`. A tale scopo, occorre specificare ogni percorso di inclusione iniziando dalla radice. Ad esempio, `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Questo non significa che si otterranno join ridondanti. Nella maggior parte dei casi EF consoliderà i join durante la generazione di SQL.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
 ### <a name="include-on-derived-types"></a>Inclusione per i tipi derivati
 
@@ -117,11 +117,11 @@ Se si modifica la query in modo che non restituisca più istanze del tipo di ent
 
 Nell'esempio seguente gli operatori di inclusione sono basati su `Blog`, tuttavia, l'operatore `Select` viene usato per modificare la query per restituire un tipo anonimo. In questo caso, gli operatori di inclusione non hanno effetto.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#IgnoredInclude)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IgnoredInclude)]
 
 Per impostazione predefinita, EF Core registrerà un avviso quando gli operatori di inclusione vengono ignorati. Vedere [Registrazione](../miscellaneous/logging.md) per altre informazioni sulla visualizzazione dell'output di registrazione. È possibile modificare il comportamento quando un operatore di inclusione viene ignorato per generare un'eccezione o non eseguire alcuna operazione. Questa operazione viene eseguita quando si configurano le opzioni per il contesto, in genere in `DbContext.OnConfiguring` oppure in `Startup.cs` se si usa ASP.NET Core.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
 
 ## <a name="explicit-loading"></a>Caricamento esplicito
 
@@ -130,7 +130,7 @@ Per impostazione predefinita, EF Core registrerà un avviso quando gli operatori
 
 È possibile caricare in modo esplicito una proprietà di navigazione tramite l'API `DbContext.Entry(...)`.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#Eager)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#Eager)]
 
 È anche possibile caricare in modo esplicito una proprietà di navigazione eseguendo una query separata che restituisce le entità correlate. Se è abilitato il rilevamento delle modifiche, durante il caricamento di un'entità EF Core imposterà automaticamente le proprietà di navigazione dell'entità appena caricata in modo da fare riferimento alle entità già caricate e imposterà le proprietà di navigazione delle entità già caricate in modo da fare riferimento all'entità appena caricata.
 
@@ -140,11 +140,11 @@ Per impostazione predefinita, EF Core registrerà un avviso quando gli operatori
 
 Ciò consente di eseguire operazioni quali l'esecuzione di un operatore di aggregazione sulle entità correlate senza caricarle in memoria.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#NavQueryAggregate)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#NavQueryAggregate)]
 
 È anche possibile filtrare le entità correlate che vengono caricate in memoria.
 
-[!code-csharp[Main](../../../samples/core/Querying/Querying/RelatedData/Sample.cs#NavQueryFiltered)]
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#NavQueryFiltered)]
 
 ## <a name="lazy-loading"></a>Caricamento lazy
 
