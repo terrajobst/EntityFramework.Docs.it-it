@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: 7d97551044ae4a8fc42d1676199da884f3e2994d
-ms.sourcegitcommit: 7b7f774a5966b20d2aed5435a672a1edbe73b6fb
+ms.openlocfilehash: ffa9a34f13ab29f0ba93f9fd1f469398630604ce
+ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/17/2019
-ms.locfileid: "69565255"
+ms.lasthandoff: 09/16/2019
+ms.locfileid: "71005452"
 ---
 <a name="migrations"></a>Migrazioni
 ==========
@@ -25,6 +25,9 @@ Le migrazioni includono strumenti da riga di comando e API che consentono le att
 * [Ripristinare una migrazione](#revert-a-migration). Annullare le modifiche al database.
 * [Generare script SQL](#generate-sql-scripts). Potrebbe essere necessario uno script per aggiornare un database di produzione o per risolvere i problemi del codice di migrazione.
 * [Applicare migrazioni al runtime](#apply-migrations-at-runtime). Quando gli aggiornamenti in fase di progettazione e l'esecuzione di script non sono le opzioni più appropriate, chiamare il metodo `Migrate()`.
+
+> [!TIP]
+> Se `DbContext` si trova in un assembly diverso da quello del progetto di avvio, è possibile specificare in modo esplicito i progetti di destinazione e di avvio negli [strumenti della console di Gestione pacchetti](xref:core/miscellaneous/cli/powershell#target-and-startup-project) o negli [strumenti dell'interfaccia della riga di comando di .NET Core](xref:core/miscellaneous/cli/dotnet#target-project-and-startup-project).
 
 <a name="install-the-tools"></a>Installare gli strumenti
 -----------------
