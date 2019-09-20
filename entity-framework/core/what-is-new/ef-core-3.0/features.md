@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: 2EBE2CCC-E52D-483F-834C-8877F5EB0C0C
 uid: core/what-is-new/ef-core-3.0/features
-ms.openlocfilehash: 528733d6eec33de2c9538541a6ed5be704b9d433
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.openlocfilehash: d938f17daecd5031147951d0018602c5635de41d
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005562"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149099"
 ---
 # <a name="new-features-included-in-ef-core-30"></a>Nuove funzionalità incluse in EF Core 3,0
 
@@ -57,7 +57,7 @@ var orders =
 
 await foreach(var o in orders)
 {
-  Proccess(o);
+  Process(o);
 } 
 ```
 
@@ -71,7 +71,7 @@ La nuova API di intercettazione in EF Core 3,0 consente a a livello di osservare
 
 ## <a name="reverse-engineering-of-database-views"></a>Decompilazione delle viste di database
 
-I tipi di entità senza chiavi (noti in precedenza come [tipi di query](xref:core/modeling/query-types)) rappresentano i dati che possono essere letti dal database, ma non possono essere aggiornati.
+I tipi di entità senza chiavi (noti in precedenza come [tipi di query](xref:core/modeling/keyless-entity-types)) rappresentano i dati che possono essere letti dal database, ma non possono essere aggiornati.
 Questa caratteristica li rende un ottimo adattamento per il mapping delle viste di database nella maggior parte degli scenari, quindi è stata automatizzata la creazione di tipi di entità senza chiavi quando reverse engineering viste di database.
 
 ## <a name="dependent-entities-sharing-the-table-with-the-principal-are-now-optional"></a>Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative
@@ -108,5 +108,5 @@ Esistono alcune limitazioni, ad esempio:
 
 Alcune funzionalità pianificate originariamente per EF Core 3,0 sono state rimandate alle versioni future: 
 
-- Possibilità di ingore delle parti di un modello nelle migrazioni, registrate da [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
-- Entità contenitore delle proprietà, registrate da due problemi distinti: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) sulle entità di tipo condiviso e [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) sul supporto del mapping delle proprietà indicizzate.
+- Possibilità di ingore delle parti di un modello nelle migrazioni, tracciate come [#2725](https://github.com/aspnet/EntityFrameworkCore/issues/2725).
+- Entità contenitore delle proprietà, registrate come due problemi distinti: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914) sulle entità di tipo condiviso e [#13610](https://github.com/aspnet/EntityFrameworkCore/issues/13610) sul supporto del mapping delle proprietà indicizzate.

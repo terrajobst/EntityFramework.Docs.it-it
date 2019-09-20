@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 28b2180e898b91d233b590b1639674a464f8c679
-ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.openlocfilehash: 781578d9de05895cdbc777aa53c3f6d6f9777869
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/04/2019
-ms.locfileid: "70271426"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149048"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -36,7 +36,7 @@ Leggere la [sezione sulla suddivisione di tabelle](xref:core/modeling/table-spli
 
 ### <a name="owned-types"></a>Tipi di proprietà
 
-Un tipo di entità di proprietà può condividere lo stesso tipo CLR con un altro tipo di entità di proprietà, ma poiché non può essere identificato soltanto dal tipo CLR è necessario che sia presente una navigazione verso di esso da un altro tipo di entità. L'entità contenente la navigazione che lo definisce è il proprietario. Quando si esegue una query sul proprietario, i tipi di proprietà saranno inclusi per impostazione predefinita.
+Un tipo di entità di proprietà può condividere lo stesso tipo .NET con un altro tipo di entità di proprietà, ma poiché non può essere identificato solo dal tipo .NET è necessario che vi sia una navigazione da un altro tipo di entità. L'entità contenente la navigazione che lo definisce è il proprietario. Quando si esegue una query sul proprietario, i tipi di proprietà saranno inclusi per impostazione predefinita.
 
 Per convenzione viene creata una chiave primaria shadow per il tipo di proprietà e ne viene eseguito il mapping alla stessa tabella del proprietario usando la suddivisione di tabelle. Ciò consente di usare i tipi di proprietà in modo simile ai tipi complessi in EF6:
 
@@ -201,7 +201,7 @@ using (var db = new CustomerContext())
 }
 ```
 
-## <a name="change-tracking"></a>Change Tracking
+## <a name="change-tracking"></a>Rilevamento modifiche
 
 ### <a name="attach-can-track-a-graph-of-new-and-existing-entities"></a>Il metodo Attach consente di tracciare un grafo delle entità nuove ed esistenti
 
@@ -221,7 +221,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente di usare l'interpolazione di stringhe C# in modo "sicuro", ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
-Di seguito è fornito un esempio:
+Ecco un esempio:
 
 ``` csharp
 var city = "London";

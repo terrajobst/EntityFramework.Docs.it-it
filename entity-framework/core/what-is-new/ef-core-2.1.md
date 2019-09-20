@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: 16600ccbb1194d584fae15671118d9c046f1f637
-ms.sourcegitcommit: 06073f8efde97dd5f540dbfb69f574d8380566fe
-ms.translationtype: HT
+ms.openlocfilehash: 5f97015f0228387574e3a19fb20cae1bdb403410
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/24/2019
-ms.locfileid: "67333851"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149181"
 ---
 # <a name="new-features-in-ef-core-21"></a>Nuove funzionalità di EF Core 2.1
 
@@ -81,7 +81,7 @@ Un modello EF Core può ora includere tipi di query. Diversamente dai tipi di en
 - Mapping a query definite nel modello
 - Utilizzo come tipo restituito per le query `FromSql()`
 
-Leggere la [sezione sui tipi di query](xref:core/modeling/query-types) per altre informazioni su questo argomento.
+Leggere la [sezione sui tipi di query](xref:core/modeling/keyless-entity-types) per altre informazioni su questo argomento.
 
 ## <a name="include-for-derived-types"></a>Include per i tipi derivati
 Sarà ora possibile specificare le proprietà di navigazione definite solo su tipi derivati durante la scrittura di espressioni per il metodo `Include`. Per la versione fortemente tipizzata di `Include`, è supportato l'uso di un cast esplicito o dell'operatore `as`. Sono ora supportati anche i riferimenti ai nomi di proprietà di navigazione definite su tipi derivati nella versione stringa di `Include`:

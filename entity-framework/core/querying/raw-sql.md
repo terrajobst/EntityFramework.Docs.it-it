@@ -4,16 +4,16 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: 7a0df6fb656be58103971f45b9e12e9f1383311f
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: b0c9ba1bb452e47e8348d000e3f7b88cc2730d8e
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921711"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149305"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
-Entity Framework Core consente di ricorrere a query SQL non elaborate quando si lavora con un database relazionale. Ciò può essere utile se la query da eseguire non può essere espressa usando LINQ oppure se l'uso di una query LINQ comporta l'invio di query SQL non efficienti. Le query SQL non elaborate possono restituire tipi di entità o, a partire da EF Core 2.1, [tipi di query](xref:core/modeling/query-types) che fanno parte del modello.
+Entity Framework Core consente di ricorrere a query SQL non elaborate quando si lavora con un database relazionale. Ciò può essere utile se la query da eseguire non può essere espressa usando LINQ oppure se l'uso di una query LINQ comporta l'invio di query SQL non efficienti. Le query SQL non elaborate possono restituire i tipi di entità o, a partire da EF Core 2,1, i [tipi di entità senza chiave](xref:core/modeling/keyless-entity-types) che fanno parte del modello.
 
 > [!TIP]  
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
@@ -103,7 +103,7 @@ var blogs = context.Blogs
     .ToList();
 ```
 
-## <a name="change-tracking"></a>Change Tracking
+## <a name="change-tracking"></a>Rilevamento modifiche
 
 Le query che usano `FromSql()` osservano le stesse regole di rilevamento modifiche di qualsiasi altra query LINQ in EF Core. Se ad esempio la query proietta tipi di entità, i risultati vengono rilevati per impostazione predefinita.  
 

@@ -1,32 +1,32 @@
 ---
-title: Reverse Engineering - EF Core
+title: Reverse Engineering-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
-ms.openlocfilehash: 6e61d2ebcf5ada365dcdb264bc371199574e12fa
-ms.sourcegitcommit: 33b2e84dae96040f60a613186a24ff3c7b00b6db
+ms.openlocfilehash: 775a929982b9f4fb10aad9cd43bbb555ce632ad1
+ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/21/2019
-ms.locfileid: "56459185"
+ms.lasthandoff: 09/20/2019
+ms.locfileid: "71149015"
 ---
 # <a name="reverse-engineering"></a>Reverse Engineering
 
-Decodifica è il processo di scaffolding classi del tipo di entità e una classe DbContext basati su uno schema di database. Può essere eseguita usando il `Scaffold-DbContext` comando degli strumenti di Entity Framework Core Package Manager Console (console di gestione pacchetti) o `dotnet ef dbcontext scaffold` comando degli strumenti dell'interfaccia della riga di comando (CLI di .NET).
+Il Reverse Engineering è il processo di impalcature di classi di tipi di entità e una classe DbContext basata su uno schema di database. Può essere eseguita usando il `Scaffold-DbContext` comando degli strumenti della console di gestione pacchetti di EF Core `dotnet ef dbcontext scaffold` o del comando degli strumenti dell'interfaccia della riga di comando di .NET (CLI).
 
 ## <a name="installing"></a>Installazione di
 
-Prima la decompilazione, è necessario eseguire l'installazione di [strumenti console di gestione pacchetti](xref:core/miscellaneous/cli/powershell) (solo Visual Studio) o il [gli strumenti CLI](xref:core/miscellaneous/cli/dotnet). Vedere i collegamenti per informazioni dettagliate.
+Prima di reverse engineering, è necessario installare gli strumenti di [PMC](xref:core/miscellaneous/cli/powershell) (solo Visual Studio) o gli [strumenti dell'interfaccia](xref:core/miscellaneous/cli/dotnet)della riga di comando. Per informazioni dettagliate, vedere i collegamenti.
 
-È necessario anche installare appropriata [provider di database](xref:core/providers/index) per lo schema del database che si desidera decodificare.
+Sarà inoltre necessario installare un [provider di database](xref:core/providers/index) appropriato per lo schema del database che si desidera decodificare.
 
 ## <a name="connection-string"></a>Stringa di connessione
 
-Il primo argomento per il comando è una stringa di connessione al database. Gli strumenti userà questa stringa di connessione per leggere lo schema del database.
+Il primo argomento del comando è una stringa di connessione al database. Questa stringa di connessione verrà utilizzata dagli strumenti per leggere lo schema del database.
 
-Come utilizzare le virgolette ed escape alla stringa di connessione dipende dal quale shell in uso per eseguire il comando. Fare riferimento alla documentazione della shell per le specifiche. Ad esempio, PowerShell richiede di eseguire l'escape di `$` carattere, ma non `\`.
+La modalità di citazione e di escape della stringa di connessione dipende dalla shell utilizzata per eseguire il comando. Per informazioni dettagliate, vedere la documentazione della shell. PowerShell, ad esempio, richiede l'escape del `$` carattere, ma non `\`.
 
 ``` powershell
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
@@ -38,48 +38,48 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 
 ### <a name="configuration-and-user-secrets"></a>Configurazione e segreti utente
 
-Se si dispone di un progetto ASP.NET Core, è possibile usare il `Name=<connection-string>` sintassi per leggere la stringa di connessione dalla configurazione.
+Se si dispone di un progetto di ASP.NET Core, è possibile `Name=<connection-string>` utilizzare la sintassi per leggere la stringa di connessione dalla configurazione.
 
-Questo funziona bene con la [strumento Secret Manager](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager) separare la password del database dalla codebase.
+Questo funziona bene con lo [strumento di gestione dei segreti](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager) per evitare che la password del database sia separata dalla codebase.
 
 ``` Console
 dotnet user-secrets set ConnectionStrings.Chinook "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook"
 dotnet ef dbcontext scaffold Name=Chinook Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-## <a name="provider-name"></a>Nome del provider
+## <a name="provider-name"></a>Nome provider
 
-Il secondo argomento è il nome del provider. Il nome del provider è in genere lo stesso nome di pacchetto NuGet del provider.
+Il secondo argomento è il nome del provider. Il nome del provider è in genere uguale al nome del pacchetto NuGet del provider.
 
-## <a name="specifying-tables"></a>Specifica le tabelle
+## <a name="specifying-tables"></a>Specifica di tabelle
 
-Tutte le tabelle nello schema del database vengono decodificati in tipi di entità per impostazione predefinita. È possibile limitare le tabelle che vengono decodificati specificando gli schemi e tabelle.
+Per impostazione predefinita, tutte le tabelle nello schema del database sono decodificate in tipi di entità. È possibile limitare le tabelle decodificate specificando schemi e tabelle.
 
-Il `-Schemas` parametro nella console di gestione pacchetti e `--schema` opzione della riga di comando può essere usata per includere tutte le tabelle all'interno di uno schema.
+Il `-Schemas` parametro in PMC e l' `--schema` opzione nell'interfaccia della riga di comando possono essere utilizzati per includere ogni tabella all'interno di uno schema.
 
-`-Tables` (PMC) e `--table` (CLI) può essere utilizzato per includere tabelle specifiche.
+`-Tables`È possibile usare ( `--table` PMC) e (CLI) per includere tabelle specifiche.
 
-Per includere più tabelle nella console di gestione pacchetti, usare una matrice.
+Per includere più tabelle in PMC, usare una matrice.
 
 ``` powershell
 Scaffold-DbContext ... -Tables Artist, Album
 ```
 
-Per includere più tabelle della riga di comando, specificare l'opzione più volte.
+Per includere più tabelle nell'interfaccia della riga di comando, specificare l'opzione più volte.
 
 ``` Console
 dotnet ef dbcontext scaffold ... --table Artist --table Album
 ```
 
-## <a name="preserving-names"></a>Nomi di mantenimento
+## <a name="preserving-names"></a>Conservazione dei nomi
 
-I nomi di tabella e colonna sono fisse per adattarlo meglio le convenzioni di denominazione .NET per i tipi e le proprietà per impostazione predefinita. Specificando il `-UseDatabaseNames` console di gestione pacchetti di attivazione o la `--use-database-names` opzione della riga di comando disabiliterà il problema mantenendo quanto più possibile i nomi di database originali. Verranno risolti ancora identificatori .NET non è validi e nomi sintetizzati come proprietà di navigazione saranno ancora conforme alle convenzioni di denominazione .NET.
+Per impostazione predefinita, i nomi delle tabelle e delle colonne sono corretti per una migliore corrispondenza con le convenzioni di denominazione .NET per i tipi e le proprietà. Se si `-UseDatabaseNames` specifica l'opzione nella console `--use-database-names` di gestione pacchetti o l'opzione nell'interfaccia della riga di comando, questo comportamento verrà disabilitato per quanto possibile. Gli identificatori .NET non validi verranno comunque corretti e i nomi sintetizzati, come le proprietà di navigazione, saranno comunque conformi alle convenzioni di denominazione .NET.
 
 ## <a name="fluent-api-or-data-annotations"></a>API Fluent o annotazioni dei dati
 
-Per impostazione predefinita, i tipi di entità sono configurati con l'API Fluent. Specificare `-DataAnnotations` (console di gestione pacchetti) o `--data-annotations` (CLI) per usare invece le annotazioni dei dati quando possibile.
+Per impostazione predefinita, i tipi di entità vengono configurati tramite l'API Fluent. Specificare `-DataAnnotations` (PMC) o `--data-annotations` (CLI) per usare invece le annotazioni dei dati, quando possibile.
 
-Ad esempio, tramite l'API Fluent eseguirà lo scaffolding questo:
+Se ad esempio si usa l'API Fluent, l'impalcatura è la seguente:
 
 ``` csharp
 entity.Property(e => e.Title)
@@ -87,7 +87,7 @@ entity.Property(e => e.Title)
     .HasMaxLength(160);
 ```
 
-Durante l'utilizzo di annotazioni dei dati eseguirà lo scaffolding questo:
+Quando si usano le annotazioni dei dati, questo è l'impalcatura:
 
 ``` csharp
 [Required]
@@ -95,15 +95,15 @@ Durante l'utilizzo di annotazioni dei dati eseguirà lo scaffolding questo:
 public string Title { get; set; }
 ```
 
-## <a name="dbcontext-name"></a>Nome oggetto DbContext
+## <a name="dbcontext-name"></a>Nome DbContext
 
-Il nome della classe DbContext sottoposto a scaffolding sarà il nome del database con suffisso *contesto* per impostazione predefinita. Per specificare una diversa, usare `-Context` nella console di gestione pacchetti e `--context` della riga di comando.
+Il nome della classe DbContext con impalcature sarà il nome del database con suffisso *per impostazione predefinita* . Per specificarne uno diverso, usare `-Context` in PMC e `--context` nell'interfaccia della riga di comando.
 
-## <a name="directories-and-namespaces"></a>Le directory e gli spazi dei nomi
+## <a name="directories-and-namespaces"></a>Directory e spazi dei nomi
 
-Le classi di entità e una classe DbContext è sottoposto a scaffolding nella directory radice del progetto e usare lo spazio dei nomi predefinito del progetto. È possibile specificare la directory in cui vengano eseguito lo scaffolding di classi usando `-OutputDir` (console di gestione pacchetti) o `--output-dir` (CLI). Lo spazio dei nomi sarà lo spazio dei nomi radice e i nomi di tutte le sottodirectory nella directory radice del progetto.
+Le classi di entità e una classe DbContext sono impalcature nella directory radice del progetto e usano lo spazio dei nomi predefinito del progetto. È possibile specificare la directory in cui le classi sono sottoposto a impalcatura `--output-dir` usando `-OutputDir` (PMC) o (CLI). Lo spazio dei nomi sarà lo spazio dei nomi radice più i nomi delle sottodirectory nella directory radice del progetto.
 
-È anche possibile usare `-ContextDir` (console di gestione pacchetti) e `--context-dir` (CLI) per eseguire lo scaffolding della classe DbContext in una directory diversa dalle classi di tipo di entità.
+È anche possibile usare `-ContextDir` (PMC) e `--context-dir` (CLI) per eseguire il patibolo della classe DbContext in una directory separata dalle classi dei tipi di entità.
 
 ``` powershell
 Scaffold-DbContext ... -ContextDir Data -OutputDir Models
@@ -113,39 +113,37 @@ Scaffold-DbContext ... -ContextDir Data -OutputDir Models
 dotnet ef dbcontext scaffold ... --context-dir Data --output-dir Models
 ```
 
-## <a name="how-it-works"></a>Come funziona
+## <a name="how-it-works"></a>Funzionamento
 
-Verrà avviata la decompilazione leggendo lo schema del database. Legge le informazioni sulle tabelle, colonne, vincoli e indici.
+Il reverse engineering inizia con la lettura dello schema del database. Legge le informazioni su tabelle, colonne, vincoli e indici.
 
-Successivamente, Usa le informazioni sullo schema per creare un modello di EF Core. Le tabelle vengono utilizzate per creare tipi di entità. le colonne vengono utilizzate per creare le proprietà; e le chiavi esterne vengono utilizzate per creare relazioni.
+USA quindi le informazioni sullo schema per creare un modello di EF Core. Le tabelle vengono utilizzate per creare i tipi di entità. le colonne vengono utilizzate per creare le proprietà; e le chiavi esterne vengono utilizzate per creare relazioni.
 
-Infine, il modello viene utilizzato per generare il codice. Il corrispondente entità dati classi e API Fluent annotazioni del tipo sono sottoposto a scaffolding per ricreare lo stesso modello dalla propria app.
+Infine, il modello viene utilizzato per generare il codice. Le classi del tipo di entità, l'API Fluent e le annotazioni dei dati corrispondenti sono basate su impalcature per ricreare lo stesso modello dall'app.
 
 ## <a name="what-doesnt-work"></a>Cosa non funziona
 
-Non tutti gli aspetti relativi a un modello possono essere rappresentati usando uno schema di database. Ad esempio, le informazioni sulle **gerarchie di ereditarietà**, **tipi di proprietà**, e **tabella suddivisione** non sono presenti nello schema del database. Per questo motivo, questi costrutti non verrà mai essere decodificata.
+Non tutti gli elementi di un modello possono essere rappresentati utilizzando uno schema di database. Ad esempio, le informazioni sulle [**gerarchie di ereditarietà**](../modeling/inheritance.md), i [**tipi di proprietà**](../modeling/owned-entities.md)e la suddivisione delle [**tabelle**](../modeling/table-splitting.md) non sono presenti nello schema del database. Per questo motivo, questi costrutti non verranno mai decodificati.
 
-È inoltre **alcuni tipi di colonna** potrebbero non essere supportate dal provider di EF Core. Queste colonne non verranno incluse nel modello.
+Inoltre, **alcuni tipi di colonna** potrebbero non essere supportati dal provider EF core. Queste colonne non verranno incluse nel modello.
 
-EF Core richiede ogni tipo di entità dispone di una chiave. Le tabelle, tuttavia, non sono necessari per specificare una chiave primaria. **Le tabelle senza una chiave primaria** attualmente non vengono decodificati.
-
-È possibile definire **token di concorrenza** in un modello di EF Core per evitare che due utenti di aggiornare la stessa entità contemporaneamente. Alcuni database dispongono di un tipo speciale per rappresentare questo tipo di colonna (ad esempio, rowversion in SQL Server) in questo caso è possibile invertire progettare queste informazioni. Tuttavia, altri token di concorrenza saranno non essere decodificato.
+È possibile definire i [**token di concorrenza**](../modeling/concurrency.md)in un modello di EF core per impedire a due utenti di aggiornare la stessa entità nello stesso momento. Alcuni database hanno un tipo speciale per rappresentare questo tipo di colonna (ad esempio, rowversion in SQL Server), nel qual caso è possibile decompilare queste informazioni; Tuttavia, altri token di concorrenza non verranno decodificati.
 
 ## <a name="customizing-the-model"></a>Personalizzazione del modello
 
-Il codice generato da EF Core è il codice. È possibile modificarlo. Verrà rigenerato solo se si decodifica lo stesso modello anche in questo caso. Rappresenta il codice con scaffolding *uno* modello che può essere utilizzato per accedere al database, ma sicuramente non è la *solo* modello che può essere utilizzato.
+Il codice generato da EF Core è il codice. È possibile modificarlo. Verrà rigenerato solo se si esegue nuovamente la decompilazione dello stesso modello. Il codice con impalcatura rappresenta *un* modello che può essere utilizzato per accedere al database, ma non è certo l' *unico* modello che può essere utilizzato.
 
-Personalizzare le classi del tipo di entità e classe DbContext in base alle esigenze. Ad esempio, è possibile scegliere di rinominare i tipi e le proprietà, introdurre le gerarchie di ereditarietà, o dividere una tabella in più entità. È anche possibile rimuovere gli indici non univoci, sequenze inutilizzate e le proprietà di navigazione, facoltativo delle proprietà scalari e nomi di vincoli dal modello.
+Personalizzare le classi del tipo di entità e la classe DbContext in base alle esigenze. È ad esempio possibile scegliere di rinominare tipi e proprietà, introdurre gerarchie di ereditarietà o suddividere una tabella in più entità. È inoltre possibile rimuovere indici non univoci, sequenze inutilizzate e proprietà di navigazione, proprietà scalari facoltative e nomi di vincoli dal modello.
 
-È anche possibile aggiungere altri costruttori, metodi, proprietà, e così via. utilizzo di un'altra classe parziale in un file separato. Questo approccio funziona anche quando si intende decompilare il modello di nuovo.
+È anche possibile aggiungere ulteriori costruttori, metodi, proprietà e così via. uso di un'altra classe parziale in un file separato. Questo approccio funziona anche quando si intende decodificare nuovamente il modello.
 
-## <a name="updating-the-model"></a>L'aggiornamento del modello
+## <a name="updating-the-model"></a>Aggiornamento del modello
 
-Dopo aver apportato modifiche al database, si potrebbe essere necessario aggiornare il modello di EF Core per riflettere tali modifiche. Se le modifiche del database sono semplici, potrebbe essere più semplice apportare manualmente le modifiche al modello di EF Core. Ad esempio, la ridenominazione di una tabella o colonna, rimuovere una colonna o si aggiorna tipo di una colonna è semplici modifiche da apportare nel codice.
+Dopo aver apportato modifiche al database, potrebbe essere necessario aggiornare il modello di EF Core per riflettere tali modifiche. Se le modifiche apportate al database sono semplici, potrebbe essere più semplice apportare manualmente le modifiche al modello di EF Core. Ad esempio, la ridenominazione di una tabella o di una colonna, la rimozione di una colonna o l'aggiornamento del tipo di una colonna sono semplici modifiche da apportare nel codice.
 
-Altre modifiche significative, tuttavia, non sono come facile apportare manualmente. Un flusso di lavoro comune è quello inverso progettare il modello dal database di utilizzando nuovamente `-Force` (console di gestione pacchetti) o `--force` (CLI) per sovrascrivere il modello esistente con una aggiornata.
+Le modifiche più significative, tuttavia, non sono semplici da creare manualmente. Un flusso di lavoro comune è quello di decodificare il modello dal `-Force` database usando (PMC `--force` ) o (CLI) per sovrascrivere il modello esistente con uno aggiornato.
 
-Un'altra funzionalità comunemente richiesta è la possibilità di aggiornare il modello dal database mantenendo la personalizzazione, ad esempio le operazioni di ridenominazione, le gerarchie dei tipi e così via. Usare problema [831 #](https://github.com/aspnet/EntityFrameworkCore/issues/831) per tenere traccia dell'avanzamento di questa funzionalità.
+Un'altra funzionalità comunemente richiesta è la possibilità di aggiornare il modello dal database mantenendo la personalizzazione, ad esempio le rinominazioni, le gerarchie dei tipi e così via. Utilizzare Issue [#831](https://github.com/aspnet/EntityFrameworkCore/issues/831) per tenere traccia dello stato di avanzamento di questa funzionalità.
 
 > [!WARNING]
-> Se il modello dal database la decodificazione anche in questo caso, eventuali modifiche apportate ai file andranno perse.
+> Se si esegue di nuovo la decompilazione del modello dal database, tutte le modifiche apportate ai file andranno perse.
