@@ -1,29 +1,29 @@
 ---
-title: Proprietà shadow - EF Core
+title: Proprietà Shadow-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 75369266-d2b9-4416-b118-ed238f81f599
 uid: core/modeling/shadow-properties
-ms.openlocfilehash: 4029539f3642f539a427f5901577d4df96c00f30
-ms.sourcegitcommit: 119058fefd7f35952048f783ada68be9aa612256
+ms.openlocfilehash: 5fdc4c50c295f73d0fa5eef3518adf4d3eb95599
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/06/2019
-ms.locfileid: "66749707"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197708"
 ---
-# <a name="shadow-properties"></a>Proprietà shadow
+# <a name="shadow-properties"></a>Proprietà Shadow
 
-Proprietà shadow sono proprietà che non sono definite nella classe di entità .NET, ma sono definite per tale tipo di entità nel modello di EF Core. Il valore e lo stato di queste proprietà sono mantenute esclusivamente nel rilevamento delle modifiche.
+Le proprietà shadow sono proprietà che non sono definite nella classe di entità .NET, ma sono definite per il tipo di entità nel modello di EF Core. Il valore e lo stato di queste proprietà vengono mantenuti esclusivamente nello strumento di rilevamento delle modifiche.
 
-Proprietà shadow sono utili quando sono presenti dati nel database che non deve essere esposte sui tipi di entità con mapping. Vengono spesso utilizzati per la proprietà di chiave esterna, dove la relazione tra due entità è rappresentata da un valore di chiave esterna nel database, ma la relazione viene eseguita sui tipi di entità usando le proprietà di navigazione tra i tipi di entità.
+Le proprietà shadow sono utili quando nel database sono presenti dati che non devono essere esposti sui tipi di entità mappati. Vengono spesso usate per le proprietà di chiave esterna, in cui la relazione tra due entità è rappresentata da un valore di chiave esterna nel database, ma la relazione viene gestita sui tipi di entità usando le proprietà di navigazione tra i tipi di entità.
 
-I valori delle proprietà shadow possono essere ottenuti e modificati tramite la `ChangeTracker` API.
+I valori delle proprietà shadow possono essere ottenuti e `ChangeTracker` modificati tramite l'API.
 
 ``` csharp
 context.Entry(myBlog).Property("LastUpdated").CurrentValue = DateTime.Now;
 ```
 
-Proprietà shadow sono reperibile in query LINQ tramite le `EF.Property` metodo statico.
+È possibile fare riferimento alle proprietà shadow nelle query LINQ tramite `EF.Property` il metodo statico.
 
 ``` csharp
 var blogs = context.Blogs
@@ -32,11 +32,11 @@ var blogs = context.Blogs
 
 ## <a name="conventions"></a>Convenzioni
 
-È possibile creare proprietà shadow per convenzione quando viene individuata una relazione ma nessuna proprietà di chiave esterna è stato trovato nella classe di entità dipendente. In questo caso, verrà introdotta una proprietà di chiave esterna di ombreggiatura. La proprietà di chiave esterna di shadow verrà denominata `<navigation property name><principal key property name>` (riquadro di spostamento dell'entità dipendente, che fa riferimento all'entità principale, viene usato per la denominazione). Se il nome della proprietà chiave dell'entità include il nome della proprietà di navigazione, quindi il nome sarà semplicemente `<principal key property name>`. Se è presente nessuna proprietà di navigazione nell'entità dipendente, il nome del tipo dell'entità viene utilizzato al suo posto.
+Le proprietà shadow possono essere create per convenzione quando viene individuata una relazione, ma nella classe di entità dipendente non viene trovata alcuna proprietà di chiave esterna. In questo caso verrà introdotta una proprietà di chiave esterna Shadow. La proprietà della chiave esterna shadow verrà denominata `<navigation property name><principal key property name>` (la navigazione sull'entità dipendente, che fa riferimento all'entità principale, viene utilizzata per la denominazione). Se il nome della proprietà chiave principale include il nome della proprietà di navigazione, il nome sarà semplicemente `<principal key property name>`. Se non è presente alcuna proprietà di navigazione nell'entità dipendente, il nome del tipo di entità viene usato al suo posto.
 
-Ad esempio, il listato di codice seguente genererà un `BlogId` introdotta per la proprietà shadow il `Post` entità.
+Il seguente listato di codice, ad esempio, comporterà l'introduzione `BlogId` `Post` di una proprietà shadow nell'entità.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/ShadowForeignKey.cs)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/ShadowForeignKey.cs)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -64,15 +64,15 @@ public class Post
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-Nascondere le proprietà non è possibile creare con le annotazioni dei dati.
+Non è possibile creare le proprietà shadow con le annotazioni dei dati.
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile usare l'API Fluent per configurare le proprietà shadow. Dopo aver chiamato l'overload dei valori di `Property` è possibile concatenare qualsiasi delle chiamate di configurazione si farebbe per le altre proprietà.
+Per configurare le proprietà shadow, è possibile usare l'API Fluent. Una volta chiamato l'overload di `Property` stringa, è possibile concatenare qualsiasi chiamata di configurazione per altre proprietà.
 
-Se il nome fornito per il `Property` metodo corrisponde al nome di una proprietà esistente (una proprietà shadow o quello definito nella classe di entità), quindi verrà configurato il codice di tale proprietà esistente anziché introdurre una nuova proprietà shadow.
+Se il nome fornito al `Property` metodo corrisponde al nome di una proprietà esistente (una proprietà shadow o un oggetto definito nella classe di entità), il codice configurerà la proprietà esistente anziché introdurre una nuova proprietà shadow.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/ShadowProperty.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/ShadowProperty.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {

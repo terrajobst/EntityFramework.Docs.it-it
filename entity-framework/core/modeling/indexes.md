@@ -1,33 +1,33 @@
 ---
-title: Indici - EF Core
+title: Indici-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 85b92003-b692-417d-ac1d-76d40dce664b
 uid: core/modeling/indexes
-ms.openlocfilehash: 87fe893243377e3ab83d419ae9bedf813ca50c3f
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: b6f11401b69bd8e8795f6b22e5392ba16fc9ba2e
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42995480"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197254"
 ---
-# <a name="indexes"></a>Indici
+# <a name="indexes"></a>Indexes
 
-Gli indici sono un concetto comune ampiamente tra molti archivi dati. Mentre la relativa implementazione nell'archivio dati può variare, vengono usate per effettuare ricerche basate su una colonna o set di colonne, più efficiente.
+Gli indici sono un concetto comune in molti archivi dati. Mentre la loro implementazione nell'archivio dati può variare, vengono usati per rendere più efficienti le ricerche basate su una colonna o un set di colonne.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, viene creato un indice in ogni proprietà (o set di proprietà) che vengono utilizzate come chiave esterna.
+Per convenzione, viene creato un indice in ogni proprietà o set di proprietà utilizzate come chiave esterna.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-Gli indici non è possibile creare tramite le annotazioni dei dati.
+Non è possibile creare indici utilizzando le annotazioni dei dati.
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile usare l'API Fluent per specificare un indice su una singola proprietà. Per impostazione predefinita, gli indici non sono univoche.
+È possibile usare l'API Fluent per specificare un indice in una singola proprietà. Per impostazione predefinita, gli indici non sono univoci.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/Index.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Index.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -47,18 +47,18 @@ public class Blog
 }
 ```
 
-È anche possibile specificare che un indice deve essere univoco, vale a dire che nessun due entità può avere i valori stessi per la proprietà specificata.
+È inoltre possibile specificare che un indice deve essere univoco, pertanto due entità non possono avere gli stessi valori per le proprietà specificate.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IndexUnique.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/IndexUnique.cs?highlight=3)] -->
 ``` csharp
         modelBuilder.Entity<Blog>()
             .HasIndex(b => b.Url)
             .IsUnique();
 ```
 
-È anche possibile specificare un indice su più colonne.
+È inoltre possibile specificare un indice per più di una colonna.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Samples/IndexComposite.cs?highlight=7,8)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/IndexComposite.cs?highlight=7,8)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -80,4 +80,4 @@ public class Person
 ```
 
 > [!TIP]  
-> È presente un solo indice per ogni serie distinta di proprietà. Se si usa l'API Fluent per configurare un indice in un set di proprietà che dispone già di un indice definito, in base alla convenzione o configurazione precedente, quindi possibile che si desidera modificare la definizione di tale indice. Ciò è utile se si desidera un'ulteriore configurazione di un indice creato per convenzione.
+> È disponibile un solo indice per set di proprietà distinti. Se si usa l'API Fluent per configurare un indice in un set di proprietà in cui è già definito un indice, per convenzione o per la configurazione precedente, si modificherà la definizione di tale indice. Questa opzione è utile se si desidera configurare ulteriormente un indice creato per convenzione.

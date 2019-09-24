@@ -1,36 +1,36 @@
 ---
-title: Vincoli di chiave esterna - EF Core
+title: Vincoli FOREIGN KEY-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
 uid: core/modeling/relational/fk-constraints
-ms.openlocfilehash: a83f72b5d832e349fb4a5fb3b2de0b82bd79ef2a
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: d7ed4466f4df9ec01267b048ba1bbcc6e8bbdad5
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993988"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197065"
 ---
-# <a name="foreign-key-constraints"></a>Vincoli di chiave esterna
+# <a name="foreign-key-constraints"></a>Vincoli FOREIGN KEY
 
 > [!NOTE]  
 > La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Un vincolo foreign key è stato introdotto per ogni relazione nel modello.
+Un vincolo FOREIGN KEY viene introdotto per ogni relazione nel modello.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, i vincoli di chiave esterni sono denominati `FK_<dependent type name>_<principal type name>_<foreign key property name>`. Per una chiave esterna composta `<foreign key property name>` diventa un elenco separato da un carattere di sottolineatura di nomi di proprietà di chiave esterna.
+Per convenzione, i vincoli di chiave esterna `FK_<dependent type name>_<principal type name>_<foreign key property name>`vengono denominati. Per le chiavi `<foreign key property name>` esterne composite diventa un elenco delimitato da caratteri di sottolineatura dei nomi delle proprietà di chiave esterna.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-I nomi di vincolo di chiave esterna non possono essere configurati tramite le annotazioni dei dati.
+Impossibile configurare nomi di vincoli di chiave esterna utilizzando le annotazioni dei dati.
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile utilizzare l'API Fluent per configurare il nome del vincolo di chiave esterna per una relazione.
+Per configurare il nome del vincolo FOREIGN KEY per una relazione, è possibile usare l'API Fluent.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs?highlight=12)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/RelationshipConstraintName.cs?highlight=12)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -62,6 +62,6 @@ public class Post
     public string Content { get; set; }
 
     public int BlogId { get; set; }
-    public Blog Blog { get; set; }
+    public Blog Blog { get; set; }
 }
 ```

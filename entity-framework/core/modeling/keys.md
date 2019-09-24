@@ -1,27 +1,27 @@
 ---
-title: Chiavi (primario) - EF Core
+title: Chiavi (primario)-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 912ffef7-86a0-4cdc-a776-55f907459d20
 uid: core/modeling/keys
-ms.openlocfilehash: 51d163b867085f42f415dbd7afa9e311ab1781a0
-ms.sourcegitcommit: 87fcaba46535aa351db4bdb1231bd14b40e459b9
+ms.openlocfilehash: 8b32bf6417890a954c933a5973a2c90c609beeca
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/22/2019
-ms.locfileid: "59929836"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197278"
 ---
-# <a name="keys-primary"></a>Chiavi (primarie)
+# <a name="keys-primary"></a>Chiavi (primario)
 
-Una chiave funge da identificatore univoco primario per ogni istanza di entità. Quando si usa un database relazionale viene eseguito il mapping al concetto di una *chiave primaria*. È anche possibile configurare un identificatore univoco che non corrisponde alla chiave primaria (vedere [le chiavi alternative](alternate-keys.md) per altre informazioni). 
+Una chiave funge da identificatore univoco primario per ogni istanza di entità. Quando si utilizza un database relazionale, viene eseguito il mapping al concetto di *chiave primaria*. È anche possibile configurare un identificatore univoco che non sia la chiave primaria. per ulteriori informazioni, vedere [chiavi alternative](alternate-keys.md) . 
 
-Uno dei metodi descritti di seguito è utilizzabile per il programma di installazione/creare una chiave primaria.
+Per configurare o creare una chiave primaria, è possibile utilizzare uno dei metodi seguenti.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, una proprietà denominata `Id` o `<type name>Id` saranno configurati come la chiave di un'entità.
+Per convenzione, una proprietà denominata `Id` o `<type name>Id` verrà configurata come chiave di un'entità.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/KeyId.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/KeyId.cs?highlight=3)] -->
 ``` csharp
 class Car
 {
@@ -32,7 +32,7 @@ class Car
 }
 ```
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Samples/KeyTypeNameId.cs?highlight=3)] -->
+<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/KeyTypeNameId.cs?highlight=3)] -->
 ``` csharp
 class Car
 {
@@ -45,16 +45,16 @@ class Car
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-È possibile usare le annotazioni dei dati per configurare una singola proprietà per la chiave di un'entità.
+È possibile utilizzare le annotazioni dei dati per configurare una singola proprietà come chiave di un'entità.
 
-[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Samples/KeySingle.cs?highlight=13)]
+[!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?highlight=13)]
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile usare l'API Fluent per configurare una singola proprietà per la chiave di un'entità.
+È possibile usare l'API Fluent per configurare una singola proprietà come chiave di un'entità.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeySingle.cs?highlight=11,12)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?highlight=11,12)]
 
-È anche possibile usare l'API Fluent per configurare più proprietà per la chiave di un'entità (nota come una chiave composta). Le chiavi composte possono essere configurate solo usando l'API Fluent: convenzioni non installerà mai una chiave composta e non è possibile usare le annotazioni dei dati per configurarne uno.
+È anche possibile usare l'API Fluent per configurare più proprietà come chiave di un'entità, nota come chiave composta. Le chiavi composite possono essere configurate solo usando le convenzioni API Fluent non installeranno mai una chiave composta e non è possibile usare le annotazioni dei dati per configurarne una.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Samples/KeyComposite.cs?highlight=11,12)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeyComposite.cs?highlight=11,12)]

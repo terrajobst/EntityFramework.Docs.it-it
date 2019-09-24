@@ -1,30 +1,30 @@
 ---
-title: Mapping tabella - EF Core
+title: Mapping tabella-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c807aa4c-7845-443d-b8d0-bfc9b42691a3
 uid: core/modeling/relational/tables
-ms.openlocfilehash: 32c5e3cc0e498005ce8e6be1f1ee7e8ddf9b510d
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 62dce317b901bc862b3c7d20ed1d176805bb24dd
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994137"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71196963"
 ---
-# <a name="table-mapping"></a>Mapping di tabella
+# <a name="table-mapping"></a>Mapping tabella
 
 > [!NOTE]  
 > La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Mapping tabella identifica quali i dati della tabella devono essere una query e salvati nel database.
+Il mapping delle tabelle identifica i dati della tabella da cui devono essere eseguite query e salvati nel database.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, ogni entità verrà configurato per eseguire il mapping a una tabella con lo stesso nome di `DbSet<TEntity>` proprietà che espone l'entità nel contesto derivato. Se nessun `DbSet<TEntity>` è incluso per l'entità specificata, viene usato il nome della classe.
+Per convenzione, ogni entità viene configurata in modo da eseguire il mapping a una tabella con lo stesso nome della proprietà `DbSet<TEntity>` che espone l'entità nel contesto derivato. Se per `DbSet<TEntity>` l'entità specificata non è incluso alcun oggetto, viene utilizzato il nome della classe.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-È possibile usare le annotazioni dei dati per configurare la tabella che esegue il mapping a un tipo.
+È possibile utilizzare le annotazioni dei dati per configurare la tabella a cui viene eseguito il mapping di un tipo.
 
 ``` csharp
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,7 +38,7 @@ public class Blog
 }
 ```
 
-È anche possibile specificare uno schema a cui appartiene la tabella.
+È inoltre possibile specificare uno schema a cui appartiene la tabella.
 
 ``` csharp
 [Table("blogs", Schema = "blogging")]
@@ -51,7 +51,7 @@ public class Blog
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile usare l'API Fluent per configurare la tabella che esegue il mapping a un tipo.
+È possibile usare l'API Fluent per configurare la tabella a cui viene eseguito il mapping di un tipo.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
@@ -75,9 +75,9 @@ public class Blog
 }
 ```
 
-È anche possibile specificare uno schema a cui appartiene la tabella.
+È inoltre possibile specificare uno schema a cui appartiene la tabella.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/TableAndSchema.cs?highlight=2)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/TableAndSchema.cs?highlight=2)] -->
 ``` csharp
         modelBuilder.Entity<Blog>()
             .ToTable("blogs", schema: "blogging");

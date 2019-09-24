@@ -4,16 +4,16 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 1f63593631017a61c39ccab9216adbc4663700e7
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: f7c241159c689d4648b2778b53e50c22f580deb0
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71148903"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197927"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
-Le modifiche che si prevede abbiano impatto solo sui provider di database sono documentate nelle [modifiche che influiscono sul provider](../../providers/provider-log.md).
+Le modifiche che si prevede abbiano impatto solo sui provider di database sono documentate nelle [modifiche che influiscono sul provider](xref:core/providers/provider-log).
 Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentate qui.
 
 ## <a name="summary"></a>Riepilogo
@@ -23,6 +23,7 @@ Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentat
 | [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
 | [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | High      |
 | [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
 | [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
 | [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
 | [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
@@ -37,7 +38,6 @@ Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentat
 | [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Bassa      |
 | [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Bassa      |
 | [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Bassa      |
-| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Bassa      |
 | [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Bassa      |
 | [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Bassa      |
 | [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Bassa      |
@@ -69,6 +69,7 @@ Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentat
 | [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Bassa      |
 | [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Bassa      |
 | [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Bassa      |
+| [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Bassa      |
 
 ### <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
 
@@ -174,7 +175,7 @@ Questa modifica consente di distribuire e aggiornare `dotnet ef` come uno strume
 Per essere in grado di gestire le migrazioni o eseguire lo scaffolding di `DbContext`, installare `dotnet-ef` come strumento globale:
 
   ``` console
-    $ dotnet tool install --global dotnet-ef --version 3.0.0-*
+    $ dotnet tool install --global dotnet-ef
   ```
 
 È inoltre possibile ottenerlo come strumento locale quando si ripristinano le dipendenze di un progetto che lo dichiara come dipendenza di strumenti utilizzando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
@@ -1714,4 +1715,39 @@ modelBuilder
      .Entity<User>()
      .HasOne(e => e.UpdatedBy)
      .WithMany();
+```
+
+<a name="udf-empty-string"></a>
+### <a name="dbfunctionschema-being-null-or-empty-string-configures-it-to-be-in-models-default-schema"></a>DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello
+
+[Rilevamento del problema #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
+
+Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
+
+**Comportamento precedente**
+
+Un DbFunction configurato con schema come stringa vuota è stato trattato come funzione predefinita senza uno schema. Il codice seguente, ad esempio `DatePart` , eseguirà `DATEPART` il mapping della funzione CLR alla funzione predefinita in SqlServer.
+
+```C#
+[DbFunction("DATEPART", Schema = "")]
+public static int? DatePart(string datePartArg, DateTime? date) => throw new Exception();
+
+```
+
+**Nuovo comportamento**
+
+Tutti i mapping di DbFunction sono considerati mappati alle funzioni definite dall'utente. Pertanto, il valore stringa vuoto inserisce la funzione all'interno dello schema predefinito per il modello. Che può corrispondere allo schema configurato in modo esplicito tramite `modelBuilder.HasDefaultSchema()` l' `dbo` API Fluent o in caso contrario.
+
+**Perché?**
+
+Lo schema precedentemente vuoto era un modo per trattare la funzione è incorporata, ma tale logica è applicabile solo per SqlServer, in cui le funzioni predefinite non appartengono ad alcuno schema.
+
+**Mitigazioni**
+
+Configurare manualmente la conversione di DbFunction per eseguirne il mapping a una funzione predefinita.
+
+```C#
+modelBuilder
+    .HasDbFunction(typeof(MyContext).GetMethod(nameof(MyContext.DatePart)))
+    .HasTranslation(args => SqlFunctionExpression.Create("DatePart", args, typeof(int?), null));
 ```

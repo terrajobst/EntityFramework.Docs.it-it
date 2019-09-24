@@ -1,22 +1,22 @@
 ---
-title: Colonne calcolate - EF Core
+title: Colonne calcolate-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e9d81f06-805d-45c9-97c2-3546df654829
 uid: core/modeling/relational/computed-columns
-ms.openlocfilehash: b88efdf69e5100e4eff55f3a41925d2d8e7c3178
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: da106c94698a202744d7cd465aa84d0d72802833
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993953"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197239"
 ---
 # <a name="computed-columns"></a>Colonne calcolate
 
 > [!NOTE]  
 > La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
 
-Una colonna calcolata è una colonna il cui valore viene calcolato nel database. Una colonna calcolata può utilizzare altre colonne nella tabella per la quale calcolare il relativo valore.
+Una colonna calcolata è una colonna il cui valore viene calcolato nel database. Per calcolare il valore di una colonna calcolata, è possibile utilizzare altre colonne della tabella.
 
 ## <a name="conventions"></a>Convenzioni
 
@@ -28,9 +28,9 @@ Le colonne calcolate non possono essere configurate con le annotazioni dei dati.
 
 ## <a name="fluent-api"></a>API Fluent
 
-È possibile usare l'API Fluent per specificare che una proprietà deve eseguire il mapping a una colonna calcolata.
+È possibile utilizzare l'API Fluent per specificare che una proprietà deve essere mappata a una colonna calcolata.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/ComputedColumn.cs?highlight=9)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/ComputedColumn.cs?highlight=9)] -->
 ``` csharp
 class MyContext : DbContext
 {

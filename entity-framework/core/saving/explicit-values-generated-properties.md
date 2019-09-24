@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
-ms.openlocfilehash: 00abef4d1208400ff68ced0a241b98b8dc9be5c0
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
-ms.translationtype: HT
+ms.openlocfilehash: d6aa9a0a9ce34e09a39026ad7ea9195b6777858c
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997853"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197864"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>Impostazione di valori espliciti per le proprietà generate
 
@@ -18,25 +18,25 @@ Una proprietà generata è una proprietà il cui valore viene generato (tramite 
 Potrebbero verificarsi situazioni in cui si vuole impostare un valore esplicito per una proprietà generata, anziché usarne uno generato.
 
 > [!TIP]  
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/ExplicitValuesGenerateProperties/) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/ExplicitValuesGenerateProperties/) di questo articolo in GitHub.
 
 ## <a name="the-model"></a>Il modello
 
 Il modello usato in questo articolo contiene una singola entità `Employee`.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/Employee.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Employee.cs#Sample)]
 
 ## <a name="saving-an-explicit-value-during-add"></a>Salvataggio di un valore esplicito durante l'aggiunta
 
 La proprietà `Employee.EmploymentStarted` è configurata per contenere i valori generati dal database per le nuove entità (usando un valore predefinito).
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#EmploymentStarted)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#EmploymentStarted)]
 
 Il codice seguente inserisce due dipendenti nel database.
 * Per il primo, alla proprietà `Employee.EmploymentStarted` non viene assegnato alcun valore, in modo che rimanga impostata sul valore predefinito di CLR per `DateTime`.
 * Per il secondo, viene impostato il valore esplicito `1-Jan-2000`.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmploymentStarted)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmploymentStarted)]
 
 L'output mostra che il database ha generato un valore per il primo dipendente e che è stato usato il valore esplicito per il secondo.
 
@@ -54,7 +54,7 @@ Nella maggior parte dei casi, l'approccio illustrato in precedenza funzionerà p
 > [!NOTE]  
 > Esiste una [richiesta di funzionalità](https://github.com/aspnet/EntityFramework/issues/703) nel backlog per eseguire questa operazione automaticamente all'interno del provider SQL Server.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmployeeId)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#EmployeeId)]
 
 L'output mostra che gli ID specificati sono stati salvati nel database.
 
@@ -67,23 +67,23 @@ L'output mostra che gli ID specificati sono stati salvati nel database.
 
 La proprietà `Employee.LastPayRaise` è configurata per contenere i valori generati dal database durante gli aggiornamenti.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#LastPayRaise)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/EmployeeContext.cs#LastPayRaise)]
 
 > [!NOTE]  
 > Per impostazione predefinita, EF Core genererà un'eccezione se si tenta di salvare un valore esplicito per una proprietà che è configurata per la generazione dei valori durante l'aggiornamento. Per evitare questo problema, è necessario passare all'API dei metadati di livello inferiore e impostare `AfterSaveBehavior` (come illustrato in precedenza).
 
 > [!NOTE]  
-> **Modifiche in EF Core 2.0:** nelle versioni precedenti il comportamento post-salvataggio era controllato tramite il flag `IsReadOnlyAfterSave`. Questo flag è ora obsoleto ed è stato sostituito da `AfterSaveBehavior`.
+> **Modifiche nel EF Core 2,0:** Nelle versioni precedenti il comportamento dopo il salvataggio è stato controllato tramite `IsReadOnlyAfterSave` il flag. Questo flag è ora obsoleto ed è stato sostituito da `AfterSaveBehavior`.
 
 Esiste anche un trigger nel database per generare valori per la colonna `LastPayRaise` durante le operazioni `UPDATE`.
 
-[!code-sql[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
+[!code-sql[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/employee_UPDATE.sql)]
 
 Il codice seguente consente di aumentare lo stipendio di due dipendenti nel database.
 * Per il primo, alla proprietà `Employee.LastPayRaise` non viene assegnato alcun valore, in modo che rimanga impostata su Null.
 * Per il secondo viene impostato il valore esplicito di una settimana fa (retrodatazione dell'aumento di stipendio).
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/ExplicitValuesGenerateProperties/Sample.cs#LastPayRaise)]
+[!code-csharp[Main](../../../samples/core/Saving/ExplicitValuesGenerateProperties/Sample.cs#LastPayRaise)]
 
 L'output mostra che il database ha generato un valore per il primo dipendente e che è stato usato il valore esplicito per il secondo.
 

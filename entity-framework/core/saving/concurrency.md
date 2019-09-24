@@ -3,12 +3,12 @@ title: Gestione dei conflitti di concorrenza - EF Core
 author: rowanmiller
 ms.date: 03/03/2018
 uid: core/saving/concurrency
-ms.openlocfilehash: e050b17bfa31a4785161c700bc0355e83162b405
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
-ms.translationtype: HT
+ms.openlocfilehash: 4d6ff24e58caa0b228e9c1e4313beda78d1025fc
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993112"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197837"
 ---
 # <a name="handling-concurrency-conflicts"></a>Gestione dei conflitti di concorrenza
 
@@ -16,7 +16,7 @@ ms.locfileid: "42993112"
 > Questa pagina illustra il funzionamento della concorrenza in EF Core e come gestire i conflitti di concorrenza nell'applicazione. Vedere [Token di concorrenza](xref:core/modeling/concurrency) per informazioni dettagliate su come configurare i token di concorrenza nel modello.
 
 > [!TIP]
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Concurrency/) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Concurrency/) di questo articolo in GitHub.
 
 Con _concorrenza del database_ si fa riferimento alle situazioni in cui più processi o utenti accedono agli stessi dati in un database o li modificano nello stesso momento. Con _controllo della concorrenza_ si fa riferimento ai meccanismi specifici usati per garantire la coerenza dei dati in presenza di modifiche simultanee.
 
@@ -71,4 +71,4 @@ L'approccio generale per gestire i conflitti di concorrenza è il seguente:
 
 Nell'esempio seguente `Person.FirstName` e `Person.LastName` sono configurati come token di concorrenza. È presente un commento `// TODO:` nella posizione in cui viene inclusa la logica specifica dell'applicazione per scegliere il valore da salvare.
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]
+[!code-csharp[Main](../../../samples/core/Saving/Concurrency/Sample.cs?name=ConcurrencyHandlingCode&highlight=34-35)]

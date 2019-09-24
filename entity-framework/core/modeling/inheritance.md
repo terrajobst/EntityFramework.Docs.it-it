@@ -1,40 +1,40 @@
 ---
-title: Ereditarietà - EF Core
+title: Ereditarietà-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 754be334-dd21-450e-9d22-2591e80012a2
 uid: core/modeling/inheritance
-ms.openlocfilehash: f6b5c8f5a398ac1e28e29bc17f0674c5b76d7b20
-ms.sourcegitcommit: eb8359b7ab3b0a1a08522faf67b703a00ecdcefd
+ms.openlocfilehash: 1f20c455176b5922364584f8c7688c15a4c3f0f9
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/21/2019
-ms.locfileid: "58319127"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197294"
 ---
 # <a name="inheritance"></a>Ereditarietà
 
-Ereditarietà nel modello di Entity Framework viene utilizzato per controllare la modalità di rappresentazione di ereditarietà nelle classi di entità nel database.
+L'ereditarietà nel modello EF viene utilizzata per controllare il modo in cui l'ereditarietà nelle classi di entità viene rappresentata nel database.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, spetta il provider di database per determinare come ereditarietà verrà rappresentata nel database. Visualizzare [ereditarietà (Database relazionale)](relational/inheritance.md) per come questa operazione viene gestita con un provider di database relazionale.
+Per convenzione, spetta al provider di database determinare il modo in cui l'ereditarietà verrà rappresentata nel database. Vedere [ereditarietà (database relazionale)](relational/inheritance.md) per il modo in cui viene gestita con un provider di database relazionale.
 
-EF installerà solo l'ereditarietà se due o più tipi ereditati sono inclusi in modo esplicito nel modello. EF non analizza per i tipi di base o derivati in caso contrario, non incluse nel modello. È possibile includere i tipi nel modello tramite l'esposizione di un *DbSet<TEntity>*  per ogni tipo nella gerarchia di ereditarietà.
+EF imposterà l'ereditarietà solo se due o più tipi ereditati vengono inclusi in modo esplicito nel modello. EF non analizza i tipi di base o derivati che non sono stati altrimenti inclusi nel modello. È possibile includere tipi nel modello esponendo un *DbSet<TEntity>*  per ogni tipo nella gerarchia di ereditarietà.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceDbSets.cs?highlight=3-4&name=Model)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?highlight=3-4&name=Model)]
 
-Se non si vuole esporre una *DbSet<TEntity>*  per una o più entità nella gerarchia, è possibile usare l'API Fluent per assicurare che siano incluse nel modello.
-E se non si basano sulle convenzioni, è possibile specificare il tipo di base in modo esplicito usando `HasBaseType`.
+Se non si vuole esporre un *DbSet<TEntity>*  per una o più entità nella gerarchia, è possibile usare l'API Fluent per assicurarsi che siano incluse nel modello.
+Se non si basano sulle convenzioni, è possibile specificare il tipo di base in `HasBaseType`modo esplicito utilizzando.
 
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Samples/InheritanceModelBuilder.cs?highlight=7&name=Context)]
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceModelBuilder.cs?highlight=7&name=Context)]
 
 > [!NOTE]
-> È possibile usare `.HasBaseType((Type)null)` per rimuovere un tipo di entità dalla gerarchia.
+> È possibile utilizzare `.HasBaseType((Type)null)` per rimuovere un tipo di entità dalla gerarchia.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-È possibile usare le annotazioni dei dati per configurare l'ereditarietà.
+Non è possibile utilizzare le annotazioni dei dati per configurare l'ereditarietà.
 
 ## <a name="fluent-api"></a>API Fluent
 
-L'API Fluent per ereditarietà dipende il provider di database in che uso. Visualizzare [ereditarietà (Database relazionale)](relational/inheritance.md) per la configurazione è possibile eseguire per un provider di database relazionale.
+L'API Fluent per l'ereditarietà dipende dal provider di database in uso. Vedere [ereditarietà (database relazionale)](relational/inheritance.md) per la configurazione che è possibile eseguire per un provider di database relazionale.

@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 9d2e647f-29e4-483b-af00-74269eb06e8f
 uid: core/modeling/relational/data-types
-ms.openlocfilehash: d667cbcb821e321faed36d097b531c7c55b81248
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 26664ebe18abcdeaa2b9c8dc23a6410204f53c8e
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149161"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197188"
 ---
 # <a name="data-types"></a>Tipi di dati
 
@@ -30,10 +30,10 @@ Ad esempio, SQL Server usa `datetime2(7)` per `DateTime` le proprietà e `nvarch
 
 `Url` Il codice seguente, ad esempio, consente di configurare come stringa non Unicode con `Rating` `200` lunghezza massima e come decimale con `5` precisione e scala `2`di.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Samples/Relational/DataType.cs?name=Entities&highlight=4,6)]
+[!code-csharp[Main](../../../../samples/core/Modeling/DataAnnotations/Relational/DataType.cs?name=Entities&highlight=4,6)]
 
 ## <a name="fluent-api"></a>API Fluent
 
 È anche possibile usare l'API Fluent per specificare gli stessi tipi di dati per le colonne.
 
-[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Samples/Relational/DataType.cs?name=Model&highlight=9-10)]
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/DataType.cs?name=Model&highlight=9-10)]

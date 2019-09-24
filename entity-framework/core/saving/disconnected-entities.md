@@ -5,12 +5,12 @@ ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 51367d2619b1943c300f8954123f70b909ad96e7
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
-ms.translationtype: HT
+ms.openlocfilehash: 070f2ad396ec21858096c29413ac80bdf8547328
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42994399"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197806"
 ---
 # <a name="disconnected-entities"></a>Entità disconnesse
 
@@ -19,7 +19,7 @@ Un'istanza di DbContext sottoporrà automaticamente a rilevamento delle modifich
 Tuttavia, a volte le entità vengono sottoposte a query usando un'istanza di contesto e poi salvate con un'istanza diversa. Questo accade spesso in scenari "disconnessi", ad esempio un'applicazione Web in cui le entità vengono recuperate tramite query, inviate al client, modificate, inviate al server in una richiesta e quindi salvate. In questo caso, la seconda istanza del contesto deve sapere se le entità sono nuove (devono essere inserite) o esistenti (devono essere aggiornate).
 
 > [!TIP]  
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Saving/Disconnected/) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) di questo articolo in GitHub.
 
 > [!TIP]
 > EF Core può eseguire il rilevamento delle modifiche per una sola istanza di qualsiasi entità con un determinato valore di chiave primaria. Il modo migliore per evitare che ciò diventi un problema consiste nell'usare un contesto di breve durata per ogni unità di lavoro, in modo che il contesto sia inizialmente vuoto, abbia entità collegate, salvi queste entità, per poi essere eliminato e rimosso.
@@ -38,11 +38,11 @@ Il valore di una chiave generata automaticamente può essere spesso usato per de
 
 È facile verificare la presenza di una chiave non impostata quando è noto il tipo di entità:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewSimple)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewSimple)]
 
 Tuttavia, EF include anche un modo predefinito per eseguire questa operazione per qualsiasi tipo di entità e tipo di chiave:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewGeneral)]
 
 > [!TIP]  
 > Le chiavi vengono impostate non appena le entità vengono incluse nel rilevamento delle modifiche dal contesto, anche se l'entità risulta con lo stato Added. Ciò è utile durante l'attraversamento di un grafo di entità e per decidere come procedere con ognuna, ad esempio quando di usa l'API TrackGraph. Il valore della chiave deve essere usato solo nel modo illustrato di seguito _prima_ che venga effettuata qualsiasi chiamata per il rilevamento delle modifiche dell'entità.
@@ -55,7 +55,7 @@ Tuttavia, EF include anche un modo predefinito per eseguire questa operazione pe
 
 Per eseguire una query per l'entità, è sufficiente usare il metodo Find:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#IsItNewQuery)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#IsItNewQuery)]
 
 Esula dagli scopi di questo documento mostrare il codice completo per il passaggio di un flag da un client. In un'app Web, in genere significa effettuare richieste diverse per azioni diverse oppure passare uno stato nella richiesta e quindi estrarlo nel controller.
 
@@ -63,20 +63,20 @@ Esula dagli scopi di questo documento mostrare il codice completo per il passagg
 
 Quando è noto se è necessario eseguire un inserimento o un aggiornamento, è possibile usare in modo appropriato Add o Update:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertAndUpdateSingleEntity)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertAndUpdateSingleEntity)]
 
 Tuttavia, se l'entità usa valori di chiave generati automaticamente, è possibile usare il metodo Update per entrambi i casi:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntity)]
 
 Il metodo Update contrassegna in genere l'entità per l'aggiornamento e non per l'inserimento. Tuttavia, se l'entità ha una chiave generata automaticamente e non è stato impostato alcun valore per la chiave, l'entità viene invece contrassegnata automaticamente per l'inserimento.
 
 > [!TIP]  
 > Questo comportamento è stato introdotto in EF Core 2.0. Per le versioni precedenti è sempre necessario scegliere in modo esplicito Add o Update.
 
-Se l'entità non usa chiavi generate automaticamente, l'applicazione deve quindi decidere se l'entità deve essere inserita o aggiornata. Ad esempio:
+Se l'entità non usa chiavi generate automaticamente, l'applicazione deve decidere se l'entità deve essere inserita o aggiornata: Ad esempio:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 
 La procedura è la seguente:
 * Se Find restituisce Null, il database non contiene già il blog con tale ID, pertanto si chiama Add per contrassegnarlo per l'inserimento.
@@ -97,17 +97,17 @@ Come indicato in precedenza, EF Core può eseguire il rilevamento delle modifich
 
 Un esempio di utilizzo dei grafi è l'inserimento o l'aggiornamento di un blog con la raccolta di post associati. Se tutte le entità nel grafo devono essere inserite o devono essere tutte aggiornate, il processo è identico a quello sopra descritto per singole entità. Ad esempio, un grafo di blog e post creato come il seguente:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#CreateBlogAndPosts)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#CreateBlogAndPosts)]
 
 può essere inserito nel modo seguente:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertGraph)]
 
 La chiamata di Add contrassegnerà il blog e tutti i post per l'inserimento.
 
 Analogamente, se tutte le entità in un grafo devono essere aggiornate, si può usare Update:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#UpdateGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#UpdateGraph)]
 
 Il blog e tutti i relativi post verranno contrassegnati per l'aggiornamento.
 
@@ -115,13 +115,13 @@ Il blog e tutti i relativi post verranno contrassegnati per l'aggiornamento.
 
 Con le chiavi generate automaticamente, è possibile usare Update sia per gli inserimenti che per gli aggiornamenti, anche se il grafo contiene una combinazione di entità che richiedono l'inserimento e che richiedono l'aggiornamento:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateGraph)]
 
 Update contrassegnerà qualsiasi entità nel grafo, blog o post, per l'inserimento, se non dispone di valore di chiave impostato, mentre tutte le altre entità verranno contrassegnate per l'aggiornamento.
 
 Come prima, se non si usano chiavi generate automaticamente, è possibile usare una query e alcune operazioni di elaborazione:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertOrUpdateGraphWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateGraphWithFind)]
 
 ## <a name="handling-deletes"></a>Gestione delle eliminazioni
 
@@ -129,12 +129,12 @@ L'eliminazione può essere difficile da gestire, dato che l'assenza di un'entit�
 
 Per le vere eliminazioni, un modello comune consiste nell'usare un'estensione del modello di query per eseguire essenzialmente un confronto delle differenze del grafo. Ad esempio:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 
 ## <a name="trackgraph"></a>TrackGraph
 
 Internamente, Add, Attach e Update usano l'attraversamento del grafo determinando per ogni entità se deve essere contrassegnata come Added (per l'inserimento), Modified (per l'aggiornamento), Unchanged (per non eseguire alcuna operazione) o Delete (per l'eliminazione). Questo meccanismo viene esposto tramite l'API TrackGraph. Ad esempio, si supponga che quando il client invia un grafo delle entità imposti alcuni flag per ogni entità per indicare come deve essere gestita. TrackGraph può quindi essere usato per elaborare questo flag:
 
-[!code-csharp[Main](../../../samples/core/Saving/Saving/Disconnected/Sample.cs#TrackGraph)]
+[!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#TrackGraph)]
 
 I flag vengono visualizzati solo come parte dell'entità per semplicità dell'esempio. In genere, i flag farebbero parte di un DTO o qualche altro stato incluso nella richiesta.
