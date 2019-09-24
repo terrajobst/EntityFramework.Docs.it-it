@@ -1,36 +1,36 @@
 ---
-title: Vincoli di chiave esterna - EF Core
+title: Vincoli FOREIGN KEY-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: dbaf4bac-1fd5-46c0-ac57-64d7153bc574
 uid: core/modeling/relational/fk-constraints
-ms.openlocfilehash: a83f72b5d832e349fb4a5fb3b2de0b82bd79ef2a
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: d7ed4466f4df9ec01267b048ba1bbcc6e8bbdad5
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993988"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197065"
 ---
-# <a name="foreign-key-constraints"></a><span data-ttu-id="7f57c-102">Vincoli di chiave esterna</span><span class="sxs-lookup"><span data-stu-id="7f57c-102">Foreign Key Constraints</span></span>
+# <a name="foreign-key-constraints"></a><span data-ttu-id="3dd82-102">Vincoli FOREIGN KEY</span><span class="sxs-lookup"><span data-stu-id="3dd82-102">Foreign Key Constraints</span></span>
 
 > [!NOTE]  
-> <span data-ttu-id="7f57c-103">La configurazione di questa sezione è applicabile in generale ai database relazionali.</span><span class="sxs-lookup"><span data-stu-id="7f57c-103">The configuration in this section is applicable to relational databases in general.</span></span> <span data-ttu-id="7f57c-104">I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).</span><span class="sxs-lookup"><span data-stu-id="7f57c-104">The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).</span></span>
+> <span data-ttu-id="3dd82-103">La configurazione di questa sezione è applicabile in generale ai database relazionali.</span><span class="sxs-lookup"><span data-stu-id="3dd82-103">The configuration in this section is applicable to relational databases in general.</span></span> <span data-ttu-id="3dd82-104">I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).</span><span class="sxs-lookup"><span data-stu-id="3dd82-104">The extension methods shown here will become available when you install a relational database provider (due to the shared *Microsoft.EntityFrameworkCore.Relational* package).</span></span>
 
-<span data-ttu-id="7f57c-105">Un vincolo foreign key è stato introdotto per ogni relazione nel modello.</span><span class="sxs-lookup"><span data-stu-id="7f57c-105">A foreign key constraint is introduced for each relationship in the model.</span></span>
+<span data-ttu-id="3dd82-105">Un vincolo FOREIGN KEY viene introdotto per ogni relazione nel modello.</span><span class="sxs-lookup"><span data-stu-id="3dd82-105">A foreign key constraint is introduced for each relationship in the model.</span></span>
 
-## <a name="conventions"></a><span data-ttu-id="7f57c-106">Convenzioni</span><span class="sxs-lookup"><span data-stu-id="7f57c-106">Conventions</span></span>
+## <a name="conventions"></a><span data-ttu-id="3dd82-106">Convenzioni</span><span class="sxs-lookup"><span data-stu-id="3dd82-106">Conventions</span></span>
 
-<span data-ttu-id="7f57c-107">Per convenzione, i vincoli di chiave esterni sono denominati `FK_<dependent type name>_<principal type name>_<foreign key property name>`.</span><span class="sxs-lookup"><span data-stu-id="7f57c-107">By convention, foreign key constraints are named `FK_<dependent type name>_<principal type name>_<foreign key property name>`.</span></span> <span data-ttu-id="7f57c-108">Per una chiave esterna composta `<foreign key property name>` diventa un elenco separato da un carattere di sottolineatura di nomi di proprietà di chiave esterna.</span><span class="sxs-lookup"><span data-stu-id="7f57c-108">For composite foreign keys `<foreign key property name>` becomes an underscore separated list of foreign key property names.</span></span>
+<span data-ttu-id="3dd82-107">Per convenzione, i vincoli di chiave esterna `FK_<dependent type name>_<principal type name>_<foreign key property name>`vengono denominati.</span><span class="sxs-lookup"><span data-stu-id="3dd82-107">By convention, foreign key constraints are named `FK_<dependent type name>_<principal type name>_<foreign key property name>`.</span></span> <span data-ttu-id="3dd82-108">Per le chiavi `<foreign key property name>` esterne composite diventa un elenco delimitato da caratteri di sottolineatura dei nomi delle proprietà di chiave esterna.</span><span class="sxs-lookup"><span data-stu-id="3dd82-108">For composite foreign keys `<foreign key property name>` becomes an underscore separated list of foreign key property names.</span></span>
 
-## <a name="data-annotations"></a><span data-ttu-id="7f57c-109">Annotazioni dei dati</span><span class="sxs-lookup"><span data-stu-id="7f57c-109">Data Annotations</span></span>
+## <a name="data-annotations"></a><span data-ttu-id="3dd82-109">Annotazioni dei dati</span><span class="sxs-lookup"><span data-stu-id="3dd82-109">Data Annotations</span></span>
 
-<span data-ttu-id="7f57c-110">I nomi di vincolo di chiave esterna non possono essere configurati tramite le annotazioni dei dati.</span><span class="sxs-lookup"><span data-stu-id="7f57c-110">Foreign key constraint names cannot be configured using data annotations.</span></span>
+<span data-ttu-id="3dd82-110">Impossibile configurare nomi di vincoli di chiave esterna utilizzando le annotazioni dei dati.</span><span class="sxs-lookup"><span data-stu-id="3dd82-110">Foreign key constraint names cannot be configured using data annotations.</span></span>
 
-## <a name="fluent-api"></a><span data-ttu-id="7f57c-111">API Fluent</span><span class="sxs-lookup"><span data-stu-id="7f57c-111">Fluent API</span></span>
+## <a name="fluent-api"></a><span data-ttu-id="3dd82-111">API Fluent</span><span class="sxs-lookup"><span data-stu-id="3dd82-111">Fluent API</span></span>
 
-<span data-ttu-id="7f57c-112">È possibile utilizzare l'API Fluent per configurare il nome del vincolo di chiave esterna per una relazione.</span><span class="sxs-lookup"><span data-stu-id="7f57c-112">You can use the Fluent API to configure the foreign key constraint name for a relationship.</span></span>
+<span data-ttu-id="3dd82-112">Per configurare il nome del vincolo FOREIGN KEY per una relazione, è possibile usare l'API Fluent.</span><span class="sxs-lookup"><span data-stu-id="3dd82-112">You can use the Fluent API to configure the foreign key constraint name for a relationship.</span></span>
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Samples/Relational/RelationshipConstraintName.cs?highlight=12)] -->
+<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/RelationshipConstraintName.cs?highlight=12)] -->
 ``` csharp
 class MyContext : DbContext
 {
@@ -62,6 +62,6 @@ public class Post
     public string Content { get; set; }
 
     public int BlogId { get; set; }
-    public Blog Blog { get; set; }
+    public Blog Blog { get; set; }
 }
 ```
