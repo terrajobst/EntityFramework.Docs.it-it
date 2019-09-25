@@ -1,35 +1,82 @@
 ---
-title: Novità di EF Core - EF Core
+title: Novità - EF Core
 author: divega
 ms.date: 02/20/2018
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: cc82cad77b69a605706ca32166b4a810106fc73e
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.openlocfilehash: 2ca4915fca515b4bdbfeb77bc7b02f15ce1704b6
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005544"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197735"
 ---
-# <a name="what-is-new-in-ef-core"></a>Novità di EF Core
-
-## <a name="future-releases"></a>Versioni future
-> [!IMPORTANT]
-> Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
-
-- **EF Core 3.1:** questa versione è in corso di sviluppo e conterrà piccoli miglioramenti per prestazioni, qualità e stabilità rispetto alla versione 3.0, è progettata come versione LTS (Long-Term Support) ed è attualmente pianificata per dicembre 2019.
-- **EF Core 5.0:** questa sarà la prossima versione principale di EF Core che verrà fornita insieme a .NET 5. La pianificazione di questa versione non è ancora iniziata e non sono state annunciate funzionalità.  
-
-Per altri dettagli su come vengono pianificate le versioni future, come la versione 3.0 e oltre, vedere la [roadmap per EF Core](xref:core/what-is-new/roadmap).
+# <a name="whats-new-in-ef-core"></a>Novità di EF Core
 
 ## <a name="recent-releases"></a>Versioni recenti
 
-- EF Core 3.0 è la versione stabile più recente e offre un set di [nuove funzionalità](xref:core/what-is-new/ef-core-3.0/features) nonché [modifiche di rilievo](xref:core/what-is-new/ef-core-3.0/breaking-changes) di cui è necessario essere a conoscenza per l'aggiornamento.
-- [EF Core 2.2 ](xref:core/what-is-new/ef-core-2.2)
-- [EF Core 2.1 (LTS più recente)](xref:core/what-is-new/ef-core-2.1)
+- **EF Core 3.0** (ultima versione stabile) 
+  - [Nuove funzionalità](xref:core/what-is-new/ef-core-3.0/index) 
+  - [Modifiche di rilievo](xref:core/what-is-new/ef-core-3.0/breaking-changes) di cui tenere conto durante l'aggiornamento
+- [EF Core 2.2](xref:core/what-is-new/ef-core-2.2)
+- [EF Core 2.1](xref:core/what-is-new/ef-core-2.1) (ultima versione con supporto a lungo termine)
 
-## <a name="past-releases"></a>Versioni precedenti
+## <a name="product-roadmap"></a>Roadmap per il prodotto
 
-- [EF Core 2.0](xref:core/what-is-new/ef-core-2.0)
-- [EF Core 1.1](xref:core/what-is-new/ef-core-1.1)
-- [EF Core 1.0](xref:core/what-is-new/ef-core-1.0)
+> [!IMPORTANT]
+> Si tenga presente che i set di funzionalità e le pianificazioni delle versioni future sono sempre soggette a modifiche e che questa pagina, nonostante l'impegno profuso per mantenerla aggiornata, potrebbe non riflettere sempre i piani più recenti.
+
+### <a name="future-releases"></a>Versioni future
+
+- **EF Core 3.1**  
+  - In fase di sviluppo attivo
+  - Conterrà [miglioramenti minori di prestazioni, qualità e stabilità](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3A3.1.0+sort%3Areactions-desc)
+  - Pianificata come versione con supporto a lungo termine (LTS)
+  - Attualmente pianificata per dicembre 2019
+- **EF Core "vNext"**   
+  - Prossima versione principale di EF Core che verrà resa disponibile insieme a .NET 5
+  - La pianificazione di questa versione non è ancora iniziata e non sono state annunciate funzionalità.  
+
+### <a name="schedule"></a>Pianificazione
+
+La pianificazione della versione per EF Core è sincronizzata con la [pianificazione della versione di .NET Core](https://github.com/dotnet/core/blob/master/roadmap.md).
+
+### <a name="backlog"></a>Backlog
+
+Il [Backlog Milestone](https://github.com/aspnet/EntityFrameworkCore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog+sort%3Areactions-%2B1-desc) (attività cardine di backlog) nella pagina di registrazione dei problemi contiene i problemi su cui Microsoft prevede di lavorare prima o poi oppure che potrebbero essere affrontati da qualcuno nella community.
+I clienti sono invitati a inviare commenti e voti per questi problemi.
+I collaboratori che hanno intenzione di lavorare a questi problemi sono invitati ad avviare prima di tutto una discussione in merito a come approcciarli.
+
+Non esiste mai la garanzia che Microsoft lavori a una determinata funzionalità in una versione specifica di EF Core.
+Come in tutti i progetti software, le priorità, le pianificazioni dei rilasci e le risorse disponibili possono cambiare in qualsiasi momento.
+Se Microsoft intende risolvere un problema in un intervallo di tempo specifico, tuttavia, questo verrà assegnato a un'attività cardine di rilascio invece che all'attività cardine di backlog.
+I problemi vengono regolarmente spostati tra le attività cardine di backlog e di rilascio nell'ambito del [processo di pianificazione delle versioni](#release-planning-process).
+
+È probabile che un problema venga chiuso se è previsto che non venga mai affrontato.
+Ma è possibile che un problema precedentemente chiuso venga ripreso in considerazione se si ricevono nuove informazioni al riguardo.
+
+### <a name="release-planning-process"></a>Processo di pianificazione delle versioni
+
+Viene chiesto spesso in che modo vengano scelte le funzionalità da inserire in una versione specifica.
+È certo che il backlog non viene convertito automaticamente in piani di rilascio.
+La presenza di una funzionalità in EF6, poi, non significa che tale funzionalità verrà necessariamente implementata in EF Core.
+
+È difficile descrivere in dettaglio l'intero processo seguito per pianificare un rilascio.
+Gran parte del processo implica la discussione delle funzionalità, opportunità e priorità specifiche e il processo stesso si evolve anche per ogni rilascio.
+È tuttavia possibile riepilogare le domande più frequenti a cui si tenta di rispondere quando si deve decidere su cosa lavorare:
+
+1. **Quanti sviluppatori si pensa che useranno la funzionalità e quanto questa migliorerà le loro applicazioni o la loro esperienza?** Per rispondere a questa domanda vengono raccolti commenti e suggerimenti provenienti da numerose fonti, una delle quali sono i commenti e i voti per i problemi.
+
+2. **Quali sono le soluzioni alternative utilizzabili finché questa funzionalità non viene implementata?** Molti sviluppatori, ad esempio, possono eseguire il mapping di una tabella di join per ovviare alla mancanza del supporto molti-a-molti nativo. Ovviamente, non tutti gli sviluppatori vogliono farlo, ma molti possono e ciò è un fattore di cui tenere conto per la decisione.
+
+3. **L'implementazione di questa funzionalità consente un'evoluzione dell'architettura di EF Core tale da facilitare l'implementazione di altre funzionalità?** Vengono tendenzialmente favorite le funzionalità che rappresentano la base per altre funzionalità. Ad esempio, le entità contenitore di proprietà possono essere utili per procedere verso l'implementazione del supporto molti-a-molti e i costruttori di entità hanno reso possibile il supporto del caricamento lazy.
+
+4. **La funzionalità rappresenta un punto di estensibilità?** Vengono tendenzialmente favoriti i punti di estendibilità rispetto alle normali funzionalità, perché consentono agli sviluppatori di collegare i propri comportamenti e di compensare eventuali funzionalità mancanti.
+
+5. **Qual è la sinergia della funzionalità quando viene usata in combinazione con altri prodotti?** Vengono favorite le funzionalità che consentono l'uso o che migliorano significativamente l'esperienza d'uso di EF Core con altri prodotti, ad esempio .NET Core, la versione più recente di Visual Studio, Microsoft Azure e così via.
+
+6. **Quali sono le competenze delle persone disponibili a lavorare su una funzionalità e come è possibile sfruttare al meglio queste risorse?** Ogni membro del team EF e i collaboratori della community hanno diversi livelli di esperienza in aree diverse ed è quindi necessario pianificare di conseguenza. Anche se si volesse usufruire della collaborazione di tutti su una funzionalità specifica, ad esempio le traslazioni GroupBy o il supporto molti-a-molti, questo non sarebbe pratico.
+
+Come accennato in precedenza, il processo si evolve a ogni rilascio.
+In futuro si tenterà di aggiungere maggiori opportunità per i membri della community per fornire input per i piani di rilascio.
+Ad esempio, Microsoft vorrebbe renderne più semplice la revisione delle bozze di progettazione delle funzionalità e del piano di rilascio stesso.

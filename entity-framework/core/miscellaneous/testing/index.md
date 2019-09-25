@@ -1,17 +1,17 @@
 ---
-title: Testare i componenti tramite Entity Framework - EF Core
+title: Testare i componenti usando EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 1603be0c-69bc-4dd9-9a08-3d0129cdc6c1
 uid: core/miscellaneous/testing/index
-ms.openlocfilehash: fc751b9053c337e4911f4016b65b370d1276046b
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: a946387718546f14e1485b4093e6c8046188f62d
+ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997837"
+ms.lasthandoff: 09/23/2019
+ms.locfileid: "71197500"
 ---
-# <a name="testing"></a>Test
+# <a name="testing-components-using-ef-core"></a>Test dei componenti usando EF Core
 
 È consigliabile testare i componenti tramite un elemento che si avvicina alla connessione al database reale senza il sovraccarico delle operazioni I/O del database effettivo.
 
