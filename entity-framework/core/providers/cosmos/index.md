@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 09/12/2019
 ms.assetid: 28264681-4486-4891-888c-be5e4ade24f1
 uid: core/providers/cosmos/index
-ms.openlocfilehash: c753bb71089c91cbb26b970cddd118645fb18d56
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 683436aa485d2fef9aa8bf6c6ff02b00dfeb28cf
+ms.sourcegitcommit: 2caec1e63f2ce1d9439ef6193df5a77da2fedd0f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71150728"
+ms.lasthandoff: 09/26/2019
+ms.locfileid: "71317568"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>Provider di Azure Cosmos DB per EF Core
 
@@ -34,7 +34,9 @@ Install-Package Microsoft.EntityFrameworkCore.Cosmos
 > [!TIP]  
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Cosmos) di questo articolo in GitHub.
 
-Come per gli altri provider, il primo passaggio consiste nel chiamare `UseCosmos`: [!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
+Come per gli altri provider, il primo passaggio consiste nel chiamare `UseCosmos`:
+
+[!code-csharp[Configuration](../../../../samples/core/Cosmos/ModelBuilding/OrderContext.cs?name=Configuration)]
 
 > [!WARNING]
 > L'endpoint e la chiave sono hardcoded qui per semplicità, ma in un'app di produzione devono essere [archiviati in modo sicuro](https://docs.microsoft.com/aspnet/core/security/app-secrets#secret-manager)
@@ -45,7 +47,9 @@ In questo esempio `Order` è un'entità semplice con un riferimento al [tipo i p
 
 [!code-csharp[StreetAddress](../../../../samples/core/Cosmos/ModelBuilding/StreetAddress.cs?name=StreetAddress)]
 
-Per il salvataggio e l'esecuzione di query sui dati si segue il modello EF normale: [!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
+Per il salvataggio e l'esecuzione di query sui dati si segue il modello EF normale:
+
+[!code-csharp[HelloCosmos](../../../../samples/core/Cosmos/ModelBuilding/Sample.cs?name=HelloCosmos)]
 
 > [!IMPORTANT]
 > La chiamata di `EnsureCreated` è necessaria per creare le raccolte richieste e inserire i [dati di inizializzazione](../../modeling/data-seeding.md) se presenti nel modello. Tuttavia, `EnsureCreated` deve essere chiamato solo durante la distribuzione, e non durante il normale funzionamento, perché potrebbe causare problemi di prestazioni.
