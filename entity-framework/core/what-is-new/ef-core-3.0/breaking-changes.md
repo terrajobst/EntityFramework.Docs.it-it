@@ -4,28 +4,27 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: f7c241159c689d4648b2778b53e50c22f580deb0
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 0dd4c5c4aa1a5d241fb48abf1372a678d0f7a7a3
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197927"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813625"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
 Le modifiche che si prevede abbiano impatto solo sui provider di database sono documentate nelle [modifiche che influiscono sul provider](xref:core/providers/provider-log).
-Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentate qui.
 
 ## <a name="summary"></a>Riepilogo
 
 | **Modifica di rilievo**                                                                                               | **Impatto** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
-| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | High      |
-| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
-| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
-| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
-| [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
+| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | Alto       |
+| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | Alto      |
+| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | Alto      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Alto      |
+| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | Alto      |
+| [I tipi di query vengono consolidati con tipi di entità](#qt) | Alto      |
 | [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
 | [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
 | [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Medio      |
@@ -76,8 +75,6 @@ Le interruzioni da un'anteprima 3,0 a un'altra anteprima 3,0 non sono documentat
 [Problema n. 14935](https://github.com/aspnet/EntityFrameworkCore/issues/14935)
 [Vedere anche il problema n. 12795](https://github.com/aspnet/EntityFrameworkCore/issues/12795)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti alla versione 3.0, quando EF Core non era in grado di convertire un'espressione inclusa in una query in SQL o in un parametro, l'espressione veniva automaticamente valutata nel client.
@@ -107,8 +104,6 @@ Se una query non può essere convertita completamente, riscrivere la query in un
 
 [Problema n. 15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
-
 **Comportamento precedente**
 
 Prima della versione 3.0, EF Core usava come destinazione .NET Standard 2.0 e poteva essere eseguito in tutte le piattaforme che supportano tale standard, incluso .NET Framework.
@@ -129,8 +124,6 @@ Valutare il passaggio a una piattaforma .NET moderna. Se non è possibile, conti
 ### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core
 
 [Annunci problema n. 325](https://github.com/aspnet/Announcements/issues/325)
-
-Questa modifica è stata introdotta in ASP.NET Core 3.0 anteprima 1. 
 
 **Comportamento precedente**
 
@@ -155,8 +148,6 @@ Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione
 ### <a name="the-ef-core-command-line-tool-dotnet-ef-is-no-longer-part-of-the-net-core-sdk"></a>Lo strumento della riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK
 
 [Problema n. 14016](https://github.com/aspnet/EntityFrameworkCore/issues/14016)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4 e nella versione corrispondente di .NET Core SDK.
 
 **Comportamento precedente**
 
@@ -185,8 +176,6 @@ Per essere in grado di gestire le migrazioni o eseguire lo scaffolding di `DbCon
 
 [Problema n. 10996](https://github.com/aspnet/EntityFrameworkCore/issues/10996)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0, erano disponibili overload per questi nomi di metodo per supportare l'uso con una stringa normale o una stringa che deve essere interpolata in SQL e parametri.
@@ -194,7 +183,7 @@ Prima di EF Core 3.0, erano disponibili overload per questi nomi di metodo per s
 **Nuovo comportamento**
 
 A partire da EF Core 3.0, usare `FromSqlRaw`, `ExecuteSqlRaw` e `ExecuteSqlRawAsync` per creare una query con parametri in cui i parametri vengono passati separatamente dalla stringa di query.
-Ad esempio:
+Esempio:
 
 ```C#
 context.Products.FromSqlRaw(
@@ -203,7 +192,7 @@ context.Products.FromSqlRaw(
 ```
 
 Usare `FromSqlInterpolated`, `ExecuteSqlInterpolated`, e `ExecuteSqlInterpolatedAsync` per creare una query con parametri in cui i parametri vengono passati come parte di una stringa di query interpolata.
-Ad esempio:
+Esempio:
 
 ```C#
 context.Products.FromSqlInterpolated(
@@ -227,8 +216,6 @@ Passare all'uso dei nuovi nomi di metodo.
 
 [Problema n. 15704](https://github.com/aspnet/EntityFrameworkCore/issues/15704)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0, il metodo `FromSql` poteva essere specificato in un punto qualsiasi nella query.
@@ -249,8 +236,6 @@ Le chiamate di `FromSql` devono essere spostate in modo da comparire direttament
 ### <a name="no-tracking-queries-no-longer-perform-identity-resolution"></a>Le query senza rilevamento delle modifiche non eseguono più la risoluzione delle identità
 
 [Problema n. 13518](https://github.com/aspnet/EntityFrameworkCore/issues/13518)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
 
 **Comportamento precedente**
 
@@ -279,8 +264,6 @@ Se la risoluzione delle identità è necessaria, usare una query con rilevamento
 
 [Problema n. 14523](https://github.com/aspnet/EntityFrameworkCore/issues/14523)
 
-Questa modifica è stata annullata in EF Core 3.0 anteprima 7.
-
 Questa modifica è stata annullata perché la nuova configurazione in EF Core 3.0 consente all'applicazione di specificare il livello di log per qualsiasi evento. Ad esempio, per impostare la registrazione di SQL sul livello `Debug`, configurare il livello in modo esplicito in `OnConfiguring` o `AddDbContext`:
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -294,8 +277,6 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 ### <a name="temporary-key-values-are-no-longer-set-onto-entity-instances"></a>I valori di chiave temporanei non sono più impostati nelle istanze di entità
 
 [Problema n. 12378](https://github.com/aspnet/EntityFrameworkCore/issues/12378)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 2.
 
 **Comportamento precedente**
 
@@ -324,8 +305,6 @@ Ad esempio, `context.Entry(blog).Property(e => e.Id).CurrentValue` restituisce i
 ### <a name="detectchanges-honors-store-generated-key-values"></a>DetectChanges rispetta i valori di chiave generati dall'archivio
 
 [Problema n. 14616](https://github.com/aspnet/EntityFrameworkCore/issues/14616)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
@@ -365,8 +344,6 @@ public string Id { get; set; }
 
 [Problema n. 10114](https://github.com/aspnet/EntityFrameworkCore/issues/10114)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti alla versione 3.0, EF Core applicava azioni a catena (eliminazione delle entità dipendenti quando veniva eliminata un'entità di sicurezza obbligatoria o veniva recisa la relazione con un'entità di sicurezza obbligatoria) solo dopo la chiamata a SaveChanges.
@@ -383,7 +360,7 @@ Questa modifica è stata apportata per migliorare l'esperienza di associazione d
 **Mitigazioni**
 
 Il comportamento precedente può essere ripristinato tramite le impostazioni in `context.ChangedTracker`.
-Ad esempio:
+Esempio:
 
 ```C#
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
@@ -393,8 +370,6 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ### <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>Semantica più chiara per DeleteBehavior.Restrict
 
 [Problema n. 12661](https://github.com/aspnet/EntityFrameworkCore/issues/12661)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 5.
 
 **Comportamento precedente**
 
@@ -416,8 +391,6 @@ Il comportamento precedente può essere ripristinato tramite `DeleteBehavior.Cli
 ### <a name="query-types-are-consolidated-with-entity-types"></a>I tipi di query vengono consolidati con tipi di entità
 
 [Problema n. 14194](https://github.com/aspnet/EntityFrameworkCore/issues/14194)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
@@ -450,8 +423,6 @@ Non ne viene eseguita la configurazione per convenzione per evitare una configur
 [Problema n. 9148](https://github.com/aspnet/EntityFrameworkCore/issues/9148)
 [Problema n. 14153](https://github.com/aspnet/EntityFrameworkCore/issues/14153)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti a EF Core 3.0 la configurazione della relazione di proprietà veniva eseguita direttamente dopo la chiamata a `OwnsOne` o `OwnsMany`. 
@@ -459,7 +430,7 @@ Nelle versioni precedenti a EF Core 3.0 la configurazione della relazione di pro
 **Nuovo comportamento**
 
 A partire da EF Core 3.0, è disponibile l'API Fluent per configurare una proprietà di navigazione per il proprietario usando `WithOwner()`.
-Ad esempio:
+Esempio:
 
 ```C#
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
@@ -467,7 +438,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 
 La configurazione correlata alla relazione tra proprietario e elemento di proprietà deve essere ora concatenata dopo `WithOwner()` in modo analogo a come vengono configurate altre relazioni.
 La configurazione per il tipo di proprietà viene comunque concatenata dopo `OwnsOne()/OwnsMany()`.
-Ad esempio:
+Esempio:
 
 ```C#
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
@@ -508,8 +479,6 @@ Modificare la configurazione delle relazioni dei tipi di proprietà per usare la
 
 [Problema n. 9005](https://github.com/aspnet/EntityFrameworkCore/issues/9005)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Si consideri il modello seguente:
@@ -544,8 +513,6 @@ Se il modello include una tabella condivisa dipendente con tutte le colonne faco
 ### <a name="all-entities-sharing-a-table-with-a-concurrency-token-column-have-to-map-it-to-a-property"></a>Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà
 
 [Problema n. 14154](https://github.com/aspnet/EntityFrameworkCore/issues/14154)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -598,8 +565,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 ### <a name="inherited-properties-from-unmapped-types-are-now-mapped-to-a-single-column-for-all-derived-types"></a>Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati
 
 [Problema n. 13998](https://github.com/aspnet/EntityFrameworkCore/issues/13998)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -664,8 +629,6 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 [Problema n. 13274](https://github.com/aspnet/EntityFrameworkCore/issues/13274)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Si consideri il modello seguente:
@@ -689,7 +652,7 @@ Tuttavia, se `Order` è un tipo di proprietà, `CustomerId` sarebbe la chiave pr
 
 A partire da 3.0, EF Core non tenta di usare le proprietà per le chiavi esterne per convenzione se hanno lo stesso nome della proprietà dell'entità di sicurezza.
 Viene ancora eseguita la corrispondenza tra i criteri del nome del tipo dell'entità di sicurezza concatenato al nome della proprietà dell'entità di sicurezza e il nome di navigazione concatenato al nome della proprietà dell'entità di sicurezza.
-Ad esempio:
+Esempio:
 
 ```C#
 public class Customer
@@ -733,8 +696,6 @@ Se la proprietà è stata progettata per essere la chiave esterna e di conseguen
 ### <a name="database-connection-is-now-closed-if-not-used-anymore-before-the-transactionscope-has-been-completed"></a>La connessione al database viene ora chiusa se non viene più usata prima del completamento di TransactionScope
 
 [Problema n. 14218](https://github.com/aspnet/EntityFrameworkCore/issues/14218)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -788,8 +749,6 @@ using (new TransactionScope())
 
 [Problema n. 6872](https://github.com/aspnet/EntityFrameworkCore/issues/6872)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti a EF Core 3.0 veniva usato un unico generatore di valori condiviso per tutte le proprietà di chiavi di tipo intero in memoria.
@@ -812,8 +771,6 @@ Ciò può interrompere un'applicazione che si basa sull'impostazione di valori d
 
 [Problema n. 12430](https://github.com/aspnet/EntityFrameworkCore/issues/12430)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 2.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti alla versione 3.0, anche se il campo sottostante di una proprietà era noto, per impostazione predefinita EF Core eseguiva la lettura e la scrittura del valore della proprietà usando i metodi getter e setter della proprietà.
@@ -831,7 +788,7 @@ Questa modifica è stata apportata per impedire a EF Core di attivare per errore
 **Mitigazioni**
 
 È possibile ripristinare il comportamento delle versioni precedenti alla versione 3.0 tramite la configurazione della modalità di accesso delle proprietà in `ModelBuilder`.
-Ad esempio:
+Esempio:
 
 ```C#
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
@@ -840,8 +797,6 @@ modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruct
 ### <a name="throw-if-multiple-compatible-backing-fields-are-found"></a>Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili
 
 [Problema n. 12523](https://github.com/aspnet/EntityFrameworkCore/issues/12523)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -869,8 +824,6 @@ modelBuilder
 ```
 
 ### <a name="field-only-property-names-should-match-the-field-name"></a>I nomi delle proprietà solo campo devono corrispondere al nome di campo
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -920,8 +873,6 @@ modelBuilder
 
 [Problema n. 14756](https://github.com/aspnet/EntityFrameworkCore/issues/14756)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0, la chiamata di `AddDbContext` oppure `AddDbContextPool` comporta anche la registrazione dei servizi di registrazione e memorizzazione nella cache con inserimento delle dipendenze tramite chiamate a [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) e [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
@@ -943,8 +894,6 @@ Se l'applicazione necessita di questi servizi, registrarli in modo esplicito con
 ### <a name="dbcontextentry-now-performs-a-local-detectchanges"></a>DbContext.Entry esegue ora un DetectChanges locale
 
 [Problema n. 13552](https://github.com/aspnet/EntityFrameworkCore/issues/13552)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
@@ -971,8 +920,6 @@ Chiamare `ChgangeTracker.DetectChanges()` in modo esplicito prima di chiamare `E
 ### <a name="string-and-byte-array-keys-are-not-client-generated-by-default"></a>Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita
 
 [Problema n. 14617](https://github.com/aspnet/EntityFrameworkCore/issues/14617)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1012,8 +959,6 @@ public string Id { get; set; }
 
 [Problema n. 14698](https://github.com/aspnet/EntityFrameworkCore/issues/14698)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti a EF Core 3.0 `ILoggerFactory` veniva registrato come servizio singleton.
@@ -1037,8 +982,6 @@ Se si verificano situazioni simili, inviare una segnalazione nello [strumento di
 ### <a name="lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded"></a>I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente
 
 [Problema n. 12780](https://github.com/aspnet/EntityFrameworkCore/issues/12780)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1065,8 +1008,6 @@ Aggiornare il codice dell'applicazione per fare in modo che non venga tentato il
 
 [Problema n. 10236](https://github.com/aspnet/EntityFrameworkCore/issues/10236)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti a EF Core 3.0 veniva registrato un avviso per le applicazioni che creavano un numero eccessivo di provider di servizi interni.
@@ -1083,7 +1024,7 @@ Questa modifica è stata apportata per gestire meglio il codice dell'applicazion
 
 L'azione più appropriata quando si verifica questo errore consiste nell'individuare la causa radice e nell'interrompere la creazione di numerosi provider di servizi interni.
 È possibile tuttavia convertire nuovamente l'errore in avviso o ignorarlo tramite una configurazione in `DbContextOptionsBuilder`.
-Ad esempio:
+Esempio:
 
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -1099,12 +1040,10 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 [Problema n. 9171](https://github.com/aspnet/EntityFrameworkCore/issues/9171)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0, il codice che chiama `HasOne` o `HasMany` con una singola stringa era interpretato in modo poco chiaro.
-Ad esempio:
+Esempio:
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
@@ -1126,7 +1065,7 @@ Il comportamento precedente era molto poco chiaro, soprattutto durante la lettur
 Questa modifica causerà problemi solo nelle applicazioni che configurano relazioni in modo esplicito usando stringhe per i nomi dei tipi e senza specificare in modo esplicito la proprietà di navigazione.
 Non è uno scenario comune.
 Il comportamento precedente può essere ottenuto passando esplicitamente `null` per il nome della proprietà di navigazione.
-Ad esempio:
+Esempio:
 
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
@@ -1137,8 +1076,6 @@ modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
 ### <a name="the-return-type-for-several-async-methods-has-been-changed-from-task-to-valuetask"></a>Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask
 
 [Problema n. 15184](https://github.com/aspnet/EntityFrameworkCore/issues/15184)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1170,8 +1107,6 @@ Si noti che in questo modo si annulla la riduzione delle allocazioni consentita 
 
 [Problema n. 9913](https://github.com/aspnet/EntityFrameworkCore/issues/9913)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 2.
-
 **Comportamento precedente**
 
 Il nome di annotazione delle annotazioni di mapping del tipo era "Relational:TypeMapping".
@@ -1192,8 +1127,6 @@ L'azione più appropriata per risolvere il problema consiste nell'usare la super
 ### <a name="totable-on-a-derived-type-throws-an-exception"></a>ToTable in un tipo derivato genera un'eccezione 
 
 [Problema n. 11811](https://github.com/aspnet/EntityFrameworkCore/issues/11811)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
@@ -1216,8 +1149,6 @@ Rimuovere qualsiasi tentativo di mapping di tipi derivati in altre tabelle.
 
 [Problema n. 12366](https://github.com/aspnet/EntityFrameworkCore/issues/12366)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
-
 **Comportamento precedente**
 
 Nelle versioni precedenti a EF Core 3.0, `ForSqlServerHasIndex().ForSqlServerInclude()` offriva un metodo per configurare le colonne usate con `INCLUDE`.
@@ -1238,8 +1169,6 @@ Usare la nuova API, come illustrato in precedenza.
 ### <a name="metadata-api-changes"></a>Modifiche dell'API dei metadati
 
 [Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Nuovo comportamento**
 
@@ -1265,8 +1194,6 @@ Usare i nuovi metodi di estensione.
 
 [Problema n. 214](https://github.com/aspnet/EntityFrameworkCore/issues/214)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
-
 **Nuovo comportamento**
 
 I metodi di estensione specifici del provider verranno resi flat:
@@ -1288,8 +1215,6 @@ Usare i nuovi metodi di estensione.
 ### <a name="ef-core-no-longer-sends-pragma-for-sqlite-fk-enforcement"></a>EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite
 
 [Problema n. 12151](https://github.com/aspnet/EntityFrameworkCore/issues/12151)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 3.
 
 **Comportamento precedente**
 
@@ -1333,8 +1258,6 @@ Per usare la versione di SQLite nativa in iOS, configurare `Microsoft.Data.Sqlit
 ### <a name="guid-values-are-now-stored-as-text-on-sqlite"></a>I valori Guid vengono ora archiviati come TEXT in SQLite
 
 [Problema n. 15078](https://github.com/aspnet/EntityFrameworkCore/issues/15078)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
 
 **Comportamento precedente**
 
@@ -1386,8 +1309,6 @@ Microsoft.Data.Sqlite rimane in grado di leggere i valori Guid sia da colonne BL
 
 [Problema n. 15020](https://github.com/aspnet/EntityFrameworkCore/issues/15020)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 I valori char in precedenza venivano archiviati come valori interi in SQLite. Un valore char di *A* veniva ad esempio archiviato come valore intero 65.
@@ -1429,8 +1350,6 @@ Microsoft.Data.Sqlite rimane comunque in grado di leggere i valori di caratteri 
 
 [Problema n. 12978](https://github.com/aspnet/EntityFrameworkCore/issues/12978)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Gli ID di migrazione venivano inavvertitamente generati usando il calendario delle impostazioni cultura correnti.
@@ -1470,8 +1389,6 @@ SET MigrationId = CONCAT(LEFT(MigrationId, 4)  - 543, SUBSTRING(MigrationId, 4, 
 
 [Problema n. 16400](https://github.com/aspnet/EntityFrameworkCore/issues/16400)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0 si poteva usare `UseRowNumberForPaging` per generare codice SQL per la suddivisione in pagine compatibile con SQL Server 2008.
@@ -1493,8 +1410,6 @@ Questa modifica è stata apportata perché [SQL Server 2008 non è più un prodo
 ### <a name="extension-infometadata-has-been-removed-from-idbcontextoptionsextension"></a>Info/metadati dell'estensione rimossi da IDbContextOptionsExtension
 
 [Problema n. 16119](https://github.com/aspnet/EntityFrameworkCore/issues/16119)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
 
 **Comportamento precedente**
 
@@ -1520,8 +1435,6 @@ Sono disponibili esempi nelle numerose implementazioni di `IDbContextOptionsExte
 
 [Problema n. 10985](https://github.com/aspnet/EntityFrameworkCore/issues/10985)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Modifica**
 
 `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperator` è stato rinominato in `RelationalEventId.LogQueryPossibleExceptionWithAggregateOperatorWarning`.
@@ -1540,11 +1453,9 @@ Usare il nuovo nome. (Si noti che il numero di ID evento non è stato modificato
 
 [Problema n. 10730](https://github.com/aspnet/EntityFrameworkCore/issues/10730)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
-Prima di EF Core 3.0, si faceva riferimento ai nomi di vincolo di chiave esterna semplicemente con "Name". Ad esempio:
+Prima di EF Core 3.0, si faceva riferimento ai nomi di vincolo di chiave esterna semplicemente con "Name". Esempio:
 
 ```C#
 var constraintName = myForeignKey.Name;
@@ -1552,7 +1463,7 @@ var constraintName = myForeignKey.Name;
 
 **Nuovo comportamento**
 
-A partire da EF Core 3.0, si fa ora riferimento ai nomi di vincolo di chiave esterna con "ConstraintName". Ad esempio:
+A partire da EF Core 3.0, si fa ora riferimento ai nomi di vincolo di chiave esterna con "ConstraintName". Esempio:
 
 ```C#
 var constraintName = myForeignKey.ConstraintName;
@@ -1571,8 +1482,6 @@ Usare il nuovo nome.
 ### <a name="irelationaldatabasecreatorhastableshastablesasync-have-been-made-public"></a>IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici
 
 [Problema n. 15997](https://github.com/aspnet/EntityFrameworkCore/issues/15997)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
 
 **Comportamento precedente**
 
@@ -1596,8 +1505,6 @@ Modificare l'accessibilità di eventuali override.
 
 [Problema n. 11506](https://github.com/aspnet/EntityFrameworkCore/issues/11506)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 4.
-
 **Comportamento precedente**
 
 Prima di EF Core 3.0, Microsoft.EntityFrameworkCore.Design era un pacchetto NuGet normale ed era possibile fare riferimento al relativo assembly dai progetti dipendenti.
@@ -1615,7 +1522,7 @@ Questo pacchetto è destinato solo all'uso in fase di progettazione. Le applicaz
 Se è necessario fare riferimento a questo pacchetto per eseguire l'override del comportamento in fase di progettazione di EF Core, è possibile aggiornare i metadati dell'elemento PackageReference nel progetto. In presenza di riferimenti transitivi al pacchetto tramite Microsoft.EntityFrameworkCore.Tools, sarà necessario aggiungere un PackageReference esplicito al pacchetto per modificare i relativi metadati.
 
 ``` xml
-<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0-preview4.19216.3">
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
   <PrivateAssets>all</PrivateAssets>
   <!-- Remove IncludeAssets to allow compiling against the assembly -->
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
@@ -1627,8 +1534,6 @@ Se è necessario fare riferimento a questo pacchetto per eseguire l'override del
 ### <a name="sqlitepclraw-updated-to-version-200"></a>Aggiornamento di SQLitePCL.raw alla versione 2.0.0
 
 [Problema n. 14824](https://github.com/aspnet/EntityFrameworkCore/issues/14824)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
 
 **Comportamento precedente**
 
@@ -1652,8 +1557,6 @@ SQLitePCL.raw versione 2.0.0 include alcune modifiche che causano un'interruzion
 
 [Problema n. 14825](https://github.com/aspnet/EntityFrameworkCore/issues/14825)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
-
 **Comportamento precedente**
 
 I pacchetti spaziali dipendevano in precedenza dalla versione 1.15.1 di NetTopologySuite.
@@ -1676,11 +1579,9 @@ NetTopologySuite versione 2.0.0 include alcune modifiche che causano un'interruz
 
 [Problema n. 13573](https://github.com/aspnet/EntityFrameworkCore/issues/13573)
 
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 6.
-
 **Comportamento precedente**
 
-Un tipo di entità con più proprietà di navigazione unidirezionale che fanno riferimento a se stesse e più chiavi esterne corrispondenti è stato erroneamente configurato come relazione singola. Ad esempio:
+Un tipo di entità con più proprietà di navigazione unidirezionale che fanno riferimento a se stesse e più chiavi esterne corrispondenti è stato erroneamente configurato come relazione singola. Esempio:
 
 ```C#
 public class User 
@@ -1703,7 +1604,7 @@ Il modello risultante era ambiguo e sarà probabilmente errato in questo caso.
 
 **Mitigazioni**
 
-Usare la configurazione completa della relazione. Ad esempio:
+Usare la configurazione completa della relazione. Esempio:
 
 ```C#
 modelBuilder
@@ -1721,8 +1622,6 @@ modelBuilder
 ### <a name="dbfunctionschema-being-null-or-empty-string-configures-it-to-be-in-models-default-schema"></a>DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello
 
 [Rilevamento del problema #12757](https://github.com/aspnet/EntityFrameworkCore/issues/12757)
-
-Questa modifica è stata introdotta in EF Core 3.0 anteprima 7.
 
 **Comportamento precedente**
 

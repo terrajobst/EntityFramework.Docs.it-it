@@ -1,17 +1,17 @@
 ---
-title: Indici-EF Core
+title: Indici (database relazionale)-EF Core
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 4581e7ba-5e7f-452c-9937-0aaf790ba10a
 uid: core/modeling/relational/indexes
-ms.openlocfilehash: 7dcf27dedbde45302a462a4c41a811b9868e40bb
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 7bb74d0bfa6090b597eb988a46f00494e25f233e
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197020"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813637"
 ---
-# <a name="indexes"></a>Indexes
+# <a name="indexes-relational-database"></a>Indici (database relazionale)
 
 > [!NOTE]  
 > La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).

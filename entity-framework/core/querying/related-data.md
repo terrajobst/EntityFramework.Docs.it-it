@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 4bf9598f9b7e74c2835d3926215de9a7ef4e6f96
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 4e4ba21cd099daab4db8a8f358800fde26980c14
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921800"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813585"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
 
@@ -30,7 +30,6 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 > [!TIP]  
 > Entity Framework Core correggerà automaticamente le proprietà di navigazione per qualsiasi altra entità caricata in precedenza nell'istanza di contesto. Anche se i dati per una proprietà di navigazione non vengono inclusi in modo esplicito, la proprietà può comunque essere popolata se alcune o tutte le entità correlate sono state caricate in precedenza.
 
-
 È possibile includere dati correlati da più relazioni in una singola query.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleIncludes)]
@@ -40,9 +39,6 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 È possibile eseguire il drill-down delle relazioni per includere più livelli di dati correlati tramite il metodo `ThenInclude`. L'esempio seguente carica tutti i blog, i post correlati e l'autore di ogni post.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#SingleThenInclude)]
-
-> [!NOTE]  
-> Le versioni correnti di Visual Studio offrono opzioni di completamento del codice non corrette, a causa delle quali espressioni corrette possono essere contrassegnate con errori di sintassi quando si usa il metodo `ThenInclude` dopo una proprietà di navigazione della raccolta. Si tratta di un sintomo di un bug di IntelliSense registrato in https://github.com/dotnet/roslyn/issues/8237. È possibile ignorare questi errori di sintassi spuri, purché il codice sia corretto e possa essere compilato correttamente. 
 
 È possibile concatenare più chiamate a `ThenInclude` per continuare a includere ulteriori livelli di dati correlati.
 
@@ -55,6 +51,9 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 È possibile che si vogliano includere più entità correlate per una delle entità incluse. Quando ad esempio si eseguono query per `Blogs`, è necessario includere `Posts` e poi si può anche decidere di includere `Author` e `Tags` per `Posts`. A tale scopo, occorre specificare ogni percorso di inclusione iniziando dalla radice. Ad esempio, `Blog -> Posts -> Author` e `Blog -> Posts -> Tags`. Questo non significa che si otterranno join ridondanti. Nella maggior parte dei casi EF consoliderà i join durante la generazione di SQL.
 
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
+
+> [!CAUTION]
+> Dalla versione 3.0.0, ogni `Include` provocherà l'aggiunta di un JOIN aggiuntivo alle query SQL prodotte dai provider relazionali, mentre le versioni precedenti generavano query SQL aggiuntive. Questo può modificare in modo significativo le prestazioni delle query, per un miglioramento o peggio. In particolare, potrebbe essere necessario suddividere le query LINQ con un numero estremamente elevato di operatori `Include` in più query LINQ separate per evitare il problema di esplosione cartesiana.
 
 ### <a name="include-on-derived-types"></a>Inclusione per i tipi derivati
 
@@ -111,22 +110,7 @@ Il contenuto della navigazione `School` di tutte le entità People che sono Stud
   context.People.Include("School").ToList()
   ```
 
-### <a name="ignored-includes"></a>Inclusioni ignorate
-
-Se si modifica la query in modo che non restituisca più istanze del tipo di entità con cui è iniziata la query, gli operatori di inclusione vengono ignorati.
-
-Nell'esempio seguente gli operatori di inclusione sono basati su `Blog`, tuttavia, l'operatore `Select` viene usato per modificare la query per restituire un tipo anonimo. In questo caso, gli operatori di inclusione non hanno effetto.
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#IgnoredInclude)]
-
-Per impostazione predefinita, EF Core registrerà un avviso quando gli operatori di inclusione vengono ignorati. Vedere [Registrazione](../miscellaneous/logging.md) per altre informazioni sulla visualizzazione dell'output di registrazione. È possibile modificare il comportamento quando un operatore di inclusione viene ignorato per generare un'eccezione o non eseguire alcuna operazione. Questa operazione viene eseguita quando si configurano le opzioni per il contesto, in genere in `DbContext.OnConfiguring` oppure in `Startup.cs` se si usa ASP.NET Core.
-
-[!code-csharp[Main](../../../samples/core/Querying/RelatedData/ThrowOnIgnoredInclude/BloggingContext.cs#OnConfiguring)]
-
 ## <a name="explicit-loading"></a>Caricamento esplicito
-
-> [!NOTE]  
-> Questa funzionalità è stata introdotta in EF Core 1.1.
 
 È possibile caricare in modo esplicito una proprietà di navigazione tramite l'API `DbContext.Entry(...)`.
 
@@ -148,10 +132,8 @@ Ciò consente di eseguire operazioni quali l'esecuzione di un operatore di aggre
 
 ## <a name="lazy-loading"></a>Caricamento lazy
 
-> [!NOTE]  
-> Questa funzionalità è stata introdotta in EF Core 2.1.
+Il modo più semplice per usare il caricamento lazy consiste nell'installare il pacchetto [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) e abilitarlo con una chiamata a `UseLazyLoadingProxies`. Esempio:
 
-Il modo più semplice per usare il caricamento lazy consiste nell'installare il pacchetto [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) e abilitarlo con una chiamata a `UseLazyLoadingProxies`. Ad esempio:
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder
@@ -159,12 +141,15 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseSqlServer(myConnectionString);
 ```
 O quando si usa AddDbContext:
+
 ```csharp
 .AddDbContext<BloggingContext>(
     b => b.UseLazyLoadingProxies()
           .UseSqlServer(myConnectionString));
 ```
+
 EF Core abiliterà quindi il caricamento lazy per qualsiasi proprietà di navigazione che può essere sottoposta a override, ovvero deve essere `virtual` e in una classe ereditabile. Ad esempio, nelle entità seguenti, le proprietà di navigazione `Post.Blog` e `Blog.Posts` vengono caricate in modalità lazy.
+
 ```csharp
 public class Blog
 {
@@ -183,9 +168,11 @@ public class Post
     public virtual Blog Blog { get; set; }
 }
 ```
+
 ### <a name="lazy-loading-without-proxies"></a>Caricamento lazy senza proxy
 
-I proxy di caricamento lazy operano inserendo il servizio `ILazyLoader` in un'entità, come descritto in [Costruttori di tipi di entità](../modeling/constructors.md). Ad esempio:
+I proxy di caricamento lazy operano inserendo il servizio `ILazyLoader` in un'entità, come descritto in [Costruttori di tipi di entità](../modeling/constructors.md). Esempio:
+
 ```csharp
 public class Blog
 {
@@ -238,7 +225,9 @@ public class Post
     }
 }
 ```
-In questo caso non è richiesto che i tipi di entità vengano ereditati o che le proprietà di navigazione siano virtuali e le istanze di entità possono essere create con `new` per eseguire il caricamento lazy dopo il collegamento a un contesto. Tuttavia, è necessario un riferimento al servizio `ILazyLoader`, che viene definito nel pacchetto [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/). Questo pacchetto contiene un set minimo di tipi in modo che vi sia un impatto minimo per le dipendenze. Tuttavia, per evitare completamente di dipendere da pacchetti di EF Core nei tipi di entità, è possibile inserire il metodo `ILazyLoader.Load` come delegato. Ad esempio:
+
+In questo caso non è richiesto che i tipi di entità vengano ereditati o che le proprietà di navigazione siano virtuali e le istanze di entità possono essere create con `new` per eseguire il caricamento lazy dopo il collegamento a un contesto. Tuttavia, è necessario un riferimento al servizio `ILazyLoader`, che viene definito nel pacchetto [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/). Questo pacchetto contiene un set minimo di tipi in modo che vi sia un impatto minimo per le dipendenze. Tuttavia, per evitare completamente di dipendere da pacchetti di EF Core nei tipi di entità, è possibile inserire il metodo `ILazyLoader.Load` come delegato. Esempio:
+
 ```csharp
 public class Blog
 {
@@ -291,7 +280,9 @@ public class Post
     }
 }
 ```
+
 Il codice precedente usa un metodo di estensione `Load` per chiarire l'uso del delegato:
+
 ```csharp
 public static class PocoLoadingExtensions
 {
@@ -308,6 +299,7 @@ public static class PocoLoadingExtensions
     }
 }
 ```
+
 > [!NOTE]  
 > Il parametro del costruttore per il delegato di caricamento lazy deve essere chiamato "lazyLoader". La possibilità di configurare l'uso di un nome diverso è pianificata per una versione futura.
 

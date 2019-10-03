@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 02/23/2018
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/providers/index
-ms.openlocfilehash: 096d68f814e279bd224dfc50111d6576ab5eb223
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: db06906e6af518a27a21f30b12d722ce06e9bd52
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149246"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813518"
 ---
 # <a name="database-providers"></a>Provider di database
 
@@ -44,27 +44,23 @@ Entity Framework Core può accedere a molti database diversi tramite librerie pl
 | [Devart.Data.SQLite.EFCore](https://www.nuget.org/packages/Devart.Data.SQLite.EFCore/)                               | SQLite 3 e versioni successive           | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/sqlite/docs/)                                                                                                                                             |
 | [Devart.Data.MySql.EFCore](https://www.nuget.org/packages/Devart.Data.MySql.EFCore/)                                 | MySQL 5 e versioni successive            | [DevArt](https://www.devart.com/)                                             | Paid                 | [docs](https://www.devart.com/dotconnect/mysql/docs/)                                                                                                                                              |
 
-## <a name="future-providers"></a>Provider futuri
-
-### <a name="cosmos-db"></a>Cosmos DB
-
-È in corso lo sviluppo di un provider EF Core per l'API SQL in Cosmos DB.
-Questo sarà il primo provider di database orientato ai documenti completo prodotto e le lezioni apprese nel corso di questo progetto promuoveranno miglioramenti per la progettazione delle versioni future di EF Core e verosimilmente di altri provider non relazionali.
-È disponibile un'anteprima nella [raccolta NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos).
-
 ## <a name="adding-a-database-provider-to-your-application"></a>Aggiunta di un provider di database all'applicazione
 
-La maggior parte dei provider di database per EF Core viene distribuita in forma di pacchetti NuGet. Questo significa la possibilità di eseguire l'installazione tramite lo strumento `dotnet` nella riga di comando:
+La maggior parte dei provider di database per EF Core viene distribuita in forma di pacchetti NuGet e può essere installata come segue:
+
+# <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
 ``` console
 dotnet add package provider_package_name
 ```
 
-Oppure in Visual Studio, usando la Console di gestione pacchetti di NuGet:
+# <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 install-package provider_package_name
 ```
+
+***
 
 Dopo l'installazione, il provider verrà configurato nel `DbContext`, nel metodo `OnConfiguring` o nel metodo `AddDbContext` se si usa un contenitore di inserimento delle dipendenze.
 Ad esempio, la riga seguente consente di configurare il provider SQL Server con la stringa di connessione passata:

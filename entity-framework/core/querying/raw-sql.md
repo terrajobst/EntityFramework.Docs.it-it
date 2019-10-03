@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 70aae9b5-8743-4557-9c5d-239f688bf418
 uid: core/querying/raw-sql
-ms.openlocfilehash: ebec5775770c0f1e297eaaf35bf644c605a69afc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: d8f52edfdf4bd7776ab8d81185c867cbfd7bcf44
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197766"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813601"
 ---
 # <a name="raw-sql-queries"></a>Query SQL non elaborate
 
@@ -62,7 +62,6 @@ In alternativa a `FromSqlRaw`, è possibile usare `FromSqlInterpolated` che cons
 
 > [!NOTE]
 > Prima della versione 3,0 `FromSqlRaw` ed `FromSqlInterpolated` erano due overload denominati `FromSql`. Per ulteriori informazioni, vedere la [sezione versioni precedenti](#previous-versions) .
-
 
 <!-- [!code-csharp[Main](samples/core/Querying/RawSQL/Sample.cs)] -->
 ``` csharp
@@ -172,6 +171,6 @@ Esistono alcune limitazioni da tenere presenti quando si usano query SQL non ela
 
 * Si noti che SQL Server non consente la composizione su chiamate stored procedure, quindi qualsiasi tentativo di applicare operatori di query aggiuntivi a tale chiamata genererà SQL non valido. Gli operatori di query possono essere `AsEnumerable()` introdotti dopo per la valutazione del client.
 
-# <a name="previous-versions"></a>Versioni precedenti
+## <a name="previous-versions"></a>Versioni precedenti
 
 EF Core versione 2,2 e versioni precedenti hanno due overload denominati `FromSql` che si comportavano nello stesso modo dei più recenti `FromSqlInterpolated` `FromSqlRaw` e. In questo modo è molto semplice chiamare accidentalmente il metodo stringa non elaborata quando lo scopo era quello di chiamare il metodo della stringa interpolata e viceversa. Il risultato potrebbero essere query senza parametri, quando invece è prevista la parametrizzazione.

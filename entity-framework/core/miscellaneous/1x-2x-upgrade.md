@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/13/2017
 ms.assetid: 8BD43C8C-63D9-4F3A-B954-7BC518A1B7DB
 uid: core/miscellaneous/1x-2x-upgrade
-ms.openlocfilehash: 1222f10811914f65822a49e18522c287ece12174
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.openlocfilehash: 42e59b47f569ef6fcf72fc5bd5f94d3e9d807a24
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306496"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813566"
 ---
 # <a name="upgrading-applications-from-previous-versions-to-ef-core-20"></a>Aggiornamento di applicazioni da versioni precedenti a EF Core 2,0
 
@@ -94,19 +94,19 @@ I provider SQL Server e SQLite vengono spediti dal team EF e le versioni 2,0 sar
 
 Nota: queste modifiche non dovrebbero avere un effetto sulla maggior parte del codice dell'applicazione.
 
-Gli ID evento per i messaggi inviati a un [ILogger](https://github.com/aspnet/Logging/blob/dev/src/Microsoft.Extensions.Logging.Abstractions/ILogger.cs) sono stati modificati in 2,0. Gli ID evento sono ora univoci nel codice EF Core. Questi messaggi ora seguono inoltre il modello standard per la registrazione strutturata usato, ad esempio, da MVC.
+Gli ID evento per i messaggi inviati a un [ILogger](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger) sono stati modificati in 2,0. Gli ID evento sono ora univoci nel codice EF Core. Questi messaggi ora seguono inoltre il modello standard per la registrazione strutturata usato, ad esempio, da MVC.
 
-Anche le categorie del logger sono state modificate. È ora disponibile un set di categorie ben noto accessibile tramite [DbLoggerCategory](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/DbLoggerCategory.cs).
+Anche le categorie del logger sono state modificate. È ora disponibile un set di categorie ben noto accessibile tramite [DbLoggerCategory](https://github.com/aspnet/EntityFrameworkCore/blob/rel/2.0.0/src/EFCore/DbLoggerCategory.cs).
 
-Gli eventi [DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) ora utilizzano gli stessi nomi di ID evento dei `ILogger` messaggi corrispondenti. I payload dell'evento sono tutti tipi nominali derivati da [EventData](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/EventData.cs).
+Gli eventi [DiagnosticSource](https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) ora utilizzano gli stessi nomi di ID evento dei `ILogger` messaggi corrispondenti. I payload dell'evento sono tutti tipi nominali derivati da [EventData](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.eventdata).
 
-Gli ID evento, i tipi di payload e le categorie sono documentati nelle classi [CoreEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Diagnostics/CoreEventId.cs) e [RelationalEventId](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore.Relational/Diagnostics/RelationalEventId.cs) .
+Gli ID evento, i tipi di payload e le categorie sono documentati nelle classi [CoreEventId](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.coreeventid) e [RelationalEventId](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.diagnostics.relationaleventid) .
 
 Gli ID sono stati spostati anche da Microsoft. EntityFrameworkCore. Infrastructure al nuovo spazio dei nomi Microsoft. EntityFrameworkCore. Diagnostics.
 
 ## <a name="ef-core-relational-metadata-api-changes"></a>EF Core modifiche API dei metadati relazionali
 
-EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai _concetti di metadati relazionali comuni_ viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via. Ad esempio, il codice 1.1. x è simile al seguente:
+EF Core 2.0 ora compila un elemento [IModel](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.imodel) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai _concetti di metadati relazionali comuni_ viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via. Ad esempio, il codice 1.1. x è simile al seguente:
 
 ``` csharp
 var tableName = context.Model.FindEntityType(typeof(User)).SqlServer().TableName;
@@ -118,7 +118,7 @@ Dovrebbe ora essere scritto come segue:
 var tableName = context.Model.FindEntityType(typeof(User)).Relational().TableName;
 ```
 
-Anziché usare metodi come `ForSqlServerToTable`, i metodi di estensione sono ora disponibili per scrivere codice condizionale basato sul provider corrente in uso. Ad esempio:
+Anziché usare metodi come `ForSqlServerToTable`, i metodi di estensione sono ora disponibili per scrivere codice condizionale basato sul provider corrente in uso. Esempio:
 
 ```C#
 modelBuilder.Entity<User>().ToTable(
@@ -135,7 +135,7 @@ La `AddEntityFramework`chiamata `AddEntityFrameworkSqlServer`di, e così via non
 
 ## <a name="in-memory-databases-must-be-named"></a>I database in memoria devono essere denominati
 
-Il database in memoria globale senza nome è stato rimosso, ma è necessario assegnare un nome a tutti i database in memoria. Ad esempio:
+Il database in memoria globale senza nome è stato rimosso, ma è necessario assegnare un nome a tutti i database in memoria. Esempio:
 
 ``` csharp
 optionsBuilder.UseInMemoryDatabase("MyDatabase");
@@ -145,13 +145,13 @@ Viene creato un database con il nome "database". Se `UseInMemoryDatabase` viene 
 
 ## <a name="read-only-api-changes"></a>Modifiche all'API di sola lettura
 
-`IsReadOnlyBeforeSave`, `IsReadOnlyAfterSave`e `IsStoreGeneratedAlways` sono stati obsoleti e sostituiti con [BeforeSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L39) e [AfterSaveBehavior](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/IProperty.cs#L55). Questi comportamenti si applicano a qualsiasi proprietà (non solo alle proprietà generate dall'archivio) e determinano il modo in cui il valore della proprietà deve essere utilizzato quando si`BeforeSaveBehavior`inserisce in una riga di database () o`AfterSaveBehavior`quando si aggiorna una riga di database esistente ().
+`IsReadOnlyBeforeSave`, `IsReadOnlyAfterSave`e `IsStoreGeneratedAlways` sono stati obsoleti e sostituiti con [BeforeSaveBehavior](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.iproperty.beforesavebehavior) e [AfterSaveBehavior](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.iproperty.aftersavebehavior). Questi comportamenti si applicano a qualsiasi proprietà (non solo alle proprietà generate dall'archivio) e determinano il modo in cui il valore della proprietà deve essere utilizzato quando si`BeforeSaveBehavior`inserisce in una riga di database () o`AfterSaveBehavior`quando si aggiorna una riga di database esistente ().
 
-Per impostazione predefinita, le proprietà contrassegnate come [ValueGenerated. OnAddOrUpdate](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/ValueGenerated.cs) (ad esempio per le colonne calcolate) ignoreranno tutti i valori attualmente impostati nella proprietà. Ciò significa che un valore generato dall'archivio sarà sempre ottenuto indipendentemente dal fatto che un valore sia stato impostato o modificato sull'entità rilevata. Questo può essere modificato impostando un diverso `Before\AfterSaveBehavior`.
+Per impostazione predefinita, le proprietà contrassegnate come [ValueGenerated. OnAddOrUpdate](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.metadata.valuegenerated) (ad esempio per le colonne calcolate) ignoreranno tutti i valori attualmente impostati nella proprietà. Ciò significa che un valore generato dall'archivio sarà sempre ottenuto indipendentemente dal fatto che un valore sia stato impostato o modificato sull'entità rilevata. Questo può essere modificato impostando un diverso `Before\AfterSaveBehavior`.
 
 ## <a name="new-clientsetnull-delete-behavior"></a>Nuovo comportamento di eliminazione ClientSetNull
 
-Nelle versioni precedenti, [DeleteBehavior. Restrict](https://github.com/aspnet/EntityFramework/blob/dev/src/EFCore/Metadata/DeleteBehavior.cs) aveva un comportamento per le entità rilevate dal contesto che ha più chiuso `SetNull` la semantica corrispondente. In EF Core 2,0 è stato introdotto `ClientSetNull` un nuovo comportamento come impostazione predefinita per le relazioni facoltative. Questo comportamento ha `SetNull` la semantica per le entità rilevate e `Restrict` il comportamento per i database creati con EF core. In questa esperienza, questi sono i comportamenti più attesi/utili per le entità rilevate e il database. `DeleteBehavior.Restrict`viene ora rispettato per le entità rilevate se impostate per le relazioni facoltative.
+Nelle versioni precedenti, [DeleteBehavior. Restrict](https://docs.microsoft.com/en-us/dotnet/api/microsoft.entityframeworkcore.deletebehavior) aveva un comportamento per le entità rilevate dal contesto che ha più chiuso `SetNull` la semantica corrispondente. In EF Core 2,0 è stato introdotto `ClientSetNull` un nuovo comportamento come impostazione predefinita per le relazioni facoltative. Questo comportamento ha `SetNull` la semantica per le entità rilevate e `Restrict` il comportamento per i database creati con EF core. In questa esperienza, questi sono i comportamenti più attesi/utili per le entità rilevate e il database. `DeleteBehavior.Restrict`viene ora rispettato per le entità rilevate se impostate per le relazioni facoltative.
 
 ## <a name="provider-design-time-packages-removed"></a>Pacchetti della fase di progettazione del provider rimossi
 

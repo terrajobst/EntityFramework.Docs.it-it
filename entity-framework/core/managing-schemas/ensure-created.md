@@ -1,29 +1,29 @@
 ---
-title: Creare ed eliminare le API - EF Core
+title: Creare ed eliminare API-EF Core
 author: bricelam
 ms.author: bricelam
-ms.date: 11/7/2018
-ms.openlocfilehash: 40d9e3aa0aba1bf2bc341f01dd815ed7cb7b48fa
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
+ms.date: 11/07/2018
+ms.openlocfilehash: 88c1403d2fae740ad78bb7c41d404b0dd91e86ae
+ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688629"
+ms.lasthandoff: 10/02/2019
+ms.locfileid: "71813435"
 ---
-# <a name="create-and-drop-apis"></a>Creare ed eliminare le API
+# <a name="create-and-drop-apis"></a>API di creazione ed eliminazione
 
-I metodi EnsureCreated ed EnsureDeleted forniscono una semplice alternativa [migrazioni](migrations/index.md) per la gestione dello schema del database. Questi metodi sono utili negli scenari quando i dati sono temporanei e possono essere eliminati quando viene modificato lo schema. Ad esempio durante la creazione di prototipi, nei test o per le cache locale.
+I metodi EnsureCreated e EnsureDeleted forniscono un'alternativa semplice alle [migrazioni](migrations/index.md) per la gestione dello schema del database. Questi metodi sono utili negli scenari in cui i dati sono temporanei e possono essere eliminati quando lo schema viene modificato. Ad esempio, durante la fase di prototipo, nei test o per le cache locali.
 
-Alcuni provider (in particolare quelli non relazionali) non supporta le migrazioni. Per questi provider, EnsureCreated è spesso il modo più semplice per inizializzare lo schema del database.
+Alcuni provider (soprattutto quelli non relazionali) non supportano le migrazioni. Per questi provider, EnsureCreated è spesso il modo più semplice per inizializzare lo schema del database.
 
 > [!WARNING]
-> Le migrazioni ed EnsureCreated non funzionano bene insieme. Se si usano le migrazioni, non usare EnsureCreated per inizializzare lo schema.
+> EnsureCreated e le migrazioni non funzionano bene insieme. Se si usano le migrazioni, non usare EnsureCreated per inizializzare lo schema.
 
-Transizione da EnsureCreated alle migrazioni non è un'esperienza senza problemi. Il modo più semplice per farlo è eliminare il database e ricrearlo con le migrazioni. Se si prevede di usare le migrazioni in futuro, è consigliabile iniziare le migrazioni anziché EnsureCreated.
+La transizione da EnsureCreated a migrazioni non è un'esperienza senza problemi. Il modo più semplice per eseguire questa operazione consiste nell'eliminare il database e ricrearlo usando le migrazioni. Se si prevede di usare le migrazioni in futuro, è preferibile iniziare con le migrazioni invece di usare EnsureCreated.
 
 ## <a name="ensuredeleted"></a>EnsureDeleted
 
-Se esiste, il metodo EnsureDeleted eliminerà il database. Se non si dispone delle autorizzazioni appropriate, viene generata un'eccezione.
+Se esistente, il metodo EnsureDeleted eliminerà il database. Se non si dispone delle autorizzazioni appropriate, viene generata un'eccezione.
 
 ``` csharp
 // Drop the database if it exists
@@ -32,7 +32,7 @@ dbContext.Database.EnsureDeleted();
 
 ## <a name="ensurecreated"></a>EnsureCreated
 
-EnsureCreated creerà il database se non esiste e inizializzare lo schema del database. Se sono presenti eventuali tabelle (incluse le tabelle per un'altra classe DbContext), lo schema non inizializzato.
+EnsureCreated creerà il database se non esiste e inizializza lo schema del database. Se sono presenti tabelle (incluse le tabelle per un'altra classe DbContext), lo schema non verrà inizializzato.
 
 ``` csharp
 // Create the database if it doesn't exist
@@ -40,19 +40,19 @@ dbContext.Database.EnsureCreated();
 ```
 
 > [!TIP]
-> Sono disponibili anche versioni asincrone di questi metodi.
+> Sono disponibili anche le versioni asincrone di questi metodi.
 
 ## <a name="sql-script"></a>Script SQL
 
-Per ottenere il codice SQL utilizzato da EnsureCreated, è possibile usare il metodo GenerateCreateScript.
+Per ottenere l'oggetto SQL usato da EnsureCreated, è possibile usare il Metodo GenerateCreateScript.
 
 ``` csharp
 var sql = dbContext.Database.GenerateCreateScript();
 ```
 
-## <a name="multiple-dbcontext-classes"></a>Più classi di DbContext
+## <a name="multiple-dbcontext-classes"></a>Più classi DbContext
 
-EnsureCreated funziona solo quando alcun tabelle non sono presenti nel database. Se necessario, è possibile scrivere il proprio controllo per verificare se lo schema deve essere inizializzata e usare il servizio IRelationalDatabaseCreator sottostante per inizializzare lo schema.
+EnsureCreated funziona solo quando nel database non è presente alcuna tabella. Se necessario, è possibile scrivere un controllo personalizzato per verificare se lo schema deve essere inizializzato e usare il servizio IRelationalDatabaseCreator sottostante per inizializzare lo schema.
 
 ``` csharp
 // TODO: Check whether the schema needs to be initialized
