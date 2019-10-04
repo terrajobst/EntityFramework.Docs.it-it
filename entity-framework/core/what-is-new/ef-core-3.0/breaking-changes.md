@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 0dd4c5c4aa1a5d241fb48abf1372a678d0f7a7a3
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: f7f04efa8fb8ebc1eb06f256b8ccbd3110af47ab
+ms.sourcegitcommit: 705e898b4684e639a57c787fb45c932a27650c2d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813625"
+ms.lasthandoff: 10/03/2019
+ms.locfileid: "71934876"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
@@ -27,6 +27,7 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [I tipi di query vengono consolidati con tipi di entità](#qt) | Alto      |
 | [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
 | [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
+| [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Medio      |
 | [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Medio      |
 | [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Medio      |
 | [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Medio      |
@@ -34,6 +35,7 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [Modifiche dell'API dei metadati](#metadata-api-changes) | Medio      |
 | [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
 | [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
+| [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Medio      |
 | [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Bassa      |
 | [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Bassa      |
 | [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Bassa      |
@@ -210,6 +212,35 @@ Il risultato potrebbero essere query senza parametri, quando invece è prevista 
 
 Passare all'uso dei nuovi nomi di metodo.
 
+<a name="fromsqlsproc"></a>
+### <a name="fromsql-method-when-used-with-stored-procedure-cannot-be-composed"></a>Non è possibile comporre il metodo dati da tabelle se usato con stored procedure
+
+[Rilevamento del problema #15392](https://github.com/aspnet/EntityFrameworkCore/issues/15392)
+
+**Comportamento precedente**
+
+Prima di EF Core 3,0, il metodo dati da tabelle ha tentato di rilevare se il SQL passato può essere composto in base a. Ha fatto la valutazione del client quando SQL era non componibile come un stored procedure. La query seguente ha funzionato eseguendo il stored procedure sul server e FirstOrDefault sul lato client.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").FirstOrDefault();
+```
+
+**Nuovo comportamento**
+
+A partire da EF Core 3,0, EF Core non tenterà di analizzare SQL. Quindi, se si esegue la composizione dopo FromSqlRaw/FromSqlInterpolated, EF Core comporrà il SQL causando una sottoquery. Quindi, se si usa un stored procedure con Composition, si otterrà un'eccezione per la sintassi SQL non valida.
+
+**Perché?**
+
+EF Core 3,0 non supporta la valutazione automatica del client perché è stata soggetta a errori, come illustrato [qui](#linq-queries-are-no-longer-evaluated-on-the-client).
+
+**Mitigazione**
+
+Se si usa un stored procedure in FromSqlRaw/FromSqlInterpolated, è noto che non è possibile componerlo, quindi è possibile aggiungere __AsEnumerable/AsAsyncEnumerable__ subito dopo la chiamata al metodo dati da tabelle per evitare qualsiasi composizione sul lato server.
+
+```C#
+context.Products.FromSqlRaw("[dbo].[Ten Most Expensive Products]").AsEnumerable().FirstOrDefault();
+```
+
 <a name="fromsql"></a>
 
 ### <a name="fromsql-methods-can-only-be-specified-on-query-roots"></a>I metodi FromSql possono essere specificati solo in radici di query
@@ -366,6 +397,29 @@ Esempio:
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
 context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 ```
+<a name="eager-loading-single-query"></a>
+### <a name="eager-loading-of-related-entities-now-happens-in-a-single-query"></a>Il caricamento eager delle entità correlate ora si verifica in una singola query
+
+[Rilevamento del problema #18022](https://github.com/aspnet/EntityFrameworkCore/issues/18022)
+
+**Comportamento precedente**
+
+Prima del 3,0, il caricamento immediato delle esplorazioni delle raccolte tramite gli operatori `Include` ha causato la generazione di più query sul database relazionale, una per ogni tipo di entità correlato.
+
+**Nuovo comportamento**
+
+A partire da 3,0, EF Core genera una singola query con JOIN nei database relazionali.
+
+**Perché?**
+
+L'invio di più query per l'implementazione di una singola query LINQ ha causato numerosi problemi, incluse le prestazioni negative in quanto sono stati necessari più round trip di database e i dati coerenza problemi poiché ogni query poteva osservare uno stato diverso del database.
+
+**Mitigazioni**
+
+Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di operatori `Include` sulle esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137) .
+
+**
+
 <a name="deletebehavior"></a>
 ### <a name="deletebehaviorrestrict-has-cleaner-semantics"></a>Semantica più chiara per DeleteBehavior.Restrict
 
