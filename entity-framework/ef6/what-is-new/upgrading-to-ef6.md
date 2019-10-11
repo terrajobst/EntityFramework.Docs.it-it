@@ -1,85 +1,85 @@
 ---
-title: L'aggiornamento a Entity Framework 6
+title: Aggiornamento a Entity Framework 6-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a
-ms.openlocfilehash: 711f1940080de27bd23cb8f641a5c7f2711dd65b
-ms.sourcegitcommit: a6082a2caee62029f101eb1000656966195cd6ee
+ms.openlocfilehash: 4395a9c117a6cf38e7fc08f11ee689d6fffa6fed
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/10/2018
-ms.locfileid: "53182007"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182109"
 ---
-# <a name="upgrading-to-entity-framework-6"></a>L'aggiornamento a Entity Framework 6
+# <a name="upgrading-to-entity-framework-6"></a>Aggiornamento a Entity Framework 6
 
-Nelle versioni precedenti di Entity Framework il codice è stato suddiviso tra le librerie di base (principalmente System) fornite come parte di .NET Framework e librerie (OOB) di out-of-band (principalmente EntityFramework) fornite in un pacchetto NuGet. EF6 richiede il codice dalle librerie di base e lo incorpora nelle librerie di OOB. Questo è stato necessario per consentire a Entity Framework essere reso open source e per poter essere in grado di evolvere a un ritmo diverso da .NET Framework. La conseguenza di ciò è che le applicazioni dovranno essere ricompilati utilizzando i tipi di spostata.
+Nelle versioni precedenti di EF il codice è stato suddiviso tra le librerie principali (principalmente System. Data. Entity. dll) spedite come parte delle librerie .NET Framework e fuori banda (OOB) (principalmente EntityFramework. dll) fornite in un pacchetto NuGet. EF6 acquisisce il codice dalle librerie principali e le incorpora nelle librerie di OOB. Questa operazione era necessaria per consentire a EF di essere creata in modo open source e per potersi sviluppare a ritmi diversi da .NET Framework. La conseguenza è che le applicazioni dovranno essere ricompilate in base ai tipi spostati.
 
-Questo dovrebbe essere semplice per le applicazioni che usano DbContext come fornito in Entity Framework 4.1 e versioni successive. È necessario per le applicazioni che usano ObjectContext un po' più lavoro ma non ancora difficile da eseguire.
+Questo dovrebbe essere semplice per le applicazioni che usano DbContext come fornito in EF 4,1 e versioni successive. Per le applicazioni che usano ObjectContext è necessario un po' di lavoro, ma non è ancora difficile.
 
-Ecco un elenco di controllo delle operazioni da eseguire per aggiornare un'applicazione esistente a EF6.
+Di seguito è riportato un elenco di controllo delle operazioni che è necessario eseguire per aggiornare un'applicazione esistente a EF6.
 
-## <a name="1-install-the-ef6-nuget-package"></a>1. Installare il pacchetto NuGet di Entity Framework 6
+## <a name="1-install-the-ef6-nuget-package"></a>1. Installare il pacchetto NuGet EF6
 
-È necessario eseguire l'aggiornamento per il nuovo runtime di Entity Framework 6.
+È necessario eseguire l'aggiornamento al nuovo runtime di Entity Framework 6.
 
-1. Pulsante destro del mouse sul progetto, quindi selezionare **Gestisci pacchetti NuGet...**  
-2. Sotto il **Online** scheda selezionare **EntityFramework** e fare clic su **installare**  
+1. Fare clic con il pulsante destro del mouse sul progetto e scegliere **Gestisci pacchetti NuGet...**  
+2. Nella scheda **online** selezionare **EntityFramework** e fare clic su **Installa** .  
    > [!NOTE]
-   > Se una versione precedente dell'installazione del pacchetto EntityFramework NuGet si eseguirà l'aggiornamento a EF6.
+   > Se è stata installata una versione precedente del pacchetto NuGet EntityFramework, questo verrà aggiornato a EF6.
 
-In alternativa, è possibile eseguire il comando seguente dalla Console di gestione pacchetti:
+In alternativa, è possibile eseguire il comando seguente dalla console di gestione pacchetti:
 
 ``` powershell
 Install-Package EntityFramework
 ```
 
-## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2. Assicurarsi che vengano rimossi i riferimenti ad assembly a System
+## <a name="2-ensure-that-assembly-references-to-systemdataentitydll-are-removed"></a>2. Assicurarsi che i riferimenti ad assembly a System. Data. Entity. dll vengano rimossi
 
-Installazione del pacchetto NuGet di Entity Framework 6 deve rimuovere automaticamente qualsiasi riferimento a Data. Entity dal progetto per l'utente.
+L'installazione del pacchetto NuGet EF6 dovrebbe rimuovere automaticamente dal progetto tutti i riferimenti a System. Data. Entity.
 
-## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3. Scambia i modelli di progettazione (EDMX di Entity Framework) per usare la generazione di codice di Entity Framework 6.x
+## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3. Scambiare qualsiasi modello di progettazione EF (EDMX) per usare la generazione di codice EF 6. x
 
-Se si dispone di tutti i modelli creati con la finestra di progettazione di Entity Framework, è necessario aggiornare i modelli di generazione di codice per generare codice compatibile con Entity Framework 6.
+Se sono presenti modelli creati con la finestra di progettazione di EF, sarà necessario aggiornare i modelli di generazione del codice per generare codice compatibile con EF6.
 
 > [!NOTE]
-> Sono disponibili attualmente soltanto i modelli del generatore di DbContext di Entity Framework 6.x per Visual Studio 2012 e 2013.
+> Attualmente sono disponibili solo i modelli di Generatore DbContext di EF 6. x per Visual Studio 2012 e 2013.
 
-1. Eliminare i modelli di generazione del codice esistente. Questi file verranno in genere è denominati  **\<edmx_file_name\>tt** e  **\<edmx_file_name\>. Context.tt** ed essere annidato sotto il file edmx in Esplora soluzioni. È possibile selezionare i modelli in Esplora soluzioni e premere il **CANC** chiave per eliminarli.  
+1. Elimina i modelli di generazione del codice esistenti. Questi file saranno in genere denominati **@no__t -1edmx_file_name\>.tt** e **\<edmx_file_name @ no__t-5. Context.tt** ed essere annidati nel file edmx in Esplora soluzioni. È possibile selezionare i modelli in Esplora soluzioni e premere il tasto **Canc** per eliminarli.  
    > [!NOTE]
-   > Nei progetti di sito Web i modelli verranno non essere annidati sotto il file edmx, ma elencati insieme a esso in Esplora soluzioni.  
+   > Nei progetti di siti Web i modelli non verranno annidati nel file edmx, ma elencati insieme in Esplora soluzioni.  
 
    > [!NOTE]
-   > Nei progetti Visual Basic.NET è necessario abilitare 'Mostra tutti i file' per poter visualizzare i file di modello annidato.
-2. Aggiungere modello di generazione codice appropriato di EF 6.x. Aprire il modello nella finestra di progettazione di Entity Framework, pulsante destro del mouse su area di progettazione e seleziona **Aggiungi elemento di generazione di codice...**
-    - Se si usa l'API DbContext (scelta consigliata) quindi **EF 6.x DbContext Generator** saranno disponibili nella **dati** scheda.  
+   > Nei progetti VB.NET è necessario abilitare ' Mostra tutti i file ' per poter visualizzare i file del modello annidato.
+2. Aggiungere il modello di generazione del codice EF 6. x appropriato. Aprire il modello nella finestra di progettazione EF, fare clic con il pulsante destro del mouse nell'area di progettazione e scegliere **Aggiungi elemento di generazione codice...**
+    - Se si usa l'API DbContext (scelta consigliata), il **Generatore EF 6. x DbContext** sarà disponibile nella scheda **dati** .  
       > [!NOTE]
-      > Se si usa Visual Studio 2012, è necessario installare gli strumenti di Entity Framework 6 con questo modello. Visualizzare [ottenere Entity Framework](~/ef6/fundamentals/install.md) per informazioni dettagliate.  
+      > Se si usa Visual Studio 2012, sarà necessario installare gli strumenti di EF 6 per avere questo modello. Per informazioni dettagliate, vedere [Get Entity Framework](~/ef6/fundamentals/install.md) .  
 
-    - Se si usa l'API ObjectContext, dovrai selezionare i **Online** scheda e cercare **EF 6.x EntityObject Generator**.  
-3. Se tutte le personalizzazioni sono applicati per i modelli di generazione di codice che è necessario applicare nuovamente per i modelli aggiornati.
+    - Se si usa l'API ObjectContext, sarà necessario selezionare la scheda **online** e cercare **Ef 6. x EntityObject Generator**.  
+3. Se è stata applicata una personalizzazione ai modelli di generazione del codice, sarà necessario applicarli nuovamente ai modelli aggiornati.
 
-## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4. Aggiornare gli spazi dei nomi per qualsiasi tipo EF core in uso
+## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4. Aggiornare gli spazi dei nomi per tutti i tipi di core EF usati
 
-Gli spazi dei nomi per i tipi DbContext e Code First non sono stati modificati. Ciò significa che per molte applicazioni che usano Entity Framework 4.1 o versioni successive non è necessario apportare alcuna modifica.
+Gli spazi dei nomi per i tipi DbContext e Code First non sono stati modificati. Ciò significa che per molte applicazioni che utilizzano EF 4,1 o versioni successive non è necessario modificare alcun elemento.
 
-I tipi, ad esempio ObjectContext disponibili in precedenza System sono stati spostati nuovi spazi dei nomi. Ciò significa che potrebbe essere necessario aggiornare il *usando* oppure *importazione* direttive per la compilazione EF6.
+I tipi come ObjectContext precedentemente presenti in System. Data. Entity. dll sono stati spostati nei nuovi spazi dei nomi. Ciò significa che potrebbe essere necessario aggiornare le direttive *using* o *Import* per la compilazione con EF6.
 
-La regola generale per lo spazio dei nomi è che qualsiasi tipo in System.Data.* viene spostata nel System.Data.Entity.Core.*. In altre parole, sufficiente inserire **Entity.Core.** Dopo aver System. Data. Ad esempio:
+La regola generale per le modifiche dello spazio dei nomi è che qualsiasi tipo in System. Data. * viene spostato in System. Data. Entity. Core. *. In altre parole, è sufficiente inserire **Entity. Core.** Dopo System. Data. Esempio:
 
-- System.Data.EntityException = > System. Data. **Entity.Core**. EntityException  
-- System.Data.Objects.ObjectContext = > System. Data. **Entity.Core**. Objects.ObjectContext  
-- System.Data.Objects.DataClasses.RelationshipManager = > System. Data. **Entity.Core**. Objects.DataClasses.RelationshipManager  
+- System. Data. EntityException = > System. Data. **Entity. Core**. EntityException  
+- System. Data. Objects. ObjectContext = > System. Data. **Entity. Core**. Objects. ObjectContext  
+- System. Data. Objects. dataclasss. RelationshipManager = > System. Data. **Entity. Core**. Objects. dataclasss. RelationshipManager  
 
-Questi tipi sono nel *Core* gli spazi dei nomi perché non vengono usati direttamente per la maggior parte delle applicazioni basate su DbContext. Alcuni tipi che fanno parte della System sono ancora usati comunemente e direttamente per le applicazioni basate su DbContext e pertanto non sono stati spostati nel *Core* gli spazi dei nomi. Questi sono:
+Questi tipi sono inclusi negli spazi dei nomi *principali* perché non vengono utilizzati direttamente per la maggior parte delle applicazioni basate su DbContext. Alcuni tipi che facevano parte di System. Data. Entity. dll vengono comunque usati comunemente e direttamente per le applicazioni basate su DbContext, quindi non sono stati spostati negli spazi dei nomi di *base* . Questi sono:
 
-- System.Data.EntityState = > System. Data. **Entità**. EntityState  
-- System.Data.Objects.DataClasses.EdmFunctionAttribute = > System. Data. **Entity.DbFunctionAttribute**  
+- System. Data. EntityState = > System. Data. **Entità**. EntityState  
+- System. Data. Objects. dataclasss. EdmFunctionAttribute = > System. Data. **Entity. DbFunctionAttribute**  
   > [!NOTE]
-  > Questa classe è stata rinominata; una classe con il vecchio nome esiste già e funziona, ma ora contrassegnato come obsoleto.  
-- System.Data.Objects.EntityFunctions = > System. Data. **Entity.DbFunctions**  
+  > Questa classe è stata rinominata. una classe con il nome precedente esiste ancora e funziona, ma ora è contrassegnata come obsoleta.  
+- System. Data. Objects. EntityFunctions = > System. Data. **Entity. DbFunctions**  
   > [!NOTE]
-  > Questa classe è stata rinominata; una classe con il vecchio nome esiste già e funziona, ma ora contrassegnato come obsoleto.)  
-- Classi spaziale (ad esempio, DbGeography, DbGeometry) sono stati spostati dalla System.Data.Spatial = > System. Data. **Entità**. Spaziali
+  > Questa classe è stata rinominata. una classe con il nome precedente esiste ancora e funziona, ma è ora contrassegnata come obsoleta.  
+- Le classi spaziali (ad esempio, DbGeography, DbGeometry) sono state spostate da System. Data. Spatial = > System. Data. **Entità**. Spaziali
 
 > [!NOTE]
-> Alcuni tipi nello spazio dei nomi System. Data sono in System che non è un assembly di Entity Framework. Questi tipi non è sono spostato e pertanto non subiscono gli spazi dei nomi.
+> Alcuni tipi nello spazio dei nomi System. Data si trovano in System. Data. dll, che non è un assembly EF. Questi tipi non sono stati spostati, quindi gli spazi dei nomi rimangono invariati.

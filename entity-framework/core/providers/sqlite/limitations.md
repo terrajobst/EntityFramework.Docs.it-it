@@ -1,23 +1,23 @@
 ---
-title: Database SQLite - limitazioni - Provider EF Core
+title: Provider di database SQLite-limitazioni-EF Core
 author: rowanmiller
 ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
-ms.openlocfilehash: eaa7d5b1496172e4f3821433a1cd098ee7e8b737
-ms.sourcegitcommit: 9bd64a1a71b7f7aeb044aeecc7c4785b57db1ec9
+ms.openlocfilehash: 2f80dc195265787318ac4925dd937da45ffad011
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/26/2019
-ms.locfileid: "67394798"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72179775"
 ---
-# <a name="sqlite-ef-core-database-provider-limitations"></a>Limitazioni del Provider SQLite EF Core Database
+# <a name="sqlite-ef-core-database-provider-limitations"></a>Limitazioni del provider di database EF Core SQLite
 
-Il provider SQLite ha alcune limitazioni delle migrazioni. La maggior parte di queste limitazioni sono il risultato delle limitazioni nel motore di database SQLite sottostante e non sono specifica di Entity Framework.
+Il provider SQLite presenta alcune limitazioni relative alle migrazioni. La maggior parte di queste limitazioni è il risultato di limitazioni nel motore di database SQLite sottostante e non sono specifiche di EF.
 
 ## <a name="modeling-limitations"></a>Limitazioni di modellazione
 
-La libreria relazionale comune (condivisa dai provider di database relazionale di Entity Framework) definisce le API per la modellazione di concetti che sono comuni alla maggior parte dei motori di database relazionale. Un paio di questi concetti non sono supportati dal provider di SQLite.
+La libreria relazionale comune (condivisa da Entity Framework provider di database relazionali) definisce le API per i concetti di modellazione comuni alla maggior parte dei motori di database relazionali. Alcuni di questi concetti non sono supportati dal provider SQLite.
 
 * Schemi
 * Sequenze
@@ -25,16 +25,16 @@ La libreria relazionale comune (condivisa dai provider di database relazionale d
 
 ## <a name="query-limitations"></a>Limitazioni delle query
 
-SQLite in modo nativo non supporta i seguenti tipi di dati. EF Core può leggere e scrivere i valori di questi tipi e l'esecuzione di query per verificare l'uguaglianza (`where e.Property == value`) è inoltre il supporto. Altre operazioni, tuttavia, come il confronto e ordinamento richiederanno la valutazione sul client.
+SQLite non supporta in modo nativo i tipi di dati seguenti. EF Core è in grado di leggere e scrivere valori di questi tipi ed è supportata anche l'esecuzione di query per verificarne l'uguaglianza (`where e.Property == value`). Altre operazioni, tuttavia, come il confronto e l'ordinamento richiederanno una valutazione sul client.
 
 * DateTimeOffset
-* Decimale
+* Decimal
 * TimeSpan
 * UInt64
 
-Invece di `DateTimeOffset`, è consigliabile usare i valori DateTime. Quando si gestiscono più fusi orari, è consigliabile convertire i valori in formato UTC prima di salvare e quindi riconvertendo nuovamente al fuso orario appropriato.
+Anziché `DateTimeOffset`, è consigliabile utilizzare valori DateTime. Quando si gestiscono più fusi orari, è consigliabile convertire i valori in formato UTC prima di salvare e quindi tornare al fuso orario appropriato.
 
-Il `Decimal` tipo fornisce un livello elevato di precisione. Se non è necessario tale livello di precisione, tuttavia, è consigliabile usare doppie invece. È possibile usare una [convertitore](../../modeling/value-conversions.md) per continuare a usare decimale nelle classi.
+Il tipo `Decimal` fornisce un livello elevato di precisione. Se questo livello di precisione non è necessario, tuttavia, è consigliabile usare invece Double. È possibile usare un [convertitore di valori](../../modeling/value-conversions.md) per continuare a usare Decimal nelle classi.
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()
@@ -44,9 +44,9 @@ modelBuilder.Entity<MyEntity>()
 
 ## <a name="migrations-limitations"></a>Limitazioni delle migrazioni
 
-Il motore di database SQLite non supporta un numero di operazioni dello schema supportati per la maggior parte degli altri database relazionali. Se si tenta di applicare una delle operazioni non supportate per un database SQLite un `NotSupportedException` verrà generata.
+Il motore di database SQLite non supporta una serie di operazioni dello schema supportate dalla maggior parte degli altri database relazionali. Se si tenta di applicare una delle operazioni non supportate a un database SQLite, verrà generata un'`NotSupportedException`.
 
-| Operazione            | È supportata? | Richiede la versione |
+| Operazione            | Supportato? | Richiede la versione |
 |:---------------------|:-----------|:-----------------|
 | AddColumn            | ✔          | 1.0              |
 | AddForeignKey        | ✗          |                  |
@@ -70,10 +70,10 @@ Il motore di database SQLite non supporta un numero di operazioni dello schema s
 | Aggiorna               | ✔          | 2.0              |
 | Eliminare               | ✔          | 2.0              |
 
-## <a name="migrations-limitations-workaround"></a>Soluzione alternativa di limitazioni di migrazioni
+## <a name="migrations-limitations-workaround"></a>Soluzione alternativa alle migrazioni
 
-È possibile risolvere alcune di queste limitazioni da scrivere manualmente il codice per le migrazioni per eseguire una tabella ricompilazione. Una ricompilazione della tabella comporta la ridenominazione della tabella esistente, la creazione di una nuova tabella, la copia di dati nella nuova tabella e l'eliminazione della tabella precedente. È necessario usare il `Sql(string)` metodo per eseguire alcuni di questi passaggi.
+È possibile aggirare alcune di queste limitazioni scrivendo manualmente il codice nelle migrazioni per eseguire una ricompilazione della tabella. Una ricompilazione della tabella comporta la ridenominazione della tabella esistente, la creazione di una nuova tabella, la copia di dati nella nuova tabella e l'eliminazione della tabella precedente. Per eseguire alcuni di questi passaggi, sarà necessario usare il metodo `Sql(string)`.
 
-Visualizzare [rendendo altri tipi di tabella di modifiche dello Schema](http://sqlite.org/lang_altertable.html#otheralter) nella documentazione di SQLite per altri dettagli.
+Per altri dettagli, vedere la documentazione di SQLite per [altri tipi di modifiche dello schema della tabella](https://sqlite.org/lang_altertable.html#otheralter) .
 
-In futuro, EF potrebbe supportare alcune di queste operazioni usando l'approccio di ricompilazione tabella dietro le quinte. È possibile [tenere traccia di questa funzionalità nel nostro progetto GitHub](https://github.com/aspnet/EntityFrameworkCore/issues/329).
+In futuro, EF può supportare alcune di queste operazioni usando l'approccio di ricompilazione della tabella dietro le quinte. È possibile [tenere traccia di questa funzionalità nel progetto GitHub](https://github.com/aspnet/EntityFrameworkCore/issues/329).

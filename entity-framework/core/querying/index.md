@@ -1,16 +1,38 @@
 ---
 title: Esecuzione di query su dati - EF Core
-author: rowanmiller
-ms.date: 10/27/2016
+author: smitpatel
+ms.date: 10/03/2019
 ms.assetid: 7c65ec3e-46c8-48f8-8232-9e31f96c277b
 uid: core/querying/index
-ms.openlocfilehash: 51aaa5de11d3fe38b4fba82db8dcb5658088cc27
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 009235c3673a414e06d1a64f9877b60e7cde97b0
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993534"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181924"
 ---
 # <a name="querying-data"></a>Esecuzione di query su dati
 
-Entity Framework Core usa query LINQ (Language Integrated Query) per eseguire query sui dati dal database. Le query LINQ consentono di usare C#, o il linguaggio .NET che si preferisce, per generare query fortemente tipizzate in base alle classi di contesto ed entità derivate. Una rappresentazione della query LINQ viene passata al provider di database, per essere convertita nel linguaggio di query specifico del database, come ad esempio SQL per un database relazionale. Per altre informazioni sulla modalità di elaborazione di una query, vedere [How Queries Work](overview.md) (Funzionamento delle query).
+Entity Framework Core usa query LINQ (Language Integrated Query) per eseguire query sui dati dal database. LINQ consente di usare C#, o il linguaggio .NET che si preferisce, per generare query fortemente tipizzate. Usa le classi di contesto ed entità derivate per fare riferimento agli oggetti di database. EF Core passa una rappresentazione della query LINQ al provider di database. I provider di database a loro volta la convertono nel linguaggio di query specifico del database, ad esempio SQL per un database relazionale.
+
+> [!TIP]
+> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
+
+I frammenti seguenti illustrano alcuni esempi di come eseguire attività comuni con Entity Framework Core.
+
+## <a name="loading-all-data"></a>Caricamento di tutti i dati
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingAllData)]
+
+## <a name="loading-a-single-entity"></a>Caricamento di una singola entità
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingSingleEntity)]
+
+## <a name="filtering"></a>Filtro
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#Filtering)]
+
+## <a name="further-readings"></a>Altre informazioni
+
+- Vedere altre informazioni sulle [espressioni di query LINQ](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)
+- Per altre informazioni sulla modalità di elaborazione di una query in EF Core, vedere [Funzionamento delle query](xref:core/querying/how-query-works).

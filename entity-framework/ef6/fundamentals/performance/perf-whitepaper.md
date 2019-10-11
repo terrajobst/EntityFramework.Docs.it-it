@@ -1,183 +1,183 @@
 ---
-title: Considerazioni sulle prestazioni per EF4 EF5 ed EF6
+title: Considerazioni sulle prestazioni per EF4, EF5 e EF6-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d6d5a465-6434-45fa-855d-5eb48c61a2ea
-ms.openlocfilehash: f8fa1001c85366e169cf50e89efdb65bd92b671e
-ms.sourcegitcommit: f277883a5ed28eba57d14aaaf17405bc1ae9cf94
+ms.openlocfilehash: 07eb605f0d39f0c1bcfe781540525180f0dd0b22
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/18/2019
-ms.locfileid: "65874615"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181660"
 ---
-# <a name="performance-considerations-for-ef-4-5-and-6"></a>Considerazioni sulle prestazioni per Entity Framework 4, 5 e 6
-David Obando, Eric Dettinger e ad altri utenti
+# <a name="performance-considerations-for-ef-4-5-and-6"></a>Considerazioni sulle prestazioni per EF 4, 5 e 6
+Di David Obando, Eric Dettinger e altri
 
-Data di pubblicazione: Aprile 2012
+Pubblicato Aprile 2012
 
-Ultimo aggiornamento: Maggio 2014
+Ultimo aggiornamento: 2014 maggio
 
 ------------------------------------------------------------------------
 
 ## <a name="1-introduction"></a>1. Introduzione
 
-Framework di Mapping relazionale a oggetti sono un modo pratico per fornire un'astrazione per l'accesso ai dati in un'applicazione orientata agli oggetti. Per le applicazioni .NET, consigliata da Microsoft CHE O/RM è Entity Framework. Tuttavia, con qualsiasi livello di astrazione delle prestazioni possono costituire un problema.
+I Framework di mapping relazionale a oggetti costituiscono un modo pratico per fornire un'astrazione per l'accesso ai dati in un'applicazione orientata a oggetti. Per le applicazioni .NET, il O/RM consigliato da Microsoft è Entity Framework. Con qualsiasi astrazione, tuttavia, le prestazioni possono diventare un problema.
 
-Questo white paper è stato scritto per mostrare le considerazioni sulle prestazioni durante lo sviluppo di applicazioni con Entity Framework, per offrire agli sviluppatori un'idea degli algoritmi interni di Entity Framework che possono influire sulle prestazioni e fornire suggerimenti per l'analisi e miglioramento delle prestazioni nelle applicazioni che usano Entity Framework. Esistono alcuni argomenti buona sulle prestazioni già disponibili sul web e abbiamo provato anche che puntano a queste risorse dove possibile.
+Questo white paper è stato scritto per mostrare le considerazioni sulle prestazioni durante lo sviluppo di applicazioni con Entity Framework, per offrire agli sviluppatori un'idea degli algoritmi interni Entity Framework che possono influire sulle prestazioni e fornire suggerimenti per l'analisi e miglioramento delle prestazioni delle applicazioni che utilizzano Entity Framework. Sono disponibili numerosi argomenti utili sulle prestazioni già disponibili sul Web e si è tentato di puntare a queste risorse laddove possibile.
 
-Le prestazioni sono una questione spinosa. Questo white paper è concepito come una risorsa per aiutare si apportano le prestazioni relative decisioni per le applicazioni che usano Entity Framework. Abbiamo incluso alcune metriche di test per illustrare le prestazioni, ma queste metriche non sono da intendersi come assoluto degli indicatori delle prestazioni che verrà visualizzato nell'applicazione.
+Le prestazioni sono un argomento complesso. Questo white paper è concepito come una risorsa che consente di prendere decisioni relative alle prestazioni per le applicazioni che usano Entity Framework. Sono state incluse alcune metriche di test per dimostrare le prestazioni, ma queste metriche non sono destinate a indicatori assoluti delle prestazioni che verranno visualizzate nell'applicazione.
 
-Ai fini pratici, questo documento si presuppone che Entity Framework 4 viene eseguita in .NET 4.0 ed Entity Framework 5 e 6 vengono eseguite in .NET 4.5. Molti dei miglioramenti delle prestazioni per Entity Framework 5 si trovano all'interno di componenti di base fornite con .NET 4.5.
+Per scopi pratici, questo documento presuppone che Entity Framework 4 venga eseguito in .NET 4,0 e Entity Framework 5 e 6 vengano eseguiti in .NET 4,5. Molti dei miglioramenti apportati alle prestazioni per Entity Framework 5 risiedono all'interno dei componenti di base forniti con .NET 4,5.
 
-Entity Framework 6 è un rilascio fuori banda fuori e non dipende dai componenti di Entity Framework forniti con .NET. Entity Framework 6 si cimentano sia .NET 4.0 e .NET 4.5 e può offrire un vantaggio significativo delle prestazioni per gli utenti non hanno eseguito l'aggiornamento da .NET 4.0, ma vuole che i bit più recenti di Entity Framework nella propria applicazione. Quando questo documento vengono citate Entity Framework 6, fa riferimento alla versione più recente disponibile al momento della stesura di questo articolo: versione 6.1.0.
+Entity Framework 6 è una versione fuori banda e non dipende dai componenti Entity Framework forniti con .NET. Entity Framework 6 funzionano sia in .NET 4,0 che in .NET 4,5 e possono offrire un notevole vantaggio a livello di prestazioni a coloro che non hanno eseguito l'aggiornamento da .NET 4,0, ma che desiderano i Entity Framework bit più recenti nella propria applicazione. Quando questo documento cita Entity Framework 6, si riferisce alla versione più recente disponibile al momento della stesura di questo documento: versione 6.1.0.
 
-## <a name="2-cold-vs-warm-query-execution"></a>2. Visual Studio ad accesso sporadico. Esecuzione di Query a caldo
+## <a name="2-cold-vs-warm-query-execution"></a>2. Confronto tra freddo e Esecuzione di query a caldo
 
-La prima volta che le query viene eseguita in un determinato modello, Entity Framework esegue molte operazioni in background per caricare e convalidare il modello. Abbiamo fanno riferimento a questa prima query come query "fredda".  Altre query in base a un modello già caricato sono note come query "calda" e sono molto più veloci.
+La prima volta che si esegue una query su un determinato modello, il Entity Framework esegue una grande quantità di lavoro dietro le quinte per caricare e convalidare il modello. Spesso si fa riferimento a questa prima query come query "a freddo".  Ulteriori query su un modello già caricato sono note come query "calde" e sono molto più veloci.
 
-È possibile richiedere una visualizzazione generale di dove viene impiegato il tempo quando si esegue una query mediante Entity Framework e vedere in cui le cose stanno migliorando in Entity Framework 6.
+Si prenda in considerazione una panoramica di alto livello del tempo impiegato per l'esecuzione di una query con Entity Framework e per vedere dove si stanno migliorando i Entity Framework 6.
 
-**Prima esecuzione di Query, query ad accesso sporadico**
+**Prima esecuzione query-query a freddo**
 
-| Operazioni di scrittura di codice utente                                                                                     | Operazione                    | EF4 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                        | EF5 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Entity Framework 6 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Scritture utente codice                                                                                     | Azione                    | Effetti sulle prestazioni di EF4                                                                                                                                                                                                                                                                                                                                                                                                        | Effetti sulle prestazioni di EF5                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Effetti sulle prestazioni di EF6                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 |:-----------------------------------------------------------------------------------------------------|:--------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `using(var db = new MyContext())` <br/> `{`                                                          | Creazione rapida          | Medio                                                                                                                                                                                                                                                                                                                                                                                                                        | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `using(var db = new MyContext())` <br/> `{`                                                          | Creazione del contesto          | Medio                                                                                                                                                                                                                                                                                                                                                                                                                        | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | `  var q1 = ` <br/> `    from c in db.Customers` <br/> `    where c.Id == id1` <br/> `    select c;` | Creazione di espressioni di query | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                           | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `  var c1 = q1.First();`                                                                             | Esecuzione di query LINQ      | -Caricamento Metadata: Elevata ma memorizzati nella cache <br/> -Generazione view: Potenzialmente molto alta ma memorizzati nella cache <br/> -Versione di valutazione parametro: Medio <br/> -Translation query: Medio <br/> -Generazione materializzatore: Medium ma memorizzati nella cache <br/> -Esecuzione di query database: Potenzialmente elevato <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medio <br/> -Ricerca identity: Medio | -Caricamento Metadata: Elevata ma memorizzati nella cache <br/> -Generazione view: Potenzialmente molto alta ma memorizzati nella cache <br/> -Versione di valutazione parametro: Bassa <br/> -Translation query: Medium ma memorizzati nella cache <br/> -Generazione materializzatore: Medium ma memorizzati nella cache <br/> -Esecuzione di query database: Potenzialmente elevato (più query in alcune situazioni) <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medio <br/> -Ricerca identity: Medio | -Caricamento Metadata: Elevata ma memorizzati nella cache <br/> -Generazione view: Medium ma memorizzati nella cache <br/> -Versione di valutazione parametro: Bassa <br/> -Translation query: Medium ma memorizzati nella cache <br/> -Generazione materializzatore: Medium ma memorizzati nella cache <br/> -Esecuzione di query database: Potenzialmente elevato (più query in alcune situazioni) <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medium (più veloce rispetto a EF5) <br/> -Ricerca identity: Medio |
-| `}`                                                                                                  | Connection          | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                           | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `  var c1 = q1.First();`                                                                             | Esecuzione di query LINQ      | -Caricamento dei metadati: Elevato ma memorizzato nella cache <br/> -Generazione visualizzazione: Potenzialmente molto elevato ma memorizzato nella cache <br/> -Valutazione parametri: Medio <br/> -Conversione query: Medio <br/> -Generazione del materializzatore: Medio ma memorizzato nella cache <br/> -Esecuzione query database: Potenzialmente elevato <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Medio <br/> -Ricerca identità: Medio | -Caricamento dei metadati: Elevato ma memorizzato nella cache <br/> -Generazione visualizzazione: Potenzialmente molto elevato ma memorizzato nella cache <br/> -Valutazione parametri: Bassa <br/> -Conversione query: Medio ma memorizzato nella cache <br/> -Generazione del materializzatore: Medio ma memorizzato nella cache <br/> -Esecuzione query database: Potenzialmente elevato (query migliori in alcune situazioni) <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Medio <br/> -Ricerca identità: Medio | -Caricamento dei metadati: Elevato ma memorizzato nella cache <br/> -Generazione visualizzazione: Medio ma memorizzato nella cache <br/> -Valutazione parametri: Bassa <br/> -Conversione query: Medio ma memorizzato nella cache <br/> -Generazione del materializzatore: Medio ma memorizzato nella cache <br/> -Esecuzione query database: Potenzialmente elevato (query migliori in alcune situazioni) <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Media (più veloce di EF5) <br/> -Ricerca identità: Medio |
+| `}`                                                                                                  | Connection. Close          | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                           | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 
-**Esecuzione della seconda Query – query a caldo**
+**Seconda esecuzione della query: query warm**
 
-| Operazioni di scrittura di codice utente                                                                                     | Operazione                    | EF4 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | EF5 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Entity Framework 6 Impatto sulle prestazioni                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Scritture utente codice                                                                                     | Azione                    | Effetti sulle prestazioni di EF4                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Effetti sulle prestazioni di EF5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Effetti sulle prestazioni di EF6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 |:-----------------------------------------------------------------------------------------------------|:--------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `using(var db = new MyContext())` <br/> `{`                                                          | Creazione rapida          | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `using(var db = new MyContext())` <br/> `{`                                                          | Creazione del contesto          | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Medio                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `  var q1 = ` <br/> `    from c in db.Customers` <br/> `    where c.Id == id1` <br/> `    select c;` | Creazione di espressioni di query | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `  var c1 = q1.First();`                                                                             | Esecuzione di query LINQ      | -Metadata ~~caricamento~~ ricerca: ~~Elevata ma memorizzati nella cache~~ bassa <br/> -Visualizzare ~~generazione~~ ricerca: ~~Potenzialmente molto alta ma memorizzati nella cache~~ bassa <br/> -Versione di valutazione parametro: Medio <br/> : Esegue una query ~~traduzione~~ ricerca: Medio <br/> -Materializzatore ~~generazione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Esecuzione di query database: Potenzialmente elevato <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medio <br/> -Ricerca identity: Medio | -Metadata ~~caricamento~~ ricerca: ~~Elevata ma memorizzati nella cache~~ bassa <br/> -Visualizzare ~~generazione~~ ricerca: ~~Potenzialmente molto alta ma memorizzati nella cache~~ bassa <br/> -Versione di valutazione parametro: Bassa <br/> : Esegue una query ~~traduzione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Materializzatore ~~generazione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Esecuzione di query database: Potenzialmente elevato (più query in alcune situazioni) <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medio <br/> -Ricerca identity: Medio | -Metadata ~~caricamento~~ ricerca: ~~Elevata ma memorizzati nella cache~~ bassa <br/> -Visualizzare ~~generazione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Versione di valutazione parametro: Bassa <br/> : Esegue una query ~~traduzione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Materializzatore ~~generazione~~ ricerca: ~~Media ma memorizzati nella cache~~ bassa <br/> -Esecuzione di query database: Potenzialmente elevato (più query in alcune situazioni) <br/> + Venga <br/> + Command.ExecuteReader <br/> + DataReader.Read <br/> Materializzazione degli oggetti: Medium (più veloce rispetto a EF5) <br/> -Ricerca identity: Medio |
-| `}`                                                                                                  | Connection          | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `  var c1 = q1.First();`                                                                             | Esecuzione di query LINQ      | -Ricerca ~~caricamento~~ metadati: ~~Elevato ma memorizzato nella cache~~ Basso <br/> -Visualizza ricerca ~~generazione~~ : ~~Potenzialmente molto elevato ma memorizzato nella cache~~ Basso <br/> -Valutazione parametri: Medio <br/> -Ricerca ~~conversione~~ query: Medio <br/> -Ricerca di ~~generazione~~ del materializzatore: ~~Medio ma memorizzato nella cache~~ Basso <br/> -Esecuzione query database: Potenzialmente elevato <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Medio <br/> -Ricerca identità: Medio | -Ricerca ~~caricamento~~ metadati: ~~Elevato ma memorizzato nella cache~~ Basso <br/> -Visualizza ricerca ~~generazione~~ : ~~Potenzialmente molto elevato ma memorizzato nella cache~~ Basso <br/> -Valutazione parametri: Bassa <br/> -Ricerca ~~conversione~~ query: ~~Medio ma memorizzato nella cache~~ Basso <br/> -Ricerca di ~~generazione~~ del materializzatore: ~~Medio ma memorizzato nella cache~~ Basso <br/> -Esecuzione query database: Potenzialmente elevato (query migliori in alcune situazioni) <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Medio <br/> -Ricerca identità: Medio | -Ricerca ~~caricamento~~ metadati: ~~Elevato ma memorizzato nella cache~~ Basso <br/> -Visualizza ricerca ~~generazione~~ : ~~Medio ma memorizzato nella cache~~ Basso <br/> -Valutazione parametri: Bassa <br/> -Ricerca ~~conversione~~ query: ~~Medio ma memorizzato nella cache~~ Basso <br/> -Ricerca di ~~generazione~~ del materializzatore: ~~Medio ma memorizzato nella cache~~ Basso <br/> -Esecuzione query database: Potenzialmente elevato (query migliori in alcune situazioni) <br/> + Connessione. Apri <br/> + Command. ExecuteReader <br/> + DataReader. Read <br/> Materializzazione dell'oggetto: Media (più veloce di EF5) <br/> -Ricerca identità: Medio |
+| `}`                                                                                                  | Connection. Close          | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Bassa                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 
-Esistono diversi modi per ridurre l'impatto sulle prestazioni delle query sia ad accesso frequente e meno attivi e prenderemo in esame tali nella sezione seguente. In particolare, esamineremo riducendo il costo del modello il caricamento nelle query ad accesso sporadico usando le visualizzazioni pregenerate, che consentono di risolvere problematiche delle prestazioni esperti durante la generazione di visualizzazioni. Per le query a caldo, illustreremo la memorizzazione nella cache piano di query, nessuna query di rilevamento e le opzioni di esecuzione di query diversi.
+Esistono diversi modi per ridurre il costo delle prestazioni di query sia a freddo che a caldo, che verranno esaminati nella sezione seguente. In particolare, si esaminerà la riduzione dei costi del caricamento del modello nelle query a freddo usando visualizzazioni pregenerate, che consentono di ridurre i problemi di prestazioni riscontrati durante la generazione della visualizzazione. Per le query a caldo, verrà illustrata la memorizzazione nella cache del piano di query, nessuna query di rilevamento e diverse opzioni di esecuzione delle query.
 
-### <a name="21-what-is-view-generation"></a>2.1 What ' s generazione di viste?
+### <a name="21-what-is-view-generation"></a>2,1 che cos'è la generazione di viste?
 
-Per comprendere quale visualizzazione viene generazione, è innanzitutto necessario conoscere quali sono "Mapping di viste". Le visualizzazioni di mapping sono rappresentazioni eseguibili delle trasformazioni specificate nel mapping per tutti i set di entità e associazioni. Internamente, queste visualizzazioni mapping assumere la forma di CQTs (strutture ad albero query canoniche). Esistono due tipi di visualizzazioni dei mapping:
+Per comprendere la generazione di visualizzazioni, è prima di tutto necessario comprendere quali sono le "viste di mapping". Le visualizzazioni di mapping sono rappresentazioni eseguibili delle trasformazioni specificate nel mapping per ogni set di entità e associazione. Internamente, queste viste di mapping hanno la forma di CQTs (alberi delle query canoniche). Esistono due tipi di visualizzazioni di mapping:
 
--   Eseguire query sulle viste: rappresentano le trasformazioni necessarie per passare dallo schema del database al modello concettuale.
--   Aggiornare le viste: rappresentano le trasformazioni necessarie per passare dal modello concettuale allo schema del database.
+-   Visualizzazioni di query: rappresentano la trasformazione necessaria per passare dallo schema del database al modello concettuale.
+-   Update views: rappresentano la trasformazione necessaria per passare dal modello concettuale allo schema del database.
 
-Tenere presente che il modello concettuale potrebbe essere diverso dallo schema del database in vari modi. Ad esempio, una singola tabella potrebbe essere utilizzata per archiviare i dati per due tipi di entità diversi. Ereditarietà e i mapping non semplice svolgono un ruolo in base alla complessità delle viste di mapping.
+Tenere presente che il modello concettuale potrebbe differire dallo schema del database in vari modi. Ad esempio, è possibile usare una singola tabella per archiviare i dati per due tipi di entità diversi. I mapping di ereditarietà e non banale svolgono un ruolo nella complessità delle visualizzazioni di mapping.
 
-Il processo di elaborazione di tali visualizzazioni in base alla specifica del mapping è ciò che chiamiamo generazione di visualizzazioni. Generazione di visualizzazioni può sia avvenire in modo dinamico quando viene caricato un modello o in fase di compilazione usando "visualizzazioni pregenerate"; quest'ultimo viene serializzato sotto forma di istruzioni Entity SQL a C\# o file di Visual Basic.
+Il processo di calcolo di queste visualizzazioni in base alla specifica del mapping è quello che viene chiamato generazione viste. La generazione della vista può essere eseguita in modo dinamico quando viene caricato un modello o in fase di compilazione usando "visualizzazioni pregenerate"; quest'ultimo viene serializzato sotto forma di Entity SQL istruzioni in un file C @ no__t-0 o VB.
 
-Quando vengono generate le visualizzazioni, essi vengono anche convalidati. Dal punto di vista delle prestazioni, la maggior parte del costo di generazione di visualizzazioni è effettivamente la convalida delle visualizzazioni che assicura che le connessioni tra le entità ha senso e avere la cardinalità corretta per tutte le operazioni supportate.
+Vengono convalidate anche le visualizzazioni generate. Dal punto di vista delle prestazioni, la maggior parte del costo della generazione di visualizzazioni è in realtà la convalida delle visualizzazioni, che garantisce che le connessioni tra le entità abbiano senso e abbiano la cardinalità corretta per tutte le operazioni supportate.
 
-Quando viene eseguita una query su un set di entità, la query viene combinata con la visualizzazione di query corrispondente, e il risultato di questa composizione di viene eseguito tramite il compilatore di piano per creare la rappresentazione della query che può comprendere l'archivio di backup. Per SQL Server, il risultato finale di questa compilazione è un'istruzione T-SQL SELECT. La prima volta che viene eseguito un aggiornamento su un set di entità, la visualizzazione di aggiornamento viene eseguita tramite una procedura simile per trasformarlo in istruzioni DML per il database di destinazione.
+Quando viene eseguita una query su un set di entità, la query viene combinata con la visualizzazione di query corrispondente e il risultato di questa composizione viene eseguito tramite il compilatore del piano per creare la rappresentazione della query che l'archivio di backup può comprendere. Per SQL Server, il risultato finale di questa compilazione sarà un'istruzione T-SQL SELECT. La prima volta che si esegue un aggiornamento su un set di entità, la vista aggiornamento viene eseguita tramite un processo simile per trasformarla in istruzioni DML per il database di destinazione.
 
-### <a name="22-factors-that-affect-view-generation-performance"></a>2.2 fattori che influiscono sulle prestazioni di generazione di visualizzazioni
+### <a name="22-factors-that-affect-view-generation-performance"></a>2,2 fattori che influiscono sulle prestazioni della generazione di visualizzazioni
 
-Le prestazioni del passaggio di generazione di visualizzazione dipende non solo la dimensione del modello ma anche il modello è la modalità interconnesse. Se due entità sono connessi tramite una catena di ereditarietà o un'associazione, essi sono chiamati gruppi connessi. Allo stesso modo se le due tabelle sono connesse tramite una chiave esterna, sono connessi. Come aumenta il numero di connessa entità e tabelle negli schemi, la generazione di visualizzazioni costo aumenta.
+Le prestazioni del passaggio di generazione della vista non solo dipendono dalle dimensioni del modello, ma anche dalla modalità di interconnessione del modello. Se due entità sono connesse tramite una catena di ereditarietà o un'associazione, viene detto che sono connesse. Analogamente, se due tabelle sono connesse tramite una chiave esterna, sono connesse. Man mano che aumenta il numero di tabelle e entità connesse negli schemi, aumenta il costo della generazione della vista.
 
-L'algoritmo che viene usato per generare e convalidare le viste è esponenziale nel peggiore dei casi, anche se usiamo alcune ottimizzazioni per migliorare questa soglia. Di seguito sono riportati i fattori principali che sembrano influire negativamente sulle prestazioni:
+L'algoritmo utilizzato per generare e convalidare le visualizzazioni è esponenziale nel peggiore dei casi, sebbene vengano utilizzate alcune ottimizzazioni per migliorare questa situazione. I fattori più importanti che sembrano influire negativamente sulle prestazioni sono:
 
--   Dimensione del modello, che fa riferimento al numero di entità e la quantità di associazioni tra queste entità.
--   Complessità del modello, in particolare dell'ereditarietà che include un numero elevato di tipi.
--   Utilizzo di associazioni indipendenti, invece di associazioni di chiavi esterne.
+-   Dimensioni del modello, che fanno riferimento al numero di entità e alla quantità di associazioni tra queste entità.
+-   Complessità del modello, in particolare l'ereditarietà che interessa un numero elevato di tipi.
+-   Uso di associazioni indipendenti, anziché associazioni di chiavi esterne.
 
-Per i modelli di piccole dimensioni, semplici il costo può essere sufficientemente ridotto per evitare di non dover usando le visualizzazioni pregenerate. Come aumentare la dimensione del modello e la complessità, esistono diverse opzioni disponibili per ridurre il costo di convalida e generazione di visualizzazioni.
+Per piccoli modelli semplici, il costo può essere sufficientemente piccolo da non interferire con le visualizzazioni generate in precedenza. Con l'aumentare delle dimensioni e della complessità del modello, sono disponibili diverse opzioni per ridurre i costi di generazione e convalida della visualizzazione.
 
-### <a name="23-using-pre-generated-views-to-decrease-model-load-time"></a>Il tempo di caricamento 2,3 mediante Pre-Generated le viste per ridurre i modelli
+### <a name="23-using-pre-generated-views-to-decrease-model-load-time"></a>2,3 utilizzo di visualizzazioni pregenerate per ridurre il tempo di caricamento del modello
 
-Per informazioni dettagliate su come usare le visualizzazioni pregenerate su Entity Framework 6 visitare [Pre-Generated Mapping viste](~/ef6/fundamentals/performance/pre-generated-views.md)
+Per informazioni dettagliate su come usare le visualizzazioni generate in precedenza in Entity Framework 6, vedere [viste di mapping predefinite](~/ef6/fundamentals/performance/pre-generated-views.md)
 
-#### <a name="231-pre-generated-views-using-the-entity-framework-power-tools-community-edition"></a>2.3.1 le visualizzazioni pregenerate con la Community Edition di Entity Framework Power Tools
+#### <a name="231-pre-generated-views-using-the-entity-framework-power-tools-community-edition"></a>2.3.1 visualizzazioni pre-generate con Entity Framework Power Tools Community Edition
 
-È possibile usare la [Entity Framework 6 Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition) per generare visualizzazioni di file EDMX e Code First modelli facendo clic sul file della classe modello e utilizzare il menu di Entity Framework per selezionare "Genera visualizzazioni". L'edizione Community di Entity Framework Power Tools funzionano solo sui contesti di DbContext derivata.
+È possibile usare il [Entity Framework 6 Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition) per generare visualizzazioni di modelli EDMX e Code First facendo clic con il pulsante destro del mouse sul file di classe del modello e usando il menu Entity Framework per selezionare "genera visualizzazioni". I Entity Framework Power Tools Community Edition funzionano solo con i contesti derivati da DbContext.
 
-#### <a name="232-how-to-use-pre-generated-views-with-a-model-created-by-edmgen"></a>2.3.2 come usare le visualizzazioni pregenerate con un modello creato da EDMGen
+#### <a name="232-how-to-use-pre-generated-views-with-a-model-created-by-edmgen"></a>2.3.2 come usare le visualizzazioni generate in precedenza con un modello creato da EDMGen
 
-EDMGen è un'utilità che viene fornito con .NET e funziona con Entity Framework 4 e 5, ma non con Entity Framework 6. EDMGen consente di generare un file di modello, il livello di oggetti e le viste dalla riga di comando. Uno degli output sarà un file di visualizzazioni nel tuo linguaggio preferito, Visual Basic o C\#. Si tratta di un file di codice contenente frammenti Entity SQL per ogni set di entità. Per abilitare le visualizzazioni pregenerate, è sufficiente includere il file nel progetto.
+EDMGen è un'utilità fornita con .NET e funziona con Entity Framework 4 e 5, ma non con Entity Framework 6. EDMGen consente di generare un file di modello, il livello oggetti e le visualizzazioni dalla riga di comando. Uno degli output sarà un file di viste nella lingua preferita, VB o C @ no__t-0. Si tratta di un file di codice contenente Entity SQL frammenti per ogni set di entità. Per abilitare le visualizzazioni generate in precedenza, è sufficiente includere il file nel progetto.
 
-Se si apportano manualmente le modifiche ai file di schema per il modello, è necessario generare di nuovo il file di viste. È possibile farlo eseguendo EDMGen con il **/mode:ViewGeneration** flag.
+Se si apportano manualmente modifiche ai file di schema per il modello, sarà necessario rigenerare il file delle visualizzazioni. Per eseguire questa operazione, è possibile eseguire EDMGen con il flag **/mode: ViewGeneration** .
 
-#### <a name="233-how-to-use-pre-generated-views-with-an-edmx-file"></a>2.3.3 come usare le visualizzazioni Pre-Generated con un file EDMX
+#### <a name="233-how-to-use-pre-generated-views-with-an-edmx-file"></a>2.3.3 come usare le visualizzazioni generate in precedenza con un file EDMX
 
-È inoltre possibile utilizzare EDMGen per generare visualizzazioni per un file EDMX: l'argomento di cui viene fatto riferimento in precedenza MSDN viene descritto come aggiungere un evento di pre-compilazione per eseguire questa operazione - ma questo è complicato e vi sono casi in cui non è possibile. È in genere più semplice usare un modello T4 per generare le viste quando il modello è in un file edmx.
+È anche possibile usare EDMGen per generare visualizzazioni per un file EDMX. l'argomento di MSDN a cui si fa riferimento in precedenza descrive come aggiungere un evento di pre-compilazione a tale scopo, ma questo è complesso e in alcuni casi non è possibile. In genere, è più semplice usare un modello T4 per generare le visualizzazioni quando il modello è in un file edmx.
 
-Blog del team di ADO.NET è una richiesta post che descrive come usare un modello T4 per la generazione di visualizzazioni ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>). Questo post include un modello che può essere scaricato e aggiunti al progetto. Il modello è stato scritto per la prima versione di Entity Framework, in modo che non è garantite per lavorare con le versioni più recenti di Entity Framework. Tuttavia, è possibile scaricare un set più aggiornato dei modelli di generazione di visualizzazione per Entity Framework 4 e 5from Visual Studio Gallery:
+Blog del team di ADO.NET è una richiesta post che descrive come usare un modello T4 per la generazione di visualizzazioni ( \<http://blogs.msdn.com/b/adonet/archive/2008/06/20/how-to-use-a-t4-template-for-view-generation.aspx>). Questo post include un modello che può essere scaricato e aggiunto al progetto. Il modello è stato scritto per la prima versione di Entity Framework, quindi non è garantito che funzioni con le versioni più recenti di Entity Framework. Tuttavia, è possibile scaricare un set più aggiornato di modelli di generazione delle visualizzazioni per Entity Framework 4 e 5from in Visual Studio Gallery:
 
--   VB.NET: \<http://visualstudiogallery.msdn.microsoft.com/118b44f2-1b91-4de2-a584-7a680418941d>
+-   VB.NET: \< @ NO__T-1
 -   C\#: \<http://visualstudiogallery.msdn.microsoft.com/ae7730ce-ddab-470f-8456-1b313cd2c44d>
 
 Se si usa Entity Framework 6 è possibile ottenere la visualizzazione generazione T4 i modelli Visual Studio Gallery all'indirizzo \<http://visualstudiogallery.msdn.microsoft.com/18a7db90-6705-4d19-9dd1-0a6c23d0751f>.
 
-### <a name="24-reducing-the-cost-of-view-generation"></a>2.4 riducendo i costi di generazione di visualizzazioni
+### <a name="24-reducing-the-cost-of-view-generation"></a>2,4 riduzione del costo della generazione di visualizzazioni
 
-Usando le visualizzazioni pregenerate sposta il costo della generazione di visualizzazioni dal modello di caricamento (fase di esecuzione) in fase di progettazione. Anche se ciò migliora le prestazioni di avvio in fase di esecuzione, si continuerà a verificarsi i problemi della generazione di visualizzazioni mentre si sta sviluppando. Esistono alcuni suggerimenti aggiuntivi che consentono di ridurre il costo della generazione di visualizzazioni, sia in fase di compilazione e fase di esecuzione.
+L'utilizzo di visualizzazioni pregenerate consente di spostare il costo della generazione di visualizzazioni dal caricamento del modello (tempo di esecuzione) al momento della progettazione. Sebbene questo miglioramento migliori le prestazioni di avvio in fase di esecuzione, si verificherà comunque il dolore della generazione di visualizzazioni durante lo sviluppo. Ci sono diversi trucchi aggiuntivi che consentono di ridurre il costo di generazione delle visualizzazioni, sia in fase di compilazione che in fase di esecuzione.
 
-#### <a name="241-using-foreign-key-associations-to-reduce-view-generation-cost"></a>2.4.1 utilizzando associazioni di chiavi esterne per ridurre i costi di generazione di visualizzazione
+#### <a name="241-using-foreign-key-associations-to-reduce-view-generation-cost"></a>2.4.1 utilizzo delle associazioni di chiavi esterne per ridurre i costi di generazione delle visualizzazioni
 
-Abbiamo visto un numero di case in cambio le associazioni nel modello da associazioni indipendenti per associazioni di chiavi esterne notevolmente migliorato il tempo impiegato nella generazione di visualizzazioni.
+Sono stati rilevati diversi casi in cui il cambio di associazioni nel modello da associazioni indipendenti a associazioni di chiavi esterne ha migliorato notevolmente il tempo impiegato per la generazione delle visualizzazioni.
 
-Per illustrare questo miglioramento, viene generato due versioni del modello Navision utilizzando EDMGen. *Nota: vedere l'appendice C per una descrizione del modello Navision.* Il modello Navision è interessante per questo esercizio a causa di un relativo quantità molto elevata di entità e relazioni tra di essi.
+Per illustrare questo miglioramento, sono state generate due versioni del modello Navision usando EDMGen. *Nota: per una descrizione del modello Navision, vedere l'Appendice C.* Il modello di Navision è interessante per questo esercizio a causa della quantità molto elevata di entità e relazioni tra di esse.
 
-È stata generata una versione di questo modello di dimensioni molto grande con associazioni di chiavi esterne e l'altro è stato generato con associazioni indipendenti. Abbiamo quindi programmato il tempo impiegato per generare le visualizzazioni per ogni modello. Entity Framework 5 test usato il metodo GenerateViews() dalla classe EntityViewGenerator per generare le visualizzazioni, mentre il test di Entity Framework 6 usato il metodo GenerateViews() dalla classe StorageMappingItemCollection sia. Ciò a causa di un codice ristrutturazione che si sono verificati nella codebase Entity Framework 6.
+Una versione di questo modello di grandi dimensioni è stata generata con le associazioni di chiavi esterne e l'altra è stata generata con associazioni indipendenti. È stato quindi programmato il tempo impiegato per generare le visualizzazioni per ogni modello. Entity Framework 5 test usava il Metodo GenerateViews () dalla classe EntityViewGenerator per generare le visualizzazioni, mentre il test Entity Framework 6 usava il Metodo GenerateViews () dalla classe StorageMappingItemCollection. A causa della ristrutturazione del codice che si è verificata nella codebase Entity Framework 6.
 
-Usa Entity Framework 5, generazione di visualizzazioni per il modello con le chiavi esterne sono necessari 65 minuti in un computer di laboratorio. Non è noto quanto tempo ci sarebbero voluti per generare le visualizzazioni per il modello utilizzato associazioni indipendenti. È stato lasciato il test in esecuzione per più di un mese prima che il computer è stato riavviato nel nostro laboratorio per installare gli aggiornamenti mensili.
+Utilizzando Entity Framework 5, la generazione di visualizzazioni per il modello con chiavi esterne richiede 65 minuti in un computer lab. È sconosciuto quanto tempo sarebbe stato necessario per generare le visualizzazioni per il modello che usava associazioni indipendenti. Il test è stato lasciato in esecuzione per più di un mese prima che il computer venisse riavviato nel Lab per installare gli aggiornamenti mensili.
 
-Con Entity Framework 6, generazione di visualizzazioni per il modello con le chiavi esterne ha impiegato 28 secondi nello stesso computer lab. Generazione di visualizzazioni per il modello che utilizza associazioni indipendenti impiegato 58 secondi. I miglioramenti di fine per Entity Framework 6 nel relativo codice di generazione di visualizzazione significa che molti progetti non sarà necessario le visualizzazioni pregenerate per ottenere tempi di avvio.
+Utilizzando Entity Framework 6, la generazione di visualizzazioni per il modello con chiavi esterne ha impiegato 28 secondi nello stesso computer lab. La generazione di visualizzazioni per il modello che usa associazioni indipendenti impiega 58 secondi. I miglioramenti apportati a Entity Framework 6 sul codice di generazione della visualizzazione significa che molti progetti non necessitano di visualizzazioni pre-generate per ottenere tempi di avvio più rapidi.
 
-È importante osservazione pregenerazione di visualizzazioni in Entity Framework 4 e 5 possono essere eseguite con EDMGen o Entity Framework Power Tools. Per la visualizzazione di Entity Framework 6 generazione può essere eseguita tramite Entity Framework Power Tools o a livello di programmazione come descritto in [Pre-Generated Mapping viste](~/ef6/fundamentals/performance/pre-generated-views.md).
+È importante ricordare che le visualizzazioni di pre-generazione in Entity Framework 4 e 5 possono essere eseguite con EDMGen o con Entity Framework Power Tools. Per Entity Framework 6 la generazione di visualizzazioni può essere eseguita tramite l'Entity Framework Power Tools o a livello di codice, come descritto in [viste di mapping pregenerate](~/ef6/fundamentals/performance/pre-generated-views.md).
 
-##### <a name="2411-how-to-use-foreign-keys-instead-of-independent-associations"></a>2.4.1.1 come usare le chiavi esterne anziché associazioni indipendenti
+##### <a name="2411-how-to-use-foreign-keys-instead-of-independent-associations"></a>2.4.1.1 come usare le chiavi esterne anziché le associazioni indipendenti
 
-Quando si utilizza EDMGen o Entity Designer in Visual Studio, si ottengono le chiavi esterne per impostazione predefinita, e sono necessari solo un singolo flag casella di controllo o della riga di comando per passare tra le chiavi esterne e IAs.
+Quando si usa EDMGen o il Entity Designer in Visual Studio, si ottiene FKs per impostazione predefinita e si accetta solo una singola casella di controllo o flag della riga di comando per passare da FKs a IAs e viceversa.
 
-Se si dispone di un modello Code First di grandi dimensioni, con associazioni indipendenti avrà lo stesso effetto sulla generazione di visualizzazione. Per evitare questo impatto, incluse le proprietà di chiave esterna per le classi per gli oggetti dipendenti, anche se alcuni sviluppatori prenderà in considerazione questa opzione per essere possano contaminare relativo modello a oggetti. È possibile trovare altre informazioni su questo argomento in \<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>.
+Se si dispone di un modello di Code First di grandi dimensioni, l'utilizzo di associazioni indipendenti avrà lo stesso effetto sulla generazione della vista. È possibile evitare questo effetto includendo le proprietà di chiave esterna nelle classi per gli oggetti dipendenti, anche se alcuni sviluppatori considereranno questa operazione per inquinare il modello a oggetti. È possibile trovare altre informazioni su questo argomento in \<http://blog.oneunicorn.com/2011/12/11/whats-the-deal-with-mapping-foreign-keys-using-the-entity-framework/>.
 
 | Quando si usa      | Eseguire questa operazione                                                                                                                                                                                                                                                                                                                              |
 |:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Finestra di progettazione entità | Dopo l'aggiunta di un'associazione tra due entità, assicurarsi di avere un vincolo referenziale. I vincoli referenziali indicano a Entity Framework di usare le chiavi esterne anziché associazioni indipendenti. Per altri dettagli, visitare \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
-| EDMGen          | Quando si utilizza EDMGen per generare i file dal database, verrà rispettate e aggiunte al modello di conseguenza le chiavi esterne. Per altre informazioni sulle differenti opzioni esposte da EDMGen visita [http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx).                           |
-| Code First      | Vedere la sezione "Relazione convenzione" i [convenzioni del primo codice](~/ef6/modeling/code-first/conventions/built-in.md) argomento per informazioni su come includere proprietà di chiave esterna per oggetti dipendenti quando si utilizza Code First.                                                                                              |
+| Finestra di progettazione entità | Dopo aver aggiunto un'associazione tra due entità, assicurarsi di disporre di un vincolo referenziale. I vincoli referenziali indicano Entity Framework usare chiavi esterne anziché associazioni indipendenti. Per altri dettagli, visitare \<http://blogs.msdn.com/b/efdesign/archive/2009/03/16/foreign-keys-in-the-entity-framework.aspx>. |
+| EDMGen          | Quando si usa EDMGen per generare i file dal database, le chiavi esterne verranno rispettate e aggiunte al modello come tali. Per altre informazioni sulle differenti opzioni esposte da EDMGen visita [http://msdn.microsoft.com/library/bb387165.aspx](https://msdn.microsoft.com/library/bb387165.aspx).                           |
+| Code First      | Per informazioni su come includere proprietà di chiave esterna sugli oggetti dipendenti quando si usa Code First, vedere la sezione relativa alla Convenzione delle relazioni nell'argomento [convenzioni Code First](~/ef6/modeling/code-first/conventions/built-in.md) .                                                                                              |
 
-#### <a name="242-moving-your-model-to-a-separate-assembly"></a>2.4.2 lo spostamento del modello in un assembly separato
+#### <a name="242-moving-your-model-to-a-separate-assembly"></a>2.4.2 passaggio del modello a un assembly separato
 
-Quando il modello è inclusa direttamente nel progetto dell'applicazione e si generano visualizzazioni tramite un evento di pre-compilazione o un modello T4, convalida e generazione di visualizzazioni avrà luogo ogni volta che il progetto viene ricompilato, anche se il modello non è stato modificato. Se si sposta il modello in un assembly separato e farvi riferimento dal progetto dell'applicazione, è possibile apportare altre modifiche all'applicazione senza la necessità di ricompilare il progetto contenente il modello.
+Quando il modello è incluso direttamente nel progetto dell'applicazione e le visualizzazioni vengono generate tramite un evento di pre-compilazione o un modello T4, la generazione e la convalida della visualizzazione verranno applicate ogni volta che il progetto viene ricompilato, anche se il modello non è stato modificato. Se si sposta il modello in un assembly separato e vi si fa riferimento dal progetto dell'applicazione, è possibile apportare altre modifiche all'applicazione senza dover ricompilare il progetto che contiene il modello.
 
-*Nota:*  quando si passa il modello per separare gli assembly ricordare di copiare le stringhe di connessione per il modello nel file di configurazione dell'applicazione del progetto client.
+*Nota:*  when lo stato spostato in assembly separati ricordare di copiare le stringhe di connessione per il modello nel file di configurazione dell'applicazione del progetto client.
 
 #### <a name="243-disable-validation-of-an-edmx-based-model"></a>2.4.3 disabilitare la convalida di un modello basato su edmx
 
-Modelli EDMX vengono convalidati in fase di compilazione, anche se il modello rimane invariato. Se il modello è già stato convalidato, è possibile eliminare la convalida in fase di compilazione impostando la proprietà "Convalidare nella Build" su false nella finestra Proprietà. Quando si modifica il mapping o un modello, è possibile temporaneamente abilitare nuovamente la convalida per verificare le modifiche.
+I modelli EDMX vengono convalidati in fase di compilazione, anche se il modello è invariato. Se il modello è già stato convalidato, è possibile disattivare la convalida in fase di compilazione impostando la proprietà "convalida su compilazione" su false nella finestra Proprietà. Quando si modifica il mapping o il modello, è possibile riabilitare temporaneamente la convalida per verificare le modifiche.
 
-Si noti che sono stati apportati miglioramenti delle prestazioni per la finestra di progettazione di Entity Framework per Entity Framework 6 e il costo della "convalida su Build" è molto minore rispetto a versioni precedenti della finestra di progettazione.
+Si noti che sono stati apportati miglioramenti alle prestazioni per la Entity Framework Designer per Entity Framework 6 e il costo della "convalida per compilazione" è molto più basso rispetto alle versioni precedenti della finestra di progettazione.
 
-## <a name="3-caching-in-the-entity-framework"></a>La memorizzazione nella cache 3 di Entity Framework
+## <a name="3-caching-in-the-entity-framework"></a>3 Caching nella Entity Framework
 
-Entity Framework presenta le seguenti forme di memorizzazione nella cache predefinite:
+Entity Framework presenta le seguenti forme di Caching predefinite:
 
-1.  La memorizzazione nella cache dell'oggetto: ObjectStateManager incorporato in un'istanza di ObjectContext tiene traccia in memoria degli oggetti che sono state recuperate mediante tale istanza. Ciò è noto anche come cache di primo livello.
-2.  Caching di piano di query - riutilizzando il comando di archiviazione generato quando una query viene eseguita più volte.
-3.  Metadati di memorizzazione nella cache, i metadati per un modello di condivisione tra le diverse connessioni allo stesso modello.
+1.  Caching degli oggetti: il ObjectStateManager incorporato in un'istanza di ObjectContext tiene traccia della memoria degli oggetti recuperati usando tale istanza. Questa operazione è nota anche come cache di primo livello.
+2.  Caching del piano di query: riutilizzo del comando di archiviazione generato quando una query viene eseguita più volte.
+3.  Caching dei metadati: condivisione dei metadati per un modello tra connessioni diverse allo stesso modello.
 
-Oltre alla cache che Entity Framework fornisce per impostazione predefinita, un tipo speciale di provider di dati ADO.NET, noto come un provider di ritorno a capo può essere usato anche per estendere Entity Framework con una cache per i risultati recuperati dal database, noto anche come la memorizzazione nella cache di secondo livello.
+Oltre alle cache fornite da Entity Framework, è possibile usare un tipo speciale di provider di dati ADO.NET noto come provider di wrapping per estendere Entity Framework con una cache per i risultati recuperati dal database, nota anche come memorizzazione nella cache di secondo livello.
 
-### <a name="31-object-caching"></a>3.1 oggetti nella cache
+### <a name="31-object-caching"></a>3,1 Caching oggetti
 
-Per impostazione predefinita quando nei risultati di una query, viene restituita un'entità poco prima che Entity Framework consente di materializzare, ObjectContext controllerà se un'entità con la stessa chiave è già stata caricata nel relativo ObjectStateManager. Se è già presente un'entità con le stesse chiavi EF verranno includerlo nei risultati della query. Anche se EF genererà comunque la query sul database, questo comportamento può ignorare la maggior parte del costo di materializzazione di entità più volte.
+Per impostazione predefinita, quando un'entità viene restituita nei risultati di una query, appena prima che EF lo materializza, ObjectContext verificherà se un'entità con la stessa chiave è già stata caricata nel relativo ObjectStateManager. Se un'entità con le stesse chiavi è già presente, EF li includerà nei risultati della query. Sebbene EF continui a eseguire la query sul database, questo comportamento può ignorare gran parte del costo di materializzazione dell'entità più volte.
 
-#### <a name="311-getting-entities-from-the-object-cache-using-dbcontext-find"></a>3.1.1 ottenere entità dalla cache degli oggetti tramite la ricerca di DbContext
+#### <a name="311-getting-entities-from-the-object-cache-using-dbcontext-find"></a>3.1.1 ottenere entità dalla cache oggetti usando DbContext Find
 
-A differenza di una query normali, il metodo Find nella DbSet (API incluse per la prima volta in Entity Framework 4.1) eseguirà una ricerca in memoria prima di rilasciare anche le query sul database. È importante notare che due istanze diverse di ObjectContext avrà due istanze diverse di ObjectStateManager, vale a dire che hanno le cache di oggetti distinta.
+A differenza di una normale query, il metodo Find in DbSet (le API incluse per la prima volta in EF 4,1) eseguirà una ricerca in memoria prima di emettere anche la query sul database. È importante tenere presente che due diverse istanze di ObjectContext avranno due diverse istanze di ObjectStateManager, vale a dire che hanno cache di oggetti separate.
 
-Ricerca Usa il valore della chiave primaria per tentare di trovare un'entità rilevata dal contesto. Se l'entità non è presente nel contesto quindi verrà eseguita e valutare rispetto al database una query e viene restituito null se l'entità non viene trovato nel contesto o nel database. Si noti che Find restituisce anche le entità che sono stati aggiunti al contesto, ma non sono ancora state salvate nel database.
+Trova usa il valore della chiave primaria per tentare di trovare un'entità rilevata dal contesto. Se l'entità non è nel contesto, una query viene eseguita e valutata rispetto al database e viene restituito null se l'entità non viene trovata nel contesto o nel database. Si noti che Find restituisce anche le entità che sono state aggiunte al contesto ma che non sono ancora state salvate nel database.
 
-È una considerazione sulle prestazioni da intraprendere quando si usa Cerca. Le chiamate a questo metodo per impostazione predefinita verranno attivata una convalida della cache oggetti per rilevare le modifiche che sono ancora in attesa di commit nel database. Questo processo può risultare dispendioso se sono presenti un numero molto elevato di oggetti nella cache degli oggetti o in un grafico di oggetti di grandi dimensioni da aggiungere alla cache degli oggetti, ma può anche essere disabilitato. In alcuni casi, si potrebbero percepire su un ordine di grandezza della differenza tra la chiamata di trova il metodo quando si disabilita automaticamente di rilevare le modifiche. Ancora un secondo ordine di grandezza viene percepito quando l'oggetto è effettivamente nella cache rispetto a quando l'oggetto deve essere recuperato dal database. Ecco un esempio di grafico con misurazioni effettuate utilizzando alcuni dei nostri microbenchmarks, espresso in millisecondi, con un carico di 5000 entità:
+È necessario prendere in considerazione le prestazioni quando si usa find. Per impostazione predefinita, le chiamate a questo metodo attiverà una convalida della cache degli oggetti per rilevare le modifiche ancora in sospeso al database. Questo processo può essere molto dispendioso se è presente un numero molto elevato di oggetti nella cache degli oggetti o un oggetto grafico di grandi dimensioni aggiunto alla cache degli oggetti, ma può anche essere disabilitato. In alcuni casi, è possibile percepire un ordine di grandezza della differenza nella chiamata al metodo Find quando si disabilitano le modifiche del rilevamento automatico. Tuttavia, un secondo ordine di grandezza viene percepito quando l'oggetto è effettivamente nella cache rispetto al momento in cui l'oggetto deve essere recuperato dal database. Ecco un grafico di esempio con le misurazioni eseguite usando alcuni microbenchmark, espressi in millisecondi, con un carico di 5000 entità:
 
-![.NET 4.5 scala logaritmica](~/ef6/media/net45logscale.png ".NET 4.5 - scala logaritmica")
+![Scala logaritmica .net 4,5](~/ef6/media/net45logscale.png ".NET 4,5-scala logaritmica")
 
-Esempio di ricerca con rilevamento automatico delle modifiche disabilitato:
+Esempio di ricerca con modifiche di rilevamento automatico disabilitate:
 
 ``` csharp
     context.Configuration.AutoDetectChangesEnabled = false;
@@ -186,30 +186,30 @@ Esempio di ricerca con rilevamento automatico delle modifiche disabilitato:
     ...
 ```
 
-Ciò che è necessario prendere in considerazione quando si usa il metodo Find è:
+Quando si usa il metodo Find è necessario tenere presente quanto segue:
 
-1.  Se l'oggetto non è presente nella cache sono negare i vantaggi della ricerca, ma la sintassi è ancora più semplice rispetto a una query dalla chiave.
-2.  Se il rilevamento automatico delle modifiche è abilitato il costo di metodo Find può aumentare per un ordine di grandezza o ancora più a seconda della complessità del modello e la quantità di entità nella cache oggetto.
+1.  Se l'oggetto non è nella cache, i vantaggi della ricerca sono negati, ma la sintassi è ancora più semplice rispetto a una query in base alla chiave.
+2.  Se il rilevamento automatico delle modifiche è abilitato, il costo del metodo Find può aumentare di un ordine di grandezza o ancora più a seconda della complessità del modello e della quantità di entità nella cache degli oggetti.
 
-Inoltre, tenere presente che solo trovare restituisce l'entità a cui che si sta cercando e appare automaticamente carica le entità associate se non sono già nella cache degli oggetti. Se si desidera recuperare le entità associate, è possibile utilizzare una query con chiave con il caricamento eager. Per altre informazioni vedere **8.1 Visual Studio il caricamento Lazy. Il caricamento eager**.
+Tenere inoltre presente che Find restituisce solo l'entità che si sta cercando e non carica automaticamente le entità associate se non sono già presenti nella cache degli oggetti. Se è necessario recuperare le entità associate, è possibile utilizzare una query in base alla chiave con caricamento eager. Per ulteriori informazioni, vedere **8,1 caricamento lazy rispetto a Caricamento eager @ no__t-0.
 
-#### <a name="312-performance-issues-when-the-object-cache-has-many-entities"></a>3.1.2 problemi relativi alle prestazioni di quando la cache oggetti ha molte entità
+#### <a name="312-performance-issues-when-the-object-cache-has-many-entities"></a>3.1.2 problemi di prestazioni quando la cache degli oggetti include molte entità
 
-La cache degli oggetti consente di aumentare la velocità di risposta complessiva di Entity Framework. Tuttavia, quando la cache oggetti ha una quantità molto elevata di entità caricata che può influire sulle determinate operazioni, ad esempio Aggiungi, Rimuovi, trovare, voce, SaveChanges e altro ancora. In particolare, operazioni che attivano una chiamata a DetectChanges saranno essere influenzate negativamente dalla cache degli oggetti grandi. DetectChanges Sincronizza l'oggetto grafico con la gestione dello stato degli oggetti e che le prestazioni determinato direttamente dalla dimensione dell'oggetto grafico. Per altre informazioni sulle DetectChanges, vedere [rilevamento delle modifiche nelle entità POCO](https://msdn.microsoft.com/library/dd456848.aspx).
+La cache degli oggetti consente di aumentare la velocità di risposta complessiva del Entity Framework. Tuttavia, quando la cache degli oggetti ha una quantità molto elevata di entità caricate, può influire su determinate operazioni, ad esempio Aggiungi, Rimuovi, trova, immissione, SaveChanges e altro ancora. In particolare, le operazioni che attivano una chiamata a DetectChanges verranno influenzate negativamente dalle cache di oggetti di grandi dimensioni. DetectChanges sincronizza l'oggetto grafico con gestione stato oggetto e le relative prestazioni verranno determinate direttamente dalla dimensione dell'oggetto grafico. Per altre informazioni su DetectChanges, vedere [rilevamento delle modifiche nelle entità poco](https://msdn.microsoft.com/library/dd456848.aspx).
 
-Quando si usa Entity Framework 6, gli sviluppatori sono in grado di chiamare AddRange e RemoveRange direttamente su un elemento DbSet, anziché l'iterazione di una raccolta e la chiamata a Add una volta per ogni istanza. Il vantaggio di usare i metodi di intervallo è che il costo di DetectChanges soltanto una volta per l'intero set di entità anziché una volta per ogni entità aggiunto.
+Quando si usa Entity Framework 6, gli sviluppatori sono in grado di chiamare AddRange e RemoveRange direttamente in un DbSet, anziché eseguire un'iterazione su una raccolta e chiamare Add una volta per ogni istanza. Il vantaggio di usare i metodi di intervallo è che il costo di DetectChanges viene pagato una sola volta per l'intero set di entità, anziché una volta per ogni entità aggiunta.
 
-### <a name="32-query-plan-caching"></a>3.2 eseguire una query la memorizzazione nella cache di piano
+### <a name="32-query-plan-caching"></a>3,2 Caching del piano di query
 
-La prima volta che viene eseguita una query, la chiamata passa attraverso il compilatore piano interna per tradurre le query concettuale il comando di archiviazione (ad esempio T-SQL che viene eseguito se viene eseguito in SQL Server).  Se è abilitata la memorizzazione nella cache piano di query, la volta successiva che la query viene eseguita nell'archivio comando viene recuperato direttamente dalla cache dei piani di query per l'esecuzione, ignorando il compilatore di piano.
+La prima volta che viene eseguita una query, viene eseguito il compilatore del piano interno per tradurre la query concettuale nel comando Store, ad esempio, T-SQL che viene eseguito quando viene eseguito su SQL Server.  Se la memorizzazione nella cache del piano di query è abilitata, la volta successiva che la query viene eseguita, il comando Store viene recuperato direttamente dalla cache dei piani di query per l'esecuzione, ignorando il compilatore del piano.
 
-Cache dei piani di query viene condiviso tra le istanze di ObjectContext all'interno dello stesso AppDomain. Non è necessario mantenere un'istanza di ObjectContext per trarre vantaggio dalla memorizzazione nella cache piano di query.
+La cache dei piani di query è condivisa tra le istanze di ObjectContext nello stesso dominio AppDomain. Non è necessario utilizzare un'istanza di ObjectContext per trarre vantaggio dalla memorizzazione nella cache del piano di query.
 
-#### <a name="321-some-notes-about-query-plan-caching"></a>3.2.1 alcune note sulle Query prevede la memorizzazione nella cache
+#### <a name="321-some-notes-about-query-plan-caching"></a>3.2.1 alcune note sulla memorizzazione nella cache del piano di query
 
--   Cache dei piani di query viene condiviso per tutti i tipi di query: Entity SQL, LINQ to Entities e gli oggetti CompiledQuery.
--   Per impostazione predefinita, la memorizzazione nella cache piano di query è abilitata per le query Entity SQL, se è stata eseguita tramite un EntityCommand o tramite un ObjectQuery. Viene abilitata anche per impostazione predefinita per LINQ alle query di entità in Entity Framework in .NET 4.5 in Entity Framework 6
-    -   Memorizzazione nella cache piano di query può essere disabilitata impostando la proprietà EnablePlanCaching (su EntityCommand o ObjectQuery) su false. Ad esempio:
+-   La cache dei piani di query è condivisa per tutti i tipi di query: Oggetti Entity SQL, LINQ to Entities e CompiledQuery.
+-   Per impostazione predefinita, la memorizzazione nella cache dei piani di query è abilitata per Entity SQL query, eseguite tramite un oggetto EntityCommand o un oggetto ObjectQuery. È anche abilitata per impostazione predefinita per LINQ to Entities query in Entity Framework su .NET 4,5 e in Entity Framework 6
+    -   La memorizzazione nella cache del piano di query può essere disabilitata impostando la proprietà EnablePlanCaching (su EntityCommand o ObjectQuery) su false. Esempio:
 ``` csharp
                     var query = from customer in context.Customer
                                 where customer.CustomerId == id
@@ -221,56 +221,56 @@ Cache dei piani di query viene condiviso tra le istanze di ObjectContext all'int
                     ObjectQuery oQuery = query as ObjectQuery;
                     oQuery.EnablePlanCaching = false;
 ```
--   Per le query con parametri, modificare il valore del parametro ancora raggiungerà la query memorizzato nella cache. Ma modifica i facet del parametro (ad esempio, dimensioni, precisione o scala) destinati a raggiungere una diversa voce nella cache.
--   Quando si usa Entity SQL, la stringa di query è parte della chiave. Se si modifica la query affatto comporterà voci della cache diverso, anche se le query sono funzionalmente equivalenti. Ciò include le modifiche di maiuscole e minuscole o uno spazio vuoto.
--   Quando si utilizza LINQ, la query viene elaborata per generare una parte della chiave. Modifica dell'espressione LINQ pertanto genererà una chiave diversa.
--   Possono applicare altri limiti tecnici; per altre informazioni, vedere autocompilati query.
+-   Per le query con parametri, la modifica del valore del parametro continuerà a raggiungere la query memorizzata nella cache. Tuttavia, la modifica di facet di un parametro (ad esempio, dimensioni, precisione o scala) raggiungerà una voce diversa nella cache.
+-   Quando si usa Entity SQL, la stringa di query fa parte della chiave. La modifica della query comporterà voci di cache diverse, anche se le query sono equivalenti dal punto di vista funzionale. Sono incluse le modifiche apportate a maiuscole o minuscole.
+-   Quando si usa LINQ, la query viene elaborata per generare una parte della chiave. La modifica dell'espressione LINQ genererà pertanto una chiave diversa.
+-   Potrebbero essere applicate altre limitazioni tecniche; Per ulteriori informazioni, vedere query compilate in autocompilate.
 
-#### <a name="322-cache-eviction-algorithm"></a>3.2.2 algoritmo di rimozione della cache
+#### <a name="322-cache-eviction-algorithm"></a>3.2.2 algoritmo di eliminazione della cache
 
-Informazioni sul modo in cui il funzionamento dell'algoritmo interno consentirà di capire quando per abilitare o disabilitare query piano di memorizzazione nella cache. L'algoritmo di pulizia è come segue:
+La comprensione del funzionamento dell'algoritmo interno consentirà di capire quando abilitare o disabilitare la memorizzazione nella cache del piano di query. L'algoritmo di pulizia è il seguente:
 
-1.  Una volta che la cache contiene un numero di set di voci (800), si avvia un timer che periodicamente (una volta al minuto) organizza la cache.
-2.  Durante le operazioni della cache, vengono rimosse le voci nella cache in un LFRU (meno di frequente, usato di recente) base. Questo algoritmo accetta sia il numero di passaggi e age in considerazione quando si decide quale le voci vengono espulsi.
-3.  Alla fine di ogni durante lo sweep di cache, la cache contiene anche in questo caso le voci di 800.
+1.  Quando la cache contiene un numero di voci impostato (800), viene avviato un timer che periodicamente (una volta al minuto) esegue lo sweep della cache.
+2.  Durante le operazioni di sweep nella cache, le voci vengono rimosse dalla cache in una LFRU (meno frequente, usata di recente). Questo algoritmo prende in considerazione sia il numero di passaggi che l'età quando si decidono le voci da estrarre.
+3.  Alla fine di ogni operazione di sweep della cache, la cache contiene nuovamente 800 voci.
 
-Tutte le voci della cache vengono considerate ugualmente quando si determina quali voci da rimuovere. Ciò significa che il comando di archiviazione per un CompiledQuery ha la stessa probabilità di rimozione del comando di archiviazione per una query Entity SQL.
+Tutte le voci della cache vengono considerate ugualmente quando si determinano le voci da rimuovere. Questo significa che il comando Store per un CompiledQuery ha la stessa probabilità di sfratto del comando Store per una query Entity SQL.
 
-Si noti che il timer di eliminazione della cache viene avviato quando sono presenti 800 entità nella cache, ma la cache è sweep solo 60 secondi dopo l'avvio del timer. Ciò significa che fino a 60 secondi può raggiungere la cache sia di grandi dimensioni.
+Si noti che il timer di rimozione della cache viene avviato quando sono presenti 800 entità nella cache, ma la cache viene spazzata solo 60 secondi dopo l'avvio del timer. Ciò significa che per un massimo di 60 secondi, è possibile che la cache cresca in dimensioni molto elevate.
 
-#### <a name="323-test-metrics-demonstrating-query-plan-caching-performance"></a>3.2.3 le metriche che illustra il piano di query la memorizzazione nella cache delle prestazioni dei test
+#### <a name="323-test-metrics-demonstrating-query-plan-caching-performance"></a>3.2.3 metriche di test che dimostrano le prestazioni di memorizzazione nella cache del piano di query
 
-Per illustrare l'effetto del piano di query la cache per le prestazioni dell'applicazione, abbiamo eseguito un test in cui viene eseguito un numero di query Entity SQL rispetto al modello Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query, che sono stati eseguiti. In questo test, è innanzitutto scorrere l'elenco delle query ed eseguite una volta ciascuno per aggiungerli alla cache (se è abilitata la memorizzazione nella cache). Questo passaggio è untimed. Successivamente, abbiamo sospensione il thread principale per oltre 60 secondi per consentire cache iperparametri per avvengono; Infine, viene iterato più il tempo di elenco un 2nd per eseguire le query memorizzate nella cache. Inoltre, la cache dei piani di SQL Server viene scaricata prima dell'esecuzione di ogni set di query in modo che i tempi che si ottengono con precisione riflettono il vantaggio dato dalla cache dei piani di query.
+Per illustrare l'effetto della memorizzazione nella cache del piano di query sulle prestazioni dell'applicazione, è stato eseguito un test in cui è stata eseguita una serie di Entity SQL query sul modello di Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query eseguite. In questo test viene innanzitutto eseguita l'iterazione dell'elenco di query ed eseguita una volta per aggiungerle alla cache (se la memorizzazione nella cache è abilitata). Questo passaggio non è temporizzato. Successivamente, il thread principale verrà sospeso per più di 60 secondi per consentire l'esecuzione dello sweep della cache. Infine, si scorre l'elenco una seconda volta per eseguire le query memorizzate nella cache. Inoltre, la cache dei piani SQL Server viene scaricata prima dell'esecuzione di ogni set di query, in modo che i tempi ottenibili riflettano accuratamente il vantaggio fornito dalla cache dei piani di query.
 
-##### <a name="3231-test-results"></a>3.2.3.1 i risultati dei test
+##### <a name="3231-test-results"></a>Risultati test 3.2.3.1
 
-| Test                                                                   | EF5 Nessuna cache | EF5 memorizzato nella cache | EF6 Nessuna cache | EF6 memorizzato nella cache |
+| Test                                                                   | EF5 senza cache | EF5 memorizzato nella cache | EF6 senza cache | EF6 memorizzato nella cache |
 |:-----------------------------------------------------------------------|:-------------|:-----------|:-------------|:-----------|
-| L'enumerazione di tutte le 18723 query                                          | 124          | 125.4      | 124.3        | 125.3      |
-| Come evitare durante lo sweep (solo primi 800 query, indipendentemente dalla complessità)  | 41.7         | 5.5        | 40.5         | 5.4        |
-| Solo le query AggregatingSubtotals (178 totale, che consente di evitare durante lo sweep) | 39.5         | 4.5        | 38.1         | 4.6        |
+| Enumerazione di tutte le query 18723                                          | 124          | 125,4      | 124,3        | 125,3      |
+| Evitare lo sweep (solo le prime 800 query, indipendentemente dalla complessità)  | 41,7         | 5.5        | 40,5         | 5.4        |
+| Solo le query AggregatingSubtotals (178 Total, che evita lo sweep) | 39,5         | 4.5        | 38,1         | 4.6        |
 
-*Tutte le volte in secondi.*
+*Tutti gli orari in secondi.*
 
-Morale - durante l'esecuzione di numerose delle query distinct (ad esempio, in modo dinamico creato query), la memorizzazione nella cache non è stato utile e risultante lo svuotamento della cache per mantenere le query in grado di sfruttare le potenzialità del piano di memorizzazione nella cache da effettivamente usando.
+Morale: durante l'esecuzione di un numero elevato di query distinte, ad esempio query create dinamicamente, la memorizzazione nella cache non è utile e il conseguente scaricamento della cache può garantire che le query che trarrebbero vantaggio dalla memorizzazione nella cache dei piani vengano effettivamente usate.
 
-Le query AggregatingSubtotals sono più complesse delle query che è stato testato con. Come previsto, è la query più complessa, maggiore sarà il vantaggio dalla memorizzazione nella cache piano di query verrà visualizzato.
+Le query AggregatingSubtotals sono le più complesse delle query sottoposte a test. Come previsto, più complessa è la query, maggiore sarà il vantaggio che verrà visualizzato dalla memorizzazione nella cache del piano di query.
 
-Poiché un CompiledQuery è davvero una query LINQ con il piano memorizzato nella cache, il confronto di un CompiledQuery e l'equivalente nella query Entity SQL deve avere risultati simili. Infatti, se un'app ha un numero elevato di query Entity SQL dinamico, il riempimento della cache con le query anche determinerà in effetti CompiledQueries "decompilare" quando essi vengono scaricati dalla cache. In questo scenario, potrebbero migliorare le prestazioni, disabilitare la memorizzazione nella cache sulle query dinamiche per definire le priorità di CompiledQueries. Ancora meglio, naturalmente, sarebbe necessario riscrivere l'app per usare le query con parametri invece di query dinamiche.
+Poiché un CompiledQuery è effettivamente una query LINQ con il piano memorizzato nella cache, il confronto tra un CompiledQuery e la query Entity SQL equivalente dovrebbe avere risultati simili. In realtà, se un'app dispone di molte query Entity SQL dinamiche, il riempimento della cache con le query comporterà anche la "decompilazione" di CompiledQueries quando vengono scaricati dalla cache. In questo scenario, le prestazioni possono essere migliorate disabilitando la memorizzazione nella cache per le query dinamiche per classificare in ordine di priorità i CompiledQueries. Meglio ancora, ovviamente, sarebbe riscrivere l'app in modo da usare query con parametri anziché query dinamiche.
 
-### <a name="33-using-compiledquery-to-improve-performance-with-linq-queries"></a>3.3 utilizzo CompiledQuery per migliorare le prestazioni con le query LINQ
+### <a name="33-using-compiledquery-to-improve-performance-with-linq-queries"></a>3,3 uso di CompiledQuery per migliorare le prestazioni con le query LINQ
 
-I test indicano che usando CompiledQuery può portare un vantaggio del 7% autocompilati le query LINQ. Ciò significa che è perdere 7% tempo per l'esecuzione di codice dallo stack di Entity Framework; Questo significa che l'applicazione sarà 7% più velocemente. In generale, il costo di scrivere e gestire oggetti CompiledQuery in Entity Framework 5.0 non può essere utile la briga rispetto ai vantaggi. Il chilometraggio può variare, prestare pertanto questa opzione se il progetto richiede il push aggiuntivo. Si noti che CompiledQueries solo siano compatibili con i modelli di ObjectContext derivato e non è compatibile con i modelli di DbContext derivata.
+I test indicano che l'uso di CompiledQuery può offrire un vantaggio del 7% sulle query LINQ autocompilate. Ciò significa che il tempo di esecuzione del codice dallo stack di Entity Framework verrà speso del 7% meno. non significa che l'applicazione sarà più veloce del 7%. In generale, il costo per la scrittura e la gestione di oggetti CompiledQuery in EF 5,0 potrebbe non valere in caso di problemi rispetto ai vantaggi. Il chilometraggio può variare, quindi esercitare questa opzione se il progetto richiede la pressione aggiuntiva. Si noti che CompiledQueries sono compatibili solo con i modelli derivati da ObjectContext e non sono compatibili con i modelli derivati da DbContext.
 
-Per altre informazioni su come creare e richiamare un CompiledQuery, vedere [query compilate (LINQ to Entities)](https://msdn.microsoft.com/library/bb896297.aspx).
+Per altre informazioni sulla creazione e il richiamo di un CompiledQuery, vedere [query compilate (LINQ to Entities)](https://msdn.microsoft.com/library/bb896297.aspx).
 
-Esistono due aspetti che è necessario eseguire quando si usa un CompiledQuery, vale a dire la necessità di usare le istanze statiche e i problemi che hanno con la possibilità di composizione. Qui di seguito una spiegazione dettagliata di questi due aspetti.
+Quando si usa un CompiledQuery, è necessario prendere in considerazione due considerazioni, ovvero la necessità di usare istanze statiche e i problemi che hanno con la composizione. Di seguito è riportata una spiegazione approfondita di queste due considerazioni.
 
 #### <a name="331-use-static-compiledquery-instances"></a>3.3.1 usare istanze CompiledQuery statiche
 
-Poiché la compilazione di una query LINQ è un processo che richiedono molto tempo, non vogliamo eseguire questa operazione ogni volta che è necessario recuperare i dati dal database. Le istanze CompiledQuery consentono di compilare una sola volta ed eseguire più volte, ma è necessario prestare attenzione e procurare per riutilizzare la stessa istanza CompiledQuery ogni volta anziché compilarlo in modo continuativo. L'uso di membri statici per archiviare le istanze CompiledQuery diventa necessario; in caso contrario, non vedrete alcun vantaggio.
+Poiché la compilazione di una query LINQ è un processo dispendioso in termini di tempo, non è necessario eseguire questa operazione ogni volta che è necessario recuperare i dati dal database. Le istanze di CompiledQuery consentono di compilare una sola volta ed eseguire più volte, ma è necessario prestare attenzione e procurarsi per riusare la stessa istanza di CompiledQuery ogni volta, anziché ricompilarla. L'uso di membri statici per archiviare le istanze di CompiledQuery diventa necessario; in caso contrario, non verrà visualizzato alcun vantaggio.
 
-Si supponga, ad esempio, che la pagina contiene il corpo del metodo seguente per gestire la visualizzazione dei prodotti per la categoria selezionata:
+Si supponga, ad esempio, che la pagina disponga del corpo del metodo seguente per gestire la visualizzazione dei prodotti per la categoria selezionata:
 
 ``` csharp
     // Warning: this is the wrong way of using CompiledQuery
@@ -290,9 +290,9 @@ Si supponga, ad esempio, che la pagina contiene il corpo del metodo seguente per
     this.productsGrid.Visible = true;
 ```
 
-In questo caso, si creerà una nuova istanza CompiledQuery in tempo reale ogni volta che viene chiamato il metodo. Recuperando il comando di archiviazione dalla cache dei piani di query, anziché i vantaggi delle prestazioni di CompiledQuery passeranno attraverso il compilatore piano ogni volta che viene creata una nuova istanza. Infatti, si verrà contaminare la cache dei piani di query con una nuova voce CompiledQuery ogni volta che viene chiamato il metodo.
+In questo caso, si creerà una nuova istanza di CompiledQuery in tempo reale ogni volta che viene chiamato il metodo. Anziché visualizzare i vantaggi in termini di prestazioni recuperando il comando Store dalla cache dei piani di query, il CompiledQuery passerà attraverso il compilatore del piano ogni volta che viene creata una nuova istanza. In realtà, la cache dei piani di query verrà inquinata con una nuova voce CompiledQuery ogni volta che viene chiamato il metodo.
 
-Al contrario, si desidera creare un'istanza statica della query compilate in modo che la stessa query compilata viene richiamato ogni volta che viene chiamato il metodo. Un modo per questo è aggiungendo l'istanza CompiledQuery come membro del contesto di oggetto.  È quindi possibile apportare cose così una piccola accedendo il CompiledQuery tramite un metodo helper:
+Si desidera invece creare un'istanza statica della query compilata, in modo da richiamare la stessa query compilata ogni volta che viene chiamato il metodo. A questo scopo, è possibile aggiungere l'istanza di CompiledQuery come membro del contesto dell'oggetto.  È quindi possibile rendere le cose più pulite accedendo a CompiledQuery tramite un metodo helper:
 
 ``` csharp
     public partial class NorthwindEntities : ObjectContext
@@ -308,19 +308,19 @@ Al contrario, si desidera creare un'istanza statica della query compilate in mod
         }
 ```
 
-Questo metodo di supporto potrebbe essere richiamato, come segue:
+Questo metodo di supporto verrebbe richiamato come segue:
 
 ``` csharp
     this.productsGrid.DataSource = context.GetProductsForCategory(selectedCategory);
 ```
 
-#### <a name="332-composing-over-a-compiledquery"></a>3.3.2 la composizione in un CompiledQuery
+#### <a name="332-composing-over-a-compiledquery"></a>3.3.2 composizione su un CompiledQuery
 
-La possibilità di comporre tutte le query LINQ è estremamente utile; a tale scopo, è sufficiente richiamare un metodo dopo all'oggetto IQueryable, ad esempio *Skip* oppure *Count ()*. Tuttavia, svolgendo così restituisce un nuovo oggetto IQueryable. Mentre non c'è nulla impedisce di tecnicamente composizione tramite un CompiledQuery, questa operazione causerà la generazione di un nuovo oggetto IQueryable che richiede anche in questo caso passando attraverso il compilatore di piano.
+La possibilità di comporre una query LINQ è molto utile. a tale scopo, è sufficiente richiamare un metodo dopo l'oggetto IQueryable, ad esempio *Skip ()* o *Count ()* . Tuttavia, in questo modo essenzialmente restituisce un nuovo oggetto IQueryable. Anche se non c'è nulla da impedire tecnicamente di comporre in una CompiledQuery, questa operazione causerà la generazione di un nuovo oggetto IQueryable che richiede il passaggio di nuovo al compilatore del piano.
 
-Alcuni componenti useranno IQueryable composti gli oggetti per abilitare la funzionalità avanzata. Ad esempio, ASP. Controllo GridView di NET può essere associato a dati a un oggetto IQueryable tramite la proprietà SelectMethod. GridView verrà quindi creato tramite questo oggetto IQueryable per consentire l'ordinamento e paging tramite il modello di dati. Come può notare, usando un CompiledQuery per GridView non raggiungeva la query compilata ma genera una nuova query autocompilati.
+Alcuni componenti utilizzeranno oggetti IQueryable composti per abilitare funzionalità avanzate. Ad esempio, ASP. GridView di NET può essere associato a dati a un oggetto IQueryable tramite la proprietà SelectMethod. GridView comporrà quindi su questo oggetto IQueryable per consentire l'ordinamento e il paging sul modello di dati. Come si può notare, l'uso di un CompiledQuery per GridView non raggiunge la query compilata, ma genera una nuova query autocompilata.
 
-Un'unica posizione in cui è possibile riscontrare questo è quando si aggiungono filtri progressivi per una query. Ad esempio, si supponga una pagina di clienti con diversi elenchi a discesa per i filtri facoltativi (ad esempio, paese e OrdersCount). È possibile comporre questi filtri sui risultati di una CompiledQuery IQueryable, ma tale operazione genererà una nuova query passare attraverso il compilatore piano ogni volta che la relativa esecuzione.
+Quando si aggiungono filtri progressivi a una query, è possibile che si verifichi questo problema. Si supponga, ad esempio, di avere una pagina Customers con diversi elenchi a discesa per i filtri facoltativi (ad esempio, Country e OrdersCount). È possibile comporre questi filtri sui risultati IQueryable di un CompiledQuery, ma questa operazione comporterà la nuova query per il compilatore del piano ogni volta che viene eseguita.
 
 ``` csharp
     using (NorthwindEntities context = new NorthwindEntities())
@@ -343,7 +343,7 @@ Un'unica posizione in cui è possibile riscontrare questo è quando si aggiungon
     }
 ```
 
- Per evitare la ricompilazione, è possibile riscrivere il CompiledQuery per tener conto delle possibili filtri:
+ Per evitare questa ricompilazione, è possibile riscrivere il CompiledQuery per tenere conto dei filtri possibili:
 
 ``` csharp
     private static readonly Func<NorthwindEntities, int, int?, string, IQueryable<Customer>> customersForEmployeeWithFiltersCQ = CompiledQuery.Compile(
@@ -354,7 +354,7 @@ Un'unica posizione in cui è possibile riscontrare questo è quando si aggiungon
         );
 ```
 
-Che verranno richiamati nell'interfaccia utente, ad esempio:
+Che verrebbe richiamata nell'interfaccia utente, ad esempio:
 
 ``` csharp
     using (NorthwindEntities context = new NorthwindEntities())
@@ -375,65 +375,65 @@ Che verranno richiamati nell'interfaccia utente, ad esempio:
     }
 ```
 
- Un buon compromesso qui è il comando di archiviazione generato avrà sempre i filtri con i controlli null, ma devono essere abbastanza semplice per il server di database da ottimizzare:
+ Un compromesso è il fatto che il comando di archiviazione generato avrà sempre i filtri con i controlli null, ma questi dovrebbero essere abbastanza semplici da ottimizzare per il server di database:
 
 ``` SQL
 ...
 WHERE ((0 = (CASE WHEN (@p__linq__1 IS NOT NULL) THEN cast(1 as bit) WHEN (@p__linq__1 IS NULL) THEN cast(0 as bit) END)) OR ([Project3].[C2] > @p__linq__2)) AND (@p__linq__3 IS NULL OR [Project3].[Country] = @p__linq__4)
 ```
 
-### <a name="34-metadata-caching"></a>3.4 la memorizzazione nella cache dei metadati
+### <a name="34-metadata-caching"></a>3,4 caching dei metadati
 
-Entity Framework supporta anche la memorizzazione nella cache dei metadati. Questo è essenzialmente la memorizzazione nella cache di informazioni sul tipo e informazioni sul mapping di tipo-database tra diverse connessioni allo stesso modello. La cache dei metadati è univoca per ogni dominio applicazione.
+Il Entity Framework supporta anche la memorizzazione dei metadati nella cache. Si tratta essenzialmente della memorizzazione nella cache delle informazioni sul tipo e delle informazioni sul mapping da tipo a database tra connessioni diverse allo stesso modello. La cache dei metadati è univoca per ogni dominio di applicazione.
 
-#### <a name="341-metadata-caching-algorithm"></a>3.4.1 algoritmo di memorizzazione nella cache dei metadati
+#### <a name="341-metadata-caching-algorithm"></a>3.4.1 algoritmo di caching dei metadati
 
-1.  Informazioni sui metadati per un modello viene archiviati in una classe ItemCollection per ciascun EntityConnection.
-    -   Come nota a margine, esistono diversi oggetti ItemCollection per le diverse parti del modello. Ad esempio, StoreItemCollections contiene le informazioni sul modello di database. ObjectItemCollection contiene informazioni sul modello di dati; EdmItemCollection contiene informazioni sul modello concettuale.
+1.  Le informazioni sui metadati per un modello sono archiviate in un elemento ItemCollection per ogni EntityConnection.
+    -   Si noti che esistono diversi oggetti ItemCollection per diverse parti del modello. Ad esempio, StoreItemCollections contiene le informazioni sul modello di database. ObjectItemCollection contiene informazioni sul modello di dati. EdmItemCollection contiene informazioni sul modello concettuale.
 
-2.  Se due connessioni utilizzano la stessa stringa di connessione, condividono la stessa istanza ItemCollection.
-3.  Le stringhe di connessione funzionalmente equivalenti ma testualmente diverse possono comportare le cache di metadati diversi. È suddividere le stringhe di connessione, semplicemente modificando l'ordine dei token dovrebbe restituire metadati condivisa. Tuttavia, due stringhe di connessione che sembrano funzionalmente identici non possono essere valutate come identici dopo la suddivisione in token.
-4.  ItemCollection viene periodicamente verificata per l'uso. Se è stato stabilito che un'area di lavoro non eseguito di recente, si verrà contrassegnato per la pulizia in avanti sweep cache.
-5.  La semplice creazione di un EntityConnection causerà una cache dei metadati da creare (anche se le raccolte di elementi in esso non verrà inizializzate fino a quando non viene aperta la connessione). Questa area di lavoro rimane in memoria fino a quando non determina l'algoritmo di memorizzazione nella cache non è "in uso".
+2.  Se due connessioni utilizzano la stessa stringa di connessione, condividono la stessa istanza di ItemCollection.
+3.  Equivalenti dal punto di vista funzionale, ma in modo testuale diverse stringhe di connessione possono produrre cache di metadati diverse. Le stringhe di connessione di tokenize vengono eseguite, quindi la semplice modifica dell'ordine dei token dovrebbe generare metadati condivisi. Tuttavia, due stringhe di connessione che sembrano funzionalmente uguali non possono essere valutate come identiche dopo la suddivisione in token.
+4.  ItemCollection viene verificato periodicamente per l'utilizzo. Se è stato determinato che l'accesso a un'area di lavoro non è stato eseguito di recente, verrà contrassegnato per la pulizia nella successiva operazione di memorizzazione nella cache.
+5.  La semplice creazione di un oggetto EntityConnection provocherà la creazione di una cache di metadati (sebbene le raccolte di elementi in essa non verranno inizializzate fino all'apertura della connessione). Questa area di lavoro rimarrà in memoria fino a quando l'algoritmo di memorizzazione nella cache non ne determina la mancata "utilizzo".
 
 Il Team di consulenza clienti ha scritto un post di blog che descrive conterrà un riferimento a un oggetto ItemCollection per evitare "deprecation" quando si usano modelli di grandi dimensioni: \<http://blogs.msdn.com/b/appfabriccat/archive/2010/10/22/metadataworkspace-reference-in-wcf-services.aspx>.
 
-#### <a name="342-the-relationship-between-metadata-caching-and-query-plan-caching"></a>3.4.2 la relazione tra i metadati e pianificare la memorizzazione nella cache di Query
+#### <a name="342-the-relationship-between-metadata-caching-and-query-plan-caching"></a>3.4.2 la relazione tra Caching dei metadati e caching del piano di query
 
-L'istanza di cache piano di query si trova in ItemCollection dell'elemento MetadataWorkspace di tipi di archivio. Ciò significa che comandi di archiviazione memorizzati nella cache verranno utilizzati per le query in qualsiasi contesto creata un'istanza con un determinato MetadataWorkspace. Significa anche che se si dispone di due stringhe di connessione che sono leggermente diversi e non corrispondono dopo la suddivisione in token, sarà necessario diverse query prevede le istanze di cache.
+L'istanza della cache del piano di query risiede nell'elemento ItemCollection dei tipi di archivio di MetadataWorkspace. Ciò significa che i comandi dell'archivio memorizzati nella cache verranno utilizzati per le query su qualsiasi contesto di cui è stata creata un'istanza utilizzando un elemento MetadataWorkspace specificato. Indica inoltre che se si dispone di due stringhe di connessione leggermente diverse e non corrispondenti dopo suddivisione in token, saranno disponibili diverse istanze della cache del piano di query.
 
-### <a name="35-results-caching"></a>3.5 comporta la memorizzazione nella cache
+### <a name="35-results-caching"></a>3,5 memorizzazione dei risultati nella cache
 
-Con i risultati di memorizzazione nella cache (noto anche come "second-level la memorizzazione nella cache"), mantenere i risultati delle query in una cache locale. Quando si emette una query, prima di tutto verificare se i risultati sono disponibili in locale prima di query a fronte dell'archivio. Anche se la memorizzazione nella cache i risultati non sono direttamente supportati da Entity Framework, è possibile aggiungere una cache di secondo livello con un provider di ritorno a capo. Un esempio di provider di ritorno a capo con una cache di secondo livello è dell'Alachisoft [Cache di secondo livello di Entity Framework basato su NCache](http://www.alachisoft.com/ncache/entity-framework.html).
+Con la memorizzazione dei risultati nella cache (nota anche come "memorizzazione nella cache di secondo livello"), si conservano i risultati delle query in una cache locale. Quando si emette una query, si verifica prima di tutto se i risultati sono disponibili localmente prima di eseguire una query sull'archivio. Sebbene la memorizzazione nella cache dei risultati non sia supportata direttamente da Entity Framework, è possibile aggiungere una cache di secondo livello utilizzando un provider di wrapping. Un esempio di provider di wrapping con una cache di secondo livello è Alachisoft [Entity Framework cache di secondo livello basata su NCache](https://www.alachisoft.com/ncache/entity-framework.html).
 
-Questa implementazione della memorizzazione nella cache di secondo livello è una funzionalità inserita che ha luogo dopo che è stata valutata l'espressione LINQ (la funcletized) e il piano di esecuzione di query viene calcolato o recuperato dalla cache di primo livello. La cache di secondo livello solo i risultati non elaborati del database, quindi Archivia in modo che la pipeline di materializzazione viene comunque eseguita in un secondo momento.
+Questa implementazione della memorizzazione nella cache di secondo livello è una funzionalità inserita che si verifica dopo che l'espressione LINQ è stata valutata (e funcletized) e il piano di esecuzione della query viene calcolato o recuperato dalla cache di primo livello. La cache di secondo livello archivia quindi solo i risultati del database non elaborato, quindi la pipeline di materializzazione viene comunque eseguita in seguito.
 
-#### <a name="351-additional-references-for-results-caching-with-the-wrapping-provider"></a>3.5.1 ulteriori riferimenti per i risultati la memorizzazione nella cache con il provider di ritorno a capo
+#### <a name="351-additional-references-for-results-caching-with-the-wrapping-provider"></a>3.5.1 ulteriori riferimenti per la memorizzazione nella cache dei risultati con il provider di wrapping
 
--   Julie Lerman ha scritto un articolo di MSDN "Second-Level la memorizzazione nella cache in Entity Framework e Windows Azure" che include la procedura per aggiornare il provider di ritorno a capo di esempio per usare la memorizzazione nella cache di Windows Server AppFabric: [https://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
--   Se si lavora con Entity Framework 5, il blog del team dispone di una richiesta post che descrive come eseguire le operazioni in esecuzione con il provider di memorizzazione nella cache per Entity Framework 5: \<http://blogs.msdn.com/b/adonet/archive/2010/09/13/ef-caching-with-jarek-kowalski-s-provider.aspx>. Include inoltre un modello T4 che facilitano l'automazione aggiungendo il 2 ° a livello di memorizzazione nella cache al progetto.
+-   Julie Lerman ha scritto un "caching di secondo livello in Entity Framework e Windows Azure" articolo di MSDN che include come aggiornare il provider di wrapping di esempio per l'uso della memorizzazione nella cache di Windows Server AppFabric: [https://msdn.microsoft.com/magazine/hh394143.aspx](https://msdn.microsoft.com/magazine/hh394143.aspx)
+-   Se si lavora con Entity Framework 5, nel Blog del team è presente un post che descrive come eseguire le operazioni con il provider di caching per Entity Framework 5: \< @ no__t-1. Include anche un modello T4 che consente di automatizzare l'aggiunta della memorizzazione nella cache di secondo livello al progetto.
 
-## <a name="4-autocompiled-queries"></a>4 autocompilati query
+## <a name="4-autocompiled-queries"></a>4 query compilate in Autocompilazione
 
-Quando viene eseguita una query su un database tramite Entity Framework, deve passare attraverso una serie di passaggi prima della materializzazione effettivamente i risultati. una tale operazione è la compilazione di Query. Query Entity SQL sono stati noti per avere buone prestazioni poiché essi vengono automaticamente memorizzate nella cache, pertanto il tempo secondo o il terzo è eseguire la stessa query può ignorare il compilatore di piano e usare invece il piano memorizzato nella cache.
+Quando una query viene eseguita su un database usando Entity Framework, deve eseguire una serie di passaggi prima di materializzazione effettivamente i risultati; uno di questi passaggi è la compilazione di query. Entity SQL le query erano note a prestazioni ottimali, in quanto vengono automaticamente memorizzate nella cache, quindi la seconda o la terza volta che si esegue la stessa query può ignorare il compilatore del piano e utilizzare il piano memorizzato nella cache.
 
-Entity Framework 5 è stato introdotto memorizzazione automatica nella cache per LINQ alle query di entità anche. Nelle edizioni precedenti di Entity Framework la creazione di un CompiledQuery per velocizzare le prestazioni era pratica comune, come questo renderebbe LINQ per eseguire query di entità inseribili nella cache. Poiché la memorizzazione nella cache viene eseguita automaticamente senza l'uso di un CompiledQuery, questa funzionalità viene chiamato "autocompilati queries". Per altre informazioni sulla cache dei piani di query e i relativi meccanismi, vedere la memorizzazione nella cache di piano di Query.
+In Entity Framework 5 è stata introdotta la memorizzazione automatica nella cache anche per LINQ to Entities query. Nelle versioni precedenti di Entity Framework la creazione di un CompiledQuery per velocizzare le prestazioni era una pratica comune, perché ciò renderebbe la LINQ to Entities query memorizzabile nella cache. Poiché la memorizzazione nella cache viene ora eseguita automaticamente senza l'uso di un CompiledQuery, questa funzionalità viene chiamata "query autocompilate". Per ulteriori informazioni sulla cache dei piani di query e sui relativi meccanismi, vedere la pagina relativa alla memorizzazione nella cache del piano di query.
 
-Entity Framework rileva se in una query richiede la ricompilazione, e non esegue questa operazione quando la query viene richiamata anche se si fosse stato compilato in precedenza. Condizioni comuni che causano la query venga ricompilato sono:
+Entity Framework rileva quando una query richiede la ricompilazione ed esegue questa operazione quando la query viene richiamata anche se era stata compilata in precedenza. Le condizioni comuni che provocano la ricompilazione della query sono le seguenti:
 
--   Modifica il MergeOption associata alla query. La query memorizzato nella cache non verrà utilizzata, invece il compilatore piano verrà eseguite di nuovo e viene memorizzato nella cache il piano appena creato.
--   Modifica del valore di ContextOptions.UseCSharpNullComparisonBehavior. Si ottiene lo stesso effetto modifica il MergeOption.
+-   Modifica dell'oggetto MergeOption associato alla query. La query memorizzata nella cache non verrà utilizzata, ma il compilatore del piano verrà eseguito nuovamente e il piano appena creato verrà memorizzato nella cache.
+-   Modifica del valore di ContextOptions. UseCSharpNullComparisonBehavior. Si ottiene lo stesso effetto della modifica di MergeOption.
 
-Altre condizioni possono impedire l'uso della cache di query. Esempi comuni sono:
+Altre condizioni possono impedire alla query di usare la cache. Esempi comuni sono:
 
--   Usando IEnumerable&lt;T&gt;. Contiene&lt;&gt;(valore di T).
--   Utilizzo di funzioni che generano query con costanti.
--   Usando le proprietà di un oggetto non mappati.
--   La query di collegamento a un'altra query che richiede la ricompilazione.
+-   Uso di IEnumerable @ no__t-0T @ no__t-1. Contiene @ no__t-2 @ no__t-3 (T valore).
+-   Utilizzo di funzioni che producono query con costanti.
+-   Uso delle proprietà di un oggetto non mappato.
+-   Collegamento della query a un'altra query che richiede la ricompilazione.
 
-### <a name="41-using-ienumerablelttgtcontainslttgtt-value"></a>4.1 usando IEnumerable&lt;T&gt;. Contiene&lt;T&gt;(valore di T)
+### <a name="41-using-ienumerablelttgtcontainslttgtt-value"></a>4,1 uso di IEnumerable @ no__t-0T @ no__t-1. Contiene @ no__t-2T @ no__t-3 (T valore)
 
-Entity Framework non memorizza nella cache le query che richiamano IEnumerable&lt;T&gt;. Contiene&lt;T&gt;(valore di T) su una raccolta in memoria, poiché i valori della raccolta sono considerati volatili. La query di esempio seguente non verrà memorizzata, in modo che verrà sempre elaborata dal compilatore piano:
+Entity Framework non memorizza nella cache le query che richiamano IEnumerable @ no__t-0T @ no__t-1. Contiene @ no__t-2T @ no__t-3 (T value) rispetto a una raccolta in memoria, poiché i valori della raccolta sono considerati volatili. La query di esempio seguente non verrà memorizzata nella cache, quindi verrà sempre elaborata dal compilatore del piano:
 
 ``` csharp
 int[] ids = new int[10000];
@@ -448,13 +448,13 @@ using (var context = new MyContext())
 }
 ```
 
-Si noti che viene eseguita la dimensione di IEnumerable contro cui Contains determina la velocità con cui o come rallentamento della query viene compilata. Le prestazioni potrebbero diminuire in modo significativo quando si usano le raccolte di grandi dimensioni come quella illustrata nell'esempio precedente.
+Si noti che la dimensione dell'oggetto IEnumerable rispetto al quale viene eseguito il metodo determina la velocità o la modalità di compilazione della query. Le prestazioni possono soffrire in modo significativo quando si usano raccolte di grandi dimensioni, ad esempio quella illustrata nell'esempio precedente.
 
-Entity Framework 6 contiene ottimizzazioni al modo in cui IEnumerable&lt;T&gt;. Contiene&lt;T&gt;(valore di T) funziona quando le query vengono eseguite. Il codice SQL generato è molto più veloce per produrre e più leggibile e nella maggior parte dei casi vengono anche eseguite rapidamente nel server.
+Entity Framework 6 contiene le ottimizzazioni per il modo in cui IEnumerable @ no__t-0T @ no__t-1. Contains @ no__t-2T @ no__t-3 (T value) funziona durante l'esecuzione delle query. Il codice SQL generato è molto più veloce da produrre e più leggibile e, nella maggior parte dei casi, viene eseguito più velocemente nel server.
 
-### <a name="42-using-functions-that-produce-queries-with-constants"></a>4.2 usando le funzioni che generano query con costanti
+### <a name="42-using-functions-that-produce-queries-with-constants"></a>4,2 uso di funzioni che producono query con costanti
 
-Gli operatori Skip, Take (,) Contains () e LINQ DefautIfEmpty() non producono le query SQL con parametri, ma invece inserire i valori vengano passati come costanti. Per questo motivo, le query che potrebbero altrimenti essere identici finisce possano contaminare la query, cache dei piani nello stack di Entity Framework sia nel server di database e ottenere reutilized non a meno che non vengono utilizzate le costanti stesse durante l'esecuzione di query successiva. Ad esempio:
+Gli operatori LINQ (), Take (), Contains () e DefautIfEmpty () LINQ non producono query SQL con parametri, ma inseriscono invece i valori passati come costanti. Per questo motivo, le query che potrebbero altrimenti risultare identiche a causa dell'inquinamento della cache dei piani di query, sia nello stack EF che nel server di database, non vengono riutilizzate a meno che non si utilizzino le stesse costanti in un'esecuzione di query successiva. Esempio:
 
 ``` csharp
 var id = 10;
@@ -468,11 +468,11 @@ using (var context = new MyContext())
 }
 ```
 
-In questo esempio, ogni volta che questa query viene eseguita con un valore diverso per l'id della query verrà compilato in un nuovo piano.
+In questo esempio, ogni volta che la query viene eseguita con un valore diverso per l'ID, la query verrà compilata in un nuovo piano.
 
-In particolare attenzione all'uso di Skip e Take quando si esegue il paging. In EF6 questi metodi hanno un overload del lambda in modo da rendere il piano di query memorizzati nella cache riutilizzabili perché EF è possibile acquisire variabili passate a questi metodi e convertirle in SQLparameters. Questo contribuirà a mantenere la cache più chiaro perché in caso contrario, ogni query con una costante diversa da Skip and Take otterrebbe la propria voce della cache piano di query.
+In particolare, prestare attenzione all'uso di Skip e Take durante il paging. In EF6 questi metodi hanno un overload lambda che rende il piano di query memorizzato nella cache riutilizzabile perché EF è in grado di acquisire variabili passate a questi metodi e di convertirle in SqlParameters. Questo consente anche di proteggere la cache, poiché in caso contrario ogni query con una costante diversa per Skip e Take otterrebbe la voce della cache del piano di query.
 
-Si consideri il codice seguente, che non è ottimale, ma è destinato esclusivamente a illustrare relativi di questa classe di query:
+Si consideri il codice seguente, che non è ottimale ma che è destinato solo a esemplificare questa classe di query:
 
 ``` csharp
 var customers = context.Customers.OrderBy(c => c.LastName);
@@ -483,7 +483,7 @@ for (var i = 0; i < count; ++i)
 }
 ```
 
-Una versione più veloce di questo stesso codice comporta la chiamata di Skip con un'espressione lambda:
+Una versione più veloce dello stesso codice comporterebbe la chiamata a Skip con un'espressione lambda:
 
 ``` csharp
 var customers = context.Customers.OrderBy(c => c.LastName);
@@ -494,7 +494,7 @@ for (var i = 0; i < count; ++i)
 }
 ```
 
-Il secondo frammento di codice possono essere eseguite fino a 11% più veloce perché lo stesso piano di query viene utilizzato ogni volta che viene eseguita la query, che consente di risparmiare tempo di CPU ed è possibile evitare di contaminare la cache delle query. Inoltre, perché il parametro Skip in una chiusura il codice potrebbe essere anche simile a questo punto:
+Il secondo frammento di codice può essere eseguito fino all'11% più velocemente perché lo stesso piano di query viene usato ogni volta che viene eseguita la query, il che consente di risparmiare tempo CPU ed evitare l'inquinamento della cache delle query. Inoltre, poiché il parametro da ignorare si trova in una chiusura, il codice potrebbe essere simile al seguente:
 
 ``` csharp
 var i = 0;
@@ -506,9 +506,9 @@ for (; i < count; ++i)
 }
 ```
 
-### <a name="43-using-the-properties-of-a-non-mapped-object"></a>4.3 usando le proprietà di un oggetto non mappati
+### <a name="43-using-the-properties-of-a-non-mapped-object"></a>4,3 utilizzo delle proprietà di un oggetto non mappato
 
-Quando una query Usa le proprietà di un tipo di oggetto non mappato come un parametro, quindi la query verrà non ottenere memorizzato nella cache. Ad esempio:
+Quando una query usa le proprietà di un tipo di oggetto non mappato come parametro, la query non viene memorizzata nella cache. Esempio:
 
 ``` csharp
 using (var context = new MyContext())
@@ -524,7 +524,7 @@ using (var context = new MyContext())
 }
 ```
 
-In questo esempio, si supponga che classe NonMappedType non fa parte del modello di entità. Questa query può essere modificata facilmente per non usare un tipo non mappati, usare invece una variabile locale come parametro alla query:
+In questo esempio si supponga che la classe NonMappedType non faccia parte del modello di entità. È possibile modificare facilmente questa query in modo da non utilizzare un tipo non mappato e utilizzare invece una variabile locale come parametro per la query:
 
 ``` csharp
 using (var context = new MyContext())
@@ -540,11 +540,11 @@ using (var context = new MyContext())
 }
 ```
 
-In questo caso, la query sarà in grado di ottenere memorizzato nella cache e trarranno vantaggio dalla cache dei piani di query.
+In questo caso, la query sarà in grado di essere memorizzata nella cache e trarrà vantaggio dalla cache dei piani di query.
 
-### <a name="44-linking-to-queries-that-require-recompiling"></a>4.4 il collegamento per le query che richiedono la ricompilazione
+### <a name="44-linking-to-queries-that-require-recompiling"></a>4,4 collegamento a query che richiedono la ricompilazione
 
-In seguito lo stesso esempio precedente, se si dispone di una seconda query si basa su una query che deve essere ricompilato, l'intera query secondo anche essere ricompilata. Ecco un esempio per illustrare questo scenario:
+Seguendo lo stesso esempio precedente, se si dispone di una seconda query che si basa su una query che deve essere ricompilata, verrà ricompilata anche l'intera seconda query. Di seguito è riportato un esempio per illustrare questo scenario:
 
 ``` csharp
 int[] ids = new int[10000];
@@ -564,21 +564,21 @@ using (var context = new MyContext())
 }
 ```
 
-L'esempio è generico, ma illustra come collegamento a firstQuery causa secondQuery non venga memorizzata. Se firstQuery non fosse stata una query che richiede la ricompilazione, quindi secondQuery sarebbe inseribile nella cache.
+L'esempio è generico, ma illustra il modo in cui il collegamento a firstQuery causa la mancata memorizzazione nella cache di secondQuery. Se firstQuery non era una query che richiede la ricompilazione, secondQuery sarebbe stato memorizzato nella cache.
 
-## <a name="5-notracking-queries"></a>5 NoTracking query
+## <a name="5-notracking-queries"></a>5 NoTracking di query
 
-### <a name="51-disabling-change-tracking-to-reduce-state-management-overhead"></a>5.1 la disabilitazione di rilevamento delle modifiche per ridurre il sovraccarico di gestione dello stato
+### <a name="51-disabling-change-tracking-to-reduce-state-management-overhead"></a>5,1 disabilitazione del rilevamento delle modifiche per ridurre il sovraccarico della gestione dello stato
 
-Se si desidera evitare l'overhead del caricamento di oggetti in ObjectStateManager sono in uno scenario di sola lettura, è possibile eseguire query "Rilevamento di n".  È possibile disabilitare il rilevamento delle modifiche a livello di query.
+Se si è in uno scenario di sola lettura e si desidera evitare il sovraccarico dovuto al caricamento degli oggetti in ObjectStateManager, è possibile eseguire query di "nessun rilevamento".  Il rilevamento delle modifiche può essere disabilitato a livello di query.
 
-Si noti tuttavia che disabilitando il rilevamento di modifiche consentono in modo efficace di disattivare la cache degli oggetti. Quando esegue una query per un'entità, è non è possibile ignorare la proprietà materialization spostando i risultati della query materializzato in precedenza da ObjectStateManager. Se si cercano ripetutamente le stesse entità nello stesso contesto, è possibile visualizzare effettivamente un prestazioni trarre vantaggio dall'abilitazione del rilevamento delle modifiche.
+Si noti tuttavia che disabilitando il rilevamento delle modifiche si disattiva effettivamente la cache degli oggetti. Quando si esegue una query per un'entità, non è possibile ignorare la materializzazione estraendo i risultati della query precedentemente materializzata da ObjectStateManager. Se si eseguono ripetutamente query per le stesse entità nello stesso contesto, è possibile che si possa ottenere un vantaggio in merito alle prestazioni dall'abilitazione del rilevamento delle modifiche.
 
-Quando si esegue una query tramite ObjectContext, istanze ObjectQuery e ObjectSet memorizzerà una MergeOption dopo che è impostato, e le query che sono composte da su di essi erediterà il MergeOption effettivo della query principale. Quando si usa DbContext, rilevamento può essere disabilitato tramite una chiamata il modificatore AsNoTracking() alla classe DbSet.
+Quando si eseguono query utilizzando ObjectContext, le istanze di ObjectQuery e ObjectSet ricorderanno un oggetto MergeOption dopo che è stato impostato e le query che sono composte su di essi erediteranno l'oggetto MergeOption effettivo della query padre. Quando si usa DbContext, è possibile disabilitare il rilevamento chiamando il modificatore AsNoTracking () in DbSet.
 
-#### <a name="511-disabling-change-tracking-for-a-query-when-using-dbcontext"></a>5.1.1 la disabilitazione di rilevamento delle modifiche per una query quando si usa DbContext
+#### <a name="511-disabling-change-tracking-for-a-query-when-using-dbcontext"></a>5.1.1 disabilitazione del rilevamento delle modifiche per una query quando si usa DbContext
 
-È possibile attivare la modalità di una query di NoTracking concatenando una chiamata al metodo AsNoTracking() nella query. A differenza di ObjectQuery, le classi DbSet e DbQuery nell'API DbContext non hanno una proprietà modificabile per il MergeOption.
+È possibile impostare la modalità di una query su NoTracking concatenando una chiamata al metodo AsNoTracking () nella query. Diversamente da ObjectQuery, le classi DbSet e DbQuery nell'API DbContext non hanno una proprietà modificabile per MergeOption.
 
 ``` csharp
     var productsForCategory = from p in context.Products.AsNoTracking()
@@ -588,7 +588,7 @@ Quando si esegue una query tramite ObjectContext, istanze ObjectQuery e ObjectSe
 
 ```
 
-#### <a name="512-disabling-change-tracking-at-the-query-level-using-objectcontext"></a>5.1.2 Disabilitazione a livello di query tramite ObjectContext di rilevamento delle modifiche
+#### <a name="512-disabling-change-tracking-at-the-query-level-using-objectcontext"></a>5.1.2 Disabilitazione del rilevamento delle modifiche a livello di query tramite ObjectContext
 
 ``` csharp
     var productsForCategory = from p in context.Products
@@ -598,7 +598,7 @@ Quando si esegue una query tramite ObjectContext, istanze ObjectQuery e ObjectSe
     ((ObjectQuery)productsForCategory).MergeOption = MergeOption.NoTracking;
 ```
 
-#### <a name="513-disabling-change-tracking-for-an-entire-entity-set-using-objectcontext"></a>5.1.3 la disabilitazione di rilevamento delle modifiche per un'intera entità impostata tramite ObjectContext
+#### <a name="513-disabling-change-tracking-for-an-entire-entity-set-using-objectcontext"></a>5.1.3 Disabilitazione del rilevamento delle modifiche per un intero set di entità mediante ObjectContext
 
 ``` csharp
     context.Products.MergeOption = MergeOption.NoTracking;
@@ -608,59 +608,59 @@ Quando si esegue una query tramite ObjectContext, istanze ObjectQuery e ObjectSe
                                 select p;
 ```
 
-### <a name="52test-metrics-demonstrating-the-performance-benefit-of-notracking-queries"></a>5.2 verificare metriche di dimostrare il miglioramento delle prestazioni delle query NoTracking
+### <a name="52test-metrics-demonstrating-the-performance-benefit-of-notracking-queries"></a>5,2 metriche di test che dimostrano il vantaggio in merito alle prestazioni delle query NoTracking
 
-In questo test vogliamo aumentando tuttavia il riempimento ObjectStateManager confrontando il rilevamento per le query NoTracking per il modello Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query, che sono stati eseguiti. In questo test, vengono scorrere l'elenco delle query e si eseguono ognuna una sola volta. È stato eseguito due varianti del test, una volta con query NoTracking e una volta con l'opzione di merge predefinita di "AppendOnly". È stata eseguita ogni variante 3 volte ed eseguire il valore medio delle esecuzioni. Tra i test si cancella la cache delle query in SQL Server e ridurre il tempdb eseguendo i comandi seguenti:
+In questo test viene esaminato il costo del riempimento del ObjectStateManager confrontando il rilevamento per le query NoTracking per il modello Navision. Vedere l'appendice per una descrizione del modello Navision e i tipi di query eseguite. In questo test viene eseguito l'iterazione nell'elenco di query ed eseguita una sola volta. Abbiamo eseguito due varianti del test, una volta con le query di NoTracking e una volta con l'opzione di unione predefinita "AppendOnly". Ogni variazione è stata eseguita 3 volte e si accetta il valore medio delle esecuzioni. Tra i test si cancella la cache delle query nel SQL Server e si compatta il tempdb eseguendo i comandi seguenti:
 
 1.  DBCC DROPCLEANBUFFERS
 2.  DBCC FREEPROCCACHE
 3.  DBCC SHRINKDATABASE (tempdb, 0)
 
-Testare i risultati, viene eseguito più di 3 mediano:
+Risultati test, mediana su 3 esecuzioni:
 
-|                        | NESSUN RILEVAMENTO – WORKING SET | NESSUN RILEVAMENTO – ORA | AGGIUNGERE SOLO – WORKING SET | AGGIUNGERE SOLO: ORA |
+|                        | NESSUN RILEVAMENTO-WORKING SET | NESSUN RILEVAMENTO – TEMPO | SOLO ACCODAMENTO-WORKING SET | SOLO ACCODAMENTO-ORA |
 |:-----------------------|:--------------------------|:-------------------|:--------------------------|:-------------------|
-| **Entity Framework 5** | 460361728                 | 1163536 ms         | 596545536                 | 1273042 ms         |
+| **Entity Framework 5** | 460361728                 | 1163536 MS         | 596545536                 | 1273042 ms         |
 | **Entity Framework 6** | 647127040                 | 190228 ms          | 832798720                 | 195521 ms          |
 
-Entity Framework 5 avrà un footprint di memoria minore alla fine dell'esecuzione rispetto a Entity Framework 6. La memoria aggiuntiva utilizzata da Entity Framework 6 è il risultato di strutture di memoria aggiuntiva e il codice che abilita le nuove funzionalità e prestazioni migliori.
+Entity Framework 5 avrà un footprint di memoria inferiore alla fine dell'esecuzione rispetto a Entity Framework 6. La memoria aggiuntiva utilizzata da Entity Framework 6 è il risultato di strutture e codice di memoria aggiuntive che consentono nuove funzionalità e prestazioni migliori.
 
-È inoltre disponibile una netta differenza footprint di memoria quando si utilizza ObjectStateManager. Entity Framework 5 aumentato il footprint del 30% quando tiene traccia di tutte le entità che si materializzati dal database. Entity Framework 6 aumentato il footprint di 28% in questo caso.
+Quando si usa ObjectStateManager, c'è anche una differenza netta nel footprint di memoria. Entity Framework 5 ha aumentato il footprint del 30% quando tiene traccia di tutte le entità materializzate dal database. Quando si esegue questa operazione, Entity Framework 6 ha aumentato il footprint del 28%.
 
-In termini di tempo, Entity Framework 6 ha prestazioni migliori rispetto Entity Framework 5 in questo test con un margine di grandi dimensioni. Entity Framework 6 completato il test in circa 16% del tempo utilizzato da Entity Framework 5. Inoltre, Entity Framework 5 richiede più di % 9 tempo per il completamento quando viene utilizzato il ObjectStateManager. In confronto, Entity Framework 6 Usa più tempo quando si utilizza ObjectStateManager di % 3.
+In termini di tempo, Entity Framework 6 supera Entity Framework 5 in questo test da un margine elevato. Entity Framework 6 ha completato il test in circa il 16% del tempo utilizzato da Entity Framework 5. Inoltre, Entity Framework 5 impiega il 10% più tempo per il completamento quando viene utilizzato ObjectStateManager. In confronto, Entity Framework 6 sta utilizzando il 3% più tempo quando si utilizza ObjectStateManager.
 
-## <a name="6-query-execution-options"></a>Opzioni di esecuzione di query 6
+## <a name="6-query-execution-options"></a>6 opzioni di esecuzione delle query
 
-Entity Framework offre diversi modi per eseguire query. Verrà esaminare le opzioni seguenti, confrontare i vantaggi e svantaggi di ognuna ed esaminare le caratteristiche delle prestazioni:
+Entity Framework offre diversi modi per eseguire una query. Si esamineranno le opzioni seguenti, si confronteranno i vantaggi e gli svantaggi di ciascuno di essi e si esamineranno le relative caratteristiche di prestazioni:
 
 -   LINQ to Entities.
--   Nessun rilevamento LINQ to Entities.
+-   Nessun LINQ to Entities di rilevamento.
 -   Entity SQL su un oggetto ObjectQuery.
--   Entity SQL su un EntityCommand.
+-   Entity SQL su un oggetto EntityCommand.
 -   ExecuteStoreQuery.
 -   SqlQuery.
 -   CompiledQuery.
 
-### <a name="61-linq-to-entities-queries"></a>6.1 query LINQ to Entities
+### <a name="61-linq-to-entities-queries"></a>6,1 query LINQ to Entities
 
 ``` csharp
 var q = context.Products.Where(p => p.Category.CategoryName == "Beverages");
 ```
 
-**Professionisti**
+**I professionisti**
 
 -   Adatto per le operazioni CUD.
--   Oggetti materializzati completamente.
--   Più semplici da scrivere con sintassi incorporata nel linguaggio di programmazione.
--   Buone prestazioni.
+-   Oggetti completamente materializzati.
+-   Più semplice da scrivere con la sintassi incorporata nel linguaggio di programmazione.
+-   Prestazioni ottimali.
 
 **Svantaggi**
 
--   Alcune limitazioni tecniche, ad esempio:
-    -   Modelli di utilizzo di DefaultIfEmpty per le query con OUTER JOIN generare query più complesse rispetto alle semplici istruzioni OUTER JOIN in Entity SQL.
-    -   Non è possibile usare LIKE e la generale criteri di ricerca.
+-   Alcune restrizioni tecniche, ad esempio:
+    -   I modelli che utilizzano DefaultIfEmpty per le query OUTER JOIN generano query più complesse rispetto alle semplici istruzioni OUTER JOIN in Entity SQL.
+    -   Non è ancora possibile utilizzare LIKE con criteri di ricerca generali.
 
-### <a name="62-no-tracking-linq-to-entities-queries"></a>6.2 alcun rilevamento LINQ alle query di entità
+### <a name="62-no-tracking-linq-to-entities-queries"></a>6,2 nessuna query LINQ to Entities di rilevamento
 
 Quando il contesto deriva ObjectContext:
 
@@ -676,44 +676,44 @@ var q = context.Products.AsNoTracking()
                         .Where(p => p.Category.CategoryName == "Beverages");
 ```
 
-**Professionisti**
+**I professionisti**
 
--   Miglioramento delle prestazioni su query LINQ normali.
--   Oggetti materializzati completamente.
--   Più semplici da scrivere con sintassi incorporata nel linguaggio di programmazione.
+-   Miglioramento delle prestazioni rispetto alle normali query LINQ.
+-   Oggetti completamente materializzati.
+-   Più semplice da scrivere con la sintassi incorporata nel linguaggio di programmazione.
 
 **Svantaggi**
 
--   Non è adatto per le operazioni CUD.
--   Alcune limitazioni tecniche, ad esempio:
-    -   Modelli di utilizzo di DefaultIfEmpty per le query con OUTER JOIN generare query più complesse rispetto alle semplici istruzioni OUTER JOIN in Entity SQL.
-    -   Non è possibile usare LIKE e la generale criteri di ricerca.
+-   Non adatto per le operazioni CUD.
+-   Alcune restrizioni tecniche, ad esempio:
+    -   I modelli che utilizzano DefaultIfEmpty per le query OUTER JOIN generano query più complesse rispetto alle semplici istruzioni OUTER JOIN in Entity SQL.
+    -   Non è ancora possibile utilizzare LIKE con criteri di ricerca generali.
 
-Si noti che le query che le proprietà scalari del progetto non vengono registrate anche se il NoTracking non è specificato. Ad esempio:
+Si noti che le query che proiettano le proprietà scalari non vengono rilevate anche se il NoTracking non è specificato. Esempio:
 
 ``` csharp
 var q = context.Products.Where(p => p.Category.CategoryName == "Beverages").Select(p => new { p.ProductName });
 ```
 
-Questa particolare query non specifica in modo esplicito da NoTracking, ma dal momento che non è la materializzazione non viene rilevato un tipo che è noto al gestore degli stati di oggetti, il risultato materializzato.
+Questa specifica query non specifica in modo esplicito l'oggetto NoTracking, ma poiché non materializzazione un tipo noto al gestore dello stato dell'oggetto, il risultato materializzato non viene rilevato.
 
-### <a name="63-entity-sql-over-an-objectquery"></a>6.3 entity SQL su un oggetto ObjectQuery
+### <a name="63-entity-sql-over-an-objectquery"></a>6,3 Entity SQL su un oggetto ObjectQuery
 
 ``` csharp
 ObjectQuery<Product> products = context.Products.Where("it.Category.CategoryName = 'Beverages'");
 ```
 
-**Professionisti**
+**I professionisti**
 
 -   Adatto per le operazioni CUD.
--   Oggetti materializzati completamente.
--   Supporta query piano la memorizzazione nella cache.
+-   Oggetti completamente materializzati.
+-   Supporta la memorizzazione nella cache del piano di query.
 
 **Svantaggi**
 
--   Implica le stringhe di query testuale che sono più soggette a errori rispetto a costrutti delle query integrati nel linguaggio.
+-   Include stringhe di query testuali più soggette a errori dell'utente rispetto ai costrutti di query incorporati nel linguaggio.
 
-### <a name="64-entity-sql-over-an-entity-command"></a>6.4 entity SQL su un comando di entità
+### <a name="64-entity-sql-over-an-entity-command"></a>6,4 Entity SQL su un comando di entità
 
 ``` csharp
 EntityCommand cmd = eConn.CreateCommand();
@@ -728,19 +728,19 @@ using (EntityDataReader reader = cmd.ExecuteReader(CommandBehavior.SequentialAcc
 }
 ```
 
-**Professionisti**
+**I professionisti**
 
--   Supporta query piano la memorizzazione nella cache in .NET 4.0 (piano di memorizzazione nella cache è supportato da tutti gli altri tipi di query in .NET 4.5).
+-   Supporta la memorizzazione nella cache del piano di query in .NET 4,0 (la memorizzazione nella cache dei piani è supportata da tutti gli altri tipi di query in .NET 4,5).
 
 **Svantaggi**
 
--   Implica le stringhe di query testuale che sono più soggette a errori rispetto a costrutti delle query integrati nel linguaggio.
--   Non è adatto per le operazioni CUD.
--   I risultati non vengono materializzati automaticamente e devono essere letto dal lettore di dati.
+-   Include stringhe di query testuali più soggette a errori dell'utente rispetto ai costrutti di query incorporati nel linguaggio.
+-   Non adatto per le operazioni CUD.
+-   I risultati non vengono materializzati automaticamente e devono essere letti dal lettore dati.
 
-### <a name="65-sqlquery-and-executestorequery"></a>6.5 SqlQuery ed ExecuteStoreQuery
+### <a name="65-sqlquery-and-executestorequery"></a>6,5 SQLQuery e ExecuteStoreQuery
 
-SqlQuery sul Database:
+SqlQuery sul database:
 
 ``` csharp
 // use this to obtain entities and not track them
@@ -764,19 +764,19 @@ var beverages = context.ExecuteStoreQuery<Product>(
 );
 ```
 
-**Professionisti**
+**I professionisti**
 
--   In genere prestazioni più veloci perché il compilatore di piano viene ignorato.
--   Oggetti materializzati completamente.
--   Adatto per le operazioni CUD quando vengono usati da alla classe DbSet.
+-   Prestazioni in genere più veloci perché il compilatore del piano viene ignorato.
+-   Oggetti completamente materializzati.
+-   Adatto per le operazioni CUD quando viene usato da DbSet.
 
 **Svantaggi**
 
--   Si tratta di una query di testo e tendente all'errore.
--   Query è associato a un back-end specifico usando la semantica di archivio anziché semantica.
--   Quando l'ereditarietà è presente, query artigianali deve tenere conto delle condizioni di mapping per il tipo richiesto.
+-   La query è testuale e soggetta a errori.
+-   La query è associata a un back-end specifico usando la semantica dell'archivio invece della semantica concettuale.
+-   Quando è presente l'ereditarietà, la query Handcrafted deve tenere conto delle condizioni di mapping per il tipo richiesto.
 
-### <a name="66-compiledquery"></a>6.6 CompiledQuery
+### <a name="66-compiledquery"></a>6,6 CompiledQuery
 
 ``` csharp
 private static readonly Func<NorthwindEntities, string, IQueryable<Product>> productsForCategoryCQ = CompiledQuery.Compile(
@@ -787,161 +787,161 @@ private static readonly Func<NorthwindEntities, string, IQueryable<Product>> pro
 var q = context.InvokeProductsForCategoryCQ("Beverages");
 ```
 
-**Professionisti**
+**I professionisti**
 
--   Offre fino a un miglioramento delle prestazioni di % 7 tramite query LINQ normali.
--   Oggetti materializzati completamente.
+-   Fornisce un miglioramento delle prestazioni del 7% rispetto alle normali query LINQ.
+-   Oggetti completamente materializzati.
 -   Adatto per le operazioni CUD.
 
 **Svantaggi**
 
--   Una maggiore complessità e costi generali di programmazione.
--   Il miglioramento delle prestazioni viene perso quando la composizione all'inizio di una query compilata.
--   Alcune query LINQ non possono essere scritti come un CompiledQuery - ad esempio, le proiezioni di tipi anonimi.
+-   Maggiore complessità e sovraccarico di programmazione.
+-   Il miglioramento delle prestazioni viene perso quando si compone una query compilata.
+-   Alcune query LINQ non possono essere scritte come CompiledQuery, ad esempio proiezioni di tipi anonimi.
 
-### <a name="67-performance-comparison-of-different-query-options"></a>6.7 confronto delle prestazioni di opzioni query diverse
+### <a name="67-performance-comparison-of-different-query-options"></a>6,7 confronto delle prestazioni di diverse opzioni di query
 
-Sono stati inseriti microbenchmarks semplice in cui è non stata programmata la creazione del contesto al test. È stata misurata l'esecuzione di query 5000 volte per un set di entità non in cache in un ambiente controllato. Questi numeri vengono considerati con un messaggio di avviso: non rappresentano i valori effettivi prodotti da un'applicazione, ma sono invece una misura molto accurata della quantità di una differenza nelle prestazioni quando vengono confrontati con le opzioni di query diverse mele con mele, escluso il costo della creazione di un nuovo contesto.
+I microbenchmark semplici in cui la creazione del contesto non era temporizzata sono stati inseriti nel test. È stata misurata una query di 5000 volte per un set di entità non memorizzate nella cache in un ambiente controllato. Questi numeri devono essere creati con un avviso: non riflettono i numeri effettivi prodotti da un'applicazione, ma rappresentano invece una misura molto precisa della differenza tra le prestazioni in caso di confronto tra diverse opzioni di query da mele a mele, escluso il costo della creazione di un nuovo contesto.
 
-| EF  | Test                                 | Tempo (ms) | Memoria   |
+| EF  | Test                                 | Tempo (MS) | Memoria   |
 |:----|:-------------------------------------|:----------|:---------|
 | EF5 | ESQL ObjectContext                   | 2414      | 38801408 |
-| EF5 | Query Linq di ObjectContext             | 2692      | 38277120 |
-| EF5 | Nessun rilevamento di Query Linq di DbContext     | 2818      | 41840640 |
-| EF5 | DbContext Linq Query                 | 2930      | 41771008 |
-| EF5 | Nessun rilevamento di Query Linq di ObjectContext | 3013      | 38412288 |
+| EF5 | Query LINQ ObjectContext             | 2692      | 38277120 |
+| EF5 | DbContext query LINQ senza rilevamento     | 2818      | 41840640 |
+| EF5 | Query LINQ DbContext                 | 2930      | 41771008 |
+| EF5 | Query LINQ ObjectContext senza rilevamento | 3013      | 38412288 |
 |     |                                      |           |          |
 | EF6 | ESQL ObjectContext                   | 2059      | 46039040 |
-| EF6 | Query Linq di ObjectContext             | 3074      | 45248512 |
-| EF6 | Nessun rilevamento di Query Linq di DbContext     | 3125      | 47575040 |
-| EF6 | DbContext Linq Query                 | 3420      | 47652864 |
-| EF6 | Nessun rilevamento di Query Linq di ObjectContext | 3593      | 45260800 |
+| EF6 | Query LINQ ObjectContext             | 3074      | 45248512 |
+| EF6 | DbContext query LINQ senza rilevamento     | 3125      | 47575040 |
+| EF6 | Query LINQ DbContext                 | 3420      | 47652864 |
+| EF6 | Query LINQ ObjectContext senza rilevamento | 3593      | 45260800 |
 
-![EF5 micro benchmark, 5000 iterazioni warm](~/ef6/media/ef5micro5000warm.png)
+![EF5 micro benchmarks, 5000 iterazioni calde](~/ef6/media/ef5micro5000warm.png)
 
-![EF6 micro benchmark, 5000 iterazioni warm](~/ef6/media/ef6micro5000warm.png)
+![EF6 micro benchmarks, 5000 iterazioni calde](~/ef6/media/ef6micro5000warm.png)
 
-Microbenchmarks sono molto sensibili a piccole variazioni nel codice. In questo caso, la differenza tra i costi di Entity Framework 5 ed Entity Framework 6 sono a causa dell'aggiunta dei [intercettazione](~/ef6/fundamentals/logging-and-interception.md) e [transazionali miglioramenti](~/ef6/saving/transactions.md). Questi numeri microbenchmarks, tuttavia, sono una visione amplificata, in un frammento di dimensioni molto ridotta delle operazioni eseguite da Entity Framework. Scenari reali di query a caldo non dovrebbe essere una regressione delle prestazioni durante l'aggiornamento da Entity Framework 5 per Entity Framework 6.
+I microbenchmark sono molto sensibili alle piccole modifiche del codice. In questo caso, la differenza tra i costi di Entity Framework 5 e Entity Framework 6 è causata dall'aggiunta dei miglioramenti di [intercettazione](~/ef6/fundamentals/logging-and-interception.md) e [transazionali](~/ef6/saving/transactions.md). Questi numeri di microbenchmark, tuttavia, sono una visione amplificata in un frammento molto piccolo di ciò che Entity Framework. Gli scenari reali di query calde non dovrebbero vedere una regressione delle prestazioni durante l'aggiornamento da Entity Framework 5 a Entity Framework 6.
 
-Per confrontare le prestazioni reali delle opzioni di query diversi, abbiamo creato 5 variazioni di test separato in cui si usa un'opzione di query diversi per selezionare tutti i prodotti il cui nome di categoria è "Bibite". Ogni iterazione include il costo della creazione del contesto e il costo di materializzazione di entità restituite tutto. 10 iterazioni vengono eseguite untimed prima di portare la somma dei timeout 1000 iterazioni. I risultati illustrati sono l'esecuzione medio impiegato da 5 esecuzioni di ogni test. Per altre informazioni, vedere l'appendice B che include il codice per il test.
+Per confrontare le prestazioni reali delle diverse opzioni di query, sono state create 5 diverse varianti di test in cui viene usata un'opzione di query diversa per selezionare tutti i prodotti il cui nome di categoria è "Beverage". Ogni iterazione include il costo della creazione del contesto e il costo di materializzazione di tutte le entità restituite. 10 iterazioni vengono eseguite prima di accettare la somma di 1000 iterazioni temporizzate. I risultati visualizzati sono la mediana eseguita da 5 esecuzioni di ogni test. Per ulteriori informazioni, vedere l'Appendice B, che include il codice per il test.
 
-| EF  | Test                                        | Tempo (ms) | Memoria   |
+| EF  | Test                                        | Tempo (MS) | Memoria   |
 |:----|:--------------------------------------------|:----------|:---------|
 | EF5 | Comando entità ObjectContext                | 621       | 39350272 |
-| EF5 | DbContext Query Sql sul Database             | 825       | 37519360 |
-| EF5 | Query Store di ObjectContext                   | 878       | 39460864 |
-| EF5 | Nessun rilevamento di Query Linq di ObjectContext        | 969       | 38293504 |
-| EF5 | ObjectContext Entity Sql con Query di oggetto | 1089      | 38981632 |
-| EF5 | Query compilate ObjectContext                | 1099      | 38682624 |
-| EF5 | Query Linq di ObjectContext                    | 1152      | 38178816 |
-| EF5 | Nessun rilevamento di Query Linq di DbContext            | 1208      | 41803776 |
-| EF5 | Query Sql DbContext su DbSet                | 1414      | 37982208 |
-| EF5 | DbContext Linq Query                        | 1574      | 41738240 |
+| EF5 | DbContext query SQL sul database             | 825       | 37519360 |
+| EF5 | Query archivio ObjectContext                   | 878       | 39460864 |
+| EF5 | Query LINQ ObjectContext senza rilevamento        | 969       | 38293504 |
+| EF5 | Entity SQL di ObjectContext con query di oggetto | 1089      | 38981632 |
+| EF5 | Query compilata ObjectContext                | 1099      | 38682624 |
+| EF5 | Query LINQ ObjectContext                    | 1152      | 38178816 |
+| EF5 | DbContext query LINQ senza rilevamento            | 1208      | 41803776 |
+| EF5 | Query SQL di DbContext su DbSet                | 1414      | 37982208 |
+| EF5 | Query LINQ DbContext                        | 1574      | 41738240 |
 |     |                                             |           |          |
 | EF6 | Comando entità ObjectContext                | 480       | 47247360 |
-| EF6 | Query Store di ObjectContext                   | 493       | 46739456 |
-| EF6 | DbContext Query Sql sul Database             | 614       | 41607168 |
-| EF6 | Nessun rilevamento di Query Linq di ObjectContext        | 684       | 46333952 |
-| EF6 | ObjectContext Entity Sql con Query di oggetto | 767       | 48865280 |
-| EF6 | Query compilate ObjectContext                | 788       | 48467968 |
-| EF6 | Nessun rilevamento di Query Linq di DbContext            | 878       | 47554560 |
-| EF6 | Query Linq di ObjectContext                    | 953       | 47632384 |
-| EF6 | Query Sql DbContext su DbSet                | 1023      | 41992192 |
-| EF6 | DbContext Linq Query                        | 1290      | 47529984 |
+| EF6 | Query archivio ObjectContext                   | 493       | 46739456 |
+| EF6 | DbContext query SQL sul database             | 614       | 41607168 |
+| EF6 | Query LINQ ObjectContext senza rilevamento        | 684       | 46333952 |
+| EF6 | Entity SQL di ObjectContext con query di oggetto | 767       | 48865280 |
+| EF6 | Query compilata ObjectContext                | 788       | 48467968 |
+| EF6 | DbContext query LINQ senza rilevamento            | 878       | 47554560 |
+| EF6 | Query LINQ ObjectContext                    | 953       | 47632384 |
+| EF6 | Query SQL di DbContext su DbSet                | 1023      | 41992192 |
+| EF6 | Query LINQ DbContext                        | 1290      | 47529984 |
 
 
-![Iterazioni warm query 1000 EF5](~/ef6/media/ef5warmquery1000.png)
+![Iterazioni di EF5 warm query 1000](~/ef6/media/ef5warmquery1000.png)
 
-![Iterazioni warm query 1000 EF6](~/ef6/media/ef6warmquery1000.png)
+![Iterazioni di EF6 warm query 1000](~/ef6/media/ef6warmquery1000.png)
 
 > [!NOTE]
-> Per motivi di completezza, sono state incluse una variante in cui viene eseguita una query Entity SQL su un EntityCommand. Tuttavia, poiché i risultati non vengono materializzati per tali query, il confronto non è necessariamente mele con mele. Il test include un'approssimazione molto vicina al materializzazione per provare a effettuare il confronto equa.
+> Per completezza, è stata inclusa una variante in cui viene eseguita una query di Entity SQL su un oggetto EntityCommand. Tuttavia, poiché i risultati non vengono materializzati per tali query, il confronto non è necessariamente da mele a mele. Il test include un'approssimazione vicina a materializzazione per provare a rendere più equo il confronto.
 
-In questo caso end-to-end, Entity Framework 6 ha prestazioni migliori rispetto Entity Framework 5 a causa di miglioramenti delle prestazioni ottenuti in diverse parti dello stack, inclusa un'inizializzazione DbContext molto più chiaro e più veloci MetadataCollection&lt;T&gt; ricerche.
+In questo caso end-to-end, Entity Framework 6 supera Entity Framework 5 grazie ai miglioramenti apportati alle prestazioni in diverse parti dello stack, tra cui un'inizializzazione DbContext più leggera e una ricerca più veloce di MetaDataCollection @ no__t-0T @ no__t-1.
 
-## <a name="7-design-time-performance-considerations"></a>Considerazioni sulle prestazioni di tempo progettazione 7
+## <a name="7-design-time-performance-considerations"></a>7 considerazioni sulle prestazioni in fase di progettazione
 
-### <a name="71-inheritance-strategies"></a>7.1 strategie di ereditarietà
+### <a name="71-inheritance-strategies"></a>7,1 strategie di ereditarietà
 
-Un'altra considerazione sulle prestazioni quando si usa Entity Framework è la strategia di ereditarietà. Entity Framework supporta 3 tipi di base di ereditarietà e le relative combinazioni:
+Un altro aspetto della valutazione delle prestazioni quando si usa Entity Framework è la strategia di ereditarietà usata. Entity Framework supporta 3 tipi di ereditarietà di base e le relative combinazioni:
 
--   Tabella per gerarchia (TPH), in cui ogni ereditarietà impostato esegue il mapping a una tabella con una colonna discriminatore per indicare quale tipo specifico nella gerarchia è rappresentato nella riga.
--   Tabella per ogni tipo TPT (), in cui ogni tipo ha la propria tabella nel database. le tabelle figlio definiscono solo le colonne che non contiene la tabella padre.
--   Tabella per ogni classe (TP), in cui ogni tipo ha una proprio completa della tabella nel database. le tabelle figlio definiscono tutti i relativi campi, inclusi quelli definiti nei tipi padre.
+-   Tabella per gerarchia (TPH): ogni set di ereditarietà viene mappato a una tabella con una colonna discriminatore per indicare quale tipo specifico della gerarchia viene rappresentato nella riga.
+-   Tabella per tipo (TPT): ogni tipo ha una propria tabella nel database. le tabelle figlio definiscono solo le colonne che la tabella padre non contiene.
+-   Tabella per classe (TPC), in cui ogni tipo ha una propria tabella completa nel database. le tabelle figlio definiscono tutti i campi, inclusi quelli definiti nei tipi padre.
 
-Se il modello utilizza TPT (ereditarietà), le query che vengono generate saranno più complesse rispetto a quelli che vengono generati con le altre strategie di ereditarietà, potrebbe essere in tempi di esecuzione sull'archivio.  In genere richiederà più tempo per generare le query su un modello di tabella per tipo e per materializzare gli oggetti risultanti.
+Se il modello utilizza l'ereditarietà TPT, le query generate saranno più complesse rispetto a quelle generate con le altre strategie di ereditarietà, che potrebbero causare tempi di esecuzione più lunghi nell'archivio.  In genere, la generazione di query su un modello TPT richiede più tempo e per materializzare gli oggetti risultanti.
 
 Vedere "Considerazioni sulle prestazioni quando si usa l'ereditarietà tabella per tipo (tabella per tipo) in Entity Framework" post di blog MSDN: \<http://blogs.msdn.com/b/adonet/archive/2010/08/17/performance-considerations-when-using-tpt-table-per-type-inheritance-in-the-entity-framework.aspx>.
 
-#### <a name="711-avoiding-tpt-in-model-first-or-code-first-applications"></a>7.1.1 evitando TPT nelle applicazioni Code First o Model First
+#### <a name="711-avoiding-tpt-in-model-first-or-code-first-applications"></a>7.1.1 evitare TPT in applicazioni Model First o Code First
 
-Quando si crea un modello in un database esistente che dispone di uno schema di tabella per tipo, non è necessario numerose opzioni. Tuttavia, quando si crea un'applicazione con Code First o Model First, è opportuno evitare TPT (ereditarietà) per evitare problemi di prestazioni.
+Quando si crea un modello su un database esistente con uno schema TPT, non sono disponibili molte opzioni. Tuttavia, quando si crea un'applicazione usando Model First o Code First, è consigliabile evitare l'ereditarietà TPT per i problemi relativi alle prestazioni.
 
-Quando si usa il primo modello nella creazione guidata finestra di progettazione entità, si otterrà TPT per qualsiasi tipo di ereditarietà nel modello. Se si desidera passare a una strategia di ereditarietà tabella per gerarchia con Model First, è possibile usare "Entity Designer Database generazione Power Pack" disponibile da Visual Studio Gallery ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
+Quando si usa Model First nella procedura guidata Entity Designer, si otterranno TPT per qualsiasi ereditarietà nel modello. Se si desidera passare a una strategia di ereditarietà tabella per gerarchia con Model First, è possibile usare "Entity Designer Database generazione Power Pack" disponibile da Visual Studio Gallery ( \<http://visualstudiogallery.msdn.microsoft.com/df3541c3-d833-4b65-b942-989e7ec74c87/>).
 
-Quando si utilizza Code First per configurare il mapping di un modello con ereditarietà, Entity Framework userà una tabella per gerarchia per impostazione predefinita, pertanto tutte le entità nella gerarchia di ereditarietà sarà possibile eseguire il mapping alla stessa tabella. Vedere la sezione "Mapping con l'API Fluent" dell'articolo "Code prima nell'entità Framework4.1" in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) per altri dettagli.
+Quando si utilizza Code First per configurare il mapping di un modello con ereditarietà, EF utilizzerà TPH per impostazione predefinita, pertanto tutte le entità nella gerarchia di ereditarietà verranno mappate alla stessa tabella. Vedere la sezione "Mapping con l'API Fluent" dell'articolo "Code prima nell'entità Framework4.1" in MSDN Magazine ( [http://msdn.microsoft.com/magazine/hh126815.aspx](https://msdn.microsoft.com/magazine/hh126815.aspx)) per altri dettagli.
 
-### <a name="72-upgrading-from-ef4-to-improve-model-generation-time"></a>7.2 l'aggiornamento da EF4 per migliorare la generazione del modello di tempo
+### <a name="72-upgrading-from-ef4-to-improve-model-generation-time"></a>7,2 aggiornamento da EF4 per migliorare l'ora di generazione del modello
 
-Un miglioramento delle specifiche di SQL Server per l'algoritmo che genera il livello di archivio (SSDL) del modello è disponibile in Entity Framework 5 e 6 e come aggiornamento a Entity Framework 4 quando viene installato Visual Studio 2010 SP1. I risultati dei test seguente illustrare il miglioramento durante la generazione di un modello di dimensioni molto grande, in questo caso il modello Navision. Per altre informazioni, vedere Appendice C.
+Un miglioramento specifico di SQL Server dell'algoritmo che genera il livello di archiviazione (SSDL) del modello è disponibile in Entity Framework 5 e 6 e come aggiornamento a Entity Framework 4 quando viene installato Visual Studio 2010 SP1. I risultati dei test seguenti illustrano il miglioramento quando si genera un modello molto grande, in questo caso il modello di Navision. Per altri dettagli, vedere l'Appendice C.
 
 Il modello contiene set di entità 1005 e 4227 set di associazioni.
 
-| Configurazione                              | Suddivisione di tempo usato                                                                                                                                               |
+| Configurazione                              | Suddivisione del tempo utilizzato                                                                                                                                               |
 |:-------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Visual Studio 2010, Entity Framework 4     | Generazione SSDL: 2 ore 27 min <br/> Generazione del mapping: 1 secondo <br/> Generazione di CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione di visualizzazioni: 2 ore e minuti 14 |
-| Visual Studio 2010 SP1, Entity Framework 4 | Generazione SSDL: 1 secondo <br/> Generazione del mapping: 1 secondo <br/> Generazione di CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione di visualizzazioni: 1 ora 53 min   |
-| Visual Studio 2013, Entity Framework 5     | Generazione SSDL: 1 secondo <br/> Generazione del mapping: 1 secondo <br/> Generazione di CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione di visualizzazioni: 65 minuti    |
-| Visual Studio 2013, Entity Framework 6     | Generazione SSDL: 1 secondo <br/> Generazione del mapping: 1 secondo <br/> Generazione di CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione di visualizzazioni: 28 secondi.   |
+| Visual Studio 2010, Entity Framework 4     | Generazione SSDL: 2 ore 27 min <br/> Generazione mapping: 1 secondo <br/> Generazione CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione visualizzazione: 2 h 14 min |
+| Visual Studio 2010 SP1, Entity Framework 4 | Generazione SSDL: 1 secondo <br/> Generazione mapping: 1 secondo <br/> Generazione CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione visualizzazione: 1 hr 53 min   |
+| Visual Studio 2013, Entity Framework 5     | Generazione SSDL: 1 secondo <br/> Generazione mapping: 1 secondo <br/> Generazione CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione visualizzazione: 65 minuti    |
+| Visual Studio 2013, Entity Framework 6     | Generazione SSDL: 1 secondo <br/> Generazione mapping: 1 secondo <br/> Generazione CSDL: 1 secondo <br/> Generazione ObjectLayer: 1 secondo <br/> Generazione visualizzazione: 28 secondi.   |
 
 
-Vale la pena notare che durante la generazione SSDL, il carico è quasi interamente dedicato a SQL Server, mentre è in attesa il computer di sviluppo client inattivo per ottenere risultati ritorno dal server. Gli amministratori di database deve particolarmente grati per questo miglioramento. È anche importante notare che fondamentalmente l'intero costo di generazione del modello non venga eseguita nella generazione di visualizzazioni a questo punto.
+Vale la pena notare che, durante la generazione del linguaggio SSDL, il carico è quasi completamente dedicato alla SQL Server, mentre il computer di sviluppo client è in attesa di inattività affinché i risultati tornino dal server. DBA dovrebbe apprezzare in particolare questo miglioramento. È anche importante notare che essenzialmente l'intero costo della generazione del modello avviene ora nella generazione di viste.
 
-### <a name="73-splitting-large-models-with-database-first-and-model-first"></a>7.3 suddividendo i modelli di grandi dimensioni con il Database prima di tutto e Model First
+### <a name="73-splitting-large-models-with-database-first-and-model-first"></a>7,3 Suddivisione di modelli di grandi dimensioni con Database First e Model First
 
-Man mano che aumenta le dimensioni del modello, nell'area di progettazione diventa risulti troppo affollato e difficili da usare. In genere, si consideri un modello con più di 300 entità troppo grande per l'utilizzo efficiente della finestra di progettazione. Post di blog seguente vengono descritte diverse opzioni per la divisione di modelli di grandi dimensioni: \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>.
+Con l'aumentare delle dimensioni del modello, l'area di progettazione diventa disordinata e difficile da utilizzare. In genere, un modello con più di 300 entità è troppo grande per poter utilizzare in modo efficace la finestra di progettazione. Post di blog seguente vengono descritte diverse opzioni per la divisione di modelli di grandi dimensioni: \<http://blogs.msdn.com/b/adonet/archive/2008/11/25/working-with-large-models-in-entity-framework-part-2.aspx>.
 
-Il post è stato scritto per la prima versione di Entity Framework, ma i passaggi sono comunque applicabili.
+Il post è stato scritto per la prima versione di Entity Framework, ma la procedura è ancora applicabile.
 
-### <a name="74-performance-considerations-with-the-entity-data-source-control"></a>7.4 considerazioni sulle prestazioni con il controllo origine dati di entità
+### <a name="74-performance-considerations-with-the-entity-data-source-control"></a>7,4 Considerazioni sulle prestazioni con il controllo origine dati entità
 
-Abbiamo visto case nei test di stress e prestazioni multithreading in cui le prestazioni di un'applicazione web tramite il controllo EntityDataSource causa la riduzione in modo significativo. La causa principale è che EntityDataSource chiama ripetutamente MetadataWorkspace.LoadFromAssembly sugli assembly fa riferimento l'applicazione Web per individuare i tipi da utilizzare come entità.
+Sono stati rilevati casi di test di stress e prestazioni multithread in cui le prestazioni di un'applicazione Web che usano il controllo EntityDataSource si deteriorano significativamente. La ragione principale è che EntityDataSource chiama ripetutamente MetadataWorkspace. LoadFromAssembly sugli assembly a cui fa riferimento l'applicazione Web per individuare i tipi da utilizzare come entità.
 
-La soluzione consiste nell'impostare il ContextTypeName di EntityDataSource per il nome del tipo della classe ObjectContext derivato. Ciò consente di disattivare il meccanismo che esegue l'analisi di tutti gli assembly di riferimento per i tipi di entità.
+La soluzione consiste nell'impostare ContextTypeName di EntityDataSource sul nome del tipo della classe ObjectContext derivata. Questo disattiva il meccanismo che analizza tutti gli assembly a cui si fa riferimento per i tipi di entità.
 
-L'impostazione del campo ContextTypeName impedisce anche un problema funzionale in cui EntityDataSource in .NET 4.0 genera un'eccezione ReflectionTypeLoadException quando Impossibile caricare un tipo da un assembly tramite reflection. Questo problema è stato risolto in .NET 4.5.
+L'impostazione del campo ContextTypeName impedisce anche un problema funzionale in cui EntityDataSource in .NET 4,0 genera un ReflectionTypeLoadException quando non è in grado di caricare un tipo da un assembly tramite reflection. Questo problema è stato risolto in .NET 4,5.
 
-### <a name="75-poco-entities-and-change-tracking-proxies"></a>7.5 entità POCO e rilevamento delle modifiche
+### <a name="75-poco-entities-and-change-tracking-proxies"></a>7,5 entità POCO e proxy rilevamento modifiche
 
-Entity Framework consente di utilizzare classi di dati personalizzate insieme al modello di dati senza apportare alcuna modifica alle classi di dati. Pertanto è possibile pertanto utilizzare oggetti POCO (Plain-Old CLR Object), ad esempio gli oggetti di dominio esistenti, con il modello di dati. Queste classi di dati POCO (noto anche come oggetti che non riconoscono la persistenza), che vengono eseguito il mapping a entità definite in un modello di dati, supportano la maggior parte della stessa query, inseriscono, aggiornano ed eliminare i comportamenti come tipi di entità generati dagli strumenti di Entity Data Model.
+Entity Framework consente di utilizzare le classi di dati personalizzate insieme al modello di dati senza apportare alcuna modifica alle classi di dati stesse. Pertanto è possibile pertanto utilizzare oggetti POCO (Plain-Old CLR Object), ad esempio gli oggetti di dominio esistenti, con il modello di dati. Queste classi di dati POCO, note anche come oggetti che non riconoscono la persistenza, di cui è stato eseguito il mapping alle entità definite in un modello di dati, supportano la maggior parte degli stessi comportamenti di query, inserimento, aggiornamento ed eliminazione dei tipi di entità generati dagli strumenti Entity Data Model.
 
-Entity Framework è anche possibile creare le classi proxy derivate dai tipi POCO, che vengono usati quando si desidera abilitare le funzionalità, ad esempio il caricamento lazy e automatica rilevamento delle modifiche nelle entità POCO. Le classi POCO devono soddisfare determinati requisiti per consentire a Entity Framework di usare un proxy, come descritto qui: [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx).
+Entity Framework inoltre possibile creare classi proxy derivate dai tipi POCO, che vengono utilizzate quando si desidera abilitare funzionalità quali il caricamento lazy e il rilevamento automatico delle modifiche nelle entità POCO. Le classi POCO devono soddisfare determinati requisiti per consentire a Entity Framework di usare un proxy, come descritto qui: [http://msdn.microsoft.com/library/dd468057.aspx](https://msdn.microsoft.com/library/dd468057.aspx).
 
-Proxy di rilevamento delle probabilità informerà il gestore di stato oggetto ogni volta che le proprietà delle entità presenta il valore modificato, in modo che Entity Framework riconosce lo stato effettivo delle entità di tutto il tempo. Questa operazione viene eseguita aggiungendo gli eventi di notifica al corpo dei metodi setter della proprietà e quando il gestore di stato oggetto l'elaborazione di tali eventi. Si noti che la creazione di un proxy di entità viene in genere essere più costoso rispetto alla creazione di un'entità POCO non proxy a causa di un ulteriore set di eventi creati da Entity Framework.
+I proxy di rilevamento delle probabilità notificheranno al gestore dello stato dell'oggetto ogni volta che viene modificato il valore di una delle proprietà delle entità, quindi Entity Framework sa sempre lo stato effettivo delle entità. Questa operazione viene eseguita tramite l'aggiunta di eventi di notifica al corpo dei metodi setter delle proprietà e la gestione dello stato dell'oggetto che elabora tali eventi. Si noti che la creazione di un'entità proxy sarà in genere più costosa della creazione di un'entità POCO proxy non proxy a causa del set aggiunto di eventi creati da Entity Framework.
 
-Quando un'entità POCO non dispone di un proxy di rilevamento modifiche, vengono rilevate modifiche confrontando il contenuto delle entità in una copia di uno stato salvato precedente. Questo confronto approfondito diventerà molto tempo quando si dispone di molte entità nel contesto, o quando l'entità dispone di una quantità molto grande di proprietà, anche se nessuno di essi modificato dall'ultimo confronto ha avuto luogo.
+Quando un'entità POCO non dispone di un proxy di rilevamento delle modifiche, le modifiche vengono rilevate confrontando il contenuto delle entità con una copia di uno stato salvato in precedenza. Questo confronto approfondito diventerà un processo lungo quando si dispone di molte entità nel contesto o quando le entità hanno una quantità molto elevata di proprietà, anche se nessuna di esse è stata modificata dopo l'ultimo confronto.
 
-In sintesi: si pagherà un calo durante la creazione di proxy di rilevamento delle modifiche delle prestazioni, sebbene il rilevamento delle modifiche consente di velocizzare il processo di rilevamento modifiche quando le entità hanno molte proprietà oppure quando si dispone di molte entità nel modello. Per le entità con un numero limitato di proprietà in cui la quantità di entità non aumentare una quantità eccessiva, con il proxy di rilevamento delle modifiche potrebbe non essere molto utili.
+In breve, durante la creazione del proxy di rilevamento delle modifiche si pagherà un riscontro delle prestazioni, ma il rilevamento delle modifiche consente di velocizzare il processo di rilevamento delle modifiche quando le entità hanno molte proprietà o quando sono presenti molte entità nel modello. Per le entità con un numero ridotto di proprietà in cui la quantità di entità non aumenta troppo, i proxy di rilevamento delle modifiche potrebbero non essere di gran lunga vantaggio.
 
-## <a name="8-loading-related-entities"></a>8 durante il caricamento di entità correlate
+## <a name="8-loading-related-entities"></a>8 caricamento di entità correlate
 
-### <a name="81-lazy-loading-vs-eager-loading"></a>8.1 Visual Studio durante il caricamento lazy. Caricamento eager
+### <a name="81-lazy-loading-vs-eager-loading"></a>8,1 caricamento lazy rispetto a Caricamento eager
 
-Entity Framework offre diversi modi per caricare le entità correlate all'entità di destinazione. Ad esempio, quando esegue una query per i prodotti, esistono diversi modi che gli ordini correlati verranno caricati nel gestore di stato oggetto. Dal punto di vista delle prestazioni, la domanda principale da prendere in considerazione durante il caricamento di entità correlate saranno se utilizzare il caricamento Lazy o il caricamento Eager.
+Entity Framework offre diversi modi per caricare le entità correlate all'entità di destinazione. Ad esempio, quando si esegue una query per i prodotti, esistono diversi modi in cui gli ordini correlati verranno caricati nel gestore dello stato dell'oggetto. Dal punto di vista delle prestazioni, la domanda più importante da considerare quando si caricano entità correlate sarà se usare il caricamento lazy o il caricamento eager.
 
-Quando si utilizza il caricamento Eager, le entità correlate vengono caricate insieme ai set di entità di destinazione. Si usa un'istruzione di inclusione nella query per indicare quali si vuole importare entità correlate.
+Quando si usa il caricamento eager, le entità correlate vengono caricate insieme al set di entità di destinazione. Usare un'istruzione include nella query per indicare quali entità correlate si desidera includere.
 
-Quando si utilizza il caricamento Lazy, la query iniziale riporta solo nel set di entità di destinazione. Ma ogni volta che si accede a una proprietà di navigazione, viene generata un'altra query a fronte dell'archivio per caricare l'entità correlata.
+Quando si usa il caricamento lazy, la query iniziale porta solo il set di entità di destinazione. Tuttavia, ogni volta che si accede a una proprietà di navigazione, viene eseguita un'altra query sull'archivio per caricare l'entità correlata.
 
-Una volta che un'entità è stata caricata, altre query per l'entità lo caricherà direttamente dal gestore di stato oggetto, se si utilizza il caricamento lazy o il caricamento eager.
+Dopo che un'entità è stata caricata, eventuali altre query per l'entità verranno caricate direttamente dal gestore dello stato dell'oggetto, indipendentemente dal fatto che si stia usando il caricamento lazy o il caricamento eager.
 
-### <a name="82-how-to-choose-between-lazy-loading-and-eager-loading"></a>8.2 come scegliere tra il caricamento Lazy e il caricamento Eager
+### <a name="82-how-to-choose-between-lazy-loading-and-eager-loading"></a>8,2 come scegliere tra il caricamento lazy e il caricamento eager
 
-È importante comprendere la differenza tra il caricamento Lazy e il caricamento Eager in modo che è possibile effettuare la scelta corretta per l'applicazione. Ciò consentirà di valutare il compromesso tra più richieste nel database rispetto a una singola richiesta che può contenere un payload di grandi dimensioni. Potrebbe essere opportuno usare il caricamento eager in alcune parti dell'applicazione e il caricamento lazy in altre parti.
+L'aspetto importante è che si comprende la differenza tra il caricamento lazy e il caricamento eager, in modo che sia possibile effettuare la scelta corretta per l'applicazione. Ciò consentirà di valutare il compromesso tra più richieste nel database rispetto a una singola richiesta che può contenere un payload di grandi dimensioni. Potrebbe essere opportuno usare il caricamento eager in alcune parti dell'applicazione e il caricamento lazy in altre parti.
 
-Ad esempio di ciò che accade dietro le quinte, si supponga di che voler eseguire una query per i clienti che vivono nel Regno Unito e il numero di ordini.
+Come esempio di ciò che accade dietro le quinte, si supponga di voler eseguire una query per i clienti che risiedono nel Regno Unito e il conteggio degli ordini.
 
-**Tramite il caricamento Eager**
+**Uso del caricamento eager**
 
 ``` csharp
 using (NorthwindEntities context = new NorthwindEntities())
@@ -952,7 +952,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 }
 ```
 
-**Utilizzando il caricamento Lazy**
+**Uso del caricamento lazy**
 
 ``` csharp
 using (NorthwindEntities context = new NorthwindEntities())
@@ -967,7 +967,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 }
 ```
 
-Quando si utilizza il caricamento eager, si verrà inviata una singola query che restituisce tutti i clienti e tutti gli ordini. Il comando di archiviazione è simile:
+Quando si usa il caricamento eager, viene eseguita una singola query che restituisce tutti i clienti e tutti gli ordini. Il comando Store è simile al seguente:
 
 ``` SQL
 SELECT
@@ -1033,7 +1033,7 @@ FROM ( SELECT
 ORDER BY [Project1].[CustomerID] ASC, [Project1].[C2] ASC
 ```
 
-Quando si utilizza il caricamento lazy, è possibile eseguire la query seguente inizialmente:
+Quando si usa il caricamento lazy, è necessario eseguire inizialmente la query seguente:
 
 ``` SQL
 SELECT
@@ -1052,7 +1052,7 @@ FROM [dbo].[Customers] AS [Extent1]
 WHERE N'UK' = [Extent1].[Country]
 ```
 
-E ogni volta che si accede alla proprietà di navigazione di ordini di un cliente a cui viene eseguita a fronte dell'archivio query un'altra simile al seguente:
+Ogni volta che si accede alla proprietà di navigazione Orders di un cliente, viene eseguita un'altra query simile alla seguente nell'archivio:
 
 ``` SQL
 exec sp_executesql N'SELECT
@@ -1074,28 +1074,28 @@ FROM [dbo].[Orders] AS [Extent1]
 WHERE [Extent1].[CustomerID] = @EntityKeyValue1',N'@EntityKeyValue1 nchar(5)',@EntityKeyValue1=N'AROUT'
 ```
 
-Per altre informazioni, vedere la [caricamento di oggetti correlati](https://msdn.microsoft.com/library/bb896272.aspx).
+Per ulteriori informazioni, vedere [caricamento di oggetti correlati](https://msdn.microsoft.com/library/bb896272.aspx).
 
-#### <a name="821-lazy-loading-versus-eager-loading-cheat-sheet"></a>8.2.1 il caricamento lazy e il caricamento Eager foglio informativo
+#### <a name="821-lazy-loading-versus-eager-loading-cheat-sheet"></a>foglio informativo caricamento lazy 8.2.1 rispetto al caricamento eager
 
-Non è disponibile come un unico a scegliere il caricamento eager e il caricamento lazy. Provare innanzitutto a comprendere le differenze tra entrambe le strategie permette quindi di eseguire delle decisioni ben informate; si consideri inoltre, se il codice si adatta a uno dei seguenti scenari:
+Non c'è niente di simile a una delle dimensioni adatte per scegliere il caricamento eager rispetto al caricamento lazy. Provare prima di tutto a comprendere le differenze tra le due strategie, in modo da poter prendere una decisione ben formata; valutare inoltre se il codice si riferisce a uno degli scenari seguenti:
 
-| Scenario                                                                    | Il suggerimento                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Scenario                                                                    | Il nostro suggerimento                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |:----------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| È necessario accedere a molte proprietà di navigazione dalle entità recuperate? | **No** -entrambe le opzioni probabilmente eseguirà. Tuttavia, se il payload che assolutamente innovativo, la query non è troppo grande, che potrebbero verificarsi i vantaggi delle prestazioni tramite il caricamento Eager, perché sarà necessario meno round trip ai fini della materializzazione degli oggetti della rete. <br/> <br/> **Sì** -se è necessario accedere a molte proprietà di navigazione da entità, si farebbe che usando più includono le istruzioni nella query con il caricamento Eager. Le altre entità si aggiungono, più grande di payload restituiti dalla query. Una volta nella query si includono tre o più entità, considerare il passaggio per il caricamento Lazy. |
-| Si conosce esattamente i dati che saranno necessarie in fase di esecuzione?                   | **No** -caricamento Lazy sarà migliore per l'utente. In caso contrario, si potrebbero avere l'esecuzione di query per i dati che non è necessario. <br/> <br/> **Sì** : Eager durante il caricamento è probabilmente la scelta migliore; aiuterà a caricano set intero più velocemente. Se la query richiede il recupero di una quantità molto grande di dati e questo diventa troppo lento, provare invece il caricamento Lazy.                                                                                                                                                                                                                                                       |
-| È il codice in esecuzione tutt'altro che il database? (maggiore latenza di rete)  | **No** : quando la latenza di rete non è un problema, utilizzando il caricamento Lazy può semplificare il codice. Tenere presente che potrebbe cambiare la topologia dell'applicazione, in modo da non richiedere prossimità di database per concesso. <br/> <br/> **Sì** : quando la rete è un problema, solo è possibile decidere cosa si adatta meglio per il proprio scenario. Il caricamento Eager in genere sarà preferibile perché richiede meno round trip.                                                                                                                                                                                                      |
+| È necessario accedere a molte proprietà di navigazione dalle entità recuperate? | **No** -entrambe le opzioni probabilmente funzioneranno. Tuttavia, se il payload che la query sta portando non è troppo grande, è possibile che si verifichino vantaggi in termini di prestazioni tramite il caricamento eager, perché sarà necessario meno round trip in rete per materializzare gli oggetti. <br/> <br/> **Sì** : se è necessario accedere a molte proprietà di navigazione dalle entità, è possibile usare più istruzioni include nella query con caricamento eager. Maggiore è il numero di entità incluse, più grande sarà il payload restituito dalla query. Una volta incluse nella query tre o più entità, provare a passare al caricamento lazy. |
+| Si conoscono esattamente quali dati saranno necessari in fase di esecuzione?                   | Il caricamento lazy sarà migliore. In caso contrario, è possibile che si verifichino query per i dati che non sono necessari. <br/> <br/> **Sì** : il caricamento eager è probabilmente la scommessa migliore. consente di caricare i set interi più velocemente. Se la query richiede il recupero di una quantità molto elevata di dati e questo diventa troppo lento, provare a eseguire il caricamento lazy.                                                                                                                                                                                                                                                       |
+| Il codice è in esecuzione lontano dal database? (aumento della latenza di rete)  | **No** : quando la latenza di rete non è un problema, l'uso del caricamento lazy può semplificare il codice. Tenere presente che la topologia dell'applicazione può cambiare, quindi non considerare la prossimità del database per l'autorizzazione. <br/> <br/> **Sì** : quando la rete è un problema, solo è possibile decidere quale sia la soluzione migliore per il proprio scenario. In genere, il caricamento eager sarà migliore perché richiede meno round trip.                                                                                                                                                                                                      |
 
 
-#### <a name="822-performance-concerns-with-multiple-includes"></a>8.2.2 problemi di prestazioni with include più
+#### <a name="822-performance-concerns-with-multiple-includes"></a>problemi di prestazioni 8.2.2 con più inclusioni
 
-Quando si pongono domande sulle prestazioni che comportano problemi di tempo di risposta server, l'origine del problema è spesso le query con più istruzioni di inclusione. Incluse le entità correlate in una query è potente, è importante comprendere ciò che accade dietro le quinte.
+Quando si ricevono domande sulle prestazioni che coinvolgono problemi del tempo di risposta del server, l'origine del problema è spesso query con più istruzioni di inclusione. Sebbene l'inclusione di entità correlate in una query sia efficace, è importante capire cosa accade dietro le quinte.
 
-Bastano un tempo relativamente lungo per una query con più istruzioni di inclusione in essa passare attraverso il compilatore piano interno per generare il comando di archiviazione. La maggior parte di questo tempo viene impiegata per tenta di ottimizzare la query risultante. Il comando di archiviazione generato conterrà un Outer Join o Union per ogni includono, a seconda del mapping. Le query simile alla seguente aggiungeranno grandi grafici connessi dal database in un payload singolo, quale sarà acerbate eventuali problemi di larghezza di banda, soprattutto quando c'è molto di ridondanza nel payload (ad esempio, quando vengono utilizzati più livelli di inclusione per attraversare associazioni nella direzione uno-a-molti).
+Il tempo impiegato da una query con più istruzioni include per la creazione del comando di archiviazione richiede un tempo relativamente lungo. La maggior parte di questo tempo è dedicata al tentativo di ottimizzare la query risultante. Il comando archivio generato conterrà un outer join o un'Unione per ogni inclusione, a seconda del mapping. Le query di questo tipo porteranno i grafici di grandi dimensioni dal database in un unico payload, che acerbate eventuali problemi di larghezza di banda, soprattutto in caso di ridondanza del payload (ad esempio, quando vengono usati più livelli di inclusione per attraversare associazioni nella direzione uno-a-molti.
 
-È possibile controllare nei casi in cui la query restituisce i payload di dimensioni eccessive accedendo TSQL sottostante per la query usando ToTraceString ed eseguendo il comando di archiviazione in SQL Server Management Studio per visualizzare le dimensioni del payload. In questi casi che è possibile provare a ridurre il numero di istruzioni Include nella query per importare i dati che necessari. In alternativa, è possibile suddividere la query in una sequenza più piccola di una sottoquery, ad esempio:
+È possibile controllare i casi in cui le query restituiscono payload eccessivamente grandi accedendo al TSQL sottostante per la query usando ToTraceString ed eseguendo il comando Store in SQL Server Management Studio per visualizzare le dimensioni del payload. In questi casi, è possibile provare a ridurre il numero di istruzioni include nella query per importare solo i dati necessari. In alternativa, potrebbe essere possibile suddividere la query in una sequenza più piccola di sottoquery, ad esempio:
 
-**Prima di interrompere la query:**
+**Prima di suddividere la query:**
 
 ``` csharp
 using (NorthwindEntities context = new NorthwindEntities())
@@ -1111,7 +1111,7 @@ using (NorthwindEntities context = new NorthwindEntities())
 }
 ```
 
-**Dopo l'interruzione della query:**
+**Al termine della query,**
 
 ``` csharp
 using (NorthwindEntities context = new NorthwindEntities())
@@ -1133,21 +1133,21 @@ using (NorthwindEntities context = new NorthwindEntities())
 }
 ```
 
-Che funzionerà solo query rilevate, in seguito all'utilizzo della capacità il contesto deve eseguire automaticamente la correzione della risoluzione e associazione di identità.
+Questa operazione funzionerà solo per le query rilevate, poiché viene usata la capacità del contesto di eseguire automaticamente la risoluzione delle identità e la correzione dell'associazione.
 
-Come con il caricamento lazy, il compromesso sarà più query per i payload più piccoli. È anche possibile usare le proiezioni di singole proprietà selezionare in modo esplicito solo i dati che necessari da ogni entità, ma è non caricano le entità in questo caso, e gli aggiornamenti non saranno più supportati.
+Come per il caricamento lazy, il compromesso sarà costituito da un numero maggiore di query per payload più piccoli. È inoltre possibile utilizzare le proiezioni delle singole proprietà per selezionare in modo esplicito solo i dati necessari da ogni entità, ma in questo caso le entità non verranno caricate e gli aggiornamenti non saranno supportati.
 
-#### <a name="823-workaround-to-get-lazy-loading-of-properties"></a>8.2.3 soluzione alternativa per ottenere il caricamento lazy di proprietà
+#### <a name="823-workaround-to-get-lazy-loading-of-properties"></a>soluzione alternativa 8.2.3 per ottenere il caricamento lazy delle proprietà
 
-Entity Framework attualmente non supporta il caricamento lazy di proprietà scalare o complessa. Tuttavia, nei casi in cui si dispone di una tabella che include un oggetto di grandi dimensioni, ad esempio un BLOB, è possibile utilizzare la suddivisione di tabelle per separare le proprietà di grandi dimensioni in un'entità distinta. Ad esempio, si supponga di che avere una tabella Product che include una colonna photo varbinary. Se non è spesso necessario accedere a questa proprietà nelle query, è possibile usare per importare solo le parti dell'entità che è in genere suddivisione di tabelle. L'entità che rappresenta la foto del prodotto verrà caricato solo quando serve in modo esplicito.
+Entity Framework attualmente non supporta il caricamento lazy di proprietà scalari o complesse. Tuttavia, nei casi in cui si dispone di una tabella che include un oggetto di grandi dimensioni, ad esempio un BLOB, è possibile utilizzare la suddivisione delle tabelle per separare le proprietà di grandi dimensioni in un'entità separata. Si supponga, ad esempio, di disporre di una tabella Product che includa una colonna della foto varbinary. Se non è spesso necessario accedere a questa proprietà nelle query, è possibile utilizzare la suddivisione delle tabelle per importare solo le parti dell'entità normalmente necessarie. L'entità che rappresenta la foto del prodotto verrà caricata solo quando è necessaria in modo esplicito.
 
 Un'ottima risorsa che illustra come abilitare la suddivisione di tabelle è post di blog di Gil Fink "Tabella la suddivisione in Entity Framework": \<http://blogs.microsoft.co.il/blogs/gilf/archive/2009/10/13/table-splitting-in-entity-framework.aspx>.
 
-## <a name="9-other-considerations"></a>9 altre considerazioni
+## <a name="9-other-considerations"></a>altre 9 considerazioni
 
-### <a name="91-server-garbage-collection"></a>9.1 Garbage Collection per server
+### <a name="91-server-garbage-collection"></a>Garbage Collection per Server 9,1
 
-Alcuni utenti potrebbero verificarsi conflitti di risorse che limita il parallelismo in attesa quando il Garbage Collector non è configurato correttamente. Ogni volta che EF viene utilizzato in uno scenario multithreading, o in qualsiasi applicazione che è simile a un sistema sul lato server, assicurarsi di abilitare la Garbage Collection per Server. Questa operazione viene eseguita tramite una semplice impostazione nel file di configurazione dell'applicazione:
+Alcuni utenti potrebbero riscontrare conflitti di risorse che limitano il parallelismo previsto quando il Garbage Collector non è configurato correttamente. Quando EF viene usato in uno scenario a thread multipli o in qualsiasi applicazione simile a un sistema lato server, assicurarsi di abilitare la Garbage Collection per server. Questa operazione viene eseguita tramite un'impostazione semplice nel file di configurazione dell'applicazione:
 
 ``` xml
 <?xmlversion="1.0" encoding="utf-8" ?>
@@ -1158,13 +1158,13 @@ Alcuni utenti potrebbero verificarsi conflitti di risorse che limita il parallel
 </configuration>
 ```
 
-Questo dovrebbe ridurre i conflitti di thread e aumentare la velocità effettiva fino al 30% in scenari di CPU saturato. In termini generali, è necessario verificare sempre il comportamento dell'applicazione usando il classico Garbage Collection (e migliore per gli scenari di lato client e dell'interfaccia utente), nonché la Garbage Collection per Server.
+Questa operazione dovrebbe ridurre la contesa dei thread e aumentare la velocità effettiva fino al 30% negli scenari saturi della CPU. In termini generali, è sempre necessario testare il comportamento dell'applicazione usando la procedura di Garbage Collection classica (ottimizzata per gli scenari di interfaccia utente e lato client), nonché l'operazione di Garbage Collection per server.
 
-### <a name="92-autodetectchanges"></a>9.2 AutoDetectChanges
+### <a name="92-autodetectchanges"></a>9,2 AutoDetectChanges
 
-Come accennato in precedenza, Entity Framework potrebbe mostrare i problemi di prestazioni quando la cache oggetti ha molte entità. Determinate operazioni, ad esempio Add, Remove, Find, voce e SaveChanges, attivano le chiamate a cui è possibile che occupino una grande quantità di CPU in base la cache degli oggetti è diventato DetectChanges. Il motivo è che la cache degli oggetti e il tentativo di gestione dello stato oggetto rimanere come il più possibile sincronizzati a ogni operazione eseguita per un contesto in modo che i dati generati sono sempre in un'ampia gamma di scenari corrette.
+Come indicato in precedenza, Entity Framework potrebbe visualizzare problemi di prestazioni quando la cache degli oggetti include molte entità. Alcune operazioni, ad esempio Add, Remove, find, entry e SaveChanges, attivano chiamate a DetectChanges che potrebbero utilizzare una grande quantità di CPU in base alla dimensione della cache degli oggetti. Il motivo è che la cache degli oggetti e il gestore dello stato dell'oggetto provano a rimanere sincronizzati il più possibile in ogni operazione eseguita in un contesto, in modo che i dati prodotti siano corretti in un'ampia gamma di scenari.
 
-In genere è consigliabile lasciare il rilevamento delle modifiche automatico di Entity Framework abilitato per l'intera durata dell'applicazione. Se lo scenario viene compromessa per un utilizzo elevato della CPU e i profili indicano che la causa del problema è la chiamata a DetectChanges, prendere in considerazione di disattivare temporaneamente AutoDetectChanges nella parte sensibile del codice:
+È in genere consigliabile lasciare Entity Framework il rilevamento delle modifiche automatico abilitato per l'intera durata dell'applicazione. Se lo scenario è influenzato da un utilizzo elevato della CPU e i profili indicano che il problema è la chiamata a DetectChanges, è consigliabile disattivare temporaneamente AutoDetectChanges nella parte sensibile del codice:
 
 ``` csharp
 try
@@ -1179,15 +1179,15 @@ finally
 }
 ```
 
-Prima di spegnere AutoDetectChanges, è importante comprendere che ciò potrebbe causare Entity Framework potrebbe perdere la possibilità di monitorare determinate informazioni sulle modifiche che hanno luogo sulle entità. Se vengono gestite in modo non corretto, ciò potrebbe causare un'incoerenza dei dati nell'applicazione. Per altre informazioni su come disattivare AutoDetectChanges, leggere \<http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>.
+Prima di disattivare AutoDetectChanges, è opportuno comprendere che questo potrebbe causare la perdita della capacità di Entity Framework di rilevare determinate informazioni sulle modifiche apportate alle entità. Se gestita in modo non corretto, è possibile che si verifichi un'incoerenza dei dati nell'applicazione. Per altre informazioni su come disattivare AutoDetectChanges, leggere \<http://blog.oneunicorn.com/2012/03/12/secrets-of-detectchanges-part-3-switching-off-automatic-detectchanges/>.
 
-### <a name="93-context-per-request"></a>9.3 contesto per ogni richiesta
+### <a name="93-context-per-request"></a>9,3 contesto per richiesta
 
-Contesti di Entity Framework sono concepiti per essere utilizzate come esperienza di istanze di breve durate per garantire prestazioni ottimali. Contesti devono essere breve durata ed eliminati e di conseguenza sono stati implementati per essere molto semplici e reutilize metadati laddove possibile. In scenari web è importante tenere a mente e non dispone di un contesto per supera la durata di una singola richiesta. Analogamente, in scenari non web, contesto deve essere eliminato in base la comprensione dei diversi livelli di memorizzazione nella cache in Entity Framework. In generale, è necessario evitare con un'istanza del contesto per tutta la durata dell'applicazione, nonché i contesti per ogni thread e contesti statici.
+I contesti di Entity Framework devono essere usati come istanze di breve durata per offrire l'esperienza ottimale per le prestazioni. I contesti dovrebbero essere di breve durata ed eliminati e, di conseguenza, sono stati implementati in modo da essere molto leggeri e riutilizzarli laddove possibile. Negli scenari Web è importante tenerlo presente e non avere un contesto per più della durata di una singola richiesta. Analogamente, in scenari non Web, il contesto deve essere scartato in base alla conoscenza dei diversi livelli di memorizzazione nella cache nel Entity Framework. In generale, è consigliabile evitare di avere un'istanza del contesto per tutta la durata dell'applicazione, nonché i contesti per thread e contesti statici.
 
-### <a name="94-database-null-semantics"></a>9.4 semantica null di database
+### <a name="94-database-null-semantics"></a>semantica null del database 9,4
 
-Entity Framework per impostazione predefinita verrà generato codice SQL con C\# null la semantica di confronto. Si consideri la query di esempio seguente:
+Entity Framework per impostazione predefinita genererà codice SQL con semantica di confronto null C @ no__t-0. Si consideri la query di esempio seguente:
 
 ``` csharp
             int? categoryId = 7;
@@ -1210,60 +1210,59 @@ Entity Framework per impostazione predefinita verrà generato codice SQL con C\#
             var r = q.ToList();
 ```
 
-In questo esempio, è sta confrontato un numero di variabili nullable rispetto alle proprietà che ammette valori null nell'entità, ad esempio SupplierID e UnitPrice. Il codice SQL generato per questa query verrà richiesto se il valore del parametro è identico al valore di colonna o se entrambi i parametri e i valori della colonna sono null. Ciò consente di nascondere il modo in cui il server di database gestisce valori null e fornirà un C coerente\# null esperienza tra i fornitori di database diverso. D'altra parte, il codice generato è un po' contorta e potrebbero non funzionare bene quando la quantità di confronti in where istruzione della query aumenta fino a un numero elevato.
+In questo esempio vengono confrontate alcune variabili nullable per le proprietà Nullable sull'entità, ad esempio SupplierID e PrezzoUnitario. L'oggetto SQL generato per questa query richiederà se il valore del parametro è uguale al valore della colonna o se il parametro e i valori della colonna sono null. Questo consente di nascondere il modo in cui il server di database gestisce i valori null e fornisce un'esperienza di C @ no__t-0 coerente tra diversi fornitori di database. D'altra parte, il codice generato è un po' contorto e potrebbe non funzionare correttamente quando la quantità di confronti nell'istruzione WHERE della query diventa un numero elevato.
 
-Un modo per gestire questa situazione consiste nell'usare la semantica null di database. Si noti che questo potrebbe potenzialmente comportarsi in modo diverso a C\# null semantica dall'ora Entity Framework verrà generato codice SQL più semplice che espone il modo in cui il motore di database gestisce valori null. Semantica null di database può essere attivato per ogni contesto con una riga singola configurazione in base alla configurazione di contesto:
+Un modo per gestire questa situazione consiste nell'usare la semantica null del database. Si noti che questo comportamento potrebbe potenzialmente comportarsi in modo diverso rispetto alla semantica null di C @ no__t-0 poiché ora Entity Framework genererà SQL più semplice che espone il modo in cui il motore di database gestisce i valori null. La semantica null del database può essere attivata per contesto con una singola riga di configurazione rispetto alla configurazione del contesto:
 
 ``` csharp
                 context.Configuration.UseDatabaseNullSemantics = true;
 ```
 
-Piccole e medie dimensioni query non verranno visualizzati un miglioramento delle prestazioni percettibile quando si usa la semantica null di database, ma la differenza diventerà più evidente nelle query con un numero elevato di potenziali confronti di valori null.
+Le query di dimensioni medio-piccole non visualizzeranno un miglioramento delle prestazioni percettibile quando si usa la semantica null del database, ma la differenza diventerà più evidente nelle query con un numero elevato di potenziali confronti NULL.
 
-Nella query di esempio precedente, la differenza nelle prestazioni è inferiore al 2% in un microbenchmark in esecuzione in un ambiente controllato.
+Nella query di esempio precedente la differenza delle prestazioni era minore del 2% in un microbenchmark eseguito in un ambiente controllato.
 
-### <a name="95-async"></a>9,5 Async
+### <a name="95-async"></a>9,5 asincrono
 
-Supporto di Entity Framework 6 introdotte delle operazioni asincrone quando in esecuzione in .NET 4.5 o versioni successive. Nella maggior parte, le applicazioni con i/o correlati contesa sarà più vantaggioso utilizzare query asincrona e operazioni di salvataggio. Se l'applicazione non subisca una contesa dei / o, l'utilizzo di async verrà, nei casi migliori, eseguire in modo sincrono e restituiscono il risultato nella stessa quantità di tempo come una chiamata sincrona, o nel peggiore dei casi, semplicemente rinvia l'esecuzione di un'attività asincrona e aggiungere tim extra e per il completamento dello scenario.
+In Entity Framework 6 è stato introdotto il supporto di operazioni asincrone durante l'esecuzione in .NET 4,5 o versioni successive. Nella maggior parte dei casi, le applicazioni che hanno una contesa correlata a IO trarranno maggiori vantaggi dall'uso di operazioni di salvataggio e query asincrone. Se l'applicazione non è soggetta a contesa di i/o, l'uso di Async nei migliori casi viene eseguito in modo sincrono e restituisce il risultato nella stessa quantità di tempo di una chiamata sincrona o nel peggiore dei casi è sufficiente rinviare l'esecuzione a un'attività asincrona e aggiungere un altro Tim e al completamento dello scenario.
 
-Per informazioni sull'attività di programmazione asincrono utili per decidere se async consentirà di migliorare le prestazioni dell'applicazione visitati [http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx). Per altre informazioni sull'uso delle operazioni asincrone in Entity Framework, vedere [Async Query e salvataggio](~/ef6/fundamentals/async.md
-).
+Per informazioni sull'attività di programmazione asincrono utili per decidere se async consentirà di migliorare le prestazioni dell'applicazione visitati [http://msdn.microsoft.com/library/hh191443.aspx](https://msdn.microsoft.com/library/hh191443.aspx). Per altre informazioni sull'uso di operazioni asincrone in Entity Framework, vedere query [Async e salvare @ no__t-1.
 
-### <a name="96-ngen"></a>9.6 NGEN
+### <a name="96-ngen"></a>9,6 NGEN
 
-Entity Framework 6 non viene fornito nell'installazione predefinita di .NET framework. Di conseguenza, gli assembly di Entity Framework non sono che Natively per impostazione predefinita, il che significa che tutto il codice di Entity Framework è soggetta a costi JIT'ing stesso come qualsiasi altro assembly MSIL. Questo potrebbe compromettere l'esperienza F5 durante lo sviluppo e anche l'avvio a freddo dell'applicazione negli ambienti di produzione. Per ridurre i costi della CPU e memoria di JIT'ing è consigliabile NGEN di immagini di Entity Framework come appropriato. Per altre informazioni su come migliorare le prestazioni di avvio di Entity Framework 6 con NGEN, vedere [miglioramento delle prestazioni di avvio con NGen](~/ef6/fundamentals/performance/ngen.md).
+Entity Framework 6 non viene eseguita l'installazione predefinita di .NET Framework. Di conseguenza, gli assembly di Entity Framework non sono di tipo NGEN per impostazione predefinita, pertanto tutto il codice di Entity Framework è soggetto agli stessi costi di JIT'ing di qualsiasi altro assembly MSIL. Questo potrebbe influire negativamente sull'esperienza F5 durante lo sviluppo e anche l'avvio a freddo dell'applicazione negli ambienti di produzione. Per ridurre i costi di utilizzo della CPU e della memoria di JIT'ing, è consigliabile fare in modo che NGEN le immagini Entity Framework nel modo appropriato. Per altre informazioni su come migliorare le prestazioni di avvio di Entity Framework 6 con NGEN, vedere [miglioramento delle prestazioni di avvio con NGen](~/ef6/fundamentals/performance/ngen.md).
 
-### <a name="97-code-first-versus-edmx"></a>9.7 code First per un confronto EDMX
+### <a name="97-code-first-versus-edmx"></a>9,7 Code First rispetto a EDMX
 
-Motivi di Entity Framework relativi al problema di mancata corrispondenza dell'impedenza tra la programmazione orientata agli oggetti e i database relazionali facendo in modo che una rappresentazione in memoria del modello concettuale (oggetto), lo schema di archiviazione (database) e un mapping tra il due. Questi metadati viene chiamato un Entity Data Model, o EDM per brevità. Da EDM, Entity Framework verrà derivare le viste per i dati di round trip dagli oggetti in memoria nel database e il backup.
+Entity Framework motivi del problema di mancata corrispondenza dell'impedenza tra la programmazione orientata a oggetti e i database relazionali tramite una rappresentazione in memoria del modello concettuale (gli oggetti), lo schema di archiviazione (il database) e un mapping tra due. Questi metadati sono detti Entity Data Model o EDM per brevità. Da questo modello EDM, Entity Framework deriverà le visualizzazioni ai dati di andata e ritorno dagli oggetti in memoria al database e viceversa.
 
-Quando Entity Framework viene usato con un file EDMX che formalmente specifica del modello concettuale, lo schema di archiviazione e il mapping, quindi la fase di caricamento del modello ha solo convalidare che il modello EDM è corretto (ad esempio, assicurarsi che nessun mapping non è presente), quindi Genera le visualizzazioni, convalidare le visualizzazioni e hanno questo pronto per l'uso di metadati. Solo può quindi una query da eseguire o salvare i dati di nuovo all'archivio dati.
+Quando Entity Framework viene usato con un file EDMX che specifica formalmente il modello concettuale, lo schema di archiviazione e il mapping, la fase di caricamento del modello deve solo convalidare la correttezza dell'EDM (ad esempio, assicurarsi che non siano presenti mapping), quindi generare le visualizzazioni, quindi convalidare le viste e prepararle per l'utilizzo. Solo in questo modo è possibile eseguire una query o salvare nuovi dati nell'archivio dati.
 
-L'approccio Code First è, essenzialmente, un sofisticato generatore Entity Data Model. Entity Framework ha per produrre un modello EDM da codice fornito; Ciò avviene tramite l'analisi le classi coinvolte nel modello di applicazione delle convenzioni e la configurazione di modello tramite l'API Fluent. Una volta creato il modello EDM, Entity Framework essenzialmente si comporta come verrebbe avesse un file EDMX partecipato nel progetto. Di conseguenza, compilazione del modello da Code First aggiunge complessità aggiuntive che si traduce in un tempo di avvio più lento per Entity Framework rispetto alla presenza di un EDMX. Il costo dipende completamente le dimensioni e complessità del modello che viene compilato.
+L'approccio Code First è, al suo cuore, un generatore di Entity Data Model sofisticato. Il Entity Framework deve produrre un modello EDM dal codice fornito; Questa operazione viene eseguita analizzando le classi incluse nel modello, applicando le convenzioni e configurando il modello tramite l'API Fluent. Dopo la compilazione del modello EDM, il Entity Framework si comporta in modo analogo al fatto che un file EDMX era presente nel progetto. Pertanto, la compilazione del modello da Code First aggiunge una complessità aggiuntiva che si traduce in un tempo di avvio più lento per l'Entity Framework rispetto alla presenza di un EDMX. Il costo dipende completamente dalla dimensione e dalla complessità del modello in fase di compilazione.
 
-Se si sceglie di usare EDMX rispetto a Code First, è importante sapere che la flessibilità introdotta da Code First aumenta il costo della creazione del modello per la prima volta. Se l'applicazione è in grado di resistere il costo di questo tipo di caricamento prima volta, in genere Code First sarà il modo migliore per passare.
+Quando si sceglie di usare EDMX e Code First, è importante tenere presente che la flessibilità introdotta da Code First aumenta il costo della compilazione del modello per la prima volta. Se l'applicazione è in grado di sostenere il costo del primo carico, in genere Code First sarà il modo migliore per iniziare.
 
-## <a name="10-investigating-performance"></a>Prestazioni di analisi dei 10
+## <a name="10-investigating-performance"></a>10 analisi delle prestazioni
 
-### <a name="101-using-the-visual-studio-profiler"></a>10.1 usando il Profiler di Visual Studio
+### <a name="101-using-the-visual-studio-profiler"></a>10,1 uso del profiler di Visual Studio
 
-Se si sono verificati problemi di prestazioni con Entity Framework, è possibile utilizzare un profiler simile a quello incorporato in Visual Studio per vedere dove l'applicazione trascorre del tempo. Questo è lo strumento è stato usato per generare i grafici a torta nel post di blog "Analisi delle prestazioni di ADO.NET Entity Framework - parte 1" ( \<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) che mostra dove Entity Framework Usa il tempo durante le query a freddo e a caldo.
+Se si verificano problemi di prestazioni con il Entity Framework, è possibile usare un profiler come quello incorporato in Visual Studio per vedere dove l'applicazione spende il proprio tempo. Questo è lo strumento è stato usato per generare i grafici a torta nel post di blog "Analisi delle prestazioni di ADO.NET Entity Framework - parte 1" ( \<http://blogs.msdn.com/b/adonet/archive/2008/02/04/exploring-the-performance-of-the-ado-net-entity-framework-part-1.aspx>) che mostra dove Entity Framework Usa il tempo durante le query a freddo e a caldo.
 
-Il post di blog "Profilatura Entity Framework con il Profiler di 2010 Visual Studio" scritto dagli adattatori dati e modellazione Customer Advisory Team illustra un esempio reale di come usavano il profiler per analizzare un problema di prestazioni.  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>. Questo post è stato scritto per un'applicazione windows. Se si desidera profilare un'applicazione web potrebbero funzionare meglio di lavoro da Visual Studio gli strumenti di Windows Performance Recorder (WPR) e Windows Performance Analyzer (WPA). WPR e WPA fanno parte di Windows Performance Toolkit incluso in Windows Assessment and Deployment Kit ( [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982)).
+Il post di Blog relativo all'Entity Framework di profilatura con il profiler di Visual Studio 2010 Profiler scritto dal team di consulenza dei clienti sui dati e sulla modellazione Mostra un esempio reale del modo in cui hanno usato il profiler per esaminare un problema di prestazioni.  \<http://blogs.msdn.com/b/dmcat/archive/2010/04/30/profiling-entity-framework-using-the-visual-studio-2010-profiler.aspx>. Questo post è stato scritto per un'applicazione Windows. Se è necessario profilare un'applicazione Web, è possibile che gli strumenti Windows Performance Recorder (WPR) e Windows Performance Analyzer (WPA) funzionino meglio rispetto a Visual Studio. WPR e WPA fanno parte di Windows Performance Toolkit incluso in Windows Assessment and Deployment Kit ( [http://www.microsoft.com/download/details.aspx?id=39982](https://www.microsoft.com/download/details.aspx?id=39982)).
 
-### <a name="102-applicationdatabase-profiling"></a>10.2 profilatura Database e dell'applicazione
+### <a name="102-applicationdatabase-profiling"></a>10,2 profilatura di applicazioni/database
 
-Strumenti come profiler incorporato in Visual Studio indicano dove l'applicazione trascorre del tempo.  È disponibile un altro tipo di profiler che esegue l'analisi dinamica dell'applicazione in esecuzione, in produzione o di pre-produzione in base alle esigenze e si esegue la ricerca di problemi più comuni e anti-modelli di accesso al database.
+Strumenti come il profiler incorporato in Visual Studio indicano i punti in cui l'applicazione dedica tempo.  È disponibile un altro tipo di profiler che esegue l'analisi dinamica dell'applicazione in esecuzione, in produzione o pre-produzione a seconda delle esigenze, e cerca problemi comuni e anti-modelli di accesso al database.
 
 Due profiler disponibile in commercio sono il Profiler di Entity Framework ( \<http://efprof.com>) ORMProfiler e ( \<http://ormprofiler.com>).
 
-Se l'applicazione è un'applicazione MVC con Code First, è possibile usare MiniProfiler di StackExchange. Scott Hanselman descrive questo strumento nel suo blog all'indirizzo: \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>.
+Se l'applicazione è un'applicazione MVC che usa Code First, è possibile usare MiniProfiler di StackExchange. Scott Hanselman descrive questo strumento nel suo blog all'indirizzo: \<http://www.hanselman.com/blog/NuGetPackageOfTheWeek9ASPNETMiniProfilerFromStackExchangeRocksYourWorld.aspx>.
 
-Per altre informazioni sulla profilatura delle attività del database dell'applicazione, vedere articolo di MSDN Magazine di Julie intitolata [attività di profilatura del Database in Entity Framework](https://msdn.microsoft.com/magazine/gg490349.aspx).
+Per altre informazioni sulla profilatura dell'attività del database dell'applicazione, vedere l'articolo di MSDN Magazine di Julie Lerman intitolato [attività di database di profilatura nella Entity Framework](https://msdn.microsoft.com/magazine/gg490349.aspx).
 
-### <a name="103-database-logger"></a>10.3 logger database
+### <a name="103-database-logger"></a>logger di database 10,3
 
-Se si usa Entity Framework 6 anche provare a usare la funzionalità di registrazione predefiniti. La proprietà del Database di contesto è possibile indicare al log attività tramite una semplice configurazione di una sola riga:
+Se si usa Entity Framework 6, considerare anche l'uso della funzionalità di registrazione incorporata. È possibile indicare alla proprietà database del contesto di registrare l'attività tramite una semplice configurazione a una riga:
 
 ``` csharp
     using (var context = newQueryComparison.DbC.NorthwindEntities())
@@ -1274,9 +1273,9 @@ Se si usa Entity Framework 6 anche provare a usare la funzionalità di registraz
     }
 ```
 
-In questo esempio l'attività del database verrà registrato nella console, ma la proprietà del Log può essere configurata per richiamare qualsiasi azione&lt;stringa&gt; delegare.
+In questo esempio l'attività del database verrà registrata nella console, ma la proprietà log può essere configurata per chiamare qualsiasi azione @ no__t-0string @ no__t-1.
 
-Se si vuole abilitare la registrazione del database senza dover ricompilare e si usa Entity Framework 6.1 o versioni successive, è possibile farlo mediante l'aggiunta di un intercettore nel file Web. config o App. config dell'applicazione.
+Se si vuole abilitare la registrazione del database senza ricompilare e si usa Entity Framework 6,1 o versione successiva, è possibile aggiungere un intercettore nel file Web. config o app. config dell'applicazione.
 
 ``` xml
   <interceptors>
@@ -1290,46 +1289,46 @@ Se si vuole abilitare la registrazione del database senza dover ricompilare e si
 
 Per altre informazioni su come aggiungere la registrazione senza ricompilare Vai a \<http://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/>.
 
-## <a name="11-appendix"></a>Appendice 11
+## <a name="11-appendix"></a>11 Appendice
 
-### <a name="111-a-test-environment"></a>11.1 ambiente di Test r.
+### <a name="111-a-test-environment"></a>11,1 A. ambiente di test
 
-Questo ambiente Usa una configurazione di 2-computer con il database in un computer separato dall'applicazione client. Le macchine sono nello stesso rack, in modo che la latenza di rete è relativamente bassa, ma più realistico di un ambiente singolo computer.
+Questo ambiente usa un'installazione a 2 computer con il database in un computer separato dall'applicazione client. I computer si trovano nello stesso rack, quindi la latenza di rete è relativamente bassa, ma più realistica di un ambiente con un singolo computer.
 
-#### <a name="1111-app-server"></a>11.1.1       App Server
+#### <a name="1111-app-server"></a>Server App 11.1.1
 
-##### <a name="11111-software-environment"></a>11.1.1.1 ambiente software
+##### <a name="11111-software-environment"></a>Ambiente software 11.1.1.1
 
--   Ambiente di Software di Entity Framework 4
+-   Ambiente software Entity Framework 4
     -   Nome del sistema operativo: Windows Server 2008 R2 Enterprise SP1.
     -   Visual Studio 2010 – Ultimate.
     -   Visual Studio 2010 SP1 (solo per alcuni confronti).
--   Ambiente di Software di Entity Framework 5 e 6
+-   Ambiente software Entity Framework 5 e 6
     -   Nome del sistema operativo: Windows 8.1 Enterprise
     -   Visual Studio 2013 – Ultimate.
 
-##### <a name="11112-hardware-environment"></a>11.1.1.2 ambiente hardware
+##### <a name="11112-hardware-environment"></a>Ambiente hardware 11.1.1.2
 
--   Processore doppio:     Intel (r) Xeon (r) CPU L5520 W3530 @ 2,27ghz, 2261 Mhz8 GHz, 4 memoria centrale, 84 dei processori logici.
--   RamRAM 2412 GB.
--   136 unità della 3GB/s rpm di GB SCSI250GB SATA 7200 suddividere in 4 partizioni.
+-   Processore doppio:     Intel (R) Xeon (R) CPU L5520 W3530 @ 2.27 GHz, 2261 Mhz8 GHz, 4 core, 84 processori logici.
+-   2412 GB RamRAM.
+-   136 GB SCSI250GB SATA 7200 rpm 3GB/s unità suddivisa in 4 partizioni.
 
-#### <a name="1112-db-server"></a>11.1.2 server DB
+#### <a name="1112-db-server"></a>server di database 11.1.2
 
-##### <a name="11121-software-environment"></a>11.1.2.1 ambiente software
+##### <a name="11121-software-environment"></a>Ambiente software 11.1.2.1
 
--   Nome del sistema operativo: Windows Server 2008 R28.1 Enterprise SP1.
+-   Nome del sistema operativo: Windows Server 2008 R 28.1 Enterprise SP1.
 -   SQL Server 2008 R22012.
 
-##### <a name="11122-hardware-environment"></a>11.1.2.2 ambiente hardware
+##### <a name="11122-hardware-environment"></a>Ambiente hardware 11.1.2.2
 
--   Processore singolo: Intel (r) Xeon (r) CPU L5520 @ 2,27ghz, 2261 MhzES-1620 0 @ 3.60 GHz, memoria 4 centrale, 8 processori logici.
--   RamRAM 824 GB.
--   465 GB ATA500GB SATA 7200 6GB/s rigido a rpm suddividere in 4 partizioni.
+-   Processore singolo: Intel (R) Xeon (R) CPU L5520 @ 2.27 GHz, 2261 MHz-1620 0 @ 3.60 GHz, 4 core, 8 processori logici.
+-   824 GB RamRAM.
+-   465 GB ATA500GB unità SATA 7200 rpm 6GB/s divise in 4 partizioni.
 
-### <a name="112-b-query-performance-comparison-tests"></a>11.2 confronto tra i test delle prestazioni di Query B.
+### <a name="112-b-query-performance-comparison-tests"></a>11,2 B. test di confronto delle prestazioni delle query
 
-Per eseguire questi test è stato usato il modello Northwind. È stato generato dal database utilizzando la finestra di progettazione di Entity Framework. Quindi, il codice seguente è stato utilizzato per confrontare le prestazioni delle opzioni di esecuzione query:
+Il modello Northwind è stato utilizzato per eseguire questi test. È stata generata dal database usando la finestra di progettazione Entity Framework. Quindi, per confrontare le prestazioni delle opzioni di esecuzione delle query è stato usato il codice seguente:
 
 ``` csharp
 using System;
@@ -1496,17 +1495,17 @@ namespace QueryComparison
 }
 ```
 
-### <a name="113-c-navision-model"></a>Modello Navision 11.3 C.
+### <a name="113-c-navision-model"></a>11,3 modello C. Navision
 
-Il database Navision è un database di grandi dimensioni consente di demo di Microsoft Dynamics-NAV. Il modello concettuale generato contiene set di entità 1005 e 4227 set di associazioni. Il modello usato nel test è "flat" – Nessuna ereditarietà è stato aggiunto ad esso.
+Il database di Navision è un database di grandi dimensioni usato per la demo di Microsoft Dynamics-NAV. Il modello concettuale generato contiene set di entità 1005 e 4227 set di associazioni. Il modello utilizzato nel test è "flat", a cui non è stata aggiunta alcuna ereditarietà.
 
-#### <a name="1131-queries-used-for-navision-tests"></a>11.3.1 query usate per i test Navision
+#### <a name="1131-queries-used-for-navision-tests"></a>query 11.3.1 usate per i test di Navision
 
-L'elenco di query con il modello Navision contiene 3 categorie di query Entity SQL:
+L'elenco di query usato con il modello Navision contiene 3 categorie di query di Entity SQL:
 
-##### <a name="11311-lookup"></a>11.3.1.1 ricerca
+##### <a name="11311-lookup"></a>ricerca 11.3.1.1
 
-Una query di ricerca semplice senza aggregazioni
+Query di ricerca semplice senza aggregazioni
 
 -   Conteggio: 16232
 -   Esempio:
@@ -1517,9 +1516,9 @@ Una query di ricerca semplice senza aggregazioni
   </Query>
 ```
 
-##### <a name="11312singleaggregating"></a>11.3.1.2 SingleAggregating
+##### <a name="11312singleaggregating"></a>11.3.1.2 SingleAggregating
 
-Una normale query BI con più aggregazioni, ma non i subtotali (query singola)
+Una query BI normale con più aggregazioni, ma senza subtotali (query singola)
 
 -   Conteggio: 2313
 -   Esempio:
@@ -1530,7 +1529,7 @@ Una normale query BI con più aggregazioni, ma non i subtotali (query singola)
   </Query>
 ```
 
-In cui MDF\_SessionLogin\_ora\_max () è definito nel modello come:
+Dove MDF @ no__t-0SessionLogin @ no__t-1Time @ no__t-2Max () è definito nel modello come:
 
 ``` xml
   <Function Name="MDF_SessionLogin_Time_Max" ReturnType="Collection(DateTime)">
@@ -1540,7 +1539,7 @@ In cui MDF\_SessionLogin\_ora\_max () è definito nel modello come:
 
 ##### <a name="11313aggregatingsubtotals"></a>11.3.1.3 AggregatingSubtotals
 
-Una query di BI con le aggregazioni e i subtotali (tramite unione tutti)
+Query BI con aggregazioni e subtotali (tramite Union All)
 
 -   Conteggio: 178
 -   Esempio:

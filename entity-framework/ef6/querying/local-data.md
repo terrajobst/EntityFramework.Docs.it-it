@@ -1,21 +1,21 @@
 ---
-title: Dati locali - Entity Framework 6
+title: Dati locali-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 2eda668b-1e5d-487d-9a8c-0e3beef03fcb
-ms.openlocfilehash: 400b9e1337edac1b9fa4f0ec9e1384ca58aa2fbc
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: efd646348d8a18bbeed2d0a0e708d4d36eb26eac
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490454"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182421"
 ---
 # <a name="local-data"></a>Dati locali
-Eseguendo una query LINQ direttamente un elemento DbSet inviano sempre una query al database, ma è possibile accedere ai dati che è attualmente in memoria usando la proprietà DbSet.Local. È anche possibile accedere EF tiene traccia delle informazioni aggiuntive sulle entità usando i metodi DbContext.Entry e DbContext.ChangeTracker.Entries. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
+L'esecuzione di una query LINQ direttamente su un DbSet invierà sempre una query al database, ma è possibile accedere ai dati attualmente in memoria usando la proprietà DbSet. local. È anche possibile accedere alle informazioni aggiuntive EF tenendo traccia delle entità usando i metodi DbContext. entry e DbContext. ChangeTracker. entrys. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
 
-## <a name="using-local-to-look-at-local-data"></a>Utilizzo locale per esaminare i dati locali  
+## <a name="using-local-to-look-at-local-data"></a>Uso locale per esaminare i dati locali  
 
-La proprietà locale di DbSet consente un facile accesso alle entità del set che non viene rilevato dal contesto e non sono state contrassegnate come eliminate. L'accesso alla proprietà locale non causerà mai una query da inviare al database. Ciò significa che in genere viene utilizzato dopo che è già stata eseguita una query. Il metodo di estensione Load può essere utilizzato per eseguire una query in modo che il contesto tiene traccia dei risultati. Ad esempio:  
+La proprietà locale di DbSet consente di accedere in modo semplice alle entità del set attualmente rilevate dal contesto e non sono state contrassegnate come eliminate. L'accesso alla proprietà locale non determina mai l'invio di una query al database. Ciò significa che viene in genere usato dopo che una query è già stata eseguita. Il metodo di estensione Load può essere utilizzato per eseguire una query in modo che il contesto rilevi i risultati. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -53,9 +53,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Se avessimo due blog nel database: 'ADO.NET Blog' con un BlogId pari a 1 - e "Blog di Visual Studio' con un BlogId pari a 2 è stato possibile prevedere il seguente output:  
+Se nel database sono presenti due Blog: "ADO.NET Blog" con BlogId 1 e "The Visual Studio Blog" con BlogId 2, si potrebbe prevedere l'output seguente:  
 
-```  
+```console
 In Local:
 Found 0: My New Blog with state Added
 Found 2: The Visual Studio Blog with state Unchanged
@@ -65,21 +65,21 @@ Found 1: ADO.NET Blog with state Deleted
 Found 2: The Visual Studio Blog with state Unchanged
 ```  
 
-Ciò illustra tre punti:  
+Vengono illustrati tre punti:  
 
-- Il nuovo blog 'My nuovo post di Blog' è incluso nella raccolta locale anche se non è ancora stato salvato nel database. Questo blog contiene una chiave primaria pari a zero perché il database non ha ancora generato un tasto effettivo per l'entità.  
-- Blog di ADO.NET' ' non è incluso nella raccolta locale anche se si è ancora rilevato dal contesto. Questo avviene perché è stata rimossa alla classe DbSet, contrassegnandolo come eliminato.  
-- Quando DbSet viene usato per eseguire una query il blog contrassegnato per l'eliminazione (Blog di ADO.NET) è incluso nei risultati e il nuovo post di blog (Blog di nuovo personale) non è ancora stato salvato nel database non è incluso nei risultati. Questo avviene perché DbSet sta eseguendo una query sul database e i risultati restituiti sempre riflettano gli elementi nel database.  
+- Il nuovo Blog "My New Blog" è incluso nella raccolta locale anche se non è ancora stato salvato nel database. Questo Blog presenta una chiave primaria pari a zero perché il database non ha ancora generato una chiave reale per l'entità.  
+- Il Blog ' ADO.NET ' non è incluso nella raccolta locale anche se è ancora rilevato dal contesto. Questo è dovuto al fatto che è stato rimosso dal DbSet, in modo da contrassegnarlo come eliminato.  
+- Quando si usa DbSet per eseguire una query, il Blog contrassegnato per l'eliminazione (Blog di ADO.NET) è incluso nei risultati e il nuovo Blog (nuovo Blog) che non è ancora stato salvato nel database non è incluso nei risultati. Questo perché DbSet esegue una query sul database e i risultati restituiti riflettono sempre il contenuto del database.  
 
-## <a name="using-local-to-add-and-remove-entities-from-the-context"></a>Utilizzo locale per aggiungere e rimuovere entità dal contesto  
+## <a name="using-local-to-add-and-remove-entities-from-the-context"></a>Uso di local per aggiungere e rimuovere entità dal contesto  
 
-La proprietà locale in DbSet restituisce un [ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx) con eventi collegati in modo che rimanga sincronizzato con il contenuto del contesto. Ciò significa che le entità possono essere aggiunto o rimosso dalla raccolta locale o alla classe DbSet. Significa anche che le query che offrono nuove entità nel contesto di comporterà la raccolta locale venga aggiornata con tali entità. Ad esempio:  
+La proprietà locale in DbSet restituisce un oggetto [ObservableCollection](https://msdn.microsoft.com/library/ms668604.aspx) con eventi collegati in modo che rimanga sincronizzato con il contenuto del contesto. Questo significa che le entità possono essere aggiunte o rimosse dalla raccolta locale o da DbSet. Significa anche che le query che portano nuove entità nel contesto comporteranno l'aggiornamento della raccolta locale con tali entità. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
 {
     // Load some posts from the database into the context
-    context.Posts.Where(p => p.Tags.Contains("entity-framework").Load();  
+    context.Posts.Where(p => p.Tags.Contains("entity-framework")).Load();  
 
     // Get the local collection and make some changes to it
     var localPosts = context.Posts.Local;
@@ -119,9 +119,9 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Assumendo che alcuni post con tag 'entity framework' e 'asp.net' l'output simile al seguente:  
+Supponendo che siano stati contrassegnati alcuni post con ' Entity-Framework ' è asp.net ', l'output potrebbe essere simile al seguente:  
 
-```  
+```console
 In Local after entity-framework query:
 Found 3: EF Designer Basics with state Unchanged
 Found 5: EF Code First Basics with state Unchanged
@@ -135,27 +135,27 @@ Found 0: What's New in EF with state Added
 Found 4: ASP.NET Beginners Guide with state Unchanged
 ```  
 
-Ciò illustra tre punti:  
+Vengono illustrati tre punti:  
 
-- Il nuovo post 'What' s New in EF' che è stato aggiunto all'oggetto locale raccolta diventa rilevata dal contesto nello stato Added. Da pertanto essere inserita nel database quando viene chiamato SaveChanges.  
-- Il post che è stato rimosso dalla raccolta locale (Guida per principianti Entity Framework) è ora contrassegnato come eliminato nel contesto. Si verranno pertanto eliminato dal database quando viene chiamato SaveChanges.  
-- Altri post (Guida per principianti ASP.NET) caricato nel contesto di con la seconda query viene aggiunto automaticamente alla raccolta locale.  
+- Il nuovo post ' What ' s New in EF ' aggiunto alla raccolta locale viene rilevato dal contesto nello stato Added. Che verrà quindi inserita nel database quando viene chiamato SaveChanges.  
+- Il post rimosso dalla raccolta locale (Guida per principianti di EF) è ora contrassegnato come eliminato nel contesto. Verrà quindi eliminato dal database quando viene chiamato SaveChanges.  
+- Il post aggiuntivo (Guida per principianti ASP.NET) caricato nel contesto con la seconda query viene aggiunto automaticamente alla raccolta locale.  
 
-Un ultimo aspetto da notare circa locale è che, essendo che una prestazioni ObservableCollection non sono molto utile per un numero elevato di entità. Pertanto se si gestiscono migliaia di entità nel contesto di potrebbe non essere consigliabile usare locale.  
+Un aspetto finale da considerare per quanto riguarda local è il fatto che, poiché si tratta di una performance ObservableCollection, non è ideale per un numero elevato di entità. Se pertanto si utilizzano migliaia di entità nel contesto, potrebbe non essere consigliabile utilizzare local.  
 
-## <a name="using-local-for-wpf-data-binding"></a>Utilizzo locale per l'associazione dati WPF  
+## <a name="using-local-for-wpf-data-binding"></a>Uso di local per WPF data binding  
 
-La proprietà locale di DbSet può essere utilizzata direttamente per il data binding in un'applicazione WPF perché è un'istanza della classe ObservableCollection. Come descritto nelle sezioni precedenti, che questo significa che verrà automaticamente rimangano sincronizzati con il contenuto del contesto e il contenuto del contesto viene automaticamente sincronizzata con esso. Si noti che è necessario pre-popolare la raccolta locale con i dati affinché sia disponibile alcuna operazione da associare alla poiché locale non causerà mai una query sul database.  
+La proprietà locale in DbSet può essere utilizzata direttamente per data binding in un'applicazione WPF perché è un'istanza di ObservableCollection. Come descritto nelle sezioni precedenti, questo significa che verrà automaticamente sincronizzato con il contenuto del contesto e il contenuto del contesto resterà sincronizzato automaticamente. Si noti che è necessario pre-popolare la raccolta locale con i dati in modo che sia necessario eseguire il binding perché local non causa mai una query sul database.  
 
-Non è una posizione appropriata per un esempio di associazione dati WPF completo ma gli elementi chiave sono:  
+Non si tratta di una posizione appropriata per un esempio di data binding WPF completo, ma gli elementi chiave sono:  
 
-- Installazione di origine del binding  
-- Associarlo alla proprietà locale del set di  
-- Popolare locale usando una query al database.  
+- Configurare un'origine di binding  
+- Associarlo alla proprietà locale del set  
+- Popolare local utilizzando una query nel database.  
 
-## <a name="wpf-binding-to-navigation-properties"></a>Associazione di WPF per le proprietà di navigazione  
+## <a name="wpf-binding-to-navigation-properties"></a>Associazione WPF alle proprietà di navigazione  
 
-Se si esegue il master/dettaglio tale associazione è possibile associare la visualizzazione dettagli per una proprietà di navigazione di una delle entità. Un modo semplice per eseguire questa operazione è usare una classe ObservableCollection per la proprietà di navigazione. Ad esempio:  
+Se si sta eseguendo data binding Master/Detail, è possibile associare la visualizzazione dettagli a una proprietà di navigazione di una delle entità. Un modo semplice per eseguire questa operazione consiste nell'usare un oggetto ObservableCollection per la proprietà di navigazione. Esempio:  
 
 ``` csharp
 public class Blog
@@ -173,9 +173,9 @@ public class Blog
 }
 ```  
 
-## <a name="using-local-to-clean-up-entities-in-savechanges"></a>Utilizzo locale per pulire le entità in SaveChanges  
+## <a name="using-local-to-clean-up-entities-in-savechanges"></a>Uso di local per la pulizia delle entità in SaveChanges  
 
-Nella maggior parte dei casi entità rimosse da una proprietà di navigazione verrà non essere contrassegnata automaticamente come eliminate nel contesto. Ad esempio, se si rimuove un oggetto Post dalla raccolta Blog.Posts quindi che post non essere eliminate automaticamente quando viene chiamato SaveChanges. Se è necessario che venga eliminato potrebbe essere necessario trovare queste entità inesatti e contrassegnarli come eliminato prima di chiamare SaveChanges o come parte di un metodo SaveChanges sottoposto a override. Ad esempio:  
+Nella maggior parte dei casi le entità rimosse da una proprietà di navigazione non verranno contrassegnate automaticamente come eliminate nel contesto. Se ad esempio si rimuove un oggetto post dalla raccolta Blog. Posts, il post non verrà eliminato automaticamente quando viene chiamato SaveChanges. Se è necessario eliminarlo, potrebbe essere necessario trovare queste entità penzoloni e contrassegnarle come eliminate prima di chiamare SaveChanges o come parte di un oggetto SaveChanges sottoposto a override. Esempio:  
 
 ``` csharp
 public override int SaveChanges()
@@ -192,23 +192,23 @@ public override int SaveChanges()
 }
 ```  
 
-Il codice precedente Usa la raccolta locale per trovare tutti i post e segni di quelli che non è un riferimento di blog come eliminato. La chiamata ToList è necessaria perché in caso contrario, verrà modificata la raccolta per il metodo Remove chiamare mentre viene enumerato. Nella maggior parte delle situazioni è possibile eseguire una query direttamente in base alla proprietà locale senza usare ToList prima di tutto.  
+Il codice precedente usa la raccolta locale per trovare tutti i post e contrassegna quelli che non dispongono di un riferimento a Blog come eliminati. La chiamata ToList è obbligatoria perché, in caso contrario, la raccolta verrà modificata dalla chiamata Remove mentre è in corso l'enumerazione. Nella maggior parte delle situazioni è possibile eseguire una query direttamente sulla proprietà locale senza prima usare ToList.  
 
-## <a name="using-local-and-tobindinglist-for-windows-forms-data-binding"></a>Utilizzo dell'associazione di dati locali e ToBindingList for Windows Forms  
+## <a name="using-local-and-tobindinglist-for-windows-forms-data-binding"></a>Utilizzo di local e tobinding per Windows Forms data binding  
 
-Windows Form non supporta l'associazione di dati di fedeltà con ObservableCollection direttamente. Tuttavia, è comunque possibile usare la proprietà DbSet locale per il data binding per ottenere tutti i vantaggi descritti nelle sezioni precedenti. Questo risultato viene ottenuto tramite il metodo di estensione ToBindingList che crea un' [IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx) implementazione supportato dalla classe ObservableCollection locale.  
+Windows Forms non supporta la fedeltà completa data binding utilizzando direttamente ObservableCollection. Tuttavia, è comunque possibile usare la proprietà locale DbSet per data binding per ottenere tutti i vantaggi descritti nelle sezioni precedenti. Questa operazione viene eseguita tramite il metodo di estensione tobinding, che consente di creare un'implementazione di [IBindingList](https://msdn.microsoft.com/library/system.componentmodel.ibindinglist.aspx) supportata dalla classe ObservableCollection locale.  
 
-Non è una posizione appropriata per un esempio di associazione dati di Windows Form completo ma gli elementi chiave sono:  
+Non si tratta di una posizione appropriata per un Windows Forms completo data binding esempio, ma gli elementi chiave sono:  
 
-- Configurare un'origine di associazione oggetto  
-- Associarlo alla proprietà locale del set di uso Local.ToBindingList()  
-- Popolare locale usando una query al database  
+- Configurare un'origine di associazione di oggetti  
+- Associarlo alla proprietà locale del set usando local. tobinding ()  
+- Popolare local usando una query nel database  
 
-## <a name="getting-detailed-information-about-tracked-entities"></a>Visualizzare informazioni dettagliate per le entità rilevate  
+## <a name="getting-detailed-information-about-tracked-entities"></a>Ottenere informazioni dettagliate sulle entità rilevate  
 
-Molti degli esempi in questa serie di utilizzare il metodo di ingresso per restituire un'istanza di DbEntityEntry per un'entità. Questo oggetto voce funge quindi il punto di partenza per la raccolta di informazioni sull'entità, ad esempio lo stato corrente, nonché per l'esecuzione di operazioni sulle entità, ad esempio in modo esplicito il caricamento di un'entità correlata.  
+Molti degli esempi di questa serie usano il metodo entry per restituire un'istanza di DbEntityEntry per un'entità. Questo oggetto entry funge quindi da punto di partenza per la raccolta di informazioni sull'entità, ad esempio lo stato corrente, nonché per l'esecuzione di operazioni sull'entità, ad esempio il caricamento esplicito di un'entità correlata.  
 
-I metodi di voci restituiscono oggetti DbEntityEntry per molte o tutte le entità rilevate dal contesto. In questo modo è possibile raccogliere informazioni o eseguire operazioni su molte entità anziché solo una singola voce. Ad esempio:  
+I metodi delle voci restituiscono oggetti DbEntityEntry per molte o tutte le entità rilevate dal contesto. In questo modo è possibile raccogliere informazioni o eseguire operazioni su molte entità anziché su una sola voce. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -265,7 +265,7 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noterà che è stato introdotto una classe dell'autore e il lettore nell'esempio, entrambe queste classi implementano l'interfaccia IPerson.  
+Si noterà che si sta introducendo una classe Author e Reader nell'esempio, entrambe le classi implementano l'interfaccia IPerson.  
 
 ``` csharp
 public class Author : IPerson
@@ -288,17 +288,17 @@ public interface IPerson
 }
 ```  
 
-Si supponga di che disporre i dati seguenti nel database:
+Si supponga che nel database siano presenti i dati seguenti:
 
-Blog con BlogId = 1 e nome = 'Blog di ADO.NET'  
-Blog con BlogId = 2 e nome = 'Blog di Visual Studio'  
-Blog con BlogId = 3 e nome = 'Blog di .NET Framework'  
-Autore con AuthorId = 1 e nome = 'Luca Bianchi'  
-Lettore con ReaderId = 1 e nome = "John Doe"  
+Blog con BlogId = 1 e Name =' ADO.NET Blog '  
+Blog con BlogId = 2 e nome = "Blog di Visual Studio"  
+Blog con BlogId = 3 e Name =' .NET Framework Blog '  
+Autore con autorizzazione = 1 e nome =' Joe Bloggs '  
+Reader con ReaderId = 1 e Name =' John Doe '  
 
-L'output dall'esecuzione del codice sarebbe:  
+L'output dell'esecuzione del codice è:  
 
-```  
+```console
 All tracked entities:
 Found entity of type Blog with state Modified
 Found entity of type Blog with state Deleted
@@ -322,10 +322,10 @@ Found Person Joe Bloggs
 Found Person Jane Doe
 ```  
 
-Questi esempi vengono illustrati diversi aspetti:  
+In questi esempi vengono illustrati diversi punti:  
 
-- I metodi di voci restituiscono le voci per le entità in tutti gli stati, tra cui Deleted. Eseguire il confronto locale che esclude eliminata le entità.  
-- Quando viene utilizzato il metodo di voci non generiche, vengono restituite le voci per tutti i tipi di entità. Quando viene utilizzato il metodo generico voci vengono restituite solo le voci per le entità che sono istanze del tipo generico. Questo è stato usato in precedenza per ottenere le voci per tutti i blog. È stato usato anche per ottenere le voci per tutte le entità che implementano IPerson. Ciò dimostra che il tipo generico non è necessario essere un tipo di entità effettivo.  
-- LINQ agli oggetti può essere utilizzato per filtrare i risultati restituiti. Questo è stato usato in precedenza per individuare le entità di qualsiasi tipo fino a quando vengono modificati.  
+- I metodi delle voci restituiscono le voci per le entità in tutti gli Stati, incluso eliminato. Confrontare questa impostazione con local che esclude le entità eliminate.  
+- Le voci per tutti i tipi di entità vengono restituite quando viene usato il metodo per le voci non generiche. Quando viene utilizzato il metodo delle voci generiche, le voci vengono restituite solo per le entità che sono istanze del tipo generico. Questa operazione è stata usata in precedenza per ottenere le voci per tutti i Blog. È stata usata anche per ottenere le voci per tutte le entità che implementano IPerson. Ciò dimostra che il tipo generico non deve essere un tipo di entità effettivo.  
+- LINQ to Objects può essere usato per filtrare i risultati restituiti. Questa operazione è stata usata in precedenza per trovare entità di qualsiasi tipo, purché vengano modificate.  
 
-Si noti che le istanze di DbEntityEntry contengono sempre un'entità non null. Le voci di relazione e quelle di stub non sono rappresentate come istanze di DbEntityEntry in modo che non è necessario per filtrare per questi.
+Si noti che le istanze di DbEntityEntry contengono sempre un'entità non null. Le voci di relazione e le voci stub non sono rappresentate come istanze di DbEntityEntry, pertanto non è necessario filtrare tali voci.

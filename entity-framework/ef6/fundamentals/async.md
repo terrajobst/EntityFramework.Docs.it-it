@@ -3,12 +3,12 @@ title: Query asincrona e Save-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: d56e6f1d-4bd1-4b50-9558-9a30e04a8ec3
-ms.openlocfilehash: ae578976ffc88b407ef0aaa0017935005bedd093
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 0642dc13e7aa3906fa1495031c62701fc16f0192
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921620"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181839"
 ---
 # <a name="async-query-and-save"></a>Query asincrona e salvataggio
 > [!NOTE]
@@ -30,7 +30,7 @@ Di seguito sono riportate alcune risorse per ottenere informazioni su Async:
 
 -   [Panoramica di Brandon Bray su async/await in .NET 4,5](https://blogs.msdn.com/b/dotnet/archive/2012/04/03/async-in-4-5-worth-the-await.aspx)
 -   Pagine di [programmazione asincrone](https://msdn.microsoft.com/library/hh191443.aspx) in MSDN Library
--   [Come compilare applicazioni Web ASP.NET con Async](http://channel9.msdn.com/events/teched/northamerica/2013/dev-b337) (include una demo sull'aumento della velocità effettiva del server)
+-   [Come compilare applicazioni Web ASP.NET usando Async](https://channel9.msdn.com/events/teched/northamerica/2013/dev-b337) (include una demo dell'aumento della velocità effettiva del server)
 
 ## <a name="create-the-model"></a>Creare il modello
 
@@ -222,12 +222,12 @@ Per un elenco completo dei metodi di estensione disponibili nello spazio dei nom
 Ora che il codice è asincrono, è possibile osservare un flusso di esecuzione diverso durante l'esecuzione del programma:
 
 1. **SaveChanges** inizia a eseguire il push del nuovo **Blog** nel database  
-    *Quando il comando viene inviato al database, non è necessario più tempo di calcolo nel thread gestito corrente. Il metodo **PerformDatabaseOperations** restituisce (anche se l'esecuzione non è terminata) e il flusso di programma nel metodo Main continua.*
+    *Once il comando viene inviato al database. non è necessario più tempo di calcolo nel thread gestito corrente. Il metodo **PerformDatabaseOperations** restituisce (anche se l'esecuzione non è terminata) e il flusso di programma nel metodo Main continua.*
 2. **La citazione del giorno viene scritta nella console**  
-    *Poiché non vi sono altre operazioni da eseguire nel metodo Main, il thread gestito viene bloccato nella chiamata wait fino al completamento dell'operazione del database. Al termine, verrà eseguito il resto del **PerformDatabaseOperations** .*
+    *Since non ci sono altre operazioni da eseguire nel metodo Main, il thread gestito viene bloccato nella chiamata wait fino al completamento dell'operazione del database. Al termine, verrà eseguito il resto del **PerformDatabaseOperations** .*
 3.  **SaveChanges** completato  
 4.  La query per tutti i **Blog** viene inviata al database  
-    *Anche in questo caso, il thread gestito è libero di eseguire altre operazioni mentre la query viene elaborata nel database. Poiché tutte le altre esecuzioni sono state completate, il thread si interromperà solo sulla chiamata di attesa.*
+    *Again, il thread gestito è libero di eseguire altre operazioni mentre la query viene elaborata nel database. Poiché tutte le altre esecuzioni sono state completate, il thread si interromperà solo sulla chiamata di attesa.*
 5.  La query restituisce e i risultati vengono scritti nella **console**  
 
 ![Output asincrono](~/ef6/media/asyncoutput.png) 

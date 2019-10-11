@@ -175,8 +175,6 @@
           items:
             - name: Panoramica
               href: core/querying/index.md
-            - name: Query di base
-              href: core/querying/basic.md
             - name: Caricamento di dati correlati
               href: core/querying/related-data.md
             - name: Valutazione client rispetto a server
@@ -188,7 +186,7 @@
             - name: Query asincrone
               href: core/querying/async.md
             - name: Funzionamento della query
-              href: core/querying/overview.md
+              href: core/querying/how-query-works.md
             - name: Filtri di query globali
               href: core/querying/filters.md
             - name: Tag delle query

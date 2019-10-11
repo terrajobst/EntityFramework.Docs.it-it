@@ -1,26 +1,26 @@
 ---
-title: Tabella di funzioni con valori () - Entity Framework 6
+title: Funzioni con valori di tabella (funzioni con valori)-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
-ms.openlocfilehash: 34aebd8f5f2c3b43c80e21c1a17a386597596c05
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 35684196dcd7b708a8feeb1eca3096e8d4e555ec
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283953"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182527"
 ---
-# <a name="table-valued-functions-tvfs"></a>Funzioni con valori di tabella (TVF)
+# <a name="table-valued-functions-tvfs"></a>Funzioni con valori di tabella (funzioni con valori)
 > [!NOTE]
-> **EF5 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
+> **EF5 solo** le funzionalità, le API e così via descritte in questa pagina sono state introdotte in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
 
-La procedura dettagliata video e procedura dettagliata illustra come eseguire il mapping di funzioni con valori di tabella (TVF) usando la finestra di progettazione di Entity Framework. Viene inoltre illustrato come chiamare una funzione TVF da una query LINQ.
+Il video e la procedura dettagliata illustrano come eseguire il mapping di funzioni con valori di tabella (funzioni con valori) usando il Entity Framework Designer. Viene inoltre illustrato come chiamare un TVF da una query LINQ.
 
-Le TVF sono attualmente supportati solo nel flusso di lavoro Database First.
+Funzioni con valori sono attualmente supportati solo nel flusso di lavoro Database First.
 
-Supporto TVF è stato introdotto in Entity Framework versione 5. Si noti che per utilizzare le nuove funzionalità, ad esempio funzioni con valori di tabella, enumerazioni e tipi spaziali, deve avere come destinazione .NET Framework 4.5. Visual Studio 2012 è destinato a .NET 4.5 per impostazione predefinita.
+Il supporto di TVF è stato introdotto in Entity Framework versione 5. Si noti che per utilizzare le nuove funzionalità, ad esempio le funzioni con valori di tabella, le enumerazioni e i tipi spaziali, è necessario definire come destinazione .NET Framework 4,5. Per impostazione predefinita, Visual Studio 2012 è destinato a .NET 4,5.
 
-Le TVF sono molto simili alle stored procedure con una differenza fondamentale: il risultato di una funzione TVF è componibile. Ciò significa che i risultati di una funzione TVF possono essere usati in una query LINQ mentre i risultati di una stored procedure non è possibile.
+Funzioni con valori sono molto simili alle stored procedure con una differenza fondamentale: il risultato di un TVF è componibile. Ciò significa che i risultati di un TVF possono essere utilizzati in una query LINQ mentre i risultati di un stored procedure non possono.
 
 ## <a name="watch-the-video"></a>Guarda il video
 
@@ -34,22 +34,22 @@ Per completare questa procedura dettagliata, è necessario:
 
 - Installare il [database School](~/ef6/resources/school-database.md).
 
-- Dispone di una versione recente di Visual Studio
+- Avere una versione recente di Visual Studio
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
 1.  Aprire Visual Studio
-2.  Nel **File** dal menu **New**, quindi fare clic su **progetto**
-3.  Nel riquadro sinistro, fare clic su **Visual C#\#**, quindi selezionare il **Console** modello
-4.  Immettere **TVF** come nome del progetto e fare clic su **OK**
+2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
+3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+4.  Immettere **TVF** come nome del progetto e fare clic su **OK** .
 
-## <a name="add-a-tvf-to-the-database"></a>Aggiungere una funzione TVF al Database
+## <a name="add-a-tvf-to-the-database"></a>Aggiungere un TVF al database
 
--   Selezionare **vista -&gt; Esplora oggetti di SQL Server**
--   Se Local DB non è presente nell'elenco dei server: fare clic su **SQL Server** e selezionare **Aggiungi SQL Server** usare il valore predefinito **l'autenticazione di Windows** per connettersi al server di database locale
+-   Selezionare **Visualizza-&gt; Esplora oggetti di SQL Server**
+-   Se il database locale non è presente nell'elenco dei server: Fare clic con il pulsante destro del mouse su **SQL Server** e scegliere **Aggiungi SQL Server** utilizzare l' **autenticazione di Windows** predefinita per la connessione al server del database locale.
 -   Espandere il nodo del database locale
--   Sotto il nodo database, fare clic sul nodo del database School e selezionare **nuova Query...**
--   Nell'Editor T-SQL, incollare la seguente definizione di funzione TVF
+-   Nel nodo database fare clic con il pulsante destro del mouse sul nodo School database e scegliere **nuova query...**
+-   Nell'editor T-SQL incollare la definizione TVF seguente
 
 ``` SQL
 CREATE FUNCTION [dbo].[GetStudentGradesForCourse]
@@ -67,29 +67,29 @@ RETURN
     WHERE  CourseID = @CourseID
 ```
 
--   Scegliere il pulsante destro del mouse sull'editor T-SQL e selezionare **Execute**
--   La funzione GetStudentGradesForCourse viene aggiunto al database School
+-   Fare clic con il pulsante destro del mouse sull'editor T-SQL e selezionare **Esegui** .
+-   La funzione GetStudentGradesForCourse viene aggiunta al database School
 
- 
+ 
 
-## <a name="create-a-model"></a>Creare un modello
+## <a name="create-a-model"></a>Creazione di un modello
 
-1.  Fare clic sul nome del progetto in Esplora soluzioni, scegliere **Add**, quindi fare clic su **nuovo elemento**
-2.  Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel **modelli** riquadro
-3.  Immettere **TVFModel.edmx** per il nome del file e quindi fare clic su **Add**
-4.  Nella finestra di dialogo Scegli contenuto Model, selezionare **genera da database**, quindi fare clic su **successivo**
-5.  Fare clic su **nuova connessione** invio **(localdb)\\mssqllocaldb** nel testo del nome Server casella immettere **School** per il database fare clic su nome **OK**
-6.  In Scegli di oggetti di Database nella finestra di dialogo di **tabelle** nodo, seleziona la **persona**, **StudentGrade**, e **corso** tabelle
-7.  Selezionare il **GetStudentGradesForCourse** funzione che si trova sotto il **Stored procedure e funzioni** nodo nota, che inizia con Visual Studio 2012, Entity Designer consente di importazione di batch la Stored procedure e funzioni
-8.  Fare clic su **fine**
-9.  Entity Designer, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato. Tutti gli oggetti selezionati nella **Scegli oggetti di Database** nella finestra di dialogo vengono aggiunti al modello.
-10. Per impostazione predefinita, la forma dei risultati di ogni importate stored procedure o funzione diventerà automaticamente un nuovo tipo complesso nel modello di entità. Ma per mappare i risultati della funzione GetStudentGradesForCourse all'entità StudentGrade: fare doppio clic su area di progettazione e seleziona **Visualizzatore modelli** nella finestra Browser modello selezionare **importazioni di funzioni**e quindi fare doppio clic il **GetStudentGradesForCourse** funzione In the modifica importazione di funzioni finestra di dialogo **entità** e scegliere **StudentGrade**
+1.  Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, scegliere **Aggiungi**, quindi fare clic su **nuovo elemento** .
+2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro **modelli** .
+3.  Immettere **TVFModel. edmx** per il nome del file e quindi fare clic su **Aggiungi** .
+4.  Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti** .
+5.  Fare clic su **nuova connessione** immettere (local db **) \\mssqllocaldb** nella casella di testo nome server immettere **School** per il nome del database fare clic su **OK**
+6.  Nella finestra di dialogo Scegli oggetti di database, sotto le **tabelle** node, selezionare la **persona**, **StudentGrade**e il **corso** tables
+7.  Selezionare la funzione **GetStudentGradesForCourse** situata sotto le **stored procedure e le funzioni** node nota, che a partire da Visual Studio 2012, il Entity Designer consente di importare in batch le stored procedure e le funzioni
+8.  Fare clic su **fine**
+9.  Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella casella **Choose your database objects** dialog vengono aggiunti al modello.
+10. Per impostazione predefinita, la forma risultante di ogni stored procedure o funzione importata diventerà automaticamente un nuovo tipo complesso nel modello di entità. Ma si vuole eseguire il mapping dei risultati della funzione GetStudentGradesForCourse all'entità StudentGrade: Fare clic con il pulsante destro del mouse sull'area di progettazione e selezionare **browser modello** in browser modello, selezionare **importazioni di funzioni**, quindi fare doppio clic sulla funzione **GetStudentGradesForCourse** nella finestra di dialogo modifica importazione funzione selezionare **entità** .  e scegliere **StudentGrade**
 
-## <a name="persist-and-retrieve-data"></a>Salvare in modo permanente e recuperare i dati
+## <a name="persist-and-retrieve-data"></a>Mantieni e recupera dati
 
 Aprire il file in cui è definito il metodo Main. Aggiungere il codice seguente nella funzione Main.
 
-Il codice seguente viene illustrato come compilare una query che utilizza una funzione con valori di tabella. La query proietta i risultati in un tipo anonimo che contiene il titolo del corso correlato e correlate agli studenti con un livello maggiore o uguale a 3.5.
+Nel codice seguente viene illustrato come compilare una query che utilizza una funzione con valori di tabella. La query proietta i risultati in un tipo anonimo che contiene il titolo del corso correlato e gli studenti correlati con un grado maggiore o uguale a 3,5.
 
 ``` csharp
 using (var context = new SchoolEntities())
@@ -119,11 +119,11 @@ using (var context = new SchoolEntities())
 
 Compilare l'applicazione ed eseguirla. Il programma produce l'output seguente:
 
-```
+```console
 Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
 
 ## <a name="summary"></a>Riepilogo
 
-In questa procedura dettagliata è stato descritto come eseguire il mapping di funzioni con valori di tabella (TVF) usando la finestra di progettazione di Entity Framework. È stato anche illustrato come chiamare una funzione TVF da una query LINQ.
+In questa procedura dettagliata è stato illustrato come eseguire il mapping di funzioni con valori di tabella (funzioni con valori) utilizzando il Entity Framework Designer. È stato inoltre illustrato come chiamare un TVF da una query LINQ.

@@ -1,29 +1,29 @@
 ---
-title: Supporto di enum - Entity Framework Designer - EF6
+title: Supporto enum-EF designer-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
-ms.openlocfilehash: 331182c4311565c94cf072eb9b9ad372ac76180a
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 92a763b84a04d3ce7ec0853ef2a4852356cf7997
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283940"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182513"
 ---
-# <a name="enum-support---ef-designer"></a>Supporto di enum - finestra di progettazione di Entity Framework
+# <a name="enum-support---ef-designer"></a>Supporto enum-EF designer
 > [!NOTE]
-> **EF5 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
+> **EF5 solo** le funzionalità, le API e così via descritte in questa pagina sono state introdotte in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
 
-Questa procedura dettagliata video e procedura dettagliata illustra come usare i tipi di enumerazione con Entity Framework Designer. Viene inoltre illustrato come usare enumerazioni in una query LINQ.
+Questo video e la procedura dettagliata illustrano come usare i tipi enum con la Entity Framework Designer. Viene inoltre illustrato come utilizzare le enumerazioni in una query LINQ.
 
-Questa procedura dettagliata verrà utilizzato il primo modello per creare un nuovo database, ma la finestra di progettazione di Entity Framework è anche utilizzabile con il [Database First](~/ef6/modeling/designer/workflows/database-first.md) flusso di lavoro per eseguire il mapping a un database esistente.
+Questa procedura dettagliata utilizzerà Model First per creare un nuovo database, ma è anche possibile usare la finestra di progettazione EF con il flusso di lavoro [database First](~/ef6/modeling/designer/workflows/database-first.md) per eseguire il mapping a un database esistente.
 
-Supporto di enumerazione è stata introdotta in Entity Framework 5. Per usare le nuove funzionalità come le enumerazioni, tipi di dati spaziali e funzioni con valori di tabella, deve avere come destinazione .NET Framework 4.5. Visual Studio 2012 è destinato a .NET 4.5 per impostazione predefinita.
+Il supporto enum è stato introdotto in Entity Framework 5. Per utilizzare le nuove funzionalità come enum, i tipi di dati spaziali e le funzioni con valori di tabella, è necessario specificare come destinazione .NET Framework 4,5. Per impostazione predefinita, Visual Studio 2012 è destinato a .NET 4,5.
 
-In Entity Framework, un'enumerazione può avere i seguenti tipi sottostanti: **Byte**, **Int16**, **Int32**, **Int64** , o **SByte**.
+In Entity Framework, un'enumerazione può disporre dei seguenti tipi sottostanti: **Byte**, **Int16**, **Int32**, **Int64** o **SByte**.
 
-## <a name="watch-the-video"></a>Guarda il Video
-In questo video viene illustrato come utilizzare tipi enum con Entity Framework Designer. Viene inoltre illustrato come usare enumerazioni in una query LINQ.
+## <a name="watch-the-video"></a>Guarda il video
+In questo video viene illustrato come utilizzare i tipi enum con la Entity Framework Designer. Viene inoltre illustrato come utilizzare le enumerazioni in una query LINQ.
 
 **Presentato da**: Julia Kornich
 
@@ -31,81 +31,81 @@ In questo video viene illustrato come utilizzare tipi enum con Entity Framework 
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
-È necessario disporre di Visual Studio 2012, Ultimate, Premium, Professional o Web Express edition per completare questa procedura dettagliata.
+Per completare questa procedura dettagliata, è necessario che Visual Studio 2012, Ultimate, Premium, Professional o Web Express Edition sia installato.
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
 1.  Aprire Visual Studio 2012
-2.  Nel **File** dal menu **New**, quindi fare clic su **progetto**
-3.  Nel riquadro sinistro, fare clic su **Visual C#\#**, quindi selezionare il **Console** modello
-4.  Immettere **EnumEFDesigner** come nome del progetto e fare clic su **OK**
+2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
+3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+4.  Immettere **EnumEFDesigner** come nome del progetto e fare clic su **OK** .
 
-## <a name="create-a-new-model-using-the-ef-designer"></a>Creare un nuovo modello utilizzando la finestra di progettazione di Entity Framework
+## <a name="create-a-new-model-using-the-ef-designer"></a>Creare un nuovo modello usando EF designer
 
-1.  Fare clic sul nome del progetto in Esplora soluzioni, scegliere **Add**, quindi fare clic su **nuovo elemento**
-2.  Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro dei modelli
-3.  Immettere **EnumTestModel.edmx** per il nome del file e quindi fare clic su **Add**
-4.  Nella pagina di procedura guidata Entity Data Model, selezionare **modello vuoto** nella finestra di dialogo Scegli contenuto Model
+1.  Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, scegliere **Aggiungi**, quindi fare clic su **nuovo elemento** .
+2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
+3.  Immettere **EnumTestModel. edmx** per il nome del file e quindi fare clic su **Aggiungi** .
+4.  Nella pagina Entity Data Model procedura guidata selezionare **modello vuoto** nella finestra di dialogo Scegli contenuto Model
 5.  Fare clic su **fine**
 
-Entity Designer, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato.
+Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello.
 
 La procedura guidata consente di effettuare le azioni seguenti:
 
--   Genera il file EnumTestModel.edmx che definisce il modello concettuale, il modello di archiviazione e il mapping tra di essi. Imposta la proprietà Metadata Artifact Processing del file con estensione edmx da incorporare nell'Assembly di Output in modo che i file di metadati generati ottengano incorporati nell'assembly.
--   Aggiunge un riferimento agli assembly seguenti: EntityFramework System.ComponentModel.DataAnnotations e Data. Entity.
--   Crea file EnumTestModel.tt ed EnumTestModel.Context.tt e li aggiunge sotto il file con estensione edmx. Questi file di modello T4 generano il codice che definisce il tipo DbContext derivata e i tipi POCO mappate alle entità nel modello con estensione edmx.
+-   Genera il file EnumTestModel. edmx che definisce il modello concettuale, il modello di archiviazione e il mapping tra di essi. Imposta la proprietà di elaborazione degli artefatti dei metadati del file con estensione edmx da incorporare nell'assembly di output in modo che i file di metadati generati vengano incorporati nell'assembly.
+-   Aggiunge un riferimento agli assembly seguenti: EntityFramework, System. ComponentModel. DataAnnotations e System. Data. Entity.
+-   Crea i file EnumTestModel.tt e EnumTestModel.Context.tt e li aggiunge al file con estensione edmx. Questi file di modello T4 generano il codice che definisce il tipo derivato DbContext e i tipi POCO mappati alle entità nel modello con estensione edmx.
 
 ## <a name="add-a-new-entity-type"></a>Aggiungere un nuovo tipo di entità
 
-1.  Fare doppio clic su un'area vuota dell'area di progettazione, seleziona **Add -&gt; entità**, viene visualizzata la finestra di dialogo nuova entità
-2.  Specificare **reparto** per il tipo di nome e specificare **DepartmentID** per il nome della proprietà chiave, lasciare il tipo **Int32**
+1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**, viene visualizzata la finestra di dialogo nuova entità
+2.  Specificare **Department** per il nome del tipo e specificare **DepartmentID** per il nome della proprietà chiave, lasciare il tipo come **Int32**
 3.  Fare clic su **OK**
-4.  L'entità e scegliere **Aggiungi nuovo -&gt; proprietà scalare**
-5.  Rinominare la nuova proprietà a **nome**
-6.  Modificare il tipo della nuova proprietà al **Int32** (per impostazione predefinita, la nuova proprietà è di tipo stringa) per modificare il tipo, aprire la finestra proprietà e modificare la proprietà Type per **Int32**
-7.  Aggiungere un'altra proprietà scalare e rinominarlo **Budget**, impostare il tipo su **decimale**
+4.  Fare clic con il pulsante destro del mouse sull'entità e scegliere **Aggiungi nuova-&gt; proprietà scalare**
+5.  Rinominare la nuova proprietà in **nome**
+6.  Modificare il tipo della nuova proprietà in **Int32** (per impostazione predefinita, la nuova proprietà è di tipo stringa) per modificare il tipo, aprire il finestra Proprietà e modificare la proprietà Type in **Int32** .
+7.  Aggiungere un'altra proprietà scalare e rinominarla in **budget**, modificare il tipo in **Decimal**
 
-## <a name="add-an-enum-type"></a>Aggiungere un tipo Enum
+## <a name="add-an-enum-type"></a>Aggiungere un tipo enum
 
-1.  In Entity Framework Designer, fare clic su proprietà Name, selezionare **convertire all'enumerazione**
+1.  Nella Entity Framework Designer fare clic con il pulsante destro del mouse sulla proprietà nome, quindi scegliere **Converti in enum**
 
-    ![Converti in Enum](~/ef6/media/converttoenum.png)
+    ![Converti in enum](~/ef6/media/converttoenum.png)
 
-2.  Nel **Enum aggiungere** finestra di dialogo digitare **DepartmentNames** per nome del tipo di enumerazione, modificare il tipo sottostante per **Int32**, e quindi aggiungere i membri seguenti per il tipo: inglese, Matematiche e la convenienza
+2.  Nella finestra di dialogo **Aggiungi enum** digitare **DepartmentNames** per il nome del tipo enum, modificare il tipo sottostante in **Int32**, quindi aggiungere i membri seguenti al tipo: Inglese, matematica ed economia
 
-    ![Aggiungere il tipo di enumerazione](~/ef6/media/addenumtype.png)
+    ![Aggiungi tipo enum](~/ef6/media/addenumtype.png)
 
 3.  Premere **OK**
 4.  Salvare il modello e compilare il progetto
     > [!NOTE]
-    > Quando si compila, avvisi relativi a entità non mappata e associazioni vengano visualizzati nell'elenco errori. È possibile ignorare questi avvisi perché dopo che si sceglie di generare il database dal modello, gli errori non verranno più visualizzato.
+    > Quando si compila, i messaggi di avviso sulle entità e sulle associazioni non mappate possono essere visualizzati nel Elenco errori. È possibile ignorare questi avvisi perché, dopo aver scelto di generare il database dal modello, gli errori verranno rilasciati.
 
-Se si osserva la finestra Proprietà, si noterà che il tipo della proprietà del nome sia stato modificato **DepartmentNames** e il tipo di enumerazione appena aggiunta è stata aggiunta all'elenco dei tipi.
+Se si esaminano le Finestra Proprietà, si noterà che il tipo della proprietà Name è stato modificato in **DepartmentNames** e che il tipo enum appena aggiunto è stato aggiunto all'elenco di tipi.
 
-Se si passa alla finestra Browser modello, si noterà che il tipo è stato inoltre aggiunto il nodo di tipi di enumerazione.
+Se si passa alla finestra browser modello, si noterà che il tipo è stato aggiunto anche al nodo tipi enum.
 
-![Finestra Browser modello](~/ef6/media/modelbrowser.png)
+![Browser modello](~/ef6/media/modelbrowser.png)
 
 >[!NOTE]
-> È anche possibile aggiungere nuovi tipi di enumerazione da questa finestra facendo clic sul pulsante destro del mouse e selezionando **Aggiungi tipo Enum**. Dopo aver creato il tipo verrà visualizzato nell'elenco dei tipi e sarebbe in grado di associare a una proprietà
+> È anche possibile aggiungere nuovi tipi enum da questa finestra facendo clic con il pulsante destro del mouse e selezionando **Aggiungi tipo enum**. Una volta creato, il tipo verrà visualizzato nell'elenco dei tipi e sarà possibile associarlo a una proprietà
 
-## <a name="generate-database-from-model"></a>Generare il Database da modello
+## <a name="generate-database-from-model"></a>Genera database dal modello
 
-A questo punto è possibile generare un database che si basa sul modello.
+A questo punto è possibile generare un database basato sul modello.
 
-1.  Fare doppio clic su uno spazio vuoto in Entity Designer e selezionare **genera Database da modello**
-2.  Scegliere la finestra di dialogo di connessione dati della procedura guidata genera Database viene visualizzato fare clic sui **nuova connessione** pulsante specificare **(localdb)\\mssqllocaldb** per il nome del server e la  **EnumTest** per il database e fare clic su **OK**
-3.  Verrà visualizzata, fare clic su una finestra di dialogo che chiede se si desidera creare un nuovo database **Sì**.
-4.  Fare clic su **successivo** e la procedura guidata Crea Database genera data definition language (DDL) per la creazione di un database il linguaggio DDL generato viene visualizzata nel riepilogo delle impostazioni di finestra di dialogo casella si noti che l'istruzione DDL non contiene una definizione per un tabella che esegue il mapping al tipo di enumerazione
-5.  Fare clic su **fine** facendo clic su Fine non viene eseguito lo script DDL.
-6.  La procedura guidata Crea Database esegue le operazioni seguenti: apre la **EnumTest.edmx.sql** nell'Editor T-SQL genera le sezioni di mapping dello schema e archivio dell'elemento EDMX file consente di aggiungere informazioni sulla stringa di connessione del file app. config
-7.  Scegliere il pulsante destro del mouse nell'Editor T-SQL e selezionare **Execute** Connetti al finestra di dialogo Server visualizzata, immettere le informazioni di connessione del passaggio 2 e fare clic su **Connect**
-8.  Per visualizzare lo schema generato, fare doppio clic sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna**
+1.  Fare clic con il pulsante destro del mouse su uno spazio vuoto nell'area di Entity Designer e selezionare **genera database da modello** .
+2.  Verrà visualizzata la finestra di dialogo scegliere la connessione dati della procedura guidata genera database. fare clic sul pulsante **nuova connessione** specificare (local db **) \\mssqllocaldb** per il nome del server e **EnumTest** per il database e fare clic su **OK** .
+3.  Viene visualizzata una finestra di dialogo in cui viene chiesto se si desidera creare un nuovo database, quindi fare clic su **Sì**.
+4.  Fare clic su **Avanti** . la procedura guidata Crea database genera Data Definition Language (DDL) per la creazione di un database. la DDL generata viene visualizzata nella finestra di dialogo Riepilogo e impostazioni. il DDL non contiene una definizione per una tabella che esegue il mapping al tipo di enumerazione
+5.  Fare **clic su fine per** non eseguire lo script DDL.
+6.  La procedura guidata Crea database esegue le operazioni seguenti: Apre il file **EnumTest. edmx. SQL** nell'editor T-SQL genera le sezioni schema e mapping dell'archivio del file edmx aggiunge le informazioni sulla stringa di connessione al file app. config
+7.  Fare clic con il pulsante destro del mouse nell'editor T-SQL e selezionare **Esegui** la finestra di dialogo Connetti al server, immettere le informazioni di connessione nel passaggio 2 e fare clic su **Connetti** .
+8.  Per visualizzare lo schema generato, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna** .
 
-## <a name="persist-and-retrieve-data"></a>Salvare in modo permanente e recuperare i dati
+## <a name="persist-and-retrieve-data"></a>Mantieni e recupera dati
 
-Aprire il file Program.cs in cui è definito il metodo Main. Aggiungere il codice seguente nella funzione Main. Il codice aggiunge un nuovo oggetto reparto al contesto. Quindi Salva i dati. Inoltre, il codice esegue una query LINQ che restituisce un reparto dove name è DepartmentNames.English.
+Aprire il file Program.cs in cui è definito il metodo Main. Aggiungere il codice seguente nella funzione Main. Il codice aggiunge un nuovo oggetto Department al contesto. Quindi Salva i dati. Il codice esegue anche una query LINQ che restituisce un reparto in cui il nome è DepartmentNames. English.
 
 ``` csharp
 using (var context = new EnumTestModelContainer())
@@ -127,12 +127,12 @@ using (var context = new EnumTestModelContainer())
 
 Compilare l'applicazione ed eseguirla. Il programma produce l'output seguente:
 
-```
+```console
 DepartmentID: 1 Name: English
 ```
 
-Per visualizzare i dati nel database, fare doppio clic sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna**. Quindi, scegliere il pulsante destro del mouse sulla tabella e selezionare **dati della visualizzazione**.
+Per visualizzare i dati nel database, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna**. Quindi, fare clic con il pulsante destro del mouse sulla tabella e selezionare **Visualizza dati**.
 
 ## <a name="summary"></a>Riepilogo
 
-In questa procedura dettagliata è stato illustrato come eseguire il mapping di tipi di enumerazione mediante Entity Framework Designer e su come usare le enumerazioni nel codice. 
+In questa procedura dettagliata è stato illustrato come eseguire il mapping dei tipi enum usando il Entity Framework Designer e come usare le enumerazioni nel codice. 

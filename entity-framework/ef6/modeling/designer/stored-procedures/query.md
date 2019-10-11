@@ -1,19 +1,19 @@
 ---
-title: Query della finestra di progettazione di Stored procedure - Entity Framework 6
+title: Stored procedure per query della finestra di progettazione-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
-ms.openlocfilehash: 04478ea1c8cd43a7ba4ee788e464992af3de7f64
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 2e0092b526278597e8477d47eeb642598647bb91
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283901"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182475"
 ---
-# <a name="designer-query-stored-procedures"></a>Query della finestra di progettazione di Stored procedure
-Questa procedura dettagliata mostra come usare Entity Framework Designer (Entity Framework Designer) per importare le stored procedure in un modello e quindi chiamare le stored procedure importate per recuperare i risultati. 
+# <a name="designer-query-stored-procedures"></a>Stored procedure di query della finestra di progettazione
+In questa procedura dettagliata viene illustrato come utilizzare il Entity Framework Designer (Entity Designer) per importare stored procedure in un modello e quindi chiamare le stored procedure importate per recuperare i risultati. 
 
-Si noti che Code First non supporta il mapping a stored procedure o funzioni. Tuttavia, è possibile chiamare stored procedure o funzioni tramite il metodo System.Data.Entity.DbSet.SqlQuery. Ad esempio:
+Si noti che Code First non supporta il mapping a stored procedure o funzioni. Tuttavia, è possibile chiamare stored procedure o funzioni utilizzando il metodo System. Data. Entity. DbSet. sqlQuery. Esempio:
 ``` csharp
 var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 ```
@@ -23,47 +23,47 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 Per completare questa procedura dettagliata, è necessario disporre di:
 
 - Una versione recente di Visual Studio.
-- Il [database di esempio School](~/ef6/resources/school-database.md).
+- [Database di esempio School](~/ef6/resources/school-database.md).
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
 -   Aprire Visual Studio 2012.
--   Selezionare **File -&gt; Novità -&gt; progetto**
--   Nel riquadro sinistro, fare clic su **Visual C#\#**, quindi selezionare il **Console** modello.
--   Immettere **EFwithSProcsSample** come nome.
--   Scegliere **OK**.
+-   Selezionare il **progetto file-&gt; New-&gt;**
+-   Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+-   Immettere **EFwithSProcsSample**@no__t-aggiungere1come il nome.
+-   Fare clic su **OK**.
 
-## <a name="create-a-model"></a>Creare un modello
+## <a name="create-a-model"></a>Creazione di un modello
 
--   Fare clic sul progetto in Esplora soluzioni e selezionare **Add -&gt; nuovo elemento**.
--   Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro dei modelli.
--   Immettere **EFwithSProcsModel.edmx** per il nome del file e quindi fare clic su **Add**.
--   Nella finestra di dialogo Scegli contenuto Model, selezionare **genera da database**, quindi fare clic su **successivo**.
--   Fare clic su **nuova connessione**.  
-    Nella finestra di dialogo proprietà di connessione, immettere il nome del server (ad esempio, **(localdb)\\mssqllocaldb**), selezionare il metodo di autenticazione, il tipo **School** per il nome del database e quindi Fare clic su **OK**.  
-    La finestra di dialogo Seleziona connessione dati viene aggiornata con l'impostazione di connessione di database.
--   Nella finestra di dialogo Scegli oggetti di Database, verificare i **tabelle** casella di controllo per selezionare tutte le tabelle.  
-    Selezionare anche le seguenti stored procedure con il **funzioni e Stored procedure** nodo: **GetStudentGrades** e **GetDepartmentName**. 
+-   Fare clic con il pulsante destro del mouse sul progetto Esplora soluzioni e scegliere **Aggiungi-&gt; nuovo elemento**.
+-   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
+-   Immettere **EFwithSProcsModel. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
+-   Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti**.
+-   Fare clic su **nuova connessione**.  
+    Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB) \\mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** for il nome del database, quindi fare clic su **OK**.  
+    La finestra di dialogo scegliere la connessione dati viene aggiornata con l'impostazione di connessione al database.
+-   Nella finestra di dialogo Scegli oggetti di database selezionare le **tabelle** checkbox per selezionare tutte le tabelle.  
+    Inoltre, nel nodo **stored procedure e funzioni** selezionare le stored procedure seguenti: **GetStudentGrades** e **GetDepartmentName**. 
 
     ![Import](~/ef6/media/import.jpg)
 
-    *Partire da Visual Studio 2012 nella finestra di progettazione di Entity Framework supporta l'importazione bulk di stored procedure. Il **Importa selezionate stored procedure e funzioni nel modello theentity** è selezionata per impostazione predefinita.*
--   Scegliere **Fine**.
+    *Starting con Visual Studio 2012 la finestra di progettazione EF supporta l'importazione bulk di stored procedure. Per impostazione predefinita, l' **importazione delle stored procedure e delle funzioni selezionate nel modello set** è selezionata.*
+-   Fare clic su **fine**.
 
-Per impostazione predefinita, la forma dei risultati di ogni importate stored procedure o funzione che restituisce più di una colonna verrà portato automaticamente un nuovo tipo complesso. In questo esempio si vuole mappare i risultati del **GetStudentGrades** funzionare per il **StudentGrade** entità e i risultati del **GetDepartmentName** a **Nessuna** (**none** è il valore predefinito).
+Per impostazione predefinita, la forma risultante di ogni stored procedure o funzione importata che restituisce più colonne diventerà automaticamente un nuovo tipo complesso. In questo esempio si vuole eseguire il mapping dei risultati della funzione **GetStudentGrades** all'entità **StudentGrade** e i risultati di **GetDepartmentName** su **None** (**nessuno** è il valore predefinito).
 
-Per un'importazione di funzioni restituire un tipo di entità, le colonne restituite dalla stored procedure corrispondente devono corrispondere esattamente le proprietà scalari del tipo di entità restituite. Un'importazione di funzioni può inoltre restituire raccolte di tipi semplici, tipi complessi o nessun valore.
+Affinché un'importazione di funzioni restituisca un tipo di entità, le colonne restituite dalla stored procedure corrispondente devono corrispondere esattamente alle proprietà scalari del tipo di entità restituito. Un'importazione di funzioni può inoltre restituire raccolte di tipi semplici, tipi complessi o nessun valore.
 
--   Fare doppio clic su area di progettazione e seleziona **Browser modello**.
--   In **Visualizzatore modelli**, selezionare **importazioni di funzioni**e quindi fare doppio clic il **GetStudentGrades** (funzione).
--   Nella finestra di dialogo Modifica importazione di funzioni, selezionare **Entities** e scegliere **StudentGrade**.  
-    *Il **importazione della funzione è componibile** casella di controllo nella parte superiore delle **importazioni di funzioni** finestra di dialogo consente di eseguire il mapping di funzioni componibile. Se si seleziona questa casella, verranno visualizzato solo funzioni componibili (funzioni con valori di tabella) nei **Stored Procedure / nome funzione** elenco a discesa. Se non si seleziona questa casella, solo le funzioni non componibili verranno visualizzate nell'elenco.*
+-   Fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **browser modello**.
+-   In **browser modello**selezionare **importazioni di funzioni**, quindi fare doppio clic sulla funzione **GetStudentGrades** .
+-   Nella finestra di dialogo modifica importazione funzione selezionare **entità**  E scegliere **StudentGrade**.  
+    l'importazione di funzioni *The **è componibile** nella parte superiore della finestra di dialogo **importazioni** di funzioni che consente di eseguire il mapping a funzioni componibili. Se si seleziona questa casella, solo le funzioni componibili (funzioni con valori di tabella) verranno visualizzate nell'elenco a discesa **stored procedure/nome funzione** . Se non si seleziona questa casella, nell'elenco verranno visualizzate solo le funzioni non componibili.*
 
 ## <a name="use-the-model"></a>Usare il modello
 
-Aprire il **Program.cs** file dove il **Main** metodo è definito. Aggiungere il codice seguente nella funzione Main.
+Aprire il file **Program.cs** in cui è definito il metodo **Main** . Aggiungere il codice seguente nella funzione Main.
 
-Il codice chiama due stored procedure: **GetStudentGrades** (restituisce **StudentGrades** per l'oggetto specificato *StudentId*) e **GetDepartmentName** (restituisce il nome del dipartimento nel parametro di output).  
+Il codice chiama due stored procedure: **GetStudentGrades** (restituisce **StudentGrades** per il *StudentID*specificato) e **GetDepartmentName** (restituisce il nome del reparto nel parametro di output).  
 
 ``` csharp
     using (SchoolEntities context = new SchoolEntities())
@@ -89,7 +89,7 @@ Il codice chiama due stored procedure: **GetStudentGrades** (restituisce **Stude
 
 Compilare l'applicazione ed eseguirla. Il programma produce l'output seguente:
 
-```
+```console
 StudentID: 2
 Student grade: 4.00
 StudentID: 2
@@ -100,4 +100,4 @@ The department name is Engineering
 <a name="output-parameters"></a>Parametri di output
 -----------------
 
-Se si utilizzano parametri di output, i relativi valori non sarà disponibili fino a quando i risultati sono stati letti completamente. Ciò è dovuto il comportamento sottostante di DbDataReader, vedere [recupero di dati mediante DataReader](https://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.
+Se vengono utilizzati parametri di output, i relativi valori non saranno disponibili fino a quando i risultati non sono stati letti completamente. A causa del comportamento sottostante di DbDataReader, vedere Recupero di [dati tramite un DataReader](https://go.microsoft.com/fwlink/?LinkID=398589) per altri dettagli.

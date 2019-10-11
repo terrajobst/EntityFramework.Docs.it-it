@@ -1,30 +1,30 @@
 ---
-title: Utilizzo dei valori delle proprietà - Entity Framework 6
+title: Uso dei valori delle proprietà-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: e3278b4b-9378-4fdb-923d-f64d80aaae70
-ms.openlocfilehash: afde503bb4ed15fcf83a57053541cd5da8c89835
-ms.sourcegitcommit: 50521b4a2f71139e6a7210a69ac73da582ef46cf
+ms.openlocfilehash: d8a18182754980d79b71df3f227b30c4ce40366f
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 06/27/2019
-ms.locfileid: "67416667"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182136"
 ---
-# <a name="working-with-property-values"></a>Utilizzo di valori di proprietà
-Per la maggior parte Entity Framework si occuperà di stato, i valori originali e i valori correnti delle proprietà delle istanze di entità con rilevamento. Tuttavia, potrebbero esserci alcuni casi, ad esempio gli scenari disconnessi, in cui si desidera visualizzare o modificare le informazioni che EF ha le proprietà. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
+# <a name="working-with-property-values"></a>Utilizzo dei valori delle proprietà
+Per la maggior parte Entity Framework si occuperà di tenere traccia dello stato, dei valori originali e dei valori correnti delle proprietà delle istanze dell'entità. Tuttavia, potrebbero verificarsi alcuni casi, ad esempio gli scenari disconnessi, in cui si desidera visualizzare o modificare le informazioni di EF sulle proprietà. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
 
-Entity Framework tiene traccia di due valori per ogni proprietà di un'entità rilevata. Il valore corrente è, come indica il nome, il valore corrente della proprietà nell'entità. Il valore originale è il valore che la proprietà conteneva quando l'entità è stata sottoposti a query dal database o connesso al contesto.  
+Entity Framework tiene traccia di due valori per ogni proprietà di un'entità rilevata. Il valore corrente è, come indica il nome, il valore corrente della proprietà nell'entità. Il valore originale è il valore che la proprietà aveva quando è stata eseguita una query sul database o è stato associato al contesto.  
 
-Esistono due meccanismi generali per l'utilizzo con valori di proprietà:  
+Sono disponibili due meccanismi generali per l'utilizzo dei valori delle proprietà:  
 
-- Il valore di una singola proprietà può essere ottenuto in modo fortemente tipizzato utilizzando il metodo di proprietà.  
-- I valori per tutte le proprietà di un'entità possono essere letti in un oggetto DbPropertyValues. DbPropertyValues funge quindi da un oggetto di tipo dizionario per i valori delle proprietà da leggere e impostare. I valori in un oggetto DbPropertyValues possono essere impostati dai valori in un altro oggetto DbPropertyValues o dai valori in un altro oggetto, ad esempio un'altra copia dell'entità o a un oggetto di trasferimento di dati semplici (DTO).  
+- Il valore di una singola proprietà può essere ottenuto in modo fortemente tipizzato usando il metodo Property.  
+- I valori per tutte le proprietà di un'entità possono essere letti in un oggetto elementi dbpropertyvalues. Elementi dbpropertyvalues funge quindi da oggetto simile a un dizionario per consentire la lettura e l'impostazione dei valori delle proprietà. I valori in un oggetto elementi dbpropertyvalues possono essere impostati dai valori di un altro oggetto elementi dbpropertyvalues o dai valori in un altro oggetto, ad esempio un'altra copia dell'entità o un oggetto di trasferimento dati semplice (DTO).  
 
-Le sezioni seguenti mostrano esempi di utilizzo di entrambi i meccanismi sopra.  
+Le sezioni seguenti illustrano esempi di utilizzo di entrambi i meccanismi descritti in precedenza.  
 
-## <a name="getting-and-setting-the-current-or-original-value-of-an-individual-property"></a>Ottenere e impostare il valore originale o corrente di una singola proprietà  
+## <a name="getting-and-setting-the-current-or-original-value-of-an-individual-property"></a>Recupero e impostazione del valore corrente o originale di una singola proprietà  
 
-L'esempio seguente mostra come il valore corrente di una proprietà può essere letti e quindi impostato su un nuovo valore:  
+Nell'esempio seguente viene illustrato come è possibile leggere il valore corrente di una proprietà e quindi impostarla su un nuovo valore:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -45,17 +45,17 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Usare la proprietà OriginalValue anziché la proprietà CurrentValue leggerne o impostarne il valore originale.  
+Usare la proprietà OriginalValue invece della proprietà CurrentValue per leggere o impostare il valore originale.  
 
-Si noti che il valore restituito è tipizzato come "object" quando una stringa viene utilizzata per specificare il nome della proprietà. D'altra parte, il valore restituito è fortemente tipizzato se viene usata un'espressione lambda.  
+Si noti che il valore restituito viene digitato come "Object" quando viene utilizzata una stringa per specificare il nome della proprietà. D'altra parte, il valore restituito è fortemente tipizzato se viene utilizzata un'espressione lambda.  
 
-Impostare il valore della proprietà simile al seguente solo contrassegnerà la proprietà come modificata se il nuovo valore è diverso dal valore precedente.  
+Impostando il valore della proprietà come questo, la proprietà verrà contrassegnata come modificata solo se il nuovo valore è diverso dal valore precedente.  
 
-Quando un valore della proprietà è impostato in questo modo la modifica viene rilevata automaticamente anche se AutoDetectChanges è disattivato.  
+Quando un valore di proprietà viene impostato in questo modo, la modifica viene rilevata automaticamente anche se AutoDetectChanges è disattivato.  
 
-## <a name="getting-and-setting-the-current-value-of-an-unmapped-property"></a>Ottenere e impostare il valore corrente di una proprietà non mappata  
+## <a name="getting-and-setting-the-current-value-of-an-unmapped-property"></a>Recupero e impostazione del valore corrente di una proprietà non mappata  
 
-Il valore corrente di una proprietà che non è mappato al database può anche essere letti. Un esempio di una proprietà non mappata potrebbe essere una proprietà RssLink nel Blog. Questo valore può essere calcolato in base il BlogId e pertanto non desidera essere archiviate nel database. Ad esempio:  
+È anche possibile leggere il valore corrente di una proprietà di cui non è stato eseguito il mapping al database. Un esempio di proprietà di cui non è stato eseguito il mapping può essere una proprietà RssLink nel Blog. Questo valore può essere calcolato in base a BlogId e pertanto non deve essere archiviato nel database. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -71,7 +71,7 @@ using (var context = new BloggingContext())
 
 Il valore corrente può essere impostato anche se la proprietà espone un setter.  
 
-Leggendo i valori delle proprietà non mappata è utile quando si esegue la convalida di Entity Framework di proprietà non mappata. Per lo stesso motivo i valori correnti possono leggere e impostare per le proprietà di entità che non sono attualmente controllata dal contesto. Ad esempio:  
+La lettura dei valori delle proprietà di cui non è stato eseguito il mapping risulta utile quando si esegue Entity Framework la convalida delle proprietà senza mapping. Per lo stesso motivo è possibile leggere e impostare i valori correnti per le proprietà delle entità che non sono attualmente rilevate dal contesto. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -87,11 +87,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noti che i valori originali non sono disponibili per le proprietà non mappate o per le proprietà delle entità che non vengono rilevate dal contesto.  
+Si noti che i valori originali non sono disponibili per le proprietà di cui non è stato eseguito il mapping o per le proprietà di entità che non vengono rilevate dal contesto.  
 
-## <a name="checking-whether-a-property-is-marked-as-modified"></a>Verifica se una proprietà è contrassegnata come modificata  
+## <a name="checking-whether-a-property-is-marked-as-modified"></a>Verifica per determinare se una proprietà è contrassegnata come modificata  
 
-L'esempio seguente viene illustrato come controllare se una singola proprietà è contrassegnata come modificata:  
+Nell'esempio seguente viene illustrato come verificare se una singola proprietà è contrassegnata come modificata:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -105,11 +105,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-I valori delle proprietà modificate vengono inviati come gli aggiornamenti al database quando viene chiamato SaveChanges.  
+I valori delle proprietà modificate vengono inviati come aggiornamenti al database quando viene chiamato SaveChanges.  
 
 ##  <a name="marking-a-property-as-modified"></a>Contrassegno di una proprietà come modificata  
 
-L'esempio seguente viene illustrato come forzare una singola proprietà da contrassegnare come modificato:  
+Nell'esempio seguente viene illustrato come forzare la contrassegnatura di una singola proprietà come modificata:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -123,13 +123,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Contrassegno di una proprietà come modificata forza un aggiornamento da inviare al database per la proprietà quando viene chiamato SaveChanges anche se il valore corrente della proprietà è uguale a quello originale.  
+Contrassegnando una proprietà come modificata, viene inviato un aggiornamento al database per la proprietà quando SaveChanges viene chiamato anche se il valore corrente della proprietà è uguale al valore originale.  
 
-Non è attualmente possibile reimpostare una singola proprietà da modificare non dopo che è stato contrassegnato come modificato. Si tratta di qualcosa che si prevede di supportare in una versione futura.  
+Non è attualmente possibile reimpostare una singola proprietà in modo che non venga modificata dopo che è stata contrassegnata come modificata. Si tratta di un elemento che si prevede di supportare in una versione futura.  
 
-## <a name="reading-current-original-and-database-values-for-all-properties-of-an-entity"></a>La lettura correnti, originali e i valori del database per tutte le proprietà di un'entità  
+## <a name="reading-current-original-and-database-values-for-all-properties-of-an-entity"></a>Lettura dei valori correnti, originali e del database per tutte le proprietà di un'entità  
 
-L'esempio seguente viene illustrato come leggere i valori correnti, i valori originali e i valori effettivamente nel database per tutte le proprietà con mapping di un'entità.  
+Nell'esempio seguente viene illustrato come leggere i valori correnti, i valori originali e i valori effettivamente presenti nel database per tutte le proprietà di cui è stato eseguito il mapping di un'entità.  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -163,11 +163,11 @@ public static void PrintValues(DbPropertyValues values)
 }
 ```  
 
-I valori correnti sono i valori attualmente contenenti le proprietà dell'entità. I valori originali sono i valori letti dal database quando l'entità è stata eseguita una query. I valori del database sono i valori attualmente archiviati nel database. Ottenere i valori del database è utile quando i valori del database possono essere modificata perché l'entità è stata eseguita una query, ad esempio quando un simultanea modifica per il database è diventato da un altro utente.  
+I valori correnti sono i valori attualmente contenuti nelle proprietà dell'entità. I valori originali sono i valori letti dal database durante la query dell'entità. I valori del database sono i valori attualmente archiviati nel database. Il recupero dei valori del database è utile quando è possibile che i valori nel database siano stati modificati dopo l'esecuzione di query sull'entità, ad esempio quando è stata eseguita una modifica simultanea del database da un altro utente.  
 
 ## <a name="setting-current-or-original-values-from-another-object"></a>Impostazione dei valori correnti o originali da un altro oggetto  
 
-I valori correnti o originali di un'entità rilevata possono essere aggiornati tramite la copia di valori da un altro oggetto. Ad esempio:  
+I valori correnti o originali di un'entità rilevata possono essere aggiornati copiando i valori da un altro oggetto. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -196,9 +196,9 @@ public class BlogDto
 }
 ```  
 
-Esecuzione di codice precedente consente di stampare:  
+L'esecuzione del codice precedente comporterà la stampa:  
 
-```  
+```console
 Current values:
 Property Id has value 1
 Property Name has value My Cool Blog
@@ -208,13 +208,13 @@ Property Id has value 1
 Property Name has value My Boring Blog
 ```  
 
-Questa tecnica viene usata in alcuni casi quando si aggiorna un'entità con valori ottenuti da una chiamata al servizio o un client in un'applicazione a più livelli. Si noti che l'oggetto usato non deve essere dello stesso tipo dell'entità, purché tale classe presenta proprietà i cui nomi corrispondono a quelle dell'entità. Nell'esempio precedente, un'istanza di BlogDTO consente di aggiornare i valori originali.  
+Questa tecnica viene talvolta utilizzata quando si aggiorna un'entità con valori ottenuti da una chiamata al servizio o da un client in un'applicazione a più livelli. Si noti che l'oggetto utilizzato non deve essere dello stesso tipo dell'entità purché disponga di proprietà i cui nomi corrispondono a quelli dell'entità. Nell'esempio precedente viene usata un'istanza di BlogDTO per aggiornare i valori originali.  
 
-Si noti che solo le proprietà impostate su valori diversi quando copiati da altro oggetto verranno contrassegnate come modificata.  
+Si noti che solo le proprietà impostate su valori diversi quando vengono copiati dall'altro oggetto verranno contrassegnate come modificate.  
 
 ## <a name="setting-current-or-original-values-from-a-dictionary"></a>Impostazione dei valori correnti o originali da un dizionario  
 
-I valori correnti o originali di un'entità rilevata possono essere aggiornati tramite la copia di valori da un dizionario o altre strutture di dati. Ad esempio:  
+I valori correnti o originali di un'entità rilevata possono essere aggiornati copiando i valori da un dizionario o da un'altra struttura di dati. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -238,11 +238,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Usare la proprietà OriginalValues anziché la proprietà CurrentValues per impostare i valori originali.  
+Usare la proprietà OriginalValues invece della proprietà CurrentValues per impostare i valori originali.  
 
-## <a name="setting-current-or-original-values-from-a-dictionary-using-property"></a>Impostazione dei valori correnti o originali da un dizionario con proprietà  
+## <a name="setting-current-or-original-values-from-a-dictionary-using-property"></a>Impostazione dei valori correnti o originali da un dizionario usando la proprietà  
 
-Un'alternativa all'utilizzo CurrentValues o OriginalValues come illustrato in precedenza consiste nell'usare il metodo di proprietà per impostare il valore di ogni proprietà. Ciò può essere preferibile quando è necessario impostare i valori di proprietà complesse. Ad esempio:  
+Un'alternativa all'uso di CurrentValues o OriginalValues, come illustrato in precedenza, consiste nell'usare il metodo Property per impostare il valore di ogni proprietà. Questa operazione può essere preferibile quando è necessario impostare i valori delle proprietà complesse. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -266,11 +266,11 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Nell'esempio precedente le proprietà complesse sono accessibili tramite nomi punteggiati. Per altri modi per accedere alle proprietà complesse vedere due sezioni più avanti in questo argomento in particolare sulle proprietà complesse.  
+Nell'esempio precedente viene eseguito l'accesso alle proprietà complesse utilizzando nomi punteggiati. Per altre modalità di accesso alle proprietà complesse, vedere le due sezioni più avanti in questo argomento, in particolare sulle proprietà complesse.  
 
-## <a name="creating-a-cloned-object-containing-current-original-or-database-values"></a>Creazione di un oggetto clonato contenente i valori del database, originale o corrente  
+## <a name="creating-a-cloned-object-containing-current-original-or-database-values"></a>Creazione di un oggetto clonato contenente i valori correnti, originali o di database  
 
-L'oggetto DbPropertyValues restituito dal CurrentValues, OriginalValues, o GetDatabaseValues può essere utilizzato per creare un clone dell'entità. Questo clone conterrà i valori della proprietà dall'oggetto DbPropertyValues usata per crearlo. Ad esempio:  
+Per creare un clone dell'entità, è possibile usare l'oggetto elementi dbpropertyvalues restituito da CurrentValues, OriginalValues o GetDatabaseValues. Questo clone conterrà i valori delle proprietà dall'oggetto elementi dbpropertyvalues usato per crearlo. Esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -281,13 +281,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Si noti che l'oggetto restituito non sono l'entità e non viene rilevato dal contesto. L'oggetto restituito inoltre non ha alcuna relazione impostati su altri oggetti.  
+Si noti che l'oggetto restituito non è l'entità e non viene rilevata dal contesto. Anche l'oggetto restituito non dispone di relazioni impostate su altri oggetti.  
 
-Oggetto clonato può essere utile per la risoluzione dei problemi relativi agli aggiornamenti simultanei al database, in particolare in cui è in uso un'interfaccia utente che coinvolge data binding a oggetti di un determinato tipo.  
+L'oggetto clonato può essere utile per risolvere i problemi relativi agli aggiornamenti simultanei al database, soprattutto in caso di utilizzo di un'interfaccia utente che include data binding a oggetti di un determinato tipo.  
 
-## <a name="getting-and-setting-the-current-or-original-values-of-complex-properties"></a>Ottenere e impostare i valori correnti o originali delle proprietà complessa  
+## <a name="getting-and-setting-the-current-or-original-values-of-complex-properties"></a>Recupero e impostazione dei valori correnti o originali delle proprietà complesse  
 
-Il valore di un intero oggetto complesso può essere letto e impostato utilizzando il metodo di proprietà, come è possibile per una proprietà primitiva. Inoltre è possibile risalire alle oggetto complesso e lettura o impostare le proprietà di quell'oggetto, o anche un oggetto nidificato. Ecco alcuni esempi:  
+Il valore di un intero oggetto complesso può essere letto e impostato usando il metodo Property, così come può essere per una proprietà primitiva. Inoltre, è possibile eseguire il drill-down nell'oggetto complesso e leggere o impostare le proprietà di tale oggetto o persino un oggetto annidato. Ecco alcuni esempi:  
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -334,13 +334,13 @@ using (var context = new BloggingContext())
 }
 ```  
 
-Usare la proprietà OriginalValue anziché la proprietà CurrentValue da ottenere o impostare un valore originale.  
+Usare la proprietà OriginalValue invece della proprietà CurrentValue per ottenere o impostare un valore originale.  
 
-Si noti che la proprietà o metodo ComplexProperty utilizzabile per accedere a una proprietà complessa. Tuttavia, il metodo ComplexProperty deve essere usato se si vuole eseguire il drill-nell'oggetto complesso con proprietà aggiuntive o ComplexProperty chiamate.  
+Si noti che è possibile usare la proprietà o il Metodo ComplexProperty per accedere a una proprietà complessa. Tuttavia, il Metodo ComplexProperty deve essere usato se si vuole eseguire il drill-down nell'oggetto complesso con chiamate di proprietà o ComplexProperty aggiuntive.  
 
-## <a name="using-dbpropertyvalues-to-access-complex-properties"></a>Uso di DbPropertyValues per accedere alle proprietà complesse  
+## <a name="using-dbpropertyvalues-to-access-complex-properties"></a>Uso di elementi dbpropertyvalues per accedere a proprietà complesse  
 
-Quando si usa CurrentValues, OriginalValues o GetDatabaseValues per ottenere l'oggetto corrente, originale, o i valori del database per un'entità, i valori di qualsiasi proprietà complesse vengono restituiti come oggetti DbPropertyValues annidati. Questi annidati gli oggetti possono quindi essere usati per ottenere i valori dell'oggetto complesso. Ad esempio, il metodo seguente verrà stampato i valori di tutte le proprietà, inclusi i valori di qualsiasi proprietà complesse e proprietà complesse nidificate.  
+Quando si usa CurrentValues, OriginalValues o GetDatabaseValues per ottenere tutti i valori correnti, originali o di database per un'entità, i valori di tutte le proprietà complesse vengono restituiti come oggetti elementi dbpropertyvalues annidati. Questi oggetti annidati possono quindi essere utilizzati per ottenere i valori dell'oggetto complesso. Ad esempio, il metodo seguente consente di stampare i valori di tutte le proprietà, inclusi i valori di tutte le proprietà complesse e le proprietà complesse annidate.  
 
 ``` csharp
 public static void WritePropertyValues(string parentPropertyName, DbPropertyValues propertyValues)
@@ -362,7 +362,7 @@ public static void WritePropertyValues(string parentPropertyName, DbPropertyValu
 }
 ```  
 
-Per stampare una copia tutti i valori correnti delle proprietà del metodo viene chiamato come segue:  
+Per stampare tutti i valori di proprietà correnti, il metodo verrebbe chiamato come segue:  
 
 ``` csharp
 using (var context = new BloggingContext())

@@ -3,12 +3,12 @@ title: Uso delle entità disconnesse - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 12138003-a373-4817-b1b7-724130202f5f
-ms.openlocfilehash: 11ca2a9a4161e02d32d98bf03dd4cf28545334b7
-ms.sourcegitcommit: 5e11125c9b838ce356d673ef5504aec477321724
+ms.openlocfilehash: f1ce44e7b00ec4c60a81ed850ce5c9d866495e1b
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50022171"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181763"
 ---
 # <a name="working-with-disconnected-entities"></a>Uso delle entità disconnesse
 In un'applicazione basata su Entity Framework il rilevamento delle modifiche applicate alle entità rilevate viene eseguito da una classe contesto. Se si chiama il metodo SaveChanges le modifiche rilevate dal contesto vengono rese persistenti per il database. Quando si usano le applicazioni a più livelli, gli oggetti entità vengono modificati generalmente durante la disconnessione dal contesto ed è necessario decidere come tenere traccia delle modifiche e come segnalare le modifiche al contesto. Questo argomento descrive diverse opzioni disponibili quando si usa Entity Framework con entità disconnesse.   
@@ -30,4 +30,4 @@ Rilevare le modifiche nei grafici arbitrari delle entità durante la disconnessi
 Questo modello può essere usato con i modelli creati usando la finestra di progettazione di Entity Framework, ma non può essere usato con i modelli Code First. Per altre informazioni, vedere [Self-Tracking Entities](self-tracking-entities/index.md) (Entità con rilevamento automatico).  
 
 > [!IMPORTANT]
-> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.

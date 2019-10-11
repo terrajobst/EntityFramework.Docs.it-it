@@ -4,12 +4,12 @@ author: divega
 ms.date: 11/14/2018
 ms.assetid: 998C04F3-676A-4FCF-8450-CFB0457B4198
 uid: core/what-is-new/ef-core-2.2
-ms.openlocfilehash: 79b4efc3aee23e19a9ea1deb6373b9984b77f886
-ms.sourcegitcommit: b3c2b34d5f006ee3b41d6668f16fe7dcad1b4317
-ms.translationtype: HT
+ms.openlocfilehash: 5fcf7c6dfb4d8cb7928ef974af6deb52df7c63eb
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/15/2018
-ms.locfileid: "51688759"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181379"
 ---
 # <a name="new-features-in-ef-core-22"></a>Nuove funzionalità di EF Core 2.2
 
@@ -21,10 +21,10 @@ EF Core 2.2 supporta ora l'utilizzo dei dati spaziali da vari database usando i 
 
 Il supporto dei dati spaziali viene implementato come una serie di pacchetti di estensione specifici del provider.
 Ognuno di questi pacchetti fornisce i mapping per tipi e i metodi NTS, nonché i tipi e le funzioni spaziali corrispondenti nel database.
-Queste estensioni del provider sono ora disponibili per [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/), [SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) e [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/) (dal [progetto Npgsql](http://www.npgsql.org/)).
+Queste estensioni del provider sono ora disponibili per [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/), [SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) e [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/) (dal [progetto Npgsql](https://www.npgsql.org/)).
 I tipi spaziali possono essere usati direttamente con il [provider in memoria EF Core](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/) senza estensioni aggiuntive.
 
-Dopo aver installato l'estensione del provider, è possibile aggiungere proprietà dei tipi supportati alle entità. Ad esempio:
+Dopo aver installato l'estensione del provider, è possibile aggiungere proprietà dei tipi supportati alle entità. Esempio:
 
 ``` csharp
 using NetTopologySuite.Geometries;

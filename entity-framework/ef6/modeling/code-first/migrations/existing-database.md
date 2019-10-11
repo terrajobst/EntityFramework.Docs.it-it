@@ -1,101 +1,101 @@
 ---
-title: Migrazioni Code First con un database esistente - Entity Framework 6
+title: Migrazioni Code First con un database esistente-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
-ms.openlocfilehash: 77370ec7d922b8324b924a0b4aca3e58f5ec6066
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: eb7948eafb1322cabcf69b47bd5411f762fe8498
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490571"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182589"
 ---
 # <a name="code-first-migrations-with-an-existing-database"></a>Migrazioni Code First con un database esistente
 > [!NOTE]
-> **EF4.3 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 4.1. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
+> **EF 4.3 e versioni successive** : le funzionalità, le API e così via descritte in questa pagina sono state introdotte in Entity Framework 4,1. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
 
-Questo articolo illustra l'uso di migrazioni Code First con un database esistente, che non è stato creato da Entity Framework.
+Questo articolo illustra l'uso di Migrazioni Code First con un database esistente, uno che non è stato creato da Entity Framework.
 
 > [!NOTE]
-> Questo articolo presuppone che l'utente sappia usare migrazioni Code First in scenari di base. Se in caso contrario, allora sarà necessario leggere [migrazioni Code First](~/ef6/modeling/code-first/migrations/index.md) prima di continuare.
+> Questo articolo presuppone che l'utente sappia come usare Migrazioni Code First negli scenari di base. In caso contrario, sarà necessario leggere [migrazioni Code First](~/ef6/modeling/code-first/migrations/index.md) prima di continuare.
 
 ## <a name="screencasts"></a>Screencast
 
-Se si sarebbe piuttosto guardare uno screencast rispetto a leggere questo articolo, i due video seguenti riguardano lo stesso contenuto in questo articolo.
+Se si preferisce guardare uno screencast anziché leggere questo articolo, i due video seguenti riguardano lo stesso contenuto di questo articolo.
 
-### <a name="video-one-migrations---under-the-hood"></a>Un video: "Migrazioni - dietro le quinte"
+### <a name="video-one-migrations---under-the-hood"></a>Video uno: "Migrazioni-dietro le quinte"
 
-[In questo screencast](http://channel9.msdn.com/blogs/ef/migrations-under-the-hood) riguarda la modalità di traccia delle migrazioni e utilizza le informazioni sul modello per rilevare le modifiche al modello.
+[Questo screencast](https://channel9.msdn.com/blogs/ef/migrations-under-the-hood) illustra il modo in cui le migrazioni tracciano e usano le informazioni sul modello per rilevare le modifiche al modello.
 
-### <a name="video-two-migrations---existing-databases"></a>Due video: "Migrazioni - database esistente"
+### <a name="video-two-migrations---existing-databases"></a>Video due: "Migrazioni-database esistenti"
 
-I concetti del video precedente, di compilazione [questo screencast](http://channel9.msdn.com/blogs/ef/migrations-existing-databases) illustra come abilitare e usare le migrazioni con un database esistente.
+Basandosi sui concetti del video precedente, [questo screencast](https://channel9.msdn.com/blogs/ef/migrations-existing-databases) illustra come abilitare e usare le migrazioni con un database esistente.
 
 ## <a name="step-1-create-a-model"></a>Passaggio 1: Creare un modello
 
-Il primo passaggio sarà quello di creare un modello Code First destinato a un database esistente. Il [Code First per un Database esistente](~/ef6/modeling/code-first/workflows/existing-database.md) argomento fornisce indicazioni dettagliate su come eseguire questa operazione.
+Il primo passaggio consiste nel creare un modello di Code First destinato al database esistente. L'argomento [Code First a un database esistente](~/ef6/modeling/code-first/workflows/existing-database.md) fornisce istruzioni dettagliate su come eseguire questa operazione.
 
 >[!NOTE]
-> È importante seguire il resto dei passaggi in questo argomento prima di apportare modifiche al modello che richiede modifiche allo schema del database. I passaggi seguenti richiedono il modello sia sincronizzato con lo schema del database.
+> Prima di apportare modifiche al modello che richiederebbero modifiche allo schema del database, è importante attenersi ai passaggi rimanenti di questo argomento. Per la procedura seguente è necessario che il modello sia sincronizzato con lo schema del database.
 
-## <a name="step-2-enable-migrations"></a>Passaggio 2: Abilitare le migrazioni
+## <a name="step-2-enable-migrations"></a>Passaggio 2: Abilita migrazioni
 
-Il passaggio successivo è abilitare le migrazioni. È possibile farlo eseguendo il **Enable-Migrations** comando nella Console di gestione pacchetti.
+Il passaggio successivo consiste nell'abilitare le migrazioni. È possibile eseguire questa operazione eseguendo il comando **Enable-Migrations** nella console di gestione pacchetti.
 
-Questo comando creare una cartella nella soluzione denominata migrazioni e inserire una singola classe in essa definita configurazione. La classe di configurazione è possibile configurare le migrazioni per l'applicazione, è possibile trovare altre informazioni, vedere la [migrazioni Code First](~/ef6/modeling/code-first/migrations/index.md) argomento.
+Questo comando crea una cartella nella soluzione denominata migrazioni e inserisce una singola classe al suo interno chiamata configurazione. La classe di configurazione consente di configurare le migrazioni per l'applicazione. per altre informazioni, vedere l'argomento [migrazioni Code First](~/ef6/modeling/code-first/migrations/index.md) .
 
 ## <a name="step-3-add-an-initial-migration"></a>Passaggio 3: Aggiungere una migrazione iniziale
 
-Dopo che le migrazioni sono state create e applicate a database locale che è anche possibile applicarli diventa altri database. Ad esempio, il database locale può essere un database di test e si potrebbe in definitiva desidera inoltre applicare le modifiche a un database di produzione e/o altri sviluppatori di database di test. Sono disponibili due opzioni per questo passaggio e quello che è consigliabile scegliere dipende se lo schema di altri database è vuoto o attualmente corrispondenti allo schema del database locale.
+Al termine della creazione e dell'applicazione delle migrazioni al database locale, è possibile che si desideri applicare tali modifiche anche ad altri database. È ad esempio possibile che il database locale sia un database di prova e che sia necessario applicare le modifiche anche a un database di produzione e/o ad altri database di prova degli sviluppatori. Per questo passaggio è possibile scegliere tra due opzioni, a seconda che lo schema di altri database sia vuoto o che attualmente corrisponda allo schema del database locale.
 
--   **Opzione uno: Utilizzare schema esistente come punto di partenza.** È necessario utilizzare questo approccio quando altri database che in futuro verranno applicate le migrazioni a avrà lo stesso schema come ha attualmente il database locale. Ad esempio, è possibile utilizzare questo se i database di test locale corrisponde attualmente al v1 del database di produzione e si applicherà in seguito queste migrazioni per aggiornare il database di produzione a v2.
--   **Opzione 2: Usare database vuoto come punto di partenza.** È consigliabile usare questo approccio quando altri database che in futuro verranno applicate le migrazioni a sono vuoti (o non esistono ancora). Ad esempio, è possibile utilizzare questo se subito a sviluppare l'applicazione usando un database di test ma senza usare le migrazioni e si sarà in un secondo momento creare un database di produzione da zero.
+-   **Option uno: Usa schema esistente come punto di partenza.** È consigliabile utilizzare questo approccio quando gli altri database a cui verranno applicate le migrazioni in futuro avranno lo stesso schema del database locale. Ad esempio, è possibile usare questo se il database di test locale corrisponde attualmente al V1 del database di produzione e in seguito si applicano queste migrazioni per aggiornare il database di produzione alla versione V2.
+-   @no__t 0Option due: Usa database vuoto come punto di partenza. ** È consigliabile utilizzare questo approccio quando altri database a cui verranno applicate le migrazioni in futuro sono vuoti (o non sono ancora presenti). Ad esempio, è possibile usarlo se si è iniziato a sviluppare l'applicazione usando un database di test, ma senza usare le migrazioni e in un secondo momento si vuole creare un database di produzione da zero.
 
-### <a name="option-one-use-existing-schema-as-a-starting-point"></a>Opzione uno: Usare lo schema esistente come punto di partenza
+### <a name="option-one-use-existing-schema-as-a-starting-point"></a>Opzione uno: Usa schema esistente come punto di partenza
 
-Migrazioni Code First utilizza uno snapshot del modello archiviato nel processo di migrazione più recente per rilevare le modifiche apportate al modello (è possibile trovare informazioni dettagliate in proposito [migrazioni Code First in ambienti di Team](~/ef6/modeling/code-first/migrations/teams.md)). Dal momento che si prevede di presumere che i database già lo schema del modello corrente, verranno generati una migrazione (no-op) vuota che contiene il modello corrente come snapshot.
+Migrazioni Code First utilizza uno snapshot del modello archiviato nella migrazione più recente per rilevare le modifiche apportate al modello (è possibile trovare informazioni dettagliate su questo in [migrazioni Code First in ambienti Team](~/ef6/modeling/code-first/migrations/teams.md)). Poiché si presuppone che i database abbiano già lo schema del modello corrente, verrà generata una migrazione vuota (no-op) con il modello corrente come snapshot.
 
-1.  Eseguire la **InitialCreate Add-Migration – IgnoreChanges** comando nella Console di gestione pacchetti. Verrà creata una migrazione vuota con il modello corrente come snapshot.
-2.  Eseguire la **Update-Database** comando nella Console di gestione pacchetti. In questo applicherà la migrazione InitialCreate al database. Poiché la migrazione effettiva non contiene tutte le modifiche, semplicemente aggiungere una riga per il \_ \_MigrationsHistory tabella che indica che questa migrazione è già stata applicata.
+1.  Eseguire il comando **Add-Migration InitialCreate – IgnoreChanges** nella console di gestione pacchetti. In questo modo viene creata una migrazione vuota con il modello corrente come snapshot.
+2.  Eseguire il comando **Update-database** nella console di gestione pacchetti. Verrà applicata la migrazione InitialCreate al database. Poiché la migrazione effettiva non contiene alcuna modifica, viene semplicemente aggiunta una riga alla tabella \_ @ no__t-1MigrationsHistory che indica che la migrazione è già stata applicata.
 
-### <a name="option-two-use-empty-database-as-a-starting-point"></a>Opzione 2: Usare database vuoto come punto di partenza
+### <a name="option-two-use-empty-database-as-a-starting-point"></a>Opzione due: Usa database vuoto come punto di partenza
 
-In questo scenario è necessario migrazioni sia in grado di creare l'intero database da zero:, comprese le tabelle che sono già presenti nel database locale. Verranno per generare una migrazione InitialCreate che include la logica per creare lo schema esistente. Si renderà quindi il database esistente sembra questa migrazione è già stata applicata.
+In questo scenario sono necessarie migrazioni per poter creare l'intero database da zero, incluse le tabelle già presenti nel database locale. Verrà generata una migrazione InitialCreate che include la logica per la creazione dello schema esistente. Si renderà quindi il database esistente simile a questa migrazione è già stata applicata.
 
-1.  Eseguire la **Add-Migration InitialCreate** comando nella Console di gestione pacchetti. In questo modo viene creata una migrazione per creare lo schema esistente.
-2.  Impostare come commento tutto il codice nel metodo verticale della migrazione appena creato. Ciò permetterà di 'apply' la migrazione al database locale senza provare a ricreare tutte le tabelle e così via che esistano già.
-3.  Eseguire la **Update-Database** comando nella Console di gestione pacchetti. In questo applicherà la migrazione InitialCreate al database. Dato che non contiene l'effettiva migrazione delle eventuali modiche (perché è commentato temporaneamente tali moduli), è sufficiente aggiungere una riga per il \_ \_MigrationsHistory tabella che indica che questa migrazione è già stata applicata.
-4.  Rimuovere il commento il codice nel metodo di backup. Ciò significa che quando viene applicata questa migrazione nei database futuri, lo schema già presenti nel database locale verrà creato mediante le migrazioni.
+1.  Eseguire il comando **Add-Migration InitialCreate** nella console di gestione pacchetti. In questo modo viene creata una migrazione per creare lo schema esistente.
+2.  Impostare come commento tutto il codice nel metodo up della migrazione appena creata. Questo consentirà di applicare la migrazione al database locale senza provare a ricreare tutte le tabelle e così via.
+3.  Eseguire il comando **Update-database** nella console di gestione pacchetti. Verrà applicata la migrazione InitialCreate al database. Poiché la migrazione effettiva non contiene alcuna modifica (perché è stata impostata temporaneamente come commento), verrà semplicemente aggiunta una riga alla tabella \_ @ no__t-1MigrationsHistory che indica che la migrazione è già stata applicata.
+4.  Annulla il commento del codice nel metodo up. Ciò significa che quando questa migrazione viene applicata ai database futuri, lo schema già esistente nel database locale verrà creato dalle migrazioni.
 
-## <a name="things-to-be-aware-of"></a>Aspetti da tenere presenti
+## <a name="things-to-be-aware-of"></a>Aspetti da tenere presente
 
-Esistono alcuni aspetti da tenere presenti quando si usano le migrazioni da un database esistente.
+Quando si usano le migrazioni su un database esistente, è necessario tenere presenti alcuni aspetti.
 
-### <a name="defaultcalculated-names-may-not-match-existing-schema"></a>I nomi predefiniti/calcolato potrebbero non corrispondere schema esistente
+### <a name="defaultcalculated-names-may-not-match-existing-schema"></a>I nomi predefiniti/calcolati potrebbero non corrispondere allo schema esistente
 
-Quando esegue scaffolding delle migrazioni di una, le migrazioni specifica in modo esplicito i nomi delle colonne e tabelle. Tuttavia, esistono altri oggetti di database che le migrazioni calcola un nome predefinito quando si applicano le migrazioni. Sono inclusi gli indici e vincoli di chiave esterna. Quando la destinazione è uno schema esistente, questi nomi calcolati potrebbero non corrispondere effettivamente ciò che esiste nel database.
+Le migrazioni specificano in modo esplicito i nomi delle colonne e delle tabelle durante l'impalcatura di una migrazione. Tuttavia, esistono altri oggetti di database per cui la migrazione calcola un nome predefinito durante l'applicazione delle migrazioni. Sono inclusi gli indici e i vincoli FOREIGN KEY. Quando la destinazione è uno schema esistente, i nomi calcolati potrebbero non corrispondere a quello effettivamente esistente nel database.
 
-Di seguito sono riportati alcuni esempi di quando è necessario essere a conoscenza di questo oggetto:
+Di seguito sono riportati alcuni esempi di quando è necessario tenere presente quanto segue:
 
-**Se è stato usato ' un'opzione: usare lo schema esistente come punto di partenza ' dal passaggio 3:**
+**If è stata usata l'opzione 1: Usare lo schema esistente come punto di partenza ' dal passaggio 3:**
 
--   Se le modifiche future nel modello richiedono la modifica o eliminazione di uno degli oggetti di database che ha un nome diverso, è necessario modificare la migrazione con scaffolding per specificare il nome corretto. Le API di migrazioni hanno un parametro Name facoltativo che consente di eseguire questa operazione.
-    Ad esempio, lo schema esistente sia disponibile una tabella di Post con una colonna chiave esterna BlogId dotato di un indice denominato IndexFk\_BlogId. Tuttavia, per impostazione predefinita le migrazioni aspetta l'indice sia denominato IX\_BlogId. Se si apporta una modifica al modello che causa l'eliminazione dell'indice, è necessario modificare la chiamata DropIndex sottoposto a scaffolding per specificare il IndexFk\_BlogId nome.
+-   Se le modifiche future apportate al modello richiedono la modifica o l'eliminazione di uno degli oggetti di database denominati in modo diverso, sarà necessario modificare la migrazione con impalcatura per specificare il nome corretto. Le API Migrations hanno un parametro nome facoltativo che consente di eseguire questa operazione.
+    Ad esempio, lo schema esistente potrebbe includere una tabella post con una colonna chiave esterna BlogId con un indice denominato IndexFk @ no__t-0BlogId. Tuttavia, per le migrazioni predefinite si prevede che questo indice sia denominato IX @ no__t-0BlogId. Se si modifica il modello che comporta l'eliminazione di questo indice, sarà necessario modificare la chiamata DropIndex con impalcatura per specificare il nome IndexFk @ no__t-0BlogId.
 
-**Se è stato usato ' opzione due: usare il database vuoto come punto di partenza ' dal passaggio 3:**
+**If è stata usata l'opzione due: Usare il database vuoto come punto di partenza ' dal passaggio 3:**
 
--   Tentativo di eseguire il metodo verso il basso della migrazione iniziale (che è, il ripristino a un database vuoto) nel database locale potrebbe non riuscire perché Migrations proverà a eliminare gli indici e vincoli di chiave esterna usando i nomi non corretti. Questo influirà solo il database locale poiché altri database verranno creati da zero usando il metodo di accesso della migrazione iniziale.
-    Se si vuole effettuare il downgrade del database esistente locale a uno stato vuoto è più semplice eseguire questa operazione manualmente, mediante l'eliminazione del database o l'eliminazione di tutte le tabelle. Dopo il downgrade iniziale di che tutti gli oggetti di database verranno ricreati con i nomi predefiniti, quindi questo problema non presenterà stesso nuovamente.
--   Se le modifiche future nel modello richiedono la modifica o eliminazione di uno degli oggetti di database che ha un nome diverso, questo non funzionerà con il database locale esistente, poiché i nomi non corrispondano ai valori predefiniti. Tuttavia, funzionerà con i database creati 'da zero' poiché sono verranno usati i nomi predefiniti scelti per le migrazioni.
-    È possibile apportare manualmente queste modifiche sul database esistente locale oppure è consigliabile che le migrazioni di ricreare il database da zero: quando si verifica in altri computer.
--   I database creati mediante il metodo di accesso del processo di migrazione iniziale possono differire leggermente dal database locale poiché i nomi predefiniti calcolati per gli indici e vincoli di chiave esterna verranno utilizzati. Potrebbero anche avere indici aggiuntivi come migrazioni creerà gli indici su colonne chiave esterna per impostazione predefinita, questo potrebbe non essere stata nel caso di database locale originale.
+-   Il tentativo di eseguire il metodo down della migrazione iniziale (ovvero il ripristino di un database vuoto) sul database locale potrebbe non riuscire perché le migrazioni tenterà di eliminare gli indici e i vincoli di chiave esterna utilizzando i nomi non corretti. Questo influirà solo sul database locale, perché gli altri database verranno creati da zero utilizzando il metodo up della migrazione iniziale.
+    Se si desidera eseguire il downgrade del database locale esistente a uno stato vuoto, è più semplice eseguire questa operazione manualmente, eliminando il database o eliminando tutte le tabelle. Al termine di questo downgrade iniziale, tutti gli oggetti di database verranno ricreati con i nomi predefiniti, pertanto questo problema non si presenta di nuovo.
+-   Se le modifiche future apportate al modello richiedono la modifica o l'eliminazione di uno degli oggetti di database denominati in modo diverso, questo non funzionerà con il database locale esistente, perché i nomi non corrispondono ai valori predefiniti. Tuttavia, funzionerà con i database creati ' da zerò perché utilizzeranno i nomi predefiniti scelti dalle migrazioni.
+    Queste modifiche possono essere apportate manualmente nel database locale esistente oppure è consigliabile che le migrazioni ricreino il database da zero, come in altri computer.
+-   I database creati utilizzando il metodo up della migrazione iniziale possono variare leggermente rispetto al database locale, poiché verranno utilizzati i nomi predefiniti calcolati per gli indici e i vincoli di chiave esterna. È anche possibile che si verifichino indici aggiuntivi poiché le migrazioni creeranno indici per le colonne chiave esterne per impostazione predefinita. questa situazione potrebbe non essere stata eseguita nel database locale originale.
 
 ### <a name="not-all-database-objects-are-represented-in-the-model"></a>Non tutti gli oggetti di database sono rappresentati nel modello
 
-Gli oggetti di database che non fanno parte del modello non verranno gestiti mediante le migrazioni. Può trattarsi di viste, stored procedure, le autorizzazioni, le tabelle che non fanno parte del modello, gli indici aggiuntivi, e così via.
+Gli oggetti di database che non fanno parte del modello non verranno gestiti dalle migrazioni. Questo può includere viste, stored procedure, autorizzazioni, tabelle che non fanno parte del modello, indici aggiuntivi e così via.
 
-Di seguito sono riportati alcuni esempi di quando è necessario essere a conoscenza di questo oggetto:
+Di seguito sono riportati alcuni esempi di quando è necessario tenere presente quanto segue:
 
--   Indipendentemente dall'opzione scelto nel "Passaggio 3", se le modifiche future nel modello richiedono la modifica o eliminazione di questi oggetti aggiuntivi che non riconoscerà le migrazioni per apportare queste modifiche. Ad esempio, se si elimina una colonna che dispone di un indice aggiuntivo su di esso, le migrazioni non sa di eliminare l'indice. È necessario aggiungere manualmente questo schema per la migrazione con scaffolding.
--   Se è stato usato ' opzione due: usare il database vuoto come punto di partenza ', questi oggetti aggiuntivi non verrà creati dal metodo di accesso del processo di migrazione iniziale.
-    È possibile modificare l'alto e verso il basso i metodi che si occupi di questi oggetti aggiuntivi se si desidera. Per gli oggetti che non sono supportati in modo nativo nell'API di migrazioni – ad esempio viste, è possibile usare la [Sql](https://msdn.microsoft.com/library/system.data.entity.migrations.dbmigration.sql.aspx) metodo per l'esecuzione SQL non elaborate per creare/eliminare li.
+-   Indipendentemente dall'opzione scelta nel passaggio 3, se le modifiche future apportate al modello richiedono la modifica o l'eliminazione di queste migrazioni di oggetti aggiuntivi non sapranno apportare tali modifiche. Se, ad esempio, si rilascia una colonna con un indice aggiuntivo, le migrazioni non noteranno di eliminare l'indice. Sarà necessario aggiungerlo manualmente alla migrazione con impalcature.
+-   Se è stato usato "opzione due: Utilizzare un database vuoto come punto di partenza. questi oggetti aggiuntivi non verranno creati dal metodo up della migrazione iniziale.
+    Se lo si desidera, è possibile modificare i metodi up e down per gestire questi oggetti aggiuntivi. Per gli oggetti che non sono supportati in modo nativo nell'API Migrations, ad esempio views, è possibile usare il metodo [SQL](https://msdn.microsoft.com/library/system.data.entity.migrations.dbmigration.sql.aspx) per eseguire SQL non elaborato per crearli o eliminarli.

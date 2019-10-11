@@ -3,17 +3,17 @@ title: Entità con rilevamento automatico - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
-ms.openlocfilehash: b098736ef47e79c916f4bf054716022d5032eee5
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: 3bb9759d89fbd0c10b911625aa7d0afd7747de14
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283810"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181720"
 ---
 # <a name="self-tracking-entities"></a>Entità con rilevamento automatico
 
 > [!IMPORTANT]
-> Non è più consigliabile usare il modello di entità con rilevamento automatico. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> Non è più consigliabile usare il modello di entità con rilevamento automatico. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
 In un'applicazione basata su Entity Framework il rilevamento delle modifiche negli oggetti viene controllato da un contesto. Viene quindi usato il metodo SaveChanges per rendere permanenti le modifiche al database. Quando si usano le applicazioni a più livelli, gli oggetti entità vengono in genere disconnessi dal contesto ed è necessario decidere come tenere traccia delle modifiche e segnalarle al contesto. Le entità con rilevamento automatico consentono di tenere traccia delle modifiche in qualsiasi livello e di riprodurle quindi in un contesto per essere salvate.  
 
@@ -30,7 +30,7 @@ Per iniziare, visitare la pagina [Self-Tracking Entities Walkthrough](walkthroug
 
 ## <a name="functional-considerations-when-working-with-self-tracking-entities"></a>Considerazioni funzionali per l'uso delle entità con rilevamento automatico  
 > [!IMPORTANT]
-> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
 Quando si utilizzano le entità con rilevamento automatico, tenere presenti le considerazioni seguenti.  
 

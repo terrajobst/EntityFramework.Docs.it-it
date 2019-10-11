@@ -1,63 +1,63 @@
 ---
-title: Procedura dettagliata entità - Entity Framework 6 con rilevamento automatico
+title: Procedure dettagliate per le entità con rilevamento automatico-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
-ms.openlocfilehash: d89c452410d34bea71e8220aae141c3bfca3e1ce
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 9bd644461f50a7eff1006cb8866ca9a3b08b6b8d
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490274"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181708"
 ---
-# <a name="self-tracking-entities-walkthrough"></a>Procedura dettagliata rilevamento automatico di entità
+# <a name="self-tracking-entities-walkthrough"></a>Procedura dettagliata sulle entità con rilevamento automatico
 > [!IMPORTANT]
-> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
-Questa procedura dettagliata illustra lo scenario in cui un servizio Windows Communication Foundation (WCF) espone un'operazione che restituisce un grafico di entità. Successivamente, un'applicazione client modifica il grafico e inoltra le modifiche a un'operazione del servizio che convalida e Salva gli aggiornamenti a un database tramite Entity Framework.
+In questa procedura dettagliata viene illustrato lo scenario in cui un servizio Windows Communication Foundation (WCF) espone un'operazione che restituisce un grafico di entità. Successivamente, un'applicazione client modifica il grafico e invia le modifiche a un'operazione del servizio che convalida e salva gli aggiornamenti in un database utilizzando Entity Framework.
 
-Prima di completare questa procedura dettagliata assicurarsi di leggere il [entità con rilevamento automatico](index.md) pagina.
+Prima di completare questa procedura dettagliata, assicurarsi di leggere la pagina [entità con rilevamento automatico](index.md) .
 
 In questa procedura dettagliata verranno completate le seguenti azioni:
 
 -   Crea un database a cui accedere.
 -   Crea una libreria di classi che contiene il modello.
--   Scambi al modello generatore di entità con rilevamento automatico.
+-   Scambia il modello generatore di entità con rilevamento automatico.
 -   Sposta le classi di entità in un progetto separato.
--   Crea un servizio WCF che espone operazioni per eseguire query e salvare le entità.
--   Crea applicazioni (Console e WPF) che utilizzano il servizio client.
+-   Crea un servizio WCF che espone operazioni per eseguire query e salvare entità.
+-   Crea applicazioni client (console e WPF) che utilizzano il servizio.
 
-Useremo Database First in questa procedura dettagliata, ma le stesse tecniche sono ugualmente applicabili a Model First.
+In questa procedura dettagliata verranno usati Database First, ma le stesse tecniche si applicano ugualmente ai Model First.
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
-Per completare questa procedura dettagliata è necessario utilizzare una versione recente di Visual Studio.
+Per completare questa procedura dettagliata, sarà necessaria una versione recente di Visual Studio.
 
-## <a name="create-a-database"></a>Creare un Database
+## <a name="create-a-database"></a>Creare un database
 
-Il server di database che viene installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:
+Il server di database installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:
 
--   Se si usa Visual Studio 2012, quindi si creerà un database LocalDB.
--   Se si usa Visual Studio 2010 si creerà un database SQL Express.
+-   Se si usa Visual Studio 2012, si creerà un database del database locale.
+-   Se si usa Visual Studio 2010 verrà creato un database di SQL Express.
 
-È possibile procedere e generare il database.
+Procediamo con la generazione del database.
 
 -   Aprire Visual Studio
--   **Visualizzazione -&gt; Esplora Server**
--   Fare clic con il pulsante destro sul **connessioni dati -&gt; Aggiungi connessione...**
--   Se si è ancora connessi a un database da Esplora Server prima che è necessario selezionare **Microsoft SQL Server** come origine dati
--   Connettersi a LocalDB o SQL Express, in base alla quale è stato installato
+-   **Visualizzazione-&gt; Esplora server**
+-   Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**
+-   Se non si è connessi a un database da Esplora server prima di selezionare **Microsoft SQL Server** come origine dati
+-   Connettersi a un database locale o a SQL Express, a seconda di quale installato
 -   Immettere **STESample** come nome del database
--   Selezionare **OK** e verrà richiesto se si desidera creare un nuovo database, selezionare **Sì**
--   Il nuovo database verrà ora visualizzato in Esplora Server
+-   Selezionare **OK** . verrà richiesto se si desidera creare un nuovo database, selezionare **Sì** .
+-   Il nuovo database verrà ora visualizzato in Esplora server
 -   Se si usa Visual Studio 2012
-    -   Fare doppio clic sul database in Esplora Server e selezionare **nuova Query**
-    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**
+    -   Fare clic con il pulsante destro del mouse sul database in Esplora server e selezionare **nuova query** .
+    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .
 -   Se si usa Visual Studio 2010
-    -   Selezionare **- Data&gt; Transact SQL Editor -&gt; nuova connessione Query...**
-    -   Immettere **.\\ SQLEXPRESS** come nome del server e fare clic su **OK**
-    -   Selezionare il **STESample** database dall'elenco a discesa nella parte superiore dell'editor di query
-    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Esegui SQL**
+    -   Selezionare **Data-&gt; Editor Transact SQL-&gt; nuova connessione query...**
+    -   Immettere **. \\SQLEXPRESS** come nome del server e fare clic su **OK** .
+    -   Selezionare il database **STESample** dall'elenco a discesa nella parte superiore dell'editor di query
+    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui SQL**
 
 ``` SQL
     CREATE TABLE [dbo].[Blogs] (
@@ -85,99 +85,99 @@ Il server di database che viene installato con Visual Studio è diverso a second
 
 ## <a name="create-the-model"></a>Creare il modello
 
-Innanzitutto, è necessario inserire il modello in un progetto.
+Per prima cosa, abbiamo bisogno di un progetto in cui inserire il modello.
 
--   **File -&gt; New -&gt; progetto...**
--   Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **libreria di classi**
--   Immettere **STESample** come nome, quindi fare clic su **OK**
+-   **Progetto New-&gt; del file-...**
+-   Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **libreria di classi**
+-   Immettere **STESample** come nome e fare clic su **OK** .
 
-A questo punto si creerà un modello semplice nella finestra di progettazione di Entity Framework per accedere ai database:
+Verrà ora creato un modello semplice in EF designer per accedere al database:
 
--   **Progetto -&gt; Aggiungi nuovo elemento...**
--   Selezionare **Data** nel riquadro a sinistra e quindi **ADO.NET Entity Data Model**
--   Immettere **BloggingModel** come nome, quindi fare clic su **OK**
--   Selezionare **genera da database** e fare clic su **successivo**
+-   **Progetto-&gt; Aggiungi nuovo elemento...**
+-   Selezionare i **dati** nel riquadro a sinistra e quindi **ADO.NET Entity Data Model**
+-   Immettere **BloggingModel** come nome e fare clic su **OK** .
+-   Selezionare **genera da database** e fare clic su **Avanti** .
 -   Immettere le informazioni di connessione per il database creato nella sezione precedente
--   Immettere **BloggingContext** come nome per la stringa di connessione e fare clic su **successivo**
--   Selezionare la casella accanto a **tabelle** e fare clic su **fine**
+-   Immettere **BloggingContext** come nome della stringa di connessione e fare clic su **Next (avanti** ).
+-   Selezionare la casella accanto a **tabelle** e fare clic su **fine** .
 
-## <a name="swap-to-ste-code-generation"></a>Scambio per la generazione di codice STE
+## <a name="swap-to-ste-code-generation"></a>Scambia alla generazione del codice STE
 
-A questo punto è necessario disabilitare la generazione di codice predefinita e lo scambio di entità con rilevamento automatico.
+A questo punto è necessario disabilitare la generazione di codice predefinita e scambiare le entità con rilevamento automatico.
 
 ### <a name="if-you-are-using-visual-studio-2012"></a>Se si usa Visual Studio 2012
 
--   Espandere **BloggingModel.edmx** nelle **Esplora soluzioni** ed eliminare i **BloggingModel.tt** e **BloggingModel.Context.tt** 
-     *Verrà disabilitata la generazione di codice predefinita*
--   Fare doppio clic su un'area vuota di Entity Framework Designer e selezionare **Aggiungi elemento di generazione di codice...**
--   Selezionare **Online** dal riquadro a sinistra e cercare **STE Generator**
--   Selezionare il **generatore di Incolla per C\#**  modello, immettere **STETemplate** come nome, quindi fare clic su **Add**
--   Il **STETemplate.tt** e **STETemplate.Context.tt** vengono aggiunti file annidati sotto il file BloggingModel.edmx
+-   Espandere **BloggingModel. edmx** in **Esplora soluzioni** ed eliminare **BloggingModel.TT** e **BloggingModel.Context.TT**
+    *questa operazione Disabilita la generazione di codice predefinita* .
+-   Fare clic con il pulsante destro del mouse su un'area vuota nell'area di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**
+-   Selezionare **online** dal riquadro a sinistra e cercare il **Generatore di ste**
+-   Selezionare il modello **Ste Generator per C @ no__t-1** , immettere **STETemplate** come nome e fare clic su **Aggiungi** .
+-   I file **STETemplate.TT** e **STETemplate.Context.TT** vengono aggiunti annidati nel file BloggingModel. edmx
 
 ### <a name="if-you-are-using-visual-studio-2010"></a>Se si usa Visual Studio 2010
 
--   Fare doppio clic su un'area vuota di Entity Framework Designer e selezionare **Aggiungi elemento di generazione di codice...**
--   Selezionare **codice** nel riquadro a sinistra e quindi **ADO.NET self-Tracking Entity Generator**
--   Immettere **STETemplate** come nome, quindi fare clic su **Add**
--   Il **STETemplate.tt** e **STETemplate.Context.tt** file vengono aggiunti direttamente al progetto
+-   Fare clic con il pulsante destro del mouse su un'area vuota nell'area di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**
+-   Selezionare il **codice** nel riquadro a sinistra e quindi **ADO.NET generatore di entità con rilevamento automatico**
+-   Immettere **STETemplate** come nome e fare clic su **Aggiungi**
+-   I file **STETemplate.TT** e **STETemplate.Context.TT** vengono aggiunti direttamente al progetto
 
-## <a name="move-entity-types-into-separate-project"></a>Spostare i tipi di entità nel progetto separato
+## <a name="move-entity-types-into-separate-project"></a>Spostare i tipi di entità in un progetto separato
 
-Per usare le entità con rilevamento automatico l'applicazione client deve accedere alle classi di entità generato dal modello. Poiché non si desidera esporre l'intero modello per l'applicazione client si userà per spostare le classi di entità in un progetto separato.
+Per usare le entità con rilevamento automatico, l'applicazione client deve accedere alle classi di entità generate dal modello. Poiché non si vuole esporre l'intero modello all'applicazione client, le classi di entità verranno spostate in un progetto distinto.
 
-Il primo passaggio consiste arrestano la generazione di classi di entità nel progetto esistente:
+Il primo passaggio consiste nell'arrestare la generazione delle classi di entità nel progetto esistente:
 
--   Fare clic su **STETemplate.tt** nelle **Esplora soluzioni** e selezionare **proprietà**
--   Nel **delle proprietà** finestra chiaro **TextTemplatingFileGenerator** dal **CustomTool** proprietà
--   Espandere **STETemplate.tt** nelle **Esplora soluzioni** ed eliminare tutti i file annidati
+-   Fare clic con il pulsante destro del mouse su **STETemplate.TT** in **Esplora soluzioni** e scegliere **proprietà** .
+-   Nella finestra **Proprietà** deselezionare **TextTemplatingFileGenerator** dalla proprietà **CustomTool**
+-   Espandere **STETemplate.TT** in **Esplora soluzioni** ed eliminare tutti i file annidati sotto di esso
 
-Successivamente, si userà per aggiungere un nuovo progetto e generare le classi di entità in esso
+Successivamente, verrà aggiunto un nuovo progetto e verranno generate le classi di entità
 
--   **File -&gt; Add -&gt; progetto...**
--   Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **libreria di classi**
--   Immettere **STESample.Entities** come nome, quindi fare clic su **OK**
--   **Progetto -&gt; Aggiungi elemento esistente...**
--   Passare il **STESample** cartella del progetto
--   Selezionare questa opzione per visualizzare **tutti i file (\*.\*)**
--   Selezionare il **STETemplate.tt** file
--   Fare clic sulla freccia a discesa accanto al **Add** e selezionare **Aggiungi come collegamento**
+-   **File-&gt; progetto Add-&gt;...**
+-   Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **libreria di classi**
+-   Immettere **STESample. Entities** come nome e fare clic su **OK** .
+-   **Progetto-&gt; Aggiungi elemento esistente...**
+-   Passare alla cartella del progetto **STESample**
+-   Selezionare per visualizzare **tutti i file (\*. \*)**
+-   Selezionare il file **STETemplate.TT**
+-   Fare clic sulla freccia a discesa accanto al pulsante **Aggiungi** e selezionare **Aggiungi come collegamento** .
 
-    ![Aggiungere modello collegato](~/ef6/media/addlinkedtemplate.png)
+    ![Aggiungi modello collegato](~/ef6/media/addlinkedtemplate.png)
 
-Eseguiremo, inoltre, per assicurarsi che le classi di entità vengono generate nella directory lo stesso spazio dei nomi come contesto. Solo questo riduce il numero dell'utilizzo delle istruzioni che è necessario aggiungere in tutta la nostra applicazione.
+Si verifica inoltre che le classi di entità vengano generate nello stesso spazio dei nomi del contesto. In questo modo si riduce il numero di istruzioni using che è necessario aggiungere all'interno dell'applicazione.
 
--   Fare clic su collegato **STETemplate.tt** nelle **Esplora soluzioni** e selezionare **proprietà**
--   Nel **delle proprietà** finestra set **Custom Tool Namespace** a **STESample**
+-   Fare clic con il pulsante destro del mouse sul **STETemplate.TT** collegato in **Esplora soluzioni** e selezionare **proprietà** .
+-   Nella finestra **Proprietà** impostare lo **spazio dei nomi dello strumento personalizzato** su **STESample**
 
-Il codice generato dal modello di STE sarà necessario un riferimento a **Serialization** per compilare. Questa libreria è necessaria per WCF **DataContract** e **DataMember** gli attributi utilizzati sui tipi di entità serializzabili.
+Per la compilazione del codice generato dal modello STE è necessario un riferimento a **System. Runtime. Serialization** . Questa libreria è necessaria per gli attributi **DataContract** e **DataMember** WCF utilizzati sui tipi di entità serializzabili.
 
--   Fare clic con il pulsante destro sul **STESample.Entities** del progetto **Esplora soluzioni** e selezionare **Aggiungi riferimento...**
-    -   In Visual Studio 2012 - selezionare la casella accanto a **Serialization** e fare clic su **OK**
-    -   In Visual Studio 2010 - selezionare **Serialization** e fare clic su **OK**
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample. Entities** in **Esplora soluzioni** e scegliere **Aggiungi riferimento.**
+    -   In Visual Studio 2012-selezionare la casella accanto a **System. Runtime. Serialization** e fare clic su **OK** .
+    -   In Visual Studio 2010 selezionare **System. Runtime. Serialization** e fare clic su **OK** .
 
-Infine, il progetto con il contesto in esso sarà necessario un riferimento ai tipi di entità.
+Infine, il progetto con il contesto in esso contenuto sarà necessario un riferimento ai tipi di entità.
 
--   Fare clic con il pulsante destro sul **STESample** del progetto **Esplora soluzioni** e selezionare **Aggiungi riferimento...**
-    -   In Visual Studio 2012 - selezionare **soluzione** nel riquadro sinistro, selezionare la casella accanto a **STESample.Entities** e fare clic su **OK**
-    -   In Visual Studio 2010 - selezionare il **progetti** scheda, seleziona **STESample.Entities** e fare clic su **OK**
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample** in **Esplora soluzioni** e scegliere **Aggiungi riferimento.**
+    -   In Visual Studio 2012 selezionare **soluzione** nel riquadro a sinistra, selezionare la casella accanto a **STESample. Entities** e fare clic su **OK** .
+    -   In Visual Studio 2010 selezionare la scheda **progetti** , selezionare **STESample. Entities** , quindi fare clic su **OK** .
 
 >[!NOTE]
-> Un'altra opzione per spostare i tipi di entità in un progetto separato consiste nello spostare il file di modello, anziché il relativo collegamento dalla posizione predefinita. In questo caso, è necessario aggiornare il **inputFile** variabili nel modello per fornire il percorso relativo al file con estensione edmx (in questo esempio che sarà **.. \\BloggingModel.edmx**).
+> Un'altra opzione per spostare i tipi di entità in un progetto separato consiste nello spostare il file modello, anziché collegarlo dal percorso predefinito. In tal caso, sarà necessario aggiornare la variabile **inputfile** nel modello per fornire il percorso relativo del file edmx, in questo esempio **.. \\BloggingModel. edmx**).
 
-## <a name="create-a-wcf-service"></a>Creare un servizio WCF
+## <a name="create-a-wcf-service"></a>Creazione di un servizio WCF
 
-A questo punto è possibile aggiungere un servizio WCF di esporre i dati, si inizierà creando il progetto.
+A questo punto è possibile aggiungere un servizio WCF per esporre i dati. si inizierà creando il progetto.
 
--   **File -&gt; Add -&gt; progetto...**
--   Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione del servizio WCF**
--   Immettere **STESample.Service** come nome, quindi fare clic su **OK**
--   Aggiungere un riferimento per la **Data. Entity** assembly
--   Aggiungere un riferimento per la **STESample** e **STESample.Entities** progetti
+-   **File-&gt; progetto Add-&gt;...**
+-   Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione di servizio WCF**
+-   Immettere **STESample. Service** come nome e fare clic su **OK** .
+-   Aggiungere un riferimento all'assembly **System. Data. Entity**
+-   Aggiungere un riferimento ai progetti **STESample** e **STESample. Entities**
 
-È necessario copiare la stringa di connessione Entity Framework per questo progetto in modo che si trova in fase di esecuzione.
+È necessario copiare la stringa di connessione EF in questo progetto in modo che venga individuata in fase di esecuzione.
 
--   Aprire il **app. config** del file per la * * STESample * * progetto e copiare la **connectionStrings** elemento
--   Incollare il **connectionStrings** come elemento figlio dell'elemento il **configuration** elemento del **Web. config** del file nel **STESample.Service** progetto
+-   Aprire il file **app. config** per il progetto **STESample **e copiare l'elemento **connectionStrings**
+-   Incollare l'elemento **connectionStrings** come elemento figlio dell'elemento **Configuration** del file **Web. config** nel progetto **STESample. Service**
 
 A questo punto è possibile implementare il servizio effettivo.
 
@@ -201,7 +201,7 @@ A questo punto è possibile implementare il servizio effettivo.
     }
 ```
 
--   Aprire **Service1.svc** e sostituire il contenuto con il codice seguente
+-   Aprire **Service1. svc** e sostituire il contenuto con il codice seguente
 
 ``` csharp
     using System;
@@ -254,22 +254,22 @@ A questo punto è possibile implementare il servizio effettivo.
     }
 ```
 
-## <a name="consume-the-service-from-a-console-application"></a>Uso del servizio da un'applicazione Console
+## <a name="consume-the-service-from-a-console-application"></a>Utilizzare il servizio da un'applicazione console
 
-Creare un'applicazione console che usa il nostro servizio.
+Viene ora creata un'applicazione console che usa il servizio.
 
--   **File -&gt; New -&gt; progetto...**
--   Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione Console**
--   Immettere **STESample.ConsoleTest** come nome, quindi fare clic su **OK**
--   Aggiungere un riferimento per la **STESample.Entities** progetto
+-   **Progetto New-&gt; del file-...**
+-   Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione console**
+-   Immettere **STESample. ConsoleTest** come nome e fare clic su **OK** .
+-   Aggiungere un riferimento al progetto **STESample. Entities**
 
-È necessario un riferimento al nostro servizio WCF
+È necessario un riferimento al servizio WCF
 
--   Fare doppio clic sui **STESample.ConsoleTest** del progetto nelle **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**
--   Fare clic su **individuare**
--   Immettere **BloggingService** come spazio dei nomi e fare clic su **OK**
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample. ConsoleTest** in **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**
+-   Fare clic su **individua**
+-   Immettere **BloggingService** come spazio dei nomi e fare clic su **OK** .
 
-Sarà quindi possibile scrivere codice per utilizzare il servizio.
+A questo punto è possibile scrivere codice per utilizzare il servizio.
 
 -   Aprire **Program.cs** e sostituire il contenuto con il codice seguente.
 
@@ -400,11 +400,11 @@ Sarà quindi possibile scrivere codice per utilizzare il servizio.
 
 È ora possibile eseguire l'applicazione per vederla in azione.
 
--   Fare doppio clic sui **STESample.ConsoleTest** del progetto nelle **Esplora soluzioni** e selezionare **Debug -&gt; Avvia nuova istanza**
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample. ConsoleTest** in **Esplora soluzioni** e selezionare **debug-&gt; Avvia nuova istanza**
 
-Si noterà l'output seguente quando viene eseguita l'applicazione.
+Quando l'applicazione viene eseguita, verrà visualizzato il seguente output.
 
-```
+```console
 Initial Data:
 ADO.NET Blog
 - Intro to EF
@@ -434,22 +434,22 @@ ADO.NET Blog
 Press any key to exit...
 ```
 
-## <a name="consume-the-service-from-a-wpf-application"></a>Uso del servizio da un'applicazione WPF
+## <a name="consume-the-service-from-a-wpf-application"></a>Utilizzare il servizio da un'applicazione WPF
 
-Creare un'applicazione WPF che usa il nostro servizio.
+Viene ora creata un'applicazione WPF che usa il servizio.
 
--   **File -&gt; New -&gt; progetto...**
--   Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione WPF**
--   Immettere **STESample.WPFTest** come nome, quindi fare clic su **OK**
--   Aggiungere un riferimento per la **STESample.Entities** progetto
+-   **Progetto New-&gt; del file-...**
+-   Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione WPF**
+-   Immettere **STESample. WPFTest** come nome e fare clic su **OK** .
+-   Aggiungere un riferimento al progetto **STESample. Entities**
 
-È necessario un riferimento al nostro servizio WCF
+È necessario un riferimento al servizio WCF
 
--   Fare doppio clic sui **STESample.WPFTest** del progetto nelle **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**
--   Fare clic su **individuare**
--   Immettere **BloggingService** come spazio dei nomi e fare clic su **OK**
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample. WPFTest** in **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**
+-   Fare clic su **individua**
+-   Immettere **BloggingService** come spazio dei nomi e fare clic su **OK** .
 
-Sarà quindi possibile scrivere codice per utilizzare il servizio.
+A questo punto è possibile scrivere codice per utilizzare il servizio.
 
 -   Aprire **MainWindow. XAML** e sostituire il contenuto con il codice seguente.
 
@@ -495,7 +495,7 @@ Sarà quindi possibile scrivere codice per utilizzare il servizio.
     </Window>
 ```
 
--   Aprire il code-behind per MainWindow (**MainWindow.xaml.cs**) e sostituire il contenuto con il codice seguente
+-   Aprire il code-behind per MainWindow (**MainWindow.XAML.cs**) e sostituire il contenuto con il codice seguente.
 
 ``` csharp
     using STESample.WPFTest.BloggingService;
@@ -549,7 +549,7 @@ Sarà quindi possibile scrivere codice per utilizzare il servizio.
 
 È ora possibile eseguire l'applicazione per vederla in azione.
 
--   Fare doppio clic sui **STESample.WPFTest** del progetto nelle **Esplora soluzioni** e selezionare **Debug -&gt; Avvia nuova istanza**
--   È possibile modificare i dati utilizzando la schermata e salvare il file tramite il servizio utilizzando il **salvare** pulsante
+-   Fare clic con il pulsante destro del mouse sul progetto **STESample. WPFTest** in **Esplora soluzioni** e selezionare **debug-&gt; Avvia nuova istanza**
+-   È possibile modificare i dati usando la schermata e salvarli tramite il servizio usando il pulsante **Salva**
 
-![Finestra principale di WPF](~/ef6/media/wpf.png)
+![Finestra principale WPF](~/ef6/media/wpf.png)

@@ -3,12 +3,12 @@ title: Provider di Entity Framework - EF6
 author: divega
 ms.date: 06/27/2018
 ms.assetid: 7BFB7763-CD6C-4520-93A2-7B265F5FA586
-ms.openlocfilehash: f6e34d1273bd1004ce9d1610ce3613068088eb5e
-ms.sourcegitcommit: 159c2e9afed7745e7512730ffffaf154bcf2ff4a
+ms.openlocfilehash: bf07296503e4bb5d1e13f5f6f29e7118cbbde61d
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 02/03/2019
-ms.locfileid: "55668739"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181681"
 ---
 # <a name="entity-framework-6-providers"></a>Provider di Entity Framework 6
 > [!NOTE]
@@ -21,15 +21,15 @@ Entity Framework viene ora sviluppato in base a una licenza open source e EF6 e 
 In base alle informazioni attuali, i provider ricompilati per EF6 includono:
 
 *   **Provider Microsoft SQL Server**
-    *   Compilato dalla [codebase open source di Entity Framework](http://github.com/aspnet/EntityFramework6)
-    *   Incluso nel [pacchetto NuGet EntityFramework](http://nuget.org/packages/EntityFramework)
+    *   Compilato dalla [codebase open source di Entity Framework](https://github.com/aspnet/EntityFramework6)
+    *   Incluso nel [pacchetto NuGet EntityFramework](https://nuget.org/packages/EntityFramework)
 *   **Provider Microsoft SQL Server Compact Edition**
-    *   Compilato dalla [codebase open source di Entity Framework](http://github.com/aspnet/EntityFramework6)
-    *   Incluso nel [pacchetto NuGet EntityFramework.SqlServerCompact](http://nuget.org/packages/EntityFramework.SqlServerCompact)
-*   [**Provider di dati Devart dotConnect**](http://www.devart.com/dotconnect/)
-    *   Sono disponibili provider di terze parti di [Devart](http://www.devart.com/) per un'ampia gamma di database tra cui Oracle, MySQL, PostgreSQL, SQLite, Salesforce, DB2 e SQL Server
-*   [**Provider CData Software**](http://www.cdata.com/ado/)
-    *   Sono disponibili provider di terze parti di [CData Software](http://www.cdata.com/ado/) per un'ampia gamma di archivi dati tra cui Salesforce, Archiviazione tabelle di Azure, MySql e molti altri
+    *   Compilato dalla [codebase open source di Entity Framework](https://github.com/aspnet/EntityFramework6)
+    *   Incluso nel [pacchetto NuGet EntityFramework.SqlServerCompact](https://nuget.org/packages/EntityFramework.SqlServerCompact)
+*   [**Provider di dati Devart dotConnect**](https://www.devart.com/dotconnect/)
+    *   Sono disponibili provider di terze parti di [Devart](https://www.devart.com/) per un'ampia gamma di database tra cui Oracle, MySQL, PostgreSQL, SQLite, Salesforce, DB2 e SQL Server
+*   [**Provider CData Software**](https://www.cdata.com/ado/)
+    *   Sono disponibili provider di terze parti di [CData Software](https://www.cdata.com/ado/) per un'ampia gamma di archivi dati tra cui Salesforce, Archiviazione tabelle di Azure, MySql e molti altri
 *   **Provider Firebird**
     *   Disponibile come [pacchetto NuGet](https://www.nuget.org/packages/EntityFramework.Firebird/)
 *   **Provider Visual Fox Pro**
@@ -68,7 +68,7 @@ Il "tipo" in questa registrazione è il nome qualificato dall'assembly del tipo 
 
 ### <a name="code-based-registration"></a>Registrazione basata su codice
 
-A partire da Entity Framework 6, la configurazione a livello di applicazione per Entity Framework può essere specificata nel codice. Per i dettagli completi, vedere _[Entity Framework - configurazione basata su codice](https://msdn.microsoft.com/data/jj680699)_. La normale modalità di registrazione di un provider di Entity Framework tramite la configurazione basata su codice consiste nel creare una nuova classe che deriva da System.Data.Entity.DbConfiguration e inserirla nello stesso assembly della classe DbContext. La classe DbConfiguration registrerà quindi il provider nel proprio costruttore. Ad esempio, per la registrazione del provider SQL Compact, la classe DbConfiguration ha questo aspetto:
+A partire da Entity Framework 6, la configurazione a livello di applicazione per Entity Framework può essere specificata nel codice. Per i dettagli completi, vedere _[Entity Framework - configurazione basata su codice](https://msdn.microsoft.com/data/jj680699)_ . La normale modalità di registrazione di un provider di Entity Framework tramite la configurazione basata su codice consiste nel creare una nuova classe che deriva da System.Data.Entity.DbConfiguration e inserirla nello stesso assembly della classe DbContext. La classe DbConfiguration registrerà quindi il provider nel proprio costruttore. Ad esempio, per la registrazione del provider SQL Compact, la classe DbConfiguration ha questo aspetto:
 
 ``` csharp
     public class MyConfiguration : DbConfiguration

@@ -3,20 +3,20 @@ title: Creazione di un modello - EF6
 author: divega
 ms.date: 07/05/2018
 ms.assetid: 4890228E-CEA1-4595-B8AD-CA81253F8767
-ms.openlocfilehash: c02cdf0550116b703fb6436f8b0c6b064b5d1408
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: bd9843a93121f53518a307c9d2d43b68ae03369c
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283576"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182468"
 ---
 # <a name="creating-a-model"></a>Creazione di un modello
 
 Un modello EF archivia i dettagli relativi al mapping delle classi e delle proprietà delle applicazioni alle tabelle e alle colonne di database. Per creare un modello EF, esistono principalmente due metodi:
 
-- **Tramite Code First**: lo sviluppatore per definisce il modello scrivendo codice. EF genera i modelli e i mapping in fase di runtime in base alle classi di entità e a una configurazione di modelli aggiuntiva specificata dallo sviluppatore.
+- **Uso di Code First**: lo sviluppatore scrive il codice per specificare il modello. EF genera i modelli e i mapping in fase di runtime in base alle classi di entità e a una configurazione di modelli aggiuntiva specificata dallo sviluppatore.
 
-- **Tramite EF Designer**: lo sviluppatore definisce il modello disegnando caselle e linee in EF Designer. Il modello risultante viene archiviato in formato XML in un file con estensione EDMX. Gli oggetti del dominio dell'applicazione vengono in genere generati automaticamente partendo dal modello concettuale.
+- **Uso di Entity Framework Designer**: lo sviluppatore definisce il modello disegnando caselle e linee in EF Designer. Il modello risultante viene archiviato in formato XML in un file con estensione EDMX. Gli oggetti del dominio dell'applicazione vengono in genere generati automaticamente partendo dal modello concettuale.
 
 ## <a name="ef-workflows"></a>Flussi di lavoro di EF
 
@@ -32,7 +32,7 @@ Per definire la destinazione di un database esistente o creare un nuovo database
 
 Questo breve video illustra le differenze tra i flussi di lavoro e spiega come individuare quello più adatto alla proprie esigenze.
 
-**Presentato da**: [Rowan Miller](http://romiller.com/)
+**Presentato da**: [Rowan Miller](https://romiller.com/)
 
 ![Thumb Quale flusso di lavoro](../media/whichworkflow-thumb.png) [WMV](https://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_winvideo_ChoseYourWorkflow.wmv) | [MP4](https://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_mp4video_ChoseYourWorkflow.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/8/8F81F4CD-3678-4229-8D79-0C63FFA3C595/HDI_ITPro_Technet_winvideo_ChoseYourWorkflow.zip)
 

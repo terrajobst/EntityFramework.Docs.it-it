@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking
-ms.openlocfilehash: d93be5c2b727d8fbaddd103f8f367c699ae80a7c
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: 588dee012039ce5ecc83f0ecf263a4ea6ca38c29
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921648"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181981"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>Query con rilevamento delle modifiche e senza rilevamento delle modifiche
 
@@ -63,7 +63,7 @@ using (var context = new BloggingContext())
 ```
 
 > [!NOTE]  
-> Le query senza rilevamento delle modifiche eseguono comunque la risoluzione dell'identità all'interno della query in esecuzione. Se il set di risultati contiene la stessa entità più volte, verrà restituita la stessa istanza della classe di entità per ogni occorrenza nel set di risultati. Vengono tuttavia usati riferimenti deboli per tenere traccia delle entità già restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità. Per altre informazioni, vedere [Funzionamento delle query](overview.md).
+> Le query senza rilevamento delle modifiche eseguono comunque la risoluzione dell'identità all'interno della query in esecuzione. Se il set di risultati contiene la stessa entità più volte, verrà restituita la stessa istanza della classe di entità per ogni occorrenza nel set di risultati. Vengono tuttavia usati riferimenti deboli per tenere traccia delle entità già restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità. Per altre informazioni, vedere [Funzionamento delle query](xref:core/querying/how-query-works).
 
 ## <a name="tracking-and-projections"></a>Rilevamento delle modifiche e proiezioni
 

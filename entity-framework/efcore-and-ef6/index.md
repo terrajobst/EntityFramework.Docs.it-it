@@ -1,16 +1,16 @@
 ---
-title: Confrontare Entity Framework 6 ed Entity Framework Core
+title: Confrontare Entity Framework 6 ed Entity Framework Core - EF
 description: Offre istruzioni per poter scegliere tra Entity Framework 6 ed Entity Framework Core.
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
-ms.openlocfilehash: 3d2f72e64e6846d2d8bb6d4d507e04090287114d
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 9fe4905de5bd81fce083d620724b7fad4c6dd11b
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71198016"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182033"
 ---
 # <a name="compare-ef-core--ef6"></a>Confronto tra EF Core e EF6
 

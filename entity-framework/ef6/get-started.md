@@ -3,12 +3,12 @@ title: Introduzione a Entity Framework 6 - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
-ms.openlocfilehash: c25bf16bd2c39530d54b286b7743ceb83c941e4d
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
-ms.translationtype: HT
+ms.openlocfilehash: bf54879ea94e597dfeac3e4bd70571dad290dd9e
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489290"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181403"
 ---
 # <a name="get-started-with-entity-framework-6"></a>Introduzione a Entity Framework 6
 
@@ -20,11 +20,11 @@ Questa guida contiene una raccolta di collegamenti ad articoli della documentazi
 
   Viene descritto come aggiungere Entity Framework alle applicazioni e, se si vuole usare EF Designer, assicurarsi che venga installato in Visual Studio.
 
-* [Creazione di un modello: flussi di lavoro di Code First, EF Designer ed EF](~/ef6/modeling/index.md)
+* @no__t 0Creating un modello: Code First, progettazione EF e i flussi di lavoro EF @ no__t-0
 
   Si preferisce specificare il modello EF scrivendo codice o tracciando caselle e linee?
 Si userà EF per mappare gli oggetti in un database esistente o si vuole che EF crei un database specifico per gli oggetti?
-Di seguito sono descritti due approcci diversi per usare EF6: EF Designer e Code First.
+Ecco le informazioni su due approcci diversi per l'uso di EF6: EF designer e Code First.
 Seguire la discussione e guardare il video che illustra le differenze.
 
 * [Utilizzo di DbContext](~/ef6/fundamentals/working-with-dbcontext.md)
@@ -35,7 +35,7 @@ Seguire la discussione e guardare il video che illustra le differenze.
 
   È possibile ricevere assistenza dagli esperti e contribuire con le proprie risposte alla community.
 
-* [Collaborare](http://github.com/aspnet/EntityFramework6/)
+* [Collaborare](https://github.com/aspnet/EntityFramework6/)
 
   Entity Framework 6 usa un modello di sviluppo aperto. Nel repository GitHub sono disponibili informazioni su come migliorare ulteriormente Entity Framework.
 

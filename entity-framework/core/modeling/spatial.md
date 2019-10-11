@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: 026df735473e31f1c1463c1fbc6f46c4fd6dfd4f
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.openlocfilehash: cced53edadb890e4e86753ec2628218ffc4d1d5b
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921727"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181387"
 ---
 # <a name="spatial-data"></a>Dati spaziali
 
@@ -32,7 +32,7 @@ Npgsql.EntityFrameworkCore.PostgreSQL   | [Npgsql. EntityFrameworkCore. PostgreS
 
 ## <a name="reverse-engineering"></a>Reverse Engineering
 
-I pacchetti NuGet spaziali abilitano anche [Reverse Engineering](../managing-schemas/scaffolding.md) modelli con proprietà spaziali, ma è necessario installare il pacchetto ***prima*** di `Scaffold-DbContext` eseguire `dotnet ef dbcontext scaffold`o. In caso contrario, si riceveranno avvisi relativi alla mancata individuazione dei mapping dei tipi per le colonne e le colonne verranno ignorate.
+I pacchetti NuGet spaziali abilitano anche [Reverse Engineering](../managing-schemas/scaffolding.md) modelli con proprietà spaziali, ma è necessario installare il pacchetto ***prima*** di eseguire `Scaffold-DbContext` o `dotnet ef dbcontext scaffold`. In caso contrario, si riceveranno avvisi relativi alla mancata individuazione dei mapping dei tipi per le colonne e le colonne verranno ignorate.
 
 ## <a name="nettopologysuite-nts"></a>NetTopologySuite (NTS)
 
@@ -46,7 +46,7 @@ optionsBuilder.UseSqlServer(
     x => x.UseNetTopologySuite());
 ```
 
-Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è illustrata la gerarchia di tipi NTS che è possibile usare per le proprietà nel modello. Si trovano nello `NetTopologySuite.Geometries` spazio dei nomi.
+Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è illustrata la gerarchia di tipi NTS che è possibile usare per le proprietà nel modello. Si trovano nello spazio dei nomi `NetTopologySuite.Geometries`.
 
 * Geometria
   * Punto
@@ -62,7 +62,7 @@ Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi d
 
 L'utilizzo del tipo Geometry di base consente di specificare qualsiasi tipo di forma dalla proprietà.
 
-Per eseguire il mapping alle tabelle nel [database di esempio Wide World Importers](http://go.microsoft.com/fwlink/?LinkID=800630), è possibile usare le classi di entità seguenti.
+Per eseguire il mapping alle tabelle nel [database di esempio Wide World Importers](https://go.microsoft.com/fwlink/?LinkID=800630), è possibile usare le classi di entità seguenti.
 
 ``` csharp
 [Table("Cities", Schema = "Application"))]
@@ -101,7 +101,7 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 
 ### <a name="longitude-and-latitude"></a>Longitudine e latitudine
 
-Le coordinate in NTS sono espresse in termini di valori X e Y. Per rappresentare la longitudine e la latitudine, usare X per longitudine e Y per la latitudine. Si noti che questa operazione è all' **indietro** rispetto `latitude, longitude` al formato in cui vengono in genere visualizzati questi valori.
+Le coordinate in NTS sono espresse in termini di valori X e Y. Per rappresentare la longitudine e la latitudine, usare X per longitudine e Y per la latitudine. Si noti che questo è all' **indietro** rispetto al formato `latitude, longitude` in cui vengono in genere visualizzati questi valori.
 
 ### <a name="srid-ignored-during-client-operations"></a>SRID ignorato durante le operazioni client
 
@@ -213,15 +213,15 @@ Se si usa SQL Server, è necessario tenere presenti alcuni aspetti aggiuntivi.
 
 ### <a name="geography-or-geometry"></a>Geografia o geometria
 
-Per impostazione predefinita, viene eseguito il mapping `geography` delle proprietà spaziali alle colonne in SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
+Per impostazione predefinita, viene eseguito il mapping delle proprietà spaziali a colonne `geography` SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
 
 ### <a name="geography-polygon-rings"></a>Anelli del poligono geografico
 
-Quando si usa `geography` il tipo di colonna, SQL Server impone requisiti aggiuntivi sull'anello esterno (o sulla Shell) e sugli anelli interni (o buchi). L'anello esterno deve essere orientato in senso antiorario e gli anelli interni in senso orario. NTS convalida questa operazione prima di inviare valori al database.
+Quando si usa il tipo di colonna `geography`, SQL Server impone requisiti aggiuntivi sull'anello esterno (o sulla Shell) e sugli anelli interni (o buchi). L'anello esterno deve essere orientato in senso antiorario e gli anelli interni in senso orario. NTS convalida questa operazione prima di inviare valori al database.
 
 ### <a name="fullglobe"></a>FullGlobe
 
-SQL Server dispone di un tipo geometry non standard per rappresentare l'intero globo quando si utilizza `geography` il tipo di colonna. Offre anche un modo per rappresentare i poligoni in base al globo completo (senza anello esterno). Nessuno di questi è supportato da NTS.
+SQL Server dispone di un tipo geometry non standard per rappresentare l'intero globo quando si usa il tipo di colonna `geography`. Offre anche un modo per rappresentare i poligoni in base al globo completo (senza anello esterno). Nessuno di questi è supportato da NTS.
 
 > [!WARNING]
 > FullGlobe e i poligoni basati su di essi non sono supportati da NTS.
@@ -244,7 +244,7 @@ brew install libspatialite
 
 ### <a name="configuring-srid"></a>Configurazione di SRID
 
-In SpatiaLite le colonne devono specificare un identificatore SRID per colonna. L'identificatore SRID predefinito `0`è. Specificare un identificatore SRID diverso usando il metodo ForSqliteHasSrid.
+In SpatiaLite le colonne devono specificare un identificatore SRID per colonna. L'identificatore SRID predefinito è `0`. Specificare un identificatore SRID diverso usando il metodo ForSqliteHasSrid.
 
 ``` csharp
 modelBuilder.Entity<City>().Property(c => c.Location)
@@ -331,5 +331,5 @@ Poligono. NumInteriorRings | ✔ | ✔ | ✔ | ✔
 
 * [Dati spaziali in SQL Server](https://docs.microsoft.com/sql/relational-databases/spatial/spatial-data-sql-server)
 * [Home page di SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite)
-* [Documentazione spaziale di npgsql](http://www.npgsql.org/efcore/mapping/nts.html)
-* [Documentazione di PostGIS](http://postgis.net/documentation/)
+* [Documentazione spaziale di npgsql](https://www.npgsql.org/efcore/mapping/nts.html)
+* [Documentazione di PostGIS](https://postgis.net/documentation/)
