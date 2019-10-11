@@ -1,63 +1,63 @@
 ---
-title: Procedura dettagliata entità - Entity Framework 6 con rilevamento automatico
+title: Procedure dettagliate per le entità con rilevamento automatico-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
-ms.openlocfilehash: d89c452410d34bea71e8220aae141c3bfca3e1ce
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.openlocfilehash: 9bd644461f50a7eff1006cb8866ca9a3b08b6b8d
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490274"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181708"
 ---
-# <a name="self-tracking-entities-walkthrough"></a><span data-ttu-id="abd5d-102">Procedura dettagliata rilevamento automatico di entità</span><span class="sxs-lookup"><span data-stu-id="abd5d-102">Self-Tracking Entities Walkthrough</span></span>
+# <a name="self-tracking-entities-walkthrough"></a><span data-ttu-id="16d1d-102">Procedura dettagliata sulle entità con rilevamento automatico</span><span class="sxs-lookup"><span data-stu-id="16d1d-102">Self-Tracking Entities Walkthrough</span></span>
 > [!IMPORTANT]
-> <span data-ttu-id="abd5d-103">L'uso del modello di entità con rilevamento automatico non è più consigliabile.</span><span class="sxs-lookup"><span data-stu-id="abd5d-103">We no longer recommend using the self-tracking-entities template.</span></span> <span data-ttu-id="abd5d-104">Continuerà a essere disponibile solo per supportare le applicazioni esistenti.</span><span class="sxs-lookup"><span data-stu-id="abd5d-104">It will only continue to be available to support existing applications.</span></span> <span data-ttu-id="abd5d-105">Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](http://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.</span><span class="sxs-lookup"><span data-stu-id="abd5d-105">If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](http://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.</span></span>
+> <span data-ttu-id="16d1d-103">L'uso del modello di entità con rilevamento automatico non è più consigliabile.</span><span class="sxs-lookup"><span data-stu-id="16d1d-103">We no longer recommend using the self-tracking-entities template.</span></span> <span data-ttu-id="16d1d-104">Continuerà a essere disponibile solo per supportare le applicazioni esistenti.</span><span class="sxs-lookup"><span data-stu-id="16d1d-104">It will only continue to be available to support existing applications.</span></span> <span data-ttu-id="16d1d-105">Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.</span><span class="sxs-lookup"><span data-stu-id="16d1d-105">If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](https://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.</span></span>
 
-<span data-ttu-id="abd5d-106">Questa procedura dettagliata illustra lo scenario in cui un servizio Windows Communication Foundation (WCF) espone un'operazione che restituisce un grafico di entità.</span><span class="sxs-lookup"><span data-stu-id="abd5d-106">This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph.</span></span> <span data-ttu-id="abd5d-107">Successivamente, un'applicazione client modifica il grafico e inoltra le modifiche a un'operazione del servizio che convalida e Salva gli aggiornamenti a un database tramite Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="abd5d-107">Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using Entity Framework.</span></span>
+<span data-ttu-id="16d1d-106">In questa procedura dettagliata viene illustrato lo scenario in cui un servizio Windows Communication Foundation (WCF) espone un'operazione che restituisce un grafico di entità.</span><span class="sxs-lookup"><span data-stu-id="16d1d-106">This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph.</span></span> <span data-ttu-id="16d1d-107">Successivamente, un'applicazione client modifica il grafico e invia le modifiche a un'operazione del servizio che convalida e salva gli aggiornamenti in un database utilizzando Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="16d1d-107">Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using Entity Framework.</span></span>
 
-<span data-ttu-id="abd5d-108">Prima di completare questa procedura dettagliata assicurarsi di leggere il [entità con rilevamento automatico](index.md) pagina.</span><span class="sxs-lookup"><span data-stu-id="abd5d-108">Before completing this walkthrough make sure you read the [Self-Tracking Entities](index.md) page.</span></span>
+<span data-ttu-id="16d1d-108">Prima di completare questa procedura dettagliata, assicurarsi di leggere la pagina [entità con rilevamento automatico](index.md) .</span><span class="sxs-lookup"><span data-stu-id="16d1d-108">Before completing this walkthrough make sure you read the [Self-Tracking Entities](index.md) page.</span></span>
 
-<span data-ttu-id="abd5d-109">In questa procedura dettagliata verranno completate le seguenti azioni:</span><span class="sxs-lookup"><span data-stu-id="abd5d-109">This walkthrough completes the following actions:</span></span>
+<span data-ttu-id="16d1d-109">In questa procedura dettagliata verranno completate le seguenti azioni:</span><span class="sxs-lookup"><span data-stu-id="16d1d-109">This walkthrough completes the following actions:</span></span>
 
--   <span data-ttu-id="abd5d-110">Crea un database a cui accedere.</span><span class="sxs-lookup"><span data-stu-id="abd5d-110">Creates a database to access.</span></span>
--   <span data-ttu-id="abd5d-111">Crea una libreria di classi che contiene il modello.</span><span class="sxs-lookup"><span data-stu-id="abd5d-111">Creates a class library that contains the model.</span></span>
--   <span data-ttu-id="abd5d-112">Scambi al modello generatore di entità con rilevamento automatico.</span><span class="sxs-lookup"><span data-stu-id="abd5d-112">Swaps to the Self-Tracking Entity Generator template.</span></span>
--   <span data-ttu-id="abd5d-113">Sposta le classi di entità in un progetto separato.</span><span class="sxs-lookup"><span data-stu-id="abd5d-113">Moves the entity classes to a separate project.</span></span>
--   <span data-ttu-id="abd5d-114">Crea un servizio WCF che espone operazioni per eseguire query e salvare le entità.</span><span class="sxs-lookup"><span data-stu-id="abd5d-114">Creates a WCF service that exposes operations to query and save entities.</span></span>
--   <span data-ttu-id="abd5d-115">Crea applicazioni (Console e WPF) che utilizzano il servizio client.</span><span class="sxs-lookup"><span data-stu-id="abd5d-115">Creates client applications (Console and WPF) that consume the service.</span></span>
+-   <span data-ttu-id="16d1d-110">Crea un database a cui accedere.</span><span class="sxs-lookup"><span data-stu-id="16d1d-110">Creates a database to access.</span></span>
+-   <span data-ttu-id="16d1d-111">Crea una libreria di classi che contiene il modello.</span><span class="sxs-lookup"><span data-stu-id="16d1d-111">Creates a class library that contains the model.</span></span>
+-   <span data-ttu-id="16d1d-112">Scambia il modello generatore di entità con rilevamento automatico.</span><span class="sxs-lookup"><span data-stu-id="16d1d-112">Swaps to the Self-Tracking Entity Generator template.</span></span>
+-   <span data-ttu-id="16d1d-113">Sposta le classi di entità in un progetto separato.</span><span class="sxs-lookup"><span data-stu-id="16d1d-113">Moves the entity classes to a separate project.</span></span>
+-   <span data-ttu-id="16d1d-114">Crea un servizio WCF che espone operazioni per eseguire query e salvare entità.</span><span class="sxs-lookup"><span data-stu-id="16d1d-114">Creates a WCF service that exposes operations to query and save entities.</span></span>
+-   <span data-ttu-id="16d1d-115">Crea applicazioni client (console e WPF) che utilizzano il servizio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-115">Creates client applications (Console and WPF) that consume the service.</span></span>
 
-<span data-ttu-id="abd5d-116">Useremo Database First in questa procedura dettagliata, ma le stesse tecniche sono ugualmente applicabili a Model First.</span><span class="sxs-lookup"><span data-stu-id="abd5d-116">We'll use Database First in this walkthrough but the same techniques apply equally to Model First.</span></span>
+<span data-ttu-id="16d1d-116">In questa procedura dettagliata verranno usati Database First, ma le stesse tecniche si applicano ugualmente ai Model First.</span><span class="sxs-lookup"><span data-stu-id="16d1d-116">We'll use Database First in this walkthrough but the same techniques apply equally to Model First.</span></span>
 
-## <a name="pre-requisites"></a><span data-ttu-id="abd5d-117">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="abd5d-117">Pre-Requisites</span></span>
+## <a name="pre-requisites"></a><span data-ttu-id="16d1d-117">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="16d1d-117">Pre-Requisites</span></span>
 
-<span data-ttu-id="abd5d-118">Per completare questa procedura dettagliata è necessario utilizzare una versione recente di Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="abd5d-118">To complete this walkthrough you will need a recent version of Visual Studio.</span></span>
+<span data-ttu-id="16d1d-118">Per completare questa procedura dettagliata, sarà necessaria una versione recente di Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-118">To complete this walkthrough you will need a recent version of Visual Studio.</span></span>
 
-## <a name="create-a-database"></a><span data-ttu-id="abd5d-119">Creare un Database</span><span class="sxs-lookup"><span data-stu-id="abd5d-119">Create a Database</span></span>
+## <a name="create-a-database"></a><span data-ttu-id="16d1d-119">Creare un database</span><span class="sxs-lookup"><span data-stu-id="16d1d-119">Create a Database</span></span>
 
-<span data-ttu-id="abd5d-120">Il server di database che viene installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:</span><span class="sxs-lookup"><span data-stu-id="abd5d-120">The database server that is installed with Visual Studio is different depending on the version of Visual Studio you have installed:</span></span>
+<span data-ttu-id="16d1d-120">Il server di database installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:</span><span class="sxs-lookup"><span data-stu-id="16d1d-120">The database server that is installed with Visual Studio is different depending on the version of Visual Studio you have installed:</span></span>
 
--   <span data-ttu-id="abd5d-121">Se si usa Visual Studio 2012, quindi si creerà un database LocalDB.</span><span class="sxs-lookup"><span data-stu-id="abd5d-121">If you are using Visual Studio 2012 then you'll be creating a LocalDB database.</span></span>
--   <span data-ttu-id="abd5d-122">Se si usa Visual Studio 2010 si creerà un database SQL Express.</span><span class="sxs-lookup"><span data-stu-id="abd5d-122">If you are using Visual Studio 2010 you'll be creating a SQL Express database.</span></span>
+-   <span data-ttu-id="16d1d-121">Se si usa Visual Studio 2012, si creerà un database del database locale.</span><span class="sxs-lookup"><span data-stu-id="16d1d-121">If you are using Visual Studio 2012 then you'll be creating a LocalDB database.</span></span>
+-   <span data-ttu-id="16d1d-122">Se si usa Visual Studio 2010 verrà creato un database di SQL Express.</span><span class="sxs-lookup"><span data-stu-id="16d1d-122">If you are using Visual Studio 2010 you'll be creating a SQL Express database.</span></span>
 
-<span data-ttu-id="abd5d-123">È possibile procedere e generare il database.</span><span class="sxs-lookup"><span data-stu-id="abd5d-123">Let's go ahead and generate the database.</span></span>
+<span data-ttu-id="16d1d-123">Procediamo con la generazione del database.</span><span class="sxs-lookup"><span data-stu-id="16d1d-123">Let's go ahead and generate the database.</span></span>
 
--   <span data-ttu-id="abd5d-124">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="abd5d-124">Open Visual Studio</span></span>
--   <span data-ttu-id="abd5d-125">**Visualizzazione -&gt; Esplora Server**</span><span class="sxs-lookup"><span data-stu-id="abd5d-125">**View -&gt; Server Explorer**</span></span>
--   <span data-ttu-id="abd5d-126">Fare clic con il pulsante destro sul **connessioni dati -&gt; Aggiungi connessione...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-126">Right click on **Data Connections -&gt; Add Connection…**</span></span>
--   <span data-ttu-id="abd5d-127">Se si è ancora connessi a un database da Esplora Server prima che è necessario selezionare **Microsoft SQL Server** come origine dati</span><span class="sxs-lookup"><span data-stu-id="abd5d-127">If you haven’t connected to a database from Server Explorer before you’ll need to select **Microsoft SQL Server** as the data source</span></span>
--   <span data-ttu-id="abd5d-128">Connettersi a LocalDB o SQL Express, in base alla quale è stato installato</span><span class="sxs-lookup"><span data-stu-id="abd5d-128">Connect to either LocalDB or SQL Express, depending on which one you have installed</span></span>
--   <span data-ttu-id="abd5d-129">Immettere **STESample** come nome del database</span><span class="sxs-lookup"><span data-stu-id="abd5d-129">Enter **STESample** as the database name</span></span>
--   <span data-ttu-id="abd5d-130">Selezionare **OK** e verrà richiesto se si desidera creare un nuovo database, selezionare **Sì**</span><span class="sxs-lookup"><span data-stu-id="abd5d-130">Select **OK** and you will be asked if you want to create a new database, select **Yes**</span></span>
--   <span data-ttu-id="abd5d-131">Il nuovo database verrà ora visualizzato in Esplora Server</span><span class="sxs-lookup"><span data-stu-id="abd5d-131">The new database will now appear in Server Explorer</span></span>
--   <span data-ttu-id="abd5d-132">Se si usa Visual Studio 2012</span><span class="sxs-lookup"><span data-stu-id="abd5d-132">If you are using Visual Studio 2012</span></span>
-    -   <span data-ttu-id="abd5d-133">Fare doppio clic sul database in Esplora Server e selezionare **nuova Query**</span><span class="sxs-lookup"><span data-stu-id="abd5d-133">Right-click on the database in Server Explorer and select **New Query**</span></span>
-    -   <span data-ttu-id="abd5d-134">Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**</span><span class="sxs-lookup"><span data-stu-id="abd5d-134">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
--   <span data-ttu-id="abd5d-135">Se si usa Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="abd5d-135">If you are using Visual Studio 2010</span></span>
-    -   <span data-ttu-id="abd5d-136">Selezionare **- Data&gt; Transact SQL Editor -&gt; nuova connessione Query...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-136">Select **Data -&gt; Transact SQL Editor -&gt; New Query Connection...**</span></span>
-    -   <span data-ttu-id="abd5d-137">Immettere **.\\ SQLEXPRESS** come nome del server e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-137">Enter **.\\SQLEXPRESS** as the server name and click **OK**</span></span>
-    -   <span data-ttu-id="abd5d-138">Selezionare il **STESample** database dall'elenco a discesa nella parte superiore dell'editor di query</span><span class="sxs-lookup"><span data-stu-id="abd5d-138">Select the **STESample** database from the drop down at the top of the query editor</span></span>
-    -   <span data-ttu-id="abd5d-139">Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Esegui SQL**</span><span class="sxs-lookup"><span data-stu-id="abd5d-139">Copy the following SQL into the new query, then right-click on the query and select **Execute SQL**</span></span>
+-   <span data-ttu-id="16d1d-124">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="16d1d-124">Open Visual Studio</span></span>
+-   <span data-ttu-id="16d1d-125">**Visualizzazione-&gt; Esplora server**</span><span class="sxs-lookup"><span data-stu-id="16d1d-125">**View -&gt; Server Explorer**</span></span>
+-   <span data-ttu-id="16d1d-126">Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-126">Right click on **Data Connections -&gt; Add Connection…**</span></span>
+-   <span data-ttu-id="16d1d-127">Se non si è connessi a un database da Esplora server prima di selezionare **Microsoft SQL Server** come origine dati</span><span class="sxs-lookup"><span data-stu-id="16d1d-127">If you haven’t connected to a database from Server Explorer before you’ll need to select **Microsoft SQL Server** as the data source</span></span>
+-   <span data-ttu-id="16d1d-128">Connettersi a un database locale o a SQL Express, a seconda di quale installato</span><span class="sxs-lookup"><span data-stu-id="16d1d-128">Connect to either LocalDB or SQL Express, depending on which one you have installed</span></span>
+-   <span data-ttu-id="16d1d-129">Immettere **STESample** come nome del database</span><span class="sxs-lookup"><span data-stu-id="16d1d-129">Enter **STESample** as the database name</span></span>
+-   <span data-ttu-id="16d1d-130">Selezionare **OK** . verrà richiesto se si desidera creare un nuovo database, selezionare **Sì** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-130">Select **OK** and you will be asked if you want to create a new database, select **Yes**</span></span>
+-   <span data-ttu-id="16d1d-131">Il nuovo database verrà ora visualizzato in Esplora server</span><span class="sxs-lookup"><span data-stu-id="16d1d-131">The new database will now appear in Server Explorer</span></span>
+-   <span data-ttu-id="16d1d-132">Se si usa Visual Studio 2012</span><span class="sxs-lookup"><span data-stu-id="16d1d-132">If you are using Visual Studio 2012</span></span>
+    -   <span data-ttu-id="16d1d-133">Fare clic con il pulsante destro del mouse sul database in Esplora server e selezionare **nuova query** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-133">Right-click on the database in Server Explorer and select **New Query**</span></span>
+    -   <span data-ttu-id="16d1d-134">Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-134">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
+-   <span data-ttu-id="16d1d-135">Se si usa Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="16d1d-135">If you are using Visual Studio 2010</span></span>
+    -   <span data-ttu-id="16d1d-136">Selezionare **Data-&gt; Editor Transact SQL-&gt; nuova connessione query...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-136">Select **Data -&gt; Transact SQL Editor -&gt; New Query Connection...**</span></span>
+    -   <span data-ttu-id="16d1d-137">Immettere **. \\SQLEXPRESS** come nome del server e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-137">Enter **.\\SQLEXPRESS** as the server name and click **OK**</span></span>
+    -   <span data-ttu-id="16d1d-138">Selezionare il database **STESample** dall'elenco a discesa nella parte superiore dell'editor di query</span><span class="sxs-lookup"><span data-stu-id="16d1d-138">Select the **STESample** database from the drop down at the top of the query editor</span></span>
+    -   <span data-ttu-id="16d1d-139">Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui SQL**</span><span class="sxs-lookup"><span data-stu-id="16d1d-139">Copy the following SQL into the new query, then right-click on the query and select **Execute SQL**</span></span>
 
 ``` SQL
     CREATE TABLE [dbo].[Blogs] (
@@ -83,106 +83,106 @@ ms.locfileid: "45490274"
     INSERT INTO [dbo].[Posts] ([Title], [Content], [BlogId]) VALUES (N'What is New', N'More interesting stuff...', 1)
 ```
 
-## <a name="create-the-model"></a><span data-ttu-id="abd5d-140">Creare il modello</span><span class="sxs-lookup"><span data-stu-id="abd5d-140">Create the Model</span></span>
+## <a name="create-the-model"></a><span data-ttu-id="16d1d-140">Creare il modello</span><span class="sxs-lookup"><span data-stu-id="16d1d-140">Create the Model</span></span>
 
-<span data-ttu-id="abd5d-141">Innanzitutto, è necessario inserire il modello in un progetto.</span><span class="sxs-lookup"><span data-stu-id="abd5d-141">First up, we need a project to put the model in.</span></span>
+<span data-ttu-id="16d1d-141">Per prima cosa, abbiamo bisogno di un progetto in cui inserire il modello.</span><span class="sxs-lookup"><span data-stu-id="16d1d-141">First up, we need a project to put the model in.</span></span>
 
--   <span data-ttu-id="abd5d-142">**File -&gt; New -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-142">**File -&gt; New -&gt; Project...**</span></span>
--   <span data-ttu-id="abd5d-143">Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **libreria di classi**</span><span class="sxs-lookup"><span data-stu-id="abd5d-143">Select **Visual C\#** from the left pane and then **Class Library**</span></span>
--   <span data-ttu-id="abd5d-144">Immettere **STESample** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-144">Enter **STESample** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-142">**Progetto New-&gt; del file-...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-142">**File -&gt; New -&gt; Project...**</span></span>
+-   <span data-ttu-id="16d1d-143">Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **libreria di classi**</span><span class="sxs-lookup"><span data-stu-id="16d1d-143">Select **Visual C\#** from the left pane and then **Class Library**</span></span>
+-   <span data-ttu-id="16d1d-144">Immettere **STESample** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-144">Enter **STESample** as the name and click **OK**</span></span>
 
-<span data-ttu-id="abd5d-145">A questo punto si creerà un modello semplice nella finestra di progettazione di Entity Framework per accedere ai database:</span><span class="sxs-lookup"><span data-stu-id="abd5d-145">Now we'll create a simple model in the EF Designer to access our database:</span></span>
+<span data-ttu-id="16d1d-145">Verrà ora creato un modello semplice in EF designer per accedere al database:</span><span class="sxs-lookup"><span data-stu-id="16d1d-145">Now we'll create a simple model in the EF Designer to access our database:</span></span>
 
--   <span data-ttu-id="abd5d-146">**Progetto -&gt; Aggiungi nuovo elemento...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-146">**Project -&gt; Add New Item...**</span></span>
--   <span data-ttu-id="abd5d-147">Selezionare **Data** nel riquadro a sinistra e quindi **ADO.NET Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="abd5d-147">Select **Data** from the left pane and then **ADO.NET Entity Data Model**</span></span>
--   <span data-ttu-id="abd5d-148">Immettere **BloggingModel** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-148">Enter **BloggingModel** as the name and click **OK**</span></span>
--   <span data-ttu-id="abd5d-149">Selezionare **genera da database** e fare clic su **successivo**</span><span class="sxs-lookup"><span data-stu-id="abd5d-149">Select **Generate from database** and click **Next**</span></span>
--   <span data-ttu-id="abd5d-150">Immettere le informazioni di connessione per il database creato nella sezione precedente</span><span class="sxs-lookup"><span data-stu-id="abd5d-150">Enter the connection information for the database that you created in the previous section</span></span>
--   <span data-ttu-id="abd5d-151">Immettere **BloggingContext** come nome per la stringa di connessione e fare clic su **successivo**</span><span class="sxs-lookup"><span data-stu-id="abd5d-151">Enter **BloggingContext** as the name for the connection string and click **Next**</span></span>
--   <span data-ttu-id="abd5d-152">Selezionare la casella accanto a **tabelle** e fare clic su **fine**</span><span class="sxs-lookup"><span data-stu-id="abd5d-152">Check the box next to **Tables** and click **Finish**</span></span>
+-   <span data-ttu-id="16d1d-146">**Progetto-&gt; Aggiungi nuovo elemento...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-146">**Project -&gt; Add New Item...**</span></span>
+-   <span data-ttu-id="16d1d-147">Selezionare i **dati** nel riquadro a sinistra e quindi **ADO.NET Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="16d1d-147">Select **Data** from the left pane and then **ADO.NET Entity Data Model**</span></span>
+-   <span data-ttu-id="16d1d-148">Immettere **BloggingModel** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-148">Enter **BloggingModel** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-149">Selezionare **genera da database** e fare clic su **Avanti** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-149">Select **Generate from database** and click **Next**</span></span>
+-   <span data-ttu-id="16d1d-150">Immettere le informazioni di connessione per il database creato nella sezione precedente</span><span class="sxs-lookup"><span data-stu-id="16d1d-150">Enter the connection information for the database that you created in the previous section</span></span>
+-   <span data-ttu-id="16d1d-151">Immettere **BloggingContext** come nome della stringa di connessione e fare clic su **Next (avanti** ).</span><span class="sxs-lookup"><span data-stu-id="16d1d-151">Enter **BloggingContext** as the name for the connection string and click **Next**</span></span>
+-   <span data-ttu-id="16d1d-152">Selezionare la casella accanto a **tabelle** e fare clic su **fine** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-152">Check the box next to **Tables** and click **Finish**</span></span>
 
-## <a name="swap-to-ste-code-generation"></a><span data-ttu-id="abd5d-153">Scambio per la generazione di codice STE</span><span class="sxs-lookup"><span data-stu-id="abd5d-153">Swap to STE Code Generation</span></span>
+## <a name="swap-to-ste-code-generation"></a><span data-ttu-id="16d1d-153">Scambia alla generazione del codice STE</span><span class="sxs-lookup"><span data-stu-id="16d1d-153">Swap to STE Code Generation</span></span>
 
-<span data-ttu-id="abd5d-154">A questo punto è necessario disabilitare la generazione di codice predefinita e lo scambio di entità con rilevamento automatico.</span><span class="sxs-lookup"><span data-stu-id="abd5d-154">Now we need to disable the default code generation and swap to Self-Tracking Entities.</span></span>
+<span data-ttu-id="16d1d-154">A questo punto è necessario disabilitare la generazione di codice predefinita e scambiare le entità con rilevamento automatico.</span><span class="sxs-lookup"><span data-stu-id="16d1d-154">Now we need to disable the default code generation and swap to Self-Tracking Entities.</span></span>
 
-### <a name="if-you-are-using-visual-studio-2012"></a><span data-ttu-id="abd5d-155">Se si usa Visual Studio 2012</span><span class="sxs-lookup"><span data-stu-id="abd5d-155">If you are using Visual Studio 2012</span></span>
+### <a name="if-you-are-using-visual-studio-2012"></a><span data-ttu-id="16d1d-155">Se si usa Visual Studio 2012</span><span class="sxs-lookup"><span data-stu-id="16d1d-155">If you are using Visual Studio 2012</span></span>
 
--   <span data-ttu-id="abd5d-156">Espandere **BloggingModel.edmx** nelle **Esplora soluzioni** ed eliminare i **BloggingModel.tt** e **BloggingModel.Context.tt** 
-     *Verrà disabilitata la generazione di codice predefinita*</span><span class="sxs-lookup"><span data-stu-id="abd5d-156">Expand **BloggingModel.edmx** in **Solution Explorer** and delete the **BloggingModel.tt** and **BloggingModel.Context.tt**
+-   <span data-ttu-id="16d1d-156">Espandere **BloggingModel. edmx** in **Esplora soluzioni** ed eliminare **BloggingModel.TT** e **BloggingModel.Context.TT**
+    *questa operazione Disabilita la generazione di codice predefinita* .</span><span class="sxs-lookup"><span data-stu-id="16d1d-156">Expand **BloggingModel.edmx** in **Solution Explorer** and delete the **BloggingModel.tt** and **BloggingModel.Context.tt**
 *This will disable the default code generation*</span></span>
--   <span data-ttu-id="abd5d-157">Fare doppio clic su un'area vuota di Entity Framework Designer e selezionare **Aggiungi elemento di generazione di codice...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-157">Right-click an empty area on the EF Designer surface and select **Add Code Generation Item...**</span></span>
--   <span data-ttu-id="abd5d-158">Selezionare **Online** dal riquadro a sinistra e cercare **STE Generator**</span><span class="sxs-lookup"><span data-stu-id="abd5d-158">Select **Online** from the left pane and search for **STE Generator**</span></span>
--   <span data-ttu-id="abd5d-159">Selezionare il **generatore di Incolla per C\#**  modello, immettere **STETemplate** come nome, quindi fare clic su **Add**</span><span class="sxs-lookup"><span data-stu-id="abd5d-159">Select the **STE Generator for C\#** template, enter **STETemplate** as the name and click **Add**</span></span>
--   <span data-ttu-id="abd5d-160">Il **STETemplate.tt** e **STETemplate.Context.tt** vengono aggiunti file annidati sotto il file BloggingModel.edmx</span><span class="sxs-lookup"><span data-stu-id="abd5d-160">The **STETemplate.tt** and **STETemplate.Context.tt** files are added nested under the BloggingModel.edmx file</span></span>
+-   <span data-ttu-id="16d1d-157">Fare clic con il pulsante destro del mouse su un'area vuota nell'area di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-157">Right-click an empty area on the EF Designer surface and select **Add Code Generation Item...**</span></span>
+-   <span data-ttu-id="16d1d-158">Selezionare **online** dal riquadro a sinistra e cercare il **Generatore di ste**</span><span class="sxs-lookup"><span data-stu-id="16d1d-158">Select **Online** from the left pane and search for **STE Generator**</span></span>
+-   <span data-ttu-id="16d1d-159">Selezionare il modello **Ste Generator per C @ no__t-1** , immettere **STETemplate** come nome e fare clic su **Aggiungi** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-159">Select the **STE Generator for C\#** template, enter **STETemplate** as the name and click **Add**</span></span>
+-   <span data-ttu-id="16d1d-160">I file **STETemplate.TT** e **STETemplate.Context.TT** vengono aggiunti annidati nel file BloggingModel. edmx</span><span class="sxs-lookup"><span data-stu-id="16d1d-160">The **STETemplate.tt** and **STETemplate.Context.tt** files are added nested under the BloggingModel.edmx file</span></span>
 
-### <a name="if-you-are-using-visual-studio-2010"></a><span data-ttu-id="abd5d-161">Se si usa Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="abd5d-161">If you are using Visual Studio 2010</span></span>
+### <a name="if-you-are-using-visual-studio-2010"></a><span data-ttu-id="16d1d-161">Se si usa Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="16d1d-161">If you are using Visual Studio 2010</span></span>
 
--   <span data-ttu-id="abd5d-162">Fare doppio clic su un'area vuota di Entity Framework Designer e selezionare **Aggiungi elemento di generazione di codice...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-162">Right-click an empty area on the EF Designer surface and select **Add Code Generation Item...**</span></span>
--   <span data-ttu-id="abd5d-163">Selezionare **codice** nel riquadro a sinistra e quindi **ADO.NET self-Tracking Entity Generator**</span><span class="sxs-lookup"><span data-stu-id="abd5d-163">Select **Code** from the left pane and then **ADO.NET Self-Tracking Entity Generator**</span></span>
--   <span data-ttu-id="abd5d-164">Immettere **STETemplate** come nome, quindi fare clic su **Add**</span><span class="sxs-lookup"><span data-stu-id="abd5d-164">Enter **STETemplate** as the name and click **Add**</span></span>
--   <span data-ttu-id="abd5d-165">Il **STETemplate.tt** e **STETemplate.Context.tt** file vengono aggiunti direttamente al progetto</span><span class="sxs-lookup"><span data-stu-id="abd5d-165">The **STETemplate.tt** and **STETemplate.Context.tt** files are added directly to your project</span></span>
+-   <span data-ttu-id="16d1d-162">Fare clic con il pulsante destro del mouse su un'area vuota nell'area di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-162">Right-click an empty area on the EF Designer surface and select **Add Code Generation Item...**</span></span>
+-   <span data-ttu-id="16d1d-163">Selezionare il **codice** nel riquadro a sinistra e quindi **ADO.NET generatore di entità con rilevamento automatico**</span><span class="sxs-lookup"><span data-stu-id="16d1d-163">Select **Code** from the left pane and then **ADO.NET Self-Tracking Entity Generator**</span></span>
+-   <span data-ttu-id="16d1d-164">Immettere **STETemplate** come nome e fare clic su **Aggiungi**</span><span class="sxs-lookup"><span data-stu-id="16d1d-164">Enter **STETemplate** as the name and click **Add**</span></span>
+-   <span data-ttu-id="16d1d-165">I file **STETemplate.TT** e **STETemplate.Context.TT** vengono aggiunti direttamente al progetto</span><span class="sxs-lookup"><span data-stu-id="16d1d-165">The **STETemplate.tt** and **STETemplate.Context.tt** files are added directly to your project</span></span>
 
-## <a name="move-entity-types-into-separate-project"></a><span data-ttu-id="abd5d-166">Spostare i tipi di entità nel progetto separato</span><span class="sxs-lookup"><span data-stu-id="abd5d-166">Move Entity Types into Separate Project</span></span>
+## <a name="move-entity-types-into-separate-project"></a><span data-ttu-id="16d1d-166">Spostare i tipi di entità in un progetto separato</span><span class="sxs-lookup"><span data-stu-id="16d1d-166">Move Entity Types into Separate Project</span></span>
 
-<span data-ttu-id="abd5d-167">Per usare le entità con rilevamento automatico l'applicazione client deve accedere alle classi di entità generato dal modello.</span><span class="sxs-lookup"><span data-stu-id="abd5d-167">To use Self-Tracking Entities our client application needs access to the entity classes generated from our model.</span></span> <span data-ttu-id="abd5d-168">Poiché non si desidera esporre l'intero modello per l'applicazione client si userà per spostare le classi di entità in un progetto separato.</span><span class="sxs-lookup"><span data-stu-id="abd5d-168">Because we don't want to expose the whole model to the client application we're going to move the entity classes into a separate project.</span></span>
+<span data-ttu-id="16d1d-167">Per usare le entità con rilevamento automatico, l'applicazione client deve accedere alle classi di entità generate dal modello.</span><span class="sxs-lookup"><span data-stu-id="16d1d-167">To use Self-Tracking Entities our client application needs access to the entity classes generated from our model.</span></span> <span data-ttu-id="16d1d-168">Poiché non si vuole esporre l'intero modello all'applicazione client, le classi di entità verranno spostate in un progetto distinto.</span><span class="sxs-lookup"><span data-stu-id="16d1d-168">Because we don't want to expose the whole model to the client application we're going to move the entity classes into a separate project.</span></span>
 
-<span data-ttu-id="abd5d-169">Il primo passaggio consiste arrestano la generazione di classi di entità nel progetto esistente:</span><span class="sxs-lookup"><span data-stu-id="abd5d-169">The first step is to stop generating entity classes in the existing project:</span></span>
+<span data-ttu-id="16d1d-169">Il primo passaggio consiste nell'arrestare la generazione delle classi di entità nel progetto esistente:</span><span class="sxs-lookup"><span data-stu-id="16d1d-169">The first step is to stop generating entity classes in the existing project:</span></span>
 
--   <span data-ttu-id="abd5d-170">Fare clic su **STETemplate.tt** nelle **Esplora soluzioni** e selezionare **proprietà**</span><span class="sxs-lookup"><span data-stu-id="abd5d-170">Right-click on **STETemplate.tt** in **Solution Explorer** and select **Properties**</span></span>
--   <span data-ttu-id="abd5d-171">Nel **delle proprietà** finestra chiaro **TextTemplatingFileGenerator** dal **CustomTool** proprietà</span><span class="sxs-lookup"><span data-stu-id="abd5d-171">In the **Properties** window clear **TextTemplatingFileGenerator** from the **CustomTool** property</span></span>
--   <span data-ttu-id="abd5d-172">Espandere **STETemplate.tt** nelle **Esplora soluzioni** ed eliminare tutti i file annidati</span><span class="sxs-lookup"><span data-stu-id="abd5d-172">Expand **STETemplate.tt** in **Solution Explorer** and delete all files nested under it</span></span>
+-   <span data-ttu-id="16d1d-170">Fare clic con il pulsante destro del mouse su **STETemplate.TT** in **Esplora soluzioni** e scegliere **proprietà** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-170">Right-click on **STETemplate.tt** in **Solution Explorer** and select **Properties**</span></span>
+-   <span data-ttu-id="16d1d-171">Nella finestra **Proprietà** deselezionare **TextTemplatingFileGenerator** dalla proprietà **CustomTool**</span><span class="sxs-lookup"><span data-stu-id="16d1d-171">In the **Properties** window clear **TextTemplatingFileGenerator** from the **CustomTool** property</span></span>
+-   <span data-ttu-id="16d1d-172">Espandere **STETemplate.TT** in **Esplora soluzioni** ed eliminare tutti i file annidati sotto di esso</span><span class="sxs-lookup"><span data-stu-id="16d1d-172">Expand **STETemplate.tt** in **Solution Explorer** and delete all files nested under it</span></span>
 
-<span data-ttu-id="abd5d-173">Successivamente, si userà per aggiungere un nuovo progetto e generare le classi di entità in esso</span><span class="sxs-lookup"><span data-stu-id="abd5d-173">Next, we are going to add a new project and generate the entity classes in it</span></span>
+<span data-ttu-id="16d1d-173">Successivamente, verrà aggiunto un nuovo progetto e verranno generate le classi di entità</span><span class="sxs-lookup"><span data-stu-id="16d1d-173">Next, we are going to add a new project and generate the entity classes in it</span></span>
 
--   <span data-ttu-id="abd5d-174">**File -&gt; Add -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-174">**File -&gt; Add -&gt; Project...**</span></span>
--   <span data-ttu-id="abd5d-175">Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **libreria di classi**</span><span class="sxs-lookup"><span data-stu-id="abd5d-175">Select **Visual C\#** from the left pane and then **Class Library**</span></span>
--   <span data-ttu-id="abd5d-176">Immettere **STESample.Entities** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-176">Enter **STESample.Entities** as the name and click **OK**</span></span>
--   <span data-ttu-id="abd5d-177">**Progetto -&gt; Aggiungi elemento esistente...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-177">**Project -&gt; Add Existing Item...**</span></span>
--   <span data-ttu-id="abd5d-178">Passare il **STESample** cartella del progetto</span><span class="sxs-lookup"><span data-stu-id="abd5d-178">Navigate to the **STESample** project folder</span></span>
--   <span data-ttu-id="abd5d-179">Selezionare questa opzione per visualizzare **tutti i file (\*.\*)**</span><span class="sxs-lookup"><span data-stu-id="abd5d-179">Select to view **All Files (\*.\*)**</span></span>
--   <span data-ttu-id="abd5d-180">Selezionare il **STETemplate.tt** file</span><span class="sxs-lookup"><span data-stu-id="abd5d-180">Select the **STETemplate.tt** file</span></span>
--   <span data-ttu-id="abd5d-181">Fare clic sulla freccia a discesa accanto al **Add** e selezionare **Aggiungi come collegamento**</span><span class="sxs-lookup"><span data-stu-id="abd5d-181">Click on the drop down arrow next to the **Add** button and select **Add As Link**</span></span>
+-   <span data-ttu-id="16d1d-174">**File-&gt; progetto Add-&gt;...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-174">**File -&gt; Add -&gt; Project...**</span></span>
+-   <span data-ttu-id="16d1d-175">Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **libreria di classi**</span><span class="sxs-lookup"><span data-stu-id="16d1d-175">Select **Visual C\#** from the left pane and then **Class Library**</span></span>
+-   <span data-ttu-id="16d1d-176">Immettere **STESample. Entities** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-176">Enter **STESample.Entities** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-177">**Progetto-&gt; Aggiungi elemento esistente...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-177">**Project -&gt; Add Existing Item...**</span></span>
+-   <span data-ttu-id="16d1d-178">Passare alla cartella del progetto **STESample**</span><span class="sxs-lookup"><span data-stu-id="16d1d-178">Navigate to the **STESample** project folder</span></span>
+-   <span data-ttu-id="16d1d-179">Selezionare per visualizzare **tutti i file (\*. \*)**</span><span class="sxs-lookup"><span data-stu-id="16d1d-179">Select to view **All Files (\*.\*)**</span></span>
+-   <span data-ttu-id="16d1d-180">Selezionare il file **STETemplate.TT**</span><span class="sxs-lookup"><span data-stu-id="16d1d-180">Select the **STETemplate.tt** file</span></span>
+-   <span data-ttu-id="16d1d-181">Fare clic sulla freccia a discesa accanto al pulsante **Aggiungi** e selezionare **Aggiungi come collegamento** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-181">Click on the drop down arrow next to the **Add** button and select **Add As Link**</span></span>
 
-    ![Aggiungere modello collegato](~/ef6/media/addlinkedtemplate.png)
+    ![Aggiungi modello collegato](~/ef6/media/addlinkedtemplate.png)
 
-<span data-ttu-id="abd5d-183">Eseguiremo, inoltre, per assicurarsi che le classi di entità vengono generate nella directory lo stesso spazio dei nomi come contesto.</span><span class="sxs-lookup"><span data-stu-id="abd5d-183">We're also going to make sure the entity classes get generated in the same namespace as the context.</span></span> <span data-ttu-id="abd5d-184">Solo questo riduce il numero dell'utilizzo delle istruzioni che è necessario aggiungere in tutta la nostra applicazione.</span><span class="sxs-lookup"><span data-stu-id="abd5d-184">This just reduces the number of using statements we need to add throughout our application.</span></span>
+<span data-ttu-id="16d1d-183">Si verifica inoltre che le classi di entità vengano generate nello stesso spazio dei nomi del contesto.</span><span class="sxs-lookup"><span data-stu-id="16d1d-183">We're also going to make sure the entity classes get generated in the same namespace as the context.</span></span> <span data-ttu-id="16d1d-184">In questo modo si riduce il numero di istruzioni using che è necessario aggiungere all'interno dell'applicazione.</span><span class="sxs-lookup"><span data-stu-id="16d1d-184">This just reduces the number of using statements we need to add throughout our application.</span></span>
 
--   <span data-ttu-id="abd5d-185">Fare clic su collegato **STETemplate.tt** nelle **Esplora soluzioni** e selezionare **proprietà**</span><span class="sxs-lookup"><span data-stu-id="abd5d-185">Right-click on the linked **STETemplate.tt** in **Solution Explorer** and select **Properties**</span></span>
--   <span data-ttu-id="abd5d-186">Nel **delle proprietà** finestra set **Custom Tool Namespace** a **STESample**</span><span class="sxs-lookup"><span data-stu-id="abd5d-186">In the **Properties** window set **Custom Tool Namespace** to **STESample**</span></span>
+-   <span data-ttu-id="16d1d-185">Fare clic con il pulsante destro del mouse sul **STETemplate.TT** collegato in **Esplora soluzioni** e selezionare **proprietà** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-185">Right-click on the linked **STETemplate.tt** in **Solution Explorer** and select **Properties**</span></span>
+-   <span data-ttu-id="16d1d-186">Nella finestra **Proprietà** impostare lo **spazio dei nomi dello strumento personalizzato** su **STESample**</span><span class="sxs-lookup"><span data-stu-id="16d1d-186">In the **Properties** window set **Custom Tool Namespace** to **STESample**</span></span>
 
-<span data-ttu-id="abd5d-187">Il codice generato dal modello di STE sarà necessario un riferimento a **Serialization** per compilare.</span><span class="sxs-lookup"><span data-stu-id="abd5d-187">The code generated by the STE template will need a reference to **System.Runtime.Serialization** in order to compile.</span></span> <span data-ttu-id="abd5d-188">Questa libreria è necessaria per WCF **DataContract** e **DataMember** gli attributi utilizzati sui tipi di entità serializzabili.</span><span class="sxs-lookup"><span data-stu-id="abd5d-188">This library is needed for the WCF **DataContract** and **DataMember** attributes that are used on the serializable entity types.</span></span>
+<span data-ttu-id="16d1d-187">Per la compilazione del codice generato dal modello STE è necessario un riferimento a **System. Runtime. Serialization** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-187">The code generated by the STE template will need a reference to **System.Runtime.Serialization** in order to compile.</span></span> <span data-ttu-id="16d1d-188">Questa libreria è necessaria per gli attributi **DataContract** e **DataMember** WCF utilizzati sui tipi di entità serializzabili.</span><span class="sxs-lookup"><span data-stu-id="16d1d-188">This library is needed for the WCF **DataContract** and **DataMember** attributes that are used on the serializable entity types.</span></span>
 
--   <span data-ttu-id="abd5d-189">Fare clic con il pulsante destro sul **STESample.Entities** del progetto **Esplora soluzioni** e selezionare **Aggiungi riferimento...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-189">Right click on the **STESample.Entities** project in **Solution Explorer** and select **Add Reference...**</span></span>
-    -   <span data-ttu-id="abd5d-190">In Visual Studio 2012 - selezionare la casella accanto a **Serialization** e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-190">In Visual Studio 2012 - check the box next to **System.Runtime.Serialization** and click **OK**</span></span>
-    -   <span data-ttu-id="abd5d-191">In Visual Studio 2010 - selezionare **Serialization** e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-191">In Visual Studio 2010 - select **System.Runtime.Serialization** and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-189">Fare clic con il pulsante destro del mouse sul progetto **STESample. Entities** in **Esplora soluzioni** e scegliere **Aggiungi riferimento.**</span><span class="sxs-lookup"><span data-stu-id="16d1d-189">Right click on the **STESample.Entities** project in **Solution Explorer** and select **Add Reference...**</span></span>
+    -   <span data-ttu-id="16d1d-190">In Visual Studio 2012-selezionare la casella accanto a **System. Runtime. Serialization** e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-190">In Visual Studio 2012 - check the box next to **System.Runtime.Serialization** and click **OK**</span></span>
+    -   <span data-ttu-id="16d1d-191">In Visual Studio 2010 selezionare **System. Runtime. Serialization** e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-191">In Visual Studio 2010 - select **System.Runtime.Serialization** and click **OK**</span></span>
 
-<span data-ttu-id="abd5d-192">Infine, il progetto con il contesto in esso sarà necessario un riferimento ai tipi di entità.</span><span class="sxs-lookup"><span data-stu-id="abd5d-192">Finally, the project with our context in it will need a reference to the entity types.</span></span>
+<span data-ttu-id="16d1d-192">Infine, il progetto con il contesto in esso contenuto sarà necessario un riferimento ai tipi di entità.</span><span class="sxs-lookup"><span data-stu-id="16d1d-192">Finally, the project with our context in it will need a reference to the entity types.</span></span>
 
--   <span data-ttu-id="abd5d-193">Fare clic con il pulsante destro sul **STESample** del progetto **Esplora soluzioni** e selezionare **Aggiungi riferimento...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-193">Right click on the **STESample** project in **Solution Explorer** and select **Add Reference...**</span></span>
-    -   <span data-ttu-id="abd5d-194">In Visual Studio 2012 - selezionare **soluzione** nel riquadro sinistro, selezionare la casella accanto a **STESample.Entities** e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-194">In Visual Studio 2012 - select **Solution** from the left pane, check the box next to **STESample.Entities** and click **OK**</span></span>
-    -   <span data-ttu-id="abd5d-195">In Visual Studio 2010 - selezionare il **progetti** scheda, seleziona **STESample.Entities** e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-195">In Visual Studio 2010 - select the **Projects** tab, select **STESample.Entities** and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-193">Fare clic con il pulsante destro del mouse sul progetto **STESample** in **Esplora soluzioni** e scegliere **Aggiungi riferimento.**</span><span class="sxs-lookup"><span data-stu-id="16d1d-193">Right click on the **STESample** project in **Solution Explorer** and select **Add Reference...**</span></span>
+    -   <span data-ttu-id="16d1d-194">In Visual Studio 2012 selezionare **soluzione** nel riquadro a sinistra, selezionare la casella accanto a **STESample. Entities** e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-194">In Visual Studio 2012 - select **Solution** from the left pane, check the box next to **STESample.Entities** and click **OK**</span></span>
+    -   <span data-ttu-id="16d1d-195">In Visual Studio 2010 selezionare la scheda **progetti** , selezionare **STESample. Entities** , quindi fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-195">In Visual Studio 2010 - select the **Projects** tab, select **STESample.Entities** and click **OK**</span></span>
 
 >[!NOTE]
-> <span data-ttu-id="abd5d-196">Un'altra opzione per spostare i tipi di entità in un progetto separato consiste nello spostare il file di modello, anziché il relativo collegamento dalla posizione predefinita.</span><span class="sxs-lookup"><span data-stu-id="abd5d-196">Another option for moving the entity types to a separate project is to move the template file, rather than linking it from its default location.</span></span> <span data-ttu-id="abd5d-197">In questo caso, è necessario aggiornare il **inputFile** variabili nel modello per fornire il percorso relativo al file con estensione edmx (in questo esempio che sarà **.. \\BloggingModel.edmx**).</span><span class="sxs-lookup"><span data-stu-id="abd5d-197">If you do this, you will need to update the **inputFile** variable in the template to provide the relative path to the edmx file (in this example that would be **..\\BloggingModel.edmx**).</span></span>
+> <span data-ttu-id="16d1d-196">Un'altra opzione per spostare i tipi di entità in un progetto separato consiste nello spostare il file modello, anziché collegarlo dal percorso predefinito.</span><span class="sxs-lookup"><span data-stu-id="16d1d-196">Another option for moving the entity types to a separate project is to move the template file, rather than linking it from its default location.</span></span> <span data-ttu-id="16d1d-197">In tal caso, sarà necessario aggiornare la variabile **inputfile** nel modello per fornire il percorso relativo del file edmx, in questo esempio **.. \\BloggingModel. edmx**).</span><span class="sxs-lookup"><span data-stu-id="16d1d-197">If you do this, you will need to update the **inputFile** variable in the template to provide the relative path to the edmx file (in this example that would be **..\\BloggingModel.edmx**).</span></span>
 
-## <a name="create-a-wcf-service"></a><span data-ttu-id="abd5d-198">Creare un servizio WCF</span><span class="sxs-lookup"><span data-stu-id="abd5d-198">Create a WCF Service</span></span>
+## <a name="create-a-wcf-service"></a><span data-ttu-id="16d1d-198">Creazione di un servizio WCF</span><span class="sxs-lookup"><span data-stu-id="16d1d-198">Create a WCF Service</span></span>
 
-<span data-ttu-id="abd5d-199">A questo punto è possibile aggiungere un servizio WCF di esporre i dati, si inizierà creando il progetto.</span><span class="sxs-lookup"><span data-stu-id="abd5d-199">Now it's time to add a WCF Service to expose our data, we'll start by creating the project.</span></span>
+<span data-ttu-id="16d1d-199">A questo punto è possibile aggiungere un servizio WCF per esporre i dati. si inizierà creando il progetto.</span><span class="sxs-lookup"><span data-stu-id="16d1d-199">Now it's time to add a WCF Service to expose our data, we'll start by creating the project.</span></span>
 
--   <span data-ttu-id="abd5d-200">**File -&gt; Add -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-200">**File -&gt; Add -&gt; Project...**</span></span>
--   <span data-ttu-id="abd5d-201">Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione del servizio WCF**</span><span class="sxs-lookup"><span data-stu-id="abd5d-201">Select **Visual C\#** from the left pane and then **WCF Service Application**</span></span>
--   <span data-ttu-id="abd5d-202">Immettere **STESample.Service** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-202">Enter **STESample.Service** as the name and click **OK**</span></span>
--   <span data-ttu-id="abd5d-203">Aggiungere un riferimento per la **Data. Entity** assembly</span><span class="sxs-lookup"><span data-stu-id="abd5d-203">Add a reference to the **System.Data.Entity** assembly</span></span>
--   <span data-ttu-id="abd5d-204">Aggiungere un riferimento per la **STESample** e **STESample.Entities** progetti</span><span class="sxs-lookup"><span data-stu-id="abd5d-204">Add a reference to the **STESample** and **STESample.Entities** projects</span></span>
+-   <span data-ttu-id="16d1d-200">**File-&gt; progetto Add-&gt;...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-200">**File -&gt; Add -&gt; Project...**</span></span>
+-   <span data-ttu-id="16d1d-201">Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione di servizio WCF**</span><span class="sxs-lookup"><span data-stu-id="16d1d-201">Select **Visual C\#** from the left pane and then **WCF Service Application**</span></span>
+-   <span data-ttu-id="16d1d-202">Immettere **STESample. Service** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-202">Enter **STESample.Service** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-203">Aggiungere un riferimento all'assembly **System. Data. Entity**</span><span class="sxs-lookup"><span data-stu-id="16d1d-203">Add a reference to the **System.Data.Entity** assembly</span></span>
+-   <span data-ttu-id="16d1d-204">Aggiungere un riferimento ai progetti **STESample** e **STESample. Entities**</span><span class="sxs-lookup"><span data-stu-id="16d1d-204">Add a reference to the **STESample** and **STESample.Entities** projects</span></span>
 
-<span data-ttu-id="abd5d-205">È necessario copiare la stringa di connessione Entity Framework per questo progetto in modo che si trova in fase di esecuzione.</span><span class="sxs-lookup"><span data-stu-id="abd5d-205">We need to copy the EF connection string to this project so that it is found at runtime.</span></span>
+<span data-ttu-id="16d1d-205">È necessario copiare la stringa di connessione EF in questo progetto in modo che venga individuata in fase di esecuzione.</span><span class="sxs-lookup"><span data-stu-id="16d1d-205">We need to copy the EF connection string to this project so that it is found at runtime.</span></span>
 
--   <span data-ttu-id="abd5d-206">Aprire il **app. config** del file per la \* \* STESample \* \* progetto e copiare la **connectionStrings** elemento</span><span class="sxs-lookup"><span data-stu-id="abd5d-206">Open the **App.Config** file for the \*\*STESample \*\*project and copy the **connectionStrings** element</span></span>
--   <span data-ttu-id="abd5d-207">Incollare il **connectionStrings** come elemento figlio dell'elemento il **configuration** elemento del **Web. config** del file nel **STESample.Service** progetto</span><span class="sxs-lookup"><span data-stu-id="abd5d-207">Paste the **connectionStrings** element as a child element of the **configuration** element of the **Web.Config** file in the **STESample.Service** project</span></span>
+-   <span data-ttu-id="16d1d-206">Aprire il file **app. config** per il progetto **STESample **e copiare l'elemento **connectionStrings**</span><span class="sxs-lookup"><span data-stu-id="16d1d-206">Open the **App.Config** file for the **STESample **project and copy the **connectionStrings** element</span></span>
+-   <span data-ttu-id="16d1d-207">Incollare l'elemento **connectionStrings** come elemento figlio dell'elemento **Configuration** del file **Web. config** nel progetto **STESample. Service**</span><span class="sxs-lookup"><span data-stu-id="16d1d-207">Paste the **connectionStrings** element as a child element of the **configuration** element of the **Web.Config** file in the **STESample.Service** project</span></span>
 
-<span data-ttu-id="abd5d-208">A questo punto è possibile implementare il servizio effettivo.</span><span class="sxs-lookup"><span data-stu-id="abd5d-208">Now it's time to implement the actual service.</span></span>
+<span data-ttu-id="16d1d-208">A questo punto è possibile implementare il servizio effettivo.</span><span class="sxs-lookup"><span data-stu-id="16d1d-208">Now it's time to implement the actual service.</span></span>
 
--   <span data-ttu-id="abd5d-209">Aprire **IService1.cs** e sostituire il contenuto con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="abd5d-209">Open **IService1.cs** and replace the contents with the following code</span></span>
+-   <span data-ttu-id="16d1d-209">Aprire **IService1.cs** e sostituire il contenuto con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="16d1d-209">Open **IService1.cs** and replace the contents with the following code</span></span>
 
 ``` csharp
     using System.Collections.Generic;
@@ -202,7 +202,7 @@ ms.locfileid: "45490274"
     }
 ```
 
--   <span data-ttu-id="abd5d-210">Aprire **Service1.svc** e sostituire il contenuto con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="abd5d-210">Open **Service1.svc** and replace the contents with the following code</span></span>
+-   <span data-ttu-id="16d1d-210">Aprire **Service1. svc** e sostituire il contenuto con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="16d1d-210">Open **Service1.svc** and replace the contents with the following code</span></span>
 
 ``` csharp
     using System;
@@ -255,24 +255,24 @@ ms.locfileid: "45490274"
     }
 ```
 
-## <a name="consume-the-service-from-a-console-application"></a><span data-ttu-id="abd5d-211">Uso del servizio da un'applicazione Console</span><span class="sxs-lookup"><span data-stu-id="abd5d-211">Consume the Service from a Console Application</span></span>
+## <a name="consume-the-service-from-a-console-application"></a><span data-ttu-id="16d1d-211">Utilizzare il servizio da un'applicazione console</span><span class="sxs-lookup"><span data-stu-id="16d1d-211">Consume the Service from a Console Application</span></span>
 
-<span data-ttu-id="abd5d-212">Creare un'applicazione console che usa il nostro servizio.</span><span class="sxs-lookup"><span data-stu-id="abd5d-212">Let's create a console application that uses our service.</span></span>
+<span data-ttu-id="16d1d-212">Viene ora creata un'applicazione console che usa il servizio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-212">Let's create a console application that uses our service.</span></span>
 
--   <span data-ttu-id="abd5d-213">**File -&gt; New -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-213">**File -&gt; New -&gt; Project...**</span></span>
--   <span data-ttu-id="abd5d-214">Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione Console**</span><span class="sxs-lookup"><span data-stu-id="abd5d-214">Select **Visual C\#** from the left pane and then **Console Application**</span></span>
--   <span data-ttu-id="abd5d-215">Immettere **STESample.ConsoleTest** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-215">Enter **STESample.ConsoleTest** as the name and click **OK**</span></span>
--   <span data-ttu-id="abd5d-216">Aggiungere un riferimento per la **STESample.Entities** progetto</span><span class="sxs-lookup"><span data-stu-id="abd5d-216">Add a reference to the **STESample.Entities** project</span></span>
+-   <span data-ttu-id="16d1d-213">**Progetto New-&gt; del file-...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-213">**File -&gt; New -&gt; Project...**</span></span>
+-   <span data-ttu-id="16d1d-214">Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione console**</span><span class="sxs-lookup"><span data-stu-id="16d1d-214">Select **Visual C\#** from the left pane and then **Console Application**</span></span>
+-   <span data-ttu-id="16d1d-215">Immettere **STESample. ConsoleTest** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-215">Enter **STESample.ConsoleTest** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-216">Aggiungere un riferimento al progetto **STESample. Entities**</span><span class="sxs-lookup"><span data-stu-id="16d1d-216">Add a reference to the **STESample.Entities** project</span></span>
 
-<span data-ttu-id="abd5d-217">È necessario un riferimento al nostro servizio WCF</span><span class="sxs-lookup"><span data-stu-id="abd5d-217">We need a service reference to our WCF service</span></span>
+<span data-ttu-id="16d1d-217">È necessario un riferimento al servizio WCF</span><span class="sxs-lookup"><span data-stu-id="16d1d-217">We need a service reference to our WCF service</span></span>
 
--   <span data-ttu-id="abd5d-218">Fare doppio clic sui **STESample.ConsoleTest** del progetto nelle **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-218">Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Add Service Reference...**</span></span>
--   <span data-ttu-id="abd5d-219">Fare clic su **individuare**</span><span class="sxs-lookup"><span data-stu-id="abd5d-219">Click **Discover**</span></span>
--   <span data-ttu-id="abd5d-220">Immettere **BloggingService** come spazio dei nomi e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-220">Enter **BloggingService** as the namespace and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-218">Fare clic con il pulsante destro del mouse sul progetto **STESample. ConsoleTest** in **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-218">Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Add Service Reference...**</span></span>
+-   <span data-ttu-id="16d1d-219">Fare clic su **individua**</span><span class="sxs-lookup"><span data-stu-id="16d1d-219">Click **Discover**</span></span>
+-   <span data-ttu-id="16d1d-220">Immettere **BloggingService** come spazio dei nomi e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-220">Enter **BloggingService** as the namespace and click **OK**</span></span>
 
-<span data-ttu-id="abd5d-221">Sarà quindi possibile scrivere codice per utilizzare il servizio.</span><span class="sxs-lookup"><span data-stu-id="abd5d-221">Now we can write some code to consume the service.</span></span>
+<span data-ttu-id="16d1d-221">A questo punto è possibile scrivere codice per utilizzare il servizio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-221">Now we can write some code to consume the service.</span></span>
 
--   <span data-ttu-id="abd5d-222">Aprire **Program.cs** e sostituire il contenuto con il codice seguente.</span><span class="sxs-lookup"><span data-stu-id="abd5d-222">Open **Program.cs** and replace the contents with the following code.</span></span>
+-   <span data-ttu-id="16d1d-222">Aprire **Program.cs** e sostituire il contenuto con il codice seguente.</span><span class="sxs-lookup"><span data-stu-id="16d1d-222">Open **Program.cs** and replace the contents with the following code.</span></span>
 
 ``` csharp
     using STESample.ConsoleTest.BloggingService;
@@ -399,13 +399,13 @@ ms.locfileid: "45490274"
     }
 ```
 
-<span data-ttu-id="abd5d-223">È ora possibile eseguire l'applicazione per vederla in azione.</span><span class="sxs-lookup"><span data-stu-id="abd5d-223">You can now run the application to see it in action.</span></span>
+<span data-ttu-id="16d1d-223">È ora possibile eseguire l'applicazione per vederla in azione.</span><span class="sxs-lookup"><span data-stu-id="16d1d-223">You can now run the application to see it in action.</span></span>
 
--   <span data-ttu-id="abd5d-224">Fare doppio clic sui **STESample.ConsoleTest** del progetto nelle **Esplora soluzioni** e selezionare **Debug -&gt; Avvia nuova istanza**</span><span class="sxs-lookup"><span data-stu-id="abd5d-224">Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**</span></span>
+-   <span data-ttu-id="16d1d-224">Fare clic con il pulsante destro del mouse sul progetto **STESample. ConsoleTest** in **Esplora soluzioni** e selezionare **debug-&gt; Avvia nuova istanza**</span><span class="sxs-lookup"><span data-stu-id="16d1d-224">Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**</span></span>
 
-<span data-ttu-id="abd5d-225">Si noterà l'output seguente quando viene eseguita l'applicazione.</span><span class="sxs-lookup"><span data-stu-id="abd5d-225">You'll see the following output when the application executes.</span></span>
+<span data-ttu-id="16d1d-225">Quando l'applicazione viene eseguita, verrà visualizzato il seguente output.</span><span class="sxs-lookup"><span data-stu-id="16d1d-225">You'll see the following output when the application executes.</span></span>
 
-```
+```console
 Initial Data:
 ADO.NET Blog
 - Intro to EF
@@ -435,24 +435,24 @@ ADO.NET Blog
 Press any key to exit...
 ```
 
-## <a name="consume-the-service-from-a-wpf-application"></a><span data-ttu-id="abd5d-226">Uso del servizio da un'applicazione WPF</span><span class="sxs-lookup"><span data-stu-id="abd5d-226">Consume the Service from a WPF Application</span></span>
+## <a name="consume-the-service-from-a-wpf-application"></a><span data-ttu-id="16d1d-226">Utilizzare il servizio da un'applicazione WPF</span><span class="sxs-lookup"><span data-stu-id="16d1d-226">Consume the Service from a WPF Application</span></span>
 
-<span data-ttu-id="abd5d-227">Creare un'applicazione WPF che usa il nostro servizio.</span><span class="sxs-lookup"><span data-stu-id="abd5d-227">Let's create a WPF application that uses our service.</span></span>
+<span data-ttu-id="16d1d-227">Viene ora creata un'applicazione WPF che usa il servizio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-227">Let's create a WPF application that uses our service.</span></span>
 
--   <span data-ttu-id="abd5d-228">**File -&gt; New -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-228">**File -&gt; New -&gt; Project...**</span></span>
--   <span data-ttu-id="abd5d-229">Selezionare **Visual C#\#**  nel riquadro a sinistra e quindi **applicazione WPF**</span><span class="sxs-lookup"><span data-stu-id="abd5d-229">Select **Visual C\#** from the left pane and then **WPF Application**</span></span>
--   <span data-ttu-id="abd5d-230">Immettere **STESample.WPFTest** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-230">Enter **STESample.WPFTest** as the name and click **OK**</span></span>
--   <span data-ttu-id="abd5d-231">Aggiungere un riferimento per la **STESample.Entities** progetto</span><span class="sxs-lookup"><span data-stu-id="abd5d-231">Add a reference to the **STESample.Entities** project</span></span>
+-   <span data-ttu-id="16d1d-228">**Progetto New-&gt; del file-...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-228">**File -&gt; New -&gt; Project...**</span></span>
+-   <span data-ttu-id="16d1d-229">Selezionare **Visual C @ no__t-1** dal riquadro a sinistra e quindi **applicazione WPF**</span><span class="sxs-lookup"><span data-stu-id="16d1d-229">Select **Visual C\#** from the left pane and then **WPF Application**</span></span>
+-   <span data-ttu-id="16d1d-230">Immettere **STESample. WPFTest** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-230">Enter **STESample.WPFTest** as the name and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-231">Aggiungere un riferimento al progetto **STESample. Entities**</span><span class="sxs-lookup"><span data-stu-id="16d1d-231">Add a reference to the **STESample.Entities** project</span></span>
 
-<span data-ttu-id="abd5d-232">È necessario un riferimento al nostro servizio WCF</span><span class="sxs-lookup"><span data-stu-id="abd5d-232">We need a service reference to our WCF service</span></span>
+<span data-ttu-id="16d1d-232">È necessario un riferimento al servizio WCF</span><span class="sxs-lookup"><span data-stu-id="16d1d-232">We need a service reference to our WCF service</span></span>
 
--   <span data-ttu-id="abd5d-233">Fare doppio clic sui **STESample.WPFTest** del progetto nelle **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**</span><span class="sxs-lookup"><span data-stu-id="abd5d-233">Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Add Service Reference...**</span></span>
--   <span data-ttu-id="abd5d-234">Fare clic su **individuare**</span><span class="sxs-lookup"><span data-stu-id="abd5d-234">Click **Discover**</span></span>
--   <span data-ttu-id="abd5d-235">Immettere **BloggingService** come spazio dei nomi e fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="abd5d-235">Enter **BloggingService** as the namespace and click **OK**</span></span>
+-   <span data-ttu-id="16d1d-233">Fare clic con il pulsante destro del mouse sul progetto **STESample. WPFTest** in **Esplora soluzioni** e selezionare **Aggiungi riferimento al servizio...**</span><span class="sxs-lookup"><span data-stu-id="16d1d-233">Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Add Service Reference...**</span></span>
+-   <span data-ttu-id="16d1d-234">Fare clic su **individua**</span><span class="sxs-lookup"><span data-stu-id="16d1d-234">Click **Discover**</span></span>
+-   <span data-ttu-id="16d1d-235">Immettere **BloggingService** come spazio dei nomi e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="16d1d-235">Enter **BloggingService** as the namespace and click **OK**</span></span>
 
-<span data-ttu-id="abd5d-236">Sarà quindi possibile scrivere codice per utilizzare il servizio.</span><span class="sxs-lookup"><span data-stu-id="abd5d-236">Now we can write some code to consume the service.</span></span>
+<span data-ttu-id="16d1d-236">A questo punto è possibile scrivere codice per utilizzare il servizio.</span><span class="sxs-lookup"><span data-stu-id="16d1d-236">Now we can write some code to consume the service.</span></span>
 
--   <span data-ttu-id="abd5d-237">Aprire **MainWindow. XAML** e sostituire il contenuto con il codice seguente.</span><span class="sxs-lookup"><span data-stu-id="abd5d-237">Open **MainWindow.xaml** and replace the contents with the following code.</span></span>
+-   <span data-ttu-id="16d1d-237">Aprire **MainWindow. XAML** e sostituire il contenuto con il codice seguente.</span><span class="sxs-lookup"><span data-stu-id="16d1d-237">Open **MainWindow.xaml** and replace the contents with the following code.</span></span>
 
 ``` xaml
     <Window
@@ -496,7 +496,7 @@ Press any key to exit...
     </Window>
 ```
 
--   <span data-ttu-id="abd5d-238">Aprire il code-behind per MainWindow (**MainWindow.xaml.cs**) e sostituire il contenuto con il codice seguente</span><span class="sxs-lookup"><span data-stu-id="abd5d-238">Open the code behind for MainWindow (**MainWindow.xaml.cs**) and replace the contents with the following code</span></span>
+-   <span data-ttu-id="16d1d-238">Aprire il code-behind per MainWindow (**MainWindow.XAML.cs**) e sostituire il contenuto con il codice seguente.</span><span class="sxs-lookup"><span data-stu-id="16d1d-238">Open the code behind for MainWindow (**MainWindow.xaml.cs**) and replace the contents with the following code</span></span>
 
 ``` csharp
     using STESample.WPFTest.BloggingService;
@@ -548,9 +548,9 @@ Press any key to exit...
     }
 ```
 
-<span data-ttu-id="abd5d-239">È ora possibile eseguire l'applicazione per vederla in azione.</span><span class="sxs-lookup"><span data-stu-id="abd5d-239">You can now run the application to see it in action.</span></span>
+<span data-ttu-id="16d1d-239">È ora possibile eseguire l'applicazione per vederla in azione.</span><span class="sxs-lookup"><span data-stu-id="16d1d-239">You can now run the application to see it in action.</span></span>
 
--   <span data-ttu-id="abd5d-240">Fare doppio clic sui **STESample.WPFTest** del progetto nelle **Esplora soluzioni** e selezionare **Debug -&gt; Avvia nuova istanza**</span><span class="sxs-lookup"><span data-stu-id="abd5d-240">Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**</span></span>
--   <span data-ttu-id="abd5d-241">È possibile modificare i dati utilizzando la schermata e salvare il file tramite il servizio utilizzando il **salvare** pulsante</span><span class="sxs-lookup"><span data-stu-id="abd5d-241">You can manipulate the data using the screen and save it via the service using the **Save** button</span></span>
+-   <span data-ttu-id="16d1d-240">Fare clic con il pulsante destro del mouse sul progetto **STESample. WPFTest** in **Esplora soluzioni** e selezionare **debug-&gt; Avvia nuova istanza**</span><span class="sxs-lookup"><span data-stu-id="16d1d-240">Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**</span></span>
+-   <span data-ttu-id="16d1d-241">È possibile modificare i dati usando la schermata e salvarli tramite il servizio usando il pulsante **Salva**</span><span class="sxs-lookup"><span data-stu-id="16d1d-241">You can manipulate the data using the screen and save it via the service using the **Save** button</span></span>
 
-![Finestra principale di WPF](~/ef6/media/wpf.png)
+![Finestra principale WPF](~/ef6/media/wpf.png)

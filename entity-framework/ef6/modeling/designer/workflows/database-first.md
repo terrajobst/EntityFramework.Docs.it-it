@@ -1,65 +1,65 @@
 ---
-title: Prima di tutto - database Entity Framework 6
+title: Database First-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: cc6ffdb3-388d-4e79-a201-01ec2577c949
-ms.openlocfilehash: c81025fe7c3ad6398f003f7be2a3f9f072eec327
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.openlocfilehash: d40cff4ddccf43a394ef4f244653372a5a89b05a
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46284083"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72182457"
 ---
-# <a name="database-first"></a><span data-ttu-id="1c71b-102">Prima di tutto di database</span><span class="sxs-lookup"><span data-stu-id="1c71b-102">Database First</span></span>
-<span data-ttu-id="1c71b-103">Questa procedura dettagliata video e dettagliata forniscono un'introduzione allo sviluppo di Database First con Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="1c71b-103">This video and step-by-step walkthrough provide an introduction to Database First development using Entity Framework.</span></span> <span data-ttu-id="1c71b-104">Database prima di tutto consente di decodificare un modello da un database esistente.</span><span class="sxs-lookup"><span data-stu-id="1c71b-104">Database First allows you to reverse engineer a model from an existing database.</span></span> <span data-ttu-id="1c71b-105">Il modello viene archiviato in un file EDMX (file con estensione edmx) e può essere visualizzato e modificato in Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="1c71b-105">The model is stored in an EDMX file (.edmx extension) and can be viewed and edited in the Entity Framework Designer.</span></span> <span data-ttu-id="1c71b-106">Le classi che si interagiscono con nell'applicazione vengono generate automaticamente dal file con estensione EDMX.</span><span class="sxs-lookup"><span data-stu-id="1c71b-106">The classes that you interact with in your application are automatically generated from the EDMX file.</span></span>
+# <a name="database-first"></a><span data-ttu-id="a5ce6-102">Database First</span><span class="sxs-lookup"><span data-stu-id="a5ce6-102">Database First</span></span>
+<span data-ttu-id="a5ce6-103">Questo video e la procedura dettagliata forniscono un'introduzione allo sviluppo Database First con Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-103">This video and step-by-step walkthrough provide an introduction to Database First development using Entity Framework.</span></span> <span data-ttu-id="a5ce6-104">Database First consente di decompilare un modello da un database esistente.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-104">Database First allows you to reverse engineer a model from an existing database.</span></span> <span data-ttu-id="a5ce6-105">Il modello viene archiviato in un file EDMX (estensione edmx) e può essere visualizzato e modificato nella Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-105">The model is stored in an EDMX file (.edmx extension) and can be viewed and edited in the Entity Framework Designer.</span></span> <span data-ttu-id="a5ce6-106">Le classi con cui si interagisce nell'applicazione vengono generate automaticamente dal file EDMX.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-106">The classes that you interact with in your application are automatically generated from the EDMX file.</span></span>
 
-## <a name="watch-the-video"></a><span data-ttu-id="1c71b-107">Guarda il video</span><span class="sxs-lookup"><span data-stu-id="1c71b-107">Watch the video</span></span>
-<span data-ttu-id="1c71b-108">Questo video viene fornita un'introduzione allo sviluppo di Database First usando Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="1c71b-108">This video provides an introduction to Database First development using Entity Framework.</span></span> <span data-ttu-id="1c71b-109">Database prima di tutto consente di decodificare un modello da un database esistente.</span><span class="sxs-lookup"><span data-stu-id="1c71b-109">Database First allows you to reverse engineer a model from an existing database.</span></span> <span data-ttu-id="1c71b-110">Il modello viene archiviato in un file EDMX (file con estensione edmx) e può essere visualizzato e modificato in Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="1c71b-110">The model is stored in an EDMX file (.edmx extension) and can be viewed and edited in the Entity Framework Designer.</span></span> <span data-ttu-id="1c71b-111">Le classi che si interagiscono con nell'applicazione vengono generate automaticamente dal file con estensione EDMX.</span><span class="sxs-lookup"><span data-stu-id="1c71b-111">The classes that you interact with in your application are automatically generated from the EDMX file.</span></span>
+## <a name="watch-the-video"></a><span data-ttu-id="a5ce6-107">Guarda il video</span><span class="sxs-lookup"><span data-stu-id="a5ce6-107">Watch the video</span></span>
+<span data-ttu-id="a5ce6-108">In questo video viene fornita un'introduzione allo sviluppo Database First tramite Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-108">This video provides an introduction to Database First development using Entity Framework.</span></span> <span data-ttu-id="a5ce6-109">Database First consente di decompilare un modello da un database esistente.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-109">Database First allows you to reverse engineer a model from an existing database.</span></span> <span data-ttu-id="a5ce6-110">Il modello viene archiviato in un file EDMX (estensione edmx) e può essere visualizzato e modificato nella Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-110">The model is stored in an EDMX file (.edmx extension) and can be viewed and edited in the Entity Framework Designer.</span></span> <span data-ttu-id="a5ce6-111">Le classi con cui si interagisce nell'applicazione vengono generate automaticamente dal file EDMX.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-111">The classes that you interact with in your application are automatically generated from the EDMX file.</span></span>
 
-<span data-ttu-id="1c71b-112">**Presentato da**: [Rowan Miller](http://romiller.com/)</span><span class="sxs-lookup"><span data-stu-id="1c71b-112">**Presented By**: [Rowan Miller](http://romiller.com/)</span></span>
+<span data-ttu-id="a5ce6-112">**Presentato da**: [Rowan Miller](https://romiller.com/)</span><span class="sxs-lookup"><span data-stu-id="a5ce6-112">**Presented By**: [Rowan Miller](https://romiller.com/)</span></span>
 
-<span data-ttu-id="1c71b-113">**Video**: [WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)</span><span class="sxs-lookup"><span data-stu-id="1c71b-113">**Video**: [WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)</span></span>
+<span data-ttu-id="a5ce6-113">**Video**: [WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)</span><span class="sxs-lookup"><span data-stu-id="a5ce6-113">**Video**: [WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)</span></span>
 
-## <a name="pre-requisites"></a><span data-ttu-id="1c71b-114">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="1c71b-114">Pre-Requisites</span></span>
+## <a name="pre-requisites"></a><span data-ttu-id="a5ce6-114">Prerequisiti</span><span class="sxs-lookup"><span data-stu-id="a5ce6-114">Pre-Requisites</span></span>
 
-<span data-ttu-id="1c71b-115">È necessario avere almeno Visual Studio 2010 o Visual Studio 2012 è installato per completare questa procedura dettagliata.</span><span class="sxs-lookup"><span data-stu-id="1c71b-115">You will need to have at least Visual Studio 2010 or Visual Studio 2012 installed to complete this walkthrough.</span></span>
+<span data-ttu-id="a5ce6-115">Per completare questa procedura dettagliata, è necessario che sia installato almeno Visual Studio 2010 o Visual Studio 2012.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-115">You will need to have at least Visual Studio 2010 or Visual Studio 2012 installed to complete this walkthrough.</span></span>
 
-<span data-ttu-id="1c71b-116">Se si usa Visual Studio 2010, è necessario anche avere [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installato.</span><span class="sxs-lookup"><span data-stu-id="1c71b-116">If you are using Visual Studio 2010, you will also need to have [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installed.</span></span>
+<span data-ttu-id="a5ce6-116">Se si usa Visual Studio 2010, sarà anche necessario che [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) sia installato.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-116">If you are using Visual Studio 2010, you will also need to have [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installed.</span></span>
 
- 
+ 
 
-## <a name="1-create-an-existing-database"></a><span data-ttu-id="1c71b-117">1. Creare un Database esistente</span><span class="sxs-lookup"><span data-stu-id="1c71b-117">1. Create an Existing Database</span></span>
+## <a name="1-create-an-existing-database"></a><span data-ttu-id="a5ce6-117">1. Creare un database esistente</span><span class="sxs-lookup"><span data-stu-id="a5ce6-117">1. Create an Existing Database</span></span>
 
-<span data-ttu-id="1c71b-118">In genere quando si intende usare un database esistente che verrà già creato, ma per questa procedura dettagliata è necessario creare un database a cui accedere.</span><span class="sxs-lookup"><span data-stu-id="1c71b-118">Typically when you are targeting an existing database it will already be created, but for this walkthrough we need to create a database to access.</span></span>
+<span data-ttu-id="a5ce6-118">In genere, quando si fa riferimento a un database esistente, questo verrà già creato, ma per questa procedura dettagliata è necessario creare un database per accedere a.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-118">Typically when you are targeting an existing database it will already be created, but for this walkthrough we need to create a database to access.</span></span>
 
-<span data-ttu-id="1c71b-119">Il server di database che viene installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:</span><span class="sxs-lookup"><span data-stu-id="1c71b-119">The database server that is installed with Visual Studio is different depending on the version of Visual Studio you have installed:</span></span>
+<span data-ttu-id="a5ce6-119">Il server di database installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:</span><span class="sxs-lookup"><span data-stu-id="a5ce6-119">The database server that is installed with Visual Studio is different depending on the version of Visual Studio you have installed:</span></span>
 
--   <span data-ttu-id="1c71b-120">Se si usa Visual Studio 2010 si creerà un database SQL Express.</span><span class="sxs-lookup"><span data-stu-id="1c71b-120">If you are using Visual Studio 2010 you'll be creating a SQL Express database.</span></span>
--   <span data-ttu-id="1c71b-121">Se si usa Visual Studio 2012, si creerà una [LocalDB](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx) database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-121">If you are using Visual Studio 2012 then you'll be creating a [LocalDB](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx) database.</span></span>
+-   <span data-ttu-id="a5ce6-120">Se si usa Visual Studio 2010 verrà creato un database di SQL Express.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-120">If you are using Visual Studio 2010 you'll be creating a SQL Express database.</span></span>
+-   <span data-ttu-id="a5ce6-121">Se si usa Visual Studio 2012, si creerà un database del database [locale](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx) .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-121">If you are using Visual Studio 2012 then you'll be creating a [LocalDB](https://msdn.microsoft.com/library/hh510202(v=sql.110).aspx) database.</span></span>
 
- 
+ 
 
-<span data-ttu-id="1c71b-122">È possibile procedere e generare il database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-122">Let's go ahead and generate the database.</span></span>
+<span data-ttu-id="a5ce6-122">Procediamo con la generazione del database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-122">Let's go ahead and generate the database.</span></span>
 
--   <span data-ttu-id="1c71b-123">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="1c71b-123">Open Visual Studio</span></span>
--   <span data-ttu-id="1c71b-124">**Visualizzazione -&gt; Esplora Server**</span><span class="sxs-lookup"><span data-stu-id="1c71b-124">**View -&gt; Server Explorer**</span></span>
--   <span data-ttu-id="1c71b-125">Fare clic con il pulsante destro sul **connessioni dati -&gt; Aggiungi connessione...**</span><span class="sxs-lookup"><span data-stu-id="1c71b-125">Right click on **Data Connections -&gt; Add Connection…**</span></span>
--   <span data-ttu-id="1c71b-126">Se si è ancora connessi a un database da Esplora Server prima che è necessario selezionare Microsoft SQL Server come origine dati</span><span class="sxs-lookup"><span data-stu-id="1c71b-126">If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source</span></span>
+-   <span data-ttu-id="a5ce6-123">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="a5ce6-123">Open Visual Studio</span></span>
+-   <span data-ttu-id="a5ce6-124">**Visualizzazione-&gt; Esplora server**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-124">**View -&gt; Server Explorer**</span></span>
+-   <span data-ttu-id="a5ce6-125">Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-125">Right click on **Data Connections -&gt; Add Connection…**</span></span>
+-   <span data-ttu-id="a5ce6-126">Se non si è connessi a un database da Esplora server prima di selezionare Microsoft SQL Server come origine dati</span><span class="sxs-lookup"><span data-stu-id="a5ce6-126">If you haven’t connected to a database from Server Explorer before you’ll need to select Microsoft SQL Server as the data source</span></span>
 
-    ![Seleziona l'origine dati](~/ef6/media/selectdatasource.png)
+    ![Seleziona origine dati](~/ef6/media/selectdatasource.png)
 
--   <span data-ttu-id="1c71b-128">Connettersi a LocalDB o SQL Express, in base alla quale è stato installato e immettere **DatabaseFirst.Blogging** come nome del database</span><span class="sxs-lookup"><span data-stu-id="1c71b-128">Connect to either LocalDB or SQL Express, depending on which one you have installed, and enter **DatabaseFirst.Blogging** as the database name</span></span>
+-   <span data-ttu-id="a5ce6-128">Connettersi al database locale o a SQL Express, a seconda di quale installato e immettere **DatabaseFirst. blogging** come nome del database</span><span class="sxs-lookup"><span data-stu-id="a5ce6-128">Connect to either LocalDB or SQL Express, depending on which one you have installed, and enter **DatabaseFirst.Blogging** as the database name</span></span>
 
-    ![Connessione di SQL Express DF](~/ef6/media/sqlexpressconnectiondf.png)
+    ![Connessione SQL Express DF](~/ef6/media/sqlexpressconnectiondf.png)
 
-    ![Connessione di Local DB DF](~/ef6/media/localdbconnectiondf.png)
+    ![Connessione database locale DF](~/ef6/media/localdbconnectiondf.png)
 
--   <span data-ttu-id="1c71b-131">Selezionare **OK** e verrà richiesto se si desidera creare un nuovo database, selezionare **Sì**</span><span class="sxs-lookup"><span data-stu-id="1c71b-131">Select **OK** and you will be asked if you want to create a new database, select **Yes**</span></span>
+-   <span data-ttu-id="a5ce6-131">Selezionare **OK** . verrà richiesto se si desidera creare un nuovo database, selezionare **Sì** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-131">Select **OK** and you will be asked if you want to create a new database, select **Yes**</span></span>
 
-    ![Creare una finestra di dialogo Database](~/ef6/media/createdatabasedialog.png)
+    ![Finestra di dialogo Crea database](~/ef6/media/createdatabasedialog.png)
 
--   <span data-ttu-id="1c71b-133">Il nuovo database verrà ora visualizzato in Esplora Server, su di esso e scegliere **nuova Query**</span><span class="sxs-lookup"><span data-stu-id="1c71b-133">The new database will now appear in Server Explorer, right-click on it and select **New Query**</span></span>
--   <span data-ttu-id="1c71b-134">Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**</span><span class="sxs-lookup"><span data-stu-id="1c71b-134">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
+-   <span data-ttu-id="a5ce6-133">Il nuovo database verrà ora visualizzato in Esplora server, fare clic con il pulsante destro del mouse su di esso e scegliere **nuova query** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-133">The new database will now appear in Server Explorer, right-click on it and select **New Query**</span></span>
+-   <span data-ttu-id="a5ce6-134">Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-134">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
 
 ``` SQL
 CREATE TABLE [dbo].[Blogs] (
@@ -79,78 +79,78 @@ CREATE TABLE [dbo].[Posts] (
 );
 ```
 
-## <a name="2-create-the-application"></a><span data-ttu-id="1c71b-135">2. Creare l'applicazione</span><span class="sxs-lookup"><span data-stu-id="1c71b-135">2. Create the Application</span></span>
+## <a name="2-create-the-application"></a><span data-ttu-id="a5ce6-135">2. Creare l'applicazione</span><span class="sxs-lookup"><span data-stu-id="a5ce6-135">2. Create the Application</span></span>
 
-<span data-ttu-id="1c71b-136">Per semplificare le operazioni verranno creare un'applicazione console di base che usa il Database First di eseguire l'accesso ai dati:</span><span class="sxs-lookup"><span data-stu-id="1c71b-136">To keep things simple we’re going to build a basic console application that uses the Database First to perform data access:</span></span>
+<span data-ttu-id="a5ce6-136">Per semplificare le operazioni, verrà compilata un'applicazione console di base che usa il Database First per eseguire l'accesso ai dati:</span><span class="sxs-lookup"><span data-stu-id="a5ce6-136">To keep things simple we’re going to build a basic console application that uses the Database First to perform data access:</span></span>
 
--   <span data-ttu-id="1c71b-137">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="1c71b-137">Open Visual Studio</span></span>
--   <span data-ttu-id="1c71b-138">**File -&gt; New -&gt; progetto...**</span><span class="sxs-lookup"><span data-stu-id="1c71b-138">**File -&gt; New -&gt; Project…**</span></span>
--   <span data-ttu-id="1c71b-139">Selezionare **Windows** nel menu a sinistra e **applicazione Console**</span><span class="sxs-lookup"><span data-stu-id="1c71b-139">Select **Windows** from the left menu and **Console Application**</span></span>
--   <span data-ttu-id="1c71b-140">Immettere **DatabaseFirstSample** come nome</span><span class="sxs-lookup"><span data-stu-id="1c71b-140">Enter **DatabaseFirstSample** as the name</span></span>
--   <span data-ttu-id="1c71b-141">Scegliere **OK**.</span><span class="sxs-lookup"><span data-stu-id="1c71b-141">Select **OK**</span></span>
+-   <span data-ttu-id="a5ce6-137">Aprire Visual Studio</span><span class="sxs-lookup"><span data-stu-id="a5ce6-137">Open Visual Studio</span></span>
+-   <span data-ttu-id="a5ce6-138">**Progetto New-&gt; del file-...**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-138">**File -&gt; New -&gt; Project…**</span></span>
+-   <span data-ttu-id="a5ce6-139">Selezionare **Windows** nel menu a sinistra e nell' **applicazione console**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-139">Select **Windows** from the left menu and **Console Application**</span></span>
+-   <span data-ttu-id="a5ce6-140">Immettere **DatabaseFirstSample** come nome</span><span class="sxs-lookup"><span data-stu-id="a5ce6-140">Enter **DatabaseFirstSample** as the name</span></span>
+-   <span data-ttu-id="a5ce6-141">Scegliere **OK**.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-141">Select **OK**</span></span>
 
- 
+ 
 
-## <a name="3-reverse-engineer-model"></a><span data-ttu-id="1c71b-142">3. Modelli di reverse engineering</span><span class="sxs-lookup"><span data-stu-id="1c71b-142">3. Reverse Engineer Model</span></span>
+## <a name="3-reverse-engineer-model"></a><span data-ttu-id="a5ce6-142">3. Decodificare il modello</span><span class="sxs-lookup"><span data-stu-id="a5ce6-142">3. Reverse Engineer Model</span></span>
 
-<span data-ttu-id="1c71b-143">Dobbiamo usare Entity Framework Designer, che è incluso come parte di Visual Studio, per creare il modello.</span><span class="sxs-lookup"><span data-stu-id="1c71b-143">We’re going to make use of Entity Framework Designer, which is included as part of Visual Studio, to create our model.</span></span>
+<span data-ttu-id="a5ce6-143">Per creare il modello, verrà usato Entity Framework Designer, incluso come parte di Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-143">We’re going to make use of Entity Framework Designer, which is included as part of Visual Studio, to create our model.</span></span>
 
--   <span data-ttu-id="1c71b-144">**Progetto -&gt; Aggiungi nuovo elemento...**</span><span class="sxs-lookup"><span data-stu-id="1c71b-144">**Project -&gt; Add New Item…**</span></span>
--   <span data-ttu-id="1c71b-145">Selezionare **Data** nel menu a sinistra e quindi **ADO.NET Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="1c71b-145">Select **Data** from the left menu and then **ADO.NET Entity Data Model**</span></span>
--   <span data-ttu-id="1c71b-146">Immettere **BloggingModel** come nome, quindi fare clic su **OK**</span><span class="sxs-lookup"><span data-stu-id="1c71b-146">Enter **BloggingModel** as the name and click **OK**</span></span>
--   <span data-ttu-id="1c71b-147">Verrà avviata la **procedura guidata Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="1c71b-147">This launches the **Entity Data Model Wizard**</span></span>
--   <span data-ttu-id="1c71b-148">Selezionare **genera da Database** e fare clic su **successivo**</span><span class="sxs-lookup"><span data-stu-id="1c71b-148">Select **Generate from Database** and click **Next**</span></span>
+-   <span data-ttu-id="a5ce6-144">**Progetto-&gt; Aggiungi nuovo elemento...**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-144">**Project -&gt; Add New Item…**</span></span>
+-   <span data-ttu-id="a5ce6-145">Selezionare **dati** dal menu a sinistra e quindi **ADO.NET Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-145">Select **Data** from the left menu and then **ADO.NET Entity Data Model**</span></span>
+-   <span data-ttu-id="a5ce6-146">Immettere **BloggingModel** come nome e fare clic su **OK** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-146">Enter **BloggingModel** as the name and click **OK**</span></span>
+-   <span data-ttu-id="a5ce6-147">Viene avviata la **procedura guidata Entity Data Model**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-147">This launches the **Entity Data Model Wizard**</span></span>
+-   <span data-ttu-id="a5ce6-148">Selezionare **genera da database** e fare clic su **Avanti** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-148">Select **Generate from Database** and click **Next**</span></span>
 
-    ![Passaggio della procedura guidata 1](~/ef6/media/wizardstep1.png)
+    ![Passaggio 1 della procedura guidata](~/ef6/media/wizardstep1.png)
 
--   <span data-ttu-id="1c71b-150">Selezionare la connessione al database creato nella prima sezione, immettere **BloggingContext** come nome della stringa di connessione, scegliere **successivo**</span><span class="sxs-lookup"><span data-stu-id="1c71b-150">Select the connection to the database you created in the first section, enter **BloggingContext** as the name of the connection string and click **Next**</span></span>
+-   <span data-ttu-id="a5ce6-150">Selezionare la connessione al database creato nella prima sezione, immettere **BloggingContext** come nome della stringa di connessione e fare clic su **Avanti** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-150">Select the connection to the database you created in the first section, enter **BloggingContext** as the name of the connection string and click **Next**</span></span>
 
-    ![Passaggio della procedura guidata 2](~/ef6/media/wizardstep2.png)
+    ![Passaggio 2 della procedura guidata](~/ef6/media/wizardstep2.png)
 
--   <span data-ttu-id="1c71b-152">Selezionare la casella di controllo accanto a 'Tabelle' per importare tutte le tabelle e fare clic su 'Fine'</span><span class="sxs-lookup"><span data-stu-id="1c71b-152">Click the checkbox next to ‘Tables’ to import all tables and click ‘Finish’</span></span>
+-   <span data-ttu-id="a5ce6-152">Fare clic sulla casella di controllo accanto a' Tables ' per importare tutte le tabelle e fare clic su' Finish '</span><span class="sxs-lookup"><span data-stu-id="a5ce6-152">Click the checkbox next to ‘Tables’ to import all tables and click ‘Finish’</span></span>
 
-    ![Passaggio della procedura guidata 3](~/ef6/media/wizardstep3.png)
+    ![Passaggio 3 della procedura guidata](~/ef6/media/wizardstep3.png)
 
- 
+ 
 
-<span data-ttu-id="1c71b-154">Una volta completato il processo di reverse engineering il nuovo modello viene aggiunto al progetto e aperto per la visualizzazione in Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="1c71b-154">Once the reverse engineer process completes the new model is added to your project and opened up for you to view in the Entity Framework Designer.</span></span> <span data-ttu-id="1c71b-155">Un file app. config è stato aggiunto anche al progetto con i dettagli della connessione per il database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-155">An App.config file has also been added to your project with the connection details for the database.</span></span>
+<span data-ttu-id="a5ce6-154">Una volta completato il processo di Reverse Engineering, il nuovo modello viene aggiunto al progetto e aperto per la visualizzazione nel Entity Framework Designer.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-154">Once the reverse engineer process completes the new model is added to your project and opened up for you to view in the Entity Framework Designer.</span></span> <span data-ttu-id="a5ce6-155">Al progetto è stato aggiunto anche un file app. config con i dettagli della connessione per il database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-155">An App.config file has also been added to your project with the connection details for the database.</span></span>
 
 ![Modello iniziale](~/ef6/media/modelinitial.png)
 
-### <a name="additional-steps-in-visual-studio-2010"></a><span data-ttu-id="1c71b-157">Passaggi aggiuntivi in Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="1c71b-157">Additional Steps in Visual Studio 2010</span></span>
+### <a name="additional-steps-in-visual-studio-2010"></a><span data-ttu-id="a5ce6-157">Passaggi aggiuntivi in Visual Studio 2010</span><span class="sxs-lookup"><span data-stu-id="a5ce6-157">Additional Steps in Visual Studio 2010</span></span>
 
-<span data-ttu-id="1c71b-158">Se si lavora in Visual Studio 2010, esistono alcuni passaggi aggiuntivi da seguire per eseguire l'aggiornamento alla versione più recente di Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="1c71b-158">If you are working in Visual Studio 2010 there are some additional steps you need to follow to upgrade to the latest version of Entity Framework.</span></span> <span data-ttu-id="1c71b-159">L'aggiornamento è importante perché consente di accedere a una superficie dell'API migliorata, che è molto più semplice da utilizzare, nonché le correzioni di bug più recenti.</span><span class="sxs-lookup"><span data-stu-id="1c71b-159">Upgrading is important because it gives you access to an improved API surface, that is much easier to use, as well as the latest bug fixes.</span></span>
+<span data-ttu-id="a5ce6-158">Se si lavora in Visual Studio 2010, è necessario seguire alcuni passaggi aggiuntivi per eseguire l'aggiornamento alla versione più recente di Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-158">If you are working in Visual Studio 2010 there are some additional steps you need to follow to upgrade to the latest version of Entity Framework.</span></span> <span data-ttu-id="a5ce6-159">L'aggiornamento è importante perché consente di accedere a una superficie API migliorata, molto più semplice da usare, nonché le correzioni di bug più recenti.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-159">Upgrading is important because it gives you access to an improved API surface, that is much easier to use, as well as the latest bug fixes.</span></span>
 
-<span data-ttu-id="1c71b-160">Innanzitutto, è necessario ottenere la versione più recente di Entity Framework da NuGet.</span><span class="sxs-lookup"><span data-stu-id="1c71b-160">First up, we need to get the latest version of Entity Framework from NuGet.</span></span>
+<span data-ttu-id="a5ce6-160">Prima di tutto, è necessario ottenere la versione più recente di Entity Framework da NuGet.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-160">First up, we need to get the latest version of Entity Framework from NuGet.</span></span>
 
--   <span data-ttu-id="1c71b-161">\*\*Progetto –&gt; Gestisci pacchetti NuGet... \*\* 
-     \*Se non si dispone di \**Gestisci pacchetti NuGet... \*\* opzione, è necessario installare il [versione più recente di NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)*</span><span class="sxs-lookup"><span data-stu-id="1c71b-161">**Project –&gt; Manage NuGet Packages…**
+-   <span data-ttu-id="a5ce6-161">**Progetto-&gt; Gestisci pacchetti NuGet...** 
+    \*se non si ha l'opzione **Gestisci pacchetti NuGet...** è necessario installare la [versione più recente di NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) \*</span><span class="sxs-lookup"><span data-stu-id="a5ce6-161">**Project –&gt; Manage NuGet Packages…**
 *If you don’t have the **Manage NuGet Packages…** option you should install the [latest version of NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)*</span></span>
--   <span data-ttu-id="1c71b-162">Selezionare il **Online** scheda</span><span class="sxs-lookup"><span data-stu-id="1c71b-162">Select the **Online** tab</span></span>
--   <span data-ttu-id="1c71b-163">Selezionare il **EntityFramework** pacchetto</span><span class="sxs-lookup"><span data-stu-id="1c71b-163">Select the **EntityFramework** package</span></span>
--   <span data-ttu-id="1c71b-164">Fare clic su **installare**</span><span class="sxs-lookup"><span data-stu-id="1c71b-164">Click **Install**</span></span>
+-   <span data-ttu-id="a5ce6-162">Selezionare la scheda **online**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-162">Select the **Online** tab</span></span>
+-   <span data-ttu-id="a5ce6-163">Selezionare il pacchetto **EntityFramework**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-163">Select the **EntityFramework** package</span></span>
+-   <span data-ttu-id="a5ce6-164">Fare clic su **Installa**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-164">Click **Install**</span></span>
 
-<span data-ttu-id="1c71b-165">Successivamente, è necessario scambiare il nostro modello per generare il codice che usa l'API DbContext, che è stato introdotto nelle versioni più recenti di Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="1c71b-165">Next, we need to swap our model to generate code that makes use of the DbContext API, which was introduced in later versions of Entity Framework.</span></span>
+<span data-ttu-id="a5ce6-165">Successivamente, è necessario scambiare il modello per generare il codice che usa l'API DbContext, introdotta nelle versioni successive di Entity Framework.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-165">Next, we need to swap our model to generate code that makes use of the DbContext API, which was introduced in later versions of Entity Framework.</span></span>
 
--   <span data-ttu-id="1c71b-166">Fare clic su un punto vuoto del modello in Entity Framework Designer e selezionare **Aggiungi elemento di generazione di codice...**</span><span class="sxs-lookup"><span data-stu-id="1c71b-166">Right-click on an empty spot of your model in the EF Designer and select **Add Code Generation Item…**</span></span>
--   <span data-ttu-id="1c71b-167">Selezionare **modelli Online** dal menu a sinistra e cercare **DbContext**</span><span class="sxs-lookup"><span data-stu-id="1c71b-167">Select **Online Templates** from the left menu and search for **DbContext**</span></span>
--   <span data-ttu-id="1c71b-168">Selezionare il EF **5.x generatore di DbContext per C\#**, immettere **BloggingModel** come nome, quindi fare clic su **Add**</span><span class="sxs-lookup"><span data-stu-id="1c71b-168">Select the EF **5.x DbContext Generator for C\#**, enter **BloggingModel** as the name and click **Add**</span></span>
+-   <span data-ttu-id="a5ce6-166">Fare clic con il pulsante destro del mouse su un punto vuoto del modello nella finestra di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-166">Right-click on an empty spot of your model in the EF Designer and select **Add Code Generation Item…**</span></span>
+-   <span data-ttu-id="a5ce6-167">Selezionare **modelli online** dal menu a sinistra e cercare **DbContext**</span><span class="sxs-lookup"><span data-stu-id="a5ce6-167">Select **Online Templates** from the left menu and search for **DbContext**</span></span>
+-   <span data-ttu-id="a5ce6-168">Selezionare il **Generatore EF 5. x DbContext per C @ no__t-1**, immettere **BloggingModel** come nome e fare clic su **Aggiungi** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-168">Select the EF **5.x DbContext Generator for C\#**, enter **BloggingModel** as the name and click **Add**</span></span>
 
-    ![Modello di DbContext](~/ef6/media/dbcontexttemplate.png)
+    ![Modello DbContext](~/ef6/media/dbcontexttemplate.png)
 
- 
+ 
 
-## <a name="4-reading--writing-data"></a><span data-ttu-id="1c71b-170">4. La lettura e scrittura dei dati</span><span class="sxs-lookup"><span data-stu-id="1c71b-170">4. Reading & Writing Data</span></span>
+## <a name="4-reading--writing-data"></a><span data-ttu-id="a5ce6-170">4. Lettura & scrittura di dati</span><span class="sxs-lookup"><span data-stu-id="a5ce6-170">4. Reading & Writing Data</span></span>
 
-<span data-ttu-id="1c71b-171">Ora che abbiamo un modello è possibile usarlo per accedere ai dati.</span><span class="sxs-lookup"><span data-stu-id="1c71b-171">Now that we have a model it’s time to use it to access some data.</span></span> <span data-ttu-id="1c71b-172">Le classi andremo a utilizzare per accedere ai dati vengono generati automaticamente in base al file con estensione EDMX.</span><span class="sxs-lookup"><span data-stu-id="1c71b-172">The classes we are going to use to access data are being automatically generated for you based on the EDMX file.</span></span>
+<span data-ttu-id="a5ce6-171">Ora che è disponibile un modello, è possibile usarlo per accedere ai dati.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-171">Now that we have a model it’s time to use it to access some data.</span></span> <span data-ttu-id="a5ce6-172">Le classi da usare per accedere ai dati vengono automaticamente generate in base al file EDMX.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-172">The classes we are going to use to access data are being automatically generated for you based on the EDMX file.</span></span>
 
-<span data-ttu-id="1c71b-173">*Questa schermata è da Visual Studio 2012, se si usa Visual Studio 2010 il BloggingModel.tt e file BloggingModel.Context.tt saranno direttamente sotto il progetto anziché da annidato in file con estensione EDMX.*</span><span class="sxs-lookup"><span data-stu-id="1c71b-173">*This screen shot is from Visual Studio 2012, if you are using Visual Studio 2010 the BloggingModel.tt and BloggingModel.Context.tt files will be directly under your project rather than nested under the EDMX file.*</span></span>
+<span data-ttu-id="a5ce6-173">*Questa schermata è da Visual Studio 2012. Se si usa Visual Studio 2010, i file BloggingModel.tt e BloggingModel.Context.tt saranno direttamente nel progetto anziché annidati nel file EDMX.*</span><span class="sxs-lookup"><span data-stu-id="a5ce6-173">*This screen shot is from Visual Studio 2012, if you are using Visual Studio 2010 the BloggingModel.tt and BloggingModel.Context.tt files will be directly under your project rather than nested under the EDMX file.*</span></span>
 
 ![Classi generate DF](~/ef6/media/generatedclassesdf.png)
 
- 
+ 
 
-<span data-ttu-id="1c71b-175">Implementare il metodo Main in Program.cs, come illustrato di seguito.</span><span class="sxs-lookup"><span data-stu-id="1c71b-175">Implement the Main method in Program.cs as shown below.</span></span> <span data-ttu-id="1c71b-176">Questo codice crea una nuova istanza del contesto e quindi lo usa per inserire un nuovo post di Blog.</span><span class="sxs-lookup"><span data-stu-id="1c71b-176">This code creates a new instance of our context and then uses it to insert a new Blog.</span></span> <span data-ttu-id="1c71b-177">Usa quindi una query LINQ per recuperare tutti i blog dal database ordinato alfabeticamente in base al titolo.</span><span class="sxs-lookup"><span data-stu-id="1c71b-177">Then it uses a LINQ query to retrieve all Blogs from the database ordered alphabetically by Title.</span></span>
+<span data-ttu-id="a5ce6-175">Implementare il metodo Main in Program.cs, come illustrato di seguito.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-175">Implement the Main method in Program.cs as shown below.</span></span> <span data-ttu-id="a5ce6-176">Questo codice crea una nuova istanza del contesto e la usa per inserire un nuovo blog.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-176">This code creates a new instance of our context and then uses it to insert a new Blog.</span></span> <span data-ttu-id="a5ce6-177">USA quindi una query LINQ per recuperare tutti i Blog dal database ordinati alfabeticamente in base al titolo.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-177">Then it uses a LINQ query to retrieve all Blogs from the database ordered alphabetically by Title.</span></span>
 
 ``` csharp
 class Program
@@ -185,24 +185,24 @@ class Program
 }
 ```
 
-<span data-ttu-id="1c71b-178">È ora possibile eseguire l'applicazione e testarlo.</span><span class="sxs-lookup"><span data-stu-id="1c71b-178">You can now run the application and test it out.</span></span>
+<span data-ttu-id="a5ce6-178">È ora possibile eseguire l'applicazione ed eseguirne il test.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-178">You can now run the application and test it out.</span></span>
 
-```
+```console
 Enter a name for a new Blog: ADO.NET Blog
 All blogs in the database:
 ADO.NET Blog
 Press any key to exit...
 ```
- 
+ 
 
-## <a name="5-dealing-with-database-changes"></a><span data-ttu-id="1c71b-179">5. Gestione di modifiche del Database</span><span class="sxs-lookup"><span data-stu-id="1c71b-179">5. Dealing with Database Changes</span></span>
+## <a name="5-dealing-with-database-changes"></a><span data-ttu-id="a5ce6-179">5. Gestione delle modifiche del database</span><span class="sxs-lookup"><span data-stu-id="a5ce6-179">5. Dealing with Database Changes</span></span>
 
-<span data-ttu-id="1c71b-180">A questo punto è possibile apportare alcune modifiche per lo schema di database, quando si apportano queste modifiche è necessario anche aggiornare il modello per riflettere tali modifiche.</span><span class="sxs-lookup"><span data-stu-id="1c71b-180">Now it’s time to make some changes to our database schema, when we make these changes we also need to update our model to reflect those changes.</span></span>
+<span data-ttu-id="a5ce6-180">A questo punto è possibile apportare alcune modifiche allo schema del database. quando si apportano queste modifiche, è necessario aggiornare il modello in modo da riflettere le modifiche.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-180">Now it’s time to make some changes to our database schema, when we make these changes we also need to update our model to reflect those changes.</span></span>
 
-<span data-ttu-id="1c71b-181">Il primo passaggio è necessario apportare modifiche allo schema del database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-181">The first step is to make some changes to the database schema.</span></span> <span data-ttu-id="1c71b-182">Dobbiamo aggiungere una tabella di utenti allo schema.</span><span class="sxs-lookup"><span data-stu-id="1c71b-182">We’re going to add a Users table to the schema.</span></span>
+<span data-ttu-id="a5ce6-181">Il primo passaggio consiste nel apportare alcune modifiche allo schema del database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-181">The first step is to make some changes to the database schema.</span></span> <span data-ttu-id="a5ce6-182">Verrà aggiunta una tabella users allo schema.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-182">We’re going to add a Users table to the schema.</span></span>
 
--   <span data-ttu-id="1c71b-183">Fare clic sui **DatabaseFirst.Blogging** del database in Esplora Server e selezionare **nuova Query**</span><span class="sxs-lookup"><span data-stu-id="1c71b-183">Right-click on the **DatabaseFirst.Blogging** database in Server Explorer and select **New Query**</span></span>
--   <span data-ttu-id="1c71b-184">Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**</span><span class="sxs-lookup"><span data-stu-id="1c71b-184">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
+-   <span data-ttu-id="a5ce6-183">Fare clic con il pulsante destro del mouse sul database **DatabaseFirst. blogging** in Esplora server e selezionare **nuova query** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-183">Right-click on the **DatabaseFirst.Blogging** database in Server Explorer and select **New Query**</span></span>
+-   <span data-ttu-id="a5ce6-184">Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .</span><span class="sxs-lookup"><span data-stu-id="a5ce6-184">Copy the following SQL into the new query, then right-click on the query and select **Execute**</span></span>
 
 ``` SQL
 CREATE TABLE [dbo].[Users]
@@ -212,22 +212,22 @@ CREATE TABLE [dbo].[Users]
 )
 ```
 
-<span data-ttu-id="1c71b-185">Ora che lo schema viene aggiornato, è possibile aggiornare il modello con tali modifiche.</span><span class="sxs-lookup"><span data-stu-id="1c71b-185">Now that the schema is updated, it’s time to update the model with those changes.</span></span>
+<span data-ttu-id="a5ce6-185">Ora che lo schema è stato aggiornato, è necessario aggiornare il modello con tali modifiche.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-185">Now that the schema is updated, it’s time to update the model with those changes.</span></span>
 
--   <span data-ttu-id="1c71b-186">Fare clic su un punto vuoto del modello in Entity Framework Designer e selezionare 'Aggiorna modello da Database... ', verrà avviata la procedura guidata Aggiorna</span><span class="sxs-lookup"><span data-stu-id="1c71b-186">Right-click on an empty spot of your model in the EF Designer and select ‘Update Model from Database…’, this will launch the Update Wizard</span></span>
--   <span data-ttu-id="1c71b-187">Nella scheda Aggiungi dei controlli effettuati dalla procedura guidata Aggiorna la casella accanto alle tabelle, ciò indica che si desidera aggiungere nuove tabelle dallo schema.</span><span class="sxs-lookup"><span data-stu-id="1c71b-187">On the Add tab of the Update Wizard check the box next to Tables, this indicates that we want to add any new tables from the schema.</span></span>
-    <span data-ttu-id="1c71b-188">*La scheda aggiornamento Mostra le tabelle esistenti nel modello che verrà controllato per le modifiche durante l'aggiornamento. Le schede Delete mostrano tutte le tabelle che sono stati rimossi dallo schema e verranno anche rimosso dal modello come parte dell'aggiornamento. Le informazioni su queste due schede viene rilevate automaticamente e viene fornite esclusivamente per scopi informativi, è possibile modificare le impostazioni.*</span><span class="sxs-lookup"><span data-stu-id="1c71b-188">*The Refresh tab shows any existing tables in the model that will be checked for changes during the update. The Delete tabs show any tables that have been removed from the schema and will also be removed from the model as part of the update. The information on these two tabs is automatically detected and is provided for informational purposes only, you cannot change any settings.*</span></span>
+-   <span data-ttu-id="a5ce6-186">Fare clic con il pulsante destro del mouse su un punto vuoto del modello nella finestra di progettazione EF e selezionare "Aggiorna modello da database". verrà avviata l'aggiornamento guidato</span><span class="sxs-lookup"><span data-stu-id="a5ce6-186">Right-click on an empty spot of your model in the EF Designer and select ‘Update Model from Database…’, this will launch the Update Wizard</span></span>
+-   <span data-ttu-id="a5ce6-187">Nella scheda Aggiungi della procedura guidata di aggiornamento selezionare la casella accanto a tabelle per indicare che si desidera aggiungere nuove tabelle dallo schema.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-187">On the Add tab of the Update Wizard check the box next to Tables, this indicates that we want to add any new tables from the schema.</span></span>
+    <span data-ttu-id="a5ce6-188">*The scheda aggiornamento Mostra tutte le tabelle esistenti nel modello di cui verrà verificata la presenza di modifiche durante l'aggiornamento. Le schede Elimina visualizzano tutte le tabelle che sono state rimosse dallo schema e verranno rimosse anche dal modello come parte dell'aggiornamento. Le informazioni su queste due schede vengono rilevate automaticamente e fornite solo a scopo informativo. non è possibile modificare le impostazioni.*</span><span class="sxs-lookup"><span data-stu-id="a5ce6-188">*The Refresh tab shows any existing tables in the model that will be checked for changes during the update. The Delete tabs show any tables that have been removed from the schema and will also be removed from the model as part of the update. The information on these two tabs is automatically detected and is provided for informational purposes only, you cannot change any settings.*</span></span>
 
-    ![Procedura guidata di aggiornamento](~/ef6/media/refreshwizard.png)
+    ![Aggiornamento guidato](~/ef6/media/refreshwizard.png)
 
--   <span data-ttu-id="1c71b-190">Fare clic su Fine della procedura guidata aggiornamento</span><span class="sxs-lookup"><span data-stu-id="1c71b-190">Click Finish on the Update Wizard</span></span>
+-   <span data-ttu-id="a5ce6-190">Fare clic su fine nell'aggiornamento guidato</span><span class="sxs-lookup"><span data-stu-id="a5ce6-190">Click Finish on the Update Wizard</span></span>
 
- 
+ 
 
-<span data-ttu-id="1c71b-191">Il modello è ora aggiornato per includere una nuova entità utente che esegue il mapping alla tabella Users che viene aggiunto al database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-191">The model is now updated to include a new User entity that maps to the Users table we added to the database.</span></span>
+<span data-ttu-id="a5ce6-191">Il modello è ora aggiornato per includere una nuova entità utente mappata alla tabella users aggiunta al database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-191">The model is now updated to include a new User entity that maps to the Users table we added to the database.</span></span>
 
 ![Modello aggiornato](~/ef6/media/modelupdated.png)
 
-## <a name="summary"></a><span data-ttu-id="1c71b-193">Riepilogo</span><span class="sxs-lookup"><span data-stu-id="1c71b-193">Summary</span></span>
+## <a name="summary"></a><span data-ttu-id="a5ce6-193">Riepilogo</span><span class="sxs-lookup"><span data-stu-id="a5ce6-193">Summary</span></span>
 
-<span data-ttu-id="1c71b-194">In questa procedura dettagliata che è stato esaminato lo sviluppo di Database First, che ha permesso di creare un modello nella finestra di progettazione di Entity Framework basato su un database esistente.</span><span class="sxs-lookup"><span data-stu-id="1c71b-194">In this walkthrough we looked at Database First development, which allowed us to create a model in the EF Designer based on an existing database.</span></span> <span data-ttu-id="1c71b-195">Tale modello viene quindi usato per leggere e scrivere alcuni dati dal database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-195">We then used that model to read and write some data from the database.</span></span> <span data-ttu-id="1c71b-196">Infine, abbiamo aggiornato il modello per riflettere le modifiche sono apportate allo schema del database.</span><span class="sxs-lookup"><span data-stu-id="1c71b-196">Finally, we updated the model to reflect changes we made to the database schema.</span></span>
+<span data-ttu-id="a5ce6-194">In questa procedura dettagliata è stato esaminato Database First sviluppo, che ci ha consentito di creare un modello nella finestra di progettazione EF basata su un database esistente.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-194">In this walkthrough we looked at Database First development, which allowed us to create a model in the EF Designer based on an existing database.</span></span> <span data-ttu-id="a5ce6-195">Il modello è stato quindi utilizzato per leggere e scrivere alcuni dati dal database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-195">We then used that model to read and write some data from the database.</span></span> <span data-ttu-id="a5ce6-196">Infine, il modello è stato aggiornato in modo da riflettere le modifiche apportate allo schema del database.</span><span class="sxs-lookup"><span data-stu-id="a5ce6-196">Finally, we updated the model to reflect changes we made to the database schema.</span></span>

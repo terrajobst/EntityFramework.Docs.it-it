@@ -1,16 +1,38 @@
 ---
 title: Esecuzione di query su dati - EF Core
-author: rowanmiller
-ms.date: 10/27/2016
+author: smitpatel
+ms.date: 10/03/2019
 ms.assetid: 7c65ec3e-46c8-48f8-8232-9e31f96c277b
 uid: core/querying/index
-ms.openlocfilehash: 51aaa5de11d3fe38b4fba82db8dcb5658088cc27
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 009235c3673a414e06d1a64f9877b60e7cde97b0
+ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993534"
+ms.lasthandoff: 10/09/2019
+ms.locfileid: "72181924"
 ---
-# <a name="querying-data"></a><span data-ttu-id="4f9d3-102">Esecuzione di query su dati</span><span class="sxs-lookup"><span data-stu-id="4f9d3-102">Querying Data</span></span>
+# <a name="querying-data"></a><span data-ttu-id="b2b4d-102">Esecuzione di query su dati</span><span class="sxs-lookup"><span data-stu-id="b2b4d-102">Querying Data</span></span>
 
-<span data-ttu-id="4f9d3-103">Entity Framework Core usa query LINQ (Language Integrated Query) per eseguire query sui dati dal database.</span><span class="sxs-lookup"><span data-stu-id="4f9d3-103">Entity Framework Core uses Language Integrated Query (LINQ) to query data from the database.</span></span> <span data-ttu-id="4f9d3-104">Le query LINQ consentono di usare C#, o il linguaggio .NET che si preferisce, per generare query fortemente tipizzate in base alle classi di contesto ed entità derivate.</span><span class="sxs-lookup"><span data-stu-id="4f9d3-104">LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries based on your derived context and entity classes.</span></span> <span data-ttu-id="4f9d3-105">Una rappresentazione della query LINQ viene passata al provider di database, per essere convertita nel linguaggio di query specifico del database, come ad esempio SQL per un database relazionale.</span><span class="sxs-lookup"><span data-stu-id="4f9d3-105">A representation of the LINQ query is passed to the database provider, to be translated in database-specific query language (for example, SQL for a relational database).</span></span> <span data-ttu-id="4f9d3-106">Per altre informazioni sulla modalità di elaborazione di una query, vedere [How Queries Work](overview.md) (Funzionamento delle query).</span><span class="sxs-lookup"><span data-stu-id="4f9d3-106">For more detailed information on how a query is processed, see [How Query Works](overview.md).</span></span>
+<span data-ttu-id="b2b4d-103">Entity Framework Core usa query LINQ (Language Integrated Query) per eseguire query sui dati dal database.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-103">Entity Framework Core uses Language Integrated Query (LINQ) to query data from the database.</span></span> <span data-ttu-id="b2b4d-104">LINQ consente di usare C#, o il linguaggio .NET che si preferisce, per generare query fortemente tipizzate.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-104">LINQ allows you to use C# (or your .NET language of choice) to write strongly typed queries.</span></span> <span data-ttu-id="b2b4d-105">Usa le classi di contesto ed entità derivate per fare riferimento agli oggetti di database.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-105">It uses your derived context and entity classes to reference database objects.</span></span> <span data-ttu-id="b2b4d-106">EF Core passa una rappresentazione della query LINQ al provider di database.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-106">EF Core passes a representation of the LINQ query to the database provider.</span></span> <span data-ttu-id="b2b4d-107">I provider di database a loro volta la convertono nel linguaggio di query specifico del database, ad esempio SQL per un database relazionale.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-107">Database providers in turn translate it to database-specific query language (for example, SQL for a relational database).</span></span>
+
+> [!TIP]
+> <span data-ttu-id="b2b4d-108">È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-108">You can view this article's [sample](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) on GitHub.</span></span>
+
+<span data-ttu-id="b2b4d-109">I frammenti seguenti illustrano alcuni esempi di come eseguire attività comuni con Entity Framework Core.</span><span class="sxs-lookup"><span data-stu-id="b2b4d-109">The following snippets show a few examples of how to achieve common tasks with Entity Framework Core.</span></span>
+
+## <a name="loading-all-data"></a><span data-ttu-id="b2b4d-110">Caricamento di tutti i dati</span><span class="sxs-lookup"><span data-stu-id="b2b4d-110">Loading all data</span></span>
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingAllData)]
+
+## <a name="loading-a-single-entity"></a><span data-ttu-id="b2b4d-111">Caricamento di una singola entità</span><span class="sxs-lookup"><span data-stu-id="b2b4d-111">Loading a single entity</span></span>
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#LoadingSingleEntity)]
+
+## <a name="filtering"></a><span data-ttu-id="b2b4d-112">Filtro</span><span class="sxs-lookup"><span data-stu-id="b2b4d-112">Filtering</span></span>
+
+[!code-csharp[Main](../../../samples/core/Querying/Basics/Sample.cs#Filtering)]
+
+## <a name="further-readings"></a><span data-ttu-id="b2b4d-113">Altre informazioni</span><span class="sxs-lookup"><span data-stu-id="b2b4d-113">Further readings</span></span>
+
+- <span data-ttu-id="b2b4d-114">Vedere altre informazioni sulle [espressioni di query LINQ](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)</span><span class="sxs-lookup"><span data-stu-id="b2b4d-114">Learn more about [LINQ query expressions](/dotnet/csharp/programming-guide/concepts/linq/basic-linq-query-operations)</span></span>
+- <span data-ttu-id="b2b4d-115">Per altre informazioni sulla modalità di elaborazione di una query in EF Core, vedere [Funzionamento delle query](xref:core/querying/how-query-works).</span><span class="sxs-lookup"><span data-stu-id="b2b4d-115">For more detailed information on how a query is processed in EF Core, see [How Query Works](xref:core/querying/how-query-works).</span></span>
