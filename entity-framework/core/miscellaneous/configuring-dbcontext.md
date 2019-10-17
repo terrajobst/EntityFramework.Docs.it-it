@@ -4,33 +4,33 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 734acad86e364abbfd1522fe79d4a847b1acfb52
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: e04c1b65df96819f3493e0ed34ccf26609511f6a
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149036"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445915"
 ---
 # <a name="configuring-a-dbcontext"></a>Configurazione di un DbContext
 
-Questo articolo illustra i modelli di base per `DbContext` la configurazione `DbContextOptions` di un tramite un per connettersi a un database usando uno specifico provider di EF core e comportamenti facoltativi.
+Questo articolo illustra i modelli di base per la configurazione di un `DbContext` tramite un `DbContextOptions` per connettersi a un database usando un provider di EF Core specifico e comportamenti facoltativi.
 
 ## <a name="design-time-dbcontext-configuration"></a>Configurazione DbContext della fase di progettazione
 
-EF Core strumenti della fase di progettazione, ad esempio le [migrazioni](xref:core/managing-schemas/migrations/index) , devono essere in grado di individuare e creare un'istanza `DbContext` di un tipo funzionante per raccogliere informazioni dettagliate sui tipi di entità dell'applicazione e su come eseguono il mapping a uno schema del database. Questo processo può essere automatico purché lo strumento possa creare facilmente il `DbContext` in modo da configurarlo in modo analogo a come verrebbe configurato in fase di esecuzione.
+EF Core strumenti della fase di progettazione, ad esempio le [migrazioni](xref:core/managing-schemas/migrations/index) , devono essere in grado di individuare e creare un'istanza di lavoro di un tipo `DbContext` per raccogliere informazioni dettagliate sui tipi di entità dell'applicazione e su come eseguono il mapping a uno schema del database. Questo processo può essere automatico purché lo strumento possa creare facilmente il `DbContext` in modo che venga configurato in modo analogo a come verrebbe configurato in fase di esecuzione.
 
-Anche se qualsiasi modello che fornisce le informazioni di configurazione necessarie `DbContext` a può funzionare in fase di esecuzione, gli strumenti che richiedono `DbContext` l'uso di in fase di progettazione possono funzionare solo con un numero limitato di modelli. Queste informazioni sono descritte più dettagliatamente nella sezione relativa alla [creazione del contesto della fase di progettazione](xref:core/miscellaneous/cli/dbcontext-creation) .
+Anche se qualsiasi modello che fornisce le informazioni di configurazione necessarie al `DbContext` può funzionare in fase di esecuzione, gli strumenti che richiedono l'uso di un `DbContext` in fase di progettazione possono funzionare solo con un numero limitato di modelli. Queste informazioni sono descritte più dettagliatamente nella sezione relativa alla [creazione del contesto della fase di progettazione](xref:core/miscellaneous/cli/dbcontext-creation) .
 
 ## <a name="configuring-dbcontextoptions"></a>Configurazione di DbContextOptions
 
-`DbContext`per eseguire qualsiasi operazione, `DbContextOptions` è necessario disporre di un'istanza di. L' `DbContextOptions` istanza contiene le informazioni di configurazione, ad esempio:
+`DbContext` deve avere un'istanza di `DbContextOptions` per poter eseguire qualsiasi operazione. L'istanza `DbContextOptions` porta informazioni di configurazione, ad esempio:
 
-- Provider di database da usare, in genere selezionato richiamando un metodo come `UseSqlServer` o `UseSqlite`. Questi metodi di `Microsoft.EntityFrameworkCore.SqlServer` estensione richiedono il pacchetto del provider corrispondente, ad `Microsoft.EntityFrameworkCore.Sqlite`esempio o. I metodi sono definiti nello `Microsoft.EntityFrameworkCore` spazio dei nomi.
+- Provider di database da usare, in genere selezionato richiamando un metodo come `UseSqlServer` o `UseSqlite`. Questi metodi di estensione richiedono il pacchetto del provider corrispondente, ad esempio `Microsoft.EntityFrameworkCore.SqlServer` o `Microsoft.EntityFrameworkCore.Sqlite`. I metodi sono definiti nello spazio dei nomi `Microsoft.EntityFrameworkCore`.
 - Qualsiasi stringa di connessione o identificatore necessario dell'istanza del database, in genere passato come argomento al metodo di selezione del provider menzionato in precedenza
 - Tutti i selettori di comportamento facoltativi a livello di provider, in genere concatenati all'interno della chiamata al metodo di selezione del provider
 - Tutti i selettori di comportamento di EF Core generali, in genere concatenati dopo o prima del metodo selettore provider
 
-Nell'esempio seguente viene configurato `DbContextOptions` per l'utilizzo del provider SQL Server, una connessione contenuta nella variabile, un timeout del `connectionString` comando a livello di provider e un selettore di comportamento EF core che rende disponibili `DbContext` tutte le query nel [No-tracking](xref:core/querying/tracking#no-tracking-queries) per impostazione predefinita:
+Nell'esempio seguente viene configurata la `DbContextOptions` per l'utilizzo del provider SQL Server, una connessione contenuta nella variabile `connectionString`, un timeout del comando a livello di provider e un selettore del comportamento EF Core che consente di eseguire tutte le query nel `DbContext` [senza rilevamento](xref:core/querying/tracking#no-tracking-queries) per impostazione predefinita:
 
 ``` csharp
 optionsBuilder
@@ -39,15 +39,15 @@ optionsBuilder
 ```
 
 > [!NOTE]  
-> I metodi del selettore del provider e altri metodi di selezione dei `DbContextOptions` comportamenti indicati in precedenza sono metodi di estensione nelle classi di opzioni specifiche del provider o. Per poter accedere a questi metodi di estensione, potrebbe essere necessario disporre di uno spazio dei nomi `Microsoft.EntityFrameworkCore`(in genere) nell'ambito e includere altre dipendenze del pacchetto nel progetto.
+> I metodi del selettore del provider e altri metodi di selezione dei comportamenti indicati in precedenza sono metodi di estensione su `DbContextOptions` o classi di opzioni specifiche del provider. Per poter accedere a questi metodi di estensione, potrebbe essere necessario disporre di uno spazio dei nomi (in genere `Microsoft.EntityFrameworkCore`) nell'ambito e includere altre dipendenze del pacchetto nel progetto.
 
-È `DbContextOptions` possibile fornire `DbContext` l'oggetto eseguendo l'override del `OnConfiguring` metodo o esternamente tramite un argomento del costruttore.
+È possibile specificare `DbContextOptions` per il `DbContext` eseguendo l'override del metodo `OnConfiguring` o esternamente tramite un argomento del costruttore.
 
-Se vengono usati entrambi, `OnConfiguring` viene applicato per ultimo e è possibile sovrascrivere le opzioni fornite all'argomento del costruttore.
+Se vengono usati entrambi, viene applicato per ultimo `OnConfiguring` e è possibile sovrascrivere le opzioni fornite all'argomento del costruttore.
 
 ### <a name="constructor-argument"></a>Argomento del costruttore
 
-Codice contesto con costruttore:
+Il costruttore può semplicemente accettare un `DbContextOptions`, come indicato di seguito:
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -61,9 +61,9 @@ public class BloggingContext : DbContext
 ```
 
 > [!TIP]  
-> Il costruttore di base di DbContext accetta anche la versione non generica `DbContextOptions`di, ma non è consigliabile usare la versione non generica per le applicazioni con più tipi di contesto.
+> Il costruttore di base di DbContext accetta anche la versione non generica di `DbContextOptions`, ma non è consigliabile usare la versione non generica per le applicazioni con più tipi di contesto.
 
-Codice dell'applicazione da inizializzare dall'argomento del costruttore:
+L'applicazione può ora passare il `DbContextOptions` quando si crea un'istanza di un contesto, come indicato di seguito:
 
 ``` csharp
 var optionsBuilder = new DbContextOptionsBuilder<BloggingContext>();
@@ -77,7 +77,9 @@ using (var context = new BloggingContext(optionsBuilder.Options))
 
 ### <a name="onconfiguring"></a>Onconfigurazione
 
-Codice contesto con `OnConfiguring`:
+È anche possibile inizializzare `DbContextOptions` all'interno del contesto stesso. Sebbene sia possibile usare questa tecnica per la configurazione di base, in genere è comunque necessario ottenere determinati dettagli di configurazione dall'esterno, ad esempio una stringa di connessione del database. Questa operazione può essere eseguita con un'API di configurazione o qualsiasi altro mezzo.
+
+Per inizializzare `DbContextOptions` all'interno del contesto, eseguire l'override del metodo `OnConfiguring` e chiamare i metodi sul `DbContextOptionsBuilder` fornito:
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -91,7 +93,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-Codice dell'applicazione per inizializzare un `OnConfiguring`oggetto `DbContext` che usa:
+Un'applicazione può semplicemente creare un'istanza di tale contesto senza passare alcun elemento al costruttore:
 
 ``` csharp
 using (var context = new BloggingContext())
@@ -105,13 +107,13 @@ using (var context = new BloggingContext())
 
 ### <a name="using-dbcontext-with-dependency-injection"></a>Uso di DbContext con l'inserimento di dipendenze
 
-EF Core supporta l' `DbContext` utilizzo di con un contenitore di inserimento delle dipendenze. Il tipo di DbContext può essere aggiunto al contenitore del servizio usando il `AddDbContext<TContext>` metodo.
+EF Core supporta l'utilizzo di `DbContext` con un contenitore di inserimento delle dipendenze. Il tipo di DbContext può essere aggiunto al contenitore del servizio usando il metodo `AddDbContext<TContext>`.
 
-`AddDbContext<TContext>`renderà il tipo di DbContext, `TContext`e l'oggetto corrispondente `DbContextOptions<TContext>` disponibile per l'inserimento dal contenitore del servizio.
+`AddDbContext<TContext>` farà sia il tipo di DbContext, `TContext`, sia il `DbContextOptions<TContext>` corrispondente disponibile per l'inserimento dal contenitore del servizio.
 
 Per ulteriori informazioni sull'inserimento delle dipendenze, vedere [più](#more-reading) avanti.
 
-Aggiunta dell' `DbContext` inserimento delle dipendenze:
+Aggiunta del `DbContext` all'inserimento delle dipendenze:
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)
@@ -120,7 +122,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-A tale scopo, è necessario aggiungere un [argomento del costruttore](#constructor-argument) al `DbContextOptions<TContext>`tipo DbContext che accetta.
+A tale scopo, è necessario aggiungere un [argomento del costruttore](#constructor-argument) al tipo DbContext che accetta `DbContextOptions<TContext>`.
 
 Codice contesto:
 
@@ -163,33 +165,33 @@ var options = serviceProvider.GetService<DbContextOptions<BloggingContext>>();
 ```
 ## <a name="avoiding-dbcontext-threading-issues"></a>Evitare problemi di threading DbContext
 
-Entity Framework Core non supporta l'esecuzione di più operazioni parallele nella stessa `DbContext` istanza. Sono incluse l'esecuzione parallela di query asincrone e qualsiasi utilizzo simultaneo esplicito da più thread. Pertanto, le `await` chiamate asincrone vengono sempre eseguite immediatamente oppure `DbContext` si utilizzano istanze separate per le operazioni eseguite in parallelo.
+Entity Framework Core non supporta l'esecuzione di più operazioni parallele nella stessa istanza di `DbContext`. Sono incluse l'esecuzione parallela di query asincrone e qualsiasi utilizzo simultaneo esplicito da più thread. Pertanto, le chiamate asincrone sempre `await` vengono eseguite immediatamente oppure si utilizzano istanze separate `DbContext` per le operazioni eseguite in parallelo.
 
-Quando EF Core rileva un tentativo di usare un' `DbContext` istanza simultaneamente, verrà visualizzato un `InvalidOperationException` messaggio con un messaggio simile al seguente: 
+Quando EF Core rileva un tentativo di usare un'istanza di `DbContext` contemporaneamente, verrà visualizzato un `InvalidOperationException` con un messaggio simile al seguente: 
 
 > Una seconda operazione è stata avviata in questo contesto prima del completamento di un'operazione precedente. Questo problema è in genere causato da thread diversi che utilizzano la stessa istanza di DbContext, ma non è garantito che i membri di istanza siano thread-safe.
 
 Quando l'accesso simultaneo non viene rilevato, può causare un comportamento indefinito, arresti anomali dell'applicazione e danneggiamento dei dati.
 
-Si verificano errori comuni che possono causare inavvertitamente l'accesso simultaneo nella stessa `DbContext` istanza:
+Si verificano errori comuni che possono causare inavvertitamente l'accesso simultaneo nella stessa istanza `DbContext`:
 
 ### <a name="forgetting-to-await-the-completion-of-an-asynchronous-operation-before-starting-any-other-operation-on-the-same-dbcontext"></a>Si dimentica di attendere il completamento di un'operazione asincrona prima di avviare qualsiasi altra operazione nello stesso DbContext
 
-I metodi asincroni consentono EF Core di avviare operazioni che accedono al database in modo non bloccante. Tuttavia, se un chiamante non attende il completamento di uno di questi metodi e continua a eseguire altre operazioni su `DbContext`, lo stato `DbContext` di può essere, (e molto probabilmente sarà) danneggiato. 
+I metodi asincroni consentono EF Core di avviare operazioni che accedono al database in modo non bloccante. Tuttavia, se un chiamante non attende il completamento di uno di questi metodi e continua a eseguire altre operazioni sulla `DbContext`, lo stato del `DbContext` può essere, (e molto probabilmente sarà) danneggiato. 
 
 Attendi sempre EF Core metodi asincroni immediatamente.  
 
 ### <a name="implicitly-sharing-dbcontext-instances-across-multiple-threads-via-dependency-injection"></a>Condivisione implicita delle istanze di DbContext in più thread tramite l'inserimento di dipendenze
 
-Per [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) impostazione predefinita, `DbContext` il metodo di estensione registra i tipi con una [durata con ambito](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes) . 
+Il metodo di estensione [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) registra i tipi `DbContext` con una [durata con ambito](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes) per impostazione predefinita. 
 
-Ciò è sicuro dai problemi di accesso simultaneo nelle applicazioni ASP.NET Core perché è presente un solo thread che esegue ogni richiesta client in un determinato momento e perché ogni richiesta ottiene un ambito di inserimento delle dipendenze separato ( `DbContext` e pertanto una istanza di).
+Ciò è sicuro dai problemi di accesso simultaneo nelle applicazioni ASP.NET Core perché è presente un solo thread che esegue ogni richiesta client in un determinato momento e perché ogni richiesta ottiene un ambito di inserimento delle dipendenze separato (e quindi un'istanza separata `DbContext`).
 
-Tuttavia, qualsiasi codice che esegua in modo esplicito più thread in parallelo `DbContext` deve garantire che non venga mai eseguito l'accesso alle istanze simultaneamente.
+Tuttavia, qualsiasi codice che esegua in modo esplicito più thread in parallelo deve garantire che non venga mai eseguito l'accesso simultaneo alle istanze `DbContext`.
 
-Usando l'inserimento di dipendenze, è possibile ottenere questo risultato registrando il contesto come ambito e creando ambiti ( `IServiceScopeFactory`usando) per ogni thread o registrando `DbContext` come temporaneo (usando l'overload di `AddDbContext` che accetta un `ServiceLifetime` parametro).
+Usando l'inserimento di dipendenze, è possibile ottenere questo risultato registrando il contesto come ambito e creando ambiti (usando `IServiceScopeFactory`) per ogni thread o registrando il `DbContext` come temporaneo (usando l'overload di `AddDbContext` che accetta un parametro `ServiceLifetime`).
 
 ## <a name="more-reading"></a>Altre informazioni
 
-* Per altre informazioni sull'uso DI, vedere [inserimento](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection) delle dipendenze.
+* Per altre informazioni sull'uso DI, vedere [inserimento delle dipendenze](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection) .
 * Per ulteriori informazioni, vedere [test](testing/index.md) .

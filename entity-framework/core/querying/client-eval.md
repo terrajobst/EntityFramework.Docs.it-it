@@ -1,27 +1,27 @@
 ---
-title: Valutazione client rispetto a server - EF Core
+title: Valutazione client e server-EF Core
 author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
 uid: core/querying/client-eval
-ms.openlocfilehash: 3d70324f0b57a0ea9b165b5140a2154001c326f4
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 5cfb05041f04246712fb699f58b407f70a75ce92
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181907"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445961"
 ---
-# <a name="client-vs-server-evaluation"></a>Valutazione client rispetto a server
+# <a name="client-vs-server-evaluation"></a>Valutazione client e server
 
 Come regola generale, Entity Framework Core tenta di valutare il più possibile una query sul server. EF Core converte parti della query in parametri, che possono essere valutati sul lato client. Il resto della query (insieme ai parametri generati) viene assegnato al provider di database per determinare la query di database equivalente da valutare nel server. EF Core supporta la valutazione parziale del client nella proiezione di primo livello (essenzialmente, l'ultima chiamata a `Select()`). Se la proiezione di primo livello nella query non può essere convertita nel server, EF Core recupererà tutti i dati richiesti dal server e valuterà le parti rimanenti della query nel client. Se EF Core rileva un'espressione, in una posizione diversa dalla proiezione di primo livello, che non può essere convertita nel server, viene generata un'eccezione in fase di esecuzione. Vedere [come funziona la query](xref:core/querying/how-query-works) per comprendere in che modo EF Core determina le operazioni che non possono essere convertite nel server.
 
 > [!NOTE]
 > Prima della versione 3,0, Entity Framework Core la valutazione client supportata in qualsiasi punto della query. Per ulteriori informazioni, vedere la [sezione versioni precedenti](#previous-versions).
 
-## <a name="client-evaluation-in-the-top-level-projection"></a>Valutazione client nella proiezione di primo livello
-
 > [!TIP]
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
+
+## <a name="client-evaluation-in-the-top-level-projection"></a>Valutazione client nella proiezione di primo livello
 
 Nell'esempio seguente viene usato un metodo helper per standardizzare gli URL per i Blog restituiti da un database SQL Server. Poiché il provider di SQL Server non ha informazioni dettagliate sul modo in cui viene implementato questo metodo, non è possibile convertirlo in SQL. Tutti gli altri aspetti della query vengono valutati nel database, ma il passaggio del `URL` restituito tramite questo metodo viene eseguito nel client.
 
@@ -50,9 +50,9 @@ In questi casi, è possibile acconsentire esplicitamente alla valutazione client
 
 Poiché la conversione e la compilazione di query sono costose, EF Core memorizza nella cache il piano di query compilato. Il delegato memorizzato nella cache può usare il codice client durante la valutazione client della proiezione di primo livello. EF Core genera parametri per le parti valutate dal client dell'albero di e riutilizza il piano di query sostituendo i valori dei parametri. Tuttavia, alcune costanti nell'albero delle espressioni non possono essere convertite in parametri. Se il delegato memorizzato nella cache contiene tali costanti, tali oggetti non possono essere sottoposti a Garbage Collection perché sono ancora a cui viene fatto riferimento. Se un oggetto di questo tipo contiene un DbContext o altri servizi, può causare un aumento dell'utilizzo della memoria dell'app nel tempo. Questo comportamento è in genere un segno di una perdita di memoria. EF Core genera un'eccezione ogni volta che viene rilevata una costante di un tipo che non può essere mappato utilizzando il provider di database corrente. Di seguito sono riportate le cause più comuni e le relative soluzioni:
 
-- **Utilizzando un metodo di istanza**: Quando si usano i metodi di istanza in una proiezione client, l'albero delle espressioni contiene una costante dell'istanza. Se il metodo non utilizza dati provenienti dall'istanza, provare a rendere statico il metodo. Se sono necessari dati dell'istanza nel corpo del metodo, passare i dati specifici come argomento al metodo.
-- **Passaggio di argomenti costanti al metodo**: Questo caso si verifica in genere utilizzando `this` in un argomento del metodo client. Provare a suddividere l'argomento in in più argomenti scalari, che possono essere mappati dal provider di database.
-- **Altre costanti**: Se una costante si trova in un altro caso, è possibile valutare se la costante è necessaria nell'elaborazione. Se è necessario disporre della costante o se non è possibile usare una soluzione nei casi precedenti, creare una variabile locale per archiviare il valore e usare la variabile locale nella query. EF Core convertirà la variabile locale in un parametro.
+- **Uso di un metodo di istanza**: quando si usano i metodi di istanza in una proiezione client, l'albero delle espressioni contiene una costante dell'istanza. Se il metodo non utilizza dati provenienti dall'istanza, provare a rendere statico il metodo. Se sono necessari dati dell'istanza nel corpo del metodo, passare i dati specifici come argomento al metodo.
+- **Passaggio di argomenti costanti al metodo**: questa situazione si verifica in genere utilizzando `this` in un argomento del metodo client. Provare a suddividere l'argomento in in più argomenti scalari, che possono essere mappati dal provider di database.
+- **Altre costanti**: se una costante si trova in un altro caso, è possibile valutare se la costante è necessaria nell'elaborazione. Se è necessario disporre della costante o se non è possibile usare una soluzione nei casi precedenti, creare una variabile locale per archiviare il valore e usare la variabile locale nella query. EF Core convertirà la variabile locale in un parametro.
 
 ## <a name="previous-versions"></a>Versioni precedenti
 

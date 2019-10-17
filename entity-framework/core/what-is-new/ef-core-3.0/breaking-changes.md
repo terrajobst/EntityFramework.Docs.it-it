@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: f7f04efa8fb8ebc1eb06f256b8ccbd3110af47ab
-ms.sourcegitcommit: 705e898b4684e639a57c787fb45c932a27650c2d
+ms.openlocfilehash: 690c7828cfe5019f4e7ae904c92430fab4726cb9
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/03/2019
-ms.locfileid: "71934876"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72446010"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
@@ -19,12 +19,12 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 
 | **Modifica di rilievo**                                                                                               | **Impatto** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
-| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | Alto       |
-| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | Alto      |
-| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | Alto      |
-| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Alto      |
-| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | Alto      |
-| [I tipi di query vengono consolidati con tipi di entità](#qt) | Alto      |
+| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
+| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | High      |
+| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
+| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
+| [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
 | [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
 | [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
 | [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Medio      |
@@ -36,41 +36,41 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
 | [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
 | [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Medio      |
-| [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Bassa      |
-| [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Bassa      |
-| [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Bassa      |
-| [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Bassa      |
-| [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Bassa      |
-| [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Bassa      |
-| [La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza](#fkp) | Bassa      |
-| [La connessione di database viene ora chiusa se non viene più usata prima del completamento di TransactionScope](#dbc) | Bassa      |
-| [I campi sottostanti vengono usati per impostazione predefinita](#backing-fields-are-used-by-default) | Bassa      |
-| [Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili](#throw-if-multiple-compatible-backing-fields-are-found) | Bassa      |
-| [I nomi delle proprietà solo campo devono corrispondere al nome di campo](#field-only-property-names-should-match-the-field-name) | Bassa      |
-| [AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache](#adddbc) | Bassa      |
-| [DbContext.Entry esegue ora un DetectChanges locale](#dbe) | Bassa      |
-| [Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita](#string-and-byte-array-keys-are-not-client-generated-by-default) | Bassa      |
-| [ILoggerFactory è ora un servizio con ambito](#ilf) | Bassa      |
-| [I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente](#lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded) | Bassa      |
-| [La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita](#excessive-creation-of-internal-service-providers-is-now-an-error-by-default) | Bassa      |
-| [Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa](#nbh) | Bassa      |
-| [Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask](#rtnt) | Bassa      |
-| [L'annotazione Relational:TypeMapping è ora TypeMapping](#rtt) | Bassa      |
-| [ToTable in un tipo derivato genera un'eccezione](#totable-on-a-derived-type-throws-an-exception) | Bassa      |
-| [EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite](#pragma) | Bassa      |
-| [Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3](#sqlite3) | Bassa      |
-| [I valori Guid vengono ora archiviati come TEXT in SQLite](#guid) | Bassa      |
-| [I valori char vengono ora archiviati come testo in SQLite](#char) | Bassa      |
-| [Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica](#migid) | Bassa      |
-| [Info/metadati dell'estensione rimossi da IDbContextOptionsExtension](#xinfo) | Bassa      |
-| [LogQueryPossibleExceptionWithAggregateOperator è stato rinominato](#lqpe) | Bassa      |
-| [Chiarimenti per l'API per i nomi di vincolo di chiave esterna](#clarify) | Bassa      |
-| [IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici](#irdc2) | Bassa      |
-| [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Bassa      |
-| [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Bassa      |
-| [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Bassa      |
-| [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Bassa      |
-| [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Bassa      |
+| [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Basso      |
+| [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Basso      |
+| [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Basso      |
+| [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Basso      |
+| [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Basso      |
+| [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Basso      |
+| [La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza](#fkp) | Basso      |
+| [La connessione di database viene ora chiusa se non viene più usata prima del completamento di TransactionScope](#dbc) | Basso      |
+| [I campi sottostanti vengono usati per impostazione predefinita](#backing-fields-are-used-by-default) | Basso      |
+| [Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili](#throw-if-multiple-compatible-backing-fields-are-found) | Basso      |
+| [I nomi delle proprietà solo campo devono corrispondere al nome di campo](#field-only-property-names-should-match-the-field-name) | Basso      |
+| [AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache](#adddbc) | Basso      |
+| [DbContext.Entry esegue ora un DetectChanges locale](#dbe) | Basso      |
+| [Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita](#string-and-byte-array-keys-are-not-client-generated-by-default) | Basso      |
+| [ILoggerFactory è ora un servizio con ambito](#ilf) | Basso      |
+| [I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente](#lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded) | Basso      |
+| [La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita](#excessive-creation-of-internal-service-providers-is-now-an-error-by-default) | Basso      |
+| [Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa](#nbh) | Basso      |
+| [Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask](#rtnt) | Basso      |
+| [L'annotazione Relational:TypeMapping è ora TypeMapping](#rtt) | Basso      |
+| [ToTable in un tipo derivato genera un'eccezione](#totable-on-a-derived-type-throws-an-exception) | Basso      |
+| [EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite](#pragma) | Basso      |
+| [Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3](#sqlite3) | Basso      |
+| [I valori Guid vengono ora archiviati come TEXT in SQLite](#guid) | Basso      |
+| [I valori char vengono ora archiviati come testo in SQLite](#char) | Basso      |
+| [Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica](#migid) | Basso      |
+| [Info/metadati dell'estensione rimossi da IDbContextOptionsExtension](#xinfo) | Basso      |
+| [LogQueryPossibleExceptionWithAggregateOperator è stato rinominato](#lqpe) | Basso      |
+| [Chiarimenti per l'API per i nomi di vincolo di chiave esterna](#clarify) | Basso      |
+| [IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici](#irdc2) | Basso      |
+| [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Basso      |
+| [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Basso      |
+| [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Basso      |
+| [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Basso      |
+| [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Basso      |
 
 ### <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
 
@@ -416,7 +416,7 @@ L'invio di più query per l'implementazione di una singola query LINQ ha causato
 
 **Mitigazioni**
 
-Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di operatori `Include` sulle esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-537219137) .
+Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di operatori `Include` sulle esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) .
 
 **
 
@@ -1679,7 +1679,7 @@ modelBuilder
 
 **Comportamento precedente**
 
-Un DbFunction configurato con schema come stringa vuota è stato trattato come funzione predefinita senza uno schema. Il codice seguente, ad esempio `DatePart` , eseguirà `DATEPART` il mapping della funzione CLR alla funzione predefinita in SqlServer.
+Un DbFunction configurato con schema come stringa vuota è stato trattato come funzione predefinita senza uno schema. Il codice seguente, ad esempio, eseguirà il mapping della funzione CLR `DatePart` alla funzione predefinita `DATEPART` in SqlServer.
 
 ```C#
 [DbFunction("DATEPART", Schema = "")]
@@ -1689,7 +1689,7 @@ public static int? DatePart(string datePartArg, DateTime? date) => throw new Exc
 
 **Nuovo comportamento**
 
-Tutti i mapping di DbFunction sono considerati mappati alle funzioni definite dall'utente. Pertanto, il valore stringa vuoto inserisce la funzione all'interno dello schema predefinito per il modello. Che può corrispondere allo schema configurato in modo esplicito tramite `modelBuilder.HasDefaultSchema()` l' `dbo` API Fluent o in caso contrario.
+Tutti i mapping di DbFunction sono considerati mappati alle funzioni definite dall'utente. Pertanto, il valore stringa vuoto inserisce la funzione all'interno dello schema predefinito per il modello. Che potrebbe essere lo schema configurato in modo esplicito tramite l'API Fluent `modelBuilder.HasDefaultSchema()` o `dbo` in caso contrario.
 
 **Perché?**
 

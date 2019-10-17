@@ -3,12 +3,12 @@ title: Test con test doppi-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 16a8b7c0-2d23-47f4-9cc0-e2eb2e738ca3
-ms.openlocfilehash: 4631206ae26d364e92c932857fa1970804a7a335
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 3d8933fb5e17f8c01f3971495a1fcdb5b8cfab57
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181407"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72446035"
 ---
 # <a name="testing-with-your-own-test-doubles"></a>Test con i doppi test personalizzati
 > [!NOTE]
@@ -157,9 +157,9 @@ namespace TestingDemo
         }
     }
 }
-```  
+```
 
-<a name="creating-the-in-memory-test-doubles"/> # # creazione dei duplicati del test in memoria  
+## <a name="creating-the-in-memory-test-doubles"></a>Creazione dei duplicati del test in memoria  
 
 Ora che è disponibile il modello EF reale e il servizio che può usarlo, è necessario creare il doppio test in memoria che è possibile usare per il test. È stato creato un doppio test TestContext per il contesto. In test doppi si ottiene la scelta del comportamento desiderato per supportare i test che verrà eseguito. In questo esempio viene semplicemente acquisito il numero di volte in cui viene chiamato SaveChanges, ma è possibile includere qualsiasi logica necessaria per verificare lo scenario che si sta testando.  
 

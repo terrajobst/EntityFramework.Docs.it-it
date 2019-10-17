@@ -4,12 +4,12 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: ab35e63a6eeb2f02ed07a715fd65855b4d30eaf5
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: 055f492214596506ce2c28485ade359d175c4ac2
+ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813449"
+ms.lasthandoff: 10/16/2019
+ms.locfileid: "72445893"
 ---
 # <a name="working-with-nullable-reference-types"></a>Utilizzo dei tipi di riferimento Nullable
 
@@ -26,7 +26,7 @@ La documentazione principale sulle proprietà obbligatorie e facoltative e la re
 
 ## <a name="dbcontext-and-dbset"></a>DbContext e DbSet
 
-Quando sono abilitati i tipi di riferimento C# Nullable, il compilatore genera avvisi per qualsiasi proprietà non nullable non inizializzata, in quanto questi contengono valori null. Di conseguenza, la prassi comune di definire un oggetto che non ammette `DbSet` i valori null in un contesto genera ora un avviso. Tuttavia, EF Core Inizializza sempre tutte `DbSet` le proprietà sui tipi derivati da DbContext, in modo che non siano mai null, anche se il compilatore non è a conoscenza di questo. Pertanto, è consigliabile evitare `DbSet` che le proprietà siano Nullable, in modo da consentire l'accesso senza controlli null, e per silenziare gli avvisi del compilatore impostando in modo esplicito su null, con l'aiuto dell'operatore che perdona i valori null (!):
+Quando sono abilitati i tipi di riferimento C# Nullable, il compilatore genera avvisi per qualsiasi proprietà non nullable non inizializzata, in quanto questi contengono valori null. Di conseguenza, la pratica comune di definire un oggetto `DbSet` non nullable in un contesto genera ora un avviso. Tuttavia, EF Core Inizializza sempre tutte le proprietà `DbSet` sui tipi derivati da DbContext, in modo che non siano mai null, anche se il compilatore non è a conoscenza di questo. È pertanto consigliabile limitare le proprietà `DbSet` in modo che non ammettono i valori null, consentendo di accedervi senza controlli null e di silenziare gli avvisi del compilatore impostando in modo esplicito su null con la guida dell'operatore che perdona i valori null (!):
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
 
@@ -65,4 +65,4 @@ Se questa operazione viene eseguita molto e i tipi di entità in questione sono 
 
 ## <a name="scaffolding"></a>Scaffolding
 
-[La C# funzionalità a 8 tipi di riferimento Nullable](/dotnet/csharp/tutorials/nullable-reference-types) non è attualmente supportata in Reverse Engineering: EF Core genera C# sempre codice che presuppone che la funzionalità sia disattivata. Ad esempio, le colonne di testo Nullable verranno sottoposto a impalcatura come `string` proprietà con `string?`tipo, non con l'API Fluent o le annotazioni dei dati utilizzate per configurare se una proprietà è obbligatoria o meno. È possibile modificare il codice con impalcature e sostituirle C# con annotazioni di valori null. Il supporto dell'impalcatura per i tipi di riferimento nullable viene rilevato da Issue [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520).
+[La C# funzionalità a 8 tipi di riferimento Nullable](/dotnet/csharp/tutorials/nullable-reference-types) non è attualmente supportata in Reverse Engineering: EF core genera C# sempre codice che presuppone che la funzionalità sia disattivata. Ad esempio, le colonne di testo Nullable verranno sottoposto a impalcatura come proprietà con tipo `string`, non `string?`, con l'API Fluent o le annotazioni dei dati utilizzate per configurare se una proprietà è obbligatoria o meno. È possibile modificare il codice con impalcature e sostituirle C# con annotazioni di valori null. Il supporto dell'impalcatura per i tipi di riferimento nullable viene rilevato da Issue [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520).
