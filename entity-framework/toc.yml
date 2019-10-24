@@ -175,22 +175,24 @@
           items:
             - name: Panoramica
               href: core/querying/index.md
-            - name: Caricamento di dati correlati
-              href: core/querying/related-data.md
             - name: Valutazione client rispetto a server
               href: core/querying/client-eval.md
             - name: Query con rilevamento delle modifiche e senza rilevamento
               href: core/querying/tracking.md
-            - name: Query SQL non elaborate
-              href: core/querying/raw-sql.md
+            - name: Operatori di query complessi
+              href: core/querying/complex-query-operators.md
+            - name: Caricamento di dati correlati
+              href: core/querying/related-data.md
             - name: Query asincrone
               href: core/querying/async.md
-            - name: Funzionamento della query
-              href: core/querying/how-query-works.md
+            - name: Query SQL non elaborate
+              href: core/querying/raw-sql.md
             - name: Filtri di query globali
               href: core/querying/filters.md
             - name: Tag delle query
               href: core/querying/tags.md
+            - name: Funzionamento della query
+              href: core/querying/how-query-works.md
         - name: Salvataggio di dati
           items:
             - name: Panoramica
