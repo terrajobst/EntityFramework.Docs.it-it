@@ -1,26 +1,27 @@
 ---
-title: Migrazioni con più provider - EF Core
+title: Migrazioni con più provider-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/08/2017
-ms.openlocfilehash: 75c055221609679db3f00016b9cb44c6c8c6e473
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+uid: core/managing-schemas/migrations/providers
+ms.openlocfilehash: c9b1a2563ef548e592374f90a6242b0bd851bc98
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45488777"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811952"
 ---
-<a name="migrations-with-multiple-providers"></a>Migrazioni con più provider
-==================================
-Il [Entity Framework Core Tools] [ 1] solo lo scaffolding di migrazioni per il provider attivo. In alcuni casi, tuttavia, è possibile usare più di un provider (ad esempio Microsoft SQL Server e SQLite) con l'oggetto DbContext. Esistono due modi per gestire questo aspetto con le migrazioni. È possibile mantenere due set di migrazioni: uno per ogni provider, ovvero o di tipo merge in un singolo set che possa utilizzare entrambi.
+# <a name="migrations-with-multiple-providers"></a>Migrazioni con più provider
 
-<a name="two-migration-sets"></a>Due set di migrazione
-------------------
-Il primo approccio, si generano due migrazioni per ogni modifica del modello.
+Gli [strumenti di EF Core][1] solo le migrazioni con impalcature per il provider attivo. In alcuni casi, tuttavia, potrebbe essere necessario usare più di un provider (ad esempio Microsoft SQL Server e SQLite) con la DbContext. Esistono due modi per gestire questo problema con le migrazioni. È possibile gestire due set di migrazioni, uno per ogni provider, oppure unirli in un unico set che può funzionare in entrambi.
 
-A tal fine ciò consiste nell'inserire ogni set di migrazione [in un assembly separato] [ 2] e cambiare manualmente il provider attivo (e l'assembly di migrazioni) tra l'aggiunta di due migrazioni.
+## <a name="two-migration-sets"></a>Due set di migrazione
 
-Un altro approccio che consente di utilizzare gli strumenti più semplice consiste nel creare un nuovo tipo che deriva da DbContext ed esegue l'override al provider attivo. Questo tipo viene utilizzato in fase di progettazione quando si aggiunge o applicare le migrazioni di tempo.
+Nel primo approccio vengono generate due migrazioni per ogni modifica del modello.
+
+Un modo per eseguire questa operazione è inserire ogni set di migrazione [in un assembly separato][2] e cambiare manualmente il provider attivo (e l'assembly delle migrazioni) tra l'aggiunta delle due migrazioni.
+
+Un altro approccio che rende più semplice l'utilizzo degli strumenti consiste nel creare un nuovo tipo che deriva dalla DbContext ed esegue l'override del provider attivo. Questo tipo viene utilizzato in fase di progettazione quando si aggiungono o si applicano migrazioni.
 
 ``` csharp
 class MySqliteDbContext : MyDbContext
@@ -31,7 +32,7 @@ class MySqliteDbContext : MyDbContext
 ```
 
 > [!NOTE]
-> Poiché ogni set di migrazione Usa tipi DbContext personalizzati, questo approccio non richiede l'uso di un assembly separato delle migrazioni.
+> Poiché ogni set di migrazione usa i propri tipi DbContext, questo approccio non richiede l'uso di un assembly di migrazioni separato.
 
 Quando si aggiunge una nuova migrazione, specificare i tipi di contesto.
 
@@ -39,19 +40,20 @@ Quando si aggiunge una nuova migrazione, specificare i tipi di contesto.
 Add-Migration InitialCreate -Context MyDbContext -OutputDir Migrations\SqlServerMigrations
 Add-Migration InitialCreate -Context MySqliteDbContext -OutputDir Migrations\SqliteMigrations
 ```
+
 ``` Console
 dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
 dotnet ef migrations add InitialCreate --context MySqliteDbContext --output-dir Migrations/SqliteMigrations
 ```
 
 > [!TIP]
-> Non è necessario specificare la directory di output per le migrazioni successive perché vengono create come pari livello rispetto a quello più recente.
+> Non è necessario specificare la directory di output per le successive migrazioni perché vengono create come elementi di pari livello rispetto all'ultima.
 
-<a name="one-migration-set"></a>Migrazione di un set
------------------
-Se non sono quelli con due set di migrazioni, è possibile combinarli manualmente in un unico set che può essere applicato a entrambi i provider.
+## <a name="one-migration-set"></a>Un set di migrazione
 
-Le annotazioni possono coesistere poiché un provider ignora tutte le annotazioni che non comprende. Ad esempio, una colonna chiave primaria che funziona con Microsoft SQL Server e SQLite potrebbe essere simile al seguente.
+Se non si vuole avere due set di migrazioni, è possibile combinarli manualmente in un singolo set che può essere applicato a entrambi i provider.
+
+Le annotazioni possono coesistere perché un provider ignora le annotazioni non riconoscenti. Ad esempio, una colonna chiave primaria che funziona sia con Microsoft SQL Server che SQLite potrebbe avere un aspetto simile al seguente.
 
 ``` csharp
 Id = table.Column<int>(nullable: false)
@@ -60,7 +62,7 @@ Id = table.Column<int>(nullable: false)
     .Annotation("Sqlite:Autoincrement", true),
 ```
 
-Se operazioni possono essere applicate solo in un provider (o in modo diverso sono tra i provider), usare il `ActiveProvider` proprietà per indicare quali provider è attivo.
+Se le operazioni possono essere applicate solo a un provider (oppure sono diverse tra i provider), usare la proprietà `ActiveProvider` per indicare quale provider è attivo.
 
 ``` csharp
 if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer")
@@ -69,7 +71,6 @@ if (migrationBuilder.ActiveProvider == "Microsoft.EntityFrameworkCore.SqlServer"
         name: "EntityFrameworkHiLoSequence");
 }
 ```
-
 
   [1]: ../../miscellaneous/cli/index.md
   [2]: projects.md

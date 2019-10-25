@@ -1,22 +1,23 @@
 ---
-title: Migrazioni in ambienti di Team - EF Core
+title: Migrazioni in ambienti team-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 10/30/2017
-ms.openlocfilehash: e8ff7f468d5ab6dbd6285f1abf9199e413288d10
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+uid: core/managing-schemas/migrations/teams
+ms.openlocfilehash: e6a1b86761a201cbcae34cced7e64f11df37a420
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42997695"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811976"
 ---
-<a name="migrations-in-team-environments"></a>Migrazioni in ambienti di Team
-===============================
-Quando si lavora con le migrazioni in ambienti di team, prestare particolare attenzione a file di snapshot del modello. Questo file può indicare se la migrazione del collega normalmente unite con quelle dell'utente o se è necessario risolvere un conflitto ricreando la migrazione prima di condividerlo.
+# <a name="migrations-in-team-environments"></a>Migrazioni in ambienti team
 
-<a name="merging"></a>Unione
--------
-Quando si uniscono le migrazioni dai colleghi del team, è possibile ottenere i conflitti nel file snapshot del modello. Se entrambe le modifiche non sono correlate, l'unione è semplice e due migrazioni possono coesistere. Ad esempio, possibile che si verifichi un conflitto di merge nella configurazione del tipo di entità customer che si presenta come segue:
+Quando si utilizzano migrazioni in ambienti team, prestare particolare attenzione al file di snapshot del modello. Questo file può indicare se la migrazione del proprio team si unisce in modo corretto o se è necessario risolvere un conflitto creando nuovamente la migrazione prima di condividerla.
+
+## <a name="merging"></a>Unione
+
+Quando si esegue il merge delle migrazioni dai colleghi, è possibile che si verifichino conflitti nel file di snapshot del modello. Se entrambe le modifiche non sono correlate, l'Unione è semplice e le due migrazioni possono coesistere. Ad esempio, è possibile che si verifichi un conflitto di merge nella configurazione del tipo di entità Customer simile alla seguente:
 
     <<<<<<< Mine
     b.Property<bool>("Deactivated");
@@ -24,18 +25,18 @@ Quando si uniscono le migrazioni dai colleghi del team, è possibile ottenere i 
     b.Property<int>("LoyaltyPoints");
     >>>>>>> Theirs
 
-Poiché entrambe queste proprietà devono esistere nel modello finale, completare il merge mediante l'aggiunta di entrambe le proprietà. In molti casi, il sistema di controllo della versione può unire automaticamente tali modifiche automaticamente.
+Poiché entrambe queste proprietà devono esistere nel modello finale, completare il merge aggiungendo entrambe le proprietà. In molti casi, il sistema di controllo della versione può unire automaticamente tali modifiche.
 
 ``` csharp
 b.Property<bool>("Deactivated");
 b.Property<int>("LoyaltyPoints");
 ```
 
-In questi casi, la migrazione e la migrazione del collega sono indipendenti tra loro. Poiché una di esse può essere applicata per primo, non è necessario apportare modifiche aggiuntive alla migrazione prima di condividerla con il tuo team.
+In questi casi, la migrazione e la migrazione del proprio team sono indipendenti tra loro. Poiché una di esse potrebbe essere applicata per prima, non è necessario apportare altre modifiche alla migrazione prima di condividerla con il team.
 
-<a name="resolving-conflicts"></a>Risoluzione dei conflitti
--------------------
-In alcuni casi si verifica un conflitto true quando si uniscono il modello di snapshot del modello. Ad esempio, si e si collega ognuno sia rinominato la stessa proprietà.
+## <a name="resolving-conflicts"></a>Risoluzione dei conflitti
+
+In alcuni casi si verifica un vero conflitto durante l'Unione del modello di snapshot del modello. È possibile, ad esempio, che l'utente e il compagno di squadra abbiano rinominato la stessa proprietà.
 
     <<<<<<< Mine
     b.Property<string>("Username");
@@ -43,13 +44,13 @@ In alcuni casi si verifica un conflitto true quando si uniscono il modello di sn
     b.Property<string>("Alias");
     >>>>>>> Theirs
 
-Se si verifica questo tipo di conflitto, risolvere il problema creando nuovamente la migrazione. Attenersi ai passaggi riportati di seguito.
+Se si verifica questo tipo di conflitto, risolverlo creando di nuovo la migrazione. Attenersi ai passaggi riportati di seguito.
 
-1. Interrompere il merge e il rollback alla directory di lavoro prima del merge
-2. Rimuovere la migrazione (ma mantenere le modifiche del modello)
-3. Unire le modifiche del collega in directory di lavoro
-4. Aggiungere di nuovo la migrazione
+1. Interrompere l'Unione e il rollback nella directory di lavoro prima del merge
+2. Rimuovere la migrazione (mantenendo però le modifiche del modello)
+3. Unisci le modifiche dei colleghi nella directory di lavoro
+4. Aggiungere nuovamente la migrazione
 
-Dopo questa operazione, due migrazioni possono essere applicate nell'ordine corretto. La migrazione viene applicata per primo, la colonna da rinominare *Alias*, in seguito la migrazione viene rinominato da *Username*.
+Al termine di questa operazione, le due migrazioni possono essere applicate nell'ordine corretto. La migrazione viene applicata per prima, rinominando la colonna in *alias*, successivamente la migrazione la rinomina a *nome utente*.
 
-La migrazione può essere condiviso in modo sicuro con il resto del team.
+La migrazione può essere condivisa in modo sicuro con il resto del team.

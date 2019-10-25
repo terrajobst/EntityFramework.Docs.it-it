@@ -4,14 +4,14 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: c3ca8bb97992c192672e8c2f2040b0de029df68d
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 288440a4494117fe59d27187e24424c4d2fd44ab
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197486"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811882"
 ---
-# <a name="backing-fields"></a>Campi sottoposti a backup
+# <a name="backing-fields"></a>Campi sottostanti
 
 > [!NOTE]  
 > Questa funzionalità è una novità di EF Core 1,1.
@@ -51,16 +51,12 @@ Non è possibile configurare i campi di backup con le annotazioni dei dati.
 
 È anche possibile creare una proprietà concettuale nel modello che non disponga di una proprietà CLR corrispondente nella classe di entità, ma usa invece un campo per archiviare i dati nell'entità. Questo è diverso dalle [proprietà shadow](shadow-properties.md), in cui i dati vengono archiviati nello strumento di rilevamento delle modifiche. Questa operazione viene in genere utilizzata se la classe di entità utilizza metodi per ottenere o impostare i valori.
 
-È possibile assegnare a EF il nome del campo nell' `Property(...)` API. Se non è presente alcuna proprietà con il nome specificato, Entity Framework cercherà un campo.
+È possibile assegnare a EF il nome del campo nell'API `Property(...)`. Se non è presente alcuna proprietà con il nome specificato, Entity Framework cercherà un campo.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
-È anche possibile scegliere di assegnare alla proprietà un nome diverso dal nome del campo. Questo nome viene quindi utilizzato quando si crea il modello, in particolare verrà utilizzato per il nome della colonna mappato a nel database.
-
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldConceptualProperty.cs#Sample)]
-
-Quando non è presente alcuna proprietà nella classe di entità, è possibile utilizzare `EF.Property(...)` il metodo in una query LINQ per fare riferimento alla proprietà che è concettualmente parte del modello.
+Quando non è presente alcuna proprietà nella classe di entità, è possibile usare il metodo `EF.Property(...)` in una query LINQ per fare riferimento alla proprietà che è concettualmente parte del modello.
 
 ``` csharp
-var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "Url"));
+var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));
 ```

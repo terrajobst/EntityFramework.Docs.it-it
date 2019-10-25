@@ -4,18 +4,19 @@ author: bricelam
 ms.author: bricelam
 ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: e5b42275aa575d711e1dcdf3d2ba3cb29a036727
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 29434c26a503fabb16b43ee8f0c36136a0b5b745
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181262"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811967"
 ---
 # <a name="entity-framework-core-tools-reference---net-cli"></a>Riferimento agli strumenti di Entity Framework Core-interfaccia della riga di comando .NET
 
 Gli strumenti dell'interfaccia della riga di comando (CLI) per Entity Framework Core eseguono attività di sviluppo in fase di progettazione. Ad esempio, creano [migrazioni](/aspnet/core/data/ef-mvc/migrations?view=aspnetcore-2.0), applicano migrazioni e generano codice per un modello basato su un database esistente. I comandi sono un'estensione del comando [DotNet](/dotnet/core/tools) multipiattaforma, che fa parte del [.NET Core SDK](https://www.microsoft.com/net/core). Questi strumenti funzionano con i progetti .NET Core.
 
 Se si usa Visual Studio, è consigliabile usare invece gli [strumenti della console di gestione pacchetti](powershell.md) :
+
 * Il progetto funziona automaticamente con il progetto corrente selezionato nella **console di gestione pacchetti** senza che sia necessario cambiare manualmente le directory.
 * Aprono automaticamente i file generati da un comando dopo il completamento del comando.
 
@@ -30,7 +31,7 @@ La procedura di installazione dipende dal tipo di progetto e dalla versione:
 
 ### <a name="ef-core-3x"></a>EF Core 3. x
 
-* `dotnet ef` deve essere installato come strumento globale o locale. La maggior parte degli sviluppatori installerà `dotnet ef` come strumento globale con il comando seguente:
+* `dotnet ef` necessario installare come strumento globale o locale. La maggior parte degli sviluppatori installerà `dotnet ef` come strumento globale con il comando seguente:
 
   ``` console
   dotnet tool install --global dotnet-ef
@@ -40,7 +41,7 @@ La procedura di installazione dipende dal tipo di progetto e dalla versione:
 
 * Installare la [.NET Core SDK 3,0](https://dotnet.microsoft.com/download/dotnet-core/3.0)). L'SDK deve essere installato anche se si dispone della versione più recente di Visual Studio.
 
-* Installare la versione più recente del pacchetto `Microsoft.EntityFrameworkCore.Design`.
+* Installare il pacchetto di `Microsoft.EntityFrameworkCore.Design` più recente.
 
   ``` Console
   dotnet add package Microsoft.EntityFrameworkCore.Design
@@ -50,15 +51,15 @@ La procedura di installazione dipende dal tipo di progetto e dalla versione:
 
 * Installare la [.NET Core SDK](https://www.microsoft.com/net/download/core)corrente. Il SDK deve essere installato anche se è presente la versione più recente di Visual Studio 2017.
 
-  Questo è tutto ciò che è necessario per ASP.NET Core 2.1 + perché il pacchetto `Microsoft.EntityFrameworkCore.Design` è incluso nel [metapacchetto Microsoft. AspNetCore. app](/aspnet/core/fundamentals/metapackage-app).
+  Questo è tutto ciò che è necessario per ASP.NET Core 2.1 + perché il pacchetto di `Microsoft.EntityFrameworkCore.Design` è incluso nel [metapacchetto Microsoft. AspNetCore. app](/aspnet/core/fundamentals/metapackage-app).
 
 ### <a name="ef-core-2x-not-aspnet-core"></a>EF Core 2. x (non ASP.NET Core)
 
-I comandi `dotnet ef` sono inclusi nel .NET Core SDK, ma per abilitare i comandi è necessario installare il pacchetto `Microsoft.EntityFrameworkCore.Design`.
+I comandi `dotnet ef` sono inclusi nel .NET Core SDK, ma per abilitare i comandi è necessario installare il pacchetto di `Microsoft.EntityFrameworkCore.Design`.
 
 * Installare la [.NET Core SDK](https://www.microsoft.com/net/download/core)corrente. L'SDK deve essere installato anche se si dispone della versione più recente di Visual Studio.
 
-* Installare la versione stabile più recente del pacchetto `Microsoft.EntityFrameworkCore.Design`.
+* Installare il pacchetto di `Microsoft.EntityFrameworkCore.Design` stabile più recente.
 
   ``` Console
   dotnet add package Microsoft.EntityFrameworkCore.Design
@@ -70,9 +71,9 @@ I comandi `dotnet ef` sono inclusi nel .NET Core SDK, ma per abilitare i comandi
 
 * Configurare l'applicazione per l'uso della versione di 2.1.200 SDK modificando il relativo file [Global. JSON](/dotnet/core/tools/global-json) . Questo file è in genere incluso nella directory della soluzione (uno sopra il progetto).
 
-* Modificare il file di progetto e aggiungere `Microsoft.EntityFrameworkCore.Tools.DotNet` come elemento `DotNetCliToolReference`. Specificare la versione 1. x più recente, ad esempio: 1.1.6. Vedere l'esempio di file di progetto alla fine di questa sezione.
+* Modificare il file di progetto e aggiungere `Microsoft.EntityFrameworkCore.Tools.DotNet` come elemento di `DotNetCliToolReference`. Specificare la versione 1. x più recente, ad esempio: 1.1.6. Vedere l'esempio di file di progetto alla fine di questa sezione.
 
-* Installare la versione 1. x più recente del pacchetto `Microsoft.EntityFrameworkCore.Design`, ad esempio:
+* Installare la versione 1. x più recente del pacchetto di `Microsoft.EntityFrameworkCore.Design`, ad esempio:
 
   ```console
   dotnet add package Microsoft.EntityFrameworkCore.Design -v 1.1.6
@@ -98,7 +99,7 @@ I comandi `dotnet ef` sono inclusi nel .NET Core SDK, ma per abilitare i comandi
   </Project>
   ```
 
-  Un riferimento al pacchetto con `PrivateAssets="All"` non è esposto ai progetti che fanno riferimento a questo progetto. Questa restrizione è particolarmente utile per i pacchetti che in genere vengono usati solo durante lo sviluppo.
+  Un riferimento al pacchetto con `PrivateAssets="All"` non viene esposto ai progetti che fanno riferimento a questo progetto. Questa restrizione è particolarmente utile per i pacchetti che in genere vengono usati solo durante lo sviluppo.
 
 ### <a name="verify-installation"></a>Verificare l'installazione
 
@@ -200,11 +201,11 @@ dotnet ef database update 20180904195021_InitialCreate
 
 ## <a name="dotnet-ef-dbcontext-info"></a>informazioni su DotNet EF DbContext
 
-Ottiene informazioni su un tipo `DbContext`.
+Ottiene informazioni su un tipo di `DbContext`.
 
 ## <a name="dotnet-ef-dbcontext-list"></a>elenco DbContext di DotNet EF
 
-Elenca i tipi `DbContext` disponibili.
+Elenca i tipi di `DbContext` disponibili.
 
 ## <a name="dotnet-ef-dbcontext-scaffold"></a>impalcatura DbContext DotNet EF
 
@@ -214,7 +215,7 @@ Argomenti:
 
 | Argomento       | Descrizione                                                                                                                                                                                                             |
 |:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<CONNECTION>` | Stringa di connessione al database. Per i progetti ASP.NET Core 2. x, il valore può essere *Name = \<Name della stringa di connessione >* . In tal caso, il nome deriva dalle origini di configurazione configurate per il progetto. |
+| `<CONNECTION>` | Stringa di connessione al database. Per i progetti ASP.NET Core 2. x, il valore può essere *nome =\<nome della stringa di connessione >* . In tal caso, il nome deriva dalle origini di configurazione configurate per il progetto. |
 | `<PROVIDER>`   | Provider da utilizzare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
 
 Opzioni:

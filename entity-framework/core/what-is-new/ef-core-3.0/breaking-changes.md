@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/19/2019
 ms.assetid: EE2878C9-71F9-4FA5-9BC4-60517C7C9830
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 690c7828cfe5019f4e7ae904c92430fab4726cb9
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: b2e3881e3454377dab7851cba999ed6b891def4e
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72446010"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812130"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
@@ -69,6 +69,7 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Basso      |
 | [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Basso      |
 | [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Basso      |
+| [Viene usato Microsoft. Data. SqlClient al posto di System. Data. SqlClient](#SqlClient) | Basso      |
 | [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Basso      |
 | [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Basso      |
 
@@ -1595,7 +1596,7 @@ Microsoft.EntityFrameworkCore.Sqlite dipendeva in precedenza dalla versione 1.1.
 
 **Nuovo comportamento**
 
-Il pacchetto è stato aggiornato in modo da dipendere dalla versione 2.0.0.
+Il pacchetto è stato aggiornato in base alla versione 2.0.0.
 
 **Perché?**
 
@@ -1626,6 +1627,29 @@ La versione 2.0.0 di NetTopologySuite risolve vari problemi di usabilità riscon
 **Mitigazioni**
 
 NetTopologySuite versione 2.0.0 include alcune modifiche che causano un'interruzione. Per informazioni dettagliate, vedere le [note sulla versione](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001).
+
+<a name="SqlClient"></a>
+
+### <a name="microsoftdatasqlclient-is-used-instead-of-systemdatasqlclient"></a>Viene usato Microsoft. Data. SqlClient al posto di System. Data. SqlClient
+
+[Rilevamento del problema #15636](https://github.com/aspnet/EntityFrameworkCore/issues/15636)
+
+**Comportamento precedente**
+
+Microsoft. EntityFrameworkCore. SqlServer in precedenza dipende da System. Data. SqlClient.
+
+**Nuovo comportamento**
+
+Il pacchetto è stato aggiornato in base a Microsoft. Data. SqlClient.
+
+**Perché?**
+
+Microsoft. Data. SqlClient è il driver di accesso ai dati principale per SQL Server in futuro e System. Data. SqlClient non è più l'obiettivo dello sviluppo.
+Alcune funzionalità importanti, ad esempio Always Encrypted, sono disponibili solo in Microsoft. Data. SqlClient.
+
+**Mitigazioni**
+
+Se il codice prende una dipendenza diretta da System. Data. SqlClient, è necessario modificarlo in modo che faccia riferimento a Microsoft. Data. SqlClient. Poiché i due pacchetti gestiscono un livello molto elevato di compatibilità API, questo dovrebbe essere solo una semplice modifica del pacchetto e dello spazio dei nomi.
 
 <a name="mersa"></a>
 

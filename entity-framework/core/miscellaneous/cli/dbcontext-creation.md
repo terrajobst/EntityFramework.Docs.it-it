@@ -4,24 +4,24 @@ author: bricelam
 ms.author: bricelam
 ms.date: 09/16/2019
 uid: core/miscellaneous/cli/dbcontext-creation
-ms.openlocfilehash: f83d4b16227d114a1cac1514667484a908fea4ac
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: c36dae150085b1ab509288f6fabfdd8ed7201ca8
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197571"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812026"
 ---
-<a name="design-time-dbcontext-creation"></a>Creazione DbContext della fase di progettazione
-==============================
-Alcuni dei comandi degli strumenti di EF Core (ad esempio, i comandi delle [migrazioni][1] ) richiedono la `DbContext` creazione di un'istanza derivata in fase di progettazione per raccogliere informazioni dettagliate sui tipi di entità dell'applicazione e su come eseguono il mapping a uno schema del database. Nella maggior parte dei casi, è preferibile che il `DbContext` creato sia configurato in modo analogo a come verrebbe [configurato][2]in fase di esecuzione.
+# <a name="design-time-dbcontext-creation"></a>Creazione di DbContext in fase di progettazione
 
-Esistono diversi modi in cui gli strumenti tentano di `DbContext`creare:
+Alcuni dei comandi degli strumenti EF Core (ad esempio, i comandi delle [migrazioni][1] ) richiedono la creazione di un'istanza di `DbContext` derivata in fase di progettazione per raccogliere informazioni dettagliate sui tipi di entità dell'applicazione e su come eseguono il mapping a uno schema del database. Nella maggior parte dei casi, è preferibile che il `DbContext` creato venga configurato in modo analogo a come verrebbe [configurato][2]in fase di esecuzione.
 
-<a name="from-application-services"></a>Da servizi applicazioni
--------------------------
+Esistono diversi modi in cui gli strumenti tentano di creare la `DbContext`:
+
+## <a name="from-application-services"></a>Da servizi applicazioni
+
 Se il progetto di avvio usa il [ASP.NET Core host Web][3] o l' [host generico .NET Core][4], gli strumenti tentano di ottenere l'oggetto DbContext dal provider di servizi dell'applicazione.
 
-Per prima cosa gli strumenti tentano di ottenere il provider di `Program.CreateHostBuilder()`Servizi richiamando `Build()`, quindi accedendo alla `Services` proprietà.
+Gli strumenti tentano innanzitutto di ottenere il provider di servizi richiamando `Program.CreateHostBuilder()`, chiamando `Build()`e quindi accedendo alla proprietà `Services`.
 
 ``` csharp
 public class Program
@@ -54,15 +54,15 @@ public class ApplicationDbContext : DbContext
 > [!NOTE]
 > Quando si crea una nuova applicazione ASP.NET Core, questo hook è incluso per impostazione predefinita.
 
-La `DbContext` stessa e tutte le dipendenze nel costruttore devono essere registrate come servizi nel provider di servizi dell'applicazione. Questa operazione può essere eseguita facilmente con [un `DbContext` Costruttore su che accetta un'istanza di `DbContextOptions<TContext>` come argomento][5] e usando il [ `AddDbContext<TContext>` metodo][6].
+Il `DbContext` stesso e tutte le dipendenze nel costruttore devono essere registrate come servizi nel provider di servizi dell'applicazione. Questa operazione può essere eseguita facilmente con [un costruttore sul `DbContext` che accetta un'istanza di `DbContextOptions<TContext>` come argomento][5] e usando il [Metodo`AddDbContext<TContext>`][6].
 
-<a name="using-a-constructor-with-no-parameters"></a>Uso di un costruttore senza parametri
---------------------------------------
-Se il DbContext non può essere ottenuto dal provider di servizi dell'applicazione, gli strumenti cercano il `DbContext` tipo derivato all'interno del progetto. Tentano quindi di creare un'istanza usando un costruttore senza parametri. Può essere il costruttore predefinito se `DbContext` è configurato utilizzando il [`OnConfiguring`][7] metodo.
+## <a name="using-a-constructor-with-no-parameters"></a>Uso di un costruttore senza parametri
 
-<a name="from-a-design-time-factory"></a>Da una factory della fase di progettazione
---------------------------
-È anche possibile indicare agli strumenti come creare il DbContext implementando l' `IDesignTimeDbContextFactory<TContext>` interfaccia: Se una classe che implementa questa interfaccia si trova nello stesso progetto dell'oggetto derivato `DbContext` o nel progetto di avvio dell'applicazione, gli strumenti ignorano le altre modalità di creazione di DbContext e usano invece la factory della fase di progettazione.
+Se il DbContext non può essere ottenuto dal provider di servizi dell'applicazione, gli strumenti cercano il tipo di `DbContext` derivato all'interno del progetto. Tentano quindi di creare un'istanza usando un costruttore senza parametri. Può essere il costruttore predefinito se il `DbContext` viene configurato utilizzando il metodo [`OnConfiguring`][7] .
+
+## <a name="from-a-design-time-factory"></a>Da una factory della fase di progettazione
+
+È anche possibile indicare agli strumenti come creare il DbContext implementando l'interfaccia `IDesignTimeDbContextFactory<TContext>`: se una classe che implementa questa interfaccia si trova nello stesso progetto della `DbContext` derivata o nel progetto di avvio dell'applicazione, gli strumenti ignorano l'altro modi per creare il DbContext e usare invece la factory in fase di progettazione.
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
@@ -85,9 +85,9 @@ namespace MyProject
 ```
 
 > [!NOTE]
-> Il `args` parametro non è attualmente utilizzato. Si è verificato [un problema][8] durante il rilevamento della possibilità di specificare gli argomenti della fase di progettazione dagli strumenti.
+> Il parametro `args` non è attualmente utilizzato. Si è verificato [un problema][8] durante il rilevamento della possibilità di specificare gli argomenti della fase di progettazione dagli strumenti.
 
-Una factory della fase di progettazione può essere particolarmente utile se è necessario configurare DbContext in modo diverso per la fase di progettazione rispetto al runtime, `DbContext` se il costruttore accetta parametri aggiuntivi non viene registrato in di, se non si utilizza o se per alcuni motivo per cui si preferisce non avere `BuildWebHost` un metodo nella `Main` classe dell'applicazione ASP.NET Core.
+Una factory della fase di progettazione può essere particolarmente utile se è necessario configurare il DbContext in modo diverso per la fase di progettazione rispetto al runtime, se il costruttore `DbContext` accetta parametri aggiuntivi non è registrato in DI, se non si usa o se per qualche motivo preferisce non avere un metodo di `BuildWebHost` nella classe `Main` dell'applicazione ASP.NET Core.
 
   [1]: xref:core/managing-schemas/migrations/index
   [2]: xref:core/miscellaneous/configuring-dbcontext

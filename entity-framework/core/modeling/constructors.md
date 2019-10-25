@@ -1,29 +1,29 @@
 ---
-title: Tipi di entità con costruttori - EF Core
+title: Tipi di entità con costruttori-EF Core
 author: ajcvickers
 ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
-ms.openlocfilehash: 5bf49718f02c1860871b1f4c255ec4d98fce2fc7
-ms.sourcegitcommit: 960e42a01b3a2f76da82e074f64f52252a8afecc
+ms.openlocfilehash: ddfaa8eebde388a9d3309f21b8891de593077956
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 05/08/2019
-ms.locfileid: "65405252"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72811889"
 ---
 # <a name="entity-types-with-constructors"></a>Tipi di entità con costruttori
 
 > [!NOTE]  
 > Questa funzionalità è stata introdotta in EF Core 2.1.
 
-A partire da EF Core 2.1, è ora possibile definire un costruttore con parametri che EF Core chiamare questo costruttore quando si crea un'istanza dell'entità. I parametri del costruttore possono essere associati a proprietà mappate o a vari tipi di servizi per semplificare i comportamenti, ad esempio il caricamento lazy.
+A partire da EF Core 2,1, è ora possibile definire un costruttore con parametri e EF Core chiamare questo costruttore quando si crea un'istanza dell'entità. I parametri del costruttore possono essere associati a proprietà mappate o a vari tipi di servizi per semplificare i comportamenti come il caricamento lazy.
 
 > [!NOTE]  
-> A partire da EF Core 2.1, tutti i binding di costruttore è per convenzione. Configurazione di costruttori specifici da usare è pianificata per una versione futura.
+> A partire da EF Core 2,1, l'associazione di tutti i costruttori è per convenzione. La configurazione di costruttori specifici da usare è prevista per una versione futura.
 
 ## <a name="binding-to-mapped-properties"></a>Associazione alle proprietà mappate
 
-Si consideri un tipico modello/Post di Blog:
+Si consideri un modello di Blog/post tipico:
 
 ``` csharp
 public class Blog
@@ -48,7 +48,7 @@ public class Post
 }
 ```
 
-Quando Entity Framework Core crea istanze di questi tipi, ad esempio per i risultati di una query, verrà prima chiamare il costruttore senza parametri predefinito e quindi impostare ciascuna proprietà sul valore dal database. Tuttavia, se EF Core consente di trovare un costruttore con parametri con i nomi dei parametri e i tipi che corrispondono a quelle di eseguito il mapping delle proprietà, quindi chiamerà invece il costruttore con parametri con valori di tali proprietà e non imposterà ogni proprietà in modo esplicito. Ad esempio:
+Quando EF Core crea istanze di questi tipi, ad esempio per i risultati di una query, chiamerà prima di tutto il costruttore senza parametri predefinito e quindi imposterà ogni proprietà sul valore del database. Tuttavia, se EF Core trova un costruttore con parametri con i nomi di parametro e i tipi che corrispondono a quelli delle proprietà mappate, chiamerà invece il costruttore con parametri con i valori per tali proprietà e non imposterà in modo esplicito ogni proprietà. Esempio:
 
 ``` csharp
 public class Blog
@@ -86,19 +86,23 @@ public class Post
     public Blog Blog { get; set; }
 }
 ```
+
 Alcuni aspetti da considerare:
-* Non tutte le proprietà devono avere i parametri del costruttore. Ad esempio, la proprietà Post.Content non è impostata per qualsiasi parametro di costruttore, in modo che Entity Framework Core verrà impostato dopo la chiamata al costruttore in modo normale.
-* I tipi di parametro e nomi devono corrispondere i tipi di proprietà e i nomi, ad eccezione del fatto che le proprietà possono essere convenzione Pascal, mentre i parametri sono maiuscole/minuscole camel.
-* EF Core non è possibile impostare le proprietà di navigazione (ad esempio Blog o post precedente) usando un costruttore.
-* Il costruttore può essere public, private, o avere eventuali altri accessibilità. Tuttavia, i proxy di caricamento lazy richiedono che il costruttore è accessibile dalla classe proxy che eredita. In genere, ciò significa rendendo pubblici o protetti.
+
+* Non è necessario che tutte le proprietà dispongano di parametri del costruttore. La proprietà post. Content, ad esempio, non è impostata da alcun parametro del costruttore, pertanto EF Core lo imposterà in modo normale dopo la chiamata al costruttore.
+* I tipi e i nomi dei parametri devono corrispondere ai nomi e ai tipi di proprietà, ad eccezione del fatto che le proprietà possono essere configurate in Pascal mentre i parametri sono con maiuscole/minuscole.
+* EF Core non è possibile impostare le proprietà di navigazione, ad esempio Blog o post precedenti, usando un costruttore.
+* Il costruttore può essere pubblico, privato o avere qualsiasi altra accessibilità. Tuttavia, per i proxy di caricamento lazy è necessario che il costruttore sia accessibile dalla classe proxy di ereditarietà. In genere ciò significa renderlo pubblico o protetto.
 
 ### <a name="read-only-properties"></a>Proprietà di sola lettura
 
-Una volta che vengono impostate tramite il costruttore è più sensato per rendere alcuni utenti di sola lettura. EF Core supporta, ma esistono alcuni aspetti da sapere:
-* Per convenzione, le proprietà senza Setter non sono mappate. (In questo modo tende a eseguire il mapping di proprietà che non devono essere associate, ad esempio le proprietà calcolate).
-* Usando i valori di chiave generati automaticamente richiede una proprietà chiave che è di lettura-scrittura, poiché il valore della chiave deve essere impostato per il generatore di chiavi durante l'inserimento di nuove entità.
+Quando le proprietà vengono impostate tramite il costruttore, può essere utile renderle di sola lettura. EF Core supporta questa operazione, ma è necessario esaminare alcuni aspetti:
 
-Un modo semplice per evitare queste operazioni è usare Setter privati. Ad esempio:
+* Non è stato eseguito il mapping delle proprietà senza Setter per convenzione. Questa operazione tende a eseguire il mapping delle proprietà che non devono essere mappate, ad esempio le proprietà calcolate.
+* L'uso di valori di chiave generati automaticamente richiede una proprietà chiave che sia di lettura/scrittura, perché il valore della chiave deve essere impostato dal generatore di chiavi quando si inseriscono nuove entità.
+
+Un modo semplice per evitare questi problemi consiste nell'usare Setter privati. Esempio:
+
 ``` csharp
 public class Blog
 {
@@ -135,9 +139,10 @@ public class Post
     public Blog Blog { get; set; }
 }
 ```
-EF Core considera una proprietà con setter privati di lettura / scrittura, il che significa che tutte le proprietà vengono mappate come indicato in precedenza e la chiave può ancora essere generate dall'archivio.
 
-Un'alternativa all'uso di Setter privati consiste nel rendere proprietà realmente di sola lettura e aggiungere mapping di più esplicito in OnModelCreating. In modo analogo, alcune proprietà possono essere rimosso completamente e sostituite con solo campi. Ad esempio, prendere in considerazione questi tipi di entità:
+EF Core Visualizza una proprietà con un setter privato come lettura/scrittura, il che significa che tutte le proprietà sono mappate come prima e la chiave può essere comunque generata dall'archivio.
+
+Un'alternativa all'uso di Setter privati consiste nel rendere le proprietà di sola lettura e aggiungere più mapping espliciti in OnModelCreating. Analogamente, alcune proprietà possono essere rimosse completamente e sostituite solo con i campi. Si considerino, ad esempio, i tipi di entità seguenti:
 
 ``` csharp
 public class Blog
@@ -173,7 +178,9 @@ public class Post
     public Blog Blog { get; set; }
 }
 ```
+
 E questa configurazione in OnModelCreating:
+
 ``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -194,26 +201,29 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         });
 }
 ```
-Note importanti:
-* La chiave "property" è ora un campo. Non è un `readonly` campo in modo che possono essere usate chiavi generate dall'archivio.
-* Le altre proprietà sono proprietà di sola lettura impostata solo nel costruttore.
-* Se il valore della chiave primaria è sempre impostato da Entity Framework o leggere dal database, quindi non è necessario includerla nel costruttore. Questo consente di lasciare la chiave "property" un campo semplice e in modo chiaro che dovrebbe non essere impostato in modo esplicito durante la creazione di nuovi blog o post.
+
+Aspetti da considerare:
+
+* La chiave "Property" è ora un campo. Non si tratta di un campo `readonly` in modo che sia possibile utilizzare chiavi generate dall'archivio.
+* Le altre proprietà sono proprietà di sola lettura impostate solo nel costruttore.
+* Se il valore della chiave primaria viene impostato solo da EF o letto dal database, non è necessario includerlo nel costruttore. In questo modo, la chiave "Property" viene lasciata come un campo semplice e si rende chiaro che non deve essere impostata in modo esplicito durante la creazione di nuovi blog o post.
 
 > [!NOTE]  
-> Questo codice verrà generato un avviso che indica '169' che non viene mai usato il campo. Ciò può essere ignorato poiché in realtà EF Core Usa il campo in modo extralinguistic.
+> Questo codice genererà l'avviso del compilatore ' 169' indicante che il campo non viene mai usato. Questo può essere ignorato perché in realtà EF Core usa il campo in modo linguistico.
 
 ## <a name="injecting-services"></a>Inserimento di servizi
 
-EF Core può anche inserire "servizi" nel costruttore del tipo di entità. Di seguito, ad esempio, può essere inserito:
-* `DbContext` -l'istanza del contesto corrente, che può anche essere digitato come tipo DbContext derivato
-* `ILazyLoader` -il servizio di caricamento lazy, vedere la [documentazione di caricamento lazy](../querying/related-data.md) per altri dettagli
-* `Action<object, string>` -un delegato di caricamento lazy, vedere la [documentazione di caricamento lazy](../querying/related-data.md) per altri dettagli
-* `IEntityType` -i metadati di Entity Framework Core associati a questo tipo di entità
+EF Core inoltre possibile inserire i "servizi" nel costruttore di un tipo di entità. Ad esempio, è possibile inserire quanto segue:
+
+* `DbContext`: istanza del contesto corrente, che può essere tipizzata anche come tipo DbContext derivato
+* `ILazyLoader`-servizio di caricamento lazy. per ulteriori informazioni, vedere la [documentazione relativa al caricamento lazy](../querying/related-data.md) .
+* `Action<object, string>`-un delegato di caricamento lazy. per altri dettagli, vedere la [documentazione relativa al caricamento lazy](../querying/related-data.md) .
+* `IEntityType`-i metadati EF Core associati a questo tipo di entità
 
 > [!NOTE]  
-> A partire da EF Core 2.1, solo i servizi noti da EF Core possono essere inseriti. Supporto per l'inserimento di servizi delle applicazioni verrà preso in considerazione per una versione futura.
+> A partire da EF Core 2,1, è possibile inserire solo i servizi noti da EF Core. Il supporto per l'inserimento di servizi applicativi viene preso in considerazione per una versione futura.
 
-Ad esempio, un oggetto DbContext inserito è utilizzabile per accedere in modo selettivo del database per ottenere informazioni sulle entità correlate senza il caricamento di tutti. Nell'esempio seguente questo viene usato per ottenere il numero di post di blog senza caricare i post di:
+Ad esempio, è possibile usare un DbContext inserito per accedere in modo selettivo al database per ottenere informazioni sulle entità correlate senza caricarle tutte. Nell'esempio seguente viene usato per ottenere il numero di post in un blog senza caricare i post:
 
 ``` csharp
 public class Blog
@@ -251,10 +261,12 @@ public class Post
     public Blog Blog { get; set; }
 }
 ```
-Alcuni aspetti da notare in questo:
-* Il costruttore è privato, poiché viene sempre chiamato da EF Core e non c'è un altro costruttore pubblico per uso generale.
-* Il codice che usa il servizio inserito (vale a dire, il contesto) è difesa contro questa operazione in corso `null` per gestire i casi in cui Entity Framework Core non è la creazione dell'istanza.
-* Poiché service viene archiviato in una proprietà di lettura/scrittura verranno ripristinate quando l'entità è associata a una nuova istanza del contesto.
+
+Ecco alcuni aspetti da tenere presente:
+
+* Il costruttore è privato, perché viene chiamato solo da EF Core ed è disponibile un altro costruttore pubblico per uso generale.
+* Il codice che usa il servizio inserito (ovvero il contesto) è difensivo rispetto a `null` per gestire i casi in cui EF Core non crea l'istanza.
+* Poiché il servizio viene archiviato in una proprietà di lettura/scrittura, verrà reimpostato quando l'entità è associata a una nuova istanza del contesto.
 
 > [!WARNING]  
-> Inserimento di DbContext simile al seguente è spesso considerato un antipattern poiché associa i tipi di entità direttamente a EF Core. Valutare con attenzione tutte le opzioni prima di usare l'inserimento del servizio simile al seguente.
+> L'inserimento di DbContext come questo è spesso considerato un anti-pattern, perché abbina i tipi di entità direttamente a EF Core. Valutare attentamente tutte le opzioni prima di usare l'inserimento di un servizio come questo.
