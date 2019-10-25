@@ -1,25 +1,26 @@
 ---
-title: Tabella di cronologia personalizzata migrazioni - Entity Framework Core
+title: Tabella di cronologia migrazioni personalizzate-EF Core
 author: bricelam
 ms.author: bricelam
 ms.date: 11/07/2017
-ms.openlocfilehash: 1a253972a8f4e410421ec8a77c079e588d368819
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+uid: core/managing-schemas/migrations/history-table
+ms.openlocfilehash: 0db393ff3101564f8d8081d0a57b264c2c459df7
+ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45488816"
+ms.lasthandoff: 10/23/2019
+ms.locfileid: "72812077"
 ---
-<a name="custom-migrations-history-table"></a><span data-ttu-id="c0a58-102">Tabella di cronologia migrazioni personalizzato</span><span class="sxs-lookup"><span data-stu-id="c0a58-102">Custom Migrations History Table</span></span>
-===============================
-<span data-ttu-id="c0a58-103">Per impostazione predefinita, EF Core tiene traccia di quali migrazioni sono state applicate al database registrandoli in una tabella denominata `__EFMigrationsHistory`.</span><span class="sxs-lookup"><span data-stu-id="c0a58-103">By default, EF Core keeps track of which migrations have been applied to the database by recording them in a table named `__EFMigrationsHistory`.</span></span> <span data-ttu-id="c0a58-104">Per vari motivi, è possibile personalizzare questa tabella in base alle proprie esigenze.</span><span class="sxs-lookup"><span data-stu-id="c0a58-104">For various reasons, you may want to customize this table to better suit your needs.</span></span>
+# <a name="custom-migrations-history-table"></a><span data-ttu-id="ecc5a-102">Tabella di cronologia migrazioni personalizzate</span><span class="sxs-lookup"><span data-stu-id="ecc5a-102">Custom Migrations History Table</span></span>
+
+<span data-ttu-id="ecc5a-103">Per impostazione predefinita, EF Core tiene traccia di quali migrazioni sono state applicate al database mediante la registrazione in una tabella denominata `__EFMigrationsHistory`.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-103">By default, EF Core keeps track of which migrations have been applied to the database by recording them in a table named `__EFMigrationsHistory`.</span></span> <span data-ttu-id="ecc5a-104">Per diversi motivi, potrebbe essere necessario personalizzare questa tabella per adattarla alle proprie esigenze.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-104">For various reasons, you may want to customize this table to better suit your needs.</span></span>
 
 > [!IMPORTANT]
-> <span data-ttu-id="c0a58-105">Se si personalizza la tabella di cronologia migrazioni *dopo* applicare le migrazioni, è responsabile per l'aggiornamento la tabella esistente nel database.</span><span class="sxs-lookup"><span data-stu-id="c0a58-105">If you customize the Migrations history table *after* applying migrations, you are responsible for updating the existing table in the database.</span></span>
+> <span data-ttu-id="ecc5a-105">Se si Personalizza la tabella di cronologia delle migrazioni *dopo aver* applicato le migrazioni, si è responsabili dell'aggiornamento della tabella esistente nel database.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-105">If you customize the Migrations history table *after* applying migrations, you are responsible for updating the existing table in the database.</span></span>
 
-<a name="schema-and-table-name"></a><span data-ttu-id="c0a58-106">Nome dello schema e della tabella</span><span class="sxs-lookup"><span data-stu-id="c0a58-106">Schema and table name</span></span>
-----------------------
-<span data-ttu-id="c0a58-107">È possibile modificare lo schema e nome della tabella usando il `MigrationsHistoryTable()` nel metodo `OnConfiguring()` (o `ConfigureServices()` in ASP.NET Core).</span><span class="sxs-lookup"><span data-stu-id="c0a58-107">You can change the schema and table name using the `MigrationsHistoryTable()` method in `OnConfiguring()` (or `ConfigureServices()` on ASP.NET Core).</span></span> <span data-ttu-id="c0a58-108">Di seguito è riportato un esempio con il provider di EF Core di SQL Server.</span><span class="sxs-lookup"><span data-stu-id="c0a58-108">Here is an example using the SQL Server EF Core provider.</span></span>
+## <a name="schema-and-table-name"></a><span data-ttu-id="ecc5a-106">Nome schema e tabella</span><span class="sxs-lookup"><span data-stu-id="ecc5a-106">Schema and table name</span></span>
+
+<span data-ttu-id="ecc5a-107">È possibile modificare il nome dello schema e della tabella usando il metodo `MigrationsHistoryTable()` in `OnConfiguring()` (o `ConfigureServices()` in ASP.NET Core).</span><span class="sxs-lookup"><span data-stu-id="ecc5a-107">You can change the schema and table name using the `MigrationsHistoryTable()` method in `OnConfiguring()` (or `ConfigureServices()` on ASP.NET Core).</span></span> <span data-ttu-id="ecc5a-108">Di seguito è riportato un esempio che usa il provider di EF Core SQL Server.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-108">Here is an example using the SQL Server EF Core provider.</span></span>
 
 ``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -28,9 +29,9 @@ protected override void OnConfiguring(DbContextOptionsBuilder options)
         x => x.MigrationsHistoryTable("__MyMigrationsHistory", "mySchema"));
 ```
 
-<a name="other-changes"></a><span data-ttu-id="c0a58-109">Altre modifiche</span><span class="sxs-lookup"><span data-stu-id="c0a58-109">Other changes</span></span>
--------------
-<span data-ttu-id="c0a58-110">Per configurare altri aspetti della tabella, eseguire l'override e sostituire le specifiche del provider `IHistoryRepository` servizio.</span><span class="sxs-lookup"><span data-stu-id="c0a58-110">To configure additional aspects of the table, override and replace the provider-specific `IHistoryRepository` service.</span></span> <span data-ttu-id="c0a58-111">Di seguito è riportato un esempio di modificare il nome della colonna MigrationId *Id* in SQL Server.</span><span class="sxs-lookup"><span data-stu-id="c0a58-111">Here is an example of changing the MigrationId column name to *Id* on SQL Server.</span></span>
+## <a name="other-changes"></a><span data-ttu-id="ecc5a-109">Altre modifiche</span><span class="sxs-lookup"><span data-stu-id="ecc5a-109">Other changes</span></span>
+
+<span data-ttu-id="ecc5a-110">Per configurare altri aspetti della tabella, eseguire l'override e sostituire il servizio `IHistoryRepository` specifico del provider.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-110">To configure additional aspects of the table, override and replace the provider-specific `IHistoryRepository` service.</span></span> <span data-ttu-id="ecc5a-111">Ecco un esempio di modifica del nome della colonna MigrationId in *ID* in SQL Server.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-111">Here is an example of changing the MigrationId column name to *Id* on SQL Server.</span></span>
 
 ``` csharp
 protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -40,7 +41,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder options)
 ```
 
 > [!WARNING]
-> <span data-ttu-id="c0a58-112">`SqlServerHistoryRepository` si trova all'interno di uno spazio dei nomi interna e potrebbe cambiare nelle versioni future.</span><span class="sxs-lookup"><span data-stu-id="c0a58-112">`SqlServerHistoryRepository` is inside an internal namespace and may change in future releases.</span></span>
+> <span data-ttu-id="ecc5a-112">`SqlServerHistoryRepository` si trova all'interno di uno spazio dei nomi interno e può cambiare nelle versioni future.</span><span class="sxs-lookup"><span data-stu-id="ecc5a-112">`SqlServerHistoryRepository` is inside an internal namespace and may change in future releases.</span></span>
 
 ``` csharp
 class MyHistoryRepository : SqlServerHistoryRepository
