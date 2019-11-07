@@ -4,25 +4,26 @@ author: divega
 ms.date: 11/14/2018
 ms.assetid: 998C04F3-676A-4FCF-8450-CFB0457B4198
 uid: core/what-is-new/ef-core-2.2
-ms.openlocfilehash: 5fcf7c6dfb4d8cb7928ef974af6deb52df7c63eb
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: fb9de799753bebd7b4092cd8f4af74703dee3e45
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181379"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656193"
 ---
 # <a name="new-features-in-ef-core-22"></a>Nuove funzionalità di EF Core 2.2
 
 ## <a name="spatial-data-support"></a>Supporto di dati spaziali
 
 Si possono usare dati spaziali per rappresentare la posizione fisica e la forma degli oggetti.
-Molti database possono archiviare, indicizzare ed eseguire query sui dati spaziali in modo nativo. Sono esempi di scenari comuni l'esecuzione di query per recuperare gli oggetti entro una distanza specificata e il test della presenza di una posizione specifica in un poligono.
+Molti database possono archiviare, indicizzare ed eseguire query sui dati spaziali in modo nativo.
+Sono esempi di scenari comuni l'esecuzione di query per recuperare gli oggetti entro una distanza specificata e il test della presenza di una posizione specifica in un poligono.
 EF Core 2.2 supporta ora l'utilizzo dei dati spaziali da vari database usando i tipi della libreria [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) (NTS).
 
 Il supporto dei dati spaziali viene implementato come una serie di pacchetti di estensione specifici del provider.
 Ognuno di questi pacchetti fornisce i mapping per tipi e i metodi NTS, nonché i tipi e le funzioni spaziali corrispondenti nel database.
 Queste estensioni del provider sono ora disponibili per [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/), [SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/) e [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/) (dal [progetto Npgsql](https://www.npgsql.org/)).
-I tipi spaziali possono essere usati direttamente con il [provider in memoria EF Core](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/) senza estensioni aggiuntive.
+I tipi spaziali possono essere usati direttamente con il [provider in memoria EF Core](xref:core/providers/in-memory/index) senza estensioni aggiuntive.
 
 Dopo aver installato l'estensione del provider, è possibile aggiungere proprietà dei tipi supportati alle entità. Esempio:
 
@@ -40,7 +41,7 @@ namespace MyApp
     public Point Location { get; set; }
   }
 }
-``` 
+```
 
 È quindi possibile rendere persistenti le entità con dati spaziali:
 
@@ -56,6 +57,7 @@ using (var context = new MyDbContext())
     context.SaveChanges();
 }
 ```
+
 Ed è possibile eseguire query di database basate su operazioni e dati spaziali:
 
 ``` csharp
@@ -65,7 +67,7 @@ Ed è possibile eseguire query di database basate su operazioni e dati spaziali:
       select f).Take(5).ToList();
 ```
 
-Per altre informazioni su questa funzionalità, vedere la [documentazione sui tipi spaziali](xref:core/modeling/spatial). 
+Per altre informazioni su questa funzionalità, vedere la [documentazione sui tipi spaziali](xref:core/modeling/spatial).
 
 ## <a name="collections-of-owned-entities"></a>Raccolte di entità di proprietà
 
@@ -74,7 +76,8 @@ EF Core 2.2 estende la possibilità di esprimere la proprietà alle associazioni
 La proprietà consente di vincolare l'uso delle entità.
 
 Ad esempio, le entità di proprietà:
-- Possono comparire solo nelle proprietà di navigazione di altri tipi di entità. 
+
+- Possono comparire solo nelle proprietà di navigazione di altri tipi di entità.
 - Vengono caricate automaticamente e possono essere gestite solo da un DbContext insieme al proprietario.
 
 Nei database relazionali, le raccolte di proprietà vengono mappate a tabelle separate dal proprietario, proprio come le normali associazioni uno-a-molti.
@@ -112,4 +115,4 @@ FROM [Friends] AS [f]
 ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
-Per altre informazioni, vedere la [documentazione sui tag delle query](xref:core/querying/tags). 
+Per altre informazioni, vedere la [documentazione sui tag delle query](xref:core/querying/tags).

@@ -4,14 +4,14 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c807aa4c-7845-443d-b8d0-bfc9b42691a3
 uid: core/modeling/relational/tables
-ms.openlocfilehash: 62dce317b901bc862b3c7d20ed1d176805bb24dd
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 474c49aca4c65cd5d58b184b1f3c2d30e7abff84
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71196963"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656096"
 ---
-# <a name="table-mapping"></a>Mapping tabella
+# <a name="table-mapping"></a>Mapping di tabella
 
 > [!NOTE]  
 > La configurazione di questa sezione è applicabile in generale ai database relazionali. I metodi di estensione descritti diventano disponibili quando si installa un provider di database relazionali (a causa del pacchetto *Microsoft.EntityFrameworkCore.Relational* condiviso).
@@ -20,7 +20,7 @@ Il mapping delle tabelle identifica i dati della tabella da cui devono essere es
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, ogni entità viene configurata in modo da eseguire il mapping a una tabella con lo stesso nome della proprietà `DbSet<TEntity>` che espone l'entità nel contesto derivato. Se per `DbSet<TEntity>` l'entità specificata non è incluso alcun oggetto, viene utilizzato il nome della classe.
+Per convenzione, ogni entità viene configurata in modo da eseguire il mapping a una tabella con lo stesso nome della proprietà `DbSet<TEntity>` che espone l'entità nel contesto derivato. Se non è incluso alcun `DbSet<TEntity>` per l'entità specificata, viene usato il nome della classe.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
@@ -28,8 +28,7 @@ Per convenzione, ogni entità viene configurata in modo da eseguire il mapping a
 
 ``` csharp
 using System.ComponentModel.DataAnnotations.Schema;
-```
-``` csharp
+
 [Table("blogs")]
 public class Blog
 {
@@ -55,8 +54,7 @@ public class Blog
 
 ``` csharp
 using Microsoft.EntityFrameworkCore;
-```
-``` csharp
+
 class MyContext : DbContext
 {
     public DbSet<Blog> Blogs { get; set; }
@@ -77,8 +75,4 @@ public class Blog
 
 È inoltre possibile specificare uno schema a cui appartiene la tabella.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/TableAndSchema.cs?highlight=2)] -->
-``` csharp
-        modelBuilder.Entity<Blog>()
-            .ToTable("blogs", schema: "blogging");
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/TableAndSchema.cs?name=Table&highlight=2)]

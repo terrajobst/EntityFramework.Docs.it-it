@@ -4,16 +4,17 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
-ms.openlocfilehash: 4e4ba21cd099daab4db8a8f358800fde26980c14
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: bfabe8fd5b0a64edd5d97baff3beab9d712f1c20
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813585"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654637"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
 
 Entity Framework Core consente di usare le proprietà di navigazione nel modello per caricare entità correlate. Esistono tre modelli di O/RM (Object-Relational Mapping) comuni usati per caricare i dati correlati.
+
 * **Caricamento eager** significa che i dati correlati vengono caricati dal database come parte della query iniziale.
 * **Caricamento esplicito** significa che i dati correlati vengono caricati in modo esplicito dal database in un secondo momento.
 * **Caricamento lazy** significa che i dati correlati vengono caricati in modo trasparente dal database quando si accede alla proprietà di navigazione.
@@ -53,11 +54,11 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
 > [!CAUTION]
-> Dalla versione 3.0.0, ogni `Include` provocherà l'aggiunta di un JOIN aggiuntivo alle query SQL prodotte dai provider relazionali, mentre le versioni precedenti generavano query SQL aggiuntive. Questo può modificare in modo significativo le prestazioni delle query, per un miglioramento o peggio. In particolare, potrebbe essere necessario suddividere le query LINQ con un numero estremamente elevato di operatori `Include` in più query LINQ separate per evitare il problema di esplosione cartesiana.
+> Dalla versione 3.0.0, ogni `Include` provocherà l'aggiunta di un JOIN aggiuntivo alle query SQL prodotte dai provider relazionali, mentre le versioni precedenti generavano query SQL aggiuntive. Questo può modificare in modo significativo le prestazioni delle query, per un miglioramento o peggio. In particolare, è possibile che le query LINQ con un numero estremamente elevato di operatori di `Include` debbano essere suddivise in più query LINQ separate per evitare il problema di esplosione cartesiana.
 
 ### <a name="include-on-derived-types"></a>Inclusione per i tipi derivati
 
-È possibile includere dati correlati dalle navigazioni definite solo per un tipo derivato mediante `Include` e `ThenInclude`. 
+È possibile includere dati correlati dalle navigazioni definite solo per un tipo derivato mediante `Include` e `ThenInclude`.
 
 Dato il modello seguente:
 
@@ -95,17 +96,20 @@ public class School
 
 Il contenuto della navigazione `School` di tutte le entità People che sono Student può essere caricato in modalità eager usando vari modelli:
 
-- Cast
+* Cast
+
   ```csharp
   context.People.Include(person => ((Student)person).School).ToList()
   ```
 
-- Operatore `as`
+* Operatore `as`
+
   ```csharp
   context.People.Include(person => (person as Student).School).ToList()
   ```
 
-- Overload di `Include` che accetta parametri di tipo `string`
+* Overload di `Include` che accetta parametri di tipo `string`
+
   ```csharp
   context.People.Include("School").ToList()
   ```
@@ -140,6 +144,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         .UseLazyLoadingProxies()
         .UseSqlServer(myConnectionString);
 ```
+
 O quando si usa AddDbContext:
 
 ```csharp

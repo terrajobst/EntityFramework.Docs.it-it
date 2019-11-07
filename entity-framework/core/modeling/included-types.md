@@ -4,65 +4,30 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: cbe6935e-2679-4b77-8914-a8d772240cf1
 uid: core/modeling/included-types
-ms.openlocfilehash: ca83b1c432bdf4853dba81e12ec4a739bc8218dc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1249e71c02e58afe7fe06b3fdcf523dfa0c9b17c
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197384"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655731"
 ---
-# <a name="including--excluding-types"></a>Inclusione & esclusi i tipi
+# <a name="including--excluding-types"></a>Inclusione ed esclusione di tipi
 
 L'inclusione di un tipo nel modello significa che EF dispone di metadati relativi a tale tipo e tenterà di leggere e scrivere istanze da/nel database.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, i tipi esposti nelle `DbSet` proprietà del contesto sono inclusi nel modello. Inoltre, sono inclusi anche i tipi citati `OnModelCreating` nel metodo. Infine, nel modello vengono inclusi anche tutti i tipi individuati in modo ricorsivo per esplorare le proprietà di navigazione dei tipi individuati.
+Per convenzione, i tipi esposti in `DbSet` proprietà del contesto sono inclusi nel modello. Sono inoltre inclusi i tipi indicati nel metodo `OnModelCreating`. Infine, nel modello vengono inclusi anche tutti i tipi individuati in modo ricorsivo per esplorare le proprietà di navigazione dei tipi individuati.
 
 **Ad esempio, nell'elenco di codice seguente vengono individuati tutti e tre i tipi:**
 
-* `Blog`Poiché è esposto in una `DbSet` proprietà nel contesto
+* `Blog` perché è esposto in una proprietà `DbSet` nel contesto
 
-* `Post`Poiché viene individuato tramite la `Blog.Posts` proprietà di navigazione
+* `Post` perché viene individuato tramite la proprietà di navigazione `Blog.Posts`
 
-* `AuditEntry`Poiché è indicato in`OnModelCreating`
+* `AuditEntry` perché è indicato in `OnModelCreating`
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/IncludedTypes.cs?highlight=3,7,16)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<AuditEntry>();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public Blog Blog { get; set; }
-}
-
-public class AuditEntry
-{
-    public int AuditEntryId { get; set; }
-    public string Username { get; set; }
-    public string Action { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/IncludedTypes.cs?name=IncludedTypes&highlight=3,7,16)]
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 

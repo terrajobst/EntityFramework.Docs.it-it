@@ -4,28 +4,31 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 585F90A3-4D5A-4DD1-92D8-5243B14E0FEC
 uid: core/what-is-new/ef-core-2.1
-ms.openlocfilehash: 5f97015f0228387574e3a19fb20cae1bdb403410
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: ba3a26bcd76cd0b9615b13f32456e7280afe533a
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149181"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654836"
 ---
 # <a name="new-features-in-ef-core-21"></a>Nuove funzionalità di EF Core 2.1
 
 Oltre a numerose correzioni di bug e piccoli miglioramenti funzionali e delle prestazioni, EF Core 2.1 include alcune nuove funzionalità interessanti:
 
 ## <a name="lazy-loading"></a>Caricamento lazy
+
 EF Core contiene ora i blocchi predefiniti necessari per consentire a tutti di creare classi di entità che possono caricare le proprietà di navigazione su richiesta. È stato anche creato un nuovo pacchetto, Microsoft.EntityFrameworkCore.Proxies, che sfrutta questi blocchi predefiniti per produrre classi di proxy con caricamento lazy in base a classi di entità con modifiche minime, ad esempio classi con le proprietà di navigazione virtuale.
 
 Leggere la [sezione sul caricamento lazy](xref:core/querying/related-data#lazy-loading) per altre informazioni su questo argomento.
 
 ## <a name="parameters-in-entity-constructors"></a>Parametri nei costruttori di entità
+
 In quanto uno dei blocchi predefiniti richiesti per il caricamento lazy, è stata abilitata la creazione di entità che accettano parametri nei propri costruttori. È possibile usare i parametri per inserire i valori delle proprietà, i delegati del caricamento lazy e i servizi.
 
 Leggere la [sezione sul costruttore di entità con parametri](xref:core/modeling/constructors) per altre informazioni su questo argomento.
 
 ## <a name="value-conversions"></a>Conversioni di valori
+
 Fino ad ora, EF Core poteva solo eseguire il mapping di proprietà con tipi supportati in modo nativo dal provider di database sottostante. I valori venivano copiati tra le colonne e le proprietà senza alcuna trasformazione. A partire da EF Core 2.1, si possono applicare conversioni dei valori per trasformare i valori ottenuti dalle colonne prima che vengano applicate alle proprietà e viceversa. Sono disponibili un certo numero di conversioni che possono essere applicate per convenzione in base alle esigenze, nonché un'API di configurazione esplicita che consente la registrazione di conversioni personalizzate tra colonne e le proprietà. Alcune applicazioni di questa funzionalità sono le seguenti:
 
 - Archiviazione delle enumerazioni come stringhe
@@ -35,6 +38,7 @@ Fino ad ora, EF Core poteva solo eseguire il mapping di proprietà con tipi supp
 Leggere la [sezione sulle conversioni dei valori](xref:core/modeling/value-conversions) per altre informazioni su questo argomento.  
 
 ## <a name="linq-groupby-translation"></a>Conversione di GroupBy LINQ
+
 Prima della versione 2.1, in EF Core l'operatore LINQ GroupBy veniva sempre valutato in memoria. È ora supportata la conversione nella clausola SQL GROUP BY nella maggior parte dei casi.
 
 Questo esempio mostra una query con GroupBy usata per calcolare varie funzioni di aggregazione:
@@ -63,6 +67,7 @@ GROUP BY [o].[CustomerId], [o].[EmployeeId];
 ```
 
 ## <a name="data-seeding"></a>Seeding dei dati
+
 Con la nuova versione sarà possibile fornire i dati iniziali per popolare un database. Diversamente da EF6, il seeding dei dati è associato a un tipo di entità come parte della configurazione del modello. Le migrazioni di EF Core possono calcolare automaticamente quali operazioni di inserimento, aggiornamento o eliminazione devono essere applicate durante l'aggiornamento del database a una nuova versione del modello.
 
 Ad esempio, è possibile usare questo codice per configurare i dati iniziali per un'operazione Post in `OnModelCreating`:
@@ -74,6 +79,7 @@ modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 Leggere la [sezione sul seeding dei dati](xref:core/modeling/data-seeding) per altre informazioni su questo argomento.  
 
 ## <a name="query-types"></a>Tipi di query
+
 Un modello EF Core può ora includere tipi di query. Diversamente dai tipi di entità, per i tipi di query non vengono definite chiavi e questi tipi non possono essere inseriti, eliminati o aggiornati (ovvero sono di sola lettura), ma possono essere restituiti direttamente dalle query. Alcuni degli scenari di utilizzo per i tipi di query sono:
 
 - Mapping a viste senza chiavi primarie
@@ -84,6 +90,7 @@ Un modello EF Core può ora includere tipi di query. Diversamente dai tipi di en
 Leggere la [sezione sui tipi di query](xref:core/modeling/keyless-entity-types) per altre informazioni su questo argomento.
 
 ## <a name="include-for-derived-types"></a>Include per i tipi derivati
+
 Sarà ora possibile specificare le proprietà di navigazione definite solo su tipi derivati durante la scrittura di espressioni per il metodo `Include`. Per la versione fortemente tipizzata di `Include`, è supportato l'uso di un cast esplicito o dell'operatore `as`. Sono ora supportati anche i riferimenti ai nomi di proprietà di navigazione definite su tipi derivati nella versione stringa di `Include`:
 
 ``` csharp
@@ -95,14 +102,17 @@ var option3 = context.People.Include("School");
 Leggere la [sezione su Include con tipi derivati](xref:core/querying/related-data#include-on-derived-types) per altre informazioni su questo argomento.
 
 ## <a name="systemtransactions-support"></a>Supporto di System.Transactions
+
 È stata aggiunta la possibilità di utilizzare le funzionalità di System.Transactions, ad esempio TransactionScope. Questa funzionalità sarà disponibile sia per .NET Framework che per .NET Core quando si usano provider di database che la supportano.
 
 Leggere la [sezione su System.Transactions](xref:core/saving/transactions#using-systemtransactions) per altre informazioni su questo argomento.
 
 ## <a name="better-column-ordering-in-initial-migration"></a>Migliore ordinamento delle colonne nella migrazione iniziale
+
 In base ai suggerimenti dei clienti, sono state aggiornate le migrazioni per generare inizialmente le colonne per le tabelle nello stesso ordine con cui sono dichiarate le proprietà nelle classi. Si noti che EF Core non può modificare l'ordine quando vengono aggiunti nuovi membri dopo la creazione iniziale delle tabelle.
 
 ## <a name="optimization-of-correlated-subqueries"></a>Ottimizzazione di sottoquery correlate
+
 È stata migliorata la conversione di query per evitare l'esecuzione di "N + 1" query SQL in molti scenari comuni in cui l'utilizzo di una proprietà di navigazione nella proiezione comporta il join dei dati dalla query radice con i dati da una sottoquery correlata. L'ottimizzazione richiede la memorizzazione nel buffer dei risultati della sottoquery ed è necessario modificare la query per acconsentire esplicitamente al nuovo comportamento.
 
 Ad esempio, la query seguente viene in genere convertita in un'unica query per Customers, oltre a N (dove "N" è il numero di clienti restituito) query separate per Orders:
@@ -147,6 +157,7 @@ I comandi _dotnet-ef_ sono ora inclusi in .NET Core SDK, pertanto non sarà più
 Vedere la sezione sull'[installazione degli strumenti](xref:core/miscellaneous/cli/dotnet#installing-the-tools) per maggiori dettagli su come abilitare gli strumenti da riga di comando per versioni diverse di .NET Core SDK ed EF Core.
 
 ## <a name="microsoftentityframeworkcoreabstractions-package"></a>Pacchetto Microsoft.EntityFrameworkCore.Abstractions
+
 Il nuovo pacchetto contiene gli attributi e le interfacce che è possibile usare nei progetti per attivare le funzionalità di EF Core senza creare una dipendenza da EF Core nel suo complesso. Ad esempio, l'attributo [Owned] e l'interfaccia ILazyLoader si trovano qui.
 
 ## <a name="state-change-events"></a>Eventi di modifica dello stato

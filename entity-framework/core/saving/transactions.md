@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 uid: core/saving/transactions
-ms.openlocfilehash: ff12c4e7ace1f1b9e503cb2353bcdd53efd87cce
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 952cb891d145a47666f1d506ec00f066be9f245d
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197903"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654744"
 ---
 # <a name="using-transactions"></a>Uso delle transazioni
 
@@ -99,9 +99,9 @@ L'esempio seguente mostra come eseguire un'operazione ADO.NET SqlClient e un'ope
 
 ### <a name="limitations-of-systemtransactions"></a>Limitazioni di System.Transactions  
 
-1. EF Core si basa sui provider di database per implementare il supporto per System.Transactions. Anche se il supporto è piuttosto comune tra i provider ADO.NET per .NET Framework, l'API è stata aggiunta solo di recente a .NET Core e il supporto di conseguenza non è ancora molto diffuso. Se un provider non implementa il supporto per System.Transactions, è possibile che le chiamate a queste API vengano ignorate completamente. SqlClient per .NET Core offre questo supporto dalla versione 2.1 in poi. SqlClient per .NET Core 2.0 genererà un'eccezione se si tenta di usare la funzionalità. 
+1. EF Core si basa sui provider di database per implementare il supporto per System.Transactions. Anche se il supporto è piuttosto comune tra i provider ADO.NET per .NET Framework, l'API è stata aggiunta solo di recente a .NET Core e il supporto di conseguenza non è ancora molto diffuso. Se un provider non implementa il supporto per System.Transactions, è possibile che le chiamate a queste API vengano ignorate completamente. SqlClient per .NET Core offre questo supporto dalla versione 2.1 in poi. SqlClient per .NET Core 2.0 genererà un'eccezione se si tenta di usare la funzionalità.
 
    > [!IMPORTANT]  
-   > È consigliabile verificare che il comportamento dell'API con il provider sia corretto prima di basarsi su di essa per la gestione delle transazioni. In caso contrario, è consigliabile contattare il gestore del provider del database. 
+   > È consigliabile verificare che il comportamento dell'API con il provider sia corretto prima di basarsi su di essa per la gestione delle transazioni. In caso contrario, è consigliabile contattare il gestore del provider del database.
 
-2. A partire dalla versione 2.1, l'implementazione di System.Transactions in .NET Core non include il supporto per le transazioni distribuite, quindi non è possibile usare `TransactionScope` o `CommittableTransaction` per coordinare le transazioni tra più gestori di risorse. 
+2. A partire dalla versione 2.1, l'implementazione di System.Transactions in .NET Core non include il supporto per le transazioni distribuite, quindi non è possibile usare `TransactionScope` o `CommittableTransaction` per coordinare le transazioni tra più gestori di risorse.

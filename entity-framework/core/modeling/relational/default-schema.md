@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: e6e58473-9f5e-4a1f-ac0f-b87d2cbb667e
 uid: core/modeling/relational/default-schema
-ms.openlocfilehash: ae903ed7200859430aecc55073651236759bc6ce
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1579fed007997aa4cf49b4c1290aee86c81c0000
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197126"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655975"
 ---
 # <a name="default-schema"></a>Schema predefinito
 
@@ -20,7 +20,7 @@ Lo schema predefinito è lo schema del database in cui verranno creati gli ogget
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, il provider di database sceglierà lo schema predefinito più appropriato. Ad esempio, Microsoft SQL Server utilizzerà lo `dbo` schema e SQLite non utilizzerà uno schema (poiché gli schemi non sono supportati in SQLite).
+Per convenzione, il provider di database sceglierà lo schema predefinito più appropriato. Ad esempio, Microsoft SQL Server utilizzerà lo schema `dbo` e SQLite non utilizzerà uno schema (poiché gli schemi non sono supportati in SQLite).
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
@@ -30,15 +30,4 @@ Non è possibile impostare lo schema predefinito utilizzando le annotazioni dei 
 
 Per specificare uno schema predefinito, è possibile usare l'API Fluent.
 
-<!-- [!code-csharp[Main](samples/core/relational/Modeling/FluentAPI/Relational/DefaultSchema.cs?highlight=7)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.HasDefaultSchema("blogging");
-    }
-}
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/Relational/DefaultSchema.cs?name=DefaultSchema&highlight=7)]

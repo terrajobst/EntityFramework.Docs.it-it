@@ -5,12 +5,12 @@ ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 070f2ad396ec21858096c29413ac80bdf8547328
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 88c3fa8ea5b8246a932f5cf21e674bc7cc71c0ea
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197806"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656276"
 ---
 # <a name="disconnected-entities"></a>Entità disconnesse
 
@@ -18,11 +18,13 @@ Un'istanza di DbContext sottoporrà automaticamente a rilevamento delle modifich
 
 Tuttavia, a volte le entità vengono sottoposte a query usando un'istanza di contesto e poi salvate con un'istanza diversa. Questo accade spesso in scenari "disconnessi", ad esempio un'applicazione Web in cui le entità vengono recuperate tramite query, inviate al client, modificate, inviate al server in una richiesta e quindi salvate. In questo caso, la seconda istanza del contesto deve sapere se le entità sono nuove (devono essere inserite) o esistenti (devono essere aggiornate).
 
-> [!TIP]  
+<!-- markdownlint-disable MD028 -->
+> [!TIP]
 > È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) di questo articolo in GitHub.
 
 > [!TIP]
 > EF Core può eseguire il rilevamento delle modifiche per una sola istanza di qualsiasi entità con un determinato valore di chiave primaria. Il modo migliore per evitare che ciò diventi un problema consiste nell'usare un contesto di breve durata per ogni unità di lavoro, in modo che il contesto sia inizialmente vuoto, abbia entità collegate, salvi queste entità, per poi essere eliminato e rimosso.
+<!-- markdownlint-enable MD028 -->
 
 ## <a name="identifying-new-entities"></a>Identificazione di nuove entità
 
@@ -50,8 +52,9 @@ Tuttavia, EF include anche un modo predefinito per eseguire questa operazione pe
 ### <a name="with-other-keys"></a>Con altre chiavi
 
 È necessario un altro meccanismo per identificare le nuove entità quando i valori di chiave non vengono generati automaticamente. Esistono due approcci generali a questo scopo:
- * Recuperare l'entità tramite query
- * Passare un flag dal client
+
+* Recuperare l'entità tramite query
+* Passare un flag dal client
 
 Per eseguire una query per l'entità, è sufficiente usare il metodo Find:
 
@@ -74,11 +77,12 @@ Il metodo Update contrassegna in genere l'entità per l'aggiornamento e non per 
 > [!TIP]  
 > Questo comportamento è stato introdotto in EF Core 2.0. Per le versioni precedenti è sempre necessario scegliere in modo esplicito Add o Update.
 
-Se l'entità non usa chiavi generate automaticamente, l'applicazione deve decidere se l'entità deve essere inserita o aggiornata: Ad esempio:
+Se l'entità non usa chiavi generate automaticamente, l'applicazione deve quindi decidere se l'entità deve essere inserita o aggiornata. Ad esempio:
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertOrUpdateSingleEntityWithFind)]
 
 La procedura è la seguente:
+
 * Se Find restituisce Null, il database non contiene già il blog con tale ID, pertanto si chiama Add per contrassegnarlo per l'inserimento.
 * Se Find restituisce un'entità, significa che il blog esiste nel database e il contesto esegue il rilevamento delle modifiche per l'entità esistente
   * È quindi possibile usare SetValues per impostare i valori per tutte le proprietà dell'entità sui valori provenienti dal client.
@@ -127,7 +131,7 @@ Come prima, se non si usano chiavi generate automaticamente, è possibile usare 
 
 L'eliminazione può essere difficile da gestire, dato che l'assenza di un'entità indica spesso che deve essere eliminata. Un modo per risolvere questo problema consiste nell'usare "eliminazioni temporanee" in modo che l'entità venga contrassegnata come eliminata anziché essere effettivamente eliminata. Le eliminazioni diventano quindi uguali agli aggiornamenti. Le eliminazioni temporanee possono essere implementate usando [filtri di query](xref:core/querying/filters).
 
-Per le vere eliminazioni, un modello comune consiste nell'usare un'estensione del modello di query per eseguire essenzialmente un confronto delle differenze del grafo. Ad esempio:
+Per le vere eliminazioni, un modello comune consiste nell'usare un'estensione del modello di query per eseguire essenzialmente un confronto delle differenze del grafo. Esempio:
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 

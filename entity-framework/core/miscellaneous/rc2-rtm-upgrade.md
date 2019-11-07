@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: c3c1940b-136d-45d8-aa4f-cb5040f8980a
 uid: core/miscellaneous/rc2-rtm-upgrade
-ms.openlocfilehash: e7f121d18931e26e7b5d11842da6da4a9b789efe
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 779caad7883d13684b389dab7515be44bc42e1ef
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181359"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655810"
 ---
 # <a name="upgrading-from-ef-core-10-rc2-to-rtm"></a>Aggiornamento da EF Core 1,0 RC2 a RTM
 
@@ -23,7 +23,7 @@ I nomi dei pacchetti di primo livello che in genere si installano in un'applicaz
 
 * I pacchetti di runtime (ad esempio, `Microsoft.EntityFrameworkCore.SqlServer`) sono stati modificati da `1.0.0-rc2-final` a `1.0.0`.
 
-* Il pacchetto `Microsoft.EntityFrameworkCore.Tools` è stato modificato da `1.0.0-preview1-final` a `1.0.0-preview2-final`. Si noti che gli strumenti sono ancora in versione non definitiva.
+* Il pacchetto di `Microsoft.EntityFrameworkCore.Tools` è stato modificato da `1.0.0-preview1-final` a `1.0.0-preview2-final`. Si noti che gli strumenti sono ancora in versione non definitiva.
 
 ## <a name="existing-migrations-may-need-maxlength-added"></a>È possibile che sia necessario aggiungere maxLength alle migrazioni esistenti
 
@@ -31,33 +31,26 @@ In RC2 la definizione di colonna in una migrazione era simile `table.Column<stri
 
 Per tutte le migrazioni esistenti con impalcature precedenti all'uso di RTM non sarà specificato l'argomento `maxLength`. Ciò significa che verrà utilizzata la lunghezza massima supportata dal database (`nvarchar(max)` SQL Server). Questa operazione può essere corretta per alcune colonne, ma è necessario aggiornare le colonne che fanno parte di una chiave, una chiave esterna o un indice per includere una lunghezza massima. Per convenzione, 450 è la lunghezza massima utilizzata per chiavi, chiavi esterne e colonne indicizzate. Se nel modello è stata configurata in modo esplicito una lunghezza, è necessario utilizzare tale lunghezza.
 
-**ASP.NET Identity**
+### <a name="aspnet-identity"></a>Identità ASP.NET
 
 Questa modifica ha effetto sui progetti che usano ASP.NET Identity e sono stati creati da un modello di progetto precedente alla versione RTM. Il modello di progetto include una migrazione utilizzata per creare il database. Questa migrazione deve essere modificata per specificare una lunghezza massima di `256` per le colonne seguenti.
 
-*  **AspNetRoles**
-
-    * nome
-
-    * NormalizedName
-
-*  **AspNetUsers**
-
-   * Email
-
-   * NormalizedEmail
-
-   * NormalizedUserName
-
-   * UserName
+* **AspNetRoles**
+  * Name
+  * NormalizedName
+* **AspNetUsers**
+  * Email
+  * NormalizedEmail
+  * NormalizedUserName
+  * UserName
 
 Se la modifica iniziale viene applicata a un database, l'esito negativo della modifica comporterà l'eccezione seguente.
 
-```console
+``` Console
 System.Data.SqlClient.SqlException (0x80131904): Column 'NormalizedName' in table 'AspNetRoles' is of a type that is invalid for use as a key column in an index.
 ```
 
-## <a name="net-core-remove-imports-in-projectjson"></a>.NET Core: Rimuovere "Imports" in Project. JSON
+## <a name="net-core-remove-imports-in-projectjson"></a>.NET Core: rimuovere "Imports" in Project. JSON
 
 Se la destinazione è .NET Core con RC2, è necessario aggiungere `imports` a Project. JSON come soluzione alternativa temporanea per alcune dipendenze di EF Core che non supportano .NET Standard. È ora possibile rimuovere questi elementi.
 
@@ -74,11 +67,11 @@ Se la destinazione è .NET Core con RC2, è necessario aggiungere `imports` a Pr
 > [!NOTE]  
 > A partire dalla versione 1,0 RTM, il [.NET Core SDK](https://www.microsoft.com/net/download/core) non supporta più `project.json` o lo sviluppo di applicazioni .NET Core con Visual Studio 2015. È consigliabile [eseguire la migrazione da project.json a csproj](https://docs.microsoft.com/dotnet/articles/core/migration/). Se si usa Visual Studio, è consigliabile eseguire l'aggiornamento a [Visual studio 2017](https://www.visualstudio.com/downloads/).
 
-## <a name="uwp-add-binding-redirects"></a>UWP Aggiungere reindirizzamenti di binding
+## <a name="uwp-add-binding-redirects"></a>UWP: aggiungere reindirizzamenti di binding
 
 Il tentativo di eseguire i comandi EF nei progetti piattaforma UWP (Universal Windows Platform) (UWP) comporta l'errore seguente:
 
-```console
+```output
 System.IO.FileLoadException: Could not load file or assembly 'System.IO.FileSystem.Primitives, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference.
 ```
 

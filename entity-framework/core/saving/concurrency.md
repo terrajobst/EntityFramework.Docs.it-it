@@ -3,12 +3,12 @@ title: Gestione dei conflitti di concorrenza - EF Core
 author: rowanmiller
 ms.date: 03/03/2018
 uid: core/saving/concurrency
-ms.openlocfilehash: 4d6ff24e58caa0b228e9c1e4313beda78d1025fc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: b72fa472698e76e18f155cf96b738b0e193eee0f
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197837"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654623"
 ---
 # <a name="handling-concurrency-conflicts"></a>Gestione dei conflitti di concorrenza
 
@@ -56,11 +56,9 @@ La risoluzione di un conflitto di concorrenza comporta l'unione delle modifiche 
 
 **Sono disponibili tre set di valori per risolvere un conflitto di concorrenza:**
 
-* I **valori correnti** sono i valori che l'applicazione stava tentando di scrivere nel database.
-
-* I **valori originali** sono i valori che sono stati originariamente recuperati dal database, prima di apportare eventuali modifiche.
-
-* I **valori del database** sono i valori attualmente archiviati nel database.
+- I **valori correnti** sono i valori che l'applicazione stava tentando di scrivere nel database.
+- I **valori originali** sono i valori che sono stati originariamente recuperati dal database, prima di apportare eventuali modifiche.
+- I **valori del database** sono i valori attualmente archiviati nel database.
 
 L'approccio generale per gestire i conflitti di concorrenza è il seguente:
 

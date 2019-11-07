@@ -1,38 +1,39 @@
 ---
-title: Scrittura di un Provider di Database - EF Core
+title: Scrittura di un provider di database-EF Core
 author: anmiller
 ms.date: 10/27/2016
 ms.assetid: 1165e2ec-e421-43fc-92ab-d92f9ab3c494
 uid: core/providers/writing-a-provider
-ms.openlocfilehash: c7130b0d104cd26584d298da98eb3e7080ee7f3c
-ms.sourcegitcommit: dadee5905ada9ecdbae28363a682950383ce3e10
+ms.openlocfilehash: 9d52a8581772cc5405e94966fa7ebdff4128c252
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/27/2018
-ms.locfileid: "42993666"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654772"
 ---
-# <a name="writing-a-database-provider"></a>Scrittura di un Provider di Database
+# <a name="writing-a-database-provider"></a>Scrittura di un provider di database
 
-Per informazioni sulla scrittura di un provider di database di Entity Framework Core, vedere [in modo che si desidera scrivere un provider di Entity Framework Core](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) dal [Arthur Vickers](https://github.com/ajcvickers).
+Per informazioni sulla scrittura di un provider di database Entity Framework Core, vedere la pagina relativa alla scrittura di [un provider EF Core](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) da [Arthur Vickers](https://github.com/ajcvickers).
 
 > [!NOTE]
-> Questi post non sono stati aggiornati a partire da EF Core 1.1 e sono state apportate modifiche significative da quel momento [problema 681](https://github.com/aspnet/EntityFramework.Docs/issues/681) tiene traccia degli aggiornamenti a questa documentazione.
+> Questi post non sono stati aggiornati a partire dal EF Core 1,1 e sono state apportate modifiche significative a partire da quel momento il [problema 681](https://github.com/aspnet/EntityFramework.Docs/issues/681) è tenere traccia degli aggiornamenti a questa documentazione.
 
-La codebase di EF Core è open source e contiene diversi provider di database che può essere usato come riferimento. È possibile trovare il codice sorgente in https://github.com/aspnet/EntityFrameworkCore. Potrebbe anche essere utile esaminare il codice per i provider di terze parti usati, ad esempio [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [MySQL Pomelo](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), e [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particolare, questi progetti sono il programma di installazione si estendono da ed eseguire i test funzionali che vengono pubblicati in NuGet. Questo tipo di programma di installazione è fortemente consigliato.
+Il EF Core codebase è open source e contiene diversi provider di database che possono essere utilizzati come riferimento. È possibile trovare il codice sorgente in <https://github.com/aspnet/EntityFrameworkCore>. Potrebbe anche essere utile esaminare il codice per i provider di terze parti di uso comune, ad esempio [npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)e [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particolare, questi progetti sono impostati per estendere ed eseguire test funzionali pubblicati in NuGet. Questo tipo di installazione è fortemente consigliato.
 
-## <a name="keeping-up-to-date-with-provider-changes"></a>Stare al passo con le modifiche di provider
+## <a name="keeping-up-to-date-with-provider-changes"></a>Mantenersi aggiornati sulle modifiche del provider
 
-A partire da lavoro dopo la versione 2.1, è stata creata una [registro delle modifiche](provider-log.md) che potrebbe essere necessario le modifiche corrispondenti nel codice del provider. Si tratta della Guida quando si aggiorna un provider esistente per lavorare con una nuova versione di Entity Framework Core.
+A partire da lavoro dopo la versione 2,1, è stato creato un [log di modifiche](provider-log.md) che potrebbero richiedere modifiche corrispondenti nel codice del provider. Questa operazione è utile quando si aggiorna un provider esistente per l'utilizzo con una nuova versione di EF Core.
 
-Prima di 2.1, abbiamo utilizzato la [ `providers-beware` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) e [ `providers-fyi` ](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) etichette nei nostri problemi di GitHub e richieste pull per uno scopo simile. Ci impegniamo per continuare per usare le etichette di questi problemi per fornire un'indicazione di quali elementi di lavoro in una determinata versione richieda anche il lavoro da eseguire nei provider. Oggetto `providers-beware` etichetta in genere significa che l'implementazione di un elemento di lavoro può comportare l'interruzione provider, mentre un `providers-fyi` etichetta in genere significa che i provider non verrà interrotti, ma potrebbe essere necessario codice da modificare, ad esempio, per abilitare nuove funzionalità.
+Prima del 2,1, abbiamo usato le etichette [`providers-beware`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-beware) e [`providers-fyi`](https://github.com/aspnet/EntityFrameworkCore/labels/providers-fyi) sui problemi di GitHub e le richieste pull per uno scopo simile. Si continiue di usare queste etichette nei problemi per indicare quali elementi di lavoro in una determinata versione potrebbero richiedere il lavoro da eseguire nei provider. Un'etichetta di `providers-beware` in genere significa che l'implementazione di un elemento di lavoro potrebbe interrompere i provider, mentre un'etichetta `providers-fyi` in genere significa che i provider non verranno interrotti, ma potrebbe essere necessario modificare il codice comunque, ad esempio, per abilitare nuove funzionalità.
 
-## <a name="suggested-naming-of-third-party-providers"></a>Suggerito di denominazione dei provider di terze parti
+## <a name="suggested-naming-of-third-party-providers"></a>Denominazione consigliata per i provider di terze parti
 
-È consigliabile usare i seguenti nomi per i pacchetti NuGet. Ciò è coerenza con i nomi di pacchetti recapitati dal team di EF Core.
+È consigliabile usare i nomi seguenti per i pacchetti NuGet. Questo è coerente con i nomi dei pacchetti forniti dal team EF Core.
 
 `<Optional project/company name>.EntityFrameworkCore.<Database engine name>`
 
-Ad esempio:
+Esempio:
+
 * `Microsoft.EntityFrameworkCore.SqlServer`
 * `Npgsql.EntityFrameworkCore.PostgreSQL`
 * `EntityFrameworkCore.SqlServerCompact40`

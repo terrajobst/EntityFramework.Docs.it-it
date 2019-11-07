@@ -3,12 +3,13 @@ title: Introduzione a Entity Framework 6 - EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 66ce9113-81d2-480f-8c16-d00ec405b2f7
-ms.openlocfilehash: bf54879ea94e597dfeac3e4bd70571dad290dd9e
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+uid: ef6/get-started
+ms.openlocfilehash: 74ae347af3c386639631f28ccb2ddbe9f444953a
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181403"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655835"
 ---
 # <a name="get-started-with-entity-framework-6"></a>Introduzione a Entity Framework 6
 
@@ -20,11 +21,11 @@ Questa guida contiene una raccolta di collegamenti ad articoli della documentazi
 
   Viene descritto come aggiungere Entity Framework alle applicazioni e, se si vuole usare EF Designer, assicurarsi che venga installato in Visual Studio.
 
-* @no__t 0Creating un modello: Code First, progettazione EF e i flussi di lavoro EF @ no__t-0
+* [Creazione di un modello: flussi di lavoro di Code First, EF Designer ed EF](~/ef6/modeling/index.md)
 
   Si preferisce specificare il modello EF scrivendo codice o tracciando caselle e linee?
 Si userà EF per mappare gli oggetti in un database esistente o si vuole che EF crei un database specifico per gli oggetti?
-Ecco le informazioni su due approcci diversi per l'uso di EF6: EF designer e Code First.
+Di seguito sono descritti due approcci diversi per usare EF6: EF Designer e Code First.
 Seguire la discussione e guardare il video che illustra le differenze.
 
 * [Utilizzo di DbContext](~/ef6/fundamentals/working-with-dbcontext.md)

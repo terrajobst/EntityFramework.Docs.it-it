@@ -5,12 +5,12 @@ ms.author: bricelam
 ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
-ms.openlocfilehash: cced53edadb890e4e86753ec2628218ffc4d1d5b
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 335d4f3a601624f7c994b7dcacefe4ef6798beb3
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181387"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655606"
 ---
 # <a name="spatial-data"></a>Dati spaziali
 
@@ -48,7 +48,7 @@ optionsBuilder.UseSqlServer(
 
 Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è illustrata la gerarchia di tipi NTS che è possibile usare per le proprietà nel modello. Si trovano nello spazio dei nomi `NetTopologySuite.Geometries`.
 
-* Geometria
+* Geometry
   * Punto
   * LineString
   * Poligono
@@ -101,7 +101,7 @@ var currentLocation = geometryFactory.CreatePoint(-122.121512, 47.6739882);
 
 ### <a name="longitude-and-latitude"></a>Longitudine e latitudine
 
-Le coordinate in NTS sono espresse in termini di valori X e Y. Per rappresentare la longitudine e la latitudine, usare X per longitudine e Y per la latitudine. Si noti che questo è all' **indietro** rispetto al formato `latitude, longitude` in cui vengono in genere visualizzati questi valori.
+Le coordinate in NTS sono espresse in termini di valori X e Y. Per rappresentare la longitudine e la latitudine, usare X per longitudine e Y per la latitudine. Si noti che questa operazione è all' **indietro** rispetto al formato `latitude, longitude` in cui vengono in genere visualizzati questi valori.
 
 ### <a name="srid-ignored-during-client-operations"></a>SRID ignorato durante le operazioni client
 
@@ -213,7 +213,7 @@ Se si usa SQL Server, è necessario tenere presenti alcuni aspetti aggiuntivi.
 
 ### <a name="geography-or-geometry"></a>Geografia o geometria
 
-Per impostazione predefinita, viene eseguito il mapping delle proprietà spaziali a colonne `geography` SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
+Per impostazione predefinita, viene eseguito il mapping delle proprietà spaziali a `geography` colonne SQL Server. Per utilizzare `geometry`, [configurare il tipo di colonna](xref:core/modeling/relational/data-types) nel modello.
 
 ### <a name="geography-polygon-rings"></a>Anelli del poligono geografico
 
@@ -271,7 +271,7 @@ Geometry. AsBinary () | ✔ | ✔ | ✔ | ✔
 Geometry. AsText () | ✔ | ✔ | ✔ | ✔
 Geometry. Boundary | ✔ | | ✔ | ✔
 Geometry. buffer (Double) | ✔ | ✔ | ✔ | ✔
-Geometry. buffer (Double, int) | | | ✔
+Geometry. buffer (Double, int) | | | ✔ | ✔
 Geometry. baricentro | ✔ | | ✔ | ✔
 Geometry. Contains (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. ConvexHull () | ✔ | ✔ | ✔ | ✔
@@ -287,17 +287,17 @@ Geometry. EqualsExact (Geometry) | | | | ✔
 Geometry. EqualsTopologically (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. GeometryType | ✔ | ✔ | ✔ | ✔
 Geometry. getgeometryn (int) | ✔ | | ✔ | ✔
-Geometry. InteriorPoint | ✔ | | ✔
+Geometry. InteriorPoint | ✔ | | ✔ | ✔
 Geometry. intersezione (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. Intersects (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. IsEmpty | ✔ | ✔ | ✔ | ✔
 Geometry. Simple | ✔ | | ✔ | ✔
 Geometry. IsValid | ✔ | ✔ | ✔ | ✔
-Geometry. IsWithinDistance (Geometry, Double) | ✔ | | ✔
+Geometry. IsWithinDistance (Geometry, Double) | ✔ | | ✔ | ✔
 Geometry. length | ✔ | ✔ | ✔ | ✔
 Geometry. NumGeometries | ✔ | ✔ | ✔ | ✔
 Geometry. NumPoints | ✔ | ✔ | ✔ | ✔
-Geometry. OgcGeometryType | ✔ | ✔ | ✔
+Geometry. OgcGeometryType | ✔ | ✔ | ✔ | ✔
 Geometry. sovrapposizioni (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. PointOnSurface | ✔ | | ✔ | ✔
 Geometry. correlate (Geometry, String) | ✔ | | ✔ | ✔
@@ -307,7 +307,7 @@ Geometry. SymmetricDifference (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. ToBinary () | ✔ | ✔ | ✔ | ✔
 Geometry. ToText () | ✔ | ✔ | ✔ | ✔
 Geometry. touchs (Geometry) | ✔ | | ✔ | ✔
-Geometry. Union () | | | ✔
+Geometry. Union () | | | ✔ | ✔
 Geometry. Union (Geometry) | ✔ | ✔ | ✔ | ✔
 Geometry. Within (Geometry) | ✔ | ✔ | ✔ | ✔
 GeometryCollection. Count | ✔ | ✔ | ✔ | ✔

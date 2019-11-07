@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 09/26/2018
 ms.assetid: de2e34cd-659b-4cab-b5ed-7a979c6bf120
 uid: core/querying/how-query-works
-ms.openlocfilehash: bc085755f39b1288f092a8b2df892c1bf82a89f1
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: ba0d68469530e6272ffbb51946d7856122a261c7
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72186267"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656247"
 ---
 # <a name="how-queries-work"></a>Funzionamento delle query
 
@@ -33,16 +33,17 @@ Di seguito è disponibile una panoramica generale del processo di elaborazione d
       * In caso affermativo, viene restituita l'entità esistente <sup>(1)</sup>
       * In caso contrario, viene creata e restituita una nuova entità
 
-<sup>(1) </sup> Nessuna query con rilevamento delle modifiche usa riferimenti deboli per tenere traccia delle entità già restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità.
+<sup>(1)</sup> le query senza rilevamento utilizzano riferimenti deboli per tenere traccia delle entità che sono già state restituite. Se un risultato precedente con la stessa identità esce dall'ambito e viene eseguita la Garbage Collection, si potrebbe ottenere una nuova istanza di entità.
 
 ## <a name="when-queries-are-executed"></a>Quando vengono eseguite le query
 
 Quando si chiamano operatori LINQ, si crea semplicemente una rappresentazione in memoria della query. La query viene inviata al database solo al momento dell'utilizzo dei risultati.
 
 Le operazioni più comuni che causano l'invio della query al database sono:
+
 * Iterazione dei risultati in un ciclo `for`
 * Uso di un operatore, ad esempio `ToList`, `ToArray`, `Single`, `Count`
 * Data binding dei risultati di una query a un'interfaccia utente
 
 > [!WARNING]  
-> **Convalida sempre l'input dell'utente:** Sebbene EF Core protegga dagli attacchi intrusivi nel codice SQL usando i parametri e i valori letterali di escape nelle query, non convalida gli input. È opportuno prevedere una convalida appropriata, in base ai requisiti dell'applicazione, prima che i valori provenienti da origini non attendibili vengano usati nelle query LINQ, assegnati alle proprietà di entità o passati ad altre API EF Core. Ciò include qualsiasi input dell'utente usato per costruire query in modo dinamico. Anche quando si usa LINQ, se si accetta l'input dell'utente per la creazione delle espressioni, è necessario assicurarsi che possano essere costruite solo le espressioni previste.
+> **Convalidare sempre l'input dell'utente**: anche se EF Core offre protezione da attacchi SQL injection tramite l'uso di parametri e valori letterali di escape nelle query, non convalida gli input. È opportuno prevedere una convalida appropriata, in base ai requisiti dell'applicazione, prima che i valori provenienti da origini non attendibili vengano usati nelle query LINQ, assegnati alle proprietà di entità o passati ad altre API EF Core. Ciò include qualsiasi input dell'utente usato per costruire query in modo dinamico. Anche quando si usa LINQ, se si accetta l'input dell'utente per la creazione delle espressioni, è necessario assicurarsi che possano essere costruite solo le espressioni previste.

@@ -5,12 +5,12 @@ ms.author: ansvyryd
 ms.date: 04/10/2019
 ms.assetid: 0EC2CCE1-BD55-45D8-9EA9-20634987F094
 uid: core/modeling/table-splitting
-ms.openlocfilehash: 684fcfbb66debfd1b89e23c8aaf0a32909378c6b
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: a3a2e5842a6c6b4b490084d205a0d44bb46c17ee
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149193"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656033"
 ---
 # <a name="table-splitting"></a>Suddivisione di tabelle
 
@@ -31,7 +31,7 @@ In questo esempio `Order` rappresenta un subset di `DetailedOrder`.
 
 [!code-csharp[DetailedOrder](../../../samples/core/Modeling/TableSplitting/DetailedOrder.cs?name=DetailedOrder)]
 
-Oltre alla configurazione richiesta, `Property(o => o.Status).HasColumnName("Status")` `Order.Status`viene chiamato per eseguire il `DetailedOrder.Status` mapping alla stessa colonna di.
+Oltre alla configurazione richiesta, viene chiamato `Property(o => o.Status).HasColumnName("Status")` per eseguire il mapping `DetailedOrder.Status` alla stessa colonna `Order.Status`.
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting&highlight=3)]
 
@@ -40,7 +40,7 @@ Oltre alla configurazione richiesta, `Property(o => o.Status).HasColumnName("Sta
 
 ## <a name="usage"></a>Utilizzo
 
-Il salvataggio e l'esecuzione di query sulle entità tramite la suddivisione delle tabelle vengono eseguite in modo analogo alle altre entità. A partire da EF Core 3,0, il riferimento all'entità dipendente `null`può essere. Se tutte le colonne utilizzate dall'entità dipendente sono `NULL` rappresentate dal database, non verrà creata alcuna istanza per la query. Questa situazione si verifica anche quando tutte le proprietà sono facoltative e `null`impostate su, che potrebbe non essere previsto.
+Il salvataggio e l'esecuzione di query sulle entità tramite la suddivisione delle tabelle vengono eseguite in modo analogo alle altre entità. A partire da EF Core 3,0 è possibile `null`il riferimento all'entità dipendente. Se tutte le colonne utilizzate dall'entità dipendente sono `NULL` è il database, non verrà creata alcuna istanza per la query. Questa situazione si verifica anche quando tutte le proprietà sono facoltative e impostate su `null`, che potrebbe non essere previsto.
 
 [!code-csharp[Usage](../../../samples/core/Modeling/TableSplitting/Program.cs?name=Usage)]
 

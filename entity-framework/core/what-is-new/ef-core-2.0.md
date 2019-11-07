@@ -4,16 +4,17 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 781578d9de05895cdbc777aa53c3f6d6f9777869
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.openlocfilehash: 72393e96c195af1df5a169025ca2ce7a7acb16bb
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149048"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73656217"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
 ## <a name="net-standard-20"></a>.NET Standard 2.0
+
 EF Core ha ora come obiettivo .NET Standard 2.0 e funziona con .NET Core 2.0, .NET Framework 4.6.1 e altre librerie che implementano .NET Standard 2.0.
 Vedere [Implementazioni di .NET supportate](../platforms/index.md) per altri dettagli sulle implementazioni supportate.
 
@@ -32,6 +33,7 @@ modelBuilder.Entity<Product>()
 modelBuilder.Entity<Product>().ToTable("Products");
 modelBuilder.Entity<ProductDetails>().ToTable("Products");
 ```
+
 Leggere la [sezione sulla suddivisione di tabelle](xref:core/modeling/table-splitting) per altre informazioni su questa funzionalità.
 
 ### <a name="owned-types"></a>Tipi di proprietà
@@ -65,6 +67,7 @@ public class StreetAddress
     public string City { get; set; }
 }
 ```
+
 Leggere la [sezione sui tipi di entità di proprietà](xref:core/modeling/owned-entities) per altre informazioni su questa funzionalità.
 
 ### <a name="model-level-query-filters"></a>Filtri di query a livello di modello
@@ -92,6 +95,7 @@ public class BloggingContext : DbContext
     }
 }
 ```
+
 Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti l'uso di una proprietà a livello di istanza DbContext: `TenantId`. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
 
 È possibile disabilitare i filtri per le singole query LINQ usando l'operatore IgnoreQueryFilters().
@@ -178,7 +182,7 @@ Il nuovo metodo introduce alcune limitazioni nelle operazioni possibili nel meto
 > [!WARNING]  
 > Evitare di usare il pooling DbContext se nella classe DbContext derivata si mantiene uno stato (ad esempio, campi privati) che non deve essere condiviso tra le richieste. Prima di aggiungere un'istanza di DbContext al pool, EF Core reimposterà solo lo stato di cui è a conoscenza.
 
-### <a name="explicitly-compiled-queries"></a>Query compilate in modo esplicito
+### <a name="explicitly-compiled-queries"></a>Query compilate esplicite
 
 Questa è la seconda funzionalità di ottimizzazione delle prestazioni progettata per offrire vantaggi in scenari di vasta scala.
 
@@ -298,9 +302,11 @@ public class MyPluralizer : IPluralizer
 ## <a name="others"></a>Others
 
 ### <a name="move-adonet-sqlite-provider-to-sqlitepclraw"></a>Spostamento del provider SQLite ADO.NET in SQLitePCL.raw
+
 Rende la soluzione più solida in Microsoft.Data.Sqlite per la distribuzione di file binari SQLite nativi in diverse piattaforme.
 
 ### <a name="only-one-provider-per-model"></a>Un solo provider per modello
+
 Aumenta in modo significativo le modalità di interazione dei provider con il modello e semplifica il funzionamento di convenzioni, annotazioni e API Fluent con i diversi provider.
 
 EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai *concetti di metadati relazionali comuni* viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via.

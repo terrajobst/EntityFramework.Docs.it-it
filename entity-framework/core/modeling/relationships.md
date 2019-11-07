@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 0ff736a3-f1b0-4b58-a49c-4a7094bd6935
 uid: core/modeling/relationships
-ms.openlocfilehash: 1e9c62bec47263ef452c7ac425a0bb446f9371d8
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1e59ce9e19c12aa5564bc8467dcfcb3be8ee8996
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197645"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655667"
 ---
 # <a name="relationships"></a>Relazioni
 
@@ -38,21 +38,21 @@ Esistono diversi termini usati per descrivere le relazioni
 
   * **Proprietà di navigazione inversa:** Quando si discute una particolare proprietà di navigazione, questo termine fa riferimento alla proprietà di navigazione nell'altra entità finale della relazione.
 
-Nel listato di codice seguente viene illustrata una relazione uno- `Blog` a-molti tra e`Post`
+Nel listato di codice seguente viene illustrata una relazione uno-a-molti tra `Blog` e `Post`
 
-* `Post`è l'entità dipendente
+* `Post` è l'entità dipendente
 
-* `Blog`è l'entità principale
+* `Blog` è l'entità principale
 
-* `Post.BlogId`chiave esterna
+* `Post.BlogId` è la chiave esterna
 
-* `Blog.BlogId`chiave principale (in questo caso è una chiave primaria anziché una chiave alternativa)
+* `Blog.BlogId` è la chiave principale (in questo caso è una chiave primaria anziché una chiave alternativa)
 
-* `Post.Blog`è una proprietà di navigazione di riferimento
+* `Post.Blog` è una proprietà di navigazione di riferimento
 
-* `Blog.Posts`è una proprietà di navigazione della raccolta
+* `Blog.Posts` è una proprietà di navigazione della raccolta
 
-* `Post.Blog`Proprietà di navigazione inversa di `Blog.Posts` (e viceversa)
+* `Post.Blog` è la proprietà di navigazione inversa di `Blog.Posts` (e viceversa)
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs#Entities)]
 
@@ -69,7 +69,7 @@ Il modello più comune per le relazioni prevede che le proprietà di navigazione
 
 * Se tra due tipi viene trovata una coppia di proprietà di navigazione, queste verranno configurate come proprietà di navigazione inversa della stessa relazione.
 
-* Se l'entità dipendente contiene una proprietà denominata `<primary key property name>`, `<navigation property name><primary key property name>`, o `<principal entity name><primary key property name>` verrà configurata come chiave esterna.
+* Se l'entità dipendente contiene una proprietà denominata `<primary key property name>`, `<navigation property name><primary key property name>`o `<principal entity name><primary key property name>`, sarà configurata come chiave esterna.
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/Full.cs?name=Entities&highlight=6,15,16)]
 
@@ -78,7 +78,7 @@ Il modello più comune per le relazioni prevede che le proprietà di navigazione
 
 ### <a name="no-foreign-key-property"></a>Nessuna proprietà di chiave esterna
 
-Sebbene sia consigliabile disporre di una proprietà di chiave esterna definita nella classe di entità dipendente, non è obbligatorio. Se non viene trovata alcuna proprietà di chiave esterna, verrà introdotta una proprietà di chiave esterna Shadow `<navigation property name><principal key property name>` con il nome. per ulteriori informazioni, vedere [proprietà shadow](shadow-properties.md) .
+Sebbene sia consigliabile disporre di una proprietà di chiave esterna definita nella classe di entità dipendente, non è obbligatorio. Se non viene trovata alcuna proprietà di chiave esterna, verrà introdotta una proprietà di chiave esterna Shadow con il nome `<navigation property name><principal key property name>`. per ulteriori informazioni, vedere [proprietà shadow](shadow-properties.md) .
 
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/NoForeignKey.cs?name=Entities&highlight=6,15)]
 
@@ -98,7 +98,7 @@ Per ulteriori informazioni sui diversi comportamenti di eliminazione e sulle imp
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
-Sono disponibili due annotazioni dei dati che possono essere utilizzate per configurare `[ForeignKey]` le `[InverseProperty]`relazioni, e. Sono disponibili nello `System.ComponentModel.DataAnnotations.Schema` spazio dei nomi.
+Sono disponibili due annotazioni di dati che possono essere utilizzate per configurare relazioni, `[ForeignKey]` e `[InverseProperty]`. Sono disponibili nello spazio dei nomi `System.ComponentModel.DataAnnotations.Schema`.
 
 ### <a name="foreignkey"></a>ForeignKey
 
@@ -107,7 +107,7 @@ Sono disponibili due annotazioni dei dati che possono essere utilizzate per conf
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Relationships/ForeignKey.cs?highlight=30)]
 
 > [!TIP]  
-> L' `[ForeignKey]` annotazione può essere posizionata su una proprietà di navigazione nella relazione. Non è necessario che venga eseguita la proprietà di navigazione nella classe di entità dipendente.
+> L'annotazione `[ForeignKey]` può essere posizionata su una proprietà di navigazione nella relazione. Non è necessario che venga eseguita la proprietà di navigazione nella classe di entità dipendente.
 
 ### <a name="inverseproperty"></a>[InverseProperty]
 
@@ -117,13 +117,13 @@ Sono disponibili due annotazioni dei dati che possono essere utilizzate per conf
 
 ## <a name="fluent-api"></a>API Fluent
 
-Per configurare una relazione nell'API Fluent, è necessario innanzitutto identificare le proprietà di navigazione che compongono la relazione. `HasOne`o `HasMany` identifica la proprietà di navigazione nel tipo di entità in cui si sta iniziando la configurazione. Quindi si concatenano una `WithOne` chiamata `WithMany` a o per identificare la navigazione inversa. `HasOne`/`WithOne`vengono utilizzati per le proprietà di navigazione `HasMany` di riferimento e vengono utilizzati per le / `WithMany` proprietà di navigazione della raccolta.
+Per configurare una relazione nell'API Fluent, è necessario innanzitutto identificare le proprietà di navigazione che compongono la relazione. `HasOne` o `HasMany` identifica la proprietà di navigazione nel tipo di entità in cui si sta iniziando la configurazione. È quindi possibile concatenare una chiamata a `WithOne` o `WithMany` per identificare la navigazione inversa. `HasOne`/`WithOne` vengono utilizzate per le proprietà di navigazione di riferimento e `HasMany`/`WithMany` vengono utilizzate per le proprietà di navigazione della raccolta.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/NoForeignKey.cs?highlight=14-16)]
 
 ### <a name="single-navigation-property"></a>Proprietà di navigazione singola
 
-Se è presente una sola proprietà di navigazione, sono presenti overload senza parametri di `WithOne` e. `WithMany` Ciò indica che è concettualmente presente un riferimento o una raccolta nell'altra entità finale della relazione, ma nella classe di entità non è inclusa alcuna proprietà di navigazione.
+Se è presente una sola proprietà di navigazione, sono presenti overload senza parametri di `WithOne` e `WithMany`. Ciò indica che è concettualmente presente un riferimento o una raccolta nell'altra entità finale della relazione, ma nella classe di entità non è inclusa alcuna proprietà di navigazione.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneNavigation.cs?highlight=14-16)]
 
@@ -137,7 +137,7 @@ Nel listato di codice seguente viene illustrato come configurare una chiave este
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositeForeignKey.cs?highlight=20)]
 
-È possibile utilizzare l'overload di stringa `HasForeignKey(...)` di per configurare una proprietà shadow come chiave esterna. per ulteriori informazioni, vedere [proprietà shadow](shadow-properties.md) . È consigliabile aggiungere esplicitamente la proprietà shadow al modello prima di utilizzarla come chiave esterna, come illustrato di seguito.
+È possibile utilizzare l'overload di stringa di `HasForeignKey(...)` per configurare una proprietà shadow come chiave esterna. per ulteriori informazioni, vedere [proprietà shadow](shadow-properties.md) . È consigliabile aggiungere esplicitamente la proprietà shadow al modello prima di utilizzarla come chiave esterna, come illustrato di seguito.
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ShadowForeignKey.cs#Sample)]
 
@@ -151,83 +151,11 @@ Non è necessario necessariamente fornire una proprietà di navigazione. È poss
 
 Se si desidera che la chiave esterna faccia riferimento a una proprietà diversa dalla chiave primaria, è possibile utilizzare l'API Fluent per configurare la proprietà chiave principale per la relazione. La proprietà configurata come chiave principale verrà automaticamente impostata come chiave alternativa. per ulteriori informazioni, vedere [chiavi alternative](alternate-keys.md) .
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecordOfSale>()
-            .HasOne(s => s.Car)
-            .WithMany(c => c.SaleHistory)
-            .HasForeignKey(s => s.CarLicensePlate)
-            .HasPrincipalKey(c => c.LicensePlate);
-    }
-}
-
-public class Car
-{
-    public int CarId { get; set; }
-    public string LicensePlate { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-
-    public List<RecordOfSale> SaleHistory { get; set; }
-}
-
-public class RecordOfSale
-{
-    public int RecordOfSaleId { get; set; }
-    public DateTime DateSold { get; set; }
-    public decimal Price { get; set; }
-
-    public string CarLicensePlate { get; set; }
-    public Car Car { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/PrincipalKey.cs?name=PrincipalKey&highlight=11)]
 
 Nel listato di codice seguente viene illustrato come configurare una chiave principale composta.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Car> Cars { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<RecordOfSale>()
-            .HasOne(s => s.Car)
-            .WithMany(c => c.SaleHistory)
-            .HasForeignKey(s => new { s.CarState, s.CarLicensePlate })
-            .HasPrincipalKey(c => new { c.State, c.LicensePlate });
-    }
-}
-
-public class Car
-{
-    public int CarId { get; set; }
-    public string State { get; set; }
-    public string LicensePlate { get; set; }
-    public string Make { get; set; }
-    public string Model { get; set; }
-
-    public List<RecordOfSale> SaleHistory { get; set; }
-}
-
-public class RecordOfSale
-{
-    public int RecordOfSaleId { get; set; }
-    public DateTime DateSold { get; set; }
-    public decimal Price { get; set; }
-
-    public string CarState { get; set; }
-    public string CarLicensePlate { get; set; }
-    public Car Car { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CompositePrincipalKey.cs?name=Composite&highlight=11)]
 
 > [!WARNING]  
 > L'ordine in cui si specificano le proprietà della chiave principale deve corrispondere all'ordine in cui sono specificate per la chiave esterna.
@@ -236,39 +164,7 @@ public class RecordOfSale
 
 È possibile usare l'API Fluent per configurare se la relazione è obbligatoria o facoltativa. In definitiva, controlla se la proprietà della chiave esterna è obbligatoria o facoltativa. Questa operazione è particolarmente utile quando si usa una chiave esterna dello stato di ombreggiatura. Se nella classe di entità è presente una proprietà di chiave esterna, la richiesta della relazione viene determinata a seconda che la proprietà della chiave esterna sia obbligatoria o facoltativa (per ulteriori informazioni, vedere [proprietà obbligatorie e facoltative](required-optional.md) ).
 
-<!-- [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>()
-            .HasOne(p => p.Blog)
-            .WithMany(b => b.Posts)
-            .IsRequired();
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/Required.cs?name=Required&highlight=11)]
 
 ### <a name="cascade-delete"></a>Eliminazione a catena
 
@@ -276,40 +172,7 @@ public class Post
 
 Vedere [CASCADE DELETE](../saving/cascade-delete.md) nella sezione Saving data per una descrizione dettagliata di ogni opzione.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Post>()
-            .HasOne(p => p.Blog)
-            .WithMany(b => b.Posts)
-            .OnDelete(DeleteBehavior.Cascade);
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public List<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public int? BlogId { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/CascadeDelete.cs?name=CascadeDelete&highlight=11)]
 
 ## <a name="other-relationship-patterns"></a>Altri modelli di relazione
 
@@ -317,119 +180,19 @@ public class Post
 
 Le relazioni uno-a-uno hanno una proprietà di navigazione di riferimento su entrambi i lati. Seguono le stesse convenzioni delle relazioni uno-a-molti, ma un indice univoco viene introdotto sulla proprietà della chiave esterna per garantire che solo un dipendente sia correlato a ogni entità.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/Conventions/Relationships/OneToOne.cs?highlight=6,15,16)] -->
-``` csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogImage BlogImage { get; set; }
-}
-
-public class BlogImage
-{
-    public int BlogImageId { get; set; }
-    public byte[] Image { get; set; }
-    public string Caption { get; set; }
-
-    public int BlogId { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/Relationships/OneToOne.cs?name=Property&highlight=6,15,16)]
 
 > [!NOTE]  
 > EF sceglierà una delle entità come dipendente in base alla capacità di rilevare una proprietà di chiave esterna. Se l'entità sbagliata viene scelta come dipendente, è possibile usare l'API Fluent per correggere questa operazione.
 
-Quando si configura la relazione con l'API Fluent, si usano `HasOne` i `WithOne` metodi e.
+Quando si configura la relazione con l'API Fluent, si usano i metodi `HasOne` e `WithOne`.
 
-Quando si configura la chiave esterna è necessario specificare il tipo di entità dipendente. si noti il parametro generico `HasForeignKey` fornito a nell'elenco seguente. In una relazione uno-a-molti è evidente che l'entità con l'esplorazione dei riferimenti è il dipendente e quello con la raccolta è l'entità. Ma non si tratta di una relazione uno-a-uno, di conseguenza è necessario definirla in modo esplicito.
+Quando si configura la chiave esterna è necessario specificare il tipo di entità dipendente. si noti il parametro generico fornito a `HasForeignKey` nell'elenco seguente. In una relazione uno-a-molti è evidente che l'entità con l'esplorazione dei riferimenti è il dipendente e quello con la raccolta è l'entità. Ma non si tratta di una relazione uno-a-uno, di conseguenza è necessario definirla in modo esplicito.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?highlight=11)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<BlogImage> BlogImages { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasOne(p => p.BlogImage)
-            .WithOne(i => i.Blog)
-            .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
-    }
-}
-
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-
-    public BlogImage BlogImage { get; set; }
-}
-
-public class BlogImage
-{
-    public int BlogImageId { get; set; }
-    public byte[] Image { get; set; }
-    public string Caption { get; set; }
-
-    public int BlogForeignKey { get; set; }
-    public Blog Blog { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/OneToOne.cs?name=OneToOne&highlight=11)]
 
 ### <a name="many-to-many"></a>Molti-a-molti
 
 Le relazioni many-to-many senza una classe di entità per rappresentare la tabella di join non sono ancora supportate. È tuttavia possibile rappresentare una relazione molti-a-molti includendo una classe di entità per la tabella di join ed eseguendo il mapping di due relazioni uno-a-molti separate.
 
-<!-- [!code-csharp[Main](samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)] -->
-``` csharp
-class MyContext : DbContext
-{
-    public DbSet<Post> Posts { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<PostTag>()
-            .HasKey(pt => new { pt.PostId, pt.TagId });
-
-        modelBuilder.Entity<PostTag>()
-            .HasOne(pt => pt.Post)
-            .WithMany(p => p.PostTags)
-            .HasForeignKey(pt => pt.PostId);
-
-        modelBuilder.Entity<PostTag>()
-            .HasOne(pt => pt.Tag)
-            .WithMany(t => t.PostTags)
-            .HasForeignKey(pt => pt.TagId);
-    }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-
-    public List<PostTag> PostTags { get; set; }
-}
-
-public class Tag
-{
-    public string TagId { get; set; }
-
-    public List<PostTag> PostTags { get; set; }
-}
-
-public class PostTag
-{
-    public int PostId { get; set; }
-    public Post Post { get; set; }
-
-    public string TagId { get; set; }
-    public Tag Tag { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Relationships/ManyToMany.cs?name=ManyToMany&highlight=11,12,13,14,16,17,18,19,39,40,41,42,43,44,45,46)]

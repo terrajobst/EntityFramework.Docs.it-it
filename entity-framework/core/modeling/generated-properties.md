@@ -4,18 +4,19 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
 uid: core/modeling/generated-properties
-ms.openlocfilehash: 6b38fd2e540ec29674f1116e7c204052d06ca1bc
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 6643d3c5c9b3363e450e820793f449a41e2eba80
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197433"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655753"
 ---
 # <a name="generated-values"></a>Valori generati
 
 ## <a name="value-generation-patterns"></a>Modelli di generazione di valori
 
 Sono disponibili tre modelli di generazione dei valori che possono essere usati per le proprietà:
+
 * Nessuna generazione di valori
 * Valore generato in aggiunta
 * Valore generato durante l'aggiunta o l'aggiornamento
@@ -30,24 +31,24 @@ Il valore generato durante l'aggiunta indica che viene generato un valore per le
 
 A seconda del provider di database in uso, è possibile che i valori vengano generati lato client da EF o nel database. Se il valore viene generato dal database, EF può assegnare un valore temporaneo quando si aggiunge l'entità al contesto. Questo valore temporaneo verrà quindi sostituito dal valore generato dal database durante `SaveChanges()`.
 
-Se si aggiunge un'entità al contesto a cui è assegnato un valore assegnato alla proprietà, EF tenterà di inserire tale valore anziché generarne uno nuovo. A una proprietà viene assegnato un valore se non viene assegnato il valore predefinito CLR (`null` `0` per `Guid.Empty` `string` `int`, per, per `Guid`e così via). Per ulteriori informazioni, vedere [valori espliciti per le proprietà generate](../saving/explicit-values-generated-properties.md).
+Se si aggiunge un'entità al contesto a cui è assegnato un valore assegnato alla proprietà, EF tenterà di inserire tale valore anziché generarne uno nuovo. A una proprietà viene assegnato un valore se non viene assegnato il valore predefinito CLR (`null` per `string`, `0` per `int`, `Guid.Empty` per `Guid`e così via). Per ulteriori informazioni, vedere [valori espliciti per le proprietà generate](../saving/explicit-values-generated-properties.md).
 
 > [!WARNING]  
 > Il modo in cui il valore viene generato per le entità aggiunte dipenderà dal provider di database in uso. I provider di database possono impostare automaticamente la generazione del valore per alcuni tipi di proprietà, mentre altri potrebbero richiedere di configurare manualmente il modo in cui viene generato il valore.
 >
-> Quando si utilizza SQL Server, ad esempio, i valori vengono generati automaticamente `GUID` per le proprietà (usando l'algoritmo GUID sequenziale SQL Server). Tuttavia, se si specifica che una `DateTime` proprietà viene generata in aggiunta, è necessario configurare una modalità per la generazione dei valori. A tale scopo, è possibile configurare un valore predefinito di `GETDATE()`, vedere [valori predefiniti](relational/default-values.md).
+> Quando si utilizza SQL Server, ad esempio, i valori vengono generati automaticamente per `GUID` proprietà (utilizzando l'algoritmo GUID sequenziale SQL Server). Tuttavia, se si specifica che una proprietà `DateTime` viene generata in aggiunta, è necessario configurare una modalità per la generazione dei valori. A tale scopo, è possibile configurare un valore predefinito di `GETDATE()`, vedere [valori predefiniti](relational/default-values.md).
 
 ### <a name="value-generated-on-add-or-update"></a>Valore generato durante l'aggiunta o l'aggiornamento
 
 Il valore generato durante l'aggiunta o l'aggiornamento indica che viene generato un nuovo valore ogni volta che il record viene salvato (inserimento o aggiornamento).
 
-Analogamente `value generated on add`, se si specifica un valore per la proprietà in un'istanza appena aggiunta di un'entità, tale valore verrà inserito anziché un valore generato. È anche possibile impostare un valore esplicito durante l'aggiornamento. Per ulteriori informazioni, vedere [valori espliciti per le proprietà generate](../saving/explicit-values-generated-properties.md).
+Come `value generated on add`, se si specifica un valore per la proprietà in un'istanza appena aggiunta di un'entità, tale valore verrà inserito anziché un valore generato. È anche possibile impostare un valore esplicito durante l'aggiornamento. Per ulteriori informazioni, vedere [valori espliciti per le proprietà generate](../saving/explicit-values-generated-properties.md).
 
 > [!WARNING]
 > Il modo in cui il valore viene generato per le entità aggiunte e aggiornate dipenderà dal provider di database in uso. I provider di database possono impostare automaticamente la generazione del valore per alcuni tipi di proprietà, mentre altri richiederanno di configurare manualmente il modo in cui viene generato il valore.
-> 
-> Quando si utilizza SQL Server, ad esempio `byte[]` , le proprietà impostate come generate in Aggiungi o aggiorna e contrassegnate come token di concorrenza verranno impostate con il `rowversion` tipo di dati, in modo che i valori vengano generati nel database. Tuttavia, se si specifica che una `DateTime` proprietà viene generata durante l'aggiunta o l'aggiornamento, è necessario configurare una modalità per la generazione dei valori. A tale scopo, è possibile configurare un valore predefinito di `GETDATE()` (vedere [valori predefiniti](relational/default-values.md)) per generare valori per le nuove righe. È quindi possibile usare un trigger di database per generare valori durante gli aggiornamenti, ad esempio il trigger di esempio seguente.
-> 
+>
+> Quando si utilizza SQL Server, ad esempio, `byte[]` proprietà impostate come generate in fase di aggiunta o aggiornamento e contrassegnate come token di concorrenza verranno impostate con il tipo di dati `rowversion`, in modo che i valori vengano generati nel database. Tuttavia, se si specifica che una proprietà `DateTime` viene generata in caso di aggiunta o aggiornamento, è necessario configurare una modalità per la generazione dei valori. A tale scopo, è necessario configurare un valore predefinito di `GETDATE()` (vedere [valori predefiniti](relational/default-values.md)) per generare valori per le nuove righe. È quindi possibile usare un trigger di database per generare valori durante gli aggiornamenti, ad esempio il trigger di esempio seguente.
+>
 > [!code-sql[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAddOrUpdate.sql)]
 
 ## <a name="conventions"></a>Convenzioni
@@ -87,7 +88,7 @@ Per convenzione, le chiavi primarie non composite di tipo short, int, Long o GUI
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/ValueGeneratedOnAdd.cs#Sample)]
 
 > [!WARNING]  
-> `ValueGeneratedOnAdd()`è sufficiente che EF sappia che i valori vengono generati per le entità aggiunte, non garantisce che EF configurerà il meccanismo effettivo per generare valori.  Per altri dettagli, vedere [valore generato nella sezione Aggiungi](#value-generated-on-add) .
+> `ValueGeneratedOnAdd()` consente a EF di capire che i valori vengono generati per le entità aggiunte, non garantisce che EF configurerà il meccanismo effettivo per generare valori.  Per altri dettagli, vedere [valore generato nella sezione Aggiungi](#value-generated-on-add) .
 
 ### <a name="value-generated-on-add-or-update-fluent-api"></a>Valore generato durante l'aggiunta o l'aggiornamento (API Fluent)
 

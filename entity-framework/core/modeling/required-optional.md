@@ -4,27 +4,27 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ddaa0a54-9f43-4c34-aae3-f95c96c69842
 uid: core/modeling/required-optional
-ms.openlocfilehash: fd9e96e6f79965e63b07c21217edd004fd5c4d54
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 62b2b3f5a761c0aacece986ecd0b2dd2f958d048
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197846"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655655"
 ---
 # <a name="required-and-optional-properties"></a>Proprietà obbligatorie e facoltative
 
-Una proprietà è considerata facoltativa se è valida per `null`contenerla. Se `null` non è un valore valido da assegnare a una proprietà, viene considerata una proprietà obbligatoria.
+Una proprietà è considerata facoltativa se è valida affinché contenga `null`. Se `null` non è un valore valido da assegnare a una proprietà, viene considerata una proprietà obbligatoria.
 
 Quando si esegue il mapping a uno schema di database relazionale, le proprietà obbligatorie vengono create come colonne che non ammettono i valori null e le proprietà facoltative vengono create come colonne nullable.
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, una proprietà il cui tipo .NET può contenere null verrà configurato come facoltativo, mentre le proprietà il cui tipo .NET non può contenere valori null verranno configurate in base alle esigenze. Tutte le proprietà con tipi di valore .NET (`int`, `decimal`, `bool`e così via), ad esempio, sono configurate come obbligatorie e tutte le proprietà con`int?`tipi di `bool?`valore .NET Nullable (, `decimal?`, e così via) sono configurato come facoltativo.
+Per convenzione, una proprietà il cui tipo .NET può contenere null verrà configurato come facoltativo, mentre le proprietà il cui tipo .NET non può contenere valori null verranno configurate in base alle esigenze. Tutte le proprietà con tipi di valore .NET (`int`, `decimal`, `bool`e così via), ad esempio, sono configurate come obbligatorie e tutte le proprietà con tipi di valore .NET Nullable (`int?`, `decimal?`, `bool?`e così via) sono configurate come facoltative.
 
 C#8 è stata introdotta una nuova funzionalità denominata [tipi di riferimento Nullable](/dotnet/csharp/tutorials/nullable-reference-types), che consente di aggiungere annotazioni ai tipi di riferimento, indicando se è valido per consentirne l'inclusione null. Questa funzionalità è disabilitata per impostazione predefinita e, se abilitata, modifica il comportamento del EF Core nel modo seguente:
 
 * Se i tipi di riferimento nullable sono disabilitati (impostazione predefinita), tutte le proprietà con i tipi di riferimento .NET vengono configurate come facoltative per convenzione, ad esempio `string`.
-* Se sono abilitati i tipi di riferimento Nullable, le proprietà verranno configurate in base al supporto di `string?` valori null del tipo .NET: verranno `string` configurate come facoltative, mentre verranno configurate in base alle C# esigenze.
+* Se sono abilitati i tipi di riferimento Nullable, le proprietà verranno configurate in base al supporto di valori null del tipo .NET: `string?` verranno configurati come facoltativi, mentre `string` verranno configurati in base alle C# esigenze.
 
 Nell'esempio seguente viene illustrato un tipo di entità con proprietà obbligatorie e facoltative, con la funzionalità di riferimento Nullable disabilitata (impostazione predefinita) e abilitata:
 
@@ -53,7 +53,7 @@ Una proprietà che sarebbe facoltativa per convenzione può essere configurata i
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/Required.cs?highlight=14)]
 
-# <a name="fluent-apitabfluent-api"></a>[API Fluent](#tab/fluent-api) 
+# <a name="fluent-apitabfluent-api"></a>[API Fluent](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/Required.cs?highlight=11-13)]
 
