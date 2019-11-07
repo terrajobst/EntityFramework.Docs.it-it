@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: bc2a2676-bc46-493f-bf49-e3cc97994d57
 uid: core/index
-ms.openlocfilehash: e736251753134b716e64f24f6c517ed9f66a7db4
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: e6127f775d6bbbdf81debf5519388fe252fe079d
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181320"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73655617"
 ---
 # <a name="entity-framework-core"></a>Entity Framework Core
 
@@ -25,72 +25,20 @@ Con Entity Framework Core, l'accesso ai dati viene eseguito tramite un modello. 
 
 È possibile generare un modello da un database esistente, scrivere manualmente il codice di un modello in modo che corrisponda al database o usare [migrazioni di Entity Framework](managing-schemas/migrations/index.md) per creare un database a partire dal modello e quindi svilupparlo man mano che il modello cambia nel tempo.
 
-``` csharp
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-
-namespace Intro
-{
-    public class BloggingContext : DbContext
-    {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                @"Server=(localdb)\mssqllocaldb;Database=Blogging;Integrated Security=True");
-        }
-    }
-
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string Url { get; set; }
-        public int Rating { get; set; }
-        public List<Post> Posts { get; set; }
-    }
-
-    public class Post
-    {
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-
-        public int BlogId { get; set; }
-        public Blog Blog { get; set; }
-    }
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Model.cs)]
 
 ## <a name="querying"></a>Query
 
 Le istanze di classi di entità vengono recuperate dal database tramite LINQ (Language Integrated Query). Per altre informazioni, vedere [Esecuzione di query su dati](querying/index.md).
 
-``` csharp
-using (var db = new BloggingContext())
-{
-    var blogs = db.Blogs
-        .Where(b => b.Rating > 3)
-        .OrderBy(b => b.Url)
-        .ToList();
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Program.cs#Querying)]
 
 ## <a name="saving-data"></a>Salvataggio di dati
 
 I dati vengano creati, eliminati e modificati nel database tramite le istanze di classi di entità. Per altre informazioni, vedere [Salvataggio di dati](saving/index.md).
 
-``` csharp
-using (var db = new BloggingContext())
-{
-    var blog = new Blog { Url = "http://sample.com" };
-    db.Blogs.Add(blog);
-    db.SaveChanges();
-}
-```
+[!code-csharp[Main](../../samples/core/Intro/Program.cs#SavingData)]
 
 ## <a name="next-steps"></a>Passaggi successivi
 
 Per le esercitazioni introduttive, vedere [Introduzione a Entity Framework Core](get-started/index.md).
-

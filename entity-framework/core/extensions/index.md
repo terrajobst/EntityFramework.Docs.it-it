@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 01/07/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 0c9671eb77181d85cd493341cd1abf842d13fb0e
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: e70011b42818e4df1ec5b9b88d7adb9d36bb26f1
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181266"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654805"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
@@ -28,7 +28,7 @@ LLBLGen Pro è una soluzione per la modellazione delle entità con supporto per 
 
 ### <a name="devart-entity-developer"></a>Devart Entity Developer
 
-Entity Developer è una potente finestra di progettazione ORM per ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access e LINQ to SQL. Supporta la progettazione visiva di modelli EF Core, usando l'approccio con precedenza del modello o precedenza del database e la generazione di codice C# o Visual Basic. 
+Entity Developer è una potente finestra di progettazione ORM per ADO.NET Entity Framework, NHibernate, LinqConnect, Telerik Data Access e LINQ to SQL. Supporta la progettazione visiva di modelli EF Core, usando l'approccio con precedenza del modello o precedenza del database e la generazione di codice C# o Visual Basic.
 
 [Sito Web](https://www.devart.com/entitydeveloper/)
 
@@ -52,7 +52,7 @@ CatFactory è un motore di scaffolding per .NET Core in grado di automatizzare l
 
 ### <a name="loresofts-entity-framework-core-generator"></a>Generatore Entity Framework Core di LoreSoft
 
-Il Generatore Entity Framework Core (efg) è uno strumento della riga di comando di .NET Core che genera modelli EF Core da un database esistente con modalità simili a `dotnet ef dbcontext scaffold`, ma supporta anche la [rigenerazione](https://efg.loresoft.com/en/latest/regeneration/) del codice sicuro tramite la sostituzione dell'area o tramite l'analisi dei file di mapping. Lo strumento supporta la generazione di modelli di visualizzazione, la convalida e il codice mapper degli oggetti. 
+Il Generatore Entity Framework Core (efg) è uno strumento della riga di comando di .NET Core che genera modelli EF Core da un database esistente con modalità simili a `dotnet ef dbcontext scaffold`, ma supporta anche la [rigenerazione](https://efg.loresoft.com/en/latest/regeneration/) del codice sicuro tramite la sostituzione dell'area o tramite l'analisi dei file di mapping. Lo strumento supporta la generazione di modelli di visualizzazione, la convalida e il codice mapper degli oggetti.
 
 [Esercitazione](https://www.loresoft.com/Generate-ASP-NET-Web-API)
 [Documentazione](https://efg.loresoft.com/en/latest/)
@@ -86,7 +86,7 @@ Questa libreria consente il recupero dei valori chiave primaria (incluse le chia
 
 ### <a name="entityframeworkcoretypedoriginalvalues"></a>EntityFrameworkCore.TypedOriginalValues
 
-Questa libreria consente l'accesso fortemente tipizzato ai valori originali delle proprietà dell'entità. 
+Questa libreria consente l'accesso fortemente tipizzato ai valori originali delle proprietà dell'entità.
 
 [Repository GitHub](https://github.com/NickStrupat/EntityFramework.TypedOriginalValues/)
 
