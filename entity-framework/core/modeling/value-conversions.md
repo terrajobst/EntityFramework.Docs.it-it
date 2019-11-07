@@ -1,32 +1,33 @@
 ---
-title: Conversioni dei valori - EF Core
+title: Conversioni di valori-EF Core
 author: ajcvickers
 ms.date: 02/19/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/value-conversions
-ms.openlocfilehash: 2a1956221ecc920feba796e4d95cc97259e89c53
-ms.sourcegitcommit: 0cef7d448e1e47bdb333002e2254ed42d57b45b6
+ms.openlocfilehash: 93774bc1bc3887f982faeac151825a6643c1107c
+ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/29/2018
-ms.locfileid: "43152510"
+ms.lasthandoff: 11/06/2019
+ms.locfileid: "73654790"
 ---
-# <a name="value-conversions"></a><span data-ttu-id="450ce-102">Conversioni dei valori</span><span class="sxs-lookup"><span data-stu-id="450ce-102">Value Conversions</span></span>
+# <a name="value-conversions"></a><span data-ttu-id="06700-102">Conversioni di valori</span><span class="sxs-lookup"><span data-stu-id="06700-102">Value Conversions</span></span>
 
 > [!NOTE]  
-> <span data-ttu-id="450ce-103">Questa funzionalità è stata introdotta in EF Core 2.1.</span><span class="sxs-lookup"><span data-stu-id="450ce-103">This feature is new in EF Core 2.1.</span></span>
+> <span data-ttu-id="06700-103">Questa funzionalità è stata introdotta in EF Core 2.1.</span><span class="sxs-lookup"><span data-stu-id="06700-103">This feature is new in EF Core 2.1.</span></span>
 
-<span data-ttu-id="450ce-104">Convertitori di valori i valori delle proprietà da convertire durante la lettura o la scrittura nel database.</span><span class="sxs-lookup"><span data-stu-id="450ce-104">Value converters allow property values to be converted when reading from or writing to the database.</span></span> <span data-ttu-id="450ce-105">Questa conversione può provenire da un valore a un altro dello stesso tipo (ad esempio, la crittografia di stringhe) o da un valore di un tipo in un valore di un altro tipo (ad esempio, la conversione dei valori enum in e da stringhe nel database.)</span><span class="sxs-lookup"><span data-stu-id="450ce-105">This conversion can be from one value to another of the same type (for example, encrypting strings) or from a value of one type to a value of another type (for example, converting enum values to and from strings in the database.)</span></span>
+<span data-ttu-id="06700-104">I convertitori di valori consentono di convertire i valori delle proprietà durante la lettura o la scrittura nel database.</span><span class="sxs-lookup"><span data-stu-id="06700-104">Value converters allow property values to be converted when reading from or writing to the database.</span></span> <span data-ttu-id="06700-105">Questa conversione può provenire da un valore a un altro dello stesso tipo (ad esempio, la crittografia di stringhe) o da un valore di un tipo a un valore di un altro tipo, ad esempio la conversione di valori enum da e verso stringhe nel database.</span><span class="sxs-lookup"><span data-stu-id="06700-105">This conversion can be from one value to another of the same type (for example, encrypting strings) or from a value of one type to a value of another type (for example, converting enum values to and from strings in the database.)</span></span>
 
-## <a name="fundamentals"></a><span data-ttu-id="450ce-106">Concetti fondamentali</span><span class="sxs-lookup"><span data-stu-id="450ce-106">Fundamentals</span></span>
+## <a name="fundamentals"></a><span data-ttu-id="06700-106">Concetti fondamentali</span><span class="sxs-lookup"><span data-stu-id="06700-106">Fundamentals</span></span>
 
-<span data-ttu-id="450ce-107">Convertitori di valori vengono specificati in termini di un `ModelClrType` e un `ProviderClrType`.</span><span class="sxs-lookup"><span data-stu-id="450ce-107">Value converters are specified in terms of a `ModelClrType` and a `ProviderClrType`.</span></span> <span data-ttu-id="450ce-108">Il tipo di modello è il tipo di .NET della proprietà nel tipo di entità.</span><span class="sxs-lookup"><span data-stu-id="450ce-108">The model type is the .NET type of the property in the entity type.</span></span> <span data-ttu-id="450ce-109">Il tipo di provider è il tipo .NET riconosciuto dal provider del database.</span><span class="sxs-lookup"><span data-stu-id="450ce-109">The provider type is the .NET type understood by the database provider.</span></span> <span data-ttu-id="450ce-110">Ad esempio, per salvare le enumerazioni come stringhe nel database, il tipo di modello è il tipo di enumerazione e il tipo di provider `String`.</span><span class="sxs-lookup"><span data-stu-id="450ce-110">For example, to save enums as strings in the database, the model type is the type of the enum, and the provider type is `String`.</span></span> <span data-ttu-id="450ce-111">Questi due tipi possono essere lo stesso.</span><span class="sxs-lookup"><span data-stu-id="450ce-111">These two types can be the same.</span></span>
+<span data-ttu-id="06700-107">I convertitori di valori vengono specificati in termini di `ModelClrType` e di `ProviderClrType`.</span><span class="sxs-lookup"><span data-stu-id="06700-107">Value converters are specified in terms of a `ModelClrType` and a `ProviderClrType`.</span></span> <span data-ttu-id="06700-108">Il tipo di modello è il tipo .NET della proprietà nel tipo di entità.</span><span class="sxs-lookup"><span data-stu-id="06700-108">The model type is the .NET type of the property in the entity type.</span></span> <span data-ttu-id="06700-109">Il tipo di provider è il tipo .NET riconosciuto dal provider di database.</span><span class="sxs-lookup"><span data-stu-id="06700-109">The provider type is the .NET type understood by the database provider.</span></span> <span data-ttu-id="06700-110">Ad esempio, per salvare le enumerazioni come stringhe nel database, il tipo di modello è il tipo dell'enumerazione e il tipo di provider viene `String`.</span><span class="sxs-lookup"><span data-stu-id="06700-110">For example, to save enums as strings in the database, the model type is the type of the enum, and the provider type is `String`.</span></span> <span data-ttu-id="06700-111">Questi due tipi possono essere gli stessi.</span><span class="sxs-lookup"><span data-stu-id="06700-111">These two types can be the same.</span></span>
 
-<span data-ttu-id="450ce-112">Le conversioni vengono definite utilizzando due `Func` alberi delle espressioni: uno dal `ModelClrType` a `ProviderClrType` e l'altro `ProviderClrType` a `ModelClrType`.</span><span class="sxs-lookup"><span data-stu-id="450ce-112">Conversions are defined using two `Func` expression trees: one from `ModelClrType` to `ProviderClrType` and the other from `ProviderClrType` to `ModelClrType`.</span></span> <span data-ttu-id="450ce-113">Gli alberi delle espressioni vengono usate in modo che può essere compilati nel codice di accesso del database per le conversioni efficiente.</span><span class="sxs-lookup"><span data-stu-id="450ce-113">Expression trees are used so that they can be compiled into the database access code for efficient conversions.</span></span> <span data-ttu-id="450ce-114">Per le conversioni complesse, l'albero delle espressioni può essere una semplice chiamata a un metodo che esegue la conversione.</span><span class="sxs-lookup"><span data-stu-id="450ce-114">For complex conversions, the expression tree may be a simple call to a method that performs the conversion.</span></span>
+<span data-ttu-id="06700-112">Le conversioni vengono definite utilizzando due `Func` alberi delle espressioni: uno da `ModelClrType` a `ProviderClrType` e l'altro da `ProviderClrType` a `ModelClrType`.</span><span class="sxs-lookup"><span data-stu-id="06700-112">Conversions are defined using two `Func` expression trees: one from `ModelClrType` to `ProviderClrType` and the other from `ProviderClrType` to `ModelClrType`.</span></span> <span data-ttu-id="06700-113">Gli alberi delle espressioni vengono usati in modo che possano essere compilati nel codice di accesso al database per conversioni efficienti.</span><span class="sxs-lookup"><span data-stu-id="06700-113">Expression trees are used so that they can be compiled into the database access code for efficient conversions.</span></span> <span data-ttu-id="06700-114">Per le conversioni complesse, l'albero delle espressioni può essere una semplice chiamata a un metodo che esegue la conversione.</span><span class="sxs-lookup"><span data-stu-id="06700-114">For complex conversions, the expression tree may be a simple call to a method that performs the conversion.</span></span>
 
-## <a name="configuring-a-value-converter"></a><span data-ttu-id="450ce-115">Configurazione di un convertitore di valori</span><span class="sxs-lookup"><span data-stu-id="450ce-115">Configuring a value converter</span></span>
+## <a name="configuring-a-value-converter"></a><span data-ttu-id="06700-115">Configurazione di un convertitore di valori</span><span class="sxs-lookup"><span data-stu-id="06700-115">Configuring a value converter</span></span>
 
-<span data-ttu-id="450ce-116">Le conversioni dei valori definite nella proprietà nel `OnModelCreating` del `DbContext`.</span><span class="sxs-lookup"><span data-stu-id="450ce-116">Value conversions are defined on properties in the `OnModelCreating` of your `DbContext`.</span></span> <span data-ttu-id="450ce-117">Si consideri, ad esempio, un tipo di entità e di enumerazione definito come:</span><span class="sxs-lookup"><span data-stu-id="450ce-117">For example, consider an enum and entity type defined as:</span></span>
+<span data-ttu-id="06700-116">Le conversioni di valori sono definite sulle proprietà nell'`OnModelCreating` del `DbContext`.</span><span class="sxs-lookup"><span data-stu-id="06700-116">Value conversions are defined on properties in the `OnModelCreating` of your `DbContext`.</span></span> <span data-ttu-id="06700-117">Si consideri, ad esempio, un'enumerazione e un tipo di entità definiti come segue:</span><span class="sxs-lookup"><span data-stu-id="06700-117">For example, consider an enum and entity type defined as:</span></span>
+
 ``` csharp
 public class Rider
 {
@@ -42,7 +43,9 @@ public enum EquineBeast
     Unicorn
 }
 ```
-<span data-ttu-id="450ce-118">Quindi le conversioni possono essere definite in `OnModelCreating` per archiviare i valori di enumerazione sotto forma di stringhe (ad esempio, "Asino", "Muli",...) nel database:</span><span class="sxs-lookup"><span data-stu-id="450ce-118">Then conversions can be defined in `OnModelCreating` to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:</span></span>
+
+<span data-ttu-id="06700-118">È possibile definire le conversioni in `OnModelCreating` per archiviare i valori enum come stringhe (ad esempio, "Donkey", "Mule",...) nel database:</span><span class="sxs-lookup"><span data-stu-id="06700-118">Then conversions can be defined in `OnModelCreating` to store the enum values as strings (for example, "Donkey", "Mule", ...) in the database:</span></span>
+
 ``` csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -54,12 +57,14 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
             v => (EquineBeast)Enum.Parse(typeof(EquineBeast), v));
 }
 ```
+
 > [!NOTE]  
-> <span data-ttu-id="450ce-119">Oggetto `null` valore non verrà mai passato a un convertitore di valori.</span><span class="sxs-lookup"><span data-stu-id="450ce-119">A `null` value will never be passed to a value converter.</span></span> <span data-ttu-id="450ce-120">Questo semplifica l'implementazione delle conversioni e consente loro di essere condivisa fra le proprietà che ammette valori null e non nullable.</span><span class="sxs-lookup"><span data-stu-id="450ce-120">This makes the implementation of conversions easier and allows them to be shared amongst nullable and non-nullable properties.</span></span>
+> <span data-ttu-id="06700-119">Un valore `null` non verrà mai passato a un convertitore di valori.</span><span class="sxs-lookup"><span data-stu-id="06700-119">A `null` value will never be passed to a value converter.</span></span> <span data-ttu-id="06700-120">In questo modo l'implementazione delle conversioni risulta più semplice e consente di condividerle tra proprietà Nullable e non nullable.</span><span class="sxs-lookup"><span data-stu-id="06700-120">This makes the implementation of conversions easier and allows them to be shared amongst nullable and non-nullable properties.</span></span>
 
-## <a name="the-valueconverter-class"></a><span data-ttu-id="450ce-121">La classe di ValueConverter</span><span class="sxs-lookup"><span data-stu-id="450ce-121">The ValueConverter class</span></span>
+## <a name="the-valueconverter-class"></a><span data-ttu-id="06700-121">Classe ValueConverter</span><span class="sxs-lookup"><span data-stu-id="06700-121">The ValueConverter class</span></span>
 
-<span data-ttu-id="450ce-122">La chiamata `HasConversion` come illustrato in precedenza verrà creato un `ValueConverter` dell'istanza e impostarla sulla proprietà.</span><span class="sxs-lookup"><span data-stu-id="450ce-122">Calling `HasConversion` as shown above will create a `ValueConverter` instance and set it on the property.</span></span> <span data-ttu-id="450ce-123">Il `ValueConverter` invece può essere creato in modo esplicito.</span><span class="sxs-lookup"><span data-stu-id="450ce-123">The `ValueConverter` can instead be created explicitly.</span></span> <span data-ttu-id="450ce-124">Ad esempio:</span><span class="sxs-lookup"><span data-stu-id="450ce-124">For example:</span></span>
+<span data-ttu-id="06700-122">La chiamata di `HasConversion` come illustrato in precedenza creerà un'istanza di `ValueConverter` e la imposterà sulla proprietà.</span><span class="sxs-lookup"><span data-stu-id="06700-122">Calling `HasConversion` as shown above will create a `ValueConverter` instance and set it on the property.</span></span> <span data-ttu-id="06700-123">Il `ValueConverter` può invece essere creato in modo esplicito.</span><span class="sxs-lookup"><span data-stu-id="06700-123">The `ValueConverter` can instead be created explicitly.</span></span> <span data-ttu-id="06700-124">Esempio:</span><span class="sxs-lookup"><span data-stu-id="06700-124">For example:</span></span>
+
 ``` csharp
 var converter = new ValueConverter<EquineBeast, string>(
     v => v.ToString(),
@@ -70,37 +75,40 @@ modelBuilder
     .Property(e => e.Mount)
     .HasConversion(converter);
 ```
-<span data-ttu-id="450ce-125">Ciò può essere utile quando più proprietà utilizzano la stessa conversione.</span><span class="sxs-lookup"><span data-stu-id="450ce-125">This can be useful when multiple properties use the same conversion.</span></span>
+
+<span data-ttu-id="06700-125">Questa operazione può essere utile quando più proprietà utilizzano la stessa conversione.</span><span class="sxs-lookup"><span data-stu-id="06700-125">This can be useful when multiple properties use the same conversion.</span></span>
 
 > [!NOTE]  
-> <span data-ttu-id="450ce-126">Non è attualmente possibile specificare in un'unica posizione che tutte le proprietà di un determinato tipo devono usare il convertitore di valore stesso.</span><span class="sxs-lookup"><span data-stu-id="450ce-126">There is currently no way to specify in one place that every property of a given type must use the same value converter.</span></span> <span data-ttu-id="450ce-127">Questa funzionalità verrà considerata una versione futura.</span><span class="sxs-lookup"><span data-stu-id="450ce-127">This feature will be considered for a future release.</span></span>
+> <span data-ttu-id="06700-126">Attualmente non è possibile specificare in un'unica posizione che ogni proprietà di un determinato tipo deve usare lo stesso convertitore di valori.</span><span class="sxs-lookup"><span data-stu-id="06700-126">There is currently no way to specify in one place that every property of a given type must use the same value converter.</span></span> <span data-ttu-id="06700-127">Questa funzionalità verrà considerata per una versione futura.</span><span class="sxs-lookup"><span data-stu-id="06700-127">This feature will be considered for a future release.</span></span>
 
-## <a name="built-in-converters"></a><span data-ttu-id="450ce-128">Convertitori di tipi incorporati</span><span class="sxs-lookup"><span data-stu-id="450ce-128">Built-in converters</span></span>
+## <a name="built-in-converters"></a><span data-ttu-id="06700-128">Convertitori predefiniti</span><span class="sxs-lookup"><span data-stu-id="06700-128">Built-in converters</span></span>
 
-<span data-ttu-id="450ce-129">EF Core include un set di pre-definite `ValueConverter` classi, presenti nel `Microsoft.EntityFrameworkCore.Storage.ValueConversion` dello spazio dei nomi.</span><span class="sxs-lookup"><span data-stu-id="450ce-129">EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `Microsoft.EntityFrameworkCore.Storage.ValueConversion` namespace.</span></span> <span data-ttu-id="450ce-130">Questi sono:</span><span class="sxs-lookup"><span data-stu-id="450ce-130">These are:</span></span>
-* <span data-ttu-id="450ce-131">`BoolToZeroOneConverter` -Bool a zero e uno</span><span class="sxs-lookup"><span data-stu-id="450ce-131">`BoolToZeroOneConverter` - Bool to zero and one</span></span>
-* <span data-ttu-id="450ce-132">`BoolToStringConverter` -Bool in stringhe, ad esempio "Y" e "N"</span><span class="sxs-lookup"><span data-stu-id="450ce-132">`BoolToStringConverter` - Bool to strings such as "Y" and "N"</span></span>
-* <span data-ttu-id="450ce-133">`BoolToTwoValuesConverter` -Bool a due valori</span><span class="sxs-lookup"><span data-stu-id="450ce-133">`BoolToTwoValuesConverter` - Bool to any two values</span></span>
-* <span data-ttu-id="450ce-134">`BytesToStringConverter` -Matrice di byte alla stringa con codifica Base64</span><span class="sxs-lookup"><span data-stu-id="450ce-134">`BytesToStringConverter` - Byte array to Base64-encoded string</span></span>
-* <span data-ttu-id="450ce-135">`CastingConverter` -Le conversioni che richiedono solo un cast di tipo</span><span class="sxs-lookup"><span data-stu-id="450ce-135">`CastingConverter` - Conversions that require only a type cast</span></span>
-* <span data-ttu-id="450ce-136">`CharToStringConverter` -Char stringa singolo carattere</span><span class="sxs-lookup"><span data-stu-id="450ce-136">`CharToStringConverter` - Char to single character string</span></span>
-* <span data-ttu-id="450ce-137">`DateTimeOffsetToBinaryConverter` -DateTimeOffset valore a 64 bit con codifica binaria</span><span class="sxs-lookup"><span data-stu-id="450ce-137">`DateTimeOffsetToBinaryConverter` - DateTimeOffset to binary-encoded 64-bit value</span></span>
-* <span data-ttu-id="450ce-138">`DateTimeOffsetToBytesConverter` -DateTimeOffset matrice di byte</span><span class="sxs-lookup"><span data-stu-id="450ce-138">`DateTimeOffsetToBytesConverter` - DateTimeOffset to byte array</span></span>
-* <span data-ttu-id="450ce-139">`DateTimeOffsetToStringConverter` -DateTimeOffset alla stringa</span><span class="sxs-lookup"><span data-stu-id="450ce-139">`DateTimeOffsetToStringConverter` - DateTimeOffset to string</span></span>
-* <span data-ttu-id="450ce-140">`DateTimeToBinaryConverter` -DateTime valore a 64 bit compresi DateTimeKind</span><span class="sxs-lookup"><span data-stu-id="450ce-140">`DateTimeToBinaryConverter` - DateTime to 64-bit value including DateTimeKind</span></span>
-* <span data-ttu-id="450ce-141">`DateTimeToStringConverter` -DateTime a string</span><span class="sxs-lookup"><span data-stu-id="450ce-141">`DateTimeToStringConverter` - DateTime to string</span></span>
-* <span data-ttu-id="450ce-142">`DateTimeToTicksConverter` -DateTime con segni di graduazione</span><span class="sxs-lookup"><span data-stu-id="450ce-142">`DateTimeToTicksConverter` - DateTime to ticks</span></span>
-* <span data-ttu-id="450ce-143">`EnumToNumberConverter` -Enum numero sottostante</span><span class="sxs-lookup"><span data-stu-id="450ce-143">`EnumToNumberConverter` - Enum to underlying number</span></span>
-* <span data-ttu-id="450ce-144">`EnumToStringConverter` -Enum in stringa</span><span class="sxs-lookup"><span data-stu-id="450ce-144">`EnumToStringConverter` - Enum to string</span></span>
-* <span data-ttu-id="450ce-145">`GuidToBytesConverter` -Guid in matrice di byte</span><span class="sxs-lookup"><span data-stu-id="450ce-145">`GuidToBytesConverter` - Guid to byte array</span></span>
-* <span data-ttu-id="450ce-146">`GuidToStringConverter` -Guid in stringa</span><span class="sxs-lookup"><span data-stu-id="450ce-146">`GuidToStringConverter` - Guid to string</span></span>
-* <span data-ttu-id="450ce-147">`NumberToBytesConverter` -Qualsiasi valore numerico in matrice di byte</span><span class="sxs-lookup"><span data-stu-id="450ce-147">`NumberToBytesConverter` - Any numerical value to byte array</span></span>
-* <span data-ttu-id="450ce-148">`NumberToStringConverter` -Qualsiasi valore numerico in stringa</span><span class="sxs-lookup"><span data-stu-id="450ce-148">`NumberToStringConverter` - Any numerical value to string</span></span>
-* <span data-ttu-id="450ce-149">`StringToBytesConverter` -Stringa a byte UTF8</span><span class="sxs-lookup"><span data-stu-id="450ce-149">`StringToBytesConverter` - String to UTF8 bytes</span></span>
-* <span data-ttu-id="450ce-150">`TimeSpanToStringConverter` -TimeSpan in stringa</span><span class="sxs-lookup"><span data-stu-id="450ce-150">`TimeSpanToStringConverter` - TimeSpan to string</span></span>
-* <span data-ttu-id="450ce-151">`TimeSpanToTicksConverter` -Intervallo di tempo da segni di graduazione</span><span class="sxs-lookup"><span data-stu-id="450ce-151">`TimeSpanToTicksConverter` - TimeSpan to ticks</span></span>
+<span data-ttu-id="06700-129">EF Core viene fornito con un set di classi `ValueConverter` predefinite, disponibile nello spazio dei nomi `Microsoft.EntityFrameworkCore.Storage.ValueConversion`.</span><span class="sxs-lookup"><span data-stu-id="06700-129">EF Core ships with a set of pre-defined `ValueConverter` classes, found in the `Microsoft.EntityFrameworkCore.Storage.ValueConversion` namespace.</span></span> <span data-ttu-id="06700-130">Questi sono:</span><span class="sxs-lookup"><span data-stu-id="06700-130">These are:</span></span>
 
-<span data-ttu-id="450ce-152">Si noti che `EnumToStringConverter` è incluso in questo elenco.</span><span class="sxs-lookup"><span data-stu-id="450ce-152">Notice that `EnumToStringConverter` is included in this list.</span></span> <span data-ttu-id="450ce-153">Ciò significa che non è necessario specificare la conversione in modo esplicito, come illustrato in precedenza.</span><span class="sxs-lookup"><span data-stu-id="450ce-153">This means that there is no need to specify the conversion explicitly, as shown above.</span></span> <span data-ttu-id="450ce-154">Usare invece solo il convertitore incorporato:</span><span class="sxs-lookup"><span data-stu-id="450ce-154">Instead, just use the built-in converter:</span></span>
+* <span data-ttu-id="06700-131">`BoolToZeroOneConverter`-bool a zero e uno</span><span class="sxs-lookup"><span data-stu-id="06700-131">`BoolToZeroOneConverter` - Bool to zero and one</span></span>
+* <span data-ttu-id="06700-132">da `BoolToStringConverter` a bool a stringhe quali "Y" e "N"</span><span class="sxs-lookup"><span data-stu-id="06700-132">`BoolToStringConverter` - Bool to strings such as "Y" and "N"</span></span>
+* <span data-ttu-id="06700-133">`BoolToTwoValuesConverter`-bool a due valori qualsiasi</span><span class="sxs-lookup"><span data-stu-id="06700-133">`BoolToTwoValuesConverter` - Bool to any two values</span></span>
+* <span data-ttu-id="06700-134">matrice di `BytesToStringConverter` byte in una stringa con codifica Base64</span><span class="sxs-lookup"><span data-stu-id="06700-134">`BytesToStringConverter` - Byte array to Base64-encoded string</span></span>
+* <span data-ttu-id="06700-135">conversioni di `CastingConverter` che richiedono solo un cast di tipo</span><span class="sxs-lookup"><span data-stu-id="06700-135">`CastingConverter` - Conversions that require only a type cast</span></span>
+* <span data-ttu-id="06700-136">stringa da `CharToStringConverter` a carattere singolo</span><span class="sxs-lookup"><span data-stu-id="06700-136">`CharToStringConverter` - Char to single character string</span></span>
+* <span data-ttu-id="06700-137">`DateTimeOffsetToBinaryConverter` da DateTimeOffset a valore a 64 bit con codifica binaria</span><span class="sxs-lookup"><span data-stu-id="06700-137">`DateTimeOffsetToBinaryConverter` - DateTimeOffset to binary-encoded 64-bit value</span></span>
+* <span data-ttu-id="06700-138">matrice da `DateTimeOffsetToBytesConverter` da DateTimeOffset a byte</span><span class="sxs-lookup"><span data-stu-id="06700-138">`DateTimeOffsetToBytesConverter` - DateTimeOffset to byte array</span></span>
+* <span data-ttu-id="06700-139">da `DateTimeOffsetToStringConverter` da DateTimeOffset a stringa</span><span class="sxs-lookup"><span data-stu-id="06700-139">`DateTimeOffsetToStringConverter` - DateTimeOffset to string</span></span>
+* <span data-ttu-id="06700-140">`DateTimeToBinaryConverter`-DateTime a un valore a 64 bit, incluso DateTimeKind</span><span class="sxs-lookup"><span data-stu-id="06700-140">`DateTimeToBinaryConverter` - DateTime to 64-bit value including DateTimeKind</span></span>
+* <span data-ttu-id="06700-141">da `DateTimeToStringConverter`-DateTime a stringa</span><span class="sxs-lookup"><span data-stu-id="06700-141">`DateTimeToStringConverter` - DateTime to string</span></span>
+* <span data-ttu-id="06700-142">`DateTimeToTicksConverter`-DateTime per i cicli</span><span class="sxs-lookup"><span data-stu-id="06700-142">`DateTimeToTicksConverter` - DateTime to ticks</span></span>
+* <span data-ttu-id="06700-143">`EnumToNumberConverter`-enum al numero sottostante</span><span class="sxs-lookup"><span data-stu-id="06700-143">`EnumToNumberConverter` - Enum to underlying number</span></span>
+* <span data-ttu-id="06700-144">`EnumToStringConverter`-enum in stringa</span><span class="sxs-lookup"><span data-stu-id="06700-144">`EnumToStringConverter` - Enum to string</span></span>
+* <span data-ttu-id="06700-145">`GuidToBytesConverter`-GUID a matrice di byte</span><span class="sxs-lookup"><span data-stu-id="06700-145">`GuidToBytesConverter` - Guid to byte array</span></span>
+* <span data-ttu-id="06700-146">`GuidToStringConverter`-GUID in una stringa</span><span class="sxs-lookup"><span data-stu-id="06700-146">`GuidToStringConverter` - Guid to string</span></span>
+* <span data-ttu-id="06700-147">`NumberToBytesConverter`-qualsiasi valore numerico in una matrice di byte</span><span class="sxs-lookup"><span data-stu-id="06700-147">`NumberToBytesConverter` - Any numerical value to byte array</span></span>
+* <span data-ttu-id="06700-148">`NumberToStringConverter`-qualsiasi valore numerico da stringa</span><span class="sxs-lookup"><span data-stu-id="06700-148">`NumberToStringConverter` - Any numerical value to string</span></span>
+* <span data-ttu-id="06700-149">`StringToBytesConverter` da stringa a byte UTF8</span><span class="sxs-lookup"><span data-stu-id="06700-149">`StringToBytesConverter` - String to UTF8 bytes</span></span>
+* <span data-ttu-id="06700-150">da `TimeSpanToStringConverter`-TimeSpan a String</span><span class="sxs-lookup"><span data-stu-id="06700-150">`TimeSpanToStringConverter` - TimeSpan to string</span></span>
+* <span data-ttu-id="06700-151">`TimeSpanToTicksConverter`-TimeSpan per i cicli</span><span class="sxs-lookup"><span data-stu-id="06700-151">`TimeSpanToTicksConverter` - TimeSpan to ticks</span></span>
+
+<span data-ttu-id="06700-152">Si noti che `EnumToStringConverter` è incluso nell'elenco.</span><span class="sxs-lookup"><span data-stu-id="06700-152">Notice that `EnumToStringConverter` is included in this list.</span></span> <span data-ttu-id="06700-153">Ciò significa che non è necessario specificare la conversione in modo esplicito, come illustrato in precedenza.</span><span class="sxs-lookup"><span data-stu-id="06700-153">This means that there is no need to specify the conversion explicitly, as shown above.</span></span> <span data-ttu-id="06700-154">Usare invece il convertitore predefinito:</span><span class="sxs-lookup"><span data-stu-id="06700-154">Instead, just use the built-in converter:</span></span>
+
 ``` csharp
 var converter = new EnumToStringConverter<EquineBeast>();
 
@@ -109,18 +117,22 @@ modelBuilder
     .Property(e => e.Mount)
     .HasConversion(converter);
 ```
-<span data-ttu-id="450ce-155">Si noti che tutti i convertitori predefiniti sono senza stati e pertanto una singola istanza può essere condiviso in modo sicuro da più proprietà.</span><span class="sxs-lookup"><span data-stu-id="450ce-155">Note that all the built-in converters are stateless and so a single instance can be safely shared by multiple properties.</span></span>
 
-## <a name="pre-defined-conversions"></a><span data-ttu-id="450ce-156">Conversioni predefinite</span><span class="sxs-lookup"><span data-stu-id="450ce-156">Pre-defined conversions</span></span>
+<span data-ttu-id="06700-155">Si noti che tutti i convertitori incorporati sono senza stato e pertanto una singola istanza può essere condivisa in modo sicuro da più proprietà.</span><span class="sxs-lookup"><span data-stu-id="06700-155">Note that all the built-in converters are stateless and so a single instance can be safely shared by multiple properties.</span></span>
 
-<span data-ttu-id="450ce-157">Per le conversioni comune per il quale esiste un convertitore di tipi incorporati non è necessario specificare in modo esplicito il convertitore.</span><span class="sxs-lookup"><span data-stu-id="450ce-157">For common conversions for which a built-in converter exists there is no need to specify the converter explicitly.</span></span> <span data-ttu-id="450ce-158">Al contrario, configurare solo il tipo di provider debba essere usate ed Entity Framework la userà automaticamente il convertitore predefinito appropriato.</span><span class="sxs-lookup"><span data-stu-id="450ce-158">Instead, just configure which provider type should be used and EF will automatically use the appropriate built-in converter.</span></span> <span data-ttu-id="450ce-159">Enumerazione per le conversioni di stringa vengono usati come un esempio precedente, ma EF verranno effettivamente eseguire questa operazione automaticamente se è configurato il tipo di provider:</span><span class="sxs-lookup"><span data-stu-id="450ce-159">Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:</span></span>
+## <a name="pre-defined-conversions"></a><span data-ttu-id="06700-156">Conversioni predefinite</span><span class="sxs-lookup"><span data-stu-id="06700-156">Pre-defined conversions</span></span>
+
+<span data-ttu-id="06700-157">Per le conversioni comuni per le quali esiste un convertitore incorporato, non è necessario specificare il convertitore in modo esplicito.</span><span class="sxs-lookup"><span data-stu-id="06700-157">For common conversions for which a built-in converter exists there is no need to specify the converter explicitly.</span></span> <span data-ttu-id="06700-158">Al contrario, è sufficiente configurare il tipo di provider da usare e EF userà automaticamente il convertitore predefinito appropriato.</span><span class="sxs-lookup"><span data-stu-id="06700-158">Instead, just configure which provider type should be used and EF will automatically use the appropriate built-in converter.</span></span> <span data-ttu-id="06700-159">Le conversioni da enum a stringa vengono usate come esempio sopra, ma EF eseguirà questa operazione automaticamente se il tipo di provider è configurato:</span><span class="sxs-lookup"><span data-stu-id="06700-159">Enum to string conversions are used as an example above, but EF will actually do this automatically if the provider type is configured:</span></span>
+
 ``` csharp
 modelBuilder
     .Entity<Rider>()
     .Property(e => e.Mount)
     .HasConversion<string>();
 ```
-<span data-ttu-id="450ce-160">La stessa operazione, è possibile specificare in modo esplicito il tipo di colonna.</span><span class="sxs-lookup"><span data-stu-id="450ce-160">The same thing can be achieved by explicitly specifying the column type.</span></span> <span data-ttu-id="450ce-161">Ad esempio, se il tipo di entità è definito come in modo che:</span><span class="sxs-lookup"><span data-stu-id="450ce-161">For example, if the entity type is defined like so:</span></span>
+
+<span data-ttu-id="06700-160">La stessa operazione può essere eseguita specificando in modo esplicito il tipo di colonna.</span><span class="sxs-lookup"><span data-stu-id="06700-160">The same thing can be achieved by explicitly specifying the column type.</span></span> <span data-ttu-id="06700-161">Ad esempio, se il tipo di entità è definito come segue:</span><span class="sxs-lookup"><span data-stu-id="06700-161">For example, if the entity type is defined like so:</span></span>
+
 ``` csharp
 public class Rider
 {
@@ -130,12 +142,14 @@ public class Rider
     public EquineBeast Mount { get; set; }
 }
 ```
-<span data-ttu-id="450ce-162">Quindi i valori di enumerazione verranno salvati come stringhe nel database senza altre operazioni di configurazione in `OnModelCreating`.</span><span class="sxs-lookup"><span data-stu-id="450ce-162">Then the enum values will be saved as strings in the database without any further configuration in `OnModelCreating`.</span></span>
 
-## <a name="limitations"></a><span data-ttu-id="450ce-163">Limitazioni</span><span class="sxs-lookup"><span data-stu-id="450ce-163">Limitations</span></span>
+<span data-ttu-id="06700-162">I valori enum verranno quindi salvati come stringhe nel database senza ulteriori configurazioni in `OnModelCreating`.</span><span class="sxs-lookup"><span data-stu-id="06700-162">Then the enum values will be saved as strings in the database without any further configuration in `OnModelCreating`.</span></span>
 
-<span data-ttu-id="450ce-164">Esistono alcune limitazioni correnti del sistema di conversione del valore:</span><span class="sxs-lookup"><span data-stu-id="450ce-164">There are a few known current limitations of the value conversion system:</span></span>
-* <span data-ttu-id="450ce-165">Come indicato in precedenza, `null` non può essere convertito.</span><span class="sxs-lookup"><span data-stu-id="450ce-165">As noted above, `null` cannot be converted.</span></span>
-* <span data-ttu-id="450ce-166">Attualmente non è possibile distribuire una conversione di una proprietà in più colonne o viceversa.</span><span class="sxs-lookup"><span data-stu-id="450ce-166">There is currently no way to spread a conversion of one property to multiple columns or vice-versa.</span></span>
-* <span data-ttu-id="450ce-167">Uso di conversioni dei valori può influire sulla capacità di EF Core per tradurre le espressioni SQL.</span><span class="sxs-lookup"><span data-stu-id="450ce-167">Use of value conversions may impact the ability of EF Core to translate expressions to SQL.</span></span> <span data-ttu-id="450ce-168">Per questi casi verrà registrato un avviso.</span><span class="sxs-lookup"><span data-stu-id="450ce-168">A warning will be logged for such cases.</span></span>
-<span data-ttu-id="450ce-169">Per una versione futura verrà preso in considerazione la rimozione di queste limitazioni.</span><span class="sxs-lookup"><span data-stu-id="450ce-169">Removal of these limitations is being considered for a future release.</span></span>
+## <a name="limitations"></a><span data-ttu-id="06700-163">Limitazioni</span><span class="sxs-lookup"><span data-stu-id="06700-163">Limitations</span></span>
+
+<span data-ttu-id="06700-164">Esistono alcune limitazioni note correnti del sistema di conversione dei valori:</span><span class="sxs-lookup"><span data-stu-id="06700-164">There are a few known current limitations of the value conversion system:</span></span>
+
+* <span data-ttu-id="06700-165">Come indicato in precedenza, non è possibile convertire `null`.</span><span class="sxs-lookup"><span data-stu-id="06700-165">As noted above, `null` cannot be converted.</span></span>
+* <span data-ttu-id="06700-166">Attualmente non è possibile distribuire una conversione di una proprietà in più colonne o viceversa.</span><span class="sxs-lookup"><span data-stu-id="06700-166">There is currently no way to spread a conversion of one property to multiple columns or vice-versa.</span></span>
+* <span data-ttu-id="06700-167">L'utilizzo di conversioni di valori può influisca sulla capacità di EF Core di tradurre espressioni in SQL.</span><span class="sxs-lookup"><span data-stu-id="06700-167">Use of value conversions may impact the ability of EF Core to translate expressions to SQL.</span></span> <span data-ttu-id="06700-168">Per tali casi verrà registrato un avviso.</span><span class="sxs-lookup"><span data-stu-id="06700-168">A warning will be logged for such cases.</span></span>
+<span data-ttu-id="06700-169">La rimozione di queste limitazioni verrà considerata per una versione futura.</span><span class="sxs-lookup"><span data-stu-id="06700-169">Removal of these limitations is being considered for a future release.</span></span>
