@@ -12,9 +12,9 @@ ms.locfileid: "71813553"
 ---
 # <a name="designer-cud-stored-procedures"></a>Stored procedure CUD della finestra di progettazione
 
-Questa procedura dettagliata illustra come eseguire il mapping delle operazioni di creazione @ no__t-0insert, aggiornamento ed eliminazione di un tipo di entità alle stored procedure usando il Entity Framework Designer (EF designer).  Per impostazione predefinita, il Entity Framework genera automaticamente le istruzioni SQL per le operazioni CUD, ma è anche possibile eseguire il mapping delle stored procedure a queste operazioni.  
+Questa procedura dettagliata illustra come eseguire il mapping delle operazioni di creazione\\inserimento, aggiornamento ed eliminazione (CUD) di un tipo di entità alle stored procedure usando il Entity Framework Designer (Entity Framework Designer).  Per impostazione predefinita, il Entity Framework genera automaticamente le istruzioni SQL per le operazioni CUD, ma è anche possibile eseguire il mapping delle stored procedure a queste operazioni.  
 
-Si noti che Code First non supporta il mapping a stored procedure o funzioni. Tuttavia, è possibile chiamare stored procedure o funzioni utilizzando il metodo System. Data. Entity. DbSet. sqlQuery. Esempio:
+Si noti che Code First non supporta il mapping a stored procedure o funzioni. Tuttavia, è possibile chiamare stored procedure o funzioni utilizzando il metodo System. Data. Entity. DbSet. sqlQuery. Ad esempio:
 
 ``` csharp
 var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]");
@@ -24,10 +24,10 @@ var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]");
 
 Quando si esegue il mapping delle operazioni CUD alle stored procedure, si applicano le considerazioni seguenti:
 
-- Se si esegue il mapping di una delle operazioni CUD a una stored procedure, eseguirne il mapping. Se non si esegue il mapping di tutti e tre, le operazioni non mappate avranno esito negativo se eseguite e verrà generata un'eccezione **updateexception** will.
+- Se si esegue il mapping di una delle operazioni CUD a una stored procedure, eseguirne il mapping. Se non si esegue il mapping di tutti e tre, le operazioni non mappate avranno esito negativo se eseguite e verrà generata un'eccezione **updateexception** .
 - È necessario eseguire il mapping di ogni parametro del stored procedure alle proprietà dell'entità.
-- Se il server genera il valore della chiave primaria per la riga inserita, è necessario eseguire il mapping di questo valore alla proprietà della chiave dell'entità. Nell'esempio seguente, la procedura **InsertPerson** stored restituisce la chiave primaria appena creata come parte del set di risultati della stored procedure. Viene eseguito il mapping della chiave primaria alla chiave di entità (**PersonID**) utilizzando le **associazioni di risultati &lt;Add @ no__t-3** feature di EF designer.
-- Viene eseguito il mapping delle chiamate stored procedure 1:1 con le entità del modello concettuale. Se, ad esempio, si implementa una gerarchia di ereditarietà nel modello concettuale ed è quindi necessario eseguire il mapping delle stored procedure CUD per le entità **padre** (base) e **figlio** (derivata), il salvataggio delle modifiche **figlio** chiamerà solo l' **elemento figlio**' le stored procedure di, non attiveranno le chiamate alle stored procedure **padre**.
+- Se il server genera il valore della chiave primaria per la riga inserita, è necessario eseguire il mapping di questo valore alla proprietà della chiave dell'entità. Nell'esempio seguente il **InsertPerson** stored procedure restituisce la chiave primaria appena creata come parte del set di risultati della stored procedure. Viene eseguito il mapping della chiave primaria alla chiave di entità (**PersonID**) utilizzando il **&lt;aggiungere associazioni di risultati&gt;**  funzionalità di Entity Framework Designer.
+- Viene eseguito il mapping delle chiamate stored procedure 1:1 con le entità del modello concettuale. Se, ad esempio, si implementa una gerarchia di ereditarietà nel modello concettuale ed è quindi necessario eseguire il mapping delle stored procedure CUD per le entità **padre** (base) e **figlio** (derivata), il salvataggio delle modifiche **figlio** chiamerà solo le stored procedure del **figlio**, non attiverà le chiamate alle stored procedure del **padre**.
 
 ## <a name="prerequisites"></a>Prerequisiti
 
@@ -39,21 +39,21 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
 - Aprire Visual Studio 2012.
-- Selezionare il **progetto file-&gt; New-&gt;**
-- Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
-- Immettere **CUDSProcsSample**@no__t-aggiungere1come il nome.
+- Seleziona **file-&gt; progetto nuovo-&gt;**
+- Nel riquadro sinistro fare clic su **Visual C\#** , quindi selezionare il modello **console** .
+- Immettere **CUDSProcsSample** come nome.
 - Fare clic su **OK**.
 
 ## <a name="create-a-model"></a>Creazione di un modello
 
-- Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni e scegliere **Aggiungi-&gt; nuovo elemento**.
+- Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, quindi scegliere **aggiungi&gt; nuovo elemento**.
 - Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
 - Immettere **CUDSProcs. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
 - Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti**.
-- Fare clic su **nuova connessione**. Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB\\) mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** come nome del database, quindi fare clic su **OK**.
+- Fare clic su **nuova connessione**. Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB)\\mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** per il nome del database, quindi fare clic su **OK**.
     La finestra di dialogo scegliere la connessione dati viene aggiornata con l'impostazione di connessione al database.
-- Nella finestra di dialogo Scegli oggetti di database, sotto le **tabelle** node, selezionare la tabella **Person** .
-- Inoltre, nel nodo **stored procedure e funzioni** selezionare le stored procedure seguenti: **DeletePerson**, **InsertPerson**e **UpdatePerson**.
+- Nella finestra di dialogo Scegli oggetti di database selezionare la tabella **Person** nel nodo **Tables** .
+- Inoltre, selezionare le stored procedure seguenti nel nodo **stored procedure e funzioni** : **DeletePerson**, **InsertPerson**e **UpdatePerson**.
 - A partire da Visual Studio 2012, EF Designer supporta l'importazione bulk di stored procedure. Per impostazione predefinita, l' **importazione delle stored procedure e delle funzioni selezionate nel modello di entità** è selezionata. Poiché in questo esempio sono presenti stored procedure che inseriscono, aggiornano ed eliminano i tipi di entità, non è necessario importarli e deselezionare questa casella di controllo.
 
     ![Procedure Import S](~/ef6/media/importsprocs.jpg)
@@ -63,30 +63,30 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 
 ## <a name="map-the-person-entity-to-stored-procedures"></a>Eseguire il mapping dell'entità Person alle stored procedure
 
-- Fare clic con il pulsante destro del mouse sul tipo **Person** entity e selezionare **Mapping stored procedure**.
-- I mapping di stored procedure vengono visualizzati nei **Dettagli di mapping** window.
-- Fare clic su **&lt;Selezionare Inserisci funzione @ no__t-2**.
+- Fare clic con il pulsante destro del mouse su **Person** tipo di entità e selezionare **stored procedure mapping**.
+- I mapping di stored procedure vengono visualizzati nella finestra di  **Dettagli mapping** .
+- Fare clic su **&lt;selezionare inserisci&gt;funzione **.
     Questo campo diventa l'elenco a discesa delle stored procedure contenute nel modello di archiviazione che possono essere mappate ai tipi di entità del modello concettuale.
-    Selezionare **InsertPerson** from nell'elenco a discesa.
-- Vengono visualizzati i mapping predefiniti tra i parametri delle stored procedure e le proprietà dell'entità. Si noti che le frecce indicano la direzione del mapping: I valori delle proprietà vengono specificati per stored procedure parametri.
-- Fare clic su **&lt;Add result binding @ no__t-2**.
-- Digitare **NewPersonID**, il nome del parametro restituito dalla procedura **InsertPerson** stored. Assicurarsi di non digitare spazi iniziali o finali.
+    Selezionare **InsertPerson** dall'elenco a discesa.
+- Vengono visualizzati i mapping predefiniti tra i parametri delle stored procedure e le proprietà dell'entità. Come indicato dalle frecce, che mostrano la direzione del mapping, per i parametri delle stored procedure vengono specificati i valori delle proprietà.
+- Fare clic su **&lt;Aggiungi binding risultato&gt;** .
+- Digitare **NewPersonID**, il nome del parametro restituito da **InsertPerson** stored procedure. Assicurarsi di non digitare spazi iniziali o finali.
 - Premere **invio**.
-- Per impostazione predefinita, **NewPersonID** is mappato alla chiave di entità **PersonID**. Si noti che una freccia indica la direzione del mapping: Il valore della colonna risultato viene fornito alla proprietà.
+- Per impostazione predefinita, viene eseguito il mapping di **NewPersonID** alla chiave di entità **PersonID**. Come indicato dalle frecce, che mostrano la direzione del mapping, per la proprietà viene specificato il valore della colonna dei risultati.
 
     ![Dettagli mapping](~/ef6/media/mappingdetails.png)
 
-- Fare clic su **&lt;Selezionare Update Function @ no__t-2** and selezionare **UpdatePerson** from l'elenco a discesa risultante.
+- Fare clic su **&lt;selezionare Aggiorna funzione&gt;**  e selezionare **UpdatePerson** dall'elenco a discesa risultante.
 - Vengono visualizzati i mapping predefiniti tra i parametri delle stored procedure e le proprietà dell'entità.
-- Fare clic su **&lt;Selezionare Delete Function @ no__t-2** and selezionare **DeletePerson** from l'elenco a discesa risultante.
+- Fare clic su **&lt;selezionare Elimina funzione&gt;**  e selezionare **DeletePerson** dall'elenco a discesa risultante.
 - Vengono visualizzati i mapping predefiniti tra i parametri delle stored procedure e le proprietà dell'entità.
 
-Le operazioni di inserimento, aggiornamento ed eliminazione del tipo **Person** entity vengono ora mappate alle stored procedure.
+Le operazioni di inserimento, aggiornamento ed eliminazione della **persona** tipo di entità sono ora mappate alle stored procedure.
 
 Per abilitare il controllo della concorrenza durante l'aggiornamento o l'eliminazione di un'entità con stored procedure, utilizzare una delle opzioni seguenti:
 
-- Usare un parametro di **output** per restituire il numero di righe interessate dal stored procedure e controllare il **parametro delle righe interessate** checkbox accanto al nome del parametro. Se il valore restituito è zero quando viene chiamata l'operazione, viene generata un'eccezione  [**OptimisticConcurrencyException**](https://msdn.microsoft.com/library/system.data.optimisticconcurrencyexception.aspx) will.
-- Selezionare la casella di controllo **Usa valore originale** accanto a una proprietà che si desidera utilizzare per il controllo della concorrenza. Quando si tenta di eseguire un aggiornamento, il valore della proprietà originariamente letta dal database verrà utilizzato per la scrittura di dati nel database. Se il valore non corrisponde al valore nel database, viene generata un'eccezione **OptimisticConcurrencyException** will.
+- Utilizzare un parametro di **output** per restituire il numero di righe interessate dalla stored procedure e selezionare la casella di controllo il **parametro delle righe interessate** accanto al nome del parametro. Se il valore restituito è zero quando viene chiamata l'operazione, verrà generata un' di  [**OptimisticConcurrencyException**](https://msdn.microsoft.com/library/system.data.optimisticconcurrencyexception.aspx) .
+- Selezionare la casella di controllo **Usa valore originale** accanto a una proprietà che si desidera utilizzare per il controllo della concorrenza. Quando si tenta di eseguire un aggiornamento, il valore della proprietà originariamente letta dal database verrà utilizzato per la scrittura di dati nel database. Se il valore non corrisponde al valore nel database, verrà generata un' di **OptimisticConcurrencyException** .
 
 ## <a name="use-the-model"></a>Usare il modello
 

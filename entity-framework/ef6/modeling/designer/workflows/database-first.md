@@ -18,7 +18,7 @@ In questo video viene fornita un'introduzione allo sviluppo Database First trami
 
 **Presentato da**: [Rowan Miller](https://romiller.com/)
 
-**Video**: [WMV](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
+**Video**: [wmv](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.wmv) | [MP4](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-mp4video-databasefirst.m4v) | [WMV (zip)](https://download.microsoft.com/download/8/F/0/8F0B5F63-4939-4DC8-A726-FF139B37F8D8/HDI-ITPro-MSDN-winvideo-databasefirst.zip)
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
@@ -28,7 +28,7 @@ Se si usa Visual Studio 2010, sarà anche necessario che [NuGet](https://visuals
 
  
 
-## <a name="1-create-an-existing-database"></a>1. Creare un database esistente
+## <a name="1-create-an-existing-database"></a>1. creare un database esistente
 
 In genere, quando si fa riferimento a un database esistente, questo verrà già creato, ma per questa procedura dettagliata è necessario creare un database per accedere a.
 
@@ -42,7 +42,7 @@ Il server di database installato con Visual Studio è diverso a seconda della ve
 Procediamo con la generazione del database.
 
 -   Aprire Visual Studio
--   **Visualizzazione-&gt; Esplora server**
+-   **Visualizza-&gt; Esplora server**
 -   Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**
 -   Se non si è connessi a un database da Esplora server prima di selezionare Microsoft SQL Server come origine dati
 
@@ -79,19 +79,19 @@ CREATE TABLE [dbo].[Posts] (
 );
 ```
 
-## <a name="2-create-the-application"></a>2. Creare l'applicazione
+## <a name="2-create-the-application"></a>2. creare l'applicazione
 
 Per semplificare le operazioni, verrà compilata un'applicazione console di base che usa il Database First per eseguire l'accesso ai dati:
 
 -   Aprire Visual Studio
--   **Progetto New-&gt; del file-...**
+-   **Nuovo progetto&gt; di&gt; file...**
 -   Selezionare **Windows** nel menu a sinistra e nell' **applicazione console**
 -   Immettere **DatabaseFirstSample** come nome
 -   Scegliere **OK**.
 
  
 
-## <a name="3-reverse-engineer-model"></a>3. Decodificare il modello
+## <a name="3-reverse-engineer-model"></a>3. Reverse Engineering Model
 
 Per creare il modello, verrà usato Entity Framework Designer, incluso come parte di Visual Studio.
 
@@ -133,13 +133,13 @@ Successivamente, è necessario scambiare il modello per generare il codice che u
 
 -   Fare clic con il pulsante destro del mouse su un punto vuoto del modello nella finestra di progettazione EF e scegliere **Aggiungi elemento di generazione codice...**
 -   Selezionare **modelli online** dal menu a sinistra e cercare **DbContext**
--   Selezionare il **Generatore EF 5. x DbContext per C @ no__t-1**, immettere **BloggingModel** come nome e fare clic su **Aggiungi** .
+-   Selezionare il **Generatore EF 5. x DbContext per C\#** , immettere **BloggingModel** come nome e fare clic su **Aggiungi** .
 
     ![Modello DbContext](~/ef6/media/dbcontexttemplate.png)
 
  
 
-## <a name="4-reading--writing-data"></a>4. Lettura & scrittura di dati
+## <a name="4-reading--writing-data"></a>4. lettura & scrittura di dati
 
 Ora che è disponibile un modello, è possibile usarlo per accedere ai dati. Le classi da usare per accedere ai dati vengono automaticamente generate in base al file EDMX.
 
@@ -194,7 +194,7 @@ Press any key to exit...
 ```
  
 
-## <a name="5-dealing-with-database-changes"></a>5. Gestione delle modifiche del database
+## <a name="5-dealing-with-database-changes"></a>5. gestione delle modifiche apportate al database
 
 A questo punto è possibile apportare alcune modifiche allo schema del database. quando si apportano queste modifiche, è necessario aggiornare il modello in modo da riflettere le modifiche.
 
@@ -215,7 +215,7 @@ Ora che lo schema è stato aggiornato, è necessario aggiornare il modello con t
 
 -   Fare clic con il pulsante destro del mouse su un punto vuoto del modello nella finestra di progettazione EF e selezionare "Aggiorna modello da database". verrà avviata l'aggiornamento guidato
 -   Nella scheda Aggiungi della procedura guidata di aggiornamento selezionare la casella accanto a tabelle per indicare che si desidera aggiungere nuove tabelle dallo schema.
-    *The scheda aggiornamento Mostra tutte le tabelle esistenti nel modello di cui verrà verificata la presenza di modifiche durante l'aggiornamento. Le schede Elimina visualizzano tutte le tabelle che sono state rimosse dallo schema e verranno rimosse anche dal modello come parte dell'aggiornamento. Le informazioni su queste due schede vengono rilevate automaticamente e fornite solo a scopo informativo. non è possibile modificare le impostazioni.*
+    *La scheda Aggiorna Mostra tutte le tabelle esistenti nel modello di cui verrà verificata la presenza di modifiche durante l'aggiornamento. Le schede Elimina visualizzano tutte le tabelle che sono state rimosse dallo schema e verranno rimosse anche dal modello come parte dell'aggiornamento. Le informazioni su queste due schede vengono rilevate automaticamente e vengono fornite solo a scopo informativo. non è possibile modificare le impostazioni.*
 
     ![Aggiornamento guidato](~/ef6/media/refreshwizard.png)
 

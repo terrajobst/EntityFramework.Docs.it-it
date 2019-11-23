@@ -26,7 +26,7 @@ Funzioni con valori sono molto simili alle stored procedure con una differenza f
 
 **Presentato da**: Julia Kornich
 
-[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)
+[Wmv](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (zip)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
@@ -40,13 +40,13 @@ Per completare questa procedura dettagliata, è necessario:
 
 1.  Aprire Visual Studio
 2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
-3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+3.  Nel riquadro sinistro fare clic su **Visual C\#** e quindi selezionare il modello **console** .
 4.  Immettere **TVF** come nome del progetto e fare clic su **OK** .
 
 ## <a name="add-a-tvf-to-the-database"></a>Aggiungere un TVF al database
 
 -   Selezionare **Visualizza-&gt; Esplora oggetti di SQL Server**
--   Se il database locale non è presente nell'elenco dei server: Fare clic con il pulsante destro del mouse su **SQL Server** e scegliere **Aggiungi SQL Server** utilizzare l' **autenticazione di Windows** predefinita per la connessione al server del database locale.
+-   Se il database locale non è presente nell'elenco dei server: fare clic con il pulsante destro del mouse su **SQL Server** e scegliere **Aggiungi SQL Server** utilizzare l' **autenticazione di Windows** predefinita per la connessione al server del database locale.
 -   Espandere il nodo del database locale
 -   Nel nodo database fare clic con il pulsante destro del mouse sul nodo School database e scegliere **nuova query...**
 -   Nell'editor T-SQL incollare la definizione TVF seguente
@@ -78,12 +78,12 @@ RETURN
 2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro **modelli** .
 3.  Immettere **TVFModel. edmx** per il nome del file e quindi fare clic su **Aggiungi** .
 4.  Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti** .
-5.  Fare clic su **nuova connessione** immettere (local db **) \\mssqllocaldb** nella casella di testo nome server immettere **School** per il nome del database fare clic su **OK**
-6.  Nella finestra di dialogo Scegli oggetti di database, sotto le **tabelle** node, selezionare la **persona**, **StudentGrade**e il **corso** tables
-7.  Selezionare la funzione **GetStudentGradesForCourse** situata sotto le **stored procedure e le funzioni** node nota, che a partire da Visual Studio 2012, il Entity Designer consente di importare in batch le stored procedure e le funzioni
+5.  Fare clic su **nuova connessione** immettere (local db **)\\mssqllocaldb** nella casella di testo nome server immettere **School** per nome database fare clic su **OK**
+6.  Nella finestra di dialogo Scegli oggetti di database, sotto il nodo **tabelle** , selezionare le tabelle **Person**, **StudentGrade**e **Course** 
+7.  Selezionare la funzione **GetStudentGradesForCourse** situata sotto le **stored procedure e le funzioni** nodo nota, che a partire da Visual Studio 2012, il Entity Designer consente di importare in batch le stored procedure e le funzioni
 8.  Fare clic su **fine**
-9.  Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella casella **Choose your database objects** dialog vengono aggiunti al modello.
-10. Per impostazione predefinita, la forma risultante di ogni stored procedure o funzione importata diventerà automaticamente un nuovo tipo complesso nel modello di entità. Ma si vuole eseguire il mapping dei risultati della funzione GetStudentGradesForCourse all'entità StudentGrade: Fare clic con il pulsante destro del mouse sull'area di progettazione e selezionare **browser modello** in browser modello, selezionare **importazioni di funzioni**, quindi fare doppio clic sulla funzione **GetStudentGradesForCourse** nella finestra di dialogo modifica importazione funzione selezionare **entità** .  e scegliere **StudentGrade**
+9.  Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella finestra di dialogo **Scegli oggetti di Database** vengono aggiunti al modello.
+10. Per impostazione predefinita, la forma risultante di ogni stored procedure o funzione importata diventerà automaticamente un nuovo tipo complesso nel modello di entità. Tuttavia, si desidera eseguire il mapping dei risultati della funzione GetStudentGradesForCourse all'entità StudentGrade: fare clic con il pulsante destro del mouse sull'area di progettazione e selezionare **browser modello** in browser modello, selezionare **importazioni di funzioni**, quindi fare doppio clic sulla funzione **GetStudentGradesForCourse** nella finestra di dialogo modifica importazione funzione, selezionare **entità** e scegliere **StudentGrade**
 
 ## <a name="persist-and-retrieve-data"></a>Mantieni e recupera dati
 

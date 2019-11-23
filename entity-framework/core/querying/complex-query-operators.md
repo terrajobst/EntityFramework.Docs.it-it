@@ -20,7 +20,7 @@ LINQ (Language Integrated Query) contiene molti operatori complessi, che combina
 
 ## <a name="join"></a>Join
 
-L'operatore LINQ join consente di connettere due origini dati in base al selettore di chiave per ogni origine, generando una tupla di valori quando la chiave corrisponde a. Si traduce naturalmente in `INNER JOIN` nei database relazionali. Mentre il join LINQ dispone di selettori di chiave esterni e interni, il database richiede una singola condizione di join. Quindi EF Core genera una condizione di join confrontando il selettore di chiave esterna con il selettore di chiave interna per verificarne l'uguaglianza. Inoltre, se i selettori di chiave sono tipi anonimi, EF Core genera una condizione di join per confrontare il componente di uguaglianza Wise.
+L'operatore LINQ join consente di connettere due origini dati in base al selettore di chiave per ogni origine, generando una tupla di valori quando la chiave corrisponde a. Si traduce naturalmente in `INNER JOIN` sui database relazionali. Mentre il join LINQ dispone di selettori di chiave esterni e interni, il database richiede una singola condizione di join. Quindi EF Core genera una condizione di join confrontando il selettore di chiave esterna con il selettore di chiave interna per verificarne l'uguaglianza. Inoltre, se i selettori di chiave sono tipi anonimi, EF Core genera una condizione di join per confrontare il componente di uguaglianza Wise.
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#Join)]
 
@@ -32,7 +32,7 @@ INNER JOIN [Person] AS [p] ON [p0].[PersonPhotoId] = [p].[PhotoId]
 
 ## <a name="groupjoin"></a>GroupJoin
 
-L'operatore LINQ GroupJoin consente di connettere due origini dati simili a join, ma crea un gruppo di valori interni per la corrispondenza di elementi esterni. L'esecuzione di una query come nell'esempio seguente genera il risultato `Blog` @ no__t-1 @ no__t-2. Poiché i database (in particolare i database relazionali) non hanno un modo per rappresentare una raccolta di oggetti lato client, GroupJoin non esegue la conversione nel server in molti casi. È necessario ottenere tutti i dati dal server per eseguire GroupJoin senza un selettore speciale (prima query riportata di seguito). Tuttavia, se il selettore limita i dati selezionati, il recupero di tutti i dati dal server può causare problemi di prestazioni (seconda query riportata di seguito). Per questo motivo EF Core non converte GroupJoin.
+L'operatore LINQ GroupJoin consente di connettere due origini dati simili a join, ma crea un gruppo di valori interni per la corrispondenza di elementi esterni. L'esecuzione di una query come nell'esempio seguente genera il risultato di `Blog` & `IEnumerable<Post>`. Poiché i database (in particolare i database relazionali) non hanno un modo per rappresentare una raccolta di oggetti lato client, GroupJoin non esegue la conversione nel server in molti casi. È necessario ottenere tutti i dati dal server per eseguire GroupJoin senza un selettore speciale (prima query riportata di seguito). Tuttavia, se il selettore limita i dati selezionati, il recupero di tutti i dati dal server può causare problemi di prestazioni (seconda query riportata di seguito). Per questo motivo EF Core non converte GroupJoin.
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#GroupJoin)]
 
@@ -72,7 +72,7 @@ LEFT JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 
 ### <a name="collection-selector-references-outer-in-a-non-where-case"></a>Riferimenti a selettori di raccolta esterni in un caso non-where
 
-Quando il selettore della raccolta fa riferimento all'elemento esterno, che non si trova in una clausola WHERE (come nel caso precedente), non viene convertito in un join del database. Per questo motivo è necessario valutare il selettore di raccolta per ogni elemento esterno. Si traduce in operazioni `APPLY` in molti database relazionali. Se la raccolta è vuota per un elemento esterno, non verrà generato alcun risultato per quell'elemento esterno. Tuttavia, se `DefaultIfEmpty` viene applicato al selettore della raccolta, l'elemento esterno sarà connesso con un valore predefinito dell'elemento interno. A causa di questa distinzione, questo tipo di query viene convertito in `CROSS APPLY` in assenza di `DefaultIfEmpty` e `OUTER APPLY` quando viene applicato `DefaultIfEmpty`. Alcuni database come SQLite non supportano gli operatori `APPLY`, pertanto questo tipo di query non può essere convertito.
+Quando il selettore della raccolta fa riferimento all'elemento esterno, che non si trova in una clausola WHERE (come nel caso precedente), non viene convertito in un join del database. Per questo motivo è necessario valutare il selettore di raccolta per ogni elemento esterno. Viene convertito in `APPLY` operazioni in molti database relazionali. Se la raccolta è vuota per un elemento esterno, non verrà generato alcun risultato per quell'elemento esterno. Tuttavia, se `DefaultIfEmpty` viene applicato al selettore della raccolta, l'elemento esterno sarà connesso con un valore predefinito dell'elemento interno. A causa di questa distinzione, questo tipo di query viene convertito in `CROSS APPLY` in assenza di `DefaultIfEmpty` e `OUTER APPLY` quando viene applicato `DefaultIfEmpty`. Alcuni database come SQLite non supportano gli operatori `APPLY` pertanto questo tipo di query non può essere convertito.
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#SelectManyConvertedToApply)]
 
@@ -88,7 +88,7 @@ OUTER APPLY [Posts] AS [p]
 
 ## <a name="groupby"></a>GroupBy
 
-Gli operatori di GroupBy LINQ creano un risultato di tipo `IGrouping<TKey, TElement>` in cui `TKey` e `TElement` possono essere di qualsiasi tipo arbitrario. Inoltre, `IGrouping` implementa `IEnumerable<TElement>`, il che significa che è possibile comporre su di esso utilizzando qualsiasi operatore LINQ dopo il raggruppamento. Poiché non è possibile che la struttura di database rappresenti un `IGrouping`, nella maggior parte dei casi gli operatori GroupBy non hanno alcuna traduzione. Quando viene applicato un operatore di aggregazione a ogni gruppo, che restituisce un valore scalare, può essere convertito in SQL `GROUP BY` nei database relazionali. Anche SQL `GROUP BY` è restrittivo. È necessario raggruppare solo i valori scalari. La proiezione può contenere solo colonne chiave di raggruppamento o qualsiasi aggregazione applicata a una colonna. EF Core identifica questo modello e lo converte nel server, come nell'esempio seguente:
+Gli operatori di GroupBy LINQ creano un risultato di tipo `IGrouping<TKey, TElement>` dove `TKey` e `TElement` possono essere di qualsiasi tipo arbitrario. Inoltre, `IGrouping` implementa `IEnumerable<TElement>`, il che significa che è possibile comporre su di esso utilizzando qualsiasi operatore LINQ dopo il raggruppamento. Poiché nessuna struttura del database può rappresentare una `IGrouping`, nella maggior parte dei casi gli operatori GroupBy non hanno alcuna traduzione. Quando viene applicato un operatore di aggregazione a ogni gruppo, che restituisce un valore scalare, può essere convertito in SQL `GROUP BY` nei database relazionali. Anche il `GROUP BY` SQL è restrittivo. È necessario raggruppare solo i valori scalari. La proiezione può contenere solo colonne chiave di raggruppamento o qualsiasi aggregazione applicata a una colonna. EF Core identifica questo modello e lo converte nel server, come nell'esempio seguente:
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#GroupBy)]
 
@@ -98,7 +98,7 @@ FROM [Posts] AS [p]
 GROUP BY [p].[AuthorId]
 ```
 
-EF Core inoltre converte le query in cui viene visualizzato un operatore di aggregazione nel raggruppamento in un operatore LINQ WHERE o OrderBy (o un altro ordinamento). Usa la clausola `HAVING` in SQL per la clausola WHERE. La parte della query prima di applicare l'operatore GroupBy può essere qualsiasi query complessa purché possa essere convertita nel server. Inoltre, dopo aver applicato gli operatori di aggregazione in una query di raggruppamento per rimuovere i raggruppamenti dall'origine risultante, è possibile comporre su di esso come qualsiasi altra query.
+EF Core inoltre converte le query in cui viene visualizzato un operatore di aggregazione nel raggruppamento in un operatore LINQ WHERE o OrderBy (o un altro ordinamento). USA `HAVING` clausola in SQL per la clausola WHERE. La parte della query prima di applicare l'operatore GroupBy può essere qualsiasi query complessa purché possa essere convertita nel server. Inoltre, dopo aver applicato gli operatori di aggregazione in una query di raggruppamento per rimuovere i raggruppamenti dall'origine risultante, è possibile comporre su di esso come qualsiasi altra query.
 
 [!code-csharp[Main](../../../samples/core/Querying/ComplexQuery/Sample.cs#GroupByFilter)]
 
@@ -112,8 +112,8 @@ ORDER BY [p].[AuthorId]
 
 Gli operatori di aggregazione EF Core supportati sono i seguenti:
 
-- Average
-- Count
+- Media
+- Conteggio
 - LongCount
 - Max
 - Min

@@ -29,7 +29,7 @@ In questo video viene illustrato come eseguire il mapping di tipi spaziali con l
 
 **Presentato da**: Julia Kornich
 
-**Video**: [WMV](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.wmv) | [MP4](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-mp4video-spatialwithdesigner.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.zip)
+**Video**: [wmv](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.wmv) | [MP4](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-mp4video-spatialwithdesigner.m4v) | [WMV (zip)](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.zip)
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
@@ -39,7 +39,7 @@ Per completare questa procedura dettagliata, è necessario che Visual Studio 201
 
 1.  Aprire Visual Studio 2012
 2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
-3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+3.  Nel riquadro sinistro fare clic su **Visual C\#** e quindi selezionare il modello **console** .
 4.  Immettere **SpatialEFDesigner** come nome del progetto e fare clic su **OK** .
 
 ## <a name="create-a-new-model-using-the-ef-designer"></a>Creare un nuovo modello usando EF designer
@@ -60,7 +60,7 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
 ## <a name="add-a-new-entity-type"></a>Aggiungere un nuovo tipo di entità
 
-1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**, viene visualizzata la finestra di dialogo nuova entità
+1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**. verrà visualizzata la finestra di dialogo nuova entità
 2.  Specificare **University** per il nome del tipo e specificare **UniversityID** per il nome della proprietà chiave, lasciare il tipo come **Int32**
 3.  Fare clic su **OK**
 4.  Fare clic con il pulsante destro del mouse sull'entità e scegliere **Aggiungi nuova-&gt; proprietà scalare**
@@ -75,11 +75,11 @@ La procedura guidata consente di effettuare le azioni seguenti:
 A questo punto è possibile generare un database basato sul modello.
 
 1.  Fare clic con il pulsante destro del mouse su uno spazio vuoto nell'area di Entity Designer e selezionare **genera database da modello** .
-2.  Viene visualizzata la finestra di dialogo scegliere la connessione dati della procedura guidata genera database. fare clic sul pulsante **nuova connessione** specificare (local db **) \\mssqllocaldb** per nome server e **Università** per il database e fare clic su **OK.**
+2.  Verrà visualizzata la finestra di dialogo scegliere la connessione dati della procedura guidata genera database. fare clic sul pulsante **nuova connessione** specificare (local db **)\\mssqllocaldb** per nome server e **Università** per il database e fare clic su **OK** .
 3.  Viene visualizzata una finestra di dialogo in cui viene chiesto se si desidera creare un nuovo database, quindi fare clic su **Sì**.
-4.  Fare clic su **Avanti** . la procedura guidata Crea database genera Data Definition Language (DDL) per la creazione di un database. la DDL generata viene visualizzata nella finestra di dialogo Riepilogo e impostazioni. il DDL non contiene una definizione per una tabella che esegue il mapping al tipo di enumerazione
+4.  Fare clic su **Avanti** . la procedura guidata Crea database genera Data Definition Language (DDL) per la creazione di un database. la DDL generata viene visualizzata nella finestra di dialogo Riepilogo e impostazioni nota che il DDL non contiene una definizione per una tabella che esegue il mapping al tipo di enumerazione
 5.  Fare **clic su fine per** non eseguire lo script DDL.
-6.  La procedura guidata Crea database esegue le operazioni seguenti: Apre il file **UniversityModel. edmx. SQL** nell'editor T-SQL genera le sezioni schema e mapping dell'archivio del file edmx aggiunge le informazioni sulla stringa di connessione al file app. config
+6.  La procedura guidata Crea database esegue le operazioni seguenti: apre **UniversityModel. edmx. SQL** nell'editor T-SQL genera le sezioni schema e mapping dell'archivio del file edmx aggiunge le informazioni sulla stringa di connessione al file app. config.
 7.  Fare clic con il pulsante destro del mouse nell'editor T-SQL e selezionare **Esegui** la finestra di dialogo Connetti al server, immettere le informazioni di connessione nel passaggio 2 e fare clic su **Connetti** .
 8.  Per visualizzare lo schema generato, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna** .
 

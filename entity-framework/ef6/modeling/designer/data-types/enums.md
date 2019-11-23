@@ -20,14 +20,14 @@ Questa procedura dettagliata utilizzerà Model First per creare un nuovo databas
 
 Il supporto enum è stato introdotto in Entity Framework 5. Per utilizzare le nuove funzionalità come enum, i tipi di dati spaziali e le funzioni con valori di tabella, è necessario specificare come destinazione .NET Framework 4,5. Per impostazione predefinita, Visual Studio 2012 è destinato a .NET 4,5.
 
-In Entity Framework, un'enumerazione può disporre dei seguenti tipi sottostanti: **Byte**, **Int16**, **Int32**, **Int64** o **SByte**.
+In Entity Framework, un'enumerazione può includere i seguenti tipi sottostanti: **byte**, **Int16**, **Int32**, **Int64** o **SByte**.
 
 ## <a name="watch-the-video"></a>Guarda il video
 In questo video viene illustrato come utilizzare i tipi enum con la Entity Framework Designer. Viene inoltre illustrato come utilizzare le enumerazioni in una query LINQ.
 
 **Presentato da**: Julia Kornich
 
-**Video**: [WMV](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-winvideo-enumwithdesiger.wmv) | [MP4](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-mp4video-enumwithdesiger.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-winvideo-enumwithdesiger.zip)
+**Video**: [wmv](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-winvideo-enumwithdesiger.wmv) | [MP4](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-mp4video-enumwithdesiger.m4v) | [WMV (zip)](https://download.microsoft.com/download/0/7/A/07ADECC9-7893-415D-9F20-8B97D46A37EC/HDI-ITPro-MSDN-winvideo-enumwithdesiger.zip)
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
@@ -37,7 +37,7 @@ Per completare questa procedura dettagliata, è necessario che Visual Studio 201
 
 1.  Aprire Visual Studio 2012
 2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
-3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+3.  Nel riquadro sinistro fare clic su **Visual C\#** e quindi selezionare il modello **console** .
 4.  Immettere **EnumEFDesigner** come nome del progetto e fare clic su **OK** .
 
 ## <a name="create-a-new-model-using-the-ef-designer"></a>Creare un nuovo modello usando EF designer
@@ -58,7 +58,7 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
 ## <a name="add-a-new-entity-type"></a>Aggiungere un nuovo tipo di entità
 
-1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**, viene visualizzata la finestra di dialogo nuova entità
+1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**. verrà visualizzata la finestra di dialogo nuova entità
 2.  Specificare **Department** per il nome del tipo e specificare **DepartmentID** per il nome della proprietà chiave, lasciare il tipo come **Int32**
 3.  Fare clic su **OK**
 4.  Fare clic con il pulsante destro del mouse sull'entità e scegliere **Aggiungi nuova-&gt; proprietà scalare**
@@ -72,7 +72,7 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
     ![Converti in enum](~/ef6/media/converttoenum.png)
 
-2.  Nella finestra di dialogo **Aggiungi enum** digitare **DepartmentNames** per il nome del tipo enum, modificare il tipo sottostante in **Int32**, quindi aggiungere i membri seguenti al tipo: Inglese, matematica ed economia
+2.  Nella finestra di dialogo **Aggiungi enum** digitare **DepartmentNames** per il nome del tipo enum, modificare il tipo sottostante in **Int32**, quindi aggiungere i membri seguenti al tipo: English, Math ed Economics
 
     ![Aggiungi tipo enum](~/ef6/media/addenumtype.png)
 
@@ -95,11 +95,11 @@ Se si passa alla finestra browser modello, si noterà che il tipo è stato aggiu
 A questo punto è possibile generare un database basato sul modello.
 
 1.  Fare clic con il pulsante destro del mouse su uno spazio vuoto nell'area di Entity Designer e selezionare **genera database da modello** .
-2.  Verrà visualizzata la finestra di dialogo scegliere la connessione dati della procedura guidata genera database. fare clic sul pulsante **nuova connessione** specificare (local db **) \\mssqllocaldb** per il nome del server e **EnumTest** per il database e fare clic su **OK** .
+2.  Verrà visualizzata la finestra di dialogo scegliere la connessione dati della procedura guidata genera database facendo clic sul pulsante **nuova connessione** specificare (local db **)\\mssqllocaldb** per il nome del server e **EnumTest** per il database e fare clic su **OK** .
 3.  Viene visualizzata una finestra di dialogo in cui viene chiesto se si desidera creare un nuovo database, quindi fare clic su **Sì**.
-4.  Fare clic su **Avanti** . la procedura guidata Crea database genera Data Definition Language (DDL) per la creazione di un database. la DDL generata viene visualizzata nella finestra di dialogo Riepilogo e impostazioni. il DDL non contiene una definizione per una tabella che esegue il mapping al tipo di enumerazione
+4.  Fare clic su **Avanti** . la procedura guidata Crea database genera Data Definition Language (DDL) per la creazione di un database. la DDL generata viene visualizzata nella finestra di dialogo Riepilogo e impostazioni nota che il DDL non contiene una definizione per una tabella che esegue il mapping al tipo di enumerazione
 5.  Fare **clic su fine per** non eseguire lo script DDL.
-6.  La procedura guidata Crea database esegue le operazioni seguenti: Apre il file **EnumTest. edmx. SQL** nell'editor T-SQL genera le sezioni schema e mapping dell'archivio del file edmx aggiunge le informazioni sulla stringa di connessione al file app. config
+6.  La procedura guidata Crea database esegue le operazioni seguenti: apre **EnumTest. edmx. SQL** nell'editor T-SQL genera le sezioni schema e mapping dell'archivio del file edmx aggiunge le informazioni sulla stringa di connessione al file app. config.
 7.  Fare clic con il pulsante destro del mouse nell'editor T-SQL e selezionare **Esegui** la finestra di dialogo Connetti al server, immettere le informazioni di connessione nel passaggio 2 e fare clic su **Connetti** .
 8.  Per visualizzare lo schema generato, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna** .
 

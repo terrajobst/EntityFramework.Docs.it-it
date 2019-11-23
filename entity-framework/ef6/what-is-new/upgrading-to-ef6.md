@@ -18,7 +18,7 @@ Questo dovrebbe essere semplice per le applicazioni che usano DbContext come for
 
 Di seguito è riportato un elenco di controllo delle operazioni che è necessario eseguire per aggiornare un'applicazione esistente a EF6.
 
-## <a name="1-install-the-ef6-nuget-package"></a>1. Installare il pacchetto NuGet EF6
+## <a name="1-install-the-ef6-nuget-package"></a>1. installare il pacchetto NuGet EF6
 
 È necessario eseguire l'aggiornamento al nuovo runtime di Entity Framework 6.
 
@@ -37,14 +37,14 @@ Install-Package EntityFramework
 
 L'installazione del pacchetto NuGet EF6 dovrebbe rimuovere automaticamente dal progetto tutti i riferimenti a System. Data. Entity.
 
-## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3. Scambiare qualsiasi modello di progettazione EF (EDMX) per usare la generazione di codice EF 6. x
+## <a name="3-swap-any-ef-designer-edmx-models-to-use-ef-6x-code-generation"></a>3. scambiare i modelli di progettazione EF (EDMX) per usare la generazione di codice EF 6. x
 
 Se sono presenti modelli creati con la finestra di progettazione di EF, sarà necessario aggiornare i modelli di generazione del codice per generare codice compatibile con EF6.
 
 > [!NOTE]
 > Attualmente sono disponibili solo i modelli di Generatore DbContext di EF 6. x per Visual Studio 2012 e 2013.
 
-1. Elimina i modelli di generazione del codice esistenti. Questi file saranno in genere denominati **@no__t -1edmx_file_name\>.tt** e **\<edmx_file_name @ no__t-5. Context.tt** ed essere annidati nel file edmx in Esplora soluzioni. È possibile selezionare i modelli in Esplora soluzioni e premere il tasto **Canc** per eliminarli.  
+1. Elimina i modelli di generazione del codice esistenti. Questi file saranno in genere denominati **\<edmx_file_name\>. TT** e **\<edmx_file_name\>. Context.tt** ed essere annidati nel file edmx in Esplora soluzioni. È possibile selezionare i modelli in Esplora soluzioni e premere il tasto **Canc** per eliminarli.  
    > [!NOTE]
    > Nei progetti di siti Web i modelli non verranno annidati nel file edmx, ma elencati insieme in Esplora soluzioni.  
 
@@ -58,13 +58,13 @@ Se sono presenti modelli creati con la finestra di progettazione di EF, sarà ne
     - Se si usa l'API ObjectContext, sarà necessario selezionare la scheda **online** e cercare **Ef 6. x EntityObject Generator**.  
 3. Se è stata applicata una personalizzazione ai modelli di generazione del codice, sarà necessario applicarli nuovamente ai modelli aggiornati.
 
-## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4. Aggiornare gli spazi dei nomi per tutti i tipi di core EF usati
+## <a name="4-update-namespaces-for-any-core-ef-types-being-used"></a>4. aggiornare gli spazi dei nomi per tutti i tipi EF principali usati
 
 Gli spazi dei nomi per i tipi DbContext e Code First non sono stati modificati. Ciò significa che per molte applicazioni che utilizzano EF 4,1 o versioni successive non è necessario modificare alcun elemento.
 
 I tipi come ObjectContext precedentemente presenti in System. Data. Entity. dll sono stati spostati nei nuovi spazi dei nomi. Ciò significa che potrebbe essere necessario aggiornare le direttive *using* o *Import* per la compilazione con EF6.
 
-La regola generale per le modifiche dello spazio dei nomi è che qualsiasi tipo in System. Data. * viene spostato in System. Data. Entity. Core. *. In altre parole, è sufficiente inserire **Entity. Core.** Dopo System. Data. Esempio:
+La regola generale per le modifiche dello spazio dei nomi è che qualsiasi tipo in System. Data. * viene spostato in System. Data. Entity. Core. *. In altre parole, è sufficiente inserire **Entity. Core.** Dopo System. Data. Ad esempio:
 
 - System. Data. EntityException = > System. Data. **Entity. Core**. EntityException  
 - System. Data. Objects. ObjectContext = > System. Data. **Entity. Core**. Objects. ObjectContext  

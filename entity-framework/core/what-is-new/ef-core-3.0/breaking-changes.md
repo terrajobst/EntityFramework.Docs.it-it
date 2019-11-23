@@ -20,12 +20,12 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 
 | **Modifica di rilievo**                                                                                               | **Impatto** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
-| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | High      |
-| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
-| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
-| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
-| [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
+| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | Alta       |
+| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | Alta      |
+| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | Alta      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Alta      |
+| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | Alta      |
+| [I tipi di query vengono consolidati con tipi di entità](#qt) | Alta      |
 | [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
 | [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
 | [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Medio      |
@@ -37,42 +37,42 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
 | [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
 | [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Medio      |
-| [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Basso      |
-| [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Basso      |
-| [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Basso      |
-| [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Basso      |
-| [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Basso      |
-| [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Basso      |
-| [La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza](#fkp) | Basso      |
-| [La connessione di database viene ora chiusa se non viene più usata prima del completamento di TransactionScope](#dbc) | Basso      |
-| [I campi sottostanti vengono usati per impostazione predefinita](#backing-fields-are-used-by-default) | Basso      |
-| [Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili](#throw-if-multiple-compatible-backing-fields-are-found) | Basso      |
-| [I nomi delle proprietà solo campo devono corrispondere al nome di campo](#field-only-property-names-should-match-the-field-name) | Basso      |
-| [AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache](#adddbc) | Basso      |
-| [DbContext.Entry esegue ora un DetectChanges locale](#dbe) | Basso      |
-| [Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita](#string-and-byte-array-keys-are-not-client-generated-by-default) | Basso      |
-| [ILoggerFactory è ora un servizio con ambito](#ilf) | Basso      |
-| [I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente](#lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded) | Basso      |
-| [La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita](#excessive-creation-of-internal-service-providers-is-now-an-error-by-default) | Basso      |
-| [Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa](#nbh) | Basso      |
-| [Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask](#rtnt) | Basso      |
-| [L'annotazione Relational:TypeMapping è ora TypeMapping](#rtt) | Basso      |
-| [ToTable in un tipo derivato genera un'eccezione](#totable-on-a-derived-type-throws-an-exception) | Basso      |
-| [EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite](#pragma) | Basso      |
-| [Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3](#sqlite3) | Basso      |
-| [I valori Guid vengono ora archiviati come TEXT in SQLite](#guid) | Basso      |
-| [I valori char vengono ora archiviati come testo in SQLite](#char) | Basso      |
-| [Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica](#migid) | Basso      |
-| [Info/metadati dell'estensione rimossi da IDbContextOptionsExtension](#xinfo) | Basso      |
-| [LogQueryPossibleExceptionWithAggregateOperator è stato rinominato](#lqpe) | Basso      |
-| [Chiarimenti per l'API per i nomi di vincolo di chiave esterna](#clarify) | Basso      |
-| [IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici](#irdc2) | Basso      |
-| [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Basso      |
-| [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Basso      |
-| [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Basso      |
-| [Viene usato Microsoft. Data. SqlClient al posto di System. Data. SqlClient](#SqlClient) | Basso      |
-| [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Basso      |
-| [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Basso      |
+| [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Bassa      |
+| [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Bassa      |
+| [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Bassa      |
+| [Le entità dipendenti che condividono la tabella con l'entità di sicurezza sono ora facoltative](#de) | Bassa      |
+| [Tutte le entità che condividono una tabella con una colonna di token di concorrenza devono eseguirne il mapping a una proprietà](#aes) | Bassa      |
+| [Per le proprietà ereditate da tipi senza mapping viene ora eseguito il mapping a una singola colonna per tutti i tipi derivati](#ip) | Bassa      |
+| [La convenzione di proprietà di chiave esterna non ha più lo stesso nome della proprietà dell'entità di sicurezza](#fkp) | Bassa      |
+| [La connessione di database viene ora chiusa se non viene più usata prima del completamento di TransactionScope](#dbc) | Bassa      |
+| [I campi sottostanti vengono usati per impostazione predefinita](#backing-fields-are-used-by-default) | Bassa      |
+| [Viene generata un'eccezione se vengono trovati più campi sottostanti compatibili](#throw-if-multiple-compatible-backing-fields-are-found) | Bassa      |
+| [I nomi delle proprietà solo campo devono corrispondere al nome di campo](#field-only-property-names-should-match-the-field-name) | Bassa      |
+| [AddDbContext/AddDbContextPool non chiamano più AddLogging e AddMemoryCache](#adddbc) | Bassa      |
+| [DbContext.Entry esegue ora un DetectChanges locale](#dbe) | Bassa      |
+| [Le chiavi matrice di byte e di stringhe non vengono generate dal client per impostazione predefinita](#string-and-byte-array-keys-are-not-client-generated-by-default) | Bassa      |
+| [ILoggerFactory è ora un servizio con ambito](#ilf) | Bassa      |
+| [I proxy di caricamento lazy non presuppongono più che le proprietà di navigazione vengano caricate completamente](#lazy-loading-proxies-no-longer-assume-navigation-properties-are-fully-loaded) | Bassa      |
+| [La creazione di un numero eccessivo di provider di servizi interni è ora un errore per impostazione predefinita](#excessive-creation-of-internal-service-providers-is-now-an-error-by-default) | Bassa      |
+| [Nuovo comportamento per la chiamata di HasOne/HasMany con una singola stringa](#nbh) | Bassa      |
+| [Il tipo restituito per diversi metodi asincroni è cambiato da Task a ValueTask](#rtnt) | Bassa      |
+| [L'annotazione Relational:TypeMapping è ora TypeMapping](#rtt) | Bassa      |
+| [ToTable in un tipo derivato genera un'eccezione](#totable-on-a-derived-type-throws-an-exception) | Bassa      |
+| [EF Core non invia più pragma per l'imposizione della chiave esterna di SQLite](#pragma) | Bassa      |
+| [Microsoft.EntityFrameworkCore.Sqlite dipende ora da SQLitePCLRaw.bundle_e_sqlite3](#sqlite3) | Bassa      |
+| [I valori Guid vengono ora archiviati come TEXT in SQLite](#guid) | Bassa      |
+| [I valori char vengono ora archiviati come testo in SQLite](#char) | Bassa      |
+| [Gli ID di migrazione vengono ora generati con il calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica](#migid) | Bassa      |
+| [Info/metadati dell'estensione rimossi da IDbContextOptionsExtension](#xinfo) | Bassa      |
+| [LogQueryPossibleExceptionWithAggregateOperator è stato rinominato](#lqpe) | Bassa      |
+| [Chiarimenti per l'API per i nomi di vincolo di chiave esterna](#clarify) | Bassa      |
+| [IRelationalDatabaseCreator.HasTables/HasTablesAsync sono diventati pubblici](#irdc2) | Bassa      |
+| [Microsoft.EntityFrameworkCore.Design è ora un pacchetto DevelopmentDependency](#dip) | Bassa      |
+| [Aggiornamento di SQLitePCL.raw alla versione 2.0.0](#SQLitePCL) | Bassa      |
+| [NetTopologySuite aggiornato alla versione 2.0.0](#NetTopologySuite) | Bassa      |
+| [Viene usato Microsoft. Data. SqlClient al posto di System. Data. SqlClient](#SqlClient) | Bassa      |
+| [Devono essere configurare più relazioni ambigue che fanno riferimento a se stesse](#mersa) | Bassa      |
+| [DbFunction. Schema è una stringa null o vuota che lo configura in modo che sia nello schema predefinito del modello](#udf-empty-string) | Bassa      |
 
 ### <a name="linq-queries-are-no-longer-evaluated-on-the-client"></a>Le query LINQ non vengono più valutate nel client
 
@@ -187,7 +187,7 @@ Prima di EF Core 3.0, erano disponibili overload per questi nomi di metodo per s
 **Nuovo comportamento**
 
 A partire da EF Core 3.0, usare `FromSqlRaw`, `ExecuteSqlRaw` e `ExecuteSqlRawAsync` per creare una query con parametri in cui i parametri vengono passati separatamente dalla stringa di query.
-Esempio:
+Ad esempio:
 
 ```C#
 context.Products.FromSqlRaw(
@@ -196,7 +196,7 @@ context.Products.FromSqlRaw(
 ```
 
 Usare `FromSqlInterpolated`, `ExecuteSqlInterpolated`, e `ExecuteSqlInterpolatedAsync` per creare una query con parametri in cui i parametri vengono passati come parte di una stringa di query interpolata.
-Esempio:
+Ad esempio:
 
 ```C#
 context.Products.FromSqlInterpolated(
@@ -393,7 +393,7 @@ Questa modifica è stata apportata per migliorare l'esperienza di associazione d
 **Mitigazioni**
 
 Il comportamento precedente può essere ripristinato tramite le impostazioni in `context.ChangedTracker`.
-Esempio:
+Ad esempio:
 
 ```C#
 context.ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
@@ -406,7 +406,7 @@ context.ChangeTracker.DeleteOrphansTiming = CascadeTiming.OnSaveChanges;
 
 **Comportamento precedente**
 
-Prima del 3,0, il caricamento immediato delle esplorazioni delle raccolte tramite gli operatori `Include` ha causato la generazione di più query sul database relazionale, una per ogni tipo di entità correlato.
+Prima del 3,0, il caricamento con entusiasmo delle esplorazioni della raccolta tramite operatori `Include` causava la generazione di più query nel database relazionale, una per ogni tipo di entità correlato.
 
 **Nuovo comportamento**
 
@@ -418,7 +418,7 @@ L'invio di più query per l'implementazione di una singola query LINQ ha causato
 
 **Mitigazioni**
 
-Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di operatori `Include` sulle esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) .
+Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di `Include` operatore per le esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) .
 
 **
 
@@ -486,7 +486,7 @@ Nelle versioni precedenti a EF Core 3.0 la configurazione della relazione di pro
 **Nuovo comportamento**
 
 A partire da EF Core 3.0, è disponibile l'API Fluent per configurare una proprietà di navigazione per il proprietario usando `WithOwner()`.
-Esempio:
+Ad esempio:
 
 ```C#
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
@@ -494,7 +494,7 @@ modelBuilder.Entity<Order>.OwnsOne(e => e.Details).WithOwner(e => e.Order);
 
 La configurazione correlata alla relazione tra proprietario e elemento di proprietà deve essere ora concatenata dopo `WithOwner()` in modo analogo a come vengono configurate altre relazioni.
 La configurazione per il tipo di proprietà viene comunque concatenata dopo `OwnsOne()/OwnsMany()`.
-Esempio:
+Ad esempio:
 
 ```C#
 modelBuilder.Entity<Order>.OwnsOne(e => e.Details, eb =>
@@ -708,7 +708,7 @@ Tuttavia, se `Order` è un tipo di proprietà, `CustomerId` sarebbe la chiave pr
 
 A partire da 3.0, EF Core non tenta di usare le proprietà per le chiavi esterne per convenzione se hanno lo stesso nome della proprietà dell'entità di sicurezza.
 Viene ancora eseguita la corrispondenza tra i criteri del nome del tipo dell'entità di sicurezza concatenato al nome della proprietà dell'entità di sicurezza e il nome di navigazione concatenato al nome della proprietà dell'entità di sicurezza.
-Esempio:
+Ad esempio:
 
 ```C#
 public class Customer
@@ -844,7 +844,7 @@ Questa modifica è stata apportata per impedire a EF Core di attivare per errore
 **Mitigazioni**
 
 È possibile ripristinare il comportamento delle versioni precedenti alla versione 3.0 tramite la configurazione della modalità di accesso delle proprietà in `ModelBuilder`.
-Esempio:
+Ad esempio:
 
 ```C#
 modelBuilder.UsePropertyAccessMode(PropertyAccessMode.PreferFieldDuringConstruction);
@@ -1080,7 +1080,7 @@ Questa modifica è stata apportata per gestire meglio il codice dell'applicazion
 
 L'azione più appropriata quando si verifica questo errore consiste nell'individuare la causa radice e nell'interrompere la creazione di numerosi provider di servizi interni.
 È possibile tuttavia convertire nuovamente l'errore in avviso o ignorarlo tramite una configurazione in `DbContextOptionsBuilder`.
-Esempio:
+Ad esempio:
 
 ```C#
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -1099,7 +1099,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 **Comportamento precedente**
 
 Prima di EF Core 3.0, il codice che chiama `HasOne` o `HasMany` con una singola stringa era interpretato in modo poco chiaro.
-Esempio:
+Ad esempio:
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Entrance").WithOne();
 ```
@@ -1121,7 +1121,7 @@ Il comportamento precedente era molto poco chiaro, soprattutto durante la lettur
 Questa modifica causerà problemi solo nelle applicazioni che configurano relazioni in modo esplicito usando stringhe per i nomi dei tipi e senza specificare in modo esplicito la proprietà di navigazione.
 Non è uno scenario comune.
 Il comportamento precedente può essere ottenuto passando esplicitamente `null` per il nome della proprietà di navigazione.
-Esempio:
+Ad esempio:
 
 ```C#
 modelBuilder.Entity<Samurai>().HasOne("Some.Entity.Type.Name", null).WithOne();
@@ -1511,7 +1511,7 @@ Usare il nuovo nome. (Si noti che il numero di ID evento non è stato modificato
 
 **Comportamento precedente**
 
-Prima di EF Core 3.0, si faceva riferimento ai nomi di vincolo di chiave esterna semplicemente con "Name". Esempio:
+Prima di EF Core 3.0, si faceva riferimento ai nomi di vincolo di chiave esterna semplicemente con "Name". Ad esempio:
 
 ```C#
 var constraintName = myForeignKey.Name;
@@ -1519,7 +1519,7 @@ var constraintName = myForeignKey.Name;
 
 **Nuovo comportamento**
 
-A partire da EF Core 3.0, si fa ora riferimento ai nomi di vincolo di chiave esterna con "ConstraintName". Esempio:
+A partire da EF Core 3.0, si fa ora riferimento ai nomi di vincolo di chiave esterna con "ConstraintName". Ad esempio:
 
 ```C#
 var constraintName = myForeignKey.ConstraintName;
@@ -1660,7 +1660,7 @@ Se il codice prende una dipendenza diretta da System. Data. SqlClient, è necess
 
 **Comportamento precedente**
 
-Un tipo di entità con più proprietà di navigazione unidirezionale che fanno riferimento a se stesse e più chiavi esterne corrispondenti è stato erroneamente configurato come relazione singola. Esempio:
+Un tipo di entità con più proprietà di navigazione unidirezionale che fanno riferimento a se stesse e più chiavi esterne corrispondenti è stato erroneamente configurato come relazione singola. Ad esempio:
 
 ```C#
 public class User 
@@ -1683,7 +1683,7 @@ Il modello risultante era ambiguo e sarà probabilmente errato in questo caso.
 
 **Mitigazioni**
 
-Usare la configurazione completa della relazione. Esempio:
+Usare la configurazione completa della relazione. Ad esempio:
 
 ```C#
 modelBuilder
@@ -1704,7 +1704,7 @@ modelBuilder
 
 **Comportamento precedente**
 
-Un DbFunction configurato con schema come stringa vuota è stato trattato come funzione predefinita senza uno schema. Il codice seguente, ad esempio, eseguirà il mapping della funzione CLR `DatePart` alla funzione predefinita `DATEPART` in SqlServer.
+Un DbFunction configurato con schema come stringa vuota è stato trattato come funzione predefinita senza uno schema. Il codice seguente, ad esempio, eseguirà il mapping `DatePart` funzione CLR per `DATEPART` funzione predefinita in SqlServer.
 
 ```C#
 [DbFunction("DATEPART", Schema = "")]

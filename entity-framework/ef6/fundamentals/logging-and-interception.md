@@ -100,7 +100,7 @@ Si noti che si tratta dell'output presumendo che sia già stata eseguita l'inizi
 
 Quando viene impostata la proprietà log, verranno registrate tutte le operazioni seguenti:  
 
-- SQL per tutti i diversi tipi di comandi. Esempio:  
+- SQL per tutti i diversi tipi di comandi. Ad esempio:  
     - Query, incluse le query LINQ normali, le query eSQL e le query non elaborate da metodi come SQLQuery  
     - Inserimenti, aggiornamenti ed eliminazioni generate come parte di SaveChanges  
     - Relazione che carica query come quelle generate dal caricamento lazy  
@@ -227,7 +227,7 @@ Si noti che questo codice consente di rimuovere semplicisticamente le interruzio
 
 ### <a name="setting-the-databaselogformatter"></a>Impostazione di DatabaseLogFormatter  
 
-Una volta creata una nuova classe DatabaseLogFormatter, è necessario registrarla con EF. Questa operazione viene eseguita usando la configurazione basata su codice. In breve, ciò significa creare una nuova classe che deriva da DbConfiguration nello stesso assembly della classe DbContext e quindi chiamare SetDatabaseLogFormatter nel costruttore di questa nuova classe. Esempio:  
+Una volta creata una nuova classe DatabaseLogFormatter, è necessario registrarla con EF. Questa operazione viene eseguita usando la configurazione basata su codice. In breve, ciò significa creare una nuova classe che deriva da DbConfiguration nello stesso assembly della classe DbContext e quindi chiamare SetDatabaseLogFormatter nel costruttore di questa nuova classe. Ad esempio:  
 
 ``` csharp
 public class MyDbConfiguration : DbConfiguration
@@ -261,11 +261,11 @@ Il codice di intercettazione è basato sul concetto di interfacce di intercettaz
 
 ### <a name="the-interception-context"></a>Contesto di intercettazione  
 
-Osservando i metodi definiti in una delle interfacce dell'intercettore è evidente che a ogni chiamata viene assegnato un oggetto di tipo DbInterceptionContext o un tipo derivato da questo, ad esempio DbCommandInterceptionContext @ no__t-0 @ no__t-1. Questo oggetto contiene informazioni contestuali sull'azione che EF sta assumendo. Se, ad esempio, l'azione viene eseguita per conto di un DbContext, il DbContext viene incluso nel DbInterceptionContext. Analogamente, per i comandi eseguiti in modo asincrono, il flag asincrono viene impostato su DbCommandInterceptionContext.  
+Osservando i metodi definiti in una delle interfacce dell'intercettore è evidente che a ogni chiamata viene assegnato un oggetto di tipo DbInterceptionContext o un tipo derivato da questo, ad esempio DbCommandInterceptionContext\<\>. Questo oggetto contiene informazioni contestuali sull'azione che EF sta assumendo. Se, ad esempio, l'azione viene eseguita per conto di un DbContext, il DbContext viene incluso nel DbInterceptionContext. Analogamente, per i comandi eseguiti in modo asincrono, il flag asincrono viene impostato su DbCommandInterceptionContext.  
 
 ### <a name="result-handling"></a>Gestione dei risultati  
 
-La classe DbCommandInterceptionContext @ no__t-0 @ no__t-1 contiene proprietà denominate result, OriginalResult, Exception e originalException. Queste proprietà vengono impostate su null/zero per le chiamate ai metodi di intercettazione che vengono chiamate prima dell'esecuzione dell'operazione, ovvero per... Esecuzione di metodi. Se l'operazione viene eseguita e ha esito positivo, result e OriginalResult vengono impostati sul risultato dell'operazione. Questi valori possono quindi essere osservati nei metodi di intercettazione che vengono chiamati dopo l'esecuzione dell'operazione, ovvero sul... Metodi eseguiti. Analogamente, se l'operazione genera, verranno impostate le proprietà Exception e originalException.  
+La classe DbCommandInterceptionContext\<\> contiene le proprietà denominate result, OriginalResult, Exception e originalException. Queste proprietà vengono impostate su null/zero per le chiamate ai metodi di intercettazione che vengono chiamate prima dell'esecuzione dell'operazione, ovvero per... Esecuzione di metodi. Se l'operazione viene eseguita e ha esito positivo, result e OriginalResult vengono impostati sul risultato dell'operazione. Questi valori possono quindi essere osservati nei metodi di intercettazione che vengono chiamati dopo l'esecuzione dell'operazione, ovvero sul... Metodi eseguiti. Analogamente, se l'operazione genera, verranno impostate le proprietà Exception e originalException.  
 
 #### <a name="suppressing-execution"></a>Eliminazione dell'esecuzione  
 
@@ -289,7 +289,7 @@ Le proprietà OriginalResult e originalException sono di sola lettura e vengono 
 
 ### <a name="registering-interceptors"></a>Registrazione degli intercettori  
 
-Quando una classe che implementa una o più interfacce di intercettazione è stata creata, può essere registrata con EF usando la classe DbInterception. Esempio:  
+Quando una classe che implementa una o più interfacce di intercettazione è stata creata, può essere registrata con EF usando la classe DbInterception. Ad esempio:  
 
 ``` csharp
 DbInterception.Add(new NLogCommandInterceptor());
@@ -297,7 +297,7 @@ DbInterception.Add(new NLogCommandInterceptor());
 
 Gli intercettori possono essere registrati anche a livello di dominio dell'applicazione usando il meccanismo di configurazione basato sul codice DbConfiguration.  
 
-### <a name="example-logging-to-nlog"></a>Esempio: Registrazione a NLog  
+### <a name="example-logging-to-nlog"></a>Esempio: registrazione in NLog  
 
 È necessario riunirle in un esempio che usa IDbCommandInterceptor e [NLog](https://nlog-project.org/) per:  
 

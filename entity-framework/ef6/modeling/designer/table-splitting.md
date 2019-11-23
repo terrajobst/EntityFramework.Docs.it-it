@@ -32,7 +32,7 @@ Questa procedura dettagliata usa Visual Studio 2012.
 
 -   Aprire Visual Studio 2012.
 -   Scegliere **Nuovo** dal menu **File**, quindi fare clic su **Progetto**.
--   Nel riquadro sinistro fare clic su Visual C\#e quindi selezionare il modello applicazione console.
+-   Nel riquadro sinistro fare clic su Visual C\#, quindi selezionare il modello applicazione console.
 -   Immettere **TableSplittingSample** come nome del progetto e fare clic su **OK**.
 
 ## <a name="create-a-model-based-on-the-school-database"></a>Creare un modello basato sul database School
@@ -41,12 +41,12 @@ Questa procedura dettagliata usa Visual Studio 2012.
 -   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
 -   Immettere **TableSplittingModel. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
 -   Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti.**
--   Fare clic su nuova connessione. Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB\\) mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** come nome del database, quindi fare clic su **OK**.
+-   Fare clic su nuova connessione. Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB)\\mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** per il nome del database, quindi fare clic su **OK**.
     La finestra di dialogo scegliere la connessione dati viene aggiornata con l'impostazione di connessione al database.
--   Nella finestra di dialogo Seleziona oggetti di database espandere il nodo **tabelle** e controllare la tabella **Person** . La tabella specificata verrà aggiunta al modello **School** .
+-   Nella finestra di dialogo Seleziona oggetti di database espandere le **tabelle** nodo e controllare la tabella **Person** . La tabella specificata verrà aggiunta al modello **School** .
 -   Fare clic su **fine**.
 
-Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella finestra di dialogo **Scegli oggetti** di database vengono aggiunti al modello.
+Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella finestra di dialogo **Scegli oggetti di Database** vengono aggiunti al modello.
 
 ## <a name="map-two-entities-to-a-single-table"></a>Eseguire il mapping di due entità a una singola tabella
 
@@ -60,17 +60,17 @@ In questa sezione si suddividerà l'entità **Person** in due entità, quindi la
 -   Digitare **HireInfo** per il **nome dell'entità** e **PersonID** per il nome della **proprietà della chiave** .
 -   Fare clic su **OK**.
 -   Nell'area di progettazione verrà creato e visualizzato un nuovo tipo di entità.
--   Selezionare la ****  proprietà hiree del tipo di entità **Person** e premere i tasti **CTRL + X** .
--   Selezionare l'entità **HireInfo** e premere **CTRL + V** .
+-   Selezionare la proprietà  **assunto** del tipo di entità **Person** e premere **CTRL + X** .
+-   Selezionare l'entità **HireInfo** e premere **CTRL + V** .
 -   Creare un'associazione tra **Person** e **HireInfo**. A tale scopo, fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**e fare clic su **associazione**.
--   Verrà visualizzata la finestra di dialogo **Aggiungi associazione** . Per impostazione predefinita, viene fornito il nome **PersonHireInfo** .
+-   Verrà visualizzata la finestra di dialogo Aggiungi di **associazione** . Per impostazione predefinita, viene fornito il nome **PersonHireInfo** .
 -   Specificare la molteplicità **1 (una)** su entrambe le estremità della relazione.
 -   Fare clic su **OK**.
 
-Il passaggio successivo richiede la finestra **Dettagli** mapping. Se questa finestra non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **Dettagli mapping**.
+Il passaggio successivo richiede la finestra **Dettagli Mapping** . Se questa finestra non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **Dettagli mapping**.
 
--   Selezionare il tipo di entità **HireInfo** e fare clic su **&lt;Aggiungi tabella&gt;o vista** nella finestra **Dettagli** mapping.
--   Selezionare **Person** nell'   **&lt;elenco a discesa aggiungere una tabella&gt;o un**campo di visualizzazione. L'elenco contiene le tabelle o le viste a cui è possibile eseguire il mapping dell'entità selezionata.
+-   Selezionare il tipo di entità  **HireInfo** e fare clic su **&lt;aggiungere una tabella o una vista&gt;**  nella finestra  **Dettagli mapping** .
+-   Selezionare **Person** dall'elenco **a discesa&lt;aggiungere una tabella o una vista&gt;**  campo. L'elenco contiene le tabelle o le viste a cui è possibile eseguire il mapping dell'entità selezionata.
     Per impostazione predefinita, è necessario eseguire il mapping delle proprietà appropriate.
 
     ![Mapping](~/ef6/media/mapping.png)
@@ -126,7 +126,7 @@ Le istruzioni T-SQL seguenti sono state eseguite nel database **School** in segu
 
 -   L' **inserimento** seguente è stato eseguito in seguito all'esecuzione del contesto. SaveChanges () e combina i dati delle entità **Person** e **HireInfo**
 
-    ![INS](~/ef6/media/insert.png)
+    ![Inserisci](~/ef6/media/insert.png)
 
 -   L'istruzione **Select** seguente è stata eseguita in seguito all'esecuzione del contesto. People. FirstOrDefault () e seleziona solo le colonne di cui è stato eseguito il mapping a **Person**
 

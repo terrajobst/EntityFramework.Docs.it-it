@@ -29,7 +29,7 @@ In questo video viene illustrato come eseguire il mapping di tipi spaziali con E
 
 **Presentato da**: Julia Kornich
 
-**Video**: [WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv) | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
+**Video**: [wmv](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv) | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (zip)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
 
 ## <a name="pre-requisites"></a>Prerequisiti
 
@@ -39,7 +39,7 @@ Per completare questa procedura dettagliata, è necessario che Visual Studio 201
 
 1.  Aprire Visual Studio 2012
 2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
-3.  Nel riquadro sinistro fare clic su **Visual C @ no__t-1**, quindi selezionare il modello **console** .
+3.  Nel riquadro sinistro fare clic su **Visual C\#** e quindi selezionare il modello **console** .
 4.  Immettere **SpatialCodeFirst** come nome del progetto e fare clic su **OK** .
 
 ## <a name="define-a-new-model-using-code-first"></a>Definire un nuovo modello utilizzando Code First
@@ -67,7 +67,7 @@ public class University
 
 ## <a name="define-the-dbcontext-derived-type"></a>Definire il tipo derivato DbContext
 
-Oltre alla definizione delle entità, è necessario definire una classe che deriva da DbContext ed espone le proprietà DbSet @ no__t-0TEntity @ no__t-1. Le proprietà DbSet @ no__t-0TEntity @ no__t-1 consentono al contesto di individuare i tipi che si desidera includere nel modello.
+Oltre alla definizione delle entità, è necessario definire una classe che deriva da DbContext ed espone DbSet&lt;TEntity&gt; proprietà. Le proprietà DbSet&lt;TEntity&gt; consentono al contesto di individuare i tipi che si desidera includere nel modello.
 
 Un'istanza del tipo derivato DbContext gestisce gli oggetti entità in fase di esecuzione, che include il popolamento di oggetti con dati da un database, il rilevamento delle modifiche e il salvataggio permanente dei dati nel database.
 
@@ -144,7 +144,7 @@ Si noti che, se si apportano modifiche al modello dopo che è stato creato il da
 
 Per visualizzare il database e i dati, eseguire le operazioni seguenti:
 
-1.  Nel menu principale di Visual Studio 2012 selezionare **visualizza** - @ no__t-2 **Esplora oggetti di SQL Server**.
+1.  Nel menu principale di Visual Studio 2012 selezionare **visualizza** -&gt; **Esplora oggetti di SQL Server**.
 2.  Se il database locale non è presente nell'elenco dei server, fare clic con il pulsante destro del mouse su **SQL Server** e selezionare **Aggiungi SQL Server** utilizzare l' **autenticazione di Windows** predefinita per connettersi all'istanza del database locale.
 3.  Espandere il nodo del database locale
 4.  Espandere la cartella **database** per visualizzare il nuovo database e passare alla tabella delle **Università**
