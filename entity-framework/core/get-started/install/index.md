@@ -4,12 +4,12 @@ author: divega
 ms.date: 08/06/2017
 ms.assetid: 608cc774-c570-4809-8a3e-cd2c8446b8b2
 uid: core/get-started/install/index
-ms.openlocfilehash: aeb3ed1af8725ed6f92e0c0ba022a89b651bff80
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 1121b2bde1ada74ee189287501bc770aeb65e358
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655589"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824433"
 ---
 # <a name="installing-entity-framework-core"></a>Installazione di Entity Framework Core
 
@@ -37,7 +37,7 @@ Per installare o aggiornare i pacchetti NuGet, è possibile usare l'interfaccia 
 
 * Usare il comando di interfaccia della riga di comando di .NET Core seguente dalla riga di comando del sistema operativo per installare o aggiornare il provider di EF Core SQL Server:
 
-  ``` Console
+  ```dotnetcli
   dotnet add package Microsoft.EntityFrameworkCore.SqlServer
   ```
 
@@ -95,7 +95,7 @@ Gli strumenti CLI di .NET core richiedono .NET Core SDK, indicato in precedenza 
 
 I comandi `dotnet ef` sono inclusi nelle versioni correnti di .NET Core SDK, ma per abilitarli su un progetto specifico è necessario installare il pacchetto `Microsoft.EntityFrameworkCore.Design`:
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Design
 ```
 

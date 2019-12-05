@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: bf9aa32dd731b60d2985a9fe8bebd703af4af03b
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 7de465d483ab2c183c7f37d08c84de00ef113651
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655563"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824506"
 ---
 # <a name="migrations"></a>Migrazioni
 
@@ -41,7 +41,7 @@ Dopo la [definizione del modello iniziale](xref:core/modeling/index) è il momen
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add InitialCreate
 ```
 
@@ -70,7 +70,7 @@ Applicare quindi la migrazione al database per creare lo schema.
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update
 ```
 
@@ -88,7 +88,7 @@ Dopo le modifiche al modello di EF Core, lo schema del database potrebbe non ess
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations add AddProductReviews
 ```
 
@@ -149,7 +149,7 @@ Applicare la migrazione al database tramite il comando appropriato.
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update
 ```
 
@@ -177,7 +177,7 @@ Dopo l'aggiunta di una migrazione ci si rende talvolta conto che prima di applic
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations remove
 ```
 
@@ -197,7 +197,7 @@ Se una o più migrazioni sono già state applicate ma è necessario ripristinarl
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef database update LastGoodMigration
 ```
 
@@ -215,7 +215,7 @@ Per il debug delle migrazioni o la distribuzione di queste in un database di pro
 
 ## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
-``` Console
+```dotnetcli
 dotnet ef migrations script
 ```
 
