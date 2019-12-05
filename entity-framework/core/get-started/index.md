@@ -4,12 +4,12 @@ author: rick-anderson
 ms.date: 09/17/2019
 ms.assetid: 3c88427c-20c6-42ec-a736-22d3eccd5071
 uid: core/get-started/index
-ms.openlocfilehash: fca1b532b34e20aeea1968939af96c692d60d738
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.openlocfilehash: d46c4bb9ac6c8f718b4da5ecd82d54710d41935f
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813614"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824496"
 ---
 # <a name="getting-started-with-ef-core"></a>Introduzione a EF Core
 
@@ -38,7 +38,7 @@ Installare il software seguente:
 
 ## <a name="net-core-clitabnetcore-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet new console -o EFGetStarted
 cd EFGetStarted
 ```
@@ -58,7 +58,7 @@ Per installare EF Core, installare il pacchetto per i provider di database di EF
 
 ## <a name="net-core-clitabnetcore-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
 
@@ -105,7 +105,7 @@ La procedura seguente usa le [migrazioni](xref:core/managing-schemas/migrations/
 
 * Eseguire i comandi seguenti:
 
-  ``` Console
+  ```dotnetcli
   dotnet tool install --global dotnet-ef
   dotnet add package Microsoft.EntityFrameworkCore.Design
   dotnet ef migrations add InitialCreate
@@ -138,7 +138,7 @@ La procedura seguente usa le [migrazioni](xref:core/managing-schemas/migrations/
 
 ## <a name="net-core-clitabnetcore-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/netcore-cli)
 
-``` Console
+```dotnetcli
 dotnet run
 ```
 
