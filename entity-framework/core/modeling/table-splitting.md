@@ -1,16 +1,16 @@
 ---
 title: Suddivisione di tabelle-EF Core
+description: Come configurare la suddivisione delle tabelle con Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 04/10/2019
-ms.assetid: 0EC2CCE1-BD55-45D8-9EA9-20634987F094
 uid: core/modeling/table-splitting
-ms.openlocfilehash: a3a2e5842a6c6b4b490084d205a0d44bb46c17ee
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 0e48c516de43cdc2b54c56f1a96f5e01f9fbbbc4
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656033"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824565"
 ---
 # <a name="table-splitting"></a>Suddivisione di tabelle
 
@@ -19,7 +19,7 @@ ms.locfileid: "73656033"
 
 EF Core consente di eseguire il mapping di due o più entità a una singola riga. Questa operazione è denominata _suddivisione tabelle_ o _condivisione tabella_.
 
-## <a name="configuration"></a>Configurazione
+## <a name="configuration"></a>Configurazione di
 
 Per utilizzare la suddivisione della tabella è necessario eseguire il mapping dei tipi di entità alla stessa tabella, disporre delle chiavi primarie mappate alle stesse colonne e almeno una relazione configurata tra la chiave primaria di un tipo di entità e un'altra nella stessa tabella.
 
@@ -38,7 +38,7 @@ Oltre alla configurazione richiesta, viene chiamato `Property(o => o.Status).Has
 > [!TIP]
 > Per ulteriori informazioni sul contesto, vedere il [progetto di esempio completo](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting) .
 
-## <a name="usage"></a>Utilizzo
+## <a name="usage"></a>Usage
 
 Il salvataggio e l'esecuzione di query sulle entità tramite la suddivisione delle tabelle vengono eseguite in modo analogo alle altre entità. A partire da EF Core 3,0 è possibile `null`il riferimento all'entità dipendente. Se tutte le colonne utilizzate dall'entità dipendente sono `NULL` è il database, non verrà creata alcuna istanza per la query. Questa situazione si verifica anche quando tutte le proprietà sono facoltative e impostate su `null`, che potrebbe non essere previsto.
 

@@ -1,16 +1,16 @@
 ---
 title: Tipi di entità di proprietà-EF Core
+description: Come configurare i tipi di entità o le aggregazioni di proprietà quando si usa Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 02/26/2018
-ms.assetid: 2B0BADCE-E23E-4B28-B8EE-537883E16DF3
+ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: a0665bfa27134b8dc3eba854ff3f7b1af4b69217
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 7b6d1b3bccbfceb85f03a580ba03a45984d29c74
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655927"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824601"
 ---
 # <a name="owned-entity-types"></a>Tipi di entità di proprietà
 
@@ -19,7 +19,7 @@ ms.locfileid: "73655927"
 
 EF Core consente di modellare i tipi di entità che possono essere visualizzati solo nelle proprietà di navigazione di altri tipi di entità. Questi sono denominati _tipi di entità di proprietà_. L'entità che contiene un tipo di entità di proprietà è il _proprietario_.
 
-Le entità di proprietà sono essenzialmente parte del proprietario e non possono esistere senza di essa, sono concettualmente simili a quelle delle [aggregazioni](https://martinfowler.com/bliki/DDD_Aggregate.html).
+Le entità di proprietà sono essenzialmente parte del proprietario e non possono esistere senza di essa, sono concettualmente simili a quelle delle [aggregazioni](https://martinfowler.com/bliki/DDD_Aggregate.html). Questo significa che il tipo di proprietà è per definizione sul lato dipendente della relazione con il proprietario.
 
 ## <a name="explicit-configuration"></a>Configurazione esplicita
 
@@ -74,17 +74,20 @@ Per configurare un'altra chiamata a PK `HasKey`:
 [!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 > [!NOTE]
-> Prima di EF Core 3,0 metodo `WithOwner()` non esisteva, quindi la chiamata deve essere rimossa.
+> Prima di EF Core 3,0 metodo `WithOwner()` non esisteva, quindi la chiamata deve essere rimossa. Inoltre, la chiave primaria non è stata individuata automaticamente, quindi è sempre stata specificata.
 
 ## <a name="mapping-owned-types-with-table-splitting"></a>Mapping dei tipi di proprietà con suddivisione della tabella
 
 Quando si usano database relazionali, per impostazione predefinita i tipi di proprietà di riferimento vengono mappati alla stessa tabella del proprietario. Questa operazione richiede la suddivisione della tabella in due: alcune colonne verranno utilizzate per archiviare i dati del proprietario e alcune colonne verranno utilizzate per archiviare i dati dell'entità di proprietà. Si tratta di una funzionalità comune nota come [suddivisione della tabella](table-splitting.md).
 
-Per impostazione predefinita, EF Core assegna un nome alle colonne del database per le proprietà del tipo di entità di proprietà che segue il modello _Navigation_OwnedEntityProperty_. Pertanto, le proprietà del `StreetAddress` verranno visualizzate nella tabella ' Orders ' con i nomi ' ShippingAddress_Street ' è ShippingAddress_City '.
+Per impostazione predefinita, EF Core assegna un nome alle colonne del database per le proprietà del tipo di entità di proprietà che segue il modello _Navigation_OwnedEntityProperty_. Le proprietà `StreetAddress` verranno pertanto visualizzate nella tabella ' Orders ' con i nomi ' ShippingAddress_Street ' è ShippingAddress_City '.
 
 È possibile usare il metodo `HasColumnName` per rinominare le colonne:
 
 [!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
+
+> [!NOTE]
+> La maggior parte dei normali metodi di configurazione del tipo di entità come [Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) può essere chiamata nello stesso modo.
 
 ## <a name="sharing-the-same-net-type-among-multiple-owned-types"></a>Condivisione dello stesso tipo .NET tra più tipi di proprietà
 
@@ -106,6 +109,8 @@ In questo esempio `OrderDetails` possiede `BillingAddress` e `ShippingAddress`, 
 
 [!code-csharp[OrderStatus](../../../samples/core/Modeling/OwnedEntities/OrderStatus.cs?name=OrderStatus)]
 
+Ogni navigazione a un tipo di proprietà definisce un tipo di entità separato con configurazione completamente indipendente.
+
 Oltre ai tipi di proprietà annidati, un tipo di proprietà può fare riferimento a un'entità regolare, può essere il proprietario o un'altra entità purché l'entità di proprietà si trovi sul lato dipendente. Questa funzionalità imposta i tipi di entità di proprietà oltre ai tipi complessi in EF6.
 
 [!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
@@ -114,15 +119,17 @@ Oltre ai tipi di proprietà annidati, un tipo di proprietà può fare riferiment
 
 [!code-csharp[OwnsOneNested](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneNested)]
 
-Si noti la chiamata `WithOwner` utilizzata per configurare la proprietà di navigazione che punta al proprietario.
+Si noti la chiamata `WithOwner` utilizzata per configurare la proprietà di navigazione che punta al proprietario. Per configurare una navigazione al tipo di entità Owner che non fa parte della relazione di proprietà `WithOwner()` necessario chiamare senza argomenti.
 
-È possibile ottenere il risultato utilizzando `OwnedAttribute` sia `OrderDetails` che `StreetAdress`.
+È possibile ottenere il risultato utilizzando `OwnedAttribute` sia `OrderDetails` che `StreetAddress`.
 
 ## <a name="storing-owned-types-in-separate-tables"></a>Archiviazione di tipi di proprietà in tabelle separate
 
 A differenza dei tipi complessi EF6, inoltre, i tipi di proprietà possono essere archiviati in una tabella separata dal proprietario. Per eseguire l'override della convenzione che esegue il mapping di un tipo di proprietà alla stessa tabella del proprietario, è possibile chiamare semplicemente `ToTable` e fornire un nome di tabella diverso. Nell'esempio seguente viene mappato `OrderDetails` e i relativi due indirizzi a una tabella separata da `DetailedOrder`:
 
 [!code-csharp[OwnsOneTable](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneTable)]
+
+Per eseguire questa operazione, è anche possibile usare la `TableAttribute`, ma si noti che questa operazione avrà esito negativo se sono presenti più spostamenti al tipo di proprietà, poiché in questo caso più tipi di entità verrebbero mappati alla stessa tabella.
 
 ## <a name="querying-owned-types"></a>Esecuzione di query sui tipi di proprietà
 
@@ -141,7 +148,7 @@ Alcune di queste limitazioni sono fondamentali per il funzionamento dei tipi di 
 
 ### <a name="current-shortcomings"></a>Carenze correnti
 
-- Le gerarchie di ereditarietà che includono tipi di entità di proprietà non sono supportate
+- I tipi di entità di proprietà non possono avere gerarchie di ereditarietà
 - Le esplorazioni dei riferimenti ai tipi di entità di proprietà non possono essere null a meno che non ne venga eseguito il mapping esplicito a una tabella separata dal proprietario
 - Le istanze dei tipi di entità di proprietà non possono essere condivise da più proprietari (si tratta di uno scenario noto per gli oggetti valore che non possono essere implementati con i tipi di entità di proprietà)
 

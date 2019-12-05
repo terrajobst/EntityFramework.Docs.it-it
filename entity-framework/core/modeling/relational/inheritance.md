@@ -1,15 +1,16 @@
 ---
 title: Ereditarietà (database relazionale)-EF Core
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: 9a7c5488-aaf4-4b40-b1ff-f435ff30f6ec
+description: Come configurare l'ereditarietà del tipo di entità in un database relazionale tramite Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
+ms.date: 11/06/2019
 uid: core/modeling/relational/inheritance
-ms.openlocfilehash: 381d1878007bb78b359eb49649f4356f1e5eb04a
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 30e25aa2968ceab03404baddb46e0ae59fc3ea6b
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655636"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824752"
 ---
 # <a name="inheritance-relational-database"></a>Ereditarietà (database relazionale)
 
@@ -23,7 +24,7 @@ L'ereditarietà nel modello EF viene utilizzata per controllare il modo in cui l
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, verrà eseguito il mapping dell'ereditarietà utilizzando il modello tabella per gerarchia (TPH). TPH usa una singola tabella per archiviare i dati per tutti i tipi nella gerarchia. Una colonna discriminatore viene utilizzata per identificare il tipo rappresentato da ogni riga.
+Per impostazione predefinita, viene eseguito il mapping dell'ereditarietà utilizzando il modello tabella per gerarchia (TPH). TPH usa una singola tabella per archiviare i dati per tutti i tipi nella gerarchia. Una colonna discriminatore viene utilizzata per identificare il tipo rappresentato da ogni riga.
 
 EF Core configurerà l'ereditarietà solo se due o più tipi ereditati vengono inclusi in modo esplicito nel modello. per ulteriori informazioni, vedere [ereditarietà](../inheritance.md) .
 
@@ -31,7 +32,7 @@ Di seguito è riportato un esempio che mostra uno scenario di ereditarietà semp
 
 [!code-csharp[Main](../../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs#Model)]
 
-![immagine](_static/inheritance-tph-data.png)
+![image](_static/inheritance-tph-data.png)
 
 >[!NOTE]
 > Le colonne del database vengono rese automaticamente Nullable quando necessario quando si usa il mapping di TPH.
@@ -50,48 +51,14 @@ Non è possibile utilizzare le annotazioni dei dati per configurare l'ereditarie
 
 Negli esempi precedenti, il discriminatore viene creato come [proprietà shadow](xref:core/modeling/shadow-properties) nell'entità di base della gerarchia. Poiché si tratta di una proprietà nel modello, può essere configurata esattamente come le altre proprietà. Ad esempio, per impostare la lunghezza massima quando viene usato il discriminatore predefinito per convenzione:
 
-```C#
-modelBuilder.Entity<Blog>()
-    .Property("Discriminator")
-    .HasMaxLength(200);
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/DefaultDiscriminator.cs#DiscriminatorConfiguration)]
 
-È anche possibile eseguire il mapping del discriminatore a una proprietà CLR effettiva nell'entità. Esempio:
+È anche possibile eseguire il mapping del discriminatore a una proprietà .NET nell'entità e configurarla. Ad esempio:
 
-```C#
-class MyContext : DbContext
-{
-    public DbSet<Blog> Blogs { get; set; }
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs#NonShadowDiscriminator)]
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Blog>()
-            .HasDiscriminator<string>("BlogType");
-    }
-}
+## <a name="shared-columns"></a>Colonne condivise
 
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-    public string BlogType { get; set; }
-}
+Quando due tipi di entità di pari livello hanno una proprietà con lo stesso nome, per impostazione predefinita verrà eseguito il mapping a due colonne separate. Tuttavia, se sono compatibili, è possibile eseguirne il mapping alla stessa colonna:
 
-public class RssBlog : Blog
-{
-    public string RssUrl { get; set; }
-}
-```
-
-Combinando questi due elementi, è possibile eseguire il mapping del discriminatore a una proprietà reale e configurarlo:
-
-```C#
-modelBuilder.Entity<Blog>(b =>
-{
-    b.HasDiscriminator<string>("BlogType");
-
-    b.Property(e => e.BlogType)
-        .HasMaxLength(200)
-        .HasColumnName("blog_type");
-});
-```
+[!code-csharp[Main](../../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs#SharedTPHColumns)]

@@ -4,12 +4,12 @@ author: divega
 ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
-ms.openlocfilehash: 72393e96c195af1df5a169025ca2ce7a7acb16bb
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 83f6b819409d502dba17a678d44a0746a4a77f4b
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656217"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824884"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -91,12 +91,12 @@ public class BloggingContext : DbContext
     {
         modelBuilder.Entity<Post>().HasQueryFilter(
             p => !p.IsDeleted
-            && p.TenantId == this.TenantId );
+            && p.TenantId == this.TenantId);
     }
 }
 ```
 
-Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti l'uso di una proprietà a livello di istanza DbContext: `TenantId`. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
+Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti l'uso di una proprietà `DbContext` a livello di istanza: `TenantId`. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
 
 È possibile disabilitare i filtri per le singole query LINQ usando l'operatore IgnoreQueryFilters().
 
@@ -119,7 +119,7 @@ public class BloggingContext : DbContext
     [DbFunction]
     public static int PostReadCount(int blogId)
     {
-        throw new Exception();
+        throw new NotImplementedException();
     }
 }
 ```
@@ -135,9 +135,9 @@ var query =
 
 Si noti che:
 
-- Per convenzione, durante la generazione di SQL, il nome del metodo viene usato come nome di una funzione (in questo caso una funzione definita dall'utente), ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
+- Per convenzione, il nome del metodo viene usato come nome di una funzione (in questo caso una funzione definita dall'utente) durante la generazione di SQL, ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
 - Attualmente sono supportate solo le funzioni scalari.
-- È necessario creare la funzione mappata nel database. La funzione non viene creata dalle migrazioni EF Core.
+- È necessario creare la funzione mappata nel database. La creazione di EF Core migrazioni non verrà eseguita.
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Configurazione dei tipi completa per Code First
 
@@ -146,11 +146,11 @@ In EF6 è possibile incapsulare la configurazione Code First di un tipo di entit
 ``` csharp
 class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
-  public void Configure(EntityTypeBuilder<Customer> builder)
-  {
-     builder.HasKey(c => c.AlternateKey);
-     builder.Property(c => c.Name).HasMaxLength(200);
-   }
+    public void Configure(EntityTypeBuilder<Customer> builder)
+    {
+        builder.HasKey(c => c.AlternateKey);
+        builder.Property(c => c.Name).HasMaxLength(200);
+    }
 }
 
 ...
@@ -213,7 +213,7 @@ EF Core supporta la generazione automatica di valori di chiave tramite una varie
 
 ## <a name="query"></a>Query
 
-### <a name="improved-linq-translation"></a>Conversione LINQ migliorata
+### <a name="improved-linq-translation"></a>Traduzione LINQ migliorata
 
 Consente di eseguire correttamente un maggior numero di query, con una quantità superiore di logica valutata nel database (anziché in memoria) e una quantità inferiore di dati inutilmente recuperati dal database.
 
@@ -223,7 +223,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 ### <a name="string-interpolation-in-fromsql-and-executesqlcommand"></a>Interpolazione di stringhe in FromSql e ExecuteSqlCommand
 
-C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente di usare l'interpolazione di stringhe C# in modo "sicuro", ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
+C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente C# di usare l'interpolazione di stringhe in modo sicuro. ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
 Ecco un esempio:
 
@@ -270,7 +270,7 @@ Notare che Like() include un'implementazione in memoria che può rivelarsi utile
 
 ## <a name="database-management"></a>Gestione di database
 
-### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>Hook di pluralizzazione per lo scaffolding DbContext
+### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>Hook di pluralismo per l'impalcatura DbContext
 
 EF Core 2.0 introduce un nuovo servizio *IPluralizer* usato per rendere singolari i nomi dei tipi di entità e rendere plurali i nomi DbSet. L'implementazione predefinita è no-op, quindi si tratta semplicemente di un hook a cui gli sviluppatori possono facilmente collegare i propri pluralizer.
 

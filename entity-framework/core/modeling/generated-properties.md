@@ -1,15 +1,16 @@
 ---
 title: Valori generati-EF Core
-author: rowanmiller
-ms.date: 10/27/2016
-ms.assetid: eb082011-11a1-41b4-a108-15daafa03e80
+description: Come configurare la generazione di valori per le proprietà quando si usa Entity Framework Core
+author: AndriySvyryd
+ms.author: ansvyryd
+ms.date: 11/06/2019
 uid: core/modeling/generated-properties
-ms.openlocfilehash: 6643d3c5c9b3363e450e820793f449a41e2eba80
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 7fa3eae5e2edb7b4c40ed4f99ce4a29f367e622a
+ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655753"
+ms.lasthandoff: 12/04/2019
+ms.locfileid: "74824708"
 ---
 # <a name="generated-values"></a>Valori generati
 
@@ -53,7 +54,7 @@ Come `value generated on add`, se si specifica un valore per la proprietà in un
 
 ## <a name="conventions"></a>Convenzioni
 
-Per convenzione, le chiavi primarie non composite di tipo short, int, Long o GUID verranno impostate in modo da generare valori in Aggiungi. Tutte le altre proprietà verranno impostate senza generazione di valori.
+Per impostazione predefinita, le chiavi primarie non composite di tipo short, int, Long o GUID verranno impostate in modo da generare valori in Aggiungi. Tutte le altre proprietà verranno impostate senza generazione di valori.
 
 ## <a name="data-annotations"></a>Annotazioni dei dati
 
