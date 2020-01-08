@@ -3,12 +3,12 @@ title: Modifiche che causano un'interruzione in EF Core 3.0 - EF Core
 author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: d614103169837238810fabd0a8889043c851ef14
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: cac166e9e194e512de7d730d27c061e6deaf5191
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824872"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502227"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 
@@ -25,17 +25,17 @@ Le modifiche che si prevede abbiano impatto solo sui provider di database sono d
 | [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
 | [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
 | [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
-| [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Media      |
-| [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Media      |
-| [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Media      |
-| [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Media      |
-| [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Media      |
-| [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Media      |
-| [Le query senza rilevamento delle modifiche non eseguono più la risoluzione delle identità](#notrackingresolution) | Media      |
-| [Modifiche dell'API dei metadati](#metadata-api-changes) | Media      |
-| [Modifiche dell'API dei metadati specifiche del provider](#provider) | Media      |
-| [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Media      |
-| [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Media      |
+| [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
+| [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
+| [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Medio      |
+| [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Medio      |
+| [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Medio      |
+| [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Medio      |
+| [Le query senza rilevamento delle modifiche non eseguono più la risoluzione delle identità](#notrackingresolution) | Medio      |
+| [Modifiche dell'API dei metadati](#metadata-api-changes) | Medio      |
+| [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
+| [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
+| [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Medio      |
 | [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Basso      |
 | [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Basso      |
 | [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Basso      |
@@ -389,11 +389,11 @@ Ad esempio, la chiamata a `context.Remove()` per eliminare un'entità di sicurez
 
 **Perché?**
 
-Questa modifica è stata apportata per migliorare l'esperienza di associazione di dati e degli scenari di controllo in cui è importante individuare le entità che verranno eliminate _prima_ della chiamata a `SaveChanges`.
+Questa modifica è stata apportata per migliorare l'esperienza per gli scenari di data binding e controllo in cui è importante comprendere quali entità verranno eliminate _prima_ della chiamata di `SaveChanges`.
 
 **Mitigazioni**
 
-Il comportamento precedente può essere ripristinato tramite le impostazioni in `context.ChangedTracker`.
+Il comportamento precedente può essere ripristinato tramite le impostazioni in `context.ChangeTracker`.
 Ad esempio:
 
 ```csharp
@@ -1624,7 +1624,7 @@ Prima di EF Core 3.0, Microsoft.EntityFrameworkCore.Design era un pacchetto NuGe
 
 **Nuovo comportamento**
 
-A partire da EF Core 3.0 è un pacchetto DevelopmentDependency. Questo significa che la dipendenza non verrà trasferita in modo transitivo in altri progetti e che non è più possibile fare riferimento all'assembly per impostazione predefinita.
+A partire da EF Core 3.0 è un pacchetto DevelopmentDependency. Ciò significa che la dipendenza non verrà propagata in modo transitivo in altri progetti e che non è più possibile, per impostazione predefinita, fare riferimento al relativo assembly.
 
 **Perché?**
 
@@ -1632,7 +1632,7 @@ Questo pacchetto è destinato solo all'uso in fase di progettazione. Le applicaz
 
 **Mitigazioni**
 
-Se è necessario fare riferimento a questo pacchetto per eseguire l'override del comportamento in fase di progettazione di EF Core, è possibile aggiornare i metadati dell'elemento PackageReference nel progetto. In presenza di riferimenti transitivi al pacchetto tramite Microsoft.EntityFrameworkCore.Tools, sarà necessario aggiungere un PackageReference esplicito al pacchetto per modificare i relativi metadati.
+Se è necessario fare riferimento a questo pacchetto per eseguire l'override del comportamento della fase di progettazione di EF Core, è possibile aggiornare i metadati dell'elemento PackageReference nel progetto.
 
 ``` xml
 <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
@@ -1641,6 +1641,8 @@ Se è necessario fare riferimento a questo pacchetto per eseguire l'override del
   <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
 </PackageReference>
 ```
+
+In presenza di riferimenti transitivi al pacchetto tramite Microsoft.EntityFrameworkCore.Tools, sarà necessario aggiungere un PackageReference esplicito al pacchetto per modificare i relativi metadati. Un riferimento esplicito di questo tipo deve essere aggiunto a qualsiasi progetto in cui sono necessari i tipi del pacchetto.
 
 <a name="SQLitePCL"></a>
 

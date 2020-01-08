@@ -5,37 +5,58 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 10/27/2016
 uid: core/modeling/inheritance
-ms.openlocfilehash: 4d43a432174c92ab7f3f9d78a234aefb0a4a17e8
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 507854e3acc0347adee612e516b3e2e0b10f55cf
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824672"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502168"
 ---
 # <a name="inheritance"></a>Ereditarietà
 
-L'ereditarietà nel modello EF viene utilizzata per controllare il modo in cui l'ereditarietà nelle classi di entità viene rappresentata nel database.
+EF è in grado di eseguire il mapping di una gerarchia di tipi .NET a un database. In questo modo è possibile scrivere le entità .NET nel codice come di consueto, usando i tipi base e derivati e fare in modo che EF crei facilmente lo schema del database appropriato, emette query e così via. I dettagli effettivi su come viene eseguito il mapping di una gerarchia dei tipi sono dipendenti dal provider. in questa pagina viene descritto il supporto dell'ereditarietà nel contesto di un database relazionale.
 
-## <a name="conventions"></a>Convenzioni
-
-Per impostazione predefinita, spetta al provider di database determinare il modo in cui l'ereditarietà verrà rappresentata nel database. Vedere [ereditarietà (database relazionale)](relational/inheritance.md) per il modo in cui viene gestita con un provider di database relazionale.
-
-EF imposterà l'ereditarietà solo se due o più tipi ereditati vengono inclusi in modo esplicito nel modello. EF non analizza i tipi di base o derivati che non sono stati altrimenti inclusi nel modello. È possibile includere tipi nel modello esponendo un *DbSet\<tentity >* per ogni tipo nella gerarchia di ereditarietà.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?highlight=3-4&name=Model)]
-
-Se non si vuole esporre un *DbSet\<tentity >* per una o più entità nella gerarchia, è possibile usare l'API Fluent per assicurarsi che siano incluse nel modello.
-Se non si basano sulle convenzioni, è possibile specificare il tipo di base in modo esplicito utilizzando `HasBaseType`.
-
-[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceModelBuilder.cs?highlight=7&name=Context)]
+Al momento, EF Core supporta solo il modello tabella per gerarchia (TPH). TPH usa una singola tabella per archiviare i dati per tutti i tipi nella gerarchia e viene usata una colonna discriminatore per identificare il tipo rappresentato da ogni riga.
 
 > [!NOTE]
-> È possibile utilizzare `.HasBaseType((Type)null)` per rimuovere un tipo di entità dalla gerarchia.
+> La tabella per tipo (TPT) e la tabella per tipo concreto (TPC), supportati da EF6, non sono ancora supportate da EF Core. TPT è una funzionalità principale progettata per EF Core 5,0.
 
-## <a name="data-annotations"></a>Annotazioni dei dati
+## <a name="entity-type-hierarchy-mapping"></a>Mapping della gerarchia dei tipi di entità
 
-Non è possibile utilizzare le annotazioni dei dati per configurare l'ereditarietà.
+Per convenzione, EF configurerà l'ereditarietà solo se due o più tipi ereditati vengono inclusi in modo esplicito nel modello. EF non analizzerà automaticamente i tipi di base o derivati che non sono inclusi nel modello.
 
-## <a name="fluent-api"></a>API Fluent
+È possibile includere tipi nel modello esponendo un DbSet per ogni tipo nella gerarchia di ereditarietà:
 
-L'API Fluent per l'ereditarietà dipende dal provider di database in uso. Vedere [ereditarietà (database relazionale)](relational/inheritance.md) per la configurazione che è possibile eseguire per un provider di database relazionale.
+[!code-csharp[Main](../../../samples/core/Modeling/Conventions/InheritanceDbSets.cs?name=InheritanceDbSets&highlight=3-4)]
+
+È necessario eseguire il mapping di questo modello allo schema di database seguente (si noti la colonna *Discriminator* creata in modo implicito, che identifica il tipo di *Blog* archiviato in ogni riga):
+
+![immagine](_static/inheritance-tph-data.png)
+
+>[!NOTE]
+> Le colonne del database vengono rese automaticamente Nullable quando necessario quando si usa il mapping di TPH. Ad esempio, la colonna *RssUrl* ammette i valori null perché le istanze di *Blog* normali non hanno tale proprietà.
+
+Se non si vuole esporre un DbSet per una o più entità nella gerarchia, è anche possibile usare l'API Fluent per assicurarsi che siano incluse nel modello.
+
+> [!TIP]
+> Se non si basano sulle convenzioni, è possibile specificare il tipo di base in modo esplicito utilizzando `HasBaseType`. È inoltre possibile utilizzare `.HasBaseType((Type)null)` per rimuovere un tipo di entità dalla gerarchia.
+
+## <a name="discriminator-configuration"></a>Configurazione discriminatore
+
+È possibile configurare il nome e il tipo della colonna discriminatore e i valori utilizzati per identificare ogni tipo nella gerarchia:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorConfiguration.cs?name=DiscriminatorConfiguration&highlight=4-6)]
+
+Negli esempi precedenti, EF ha aggiunto il discriminatore in modo implicito come [proprietà shadow](xref:core/modeling/shadow-properties) nell'entità di base della gerarchia. Questa proprietà può essere configurata come qualsiasi altra:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/DiscriminatorPropertyConfiguration.cs?name=DiscriminatorPropertyConfiguration&highlight=4-5)]
+
+Infine, è anche possibile eseguire il mapping del discriminatore a una normale proprietà .NET nell'entità:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/NonShadowDiscriminator.cs?name=NonShadowDiscriminator&highlight=4)]
+
+## <a name="shared-columns"></a>Colonne condivise
+
+Per impostazione predefinita, quando due tipi di entità di pari livello nella gerarchia hanno una proprietà con lo stesso nome, verrà eseguito il mapping a due colonne separate. Tuttavia, se il tipo è identico, è possibile eseguirne il mapping alla stessa colonna di database:
+
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/SharedTPHColumns.cs?name=SharedTPHColumns&highlight=9,13)]

@@ -4,12 +4,12 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: 055f492214596506ce2c28485ade359d175c4ac2
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: 0d05902566b6b166f1267915d9f698ed29dff588
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445893"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502067"
 ---
 # <a name="working-with-nullable-reference-types"></a>Utilizzo dei tipi di riferimento Nullable
 
@@ -19,14 +19,14 @@ Questa pagina introduce il supporto di EF Core per i tipi di riferimento nullabl
 
 ## <a name="required-and-optional-properties"></a>Proprietà obbligatorie e facoltative
 
-La documentazione principale sulle proprietà obbligatorie e facoltative e la relativa interazione con i tipi di riferimento Nullable è la pagina delle [proprietà obbligatoria e facoltativa](xref:core/modeling/required-optional) . È consigliabile iniziare leggendo prima di tutto la pagina.
+La documentazione principale sulle proprietà obbligatorie e facoltative e la relativa interazione con i tipi di riferimento Nullable è la pagina delle [proprietà obbligatoria e facoltativa](xref:core/modeling/entity-properties#required-and-optional-properties) . È consigliabile iniziare leggendo prima di tutto la pagina.
 
 > [!NOTE]
 > Prestare attenzione quando si abilitano i tipi di riferimento nullable in un progetto esistente: le proprietà del tipo di riferimento che in precedenza erano configurate come facoltative ora verranno configurate come richieste, a meno che non vengano annotate in modo esplicito come Nullable. Quando si gestisce uno schema di database relazionale, è possibile che vengano generate migrazioni che modificano il supporto di valori null per la colonna di database.
 
 ## <a name="dbcontext-and-dbset"></a>DbContext e DbSet
 
-Quando sono abilitati i tipi di riferimento C# Nullable, il compilatore genera avvisi per qualsiasi proprietà non nullable non inizializzata, in quanto questi contengono valori null. Di conseguenza, la pratica comune di definire un oggetto `DbSet` non nullable in un contesto genera ora un avviso. Tuttavia, EF Core Inizializza sempre tutte le proprietà `DbSet` sui tipi derivati da DbContext, in modo che non siano mai null, anche se il compilatore non è a conoscenza di questo. È pertanto consigliabile limitare le proprietà `DbSet` in modo che non ammettono i valori null, consentendo di accedervi senza controlli null e di silenziare gli avvisi del compilatore impostando in modo esplicito su null con la guida dell'operatore che perdona i valori null (!):
+Quando sono abilitati i tipi di riferimento C# Nullable, il compilatore genera avvisi per qualsiasi proprietà non nullable non inizializzata, in quanto questi contengono valori null. Di conseguenza, la prassi comune di definire un `DbSet` non nullable in un contesto genererà ora un avviso. Tuttavia, EF Core Inizializza sempre tutte le proprietà `DbSet` sui tipi derivati da DbContext, in modo che non siano mai null, anche se il compilatore non è a conoscenza di questo. Pertanto, è consigliabile lasciare le proprietà `DbSet` non nullable, in modo da consentire l'accesso senza controlli null e per silenziare gli avvisi del compilatore impostando in modo esplicito su null con l'ausilio dell'operatore che perdona i valori null (!):
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/NullableReferenceTypesContext.cs?name=Context&highlight=3-4)]
 
@@ -34,7 +34,7 @@ Quando sono abilitati i tipi di riferimento C# Nullable, il compilatore genera a
 
 Gli avvisi del compilatore per i tipi di riferimento non nullable non inizializzati rappresentano anche un problema per le proprietà regolari nei tipi di entità. Nell'esempio precedente, questi avvisi sono stati evitati usando il [binding del costruttore](xref:core/modeling/constructors), una funzionalità che funziona perfettamente con proprietà non nullable, garantendo che siano sempre inizializzate. Tuttavia, in alcuni scenari il binding del costruttore non è un'opzione: le proprietà di navigazione, ad esempio, non possono essere inizializzate in questo modo.
 
-Le proprietà di navigazione obbligatorie presentano un ulteriore problema: Sebbene un dipendente esista sempre per un'entità specifica, può essere caricato o meno da una determinata query, a seconda delle esigenze in quel punto del programma ([vedere i diversi modelli per caricamento dei dati](xref:core/querying/related-data)). Allo stesso tempo, è preferibile rendere tali proprietà Nullable, in quanto ciò impone l'accesso a tutti gli accessi per verificare la presenza di valori null, anche se sono necessari.
+Le proprietà di navigazione obbligatorie presentano un ulteriore problema: Sebbene un dipendente esista sempre per un'entità specifica, può essere caricato o meno da una determinata query, a seconda delle esigenze in quel punto del programma ([vedere i diversi modelli per il caricamento dei dati](xref:core/querying/related-data)). Allo stesso tempo, è preferibile rendere tali proprietà Nullable, in quanto ciò impone l'accesso a tutti gli accessi per verificare la presenza di valori null, anche se sono necessari.
 
 Un modo per gestire questi scenari consiste nel disporre di una proprietà che non ammette i valori null con un [campo](xref:core/modeling/backing-field)sottostante Nullable:
 

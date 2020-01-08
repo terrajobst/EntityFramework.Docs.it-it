@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: f6e35c6d-45b7-4258-be1d-87c1bb67438d
 uid: core/miscellaneous/logging
-ms.openlocfilehash: 6a8499f9f0220087e76f2e0b3a75ce551c4ddb80
-ms.sourcegitcommit: ec196918691f50cd0b21693515b0549f06d9f39c
+ms.openlocfilehash: 1a3863ee5f508c1fd393d4ec2c25c46ab8634f00
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/23/2019
-ms.locfileid: "71197513"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502097"
 ---
 # <a name="logging"></a>Registrazione
 
@@ -18,29 +18,29 @@ ms.locfileid: "71197513"
 
 ## <a name="aspnet-core-applications"></a>Applicazioni ASP.NET Core
 
-EF core si integra automaticamente con i meccanismi di registrazione di ASP.NET Core `AddDbContext` ogni `AddDbContextPool` volta che viene utilizzato o. Pertanto, quando si utilizza ASP.NET Core, la registrazione deve essere configurata come descritto nella [documentazione di ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
+EF Core si integra automaticamente con i meccanismi di registrazione di ASP.NET Core ogni volta che viene utilizzato `AddDbContext` o `AddDbContextPool`. Pertanto, quando si utilizza ASP.NET Core, la registrazione deve essere configurata come descritto nella [documentazione di ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
 
 ## <a name="other-applications"></a>Altre applicazioni
 
 Per la registrazione EF Core è necessario un ILoggerFactory configurato con uno o più provider di registrazione. I provider comuni sono forniti nei pacchetti seguenti:
 
-* [Microsoft.Extensions.Logging.Console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): Un semplice logger console.
-* [Microsoft.Extensions.Logging.AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): Supporta le funzionalità "log di diagnostica" e "flusso di log" dei servizi app Azure.
-* [Microsoft.Extensions.Logging.Debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): Registra in un monitoraggio del debugger utilizzando System. Diagnostics. debug. WriteLine ().
-* [Microsoft.Extensions.Logging.EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): Registra nel registro eventi di Windows.
-* [Microsoft.Extensions.Logging.EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): Supporta EventSource/EventListener.
-* [Microsoft.Extensions.Logging.TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): Registra un listener di traccia utilizzando `System.Diagnostics.TraceSource.TraceEvent()`.
+* [Microsoft. Extensions. Logging. console](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/): un semplice logger della console.
+* [Microsoft. Extensions. Logging. AzureAppServices](https://www.nuget.org/packages/Microsoft.Extensions.Logging.AzureAppServices/): supporta le funzionalità "log di diagnostica" e "flusso di log" dei servizi app Azure.
+* [Microsoft. Extensions. Logging. debug](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Debug/): registra in un monitor del debugger usando System. Diagnostics. debug. WriteLine ().
+* [Microsoft. Extensions. Logging. EventLog](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventLog/): registra nel registro eventi di Windows.
+* [Microsoft. Extensions. Logging. EventSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.EventSource/): supporta EventSource/EventListener.
+* [Microsoft. Extensions. Logging. TraceSource](https://www.nuget.org/packages/Microsoft.Extensions.Logging.TraceSource/): registra un listener di traccia utilizzando `System.Diagnostics.TraceSource.TraceEvent()`.
 
 Dopo l'installazione dei pacchetti appropriati, l'applicazione deve creare un'istanza singleton/globale di un LoggerFactory. Ad esempio, usando il logger della console:
 
-# <a name="version-30tabv3"></a>[Versione 3,0](#tab/v3)
+### <a name="version-30tabv3"></a>[Versione 3,0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#DefineLoggerFactory)]
 
-# <a name="version-2xtabv2"></a>[Versione 2. x](#tab/v2)
+### <a name="version-2xtabv2"></a>[Versione 2.x](#tab/v2)
 
 > [!NOTE]
-> Nell'esempio di codice seguente viene `ConsoleLoggerProvider` usato un costruttore obsoleto nella versione 2,2 e sostituito in 3,0. È possibile ignorare ed escludere gli avvisi quando si usa 2,2.
+> Nell'esempio di codice seguente viene usato un costruttore `ConsoleLoggerProvider` obsoleto nella versione 2,2 e sostituito in 3,0. È possibile ignorare ed escludere gli avvisi quando si usa 2,2.
 
 ``` csharp
 public static readonly LoggerFactory MyLoggerFactory
@@ -49,7 +49,7 @@ public static readonly LoggerFactory MyLoggerFactory
 
 ***
 
-Questa istanza singleton/globale deve quindi essere registrata con EF Core su `DbContextOptionsBuilder`. Ad esempio:
+Questa istanza singleton/globale deve quindi essere registrata con EF Core nel `DbContextOptionsBuilder`. Ad esempio:
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContext.cs#RegisterLoggerFactory)]
 
@@ -60,14 +60,14 @@ Questa istanza singleton/globale deve quindi essere registrata con EF Core su `D
 
 L'applicazione può controllare ciò che viene registrato configurando un filtro in ILoggerProvider. Ad esempio:
 
-# <a name="version-30tabv3"></a>[Versione 3,0](#tab/v3)
+### <a name="version-30tabv3"></a>[Versione 3,0](#tab/v3)
 
 [!code-csharp[Main](../../../samples/core/Miscellaneous/Logging/Logging/BloggingContextWithFiltering.cs#DefineLoggerFactory)]
 
-# <a name="version-2xtabv2"></a>[Versione 2. x](#tab/v2)
+### <a name="version-2xtabv2"></a>[Versione 2.x](#tab/v2)
 
 > [!NOTE]
-> Nell'esempio di codice seguente viene `ConsoleLoggerProvider` usato un costruttore obsoleto nella versione 2,2 e sostituito in 3,0. È possibile ignorare ed escludere gli avvisi quando si usa 2,2.
+> Nell'esempio di codice seguente viene usato un costruttore `ConsoleLoggerProvider` obsoleto nella versione 2,2 e sostituito in 3,0. È possibile ignorare ed escludere gli avvisi quando si usa 2,2.
 
 ``` csharp
 public static readonly LoggerFactory MyLoggerFactory
@@ -82,9 +82,10 @@ public static readonly LoggerFactory MyLoggerFactory
 ***
 
 In questo esempio, il log viene filtrato in modo da restituire solo i messaggi:
- * nella categoria ' Microsoft. EntityFrameworkCore. database. Command '
- * a livello di "informazioni"
 
-Per EF core, le `DbLoggerCategory` categorie di logger sono definite nella classe per facilitare la ricerca delle categorie, ma vengono risolte in stringhe semplici.
+* nella categoria ' Microsoft. EntityFrameworkCore. database. Command '
+* a livello di "informazioni"
+
+Per EF Core, le categorie di logger sono definite nella classe `DbLoggerCategory` per semplificare la ricerca delle categorie, ma vengono risolte in stringhe semplici.
 
 Per ulteriori informazioni sull'infrastruttura di registrazione sottostante, vedere la [documentazione relativa alla registrazione del ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/logging?tabs=aspnetcore2x).
