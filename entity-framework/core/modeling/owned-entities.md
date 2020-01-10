@@ -5,17 +5,14 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/owned-entities
-ms.openlocfilehash: 7b6d1b3bccbfceb85f03a580ba03a45984d29c74
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 30b91b6e66b6c0f516d1ba12485304b52770cbef
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824601"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781235"
 ---
 # <a name="owned-entity-types"></a>Tipi di entità di proprietà
-
-> [!NOTE]
-> Questa funzionalità è una novità di EF Core 2,0.
 
 EF Core consente di modellare i tipi di entità che possono essere visualizzati solo nelle proprietà di navigazione di altri tipi di entità. Questi sono denominati _tipi di entità di proprietà_. L'entità che contiene un tipo di entità di proprietà è il _proprietario_.
 
@@ -56,7 +53,7 @@ Per comprendere il modo in cui EF Core tiene traccia di questi oggetti, è utile
 
 Per configurare una raccolta di tipi di proprietà, utilizzare `OwnsMany` in `OnModelCreating`.
 
-I tipi di proprietà necessitano di una chiave primaria. Se non sono presenti proprietà valide dei candidati sul tipo .NET, EF Core possibile provare a crearne una. Tuttavia, quando i tipi di proprietà vengono definiti tramite una raccolta, non è sufficiente creare una proprietà shadow da utilizzare come chiave esterna nel proprietario e la chiave primaria dell'istanza di proprietà, come per `OwnsOne`: possono essere presenti più istanze di tipo di proprietà per ciascuna di esse. proprietario, quindi la chiave del proprietario non è sufficiente per fornire un'identità univoca per ogni istanza di proprietà.
+I tipi di proprietà necessitano di una chiave primaria. Se non sono presenti proprietà valide dei candidati sul tipo .NET, EF Core possibile provare a crearne una. Tuttavia, quando i tipi di proprietà vengono definiti tramite una raccolta, non è sufficiente creare una proprietà shadow da utilizzare come chiave esterna nel proprietario e la chiave primaria dell'istanza di proprietà, come per `OwnsOne`: possono essere presenti più istanze di tipo di proprietà per ogni proprietario e, di conseguenza, la chiave del proprietario non è sufficiente per fornire un'identità univoca per ogni istanza di proprietà.
 
 Le due soluzioni più semplici sono:
 

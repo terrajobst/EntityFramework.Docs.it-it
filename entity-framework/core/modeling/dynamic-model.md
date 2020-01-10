@@ -1,26 +1,34 @@
 ---
 title: Alternanza tra più modelli con lo stesso tipo di DbContext-EF Core
 author: AndriySvyryd
-ms.date: 12/10/2017
+ms.date: 01/03/2020
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/dynamic-model
-ms.openlocfilehash: 034076b1595894e80b98467354f6c9f139bd7426
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 156d5666cbd9352b274ddc70c99704ca62aeb1fd
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655721"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781131"
 ---
 # <a name="alternating-between-multiple-models-with-the-same-dbcontext-type"></a>Alternanza tra più modelli con lo stesso tipo di DbContext
 
-Il modello incorporato `OnModelCreating` possibile utilizzare una proprietà nel contesto per modificare la modalità di compilazione del modello. Ad esempio, può essere usata per escludere una determinata proprietà:
+Il modello incorporato `OnModelCreating` può utilizzare una proprietà nel contesto per modificare la modalità di compilazione del modello. Si supponga, ad esempio, di voler configurare un'entità in modo diverso in base a una proprietà:
 
-[!code-csharp[Main](../../../samples/core/DynamicModel/DynamicContext.cs?name=Class)]
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnModelCreating)]
+
+Sfortunatamente, questo codice non funziona così com'è, poiché EF compila il modello ed esegue `OnModelCreating` una sola volta, memorizzando nella cache il risultato per motivi di prestazioni. Tuttavia, è possibile associare il meccanismo di memorizzazione nella cache del modello per rendere EF consapevole della proprietà che produce modelli diversi.
 
 ## <a name="imodelcachekeyfactory"></a>IModelCacheKeyFactory
 
-Tuttavia, se si è provato a eseguire l'operazione precedente senza modifiche aggiuntive, si otterrebbe lo stesso modello ogni volta che viene creato un nuovo contesto per qualsiasi valore di `IgnoreIntProperty`. Questo è dovuto al meccanismo di memorizzazione nella cache del modello utilizzato da Entity Framework per migliorare le prestazioni richiamando `OnModelCreating` una sola volta e memorizzando nella cache il modello.
+EF usa il `IModelCacheKeyFactory` per generare chiavi di cache per i modelli; per impostazione predefinita, EF presuppone che per un determinato tipo di contesto il modello sarà lo stesso, quindi l'implementazione predefinita di questo servizio restituisce una chiave che contiene solo il tipo di contesto. Per produrre modelli diversi dallo stesso tipo di contesto, è necessario sostituire il servizio `IModelCacheKeyFactory` con l'implementazione corretta; la chiave generata verrà confrontata con altre chiavi del modello usando il metodo `Equals`, prendendo in considerazione tutte le variabili che influiscono sul modello:
 
-Per impostazione predefinita, EF presuppone che per un determinato tipo di contesto il modello sarà lo stesso. Per eseguire questa operazione, l'implementazione predefinita di `IModelCacheKeyFactory` restituisce una chiave che contiene solo il tipo di contesto. Per modificare questa operazione, è necessario sostituire il servizio `IModelCacheKeyFactory`. La nuova implementazione deve restituire un oggetto che può essere confrontato con altre chiavi del modello usando il metodo `Equals` che prende in considerazione tutte le variabili che interessano il modello:
+Nell'implementazione seguente viene preso in considerazione il `IgnoreIntProperty` quando si produce una chiave di cache del modello:
 
-[!code-csharp[Main](../../../samples/core/DynamicModel/DynamicModelCacheKeyFactory.cs?name=Class)]
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
+
+Infine, registrare la nuova `IModelCacheKeyFactory` nel `OnConfiguring`del contesto:
+
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnConfiguring)]
+
+Per ulteriori informazioni sul contesto, vedere il [progetto di esempio completo](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/DynamicModel) .

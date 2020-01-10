@@ -3,19 +3,16 @@ title: Suddivisione di tabelle-EF Core
 description: Come configurare la suddivisione delle tabelle con Entity Framework Core
 author: AndriySvyryd
 ms.author: ansvyryd
-ms.date: 04/10/2019
+ms.date: 01/03/2020
 uid: core/modeling/table-splitting
-ms.openlocfilehash: 0e48c516de43cdc2b54c56f1a96f5e01f9fbbbc4
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: c38d3ee0efa82f84a1051017ae40c9f3fdd57f1f
+ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824565"
+ms.lasthandoff: 01/09/2020
+ms.locfileid: "75781170"
 ---
 # <a name="table-splitting"></a>Suddivisione di tabelle
-
->[!NOTE]
-> Questa funzionalità è una novità di EF Core 2,0.
 
 EF Core consente di eseguire il mapping di due o più entità a una singola riga. Questa operazione è denominata _suddivisione tabelle_ o _condivisione tabella_.
 
@@ -33,21 +30,28 @@ In questo esempio `Order` rappresenta un subset di `DetailedOrder`.
 
 Oltre alla configurazione richiesta, viene chiamato `Property(o => o.Status).HasColumnName("Status")` per eseguire il mapping `DetailedOrder.Status` alla stessa colonna `Order.Status`.
 
-[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting&highlight=3)]
+[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
 > [!TIP]
 > Per ulteriori informazioni sul contesto, vedere il [progetto di esempio completo](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Modeling/TableSplitting) .
 
 ## <a name="usage"></a>Usage
 
-Il salvataggio e l'esecuzione di query sulle entità tramite la suddivisione delle tabelle vengono eseguite in modo analogo alle altre entità. A partire da EF Core 3,0 è possibile `null`il riferimento all'entità dipendente. Se tutte le colonne utilizzate dall'entità dipendente sono `NULL` è il database, non verrà creata alcuna istanza per la query. Questa situazione si verifica anche quando tutte le proprietà sono facoltative e impostate su `null`, che potrebbe non essere previsto.
+Il salvataggio e l'esecuzione di query sulle entità tramite la suddivisione delle tabelle vengono eseguite in modo analogo alle altre entità:
 
 [!code-csharp[Usage](../../../samples/core/Modeling/TableSplitting/Program.cs?name=Usage)]
 
+## <a name="optional-dependent-entity"></a>Entità dipendente facoltativa
+
+> [!NOTE]
+> Questa funzionalità è stata introdotta in EF Core 3,0.
+
+Se tutte le colonne utilizzate da un'entità dipendente sono `NULL` nel database, non verrà creata alcuna istanza per la query. In questo modo è possibile modellare un'entità dipendente facoltativa, in cui la proprietà relationship nell'entità è null. Si noti che questa situazione si verificherà anche che tutte le proprietà del dipendente sono facoltative e impostate su `null`, che potrebbe non essere previsto.
+
 ## <a name="concurrency-tokens"></a>Token di concorrenza
 
-Se uno dei tipi di entità che condividono una tabella include un token di concorrenza, è necessario che sia incluso in tutti gli altri tipi di entità per evitare un valore del token di concorrenza non aggiornato quando viene aggiornata solo una delle entità mappate alla stessa tabella.
+Se uno dei tipi di entità che condividono una tabella include un token di concorrenza, è necessario includerlo anche in tutti gli altri tipi di entità. Questa operazione è necessaria per evitare un valore del token di concorrenza non aggiornato quando viene aggiornata solo una delle entità mappate alla stessa tabella.
 
-Per evitare di esporlo al codice consumer, è possibile crearne uno in stato di ombreggiatura.
+Per evitare che il token di concorrenza venga esposto al codice consumer, è possibile crearne uno come [proprietà shadow](xref:core/modeling/shadow-properties):
 
 [!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]
