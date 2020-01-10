@@ -5,12 +5,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a6b9cd22-6803-4c6c-a4d4-21147c0a81cb
 uid: efcore-and-ef6/index
-ms.openlocfilehash: 9fe4905de5bd81fce083d620724b7fad4c6dd11b
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.openlocfilehash: 62f7da64bbb6289edd38b877af71fc126e03d0f6
+ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182033"
+ms.lasthandoff: 12/27/2019
+ms.locfileid: "75502289"
 ---
 # <a name="compare-ef-core--ef6"></a>Confronto tra EF Core e EF6
 
@@ -30,7 +30,7 @@ EF Core è stato progettato per offrire un'esperienza di sviluppo simile a EF6. 
 
 ## <a name="feature-comparison"></a>Confronto tra funzionalità
 
-EF Core offre nuove funzionalità che non verranno implementate in EF6 (ad esempio [chiavi alternative](xref:core/modeling/alternate-keys), [aggiornamenti batch](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements) e [valutazione mista client/database nelle query LINQ](xref:core/querying/client-eval). Trattandosi di una nuova base di codice, mancano anche alcune funzionalità presenti in EF6.
+EF Core offre nuove funzionalità che non verranno implementate in EF6 (ad esempio [chiavi alternative](xref:core/modeling/keys#alternate-keys), [aggiornamenti batch](xref:core/what-is-new/ef-core-1.0#relational-batching-of-statements) e [valutazione mista client/database nelle query LINQ](xref:core/querying/client-eval). Trattandosi di una nuova base di codice, mancano anche alcune funzionalità presenti in EF6.
 
 Le tabelle seguenti confrontano le funzionalità disponibili in EF Core e in EF6. Si tratta di un confronto generale in cui non vengono elencate tutte le funzionalità o illustrate le differenze tra la stessa funzionalità nelle diverse versioni di Entity Framework.
 
@@ -81,7 +81,7 @@ La colonna EF Core contiene la versione del prodotto in cui la funzionalità è 
 | Conversione di GroupBy                                   | Sì      | 2.1                                   |
 | Caricamento dei dati correlati: eager                           | Sì      | 1.0                                   |
 | Caricamento dei dati correlati: caricamento eager per i tipi derivati |          | 2.1                                   |
-| Caricamento dei dati correlati: Differita                            | Sì      | 2.1                                   |
+| Caricamento dei dati correlati: Lazy                            | Sì      | 2.1                                   |
 | Caricamento dei dati correlati: Explicit                        | Sì      | 1.1                                   |
 | Query SQL non elaborate: Tipi di entità                         | Sì      | 1.0                                   |
 | Query SQL non elaborate: tipi di entità senza chiave                 | Sì      | 2.1                                   |

@@ -79,18 +79,14 @@
           items:
             - name: Panoramica
               href: core/modeling/index.md
-            - name: Inclusione ed esclusione di tipi
-              href: core/modeling/included-types.md
-            - name: Inclusione ed esclusione di proprietà
-              href: core/modeling/included-properties.md
-            - name: Chiavi (primarie)
+            - name: Tipi di entità
+              href: core/modeling/entity-types.md
+            - name: Proprietà delle entità
+              href: core/modeling/entity-properties.md
+            - name: Tasti
               href: core/modeling/keys.md
             - name: Valori generati
               href: core/modeling/generated-properties.md
-            - name: Proprietà obbligatorie e facoltative
-              href: core/modeling/required-optional.md
-            - name: Lunghezza massima
-              href: core/modeling/max-length.md
             - name: Token di concorrenza
               href: core/modeling/concurrency.md
             - name: Proprietà shadow
@@ -99,10 +95,10 @@
               href: core/modeling/relationships.md
             - name: Indexes
               href: core/modeling/indexes.md
-            - name: Chiavi alternative
-              href: core/modeling/alternate-keys.md
             - name: Ereditarietà
               href: core/modeling/inheritance.md
+            - name: Sequenze
+              href: core/modeling/sequences.md
             - name: Campi sottostanti
               href: core/modeling/backing-field.md
             - name: Conversioni di valori
@@ -119,36 +115,13 @@
               href: core/modeling/keyless-entity-types.md
             - name: Alternanza di modelli con lo stesso DbContext
               href: core/modeling/dynamic-model.md
-            - name: Dati spaziali (GIS)
+            - name: Dati spaziali
+              displayName: GIS
               href: core/modeling/spatial.md
             - name: Modellazione di database relazionali
               items:
                 - name: Panoramica
                   href: core/modeling/relational/index.md
-                - name: Mapping di tabella
-                  href: core/modeling/relational/tables.md
-                - name: Mapping di colonna
-                  href: core/modeling/relational/columns.md
-                - name: Tipi di dati
-                  href: core/modeling/relational/data-types.md
-                - name: Chiavi primarie
-                  href: core/modeling/relational/primary-keys.md
-                - name: Schema predefinito
-                  href: core/modeling/relational/default-schema.md
-                - name: Colonne calcolate
-                  href: core/modeling/relational/computed-columns.md
-                - name: Sequenze
-                  href: core/modeling/relational/sequences.md
-                - name: Valori predefiniti
-                  href: core/modeling/relational/default-values.md
-                - name: Indexes
-                  href: core/modeling/relational/indexes.md
-                - name: Vincoli della chiave esterna
-                  href: core/modeling/relational/fk-constraints.md
-                - name: Chiavi alternative (vincoli univoci)
-                  href: core/modeling/relational/unique-constraints.md
-                - name: Ereditarietà (database relazionale)
-                  href: core/modeling/relational/inheritance.md
         - name: Gestione di schemi di database
           items:
             - name: Panoramica
@@ -371,7 +344,7 @@
                   items:
                     - name: Enumerazioni
                       href: ef6/modeling/code-first/data-types/enums.md
-                    - name: Spatial
+                    - name: Spaziali
                       href: ef6/modeling/code-first/data-types/spatial.md
                 - name: Convenzioni
                   items:
@@ -419,7 +392,7 @@
                       href: ef6/modeling/designer/data-types/complex-types.md
                     - name: Enumerazioni
                       href: ef6/modeling/designer/data-types/enums.md
-                    - name: Spatial
+                    - name: Spaziali
                       href: ef6/modeling/designer/data-types/spatial.md
                 - name: Mapping di suddivisione
                   items:
@@ -465,7 +438,7 @@
                       href: ef6/modeling/designer/advanced/defining-query.md
                     - name: Più set di risultati
                       href: ef6/modeling/designer/advanced/multiple-result-sets.md
-                    - name: Funzione con valori di tabella
+                    - name: Funzioni con valori di tabella
                       href: ef6/modeling/designer/advanced/tvfs.md
                 - name: Tasti di scelta rapida
                   href: ef6/modeling/designer/keyboard-shortcuts.md
