@@ -4,58 +4,58 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: a628795e-64df-4f24-a5e8-76bc261e7ed8
 uid: core/modeling/backing-field
-ms.openlocfilehash: 288440a4494117fe59d27187e24424c4d2fd44ab
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.openlocfilehash: 20cf9dc9b0d556f29680bce588bcbdc4ea48fa74
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72811882"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124379"
 ---
 # <a name="backing-fields"></a>Campi sottostanti
 
-> [!NOTE]  
-> Questa funzionalità è una novità di EF Core 1,1.
+I campi di backup consentono a EF di leggere e/o scrivere in un campo anziché in una proprietà. Questa operazione può essere utile quando si utilizza l'incapsulamento della classe per limitare l'utilizzo di e/o migliorare la semantica di accesso ai dati da parte del codice dell'applicazione, ma il valore deve essere letto e/o scritto nel database senza utilizzare tali restrizioni/miglioramenti.
 
-I campi di backup consentono a EF di leggere e/o scrivere in un campo anziché in una proprietà. Questa operazione può essere utile quando si utilizza l'incapsulamento nella classe per limitare l'utilizzo di e/o migliorare la semantica di accesso ai dati da parte del codice dell'applicazione, ma il valore deve essere letto e/o scritto nel database senza utilizzare tali restrizioni/ miglioramenti.
+## <a name="basic-configuration"></a>Configurazione di base
 
-## <a name="conventions"></a>Convenzioni
-
-Per convenzione, i campi seguenti vengono individuati come campi di backup per una determinata proprietà (elencati in ordine di precedenza). I campi vengono individuati solo per le proprietà incluse nel modello. Per ulteriori informazioni su quali proprietà sono incluse nel modello, vedere [inclusione & escluse le proprietà](included-properties.md).
+Per convenzione, i campi seguenti vengono individuati come campi di backup per una determinata proprietà (elencati in ordine di precedenza). 
 
 * `_<camel-cased property name>`
 * `_<property name>`
 * `m_<camel-cased property name>`
 * `m_<property name>`
 
+Nell'esempio seguente, la proprietà `Url` è configurata in modo da avere `_url` come campo di supporto:
+
 [!code-csharp[Main](../../../samples/core/Modeling/Conventions/BackingField.cs#Sample)]
 
-Quando viene configurato un campo sottostante, EF scrive direttamente in quel campo quando materializzazione le istanze dell'entità dal database, invece di usare il metodo di impostazione della proprietà. Se EF deve leggere o scrivere il valore in altri momenti, utilizzerà la proprietà, se possibile. Se, ad esempio, EF deve aggiornare il valore di una proprietà, utilizzerà il metodo di impostazione della proprietà, se ne è stato definito uno. Se la proprietà è di sola lettura, verrà scritta nel campo.
+Si noti che i campi sottoposti a backup vengono individuati solo per le proprietà incluse nel modello. Per ulteriori informazioni su quali proprietà sono incluse nel modello, vedere [inclusione & escluse le proprietà](included-properties.md).
 
-## <a name="data-annotations"></a>Annotazioni dei dati
+È anche possibile configurare i campi di supporto in modo esplicito, ad esempio se il nome del campo non corrisponde alle convenzioni precedenti:
 
-Non è possibile configurare i campi di backup con le annotazioni dei dati.
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs?name=BackingField&highlight=5)]
 
-## <a name="fluent-api"></a>API Fluent
+## <a name="field-and-property-access"></a>Accesso ai campi e alle proprietà
 
-È possibile usare l'API Fluent per configurare un campo sottostante per una proprietà.
+Per impostazione predefinita, EF leggerà e scriverà sempre nel campo sottostante, presumendo che sia stato configurato correttamente, e non userà mai la proprietà. Tuttavia, EF supporta anche altri modelli di accesso. Ad esempio, l'esempio seguente indica a EF di scrivere nel campo sottostante solo quando materializzazione e di usare la proprietà in tutti gli altri casi:
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingField.cs#Sample)]
+[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs?name=BackingFieldAccessMode&highlight=6)]
 
-### <a name="controlling-when-the-field-is-used"></a>Controllo quando viene utilizzato il campo
+Per il set completo di opzioni supportate, vedere l' [enumerazione PropertyAccessMode](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) .
 
-È possibile configurare quando EF usa il campo o la proprietà. Per le opzioni supportate, vedere l' [enumerazione PropertyAccessMode](https://docs.microsoft.com/dotnet/api/microsoft.entityframeworkcore.propertyaccessmode) .
+> [!NOTE]
+> Con EF Core 3,0, la modalità di accesso alla proprietà predefinita è cambiata da `PreferFieldDuringConstruction` a `PreferField`.
 
-[!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldAccessMode.cs#Sample)]
+## <a name="field-only-properties"></a>Proprietà solo campo
 
-### <a name="fields-without-a-property"></a>Campi senza una proprietà
+È anche possibile creare una proprietà concettuale nel modello che non disponga di una proprietà CLR corrispondente nella classe di entità, ma usa invece un campo per archiviare i dati nell'entità. Questo è diverso dalle [proprietà shadow](shadow-properties.md), in cui i dati vengono archiviati nello strumento di rilevamento delle modifiche, anziché nel tipo CLR dell'entità. Le proprietà di solo campo vengono in genere utilizzate quando la classe di entità utilizza metodi anziché proprietà per ottenere o impostare valori oppure nei casi in cui i campi non devono essere esposti nel modello di dominio, ad esempio le chiavi primarie.
 
-È anche possibile creare una proprietà concettuale nel modello che non disponga di una proprietà CLR corrispondente nella classe di entità, ma usa invece un campo per archiviare i dati nell'entità. Questo è diverso dalle [proprietà shadow](shadow-properties.md), in cui i dati vengono archiviati nello strumento di rilevamento delle modifiche. Questa operazione viene in genere utilizzata se la classe di entità utilizza metodi per ottenere o impostare i valori.
-
-È possibile assegnare a EF il nome del campo nell'API `Property(...)`. Se non è presente alcuna proprietà con il nome specificato, Entity Framework cercherà un campo.
+È possibile configurare una proprietà di solo campo fornendo un nome nell'API `Property(...)`:
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/BackingFieldNoProperty.cs#Sample)]
 
-Quando non è presente alcuna proprietà nella classe di entità, è possibile usare il metodo `EF.Property(...)` in una query LINQ per fare riferimento alla proprietà che è concettualmente parte del modello.
+EF tenterà di trovare una proprietà CLR con il nome specificato o un campo se non viene trovata una proprietà. Se non viene trovata alcuna proprietà né un campo, verrà invece configurata una proprietà shadow.
+
+Potrebbe essere necessario fare riferimento a una proprietà solo campo dalle query LINQ, ma tali campi sono in genere privati. È possibile usare il metodo `EF.Property(...)` in una query LINQ per fare riferimento al campo:
 
 ``` csharp
 var blogs = db.blogs.OrderBy(b => EF.Property<string>(b, "_validatedUrl"));

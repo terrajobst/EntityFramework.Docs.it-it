@@ -4,12 +4,12 @@ author: roji
 ms.date: 09/09/2019
 ms.assetid: bde4e0ee-fba3-4813-a849-27049323d301
 uid: core/miscellaneous/nullable-reference-types
-ms.openlocfilehash: 0d05902566b6b166f1267915d9f698ed29dff588
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.openlocfilehash: c16a475c363320cd18804a4efe78ccae1ae22f0d
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502067"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124353"
 ---
 # <a name="working-with-nullable-reference-types"></a>Utilizzo dei tipi di riferimento Nullable
 
@@ -38,9 +38,9 @@ Le proprietà di navigazione obbligatorie presentano un ulteriore problema: Sebb
 
 Un modo per gestire questi scenari consiste nel disporre di una proprietà che non ammette i valori null con un [campo](xref:core/modeling/backing-field)sottostante Nullable:
 
-[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=12-17)]
+[!code-csharp[Main](../../../samples/core/Miscellaneous/NullableReferenceTypes/Order.cs?range=10-17)]
 
-Poiché la proprietà di navigazione è non nullable, viene configurata una navigazione obbligatoria. fino a quando lo spostamento viene caricato correttamente, il dipendente sarà accessibile tramite la proprietà. Se, tuttavia, viene eseguito l'accesso alla proprietà senza prima caricare correttamente l'entità correlata, viene generata un'eccezione InvalidOperationException, perché il contratto API è stato usato in modo errato.
+Poiché la proprietà di navigazione è non nullable, viene configurata una navigazione obbligatoria. fino a quando lo spostamento viene caricato correttamente, il dipendente sarà accessibile tramite la proprietà. Se, tuttavia, viene eseguito l'accesso alla proprietà senza prima caricare correttamente l'entità correlata, viene generata un'eccezione InvalidOperationException, perché il contratto API è stato usato in modo errato. Si noti che EF deve essere configurato per accedere sempre al campo sottostante e non alla proprietà, perché si basa sulla possibilità di leggere il valore anche quando viene annullato. per informazioni su come eseguire questa operazione, vedere la documentazione relativa ai [campi di supporto](xref:core/modeling/backing-field) e prendere in considerazione la possibilità di specificare `PropertyAccessMode.Field` per assicurarsi che la configurazione sia corretta.
 
 Come alternativa Terser, è possibile semplicemente inizializzare la proprietà su null con l'ausilio dell'operatore con indulgenza null (!):
 
@@ -63,6 +63,7 @@ Si verifica un problema simile quando si includono più livelli di relazioni tra
 
 Se questa operazione viene eseguita molto e i tipi di entità in questione sono prevalentemente (o esclusivamente) usati nelle query di EF Core, è consigliabile rendere le proprietà di navigazione non nullable e configurarle come facoltative tramite l'API Fluent o le annotazioni dei dati. Tutti gli avvisi del compilatore vengono rimossi mantenendo la relazione facoltativa. Tuttavia, se le entità vengono attraversate all'esterno di EF Core, è possibile osservare valori null anche se le proprietà sono annotate come non nullable.
 
-## <a name="scaffolding"></a>Scaffolding
+## <a name="limitations"></a>Limitazioni
 
-[La C# funzionalità a 8 tipi di riferimento Nullable](/dotnet/csharp/tutorials/nullable-reference-types) non è attualmente supportata in Reverse Engineering: EF core genera C# sempre codice che presuppone che la funzionalità sia disattivata. Ad esempio, le colonne di testo Nullable verranno sottoposto a impalcatura come proprietà con tipo `string`, non `string?`, con l'API Fluent o le annotazioni dei dati utilizzate per configurare se una proprietà è obbligatoria o meno. È possibile modificare il codice con impalcature e sostituirle C# con annotazioni di valori null. Il supporto dell'impalcatura per i tipi di riferimento nullable viene rilevato da Issue [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520).
+* Il reverse engineering non supporta [ C# attualmente 8 tipi di riferimento Nullable (NRTs)](/dotnet/csharp/tutorials/nullable-reference-types): EF Core C# genera sempre codice che presuppone che la funzionalità sia disattivata. Ad esempio, le colonne di testo Nullable verranno sottoposto a impalcatura come proprietà con tipo `string`, non `string?`, con l'API Fluent o le annotazioni dei dati utilizzate per configurare se una proprietà è obbligatoria o meno. È possibile modificare il codice con impalcature e sostituirle C# con annotazioni di valori null. Il supporto dell'impalcatura per i tipi di riferimento nullable viene rilevato da Issue [#15520](https://github.com/aspnet/EntityFrameworkCore/issues/15520).
+* La superficie dell'API pubblica di EF Core non è ancora stata annotata per il supporto di valori null (l'API pubblica è "ignaro null"), rendendo talvolta scomodo da usare quando la funzionalità NRT è attivata. In particolare, include gli operatori LINQ asincroni esposti da EF Core, ad esempio [FirstOrDefaultAsync](/dotnet/api/microsoft.entityframeworkcore.entityframeworkqueryableextensions.firstordefaultasync#Microsoft_EntityFrameworkCore_EntityFrameworkQueryableExtensions_FirstOrDefaultAsync__1_System_Linq_IQueryable___0__System_Linq_Expressions_Expression_System_Func___0_System_Boolean___System_Threading_CancellationToken_). Si prevede di risolvere questo problema per la versione 5,0.

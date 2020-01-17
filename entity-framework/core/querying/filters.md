@@ -3,12 +3,12 @@ title: Filtri di query globali - EF Core
 author: anpete
 ms.date: 11/03/2017
 uid: core/querying/filters
-ms.openlocfilehash: c9bbb8a5889834ea078ddb7e432863b3d0cf2ffe
-ms.sourcegitcommit: 0cc9578fd49802789a00c0044b4e57325476ca2e
+ms.openlocfilehash: f4ee9b77411290249e763f9cb8492eea61803e91
+ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/04/2019
-ms.locfileid: "70271451"
+ms.lasthandoff: 01/16/2020
+ms.locfileid: "76124392"
 ---
 # <a name="global-query-filters"></a>Filtri di query globali
 
@@ -43,7 +43,7 @@ Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno 
 > Si noti l'uso del campo a livello di istanza di DbContext `_tenantId`, usato per impostare il tenant corrente. I filtri a livello di modello useranno il valore dell'istanza del contesto corretta, ovvero l'istanza che esegue la query.
 
 > [!NOTE]
-> Attualmente non è possibile definire più filtri query sulla stessa entità. verrà applicato solo l'ultimo. Tuttavia, è possibile definire un singolo filtro con più condizioni usando l'operatore _and_ logico ([ `&&` in C# ](https://docs.microsoft.com/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-)).
+> Attualmente non è possibile definire più filtri query sulla stessa entità. verrà applicato solo l'ultimo. Tuttavia, è possibile definire un singolo filtro con più condizioni usando l'operatore _and_ logico ([`&&` in C# ](https://docs.microsoft.com/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-)).
 
 ## <a name="disabling-filters"></a>Disabilitazione dei filtri
 
@@ -55,5 +55,4 @@ Le espressioni del predicato passate alle chiamate di _HasQueryFilter_ verranno 
 
 I filtri di query globali presentano le limitazioni seguenti:
 
-* I filtri non possono contenere riferimenti a proprietà di navigazione.
 * I filtri possono essere definiti solo per il tipo di entità radice di una gerarchia di ereditarietà.
