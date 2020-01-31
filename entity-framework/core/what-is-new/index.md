@@ -1,15 +1,15 @@
 ---
 title: Versioni e pianificazione di EF Core
 author: ajcvickers
-ms.date: 01/14/2020
+ms.date: 01/29/2020
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: 8d74c24021fd62c5c5d944eaf3973b344fdb1e9c
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.openlocfilehash: 0704b624a50d0736fefbb5633e9e7e657499a703
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124405"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888065"
 ---
 # <a name="ef-core-releases-and-planning"></a>Versioni e pianificazione di EF Core
 
@@ -35,18 +35,32 @@ Per informazioni sulla scadenza del supporto e sulle versioni con supporto a lun
 * Gli aggiornamenti delle versioni principali (ad esempio, da EF Core 2 a EF Core 3) spesso presentano modifiche che causano un'interruzione. Quando si effettua l'aggiornamento tra versioni principali, è consigliabile eseguire test approfonditi. Usare i collegamenti precedenti relativi alle modifiche che causano un'interruzione per informazioni aggiuntive sulla gestione di tali modifiche.
 * Gli aggiornamenti delle versioni secondarie in genere non contengono modifiche che causano un'interruzione. È comunque consigliabile eseguire test approfonditi poiché le nuove funzionalità possono introdurre regressioni.
 
+## <a name="release-planning-and-schedules"></a>Pianificazione delle versioni
+
+Le versioni EF Core sono allineate con la [pianificazione della distribuzione di .NET Core](https://github.com/dotnet/core/blob/master/roadmap.md).
+
+Le versioni patch vengono in genere distribuite mensilmente, ma hanno un lead time lungo.
+Stiamo lavorando per migliorare questo aspetto.
+
+Per altre informazioni su come viene deciso quali elementi rilasciare in ogni versione, vedere il [processo di pianificazione delle versioni](release-planning.md).
+In genere non viene eseguita una pianificazione dettagliata a lungo termine, oltre la versione principale o secondaria successiva.
+
 ## <a name="ef-core-50"></a>EF Core 5.0
 
-Le versioni EF Core sono allineate con la [pianificazione della distribuzione di .NET Core](https://github.com/dotnet/core/blob/master/roadmap.md). La prossima versione stabile pianificata è **EF Core 5.0**, prevista per novembre 2020.
+La prossima versione stabile pianificata è **EF Core 5.0**, prevista per novembre 2020.
 
 È stato creato un [piano generale per EF Core 5.0](ef-core-5.0/plan.md) seguendo il [processo di pianificazione delle versioni](release-planning.md) documentato.
 
-I commenti e i suggerimenti dei clienti sulla pianificazione sono importanti. Il modo migliore per indicare l'importanza di un problema consiste nel votare (Pollice in su) per tale problema in GitHub. Questi dati verranno inclusi nel processo di pianificazione per la versione successiva.
+I commenti e i suggerimenti dei clienti sulla pianificazione sono importanti.
+Il modo migliore per indicare l'importanza di un problema consiste nel votare (pollice in su 👍) per tale problema in GitHub.
+Questi dati verranno inclusi nel processo di pianificazione per la versione successiva.
 
 ### <a name="get-it-now"></a>Scaricare il software
 
 I pacchetti di EF Core 5.0 sono **già disponibili** come [build giornaliere](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md). 
 
-L'uso delle build giornaliere è un ottimo modo per individuare i problemi e fornire commenti e suggerimenti il prima possibile. Prima viene ricevuto tale feedback, maggiori saranno le probabilità di poter intervenire prima della successiva versione ufficiale. Microsoft si impegna a fondo per fornire build giornaliere ottimali, eseguendo più di 55.000 test su ciascuna piattaforma per ogni build.
+L'uso delle build giornaliere è un ottimo modo per individuare i problemi e fornire commenti e suggerimenti il prima possibile.
+Prima viene ricevuto tale feedback, maggiori saranno le probabilità di poter intervenire prima della successiva versione ufficiale.
+Microsoft si impegna a fondo per fornire build giornaliere ottimali, eseguendo più di 56.000 test su ciascuna piattaforma per ogni build.
 
 I pacchetti di anteprima saranno disponibili su NuGet più avanti nel corso dell'anno.
