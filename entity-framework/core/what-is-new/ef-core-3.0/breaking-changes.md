@@ -3,12 +3,12 @@ title: Modifiche che causano un'interruzione in EF Core 3.0 - EF Core
 author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
-ms.openlocfilehash: 0626ffe98843fbf5ee0e2de4b269da6c395c07f6
-ms.sourcegitcommit: 4e86f01740e407ff25e704a11b1f7d7e66bfb2a6
+ms.openlocfilehash: 6e0c17a22b56b206f18e47f678e3e237d5c42375
+ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/09/2020
-ms.locfileid: "75781222"
+ms.lasthandoff: 01/30/2020
+ms.locfileid: "76888109"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 
@@ -109,6 +109,9 @@ Se una query non può essere convertita completamente, riscrivere la query in un
 
 [Problema n. 15498](https://github.com/aspnet/EntityFrameworkCore/issues/15498)
 
+> [!IMPORTANT] 
+> EF Core 3,1 di nuovo la destinazione .NET Standard 2,0. Questa operazione riporta il supporto per .NET Framework.
+
 **Comportamento precedente**
 
 Prima della versione 3.0, EF Core usava come destinazione .NET Standard 2.0 e poteva essere eseguito in tutte le piattaforme che supportano tale standard, incluso .NET Framework.
@@ -123,7 +126,7 @@ Questo comportamento deriva da una decisione strategica per le tecnologie .NET, 
 
 **Mitigazioni**
 
-Valutare il passaggio a una piattaforma .NET moderna. Se non è possibile, continuare a usare EF Core 2.1 o EF Core 2.2, che supportano entrambe .NET Framework.
+Usare EF Core 3,1.
 
 <a name="no-longer"></a>
 ### <a name="entity-framework-core-is-no-longer-part-of-the-aspnet-core-shared-framework"></a>Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core
