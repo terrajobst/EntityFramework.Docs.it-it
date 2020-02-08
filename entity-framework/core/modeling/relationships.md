@@ -4,12 +4,12 @@ description: Come configurare le relazioni tra i tipi di entità quando si usa E
 author: AndriySvyryd
 ms.date: 11/21/2019
 uid: core/modeling/relationships
-ms.openlocfilehash: 6b3e0636bfa266b78baafe1b6e318c9707294560
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.openlocfilehash: 6d68e813cec6c989e8e4cb848f8740489645c65c
+ms.sourcegitcommit: 89567d08c9d8bf9c33bb55a62f17067094a4065a
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502188"
+ms.lasthandoff: 02/06/2020
+ms.locfileid: "77051407"
 ---
 # <a name="relationships"></a>Relazioni
 
@@ -26,9 +26,9 @@ Esistono diversi termini usati per descrivere le relazioni
 
 * **Entità principale:** Si tratta dell'entità che contiene le proprietà chiave primaria/alternativa. Noto anche come ' Parent ' della relazione.
 
-* **Chiave esterna:** Proprietà nell'entità dipendente utilizzate per archiviare i valori della chiave principale per l'entità correlata.
-
 * **Chiave principale:** Proprietà che identificano in modo univoco l'entità principale. Può trattarsi della chiave primaria o di una chiave alternativa.
+
+* **Chiave esterna:** Proprietà nell'entità dipendente utilizzate per archiviare i valori della chiave principale per l'entità correlata.
 
 * **Proprietà di navigazione:** Proprietà definita nell'entità dipendente e/o dipendente che fa riferimento all'entità correlata.
 
@@ -48,9 +48,9 @@ Nel codice seguente viene illustrata una relazione uno-a-molti tra `Blog` e `Pos
 
 * `Blog` è l'entità principale
 
-* `Post.BlogId` è la chiave esterna
-
 * `Blog.BlogId` è la chiave principale (in questo caso è una chiave primaria anziché una chiave alternativa)
+
+* `Post.BlogId` è la chiave esterna
 
 * `Post.Blog` è una proprietà di navigazione di riferimento
 
