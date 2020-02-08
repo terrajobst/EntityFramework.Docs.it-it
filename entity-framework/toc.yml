@@ -19,9 +19,9 @@
       items:
         - name: Panoramica
           href: core/index.md
-        - name: Versioni e pianificazione
+        - name: Versioni e pianificazione (roadmap)
           items:
-            - name: Versioni correnti e pianificate (roadmap)
+            - name: Versioni correnti e pianificate
               href: core/what-is-new/index.md
             - name: Processo di pianificazione delle versioni
               href: core/what-is-new/release-planning.md
@@ -29,6 +29,8 @@
               items:
                 - name: Piano generale
                   href: core/what-is-new/ef-core-5.0/plan.md
+                - name: Novità
+                  href: core/what-is-new/ef-core-5.0/whatsnew.md
             - name: EF Core 3.0
               items:
                 - name: Nuove funzionalità
