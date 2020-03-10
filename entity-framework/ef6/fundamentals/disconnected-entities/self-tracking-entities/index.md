@@ -4,16 +4,16 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 5e60f5be-7bbb-4bf8-835e-0ac808d6c84a
 ms.openlocfilehash: 3bb9759d89fbd0c10b911625aa7d0afd7747de14
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181720"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413356"
 ---
 # <a name="self-tracking-entities"></a>Entità con rilevamento automatico
 
 > [!IMPORTANT]
-> Non è più consigliabile usare il modello di entità con rilevamento automatico. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
 In un'applicazione basata su Entity Framework il rilevamento delle modifiche negli oggetti viene controllato da un contesto. Viene quindi usato il metodo SaveChanges per rendere permanenti le modifiche al database. Quando si usano le applicazioni a più livelli, gli oggetti entità vengono in genere disconnessi dal contesto ed è necessario decidere come tenere traccia delle modifiche e segnalarle al contesto. Le entità con rilevamento automatico consentono di tenere traccia delle modifiche in qualsiasi livello e di riprodurle quindi in un contesto per essere salvate.  
 
