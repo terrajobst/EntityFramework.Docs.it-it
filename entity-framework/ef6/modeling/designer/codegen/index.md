@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 56e00fa2-f9f0-48b3-8006-f8266ca7e74b
 ms.openlocfilehash: e4e99a86e7c273682c85eba06042af9a2a837d12
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283862"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78413286"
 ---
 # <a name="designer-code-generation-templates"></a>Modelli di generazione codice di Designer
 Quando si crea un modello usando Entity Framework Designer, le classi e il contesto derivato vengono generati automaticamente. Oltre alla generazione codice predefinita, sono anche disponibili diversi modelli che possono essere usati per personalizzare il codice generato. Si tratta di modelli di testo T4, che consentono di personalizzare i modelli, se necessario.
@@ -30,11 +30,11 @@ Il team di Entity Framework offre i modelli seguenti:
 
 Questo modello genera semplici classi di entità POCO e un contesto derivato da DbContext usando Entity Framework 6.
 È il modello consigliato a meno che non esista un motivo per usare uno degli altri modelli elencati di seguito.
-È anche il modello di generazione codice predefinito se si usano le versioni recenti di Visual Studio (Visual Studio 2013 e versioni successive): quando si crea un nuovo modello, questo modello viene usato per impostazione predefinita e i file T4 (con estensione tt) vengono annidati nel file con estensione edmx.
+È anche il modello di generazione del codice che si ottiene per impostazione predefinita se si usano versioni recenti di Visual Studio (da Visual Studio 2013 in poi): Quando si crea un nuovo modello, questo modello viene usato per impostazione predefinita e i file T4 (con estensione TT) sono annidati nel file con estensione edmx.
 
 #### <a name="older-versions-of-visual-studio"></a>Versioni precedenti di Visual Studio
-- **Visual Studio 2012:** per ottenere i modelli **EF 6.x DbContextGenerator** è necessario installare la versione più recente di **Entity Framework Tools per Visual Studio**. Vedere la pagina [Get Entity Framework](~/ef6/fundamentals/install.md) (Ottenere Entity Framework) per altre informazioni.
-- **Visual Studio 2010:** i modelli **EF 6.x DbContextGenerator** non sono disponibili per Visual Studio 2010.
+- **Visual Studio 2012:** Per ottenere i modelli **EF 6.x DbContextGenerator** sarà necessario installare la versione più recente di **Entity Framework Tools per Visual Studio**. Vedere la pagina [Ottenere Entity Framework](~/ef6/fundamentals/install.md) per altre informazioni.
+- **Visual Studio 2010:** I modelli **EF 6.x DbContextGenerator** non sono disponibili per Visual Studio 2010.
 
 #### <a name="dbcontext-generator-for-ef-5x"></a>Modello DbContext Generator per Entity Framework 5.x
 
@@ -145,7 +145,7 @@ Selezionare la scheda **Online** quando si aggiunge il modello per scaricarlo da
 
 ### <a name="what-are-the-web-sites-templates"></a>Modelli per siti Web
 
-I modelli per siti Web (ad esempio **EF 5.x DbContext Generator per siti Web C\#** ) sono destinati all'uso in progetti di siti Web creati tramite **File -&gt; Nuovo -&gt; Sito Web...**. Sono diversi rispetto alle applicazioni Web create tramite il percorso **File -&gt; Nuovo -&gt; Progetto...** , in cui si usano i modelli standard. Vengono offerti modelli distinti in quanto il sistema di modelli di elemento in Visual Studio li richiede.
+I modelli per siti Web (ad esempio **EF 5.x DbContext Generator per siti Web C\#** ) sono destinati all'uso in progetti di siti Web creati tramite **File -&gt; Nuovo -&gt; Sito Web...** . Sono diversi rispetto alle applicazioni Web create tramite il percorso **File -&gt; Nuovo -&gt; Progetto...** , in cui si usano i modelli standard. Vengono offerti modelli distinti in quanto il sistema di modelli di elemento in Visual Studio li richiede.
 
 ## <a name="using-a-template"></a>Uso di un modello
 
@@ -159,15 +159,15 @@ Se il modello da usare è già stato installato o è stato incluso in Visual Stu
 
 Se il modello non è stato ancora installato, selezionare **Online** dal menu a sinistra e cercare il modello necessario.
 
-![Cerca](~/ef6/media/search.png) 
+![Cerca](~/ef6/media/search.png) 
 
 Se si usa Visual Studio 2012, i nuovi file con estensione tt verranno annidati nel file con estensione edmx.*
 
 > [!NOTE]
-> Per i modelli creati in Visual Studio 2012, è necessario eliminare i modelli usati per la generazione codice predefinita. In caso contrario, si avranno duplicati di classi e contesto generati. I file predefiniti sono **&lt;nome modello&gt;.tt** e **&lt;nome modello&gt;.context.tt**. 
+> Per i modelli creati in Visual Studio 2012, è necessario eliminare i modelli usati per la generazione codice predefinita. In caso contrario, si avranno duplicati di classi e contesto generati. I file predefiniti sono **&lt;nome modello&gt;.tt** e **&lt;nome modello&gt;.context.tt**. 
 
 ![Modelli di Visual Studio 2012](~/ef6/media/vs2012-templates.png)
 
-Se si usa Visual Studio 2010, i file con estensione tt vengono aggiunti direttamente al progetto.  
+Se si usa Visual Studio 2010, i file con estensione tt vengono aggiunti direttamente al progetto.  
 
 ![Modelli di Visual Studio 2010](~/ef6/media/vs2010-templates.png)

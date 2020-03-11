@@ -47,7 +47,7 @@
               href: core/what-is-new/ef-core-1.1.md
             - name: EF Core 1.0
               href: core/what-is-new/ef-core-1.0.md
-            - name: Aggiornamento dalle versioni precedenti
+            - name: Eseguire l'aggiornamento dalle versioni precedenti
               items:
                 - name: Da 1.0 RC1 a RC2
                   href: core/miscellaneous/rc1-rc2-upgrade.md
@@ -59,7 +59,7 @@
           items:
             - name: Esercitazione EF Core
               href: core/get-started/index.md
-            - name: Installazione di EF Core
+            - name: Installare EF Core
               href: core/get-started/install/index.md
             - name: Esercitazione ASP.NET Core >>
               href: /aspnet/core/data/ef-rp/intro
@@ -75,15 +75,15 @@
               items:
                 - name: Panoramica
                   href: core/miscellaneous/testing/index.md
-                - name: Test con SQLite
+                - name: Eseguire test con SQLite
                   href: core/miscellaneous/testing/sqlite.md
-                - name: Test con InMemory
+                - name: Eseguire test con InMemory
                   href: core/miscellaneous/testing/in-memory.md
-            - name: Configurazione di un DbContext
+            - name: Configurare un DbContext
               href: core/miscellaneous/configuring-dbcontext.md
-            - name: Tipi di riferimento nullable
+            - name: Tipi riferimento nullable
               href: core/miscellaneous/nullable-reference-types.md
-        - name: Creazione di un modello
+        - name: Creare un modello
           items:
             - name: Panoramica
               href: core/modeling/index.md
@@ -119,14 +119,14 @@
               href: core/modeling/table-splitting.md
             - name: Tipi di entità di proprietà
               href: core/modeling/owned-entities.md
-            - name: Tipi di entità senza chiave
+            - name: tipi di entità senza chiave
               href: core/modeling/keyless-entity-types.md
             - name: Alternanza di modelli con lo stesso DbContext
               href: core/modeling/dynamic-model.md
             - name: Dati spaziali
               displayName: GIS
               href: core/modeling/spatial.md
-        - name: Gestione di schemi di database
+        - name: Gestire schemi di database
           items:
             - name: Panoramica
               href: core/managing-schemas/index.md
@@ -138,7 +138,7 @@
                   href: core/managing-schemas/migrations/teams.md
                 - name: Operazioni personalizzate
                   href: core/managing-schemas/migrations/operations.md
-                - name: Uso di un progetto separato
+                - name: Usare un progetto separato
                   href: core/managing-schemas/migrations/projects.md
                 - name: Più provider
                   href: core/managing-schemas/migrations/providers.md
@@ -148,17 +148,17 @@
               href: core/managing-schemas/ensure-created.md
             - name: Decompilazione (scaffolding)
               href: core/managing-schemas/scaffolding.md
-        - name: Esecuzione di query su dati
+        - name: Eseguire query sui dati
           items:
             - name: Panoramica
               href: core/querying/index.md
-            - name: Valutazione client rispetto a server
+            - name: Valutazione client e server
               href: core/querying/client-eval.md
-            - name: Query con rilevamento delle modifiche e senza rilevamento
+            - name: Rilevamento e senza rilevamento
               href: core/querying/tracking.md
             - name: Operatori di query complessi
               href: core/querying/complex-query-operators.md
-            - name: Caricamento di dati correlati
+            - name: Caricare dati correlati
               href: core/querying/related-data.md
             - name: Query asincrone
               href: core/querying/async.md
@@ -168,9 +168,9 @@
               href: core/querying/filters.md
             - name: Tag delle query
               href: core/querying/tags.md
-            - name: Funzionamento della query
+            - name: Funzionamento delle query
               href: core/querying/how-query-works.md
-        - name: Salvataggio di dati
+        - name: Salvare i dati
           items:
             - name: Panoramica
               href: core/saving/index.md
@@ -202,7 +202,7 @@
                   href: core/providers/sql-server/index.md
                 - name: Tabelle ottimizzate per la memoria
                   href: core/providers/sql-server/memory-optimized-tables.md
-                - name: Impostazione delle opzioni del database SQL di Azure
+                - name: Impostare le opzioni del database SQL di Azure
                   href: core/providers/sql-server/azure-sql-database.md
             - name: SQLite
               items:
@@ -214,13 +214,13 @@
               items:
                 - name: Panoramica
                   href: core/providers/cosmos/index.md
-                - name: Uso di dati non strutturati
+                - name: Utilizzare dati non strutturati
                   href: core/providers/cosmos/unstructured-data.md
                 - name: Limitazioni di Cosmos
                   href: core/providers/cosmos/limitations.md
             - name: InMemory (per test)
               href: core/providers/in-memory/index.md
-            - name: Scrittura di un provider di database
+            - name: Scrivere un provider di database
               href: core/providers/writing-a-provider.md
             - name: Modifiche che influiscono sul provider
               href: core/providers/provider-log.md
@@ -238,7 +238,7 @@
               href: core/miscellaneous/cli/dbcontext-creation.md
             - name: Servizi in fase di progettazione
               href: core/miscellaneous/cli/services.md
-        - name: Informazioni di riferimento per l'API di EF Core >>
+        - name: Informazioni di riferimento per l'API EF Core >>
           href: /dotnet/api/?view=efcore-3.1
     - name: Entity Framework 6
       items:
@@ -250,7 +250,7 @@
               href: ef6/what-is-new/index.md
             - name: Versioni precedenti
               href: ef6/what-is-new/past-releases.md
-            - name: Aggiornamento a EF6
+            - name: Eseguire l'aggiornamento a EF6
               href: ef6/what-is-new/upgrading-to-ef6.md
             - name: Versioni di Visual Studio
               href: ef6/what-is-new/visual-studio.md
@@ -260,7 +260,7 @@
           items:
             - name: Ottenere Entity Framework
               href: ef6/fundamentals/install.md
-            - name: Uso di DbContext
+            - name: Utilizzare DbContext
               href: ef6/fundamentals/working-with-dbcontext.md
             - name: Informazioni sulle relazioni
               href: ef6/fundamentals/relationships.md
@@ -280,11 +280,11 @@
               href: ef6/fundamentals/connection-management.md
             - name: Resilienza della connessione
               items:
-                - name: Logica di ripetizione dei tentativi
+                - name: Logica di retry
                   href: ef6/fundamentals/connection-resiliency/retry-logic.md
                 - name: Errori di commit delle transazioni
                   href: ef6/fundamentals/connection-resiliency/commit-failures.md
-            - name: Data binding
+            - name: Associazione dati
               items:
                 - name: WinForms
                   href: ef6/fundamentals/databinding/winforms.md
@@ -294,45 +294,45 @@
               items:
                 - name: Panoramica
                   href: ef6/fundamentals/disconnected-entities/index.md
-                - name: Entità di rilevamento automatico
+                - name: Entità con rilevamento automatico
                   items:
                     - name: Panoramica
                       href: ef6/fundamentals/disconnected-entities/self-tracking-entities/index.md
                     - name: Procedura dettagliata
                       href: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md
-            - name: Intercettazione e registrazione
+            - name: Registrazione e intercettazione
               href: ef6/fundamentals/logging-and-interception.md
             - name: Prestazioni
               items:
                 - name: Considerazioni sulle prestazioni (white paper)
                   href: ef6/fundamentals/performance/perf-whitepaper.md
-                - name: Uso di NGEN
+                - name: Usare NGEN
                   href: ef6/fundamentals/performance/ngen.md
-                - name: Uso di visualizzazioni pregenerate
+                - name: Usare visualizzazioni pregenerate
                   href: ef6/fundamentals/performance/pre-generated-views.md
             - name: Provider
               items:
                 - name: Panoramica
                   href: ef6/fundamentals/providers/index.md
-                - name: Modello provider EF6
+                - name: Modello di provider EF6
                   href: ef6/fundamentals/providers/provider-model.md
                 - name: Supporto spaziale nei provider
                   href: ef6/fundamentals/providers/spatial-support.md
-            - name: Uso di proxy
+            - name: Usare proxy
               href: ef6/fundamentals/proxies.md
             - name: Test con EF6
               items:
-                - name: Uso della simulazione
+                - name: Usare il comportamento fittizio
                   href: ef6/fundamentals/testing/mocking.md
-                - name: Scrittura di duplicati di test personalizzati
+                - name: Scrivere duplicati di test personalizzati
                   href: ef6/fundamentals/testing/writing-test-doubles.md
                 - name: Testabilità con EF4 (articolo)
                   href: ef6/fundamentals/testing/testability-article.md
-        - name: Creazione di un modello
+        - name: Creare un modello
           items:
             - name: Panoramica
               href: ef6/modeling/index.md
-            - name: Uso di Code First
+            - name: Usare Code First
               items:
                 - name: Flussi di lavoro
                   items:
@@ -374,15 +374,15 @@
                       href: ef6/modeling/code-first/migrations/index.md
                     - name: Migrazioni automatiche
                       href: ef6/modeling/code-first/migrations/automatic.md
-                    - name: Uso di database esistenti
+                    - name: Utilizzare database esistenti
                       href: ef6/modeling/code-first/migrations/existing-database.md
-                    - name: Personalizzazione della cronologia delle migrazioni
+                    - name: Personalizzare la cronologia delle migrazioni
                       href: ef6/modeling/code-first/migrations/history-customization.md
-                    - name: Uso di Migrate.exe
+                    - name: Usare Migrate.exe
                       href: ef6/modeling/code-first/migrations/migrate-exe.md
                     - name: Migrazioni in ambienti team
                       href: ef6/modeling/code-first/migrations/teams.md
-            - name: Uso di Entity Framework Designer
+            - name: Usare EF Designer
               items:
                 - name: Flussi di lavoro
                   items:
@@ -410,19 +410,19 @@
                       href: ef6/modeling/designer/inheritance/tph.md
                     - name: Tabella per tipo
                       href: ef6/modeling/designer/inheritance/tpt.md
-                - name: Mapping di store procedure
+                - name: Mappare stored procedure
                   items:
                     - name: Query
                       href: ef6/modeling/designer/stored-procedures/query.md
                     - name: Aggiorna
                       href: ef6/modeling/designer/stored-procedures/cud.md
-                - name: Mapping di relazioni
+                - name: Mappare relazioni
                   href: ef6/modeling/designer/relationships.md
                 - name: Più diagrammi
                   href: ef6/modeling/designer/multiple-diagrams.md
-                - name: Selezione della versione del runtime
+                - name: Selezionare la versione del runtime
                   href: ef6/modeling/designer/select-runtime-version.md
-                - name: Generazione di codice
+                - name: Generazione del codice
                   items:
                     - name: Panoramica
                       href: ef6/modeling/designer/codegen/index.md
@@ -444,9 +444,9 @@
                       href: ef6/modeling/designer/advanced/multiple-result-sets.md
                     - name: Funzioni con valori di tabella
                       href: ef6/modeling/designer/advanced/tvfs.md
-                - name: Tasti di scelta rapida
+                - name: Scelte rapide da tastiera
                   href: ef6/modeling/designer/keyboard-shortcuts.md
-        - name: Esecuzione di query su dati
+        - name: Eseguire query sui dati
           items:
             - name: Panoramica
               href: ef6/querying/index.md
@@ -456,15 +456,15 @@
               href: ef6/querying/local-data.md
             - name: Query con e senza rilevamento delle modifiche
               href: ef6/querying/no-tracking.md
-            - name: Uso di query SQL non elaborate
+            - name: Usare query SQL non elaborate
               href: ef6/querying/raw-sql.md
-            - name: Esecuzione di query su dati correlati
+            - name: Eseguire query sui dati correlati
               href: ef6/querying/related-data.md
-        - name: Salvataggio di dati
+        - name: Salvare i dati
           items:
             - name: Panoramica
               href: ef6/saving/index.md
-            - name: Rilevamento modifiche
+            - name: Change tracking
               items:
                 - name: Rilevamento automatico delle modifiche
                   href: ef6/saving/change-tracking/auto-detect-changes.md
@@ -472,9 +472,9 @@
                   href: ef6/saving/change-tracking/entity-state.md
                 - name: Valori delle proprietà
                   href: ef6/saving/change-tracking/property-values.md
-            - name: Gestione dei conflitti di concorrenza
+            - name: Gestire i conflitti di concorrenza
               href: ef6/saving/concurrency.md
-            - name: Uso delle transazioni
+            - name: Usare le transazioni
               href: ef6/saving/transactions.md
             - name: Convalida dei dati
               href: ef6/saving/validation.md
@@ -486,7 +486,7 @@
               href: ef6/resources/case-studies.md
             - name: Collaborazione
               href: ef6/resources/contribute.md
-            - name: Altre informazioni
+            - name: Ottenere aiuto
               href: ef6/resources/get-help.md
             - name: Glossario
               href: ef6/resources/glossary.md
@@ -546,5 +546,5 @@
                       href: ef6/resources/licenses/ef6/kor.md
                     - name: Russo
                       href: ef6/resources/licenses/ef6/rus.md
-        - name: Informazioni di riferimento per l'API di EF6 >>
-          href: 'https://docs.microsoft.com/dotnet/api/?view=entity-framework-6.2.0'
+        - name: Informazioni di riferimento per l'API EF6 >>
+          href: /dotnet/api/?view=entity-framework-6.2.0
