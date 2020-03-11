@@ -5,11 +5,11 @@ ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
 ms.openlocfilehash: 83f6b819409d502dba17a678d44a0746a4a77f4b
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824884"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417496"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
 
@@ -133,7 +133,7 @@ var query =
     select p;
 ```
 
-Si noti che:
+Alcuni punti di cui tenere conto:
 
 - Per convenzione, il nome del metodo viene usato come nome di una funzione (in questo caso una funzione definita dall'utente) durante la generazione di SQL, ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
 - Attualmente sono supportate solo le funzioni scalari.
@@ -182,7 +182,7 @@ Il nuovo metodo introduce alcune limitazioni nelle operazioni possibili nel meto
 > [!WARNING]  
 > Evitare di usare il pooling DbContext se nella classe DbContext derivata si mantiene uno stato (ad esempio, campi privati) che non deve essere condiviso tra le richieste. Prima di aggiungere un'istanza di DbContext al pool, EF Core reimposterà solo lo stato di cui è a conoscenza.
 
-### <a name="explicitly-compiled-queries"></a>Query compilate esplicite
+### <a name="explicitly-compiled-queries"></a>Query compilate in modo esplicito
 
 Questa è la seconda funzionalità di ottimizzazione delle prestazioni progettata per offrire vantaggi in scenari di vasta scala.
 
@@ -225,7 +225,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente C# di usare l'interpolazione di stringhe in modo sicuro. ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
-Ecco un esempio:
+Esempio:
 
 ``` csharp
 var city = "London";
@@ -299,7 +299,7 @@ public class MyPluralizer : IPluralizer
 }
 ```
 
-## <a name="others"></a>Others
+## <a name="others"></a>Altro
 
 ### <a name="move-adonet-sqlite-provider-to-sqlitepclraw"></a>Spostamento del provider SQLite ADO.NET in SQLitePCL.raw
 

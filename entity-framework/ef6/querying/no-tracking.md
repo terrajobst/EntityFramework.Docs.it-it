@@ -1,19 +1,19 @@
 ---
-title: Query senza registrazione - Entity Framework 6
+title: Query senza rilevamento-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: f80ac260-c2dc-484d-94a3-3424fd862f8b
 ms.openlocfilehash: 44d58e14a2550bd08a8edd68b467237f6f5b5978
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490121"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417102"
 ---
 # <a name="no-tracking-queries"></a>senza rilevamento delle modifiche
-In alcuni casi è possibile tornare entità da una query, ma non hanno tali entità di essere rilevate dal contesto. Questo può comportare prestazioni migliori quando si eseguono query per un numero elevato di entità in scenari di sola lettura. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
+In alcuni casi può essere necessario recuperare le entità da una query, ma queste entità non vengono rilevate dal contesto. Ciò può comportare prestazioni migliori quando si eseguono query su un numero elevato di entità in scenari di sola lettura. Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
 
-Un nuovo metodo di estensione AsNoTracking consente a qualsiasi query da eseguire in questo modo. Ad esempio:  
+Un nuovo metodo di estensione AsNoTracking consente l'esecuzione di qualsiasi query in questo modo. Ad esempio:  
 
 ``` csharp
 using (var context = new BloggingContext())

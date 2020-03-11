@@ -5,12 +5,12 @@ author: AndriySvyryd
 ms.author: ansvyryd
 ms.date: 9/13/2019
 uid: core/modeling/keyless-entity-types
-ms.openlocfilehash: 129e24b154ba32583435aeb742dbf478350344e8
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 520c9ed93240c05deee36fa527a3757490fd7082
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824670"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417316"
 ---
 # <a name="keyless-entity-types"></a>Tipi di entità senza chiave
 
@@ -47,7 +47,7 @@ Di seguito sono riportati alcuni degli scenari di utilizzo principali per i tipi
 
 ## <a name="mapping-to-database-objects"></a>Mapping agli oggetti di database
 
-Il mapping di un tipo di entità autochiave a un oggetto di database viene eseguito usando l'API `ToTable` o `ToView` Fluent. Dal punto di vista di EF Core, l'oggetto di database specificato in questo metodo è un _vista_, vale a dire che viene considerato come un'origine di query di sola lettura e non può essere la destinazione dell'aggiornamento, inserire o eliminare le operazioni. Tuttavia, ciò non significa che l'oggetto di database debba essere effettivamente una vista di database. In alternativa, può essere una tabella di database che verrà considerata di sola lettura. Viceversa, per i tipi di entità regolari, EF Core presuppone che un oggetto di database specificato nel metodo `ToTable` possa essere considerato come una _tabella_, ovvero può essere utilizzato come origine della query, ma anche come destinazione da operazioni di aggiornamento, eliminazione e inserimento. In effetti, è possibile specificare il nome di una vista di database in `ToTable` e tutto dovrebbe funzionare senza problemi, purché la visualizzazione è configurata per essere aggiornabile nel database.
+Il mapping di un tipo di entità autochiave a un oggetto di database viene eseguito usando l'API `ToTable` o `ToView` Fluent. Dal punto di vista del EF Core, l'oggetto di database specificato in questo metodo è una _vista_, ovvero viene considerato come un'origine di query di sola lettura e non può essere la destinazione di operazioni di aggiornamento, inserimento o eliminazione. Tuttavia, ciò non significa che l'oggetto di database debba essere effettivamente una vista di database. In alternativa, può essere una tabella di database che verrà considerata di sola lettura. Viceversa, per i tipi di entità regolari, EF Core presuppone che un oggetto di database specificato nel metodo `ToTable` possa essere considerato come una _tabella_, ovvero può essere utilizzato come origine della query, ma anche come destinazione da operazioni di aggiornamento, eliminazione e inserimento. Infatti, è possibile specificare il nome di una vista di database in `ToTable` e tutto dovrebbe funzionare correttamente purché la vista sia configurata per essere aggiornabile nel database.
 
 > [!NOTE]
 > `ToView` presuppone che l'oggetto esista già nel database e non venga creato dalle migrazioni.
@@ -57,7 +57,7 @@ Il mapping di un tipo di entità autochiave a un oggetto di database viene esegu
 Nell'esempio seguente viene illustrato come utilizzare i tipi di entità autochiave per eseguire una query su una vista di database.
 
 > [!TIP]
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/KeylessEntityTypes) di questo articolo in GitHub.
 
 In primo luogo, definiamo un semplice modello di post di Blog e Post:
 

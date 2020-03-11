@@ -3,19 +3,20 @@ title: Relazioni, proprietà di navigazione e chiavi esterne-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 8a21ae73-6d9b-4b50-838a-ec1fddffcf37
-ms.openlocfilehash: cc7160f2d0ab7ac0c6009f820441c88590cacfaf
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 892e872e3cb11ea95084cf6d9ab43c8d500bc0de
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655869"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419353"
 ---
 # <a name="relationships-navigation-properties-and-foreign-keys"></a>Relazioni, proprietà di navigazione e chiavi esterne
-Questo argomento fornisce una panoramica del modo in cui Entity Framework gestisce le relazioni tra le entità. Vengono inoltre fornite alcune indicazioni su come eseguire il mapping e modificare le relazioni.
+
+Questo articolo fornisce una panoramica del modo in cui Entity Framework gestisce le relazioni tra le entità. Vengono inoltre fornite alcune indicazioni su come eseguire il mapping e modificare le relazioni.
 
 ## <a name="relationships-in-ef"></a>Relazioni in EF
 
-Nei database relazionali, le relazioni (dette anche associazioni) tra le tabelle vengono definite tramite chiavi esterne. Una chiave esterna (FK) è una colonna o una combinazione di colonne utilizzata per stabilire e applicare un collegamento tra i dati di due tabelle. Esistono in genere tre tipi di relazioni: uno-a-uno, uno-a-molti e molti-a-molti. In una relazione uno-a-molti, la chiave esterna viene definita nella tabella che rappresenta le numerose entità finali della relazione. La relazione molti-a-molti implica la definizione di una terza tabella (denominata tabella di giunzione o join), la cui chiave primaria è costituita dalle chiavi esterne di entrambe le tabelle correlate. In una relazione uno-a-uno, la chiave primaria funge anche da chiave esterna e non esiste una colonna di chiave esterna separata per entrambe le tabelle.
+Nei database relazionali, le relazioni (dette anche associazioni) tra le tabelle vengono definite tramite chiavi esterne. Per chiave esterna si intende una colonna o combinazione di colonne utilizzata per stabilire e applicare un collegamento tra i dati di due tabelle. Esistono in genere tre tipi di relazioni: uno-a-uno, uno-a-molti e molti-a-molti. In una relazione uno-a-molti, la chiave esterna viene definita nella tabella che rappresenta le numerose entità finali della relazione. La relazione molti-a-molti implica la definizione di una terza tabella (denominata tabella di giunzione o join), la cui chiave primaria è costituita dalle chiavi esterne di entrambe le tabelle correlate. In una relazione uno-a-uno, la chiave primaria funge anche da chiave esterna e non esiste una colonna di chiave esterna separata per entrambe le tabelle.
 
 Nella figura seguente sono illustrate due tabelle che fanno parte di una relazione uno-a-molti. La tabella **Course** è la tabella dipendente perché contiene la colonna **DepartmentID** che lo collega alla tabella **Department** .
 
@@ -93,7 +94,7 @@ Negli esempi seguenti viene illustrato come utilizzare le proprietà di chiave e
   course.Department = department;
   ```
 
-- Per eliminare la relazione, impostare la proprietà di navigazione su `null`. Se si lavora con Entity Framework basata su .NET 4,0, è necessario caricare l'entità finale correlata prima di impostarla su null. Esempio:   
+- Per eliminare la relazione, impostare la proprietà di navigazione su `null`. Se si lavora con Entity Framework basata su .NET 4,0, è necessario caricare l'entità finale correlata prima di impostarla su null. Ad esempio:   
   ``` csharp
   context.Entry(course).Reference(c => c.Department).Load();
   course.Department = null;

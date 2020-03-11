@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 77d6a095-c0d0-471e-80b9-8f9aea6108b2
 ms.openlocfilehash: 2c5e6f1b3f60862124bafcac42e8859a7591f8e6
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72812157"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416960"
 ---
 # <a name="data-validation"></a>Convalida dei dati
 > [!NOTE]
@@ -158,7 +158,7 @@ A differenza della convalida fornita dall'API Fluent, questo risultato di conval
 
 ![Figura 2](~/ef6/media/figure02.png)
 
-## <a name="dbcontextvalidateentity"></a>DbContext. ValidateEntity
+## <a name="dbcontextvalidateentity"></a>DbContext.ValidateEntity
 
 `DbContext` dispone di un metodo sottoponibile a override denominato `ValidateEntity`. Quando si chiama `SaveChanges`, Entity Framework chiamerà questo metodo per ogni entità nella cache il cui stato non è `Unchanged`. È possibile inserire la logica di convalida direttamente qui o usare questo metodo per chiamare, ad esempio, il metodo `Blog.Validate` aggiunto nella sezione precedente.
 
@@ -235,7 +235,7 @@ Di seguito sono riportati alcuni altri punti da considerare quando si usa la con
   - Convalida a livello di proprietà per le proprietà del tipo complesso
   - Convalida a livello di tipo per il tipo complesso, inclusa la convalida `IValidatableObject` per il tipo complesso
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 L'API di convalida in Entity Framework viene riprodotta molto bene con la convalida lato client in MVC, ma non è necessario basarsi sulla convalida lato client. Entity Framework si occuperà della convalida sul lato server per le annotazioni o le configurazioni applicate con l'API Code First Fluent.
 

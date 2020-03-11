@@ -3,12 +3,12 @@ title: Pianificare Entity Framework Core 5,0
 author: ajcvickers
 ms.date: 01/14/2020
 uid: core/what-is-new/ef-core-5.0/plan.md
-ms.openlocfilehash: 0472841fdcd105ec8ea38db062c6768510b8735d
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.openlocfilehash: c5b7300c61c2f668b6f9393ae51bf9ebddf330a7
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76125382"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417876"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>Pianificare Entity Framework Core 5,0
 
@@ -27,7 +27,7 @@ EF Core 5,0 è pianificato per essere eseguito su qualsiasi piattaforma .NET 5,0
 
 EF Core 5,0 non viene eseguito su .NET Framework.
 
-### <a name="breaking-changes"></a>Modifiche che causano un'interruzione
+### <a name="breaking-changes"></a>Modifiche di rilievo
 
 EF Core 5,0 conterrà alcune modifiche di rilievo, ma saranno molto meno gravi rispetto a quanto accadeva per EF Core 3,0. Il nostro obiettivo è consentire l'aggiornamento della maggior parte delle applicazioni senza interruzioni.
 
@@ -47,11 +47,13 @@ Dimensioni della maglietta: L
 
 Stato: in corso
 
-Many-to-many è la funzionalità più richiesta (~ 407 voti) nel backlog di GitHub. Il supporto per le relazioni molti-a-molti può essere suddiviso in tre aree principali:
+Many-to-many è la [funzionalità più richiesta](https://github.com/aspnet/EntityFrameworkCore/issues/1368) (~ 407 voti) nel backlog di GitHub.
 
-* Ignorare le proprietà di navigazione. Che consentono di utilizzare il modello per le query e così via, senza riferimento all'entità sottostante della tabella di join.
-* Tipi di entità del contenitore delle proprietà. Che consentono di usare un tipo CLR standard (ad esempio `Dictionary`) per le istanze di entità in modo che non sia necessario un tipo CLR esplicito per ogni tipo di entità.
-* Sugar per semplificare la configurazione di relazioni molti-a-molti.
+Il supporto per le relazioni molti-a-molti nell'intero viene registrato come [#10508](https://github.com/aspnet/EntityFrameworkCore/issues/10508). Questo può essere suddiviso in tre aree principali:
+
+* Ignorare le proprietà di navigazione. Che consentono di utilizzare il modello per le query e così via, senza riferimento all'entità sottostante della tabella di join. ([#19003](https://github.com/aspnet/EntityFrameworkCore/issues/19003))
+* Tipi di entità del contenitore delle proprietà. Che consentono di usare un tipo CLR standard (ad esempio `Dictionary`) per le istanze di entità in modo che non sia necessario un tipo CLR esplicito per ogni tipo di entità. (Estendi per 5,0: [#9914](https://github.com/aspnet/EntityFrameworkCore/issues/9914).)
+* Sugar per semplificare la configurazione di relazioni molti-a-molti. (Estendi per 5,0).
 
 Il blocco più significativo per coloro che desiderano il supporto molti-a-molti non è in grado di utilizzare le relazioni "naturali", senza fare riferimento alla tabella di join, nella logica di business, ad esempio le query. Il tipo di entità tabella di join può ancora esistere, ma non dovrebbe essere in grado di ottenere la logica di business. Questo è il motivo per cui abbiamo scelto di affrontare le proprietà di navigazione Skip per 5,0.
 
@@ -122,7 +124,7 @@ Attualmente, molti sviluppatori migrano i database al momento dell'avvio dell'ap
 * Più thread/processi/server possono tentare di eseguire la migrazione simultanea del database
 * Le applicazioni potrebbero provare ad accedere allo stato incoerente durante l'operazione
 * In genere le autorizzazioni per il database per modificare lo schema non devono essere concesse per l'esecuzione dell'applicazione
-* È difficile ripristinare uno stato pulito se si verifica un problema
+* È difficile ripristinare uno stato pulito se si verificano problemi
 
 Si vuole offrire un'esperienza migliore che consenta di eseguire la migrazione del database in fase di distribuzione in modo semplice. Questa operazione dovrebbe:
 
@@ -144,7 +146,7 @@ Dimensioni della maglietta: L
 
 Stato: non avviato
 
-Sono disponibili indicazioni utili per l'uso di EF Core in applicazioni Web tradizionali di tipo MVC. Linee guida per altre piattaforme e modelli di applicazione mancanti o non aggiornati. Per EF Core 5,0 si prevede di esaminare, migliorare e documentare l'esperienza di utilizzo di EF Core con:
+Sono disponibili indicazioni utili per l'uso di EF Core in applicazioni Web tradizionali di tipo MVC. Linee guida per altre piattaforme e modelli di applicazione mancanti o non aggiornati. Per EF Core 5,0, si prevede di analizzare, migliorare e documentare l'esperienza di utilizzo di EF Core con:
 
 * Blazor
 * Novell, incluso l'uso della storia AOT/linker
@@ -170,7 +172,7 @@ Dimensioni della maglietta: L
 
 Stato: in corso
 
-Per EF Core si prevede di migliorare la nostra suite di benchmark delle prestazioni e di apportare miglioramenti al runtime. Si prevede inoltre di completare la nuova API batch ADO.NET, che è stata prototipata durante il ciclo di rilascio 3,0. Inoltre, a livello di ADO.NET, vengono pianificati miglioramenti delle prestazioni aggiuntivi per il provider npgsql.
+Per EF Core, si prevede di migliorare la nostra suite di benchmark delle prestazioni e di apportare miglioramenti al runtime. Si prevede inoltre di completare la nuova API batch ADO.NET, che è stata prototipata durante il ciclo di rilascio 3,0. Inoltre, a livello di ADO.NET, vengono pianificati miglioramenti delle prestazioni aggiuntivi per il provider npgsql.
 
 Nell'ambito di questo lavoro si prevede anche di aggiungere i contatori delle prestazioni di ADO.NET/EF core e altri dati di diagnostica in base alle esigenze.
 
@@ -178,7 +180,7 @@ Nell'ambito di questo lavoro si prevede anche di aggiungere i contatori delle pr
 
 Documento principale: @ajcvickers
 
-Rilevato da [#1920](https://github.com/aspnet/EntityFramework.Docs/issues/1920)
+Rilevato da [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 Dimensioni della maglietta: L
 
@@ -194,7 +196,7 @@ L'idea è quella di semplificare la comprensione di ciò che accade negli elemen
 
 Documento principale: @bricelam
 
-Rilevato da [#1675](https://github.com/aspnet/EntityFramework.Docs/issues/1675)
+Rilevato da [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675)
 
 Dimensioni T-Shirt: M
 
@@ -206,7 +208,7 @@ Il team EF possiede anche il provider Microsoft. Data. sqlite ADO.NET. Si preved
 
 Documento principale: @ajcvickers
 
-Rilevato da [problemi nel repository docs nell'attività cardine 5,0](https://github.com/aspnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
+Rilevato da [problemi nel repository docs nell'attività cardine 5,0](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
 
 Dimensioni della maglietta: L
 
@@ -252,6 +254,6 @@ Si tratta di correzioni di bug e miglioramenti che **non** sono attualmente pian
 
 Inoltre, consideriamo sempre i [problemi più votati](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) durante la pianificazione. Il taglio di uno qualsiasi di questi problemi da un rilascio è sempre penoso, ma è necessario un piano realistico per le risorse disponibili.
 
-## <a name="feedback"></a>Feedback
+## <a name="feedback"></a>Commenti e suggerimenti
 
-Il feedback sulla pianificazione è importante. Il modo migliore per indicare l'importanza di un problema consiste nel votare (Thumb) per il problema in GitHub. Questi dati vengono quindi inseriti nel [processo di pianificazione](../release-planning.md) per la versione successiva.
+I commenti e i suggerimenti dei clienti sulla pianificazione sono importanti. Il modo migliore per indicare l'importanza di un problema consiste nel votare (Pollice in su) per tale problema in GitHub. Questi dati vengono quindi inseriti nel [processo di pianificazione](../release-planning.md) per la versione successiva.

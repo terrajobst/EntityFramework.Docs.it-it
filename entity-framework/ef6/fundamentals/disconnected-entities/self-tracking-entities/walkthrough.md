@@ -4,15 +4,15 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: b21207c9-1d95-4aa3-ae05-bc5fe300dab0
 ms.openlocfilehash: 9bd644461f50a7eff1006cb8866ca9a3b08b6b8d
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181708"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419533"
 ---
 # <a name="self-tracking-entities-walkthrough"></a>Procedura dettagliata sulle entità con rilevamento automatico
 > [!IMPORTANT]
-> L'uso del modello di entità con rilevamento automatico non è più consigliabile. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
+> Non è più consigliabile usare il modello di entità con rilevamento automatico. Continuerà a essere disponibile solo per supportare le applicazioni esistenti. Se l'applicazione richiede l'uso con grafici di entità disconnesse, prendere in considerazione altre alternative, come ad esempio [Trackable Entities](https://trackableentities.github.io/), che è una tecnologia simile alle entità con rilevamento automatico ma viene sviluppata in modo più attivo dalla community, oppure la scrittura di codice personalizzato usando le API di rilevamento delle modifiche di basso livello.
 
 In questa procedura dettagliata viene illustrato lo scenario in cui un servizio Windows Communication Foundation (WCF) espone un'operazione che restituisce un grafico di entità. Successivamente, un'applicazione client modifica il grafico e invia le modifiche a un'operazione del servizio che convalida e salva gli aggiornamenti in un database utilizzando Entity Framework.
 
@@ -42,7 +42,7 @@ Il server di database installato con Visual Studio è diverso a seconda della ve
 
 Procediamo con la generazione del database.
 
--   Aprire Visual Studio
+-   Aprire Visual Studio.
 -   **Visualizza-&gt; Esplora server**
 -   Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**
 -   Se non si è connessi a un database da Esplora server prima di selezionare **Microsoft SQL Server** come origine dati

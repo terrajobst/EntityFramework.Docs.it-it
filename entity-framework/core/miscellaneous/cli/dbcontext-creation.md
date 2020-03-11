@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 09/16/2019
 uid: core/miscellaneous/cli/dbcontext-creation
 ms.openlocfilehash: f44f0648678af5a70e5171d69692bde1c1d5e0eb
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655531"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416742"
 ---
 # <a name="design-time-dbcontext-creation"></a>Creazione di DbContext in fase di progettazione
 
@@ -36,14 +36,14 @@ Se il DbContext non può essere ottenuto dal provider di servizi dell'applicazio
 
 ## <a name="from-a-design-time-factory"></a>Da una factory della fase di progettazione
 
-È anche possibile indicare agli strumenti come creare il DbContext implementando l'interfaccia `IDesignTimeDbContextFactory<TContext>`: se una classe che implementa questa interfaccia si trova nello stesso progetto della `DbContext` derivata o nel progetto di avvio dell'applicazione, gli strumenti ignorano l'altro modi per creare il DbContext e usare invece la factory in fase di progettazione.
+È anche possibile indicare agli strumenti come creare il DbContext implementando l'interfaccia `IDesignTimeDbContextFactory<TContext>`: se una classe che implementa questa interfaccia si trova nello stesso progetto della `DbContext` derivata o nel progetto di avvio dell'applicazione, gli strumenti ignorano le altre modalità di creazione del DbContext e usano invece la factory della fase di progettazione.
 
 [!code-csharp[Main](../../../../samples/core/Miscellaneous/CommandLine/BloggingContextFactory.cs)]
 
 > [!NOTE]
 > Il parametro `args` non è attualmente utilizzato. Si è verificato [un problema][8] durante il rilevamento della possibilità di specificare gli argomenti della fase di progettazione dagli strumenti.
 
-Una factory della fase di progettazione può essere particolarmente utile se è necessario configurare il DbContext in modo diverso per la fase di progettazione rispetto al runtime, se il costruttore `DbContext` accetta parametri aggiuntivi non è registrato in DI, se non si usa o se per qualche motivo preferisce non avere un metodo di `BuildWebHost` nella classe `Main` dell'applicazione ASP.NET Core.
+Una factory della fase di progettazione può essere particolarmente utile se è necessario configurare il DbContext in modo diverso per la fase di progettazione rispetto al runtime, se il costruttore `DbContext` accetta parametri aggiuntivi non è registrato in DI, se non si usa o se per qualche motivo si preferisce non avere un metodo di `BuildWebHost` nella classe `Main` dell'applicazione ASP.NET Core.
 
   [1]: xref:core/managing-schemas/migrations/index
   [2]: xref:core/miscellaneous/configuring-dbcontext

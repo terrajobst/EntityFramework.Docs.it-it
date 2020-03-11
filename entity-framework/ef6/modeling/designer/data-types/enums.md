@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: c6ae6d8f-1ace-47db-ad47-b1718f1ba082
 ms.openlocfilehash: 92a763b84a04d3ce7ec0853ef2a4852356cf7997
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182513"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418567"
 ---
 # <a name="enum-support---ef-designer"></a>Supporto enum-EF designer
 > [!NOTE]
@@ -46,7 +46,7 @@ Per completare questa procedura dettagliata, è necessario che Visual Studio 201
 2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
 3.  Immettere **EnumTestModel. edmx** per il nome del file e quindi fare clic su **Aggiungi** .
 4.  Nella pagina Entity Data Model procedura guidata selezionare **modello vuoto** nella finestra di dialogo Scegli contenuto Model
-5.  Fare clic su **fine**
+5.  Fare clic su **Fine**
 
 Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello.
 
@@ -60,7 +60,7 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
 1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**. verrà visualizzata la finestra di dialogo nuova entità
 2.  Specificare **Department** per il nome del tipo e specificare **DepartmentID** per il nome della proprietà chiave, lasciare il tipo come **Int32**
-3.  Fare clic su **OK**
+3.  Fare clic su **OK**.
 4.  Fare clic con il pulsante destro del mouse sull'entità e scegliere **Aggiungi nuova-&gt; proprietà scalare**
 5.  Rinominare la nuova proprietà in **nome**
 6.  Modificare il tipo della nuova proprietà in **Int32** (per impostazione predefinita, la nuova proprietà è di tipo stringa) per modificare il tipo, aprire il finestra Proprietà e modificare la proprietà Type in **Int32** .
@@ -133,6 +133,6 @@ DepartmentID: 1 Name: English
 
 Per visualizzare i dati nel database, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna**. Quindi, fare clic con il pulsante destro del mouse sulla tabella e selezionare **Visualizza dati**.
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato illustrato come eseguire il mapping dei tipi enum usando il Entity Framework Designer e come usare le enumerazioni nel codice. 

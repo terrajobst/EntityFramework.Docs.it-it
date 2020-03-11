@@ -1,111 +1,111 @@
 ---
-title: Ereditarietà tabella per gerarchia della finestra di progettazione - Entity Framework 6
+title: Ereditarietà TPH della finestra di progettazione-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 72d26a8e-20ab-4500-bd13-394a08e73394
 ms.openlocfilehash: 43ba34a98c3960a7a3052a00e2ed2751c2f2b121
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490123"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418427"
 ---
-# <a name="designer-tph-inheritance"></a>Ereditarietà tabella per gerarchia della finestra di progettazione
-Questa procedura dettagliata viene illustrato come implementare l'ereditarietà di tabella per gerarchia (TPH) nel modello concettuale con Entity Framework Designer (Entity Framework Designer). Ereditarietà tabella per gerarchia utilizza una tabella di database per gestire i dati per tutti i tipi di entità in una gerarchia di ereditarietà.
+# <a name="designer-tph-inheritance"></a>Ereditarietà TPH della finestra di progettazione
+Questa procedura dettagliata illustra come implementare l'ereditarietà tabella per gerarchia (TPH) nel modello concettuale con il Entity Framework Designer (EF designer). L'ereditarietà TPH utilizza una tabella di database per gestire i dati per tutti i tipi di entità in una gerarchia di ereditarietà.
 
-In questa procedura dettagliata verrà eseguito il mapping della tabella Person ai tre tipi di entità: Person (tipo di base), (deriva da Person) Student e Instructor (deriva dalla persona). Verrà creato un modello concettuale dal database (Database First) e quindi modificare il modello per implementare l'ereditarietà tabella per gerarchia usando la finestra di progettazione di Entity Framework.
+In questa procedura dettagliata si eseguirà il mapping della tabella Person a tre tipi di entità: Person (il tipo di base), Student (deriva da Person) e Instructor (deriva da Person). Si creerà un modello concettuale dal database (Database First), quindi si modificherà il modello per implementare l'ereditarietà TPH usando la finestra di progettazione EF.
 
-È possibile eseguire il mapping a un'ereditarietà tabella per gerarchia utilizzando Model First, ma si sarebbe necessario scrivere il proprio database generazione del flusso di lavoro che è complesso. È quindi necessario assegnare questo flusso di lavoro di **flusso di lavoro di Database generazione** proprietà nella finestra di progettazione di Entity Framework. Un'alternativa più semplice consiste nell'utilizzare Code First.
+È possibile eseguire il mapping a un'ereditarietà TPH usando Model First ma è necessario scrivere un flusso di lavoro di generazione del database personalizzato, che è complesso. Il flusso di lavoro verrà quindi assegnato alla proprietà del **flusso di lavoro di generazione del database** nella finestra di progettazione EF. Un'alternativa più semplice consiste nell'usare Code First.
 
 ## <a name="other-inheritance-options"></a>Altre opzioni di ereditarietà
 
-Tabella per tipo TPT () è un altro tipo di ereditarietà in cui tabelle separate nel database vengono mappate alle entità che partecipano l'ereditarietà.  Per informazioni su come eseguire il mapping dell'ereditarietà tabella per tipo con la finestra di progettazione di Entity Framework, vedere [TPT (ereditarietà) finestra di progettazione EF](~/ef6/modeling/designer/inheritance/tpt.md).
+Table-for-Type (TPT) è un altro tipo di ereditarietà in cui viene eseguito il mapping delle tabelle separate del database a entità che partecipano all'ereditarietà.  Per informazioni su come eseguire il mapping dell'ereditarietà tabella per tipo con EF designer, vedere [EF designer TPT ereditarietà](~/ef6/modeling/designer/inheritance/tpt.md).
 
-Ereditarietà dei tipi di tabella per tipo concreto (TP) e modelli di ereditarietà misti sono supportati dal runtime di Entity Framework, ma non sono supportati dalla finestra di progettazione di Entity Framework. Se si desidera utilizzare TPC o misto eredità, sono disponibili due opzioni: utilizzare Code First, oppure modificare manualmente i file con estensione EDMX. Se si sceglie di usare il file EDMX, nella finestra Dettagli Mapping verrà inserita nella "modalità provvisoria" e non sarà in grado di utilizzare la finestra di progettazione per modificare i mapping.
+I modelli di ereditarietà della tabella per tipo concreto (TPC) e di ereditarietà mista sono supportati dal runtime di Entity Framework ma non sono supportati dalla finestra di progettazione EF. Se si vuole usare TPC o l'ereditarietà mista, sono disponibili due opzioni: usare Code First o modificare manualmente il file EDMX. Se si sceglie di utilizzare il file EDMX, la finestra Dettagli mapping verrà inserita in "modalità provvisoria" e non sarà possibile utilizzare la finestra di progettazione per modificare i mapping.
 
-## <a name="prerequisites"></a>Prerequisiti
+## <a name="prerequisites"></a>Prerequisites
 
 Per completare questa procedura dettagliata, è necessario disporre di:
 
 - Una versione recente di Visual Studio.
-- Il [database di esempio School](~/ef6/resources/school-database.md).
+- [Database di esempio School](~/ef6/resources/school-database.md).
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
 -   Aprire Visual Studio 2012.
--   Selezionare **File -&gt; Novità -&gt; progetto**
--   Nel riquadro sinistro, fare clic su **Visual C#\#**, quindi selezionare il **Console** modello.
--   Immettere **TPHDBFirstSample** come nome.
--   Scegliere **OK**.
+-   Seleziona **file-&gt; progetto nuovo-&gt;**
+-   Nel riquadro sinistro fare clic su **Visual C\#** , quindi selezionare il modello **console** .
+-   Immettere **TPHDBFirstSample** come nome.
+-   Selezionare **OK**.
 
-## <a name="create-a-model"></a>Creare un modello
+## <a name="create-a-model"></a>Creare il modello
 
--   Il nome del progetto in Esplora soluzioni e scegliere **Add -&gt; nuovo elemento**.
--   Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro dei modelli.
--   Immettere **TPHModel.edmx** per il nome del file e quindi fare clic su **Add**.
--   Nella finestra di dialogo Scegli contenuto Model, selezionare **genera da database**, quindi fare clic su **successivo**.
--   Fare clic su **nuova connessione**.
-    Nella finestra di dialogo proprietà di connessione, immettere il nome del server (ad esempio, **(localdb)\\mssqllocaldb**), selezionare il metodo di autenticazione, il tipo **School** per il nome del database e quindi Fare clic su **OK**.
-    La finestra di dialogo Seleziona connessione dati viene aggiornata con l'impostazione di connessione di database.
--   Nella finestra di dialogo Scegli oggetti di Database, sotto il nodo tabelle, selezionare la **persona** tabella.
--   Scegliere **Fine**.
+-   Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, quindi scegliere **aggiungi&gt; nuovo elemento**.
+-   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
+-   Immettere **TPHModel. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
+-   Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti**.
+-   Fare clic su **nuova connessione**.
+    Nella finestra di dialogo Proprietà connessione immettere il nome del server (ad esempio, **(local DB)\\mssqllocaldb**), selezionare il metodo di autenticazione, digitare **School** per il nome del database, quindi fare clic su **OK**.
+    La finestra di dialogo scegliere la connessione dati viene aggiornata con l'impostazione di connessione al database.
+-   Nella finestra di dialogo Scegli oggetti di database, nel nodo tabelle, selezionare la tabella **Person** .
+-   Fare clic su **fine**.
 
-Entity Designer, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato. Tutti gli oggetti selezionati nella finestra di dialogo Scegli oggetti di Database vengono aggiunti al modello.
+Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello. Tutti gli oggetti selezionati nella finestra di dialogo Scegli oggetti di database vengono aggiunti al modello.
 
-Vale a dire come il **persona** l'aspetto di tabella nel database.
+Questo è il modo in cui la tabella **Person** Cerca nel database.
 
-![Tabella Person](~/ef6/media/persontable.png) 
+![Tabella Person](~/ef6/media/persontable.png) 
 
 ## <a name="implement-table-per-hierarchy-inheritance"></a>Implementare l'ereditarietà tabella per gerarchia
 
-Il **Person** tabella include le **discriminatore** colonna, che può avere uno dei due valori: "Student" e "Instructor". A seconda del valore di **persona** verrà mappata alla tabella il **studente** entità o il **insegnante** entità. Il **Person** tabella include anche due colonne, **HireDate** e **EnrollmentDate**, che deve essere **nullable** perché non può essere una persona un studente e un insegnante nello stesso momento (almeno non in questa procedura dettagliata).
+La tabella **Person** contiene la colonna **Discriminator** , che può avere uno dei due valori seguenti: "Student" e "Instructor". A seconda del valore della tabella **Person** verrà eseguito il mapping all'entità **Student** o all'entità **Instructor** . La tabella **Person** include anche due colonne, **Hired** e **EnrollmentDate**, che devono **ammettere i valori null** perché una persona non può essere uno studente e un insegnante nello stesso momento, almeno non in questa procedura dettagliata.
 
-### <a name="add-new-entities"></a>Aggiungi nuova entità
+### <a name="add-new-entities"></a>Aggiungi nuove entità
 
 -   Aggiungere una nuova entità.
-    A tale scopo, fare clic su uno spazio vuoto dell'area di progettazione di Entity Framework Designer e selezionare **Add -&gt;entità**.
--   Tipo **insegnante** per il **nome entità** e selezionare **persona** nell'elenco a discesa per il **tipo Base**.
--   Fare clic su **OK**.
--   Aggiungere un'altra nuova entità. Tipo **studente** per il **nome entità** e selezionare **persona** nell'elenco a discesa per il **tipo Base**.
+    A tale scopo, fare clic con il pulsante destro del mouse su uno spazio vuoto dell'area di progettazione dell'Entity Framework Designer e selezionare **aggiungi&gt;entità**.
+-   Digitare **Instructor** per il **nome dell'entità** e selezionare **Person** dall'elenco a discesa per il **tipo di base**.
+-   Fare clic su **OK**.
+-   Aggiungere un'altra nuova entità. Digitare **Student** per il **nome dell'entità** e selezionare **Person** dall'elenco a discesa per il **tipo di base**.
 
-Sono stati aggiunti due nuovi tipi di entità all'area di progettazione. Una freccia che punta dalla nuovi tipi di entità per il **Person** tipo di entità; ciò indica che **persona** è il tipo base per i nuovi tipi di entità.
+Due nuovi tipi di entità sono stati aggiunti all'area di progettazione. Una freccia punta dai nuovi tipi di entità alla **persona** tipo di entità; indica che **Person** è il tipo di base per i nuovi tipi di entità.
 
--   Fare doppio clic sui **HireDate** proprietà delle **persona** entità. Selezionare **Taglia** (oppure usare il tasto Ctrl-X).
--   Fare doppio clic il **insegnante** entità e selezionare **Incolla** (oppure usare il tasto Ctrl + V).
--   Fare doppio clic il **HireDate** proprietà e selezionare **proprietà**.
--   Nel **le proprietà** impostare nella finestra di **Nullable** proprietà **false**.
--   Fare doppio clic sui **EnrollmentDate** proprietà delle **persona** entità. Selezionare **Taglia** (oppure usare il tasto Ctrl-X).
--   Fare doppio clic il **studente** entità e selezionare **Incolla (o chiave di uso di Ctrl + V).**
--   Selezionare il **EnrollmentDate** proprietà e impostare le **Nullable** proprietà **false**.
--   Selezionare il **persona** tipo di entità. Nel **le proprietà** impostare nella finestra relativa **astratto** proprietà **true**.
--   Eliminare il **discriminatore** proprietà dal **persona**. Nella sezione seguente è illustrato il motivo che deve essere eliminata.
+-   Fare clic con il pulsante destro del mouse sulla proprietà di **assunzione** dell'entità  **persona** . Selezionare **taglia** (oppure usare il tasto CTRL + X).
+-   Fare clic con il pulsante destro del mouse sull'entità **Instructor** e selezionare **Incolla** (oppure utilizzare il tasto CTRL + V).
+-   Fare clic con il pulsante destro del mouse sulla proprietà di **assunzione** e selezionare **Proprietà**.
+-   Nella finestra **proprietà** impostare la proprietà **Nullable** su **false**.
+-   Fare clic con il pulsante destro del mouse sulla proprietà **EnrollmentDate** dell'entità **Person** . Selezionare **taglia** (oppure usare il tasto CTRL + X).
+-   Fare clic con il pulsante destro del mouse sull'entità **Student** e selezionare **Incolla (oppure utilizzare il tasto CTRL + V).**
+-   Selezionare la proprietà **EnrollmentDate** e impostare la proprietà **Nullable** su **false**.
+-   Selezionare il tipo di entità **Person** . Nella finestra **proprietà** impostare la proprietà **abstract** su **true**.
+-   Elimina la proprietà **Discriminator** da **Person**. Il motivo per cui deve essere eliminato è illustrato nella sezione seguente.
 
-### <a name="map-the-entities"></a>Eseguire il mapping di entità
+### <a name="map-the-entities"></a>Eseguire il mapping delle entità
 
--   Fare doppio clic il **insegnante** e selezionare **Mapping della tabella.**
-    L'entità Instructor è selezionata nella finestra Dettagli Mapping.
--   Fare clic su **&lt;aggiungere una tabella o vista&gt;** nel **Dettagli Mapping** finestra.
-    Il **&lt;aggiungere una tabella o vista&gt;** campo diventa un elenco a discesa di tabelle o visualizzazioni a cui può essere mappato l'entità selezionata.
--   Selezionare **persona** nell'elenco a discesa.
--   Il **Dettagli Mapping** finestra viene aggiornata con i mapping delle colonne predefinite e un'opzione per l'aggiunta di una condizione.
--   Fare clic su  **&lt;Aggiungi una condizione&gt;**.
-    Il **&lt;Aggiungi una condizione&gt;** campo diventa un elenco a discesa delle colonne per cui è possibile impostare le condizioni.
--   Selezionare **discriminatore** nell'elenco a discesa.
--   Nel **operatore** della colonna della **Dettagli Mapping** finestra selezionare = nell'elenco a discesa.
--   Nel **valore/proprietà** colonna, digitare **insegnante**. Il risultato finale dovrebbe essere simile al seguente:
+-   Fare clic con il pulsante destro del mouse sull' **insegnante** e scegliere **mapping tabella.**
+    L'entità Instructor è selezionata nella finestra Dettagli mapping.
+-   Fare clic su **&lt;aggiungere una tabella o una vista&gt;**  nella finestra  **Dettagli mapping** .
+    Il **&lt;aggiungere una tabella o una vista&gt;** campo diventa un elenco a discesa di tabelle o viste a cui è possibile eseguire il mapping dell'entità selezionata.
+-   Selezionare **Person** dall'elenco a discesa.
+-   La finestra **Dettagli mapping** viene aggiornata con i mapping di colonna predefiniti e un'opzione per l'aggiunta di una condizione.
+-   Fare clic su **&lt;aggiungere una condizione&gt;** .
+    Il **&lt;Aggiungi una condizione&gt;**  campo diventa un elenco a discesa di colonne per le quali è possibile impostare le condizioni.
+-   Selezionare  **discriminatore** dall'elenco a discesa.
+-   Nella colonna **operatore** della finestra **Dettagli mapping** selezionare = nell'elenco a discesa.
+-   Nella colonna **valore/proprietà** digitare **Instructor**. Il risultato finale dovrebbe essere simile al seguente:
 
-    ![Dettagli di mapping](~/ef6/media/mappingdetails2.png)
+    ![Dettagli mapping](~/ef6/media/mappingdetails2.png)
 
--   Ripetere questi passaggi per la **studente** tipo di entità, ma la condizione uguale alla marca **studente** valore.  
-    *Il motivo, desiderassimo per rimuovere il **discriminatore** proprietà, è perché non è possibile associare più di una volta una colonna di tabella. Questa colonna verrà utilizzata per eseguire il mapping condizionale, pertanto non può essere usato per il mapping anche di proprietà. L'unico modo può essere utilizzato per entrambi, se una condizione Usa un' **Is Null** oppure **Is Not Null** confronto.*
+-   Ripetere questi passaggi per il tipo di entità **student** , ma fare in modo che la condizione sia uguale al valore **Student** .  
+    *Il motivo per cui si voleva rimuovere la proprietà **Discriminator** è che non è possibile eseguire il mapping di una colonna di tabella più di una volta. Questa colonna verrà usata per il mapping condizionale, pertanto non può essere usata anche per il mapping delle proprietà. L'unico modo in cui può essere usato per entrambi, se una condizione usa un **è null** o **non è null** il confronto.*
 
 A questo punto l'ereditarietà tabella per gerarchia risulta implementata.
 
-![Finale della tabella per gerarchia](~/ef6/media/finaltph.png)
+![TPH finale](~/ef6/media/finaltph.png)
 
 ## <a name="use-the-model"></a>Usare il modello
 
-Aprire il **Program.cs** file dove il **Main** metodo è definito. Incollare il codice seguente nel **Main** (funzione). Il codice esegue tre query. La prima query restituisce tutti i **persona** oggetti. La seconda query Usa la **OfType** metodo restituisca **insegnante** oggetti. La terza query Usa la **OfType** metodo restituisca **studente** oggetti.
+Aprire il file **Program.cs** in cui è definito il metodo **Main** . Incollare il codice seguente nella funzione **Main** . Il codice esegue tre query. La prima query riporta tutti gli oggetti **Person** . La seconda query usa il metodo **OfType** per restituire gli oggetti **Instructor** . La terza query usa il metodo **OfType** per restituire gli oggetti **Student** .
 
 ``` csharp
     using (var context = new SchoolEntities())

@@ -1,29 +1,29 @@
 ---
-title: Le stringhe di connessione e modelli - Entity Framework 6
+title: Stringhe di connessione e modelli-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 294bb138-978f-4fe2-8491-fdf3cd3c60c4
 ms.openlocfilehash: 2c9f084107e4de7f5439bf0082b46a3b538496e0
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490746"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419297"
 ---
-# <a name="connection-strings-and-models"></a>Modelli e le stringhe di connessione
-In questo argomento illustra come Entity Framework consente di individuare la connessione di database da usare e il modo in cui è possibile modificarlo. I modelli creati con Code First e la finestra di progettazione di Entity Framework sono descritte in questo argomento.  
+# <a name="connection-strings-and-models"></a>Stringhe di connessione e modelli
+Questo argomento descrive il modo in cui Entity Framework individua la connessione al database da usare e come è possibile modificarla. I modelli creati con Code First e la finestra di progettazione EF sono trattati in questo argomento.  
 
-In genere un'applicazione Entity Framework Usa una classe derivata da DbContext. Questa classe derivata verrà chiamare uno dei costruttori nella classe base DbContext al controllo:  
+In genere, un'applicazione Entity Framework usa una classe derivata da DbContext. Questa classe derivata chiamerà uno dei costruttori nella classe DbContext di base per controllare:  
 
-- Modalità di connessione il contesto a un database, ovvero come una stringa di connessione è trovare/usata  
-- Se verrà utilizzato il contesto di calcolare un modello utilizzando Code First o caricare un modello creato con la finestra di progettazione di Entity Framework  
+- Il modo in cui il contesto si connetterà a un database, ovvero il modo in cui viene trovata o utilizzata una stringa di connessione  
+- Indica se il contesto utilizzerà il calcolo di un modello usando Code First o caricherà un modello creato con la finestra di progettazione EF  
 - Opzioni avanzate aggiuntive  
 
-I frammenti seguenti illustrano che alcuni modi i costruttori DbContext è utilizzabile.  
+Nei frammenti seguenti vengono illustrati alcuni dei modi in cui è possibile utilizzare i costruttori DbContext.  
 
-## <a name="use-code-first-with-connection-by-convention"></a>Utilizzare Code First con connessione per convenzione  
+## <a name="use-code-first-with-connection-by-convention"></a>USA Code First con connessione per convenzione  
 
-Se non è ancora eventuali altre opzioni di configurazione nell'applicazione, quindi chiamare il costruttore senza parametri in DbContext causerà DbContext per l'esecuzione in modalità Code First con una connessione al database creata per convenzione. Ad esempio:  
+Se nell'applicazione non è stata eseguita alcuna altra configurazione, la chiamata al costruttore senza parametri in DbContext provocherà l'esecuzione di DbContext in modalità Code First con una connessione di database creata per convenzione. Ad esempio:  
 
 ``` csharp  
 namespace Demo.EF
@@ -38,13 +38,13 @@ namespace Demo.EF
 }
 ```  
 
-In questo esempio DbContext Usa il nome completo dello spazio dei nomi di class—Demo.EF.BloggingContext—as del contesto derivato il nome del database e crea una stringa di connessione per il database usando SQL Express o LocalDB. Se entrambi sono installati, SQL Express verrà utilizzato.  
+In questo esempio DbContext usa il nome completo dello spazio dei nomi della classe del contesto derivato, demo. EF. BloggingContext, come nome del database e crea una stringa di connessione per il database usando SQL Express o local DB. Se entrambi sono installati, verrà utilizzato SQL Express.  
 
-Visual Studio 2010 include SQL Express per impostazione predefinita e Visual Studio 2012 e versioni successive include LocalDB. Durante l'installazione, il pacchetto EntityFramework NuGet controlla quali server di database è disponibile. Il pacchetto NuGet aggiornerà quindi il file di configurazione, impostare il server di database predefinito che usa Code First quando si crea una connessione per convenzione. Se SQL Express è in esecuzione, verrà utilizzato. Se SQL Express non è disponibile quindi LocalDB verrà registrato come impostazione predefinita invece. Non vengono apportate modifiche al file di configurazione se contiene già un'impostazione per la factory di connessione predefinita.  
+Visual Studio 2010 include SQL Express per impostazione predefinita e Visual Studio 2012 e versioni successive includono il database locale. Durante l'installazione, il pacchetto NuGet EntityFramework controlla il server di database disponibile. Il pacchetto NuGet aggiornerà quindi il file di configurazione impostando il server di database predefinito usato da Code First per la creazione di una connessione per convenzione. Se SQL Express è in esecuzione, verrà usato. Se SQL Express non è disponibile, il database locale verrà registrato come predefinito. Non viene apportata alcuna modifica al file di configurazione se è già presente un'impostazione per la factory di connessione predefinita.  
 
-## <a name="use-code-first-with-connection-by-convention-and-specified-database-name"></a>Uso di Code First con una connessione con convenzione e nome del database specificato  
+## <a name="use-code-first-with-connection-by-convention-and-specified-database-name"></a>USA Code First con connessione per convenzione e nome database specificato  
 
-Se non è ancora eventuali altre opzioni di configurazione nell'applicazione, quindi chiamare il costruttore string in DbContext con il nome del database da usare causerà DbContext per l'esecuzione in modalità Code First con una connessione al database creata per convenzione per il database di tale nome. Ad esempio:  
+Se nell'applicazione non è stata eseguita alcuna altra configurazione, chiamare il costruttore di stringa in DbContext con il nome del database che si desidera utilizzare provocherà l'esecuzione di DbContext in modalità Code First con una connessione di database creata per convenzione al database di nome. Ad esempio:  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -56,9 +56,9 @@ public class BloggingContext : DbContext
 }
 ```  
 
-In questo esempio DbContext Usa "BloggingDatabase" come nome del database e crea una stringa di connessione per il database usando SQL Express (installato con Visual Studio 2010) o database locale (installato con Visual Studio 2012). Se entrambi sono installati, SQL Express verrà utilizzato.  
+In questo esempio DbContext utilizza "BloggingDatabase" come nome del database e crea una stringa di connessione per il database utilizzando SQL Express (installato con Visual Studio 2010) o il database locale (installato con Visual Studio 2012). Se entrambi sono installati, verrà utilizzato SQL Express.  
 
-## <a name="use-code-first-with-connection-string-in-appconfigwebconfig-file"></a>Utilizzare Code First con stringa di connessione nel file app.config/web.config  
+## <a name="use-code-first-with-connection-string-in-appconfigwebconfig-file"></a>Usare Code First con la stringa di connessione nel file app. config/web. config  
 
 È possibile scegliere di inserire una stringa di connessione nel file app. config o Web. config. Ad esempio:  
 
@@ -72,9 +72,9 @@ In questo esempio DbContext Usa "BloggingDatabase" come nome del database e crea
 </configuration>
 ```  
 
-Si tratta di un metodo semplice per usare un server di database diverso da SQL Express o LocalDB DbContext, ovvero l'esempio precedente viene specificato un database di SQL Server Compact Edition.  
+Si tratta di un modo semplice per indicare a DbContext di utilizzare un server di database diverso da SQL Express o local DB, nell'esempio precedente viene specificato un database SQL Server Compact Edition.  
 
-Se il nome della stringa di connessione corrisponde al nome del contesto (con o senza qualifica dello spazio dei nomi) quindi si troverà da DbContext quando viene usato il costruttore senza parametri. Se il nome di stringa di connessione è diverso dal nome del contesto è possibile indicare a DbContext per usare la connessione in modalità Code First passando il nome di stringa di connessione per il costruttore DbContext. Ad esempio:  
+Se il nome della stringa di connessione corrisponde al nome del contesto (con o senza qualificazione dello spazio dei nomi), sarà trovato da DbContext quando viene usato il costruttore senza parametri. Se il nome della stringa di connessione è diverso dal nome del contesto, è possibile indicare a DbContext di usare questa connessione in modalità Code First passando il nome della stringa di connessione al costruttore DbContext. Ad esempio:  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -86,7 +86,7 @@ public class BloggingContext : DbContext
 }
 ```  
 
-In alternativa, è possibile usare il formato "nome =\<nome stringa di connessione\>" per la stringa passata al costruttore DbContext. Ad esempio:  
+In alternativa, è possibile utilizzare il formato "nome =\<nome della stringa di connessione\>" per la stringa passata al costruttore DbContext. Ad esempio:  
 
 ``` csharp  
 public class BloggingContext : DbContext
@@ -98,13 +98,13 @@ public class BloggingContext : DbContext
 }
 ```  
 
-Questo formato rende esplicita che si prevede che la stringa di connessione possano essere trovati in file di configurazione. Se una stringa di connessione con il nome specificato non viene trovata, verrà generata un'eccezione.  
+Questo modulo rende esplicito che si prevede che la stringa di connessione venga trovata nel file di configurazione. Se non viene trovata una stringa di connessione con il nome specificato, verrà generata un'eccezione.  
 
-## <a name="databasemodel-first-with-connection-string-in-appconfigwebconfig-file"></a>Database/Model First con stringa di connessione nel file app.config/web.config  
+## <a name="databasemodel-first-with-connection-string-in-appconfigwebconfig-file"></a>Database/Model First con stringa di connessione nel file app. config/web. config  
 
-I modelli creati con la finestra di progettazione di Entity Framework sono diversi da Code First in quanto il modello esiste già e non viene generato dal codice quando viene eseguita l'applicazione. Il modello è in genere presente come un file EDMX nel progetto.  
+I modelli creati con la finestra di progettazione EF sono diversi da Code First in quanto il modello esiste già e non viene generato dal codice durante l'esecuzione dell'applicazione. Il modello è in genere presente come file EDMX nel progetto.  
 
-La finestra di progettazione aggiungerà una stringa di connessione Entity Framework nel file app. config o Web. config. Questa stringa di connessione è speciale perché contiene informazioni su come trovare le informazioni nel file EDMX. Ad esempio:  
+Nella finestra di progettazione verrà aggiunta una stringa di connessione EF al file app. config o Web. config. Questa stringa di connessione è speciale in quanto contiene informazioni su come trovare le informazioni nel file EDMX. Ad esempio:  
 
 ``` xml  
 <configuration>  
@@ -124,7 +124,7 @@ La finestra di progettazione aggiungerà una stringa di connessione Entity Frame
 </configuration>
 ```  
 
-La finestra di progettazione di Entity Framework genera anche codice che chiede di DbContext per usare la connessione passando il nome di stringa di connessione per il costruttore DbContext. Ad esempio:  
+EF Designer genera anche codice che indica a DbContext di usare questa connessione passando il nome della stringa di connessione al costruttore DbContext. Ad esempio:  
 
 ``` csharp  
 public class NorthwindContext : DbContext
@@ -136,13 +136,13 @@ public class NorthwindContext : DbContext
 }
 ```  
 
-DbContext è in grado di caricare il modello esistente (anziché di utilizzare Code First per calcolarla dal codice) perché la stringa di connessione è una stringa di connessione EF contenente i dettagli del modello da usare.  
+DbContext sa di caricare il modello esistente (invece di usare Code First per calcolarlo dal codice) perché la stringa di connessione è una stringa di connessione EF che contiene i dettagli del modello da usare.  
 
-## <a name="other-dbcontext-constructor-options"></a>Altre opzioni di costruttore DbContext  
+## <a name="other-dbcontext-constructor-options"></a>Altre opzioni del costruttore DbContext  
 
-La classe DbContext contiene altri costruttori e i modelli di utilizzo che consentono alcuni scenari più avanzati. Alcune di queste sono:  
+La classe DbContext contiene altri costruttori e modelli di utilizzo che consentono scenari più avanzati. Di seguito sono riportate alcune di queste:  
 
-- È possibile usare la classe DbModelBuilder per compilare un modello Code First senza creare un'istanza di un'istanza di DbContext. Il risultato di questo è un oggetto DbModel. È quindi possibile passare questo oggetto DbModel a uno dei costruttori DbContext quando si è pronti per creare l'istanza di DbContext.  
-- È possibile passare una stringa di connessione completa per DbContext anziché solo il nome di stringa del database o una connessione. Per impostazione predefinita questa stringa di connessione viene usata con il provider SqlClient; Ciò può essere modificato impostando un'implementazione diversa della IConnectionFactory nel contesto. Database.DefaultConnectionFactory.  
-- È possibile usare un oggetto DbConnection esistente passandolo al costruttore oggetto DbContext. Se l'oggetto di connessione è un'istanza di EntityConnection, quindi il modello specificato nella connessione sarà utilizzata, anziché calcolando un modello utilizzando Code First. Se l'oggetto è un'istanza di un altro tipo, ad esempio, SqlConnection, quindi il contesto viene utilizzato per la modalità Code First.  
-- È possibile passare un oggetto ObjectContext esistente a un costruttore DbContext per creare un oggetto DbContext ritorno a capo il contesto esistente. Può essere utilizzato per le applicazioni esistenti che utilizza ObjectContext ma che vuole sfruttare i vantaggi di DbContext in alcune parti dell'applicazione.  
+- È possibile usare la classe DbModelBuilder per compilare un modello di Code First senza creare un'istanza di DbContext. Il risultato è un oggetto DbModel. È quindi possibile passare questo oggetto DbModel a uno dei costruttori DbContext quando si è pronti per creare l'istanza di DbContext.  
+- È possibile passare una stringa di connessione completa a DbContext anziché solo il nome del database o della stringa di connessione. Per impostazione predefinita, questa stringa di connessione viene utilizzata con il provider System. Data. SqlClient. Questo può essere modificato impostando un'implementazione diversa di IConnectionFactory nel contesto. Database. DefaultConnectionFactory.  
+- È possibile usare un oggetto DbConnection esistente passandolo a un costruttore DbContext. Se l'oggetto Connection è un'istanza di EntityConnection, verrà utilizzato il modello specificato nella connessione anziché calcolare un modello utilizzando Code First. Se l'oggetto è un'istanza di un altro tipo, ad esempio SqlConnection, il contesto lo utilizzerà per la modalità Code First.  
+- È possibile passare un oggetto ObjectContext esistente a un costruttore DbContext per creare un DbContext che esegue il wrapping del contesto esistente. Questo può essere usato per le applicazioni esistenti che usano ObjectContext, ma che vogliono sfruttare i vantaggi di DbContext in alcune parti dell'applicazione.  

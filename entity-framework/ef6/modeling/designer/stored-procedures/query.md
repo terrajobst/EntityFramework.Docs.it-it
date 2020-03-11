@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 9554ed25-c5c1-43be-acad-5da37739697f
 ms.openlocfilehash: 2e0092b526278597e8477d47eeb642598647bb91
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182475"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418392"
 ---
 # <a name="designer-query-stored-procedures"></a>Stored procedure di query della finestra di progettazione
 In questa procedura dettagliata viene illustrato come utilizzare il Entity Framework Designer (Entity Designer) per importare stored procedure in un modello e quindi chiamare le stored procedure importate per recuperare i risultati. 
@@ -18,7 +18,7 @@ Si noti che Code First non supporta il mapping a stored procedure o funzioni. Tu
 var query = context.Products.SqlQuery("EXECUTE [dbo].[GetAllProducts]")`;
 ```
 
-## <a name="prerequisites"></a>Prerequisiti
+## <a name="prerequisites"></a>Prerequisites
 
 Per completare questa procedura dettagliata, è necessario disporre di:
 
@@ -31,9 +31,9 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 -   Seleziona **file-&gt; progetto nuovo-&gt;**
 -   Nel riquadro sinistro fare clic su **Visual C\#** , quindi selezionare il modello **console** .
 -   Immettere **EFwithSProcsSample** come nome.
--   Fare clic su **OK**.
+-   Selezionare **OK**.
 
-## <a name="create-a-model"></a>Creazione di un modello
+## <a name="create-a-model"></a>Creare il modello
 
 -   Fare clic con il pulsante destro del mouse sul progetto Esplora soluzioni e scegliere **aggiungi&gt; nuovo elemento**.
 -   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
@@ -45,7 +45,7 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 -   Nella finestra di dialogo Scegli oggetti di database selezionare la casella di controllo **tabelle** per selezionare tutte le tabelle.  
     Inoltre, selezionare le stored procedure seguenti nel nodo **stored procedure e funzioni** : **GetStudentGrades** e **GetDepartmentName**. 
 
-    ![Import](~/ef6/media/import.jpg)
+    ![Importa](~/ef6/media/import.jpg)
 
     *A partire da Visual Studio 2012, EF Designer supporta l'importazione bulk di stored procedure. Per impostazione predefinita, l' **importazione delle stored procedure e delle funzioni selezionate nel modello set** è selezionata.*
 -   Fare clic su **fine**.

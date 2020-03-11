@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: c8417e18-a2ee-499c-9ce9-2a48cc5b468a
 ms.openlocfilehash: c359d8d32a88049213fd5e98e99fe49d7e3121a3
-ms.sourcegitcommit: d01fc19aa42ca34c3bebccbc96ee26d06fcecaa2
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/16/2019
-ms.locfileid: "71005482"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417088"
 ---
 # <a name="loading-related-entities"></a>Caricamento di entità correlate
 
@@ -102,7 +102,7 @@ public class Blog
 
 ### <a name="turn-lazy-loading-off-for-serialization"></a>Disabilitare il caricamento lazy per la serializzazione
 
-Il caricamento lazy e la serializzazione non sono combinati correttamente e, se non si presta attenzione, è possibile eseguire query per l'intero database solo perché il caricamento lazy è abilitato. La maggior parte dei serializzatori funziona accedendo a ogni proprietà in un'istanza di un tipo. L'accesso alle proprietà attiva il caricamento lazy, in modo che vengano serializzate più entità. È possibile accedere alle proprietà delle entità e vengono caricate anche altre entità. È consigliabile disattivare il caricamento lazy prima di serializzare un'entità. Le sezioni seguenti illustrano come eseguire questa operazione.
+Il caricamento lazy e la serializzazione non sono combinati correttamente e, se non si presta attenzione, è possibile eseguire query per l'intero database solo perché il caricamento lazy è abilitato. La maggior parte dei serializzatori funziona accedendo a ogni proprietà in un'istanza di un tipo. L'accesso alle proprietà attiva il caricamento lazy, in modo che vengano serializzate più entità. È possibile accedere alle proprietà delle entità e vengono caricate anche altre entità. È consigliabile disattivare il caricamento lazy prima di serializzare un'entità. Le sezioni seguenti mostrano come eseguire questa operazione.
 
 ### <a name="turning-off-lazy-loading-for-specific-navigation-properties"></a>Disattivazione del caricamento lazy per specifiche proprietà di navigazione
 

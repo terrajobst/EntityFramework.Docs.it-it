@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: ee8e14ec-2158-4c9c-96b5-118715e2ed9e
 uid: core/saving/cascade-delete
-ms.openlocfilehash: 51c8b6f4517a3f87821ed1e4e2d60549e06ed39d
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 6e92b869d691d0224abf1997d9eb7ea035489c5d
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656063"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417614"
 ---
 # <a name="cascade-delete"></a>Eliminazione a catena
 
@@ -41,9 +41,9 @@ Per le relazioni facoltative (chiave esterna che ammette valori Null), _è_ poss
 | Nome del comportamento               | Effetto sull'entità dipendente/figlio in memoria    | Effetto sull'entità dipendente/figlio nel database  |
 |:----------------------------|:---------------------------------------|:---------------------------------------|
 | **Cascade**                 | Le entità vengono eliminate                   | Le entità vengono eliminate                   |
-| **ClientSetNull** (impostazione predefinita) | Le proprietà di chiave esterna vengono impostate su Null | Nessuno                                   |
+| **ClientSetNull** (impostazione predefinita) | Le proprietà di chiave esterna vengono impostate su Null | nessuno                                   |
 | **SetNull**                 | Le proprietà di chiave esterna vengono impostate su Null | Le proprietà di chiave esterna vengono impostate su Null |
-| **Restrict**                | Nessuno                                   | Nessuno                                   |
+| **Restrict**                | nessuno                                   | nessuno                                   |
 
 ### <a name="required-relationships"></a>Relazioni obbligatorie
 
@@ -52,9 +52,9 @@ Per le relazioni obbligatorie (chiave esterna che non ammette valori Null), _non
 | Nome del comportamento         | Effetto sull'entità dipendente/figlio in memoria | Effetto sull'entità dipendente/figlio nel database |
 |:----------------------|:------------------------------------|:--------------------------------------|
 | **Cascade** (impostazione predefinita) | Le entità vengono eliminate                | Le entità vengono eliminate                  |
-| **ClientSetNull**     | SaveChanges genera un'eccezione                  | Nessuno                                  |
+| **ClientSetNull**     | SaveChanges genera un'eccezione                  | nessuno                                  |
 | **SetNull**           | SaveChanges genera un'eccezione                  | SaveChanges genera un'eccezione                    |
-| **Restrict**          | Nessuno                                | Nessuno                                  |
+| **Restrict**          | nessuno                                | nessuno                                  |
 
 Nelle tabelle precedenti, la condizione *Nessuno* può comportare una violazione di vincolo. Ad esempio, se viene eliminata un'entità principale/figlio, ma non viene eseguita alcuna azione per modificare la chiave esterna di un'entità dipendente/figlio, il database genererà probabilmente eccezioni durante SaveChanges a causa di una violazione del vincolo di chiave esterna.
 
@@ -75,7 +75,7 @@ In generale:
 
 ## <a name="entity-deletion-examples"></a>Esempi di eliminazione di entità
 
-Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio mostra cosa accade per ogni comportamento di eliminazione sia per le relazioni obbligatorie che facoltative, quando viene eliminata un'entità padre.
+Il codice seguente fa parte di un [esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio mostra cosa accade per ogni comportamento di eliminazione sia per le relazioni obbligatorie che facoltative, quando viene eliminata un'entità padre.
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteBehaviorVariations)]
 
@@ -186,7 +186,7 @@ Ogni variazione verrà analizzata per capire il funzionamento.
 
 ## <a name="delete-orphans-examples"></a>Esempi di eliminazione degli orfani
 
-Il codice seguente fa parte di un [esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio illustra le conseguenze di ogni comportamento di eliminazione sia per le relazioni facoltative che per quelle obbligatorie, quando viene interrotta la relazione tra un'entità padre/principale e le relative entità figlio/dipendenti. In questo esempio, la relazione viene interrotta rimuovendo gli oggetti dipendenti o elementi figlio (POST) dalla proprietà di navigazione della raccolta nell'entità principale/padre (blog). Tuttavia, il comportamento è lo stesso se il riferimento da entità dipendente/figlio a entità principale/padre viene invece impostato su Null.
+Il codice seguente fa parte di un [esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/CascadeDelete/) che può essere scaricato ed eseguito. L'esempio illustra le conseguenze di ogni comportamento di eliminazione sia per le relazioni facoltative che per quelle obbligatorie, quando viene interrotta la relazione tra un'entità padre/principale e le relative entità figlio/dipendenti. In questo esempio, la relazione viene interrotta rimuovendo gli oggetti dipendenti o elementi figlio (POST) dalla proprietà di navigazione della raccolta nell'entità principale/padre (blog). Tuttavia, il comportamento è lo stesso se il riferimento da entità dipendente/figlio a entità principale/padre viene invece impostato su Null.
 
 [!code-csharp[Main](../../../samples/core/Saving/CascadeDelete/Sample.cs#DeleteOrphansVariations)]
 

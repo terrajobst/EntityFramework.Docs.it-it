@@ -5,17 +5,17 @@ ms.author: bricelam
 ms.date: 10/30/2017
 uid: core/managing-schemas/migrations/projects
 ms.openlocfilehash: 89b7f50fe750c2953aa75efcdffcb1a5199ce90c
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824418"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416815"
 ---
 # <a name="using-a-separate-migrations-project"></a>Uso di un progetto di migrazioni separate
 
 Potrebbe essere necessario archiviare le migrazioni in un assembly diverso da quello che contiene il `DbContext`. È anche possibile usare questa strategia per gestire più set di migrazioni, ad esempio uno per lo sviluppo e un altro per gli aggiornamenti di versione a rilascio.
 
-Per eseguire questa operazione...
+Per
 
 1. Creare una nuova libreria di classi.
 
@@ -45,13 +45,13 @@ Per eseguire questa operazione...
 
 Se tutte le operazioni sono state effettuate correttamente, dovrebbe essere possibile aggiungere nuove migrazioni al progetto.
 
-## <a name="net-core-clitabdotnet-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
+## <a name="net-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef migrations add NewMigration --project MyApp.Migrations
 ```
 
-## <a name="visual-studiotabvs"></a>[Visual Studio](#tab/vs)
+## <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
 ``` powershell
 Add-Migration NewMigration -Project MyApp.Migrations

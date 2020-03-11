@@ -5,12 +5,12 @@ ms.author: avickers
 ms.date: 10/27/2016
 ms.assetid: 2533b195-d357-4056-b0e0-8698971bc3b0
 uid: core/saving/disconnected-entities
-ms.openlocfilehash: 88c3fa8ea5b8246a932f5cf21e674bc7cc71c0ea
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 421531e68ac98c0553938f1c24892701f22fef3c
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656276"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417597"
 ---
 # <a name="disconnected-entities"></a>Entità disconnesse
 
@@ -20,7 +20,7 @@ Tuttavia, a volte le entità vengono sottoposte a query usando un'istanza di con
 
 <!-- markdownlint-disable MD028 -->
 > [!TIP]
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Disconnected/) di questo articolo in GitHub.
 
 > [!TIP]
 > EF Core può eseguire il rilevamento delle modifiche per una sola istanza di qualsiasi entità con un determinato valore di chiave primaria. Il modo migliore per evitare che ciò diventi un problema consiste nell'usare un contesto di breve durata per ogni unità di lavoro, in modo che il contesto sia inizialmente vuoto, abbia entità collegate, salvi queste entità, per poi essere eliminato e rimosso.
@@ -131,7 +131,7 @@ Come prima, se non si usano chiavi generate automaticamente, è possibile usare 
 
 L'eliminazione può essere difficile da gestire, dato che l'assenza di un'entità indica spesso che deve essere eliminata. Un modo per risolvere questo problema consiste nell'usare "eliminazioni temporanee" in modo che l'entità venga contrassegnata come eliminata anziché essere effettivamente eliminata. Le eliminazioni diventano quindi uguali agli aggiornamenti. Le eliminazioni temporanee possono essere implementate usando [filtri di query](xref:core/querying/filters).
 
-Per le vere eliminazioni, un modello comune consiste nell'usare un'estensione del modello di query per eseguire essenzialmente un confronto delle differenze del grafo. Esempio:
+Per le vere eliminazioni, un modello comune consiste nell'usare un'estensione del modello di query per eseguire essenzialmente un confronto delle differenze del grafo. Ad esempio:
 
 [!code-csharp[Main](../../../samples/core/Saving/Disconnected/Sample.cs#InsertUpdateOrDeleteGraphWithFind)]
 

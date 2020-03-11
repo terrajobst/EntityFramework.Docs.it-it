@@ -1,21 +1,21 @@
 ---
-title: Il metodo Load - Entity Framework 6
+title: Metodo Load-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 03c5a069-b7b4-455f-a16f-ee3b96cc4e28
 ms.openlocfilehash: bcea8ab2477f44281cd5de824457a72a84ccc766
-ms.sourcegitcommit: 4a795285004612ac03ab26532ac09ca333cb4c8f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/25/2018
-ms.locfileid: "50123817"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417123"
 ---
 # <a name="the-load-method"></a>Metodo Load
-Esistono diversi scenari in cui si desidera caricare le entità dal database nel contesto di aumenterà immediatamente con le entità. Un buon esempio di questo è il caricamento di entità per il data binding come descritto in [i dati locali](~/ef6/querying/local-data.md). Un modo comune per eseguire questa operazione è scrivere una query LINQ, quindi chiamare ToList su di esso, solo per eliminare immediatamente l'elenco creato. Il metodo di estensione Load funziona esattamente come ToList ad eccezione del fatto che evita la creazione dell'elenco completamente.  
+Esistono diversi scenari in cui è possibile che si desideri caricare entità dal database nel contesto senza eseguire immediatamente operazioni con tali entità. Un esempio valido è il caricamento di entità per data binding come descritto in [dati locali](~/ef6/querying/local-data.md). Un modo comune per eseguire questa operazione è scrivere una query LINQ e quindi chiamare ToList, solo per eliminare immediatamente l'elenco creato. Il metodo di estensione Load funziona esattamente come ToList, ad eccezione del fatto che evita di creare completamente l'elenco.  
 
 Le tecniche illustrate in questo argomento si applicano in modo analogo ai modelli creati con Code First ed EF Designer.  
 
-Di seguito sono riportati due esempi di utilizzo del caricamento. Il primo viene acquisito da un'applicazione di associazione dati di Windows Form in cui viene usato carico per eseguire una query per le entità prima dell'associazione alla raccolta locale, come descritto in [i dati locali](~/ef6/querying/local-data.md):  
+Di seguito sono riportati due esempi di utilizzo di Load. Il primo viene tratto da un Windows Forms data binding applicazione in cui viene utilizzato Load per eseguire una query per le entità prima dell'associazione alla raccolta locale, come descritto in [dati locali](~/ef6/querying/local-data.md):  
 
 ``` csharp
 protected override void OnLoad(EventArgs e)
@@ -29,7 +29,7 @@ protected override void OnLoad(EventArgs e)
 }
 ```  
 
-Nel secondo esempio Usa Load per caricare una raccolta filtrata di entità correlate, come descritto in [caricamento di entità correlate](~/ef6/querying/related-data.md):  
+Nel secondo esempio viene illustrato l'utilizzo di Load per caricare una raccolta filtrata di entità correlate, come descritto in [caricamento di entità correlate](~/ef6/querying/related-data.md):  
 
 ``` csharp
 using (var context = new BloggingContext())

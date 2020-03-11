@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: d617aed1-15f2-48a9-b187-186991c666e3
 ms.openlocfilehash: 018f480c1f0f1e74fc9f7a8950a6880e96f1facc
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182656"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419101"
 ---
 # <a name="spatial---code-first"></a>Code First spaziali
 > [!NOTE]
@@ -24,7 +24,7 @@ Per utilizzare i tipi di dati spaziali, è necessario utilizzare anche un provid
 
 Esistono due tipi di dati spaziali principali: geography e Geometry. Il tipo di dati geography archivia dati ellissoidali, ad esempio coordinate di latitudine e longitudine GPS. Il tipo di dati geometry rappresenta un sistema di coordinate euclideo (piano).
 
-## <a name="watch-the-video"></a>Guarda il video
+## <a name="watch-the-video"></a>Video
 In questo video viene illustrato come eseguire il mapping di tipi spaziali con Entity Framework Code First. Viene inoltre illustrato come utilizzare una query LINQ per trovare una distanza tra due posizioni.
 
 **Presentato da**: Julia Kornich
@@ -150,6 +150,6 @@ Per visualizzare il database e i dati, eseguire le operazioni seguenti:
 4.  Espandere la cartella **database** per visualizzare il nuovo database e passare alla tabella delle **Università**
 5.  Per visualizzare i dati, fare clic con il pulsante destro del mouse sulla tabella e selezionare **Visualizza dati** .
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato esaminato come usare i tipi spaziali con Entity Framework Code First. 

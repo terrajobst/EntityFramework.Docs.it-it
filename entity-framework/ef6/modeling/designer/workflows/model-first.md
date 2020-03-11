@@ -4,16 +4,16 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: e1b9c319-bb8a-4417-ac94-7890f257e7f6
 ms.openlocfilehash: 1b37805beb3d33f0b6dad2577a8abb3ea8f7b1e4
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182435"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418105"
 ---
 # <a name="model-first"></a>Model First
 Questo video e la procedura dettagliata forniscono un'introduzione allo sviluppo Model First con Entity Framework. Model First consente di creare un nuovo modello usando il Entity Framework Designer e quindi di generare uno schema del database dal modello. Il modello viene archiviato in un file EDMX (estensione edmx) e può essere visualizzato e modificato nella Entity Framework Designer. Le classi con cui si interagisce nell'applicazione vengono generate automaticamente dal file EDMX.
 
-## <a name="watch-the-video"></a>Guarda il video
+## <a name="watch-the-video"></a>Video
 Questo video e la procedura dettagliata forniscono un'introduzione allo sviluppo Model First con Entity Framework. Model First consente di creare un nuovo modello usando il Entity Framework Designer e quindi di generare uno schema del database dal modello. Il modello viene archiviato in un file EDMX (estensione edmx) e può essere visualizzato e modificato nella Entity Framework Designer. Le classi con cui si interagisce nell'applicazione vengono generate automaticamente dal file EDMX.
 
 **Presentato da**: [Rowan Miller](https://romiller.com/)
@@ -30,11 +30,11 @@ Se si usa Visual Studio 2010, sarà anche necessario che [NuGet](https://visuals
 
 Per semplificare le operazioni, verrà compilata un'applicazione console di base che usa il Model First per eseguire l'accesso ai dati:
 
--   Aprire Visual Studio
+-   Aprire Visual Studio.
 -   **Nuovo progetto&gt; di&gt; file...**
 -   Selezionare **Windows** nel menu a sinistra e nell' **applicazione console**
 -   Immettere **ModelFirstSample** come nome
--   Scegliere **OK**.
+-   Selezionare **OK**.
 
 ## <a name="2-create-model"></a>2. creare un modello
 
@@ -189,12 +189,12 @@ Si inizierà aggiungendo una nuova entità User al modello.
 A questo punto si dispone di un modello aggiornato e si è pronti per aggiornare il database in modo da includere il nuovo tipo di entità utente.
 
 -   Fare clic con il pulsante destro del mouse sull'area di progettazione e selezionare **genera database da modello...** Entity Framework calcolerà uno script per ricreare uno schema basato sul modello aggiornato.
--   Fare clic su **fine**
+-   Fare clic su **Fine**
 -   È possibile ricevere avvisi relativi alla sovrascrittura dello script DDL esistente e delle parti di mapping e archiviazione del modello, fare clic su **Sì** per entrambi gli avvisi
 -   Verrà aperto lo script SQL aggiornato per creare il database  
     *Lo script generato eliminerà tutte le tabelle esistenti e ricreerà lo schema da zero. Questo può funzionare per lo sviluppo locale, ma non è possibile eseguire il push delle modifiche a un database già distribuito. Se è necessario pubblicare le modifiche in un database che è già stato distribuito, sarà necessario modificare lo script o usare uno strumento di confronto dello schema per calcolare uno script di migrazione.*
 -   Fare clic con il pulsante destro del mouse sullo script e scegliere **Esegui**. verrà richiesto di specificare il database a cui connettersi, specificare il database locale o SQL Server Express, a seconda della versione di Visual Studio in uso
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato esaminato Model First sviluppo, che ci ha consentito di creare un modello nella finestra di progettazione EF e quindi di generare un database da tale modello. Il modello è stato quindi utilizzato per leggere e scrivere alcuni dati dal database. Infine, il modello è stato aggiornato e quindi ricreato lo schema del database in modo che corrisponda al modello.

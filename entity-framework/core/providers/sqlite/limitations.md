@@ -5,11 +5,11 @@ ms.date: 04/09/2017
 ms.assetid: 94ab4800-c460-4caa-a5e8-acdfee6e6ce2
 uid: core/providers/sqlite/limitations
 ms.openlocfilehash: 2f80dc195265787318ac4925dd937da45ffad011
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72179775"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417774"
 ---
 # <a name="sqlite-ef-core-database-provider-limitations"></a>Limitazioni del provider di database EF Core SQLite
 
@@ -25,16 +25,16 @@ La libreria relazionale comune (condivisa da Entity Framework provider di databa
 
 ## <a name="query-limitations"></a>Limitazioni delle query
 
-SQLite non supporta in modo nativo i tipi di dati seguenti. EF Core è in grado di leggere e scrivere valori di questi tipi ed è supportata anche l'esecuzione di query per verificarne l'uguaglianza (`where e.Property == value`). Altre operazioni, tuttavia, come il confronto e l'ordinamento richiederanno una valutazione sul client.
+SQLite non supporta in modo nativo i tipi di dati seguenti. EF Core possibile leggere e scrivere i valori di questi tipi ed è supportata anche l'esecuzione di query per verificarne l'uguaglianza (`where e.Property == value`). Altre operazioni, tuttavia, come il confronto e l'ordinamento richiederanno una valutazione sul client.
 
 * DateTimeOffset
 * Decimal
 * TimeSpan
 * UInt64
 
-Anziché `DateTimeOffset`, è consigliabile utilizzare valori DateTime. Quando si gestiscono più fusi orari, è consigliabile convertire i valori in formato UTC prima di salvare e quindi tornare al fuso orario appropriato.
+Invece di `DateTimeOffset`, è consigliabile usare i valori DateTime. Quando si gestiscono più fusi orari, è consigliabile convertire i valori in formato UTC prima di salvare e quindi tornare al fuso orario appropriato.
 
-Il tipo `Decimal` fornisce un livello elevato di precisione. Se questo livello di precisione non è necessario, tuttavia, è consigliabile usare invece Double. È possibile usare un [convertitore di valori](../../modeling/value-conversions.md) per continuare a usare Decimal nelle classi.
+Il tipo di `Decimal` fornisce un livello elevato di precisione. Se questo livello di precisione non è necessario, tuttavia, è consigliabile usare invece Double. È possibile usare un [convertitore di valori](../../modeling/value-conversions.md) per continuare a usare Decimal nelle classi.
 
 ``` csharp
 modelBuilder.Entity<MyEntity>()
@@ -66,9 +66,9 @@ Il motore di database SQLite non supporta una serie di operazioni dello schema s
 | RenameTable          | ✔          | 1.0              |
 | EnsureSchema         | ✔ (no-op)  | 2.0              |
 | DropSchema           | ✔ (no-op)  | 2.0              |
-| INS               | ✔          | 2.0              |
-| Aggiorna               | ✔          | 2.0              |
-| Eliminare               | ✔          | 2.0              |
+| Inserimento               | ✔          | 2.0              |
+| Aggiornamento               | ✔          | 2.0              |
+| Delete               | ✔          | 2.0              |
 
 ## <a name="migrations-limitations-workaround"></a>Soluzione alternativa alle migrazioni
 

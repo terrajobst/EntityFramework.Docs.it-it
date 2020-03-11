@@ -6,11 +6,11 @@ ms.author: ansvyryd
 ms.date: 10/27/2016
 uid: core/modeling/inheritance
 ms.openlocfilehash: 507854e3acc0347adee612e516b3e2e0b10f55cf
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502168"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417295"
 ---
 # <a name="inheritance"></a>Ereditarietà
 
@@ -31,7 +31,7 @@ Per convenzione, EF configurerà l'ereditarietà solo se due o più tipi eredita
 
 È necessario eseguire il mapping di questo modello allo schema di database seguente (si noti la colonna *Discriminator* creata in modo implicito, che identifica il tipo di *Blog* archiviato in ogni riga):
 
-![immagine](_static/inheritance-tph-data.png)
+![image](_static/inheritance-tph-data.png)
 
 >[!NOTE]
 > Le colonne del database vengono rese automaticamente Nullable quando necessario quando si usa il mapping di TPH. Ad esempio, la colonna *RssUrl* ammette i valori null perché le istanze di *Blog* normali non hanno tale proprietà.

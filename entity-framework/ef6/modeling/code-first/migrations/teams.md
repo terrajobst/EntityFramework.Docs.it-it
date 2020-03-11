@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 4c2d9a95-de6f-4e97-9738-c1f8043eff69
 ms.openlocfilehash: b3c4c35d636caf4ddd251dd78e026587abc57d42
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182604"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418889"
 ---
 # <a name="code-first-migrations-in-team-environments"></a>Migrazioni Code First in ambienti Team
 > [!NOTE]
@@ -107,11 +107,11 @@ Developer \#1 e Developer \#2 ora apporta alcune modifiche al modello EF nella c
 
 Si tratta di un giorno fortunato per gli sviluppatori \#1 Man mano che si verificano prima di inviare le modifiche. Poiché non è stato archiviato alcun altro dato che ha sincronizzato il repository, può semplicemente inviare le modifiche senza eseguire alcuna operazione di merge.
 
-![Invia](~/ef6/media/submit.png)
+![Submit](~/ef6/media/submit.png)
 
 A questo punto è necessario che lo sviluppatore \#2 invii. Non sono così fortunati. Poiché un altro utente ha inviato modifiche dopo la sincronizzazione, sarà necessario eseguire il pull delle modifiche e unirle. Il sistema di controllo del codice sorgente sarà probabilmente in grado di unire automaticamente le modifiche a livello di codice poiché sono molto semplici. Lo stato del repository locale di Developer \#2 dopo la sincronizzazione viene illustrato nel grafico seguente. 
 
-![Tirare](~/ef6/media/pull.png)
+![Pull](~/ef6/media/pull.png)
 
 In questa fase, lo sviluppatore \#2 può eseguire **Update-database** per rilevare la nuova migrazione di **AddRating** (che non è stata applicata al database di Developer \#2) e applicarla. A questo punto, la colonna **rating** viene aggiunta alla tabella **Blogs** e il database è sincronizzato con il modello.
 
@@ -174,7 +174,7 @@ Di seguito è riportato lo stato della codebase locale di Developer \#2 dopo ave
 
 ![Metadati aggiornati](~/ef6/media/updatedmetadata.png)
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 Quando si usa Migrazioni Code First in un ambiente team, si verificano alcuni problemi. Tuttavia, una conoscenza di base del funzionamento delle migrazioni e di alcuni semplici approcci per la risoluzione dei conflitti di merge rendono più semplice superare queste problematiche.
 

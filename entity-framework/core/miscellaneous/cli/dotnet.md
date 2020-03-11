@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 07/11/2019
 uid: core/miscellaneous/cli/dotnet
-ms.openlocfilehash: 5686d28e6847797130476cd858bd3fb611620140
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.openlocfilehash: 7dc7a4404820a7c935648169cc6ff8d0f0118d87
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824476"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416749"
 ---
 # <a name="entity-framework-core-tools-reference---net-cli"></a>Riferimento agli strumenti di Entity Framework Core-interfaccia della riga di comando .NET
 
@@ -39,7 +39,7 @@ La procedura di installazione dipende dal tipo di progetto e dalla versione:
 
   È inoltre possibile utilizzare `dotnet ef` come strumento locale. Per usarlo come strumento locale, ripristinare le dipendenze di un progetto che lo dichiara come dipendenza degli strumenti usando un [file manifesto dello strumento](https://github.com/dotnet/cli/issues/10288).
 
-* Installare il [.NET Core SDK 3,0](https://dotnet.microsoft.com/download/dotnet-core/3.0). L'SDK deve essere installato anche se si dispone della versione più recente di Visual Studio.
+* Installare [.NET Core SDK](https://www.microsoft.com/net/download/core).
 
 * Installare il pacchetto di `Microsoft.EntityFrameworkCore.Design` più recente.
 
@@ -175,7 +175,7 @@ Per specificare l'ambiente per i progetti ASP.NET Core, impostare la variabile d
 
 Elimina il database.
 
-Options:
+Opzioni:
 
 |                   | Opzione                   | Descrizione                                              |
 |:------------------|:-------------------------|:---------------------------------------------------------|
@@ -216,9 +216,9 @@ Argomenti:
 | Argomento       | Descrizione                                                                                                                                                                                                             |
 |:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `<CONNECTION>` | Stringa di connessione al database. Per i progetti ASP.NET Core 2. x, il valore può essere *nome =\<nome della stringa di connessione >* . In tal caso, il nome deriva dalle origini di configurazione configurate per il progetto. |
-| `<PROVIDER>`   | Provider da utilizzare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
+| `<PROVIDER>`   | Provider da usare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`.                                                                                           |
 
-Options:
+Opzioni:
 
 |                 | Opzione                                   | Descrizione                                                                                                                                                                    |
 |:----------------|:-----------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -253,7 +253,7 @@ Argomenti:
 |:---------|:---------------------------|
 | `<NAME>` | Nome della migrazione. |
 
-Options:
+Opzioni:
 
 |                   | Opzione                             | Descrizione                                                                                                      |
 |:------------------|:-----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
@@ -267,7 +267,7 @@ Elenca le migrazioni disponibili.
 
 Rimuove l'ultima migrazione (esegue il rollback delle modifiche del codice eseguite per la migrazione).
 
-Options:
+Opzioni:
 
 |                   | Opzione    | Descrizione                                                                     |
 |:------------------|:----------|:--------------------------------------------------------------------------------|
@@ -284,7 +284,7 @@ Argomenti:
 | `<FROM>` | Migrazione iniziale. Le migrazioni possono essere identificate in base al nome o all'ID. Il numero 0 è un caso speciale che indica *prima della prima migrazione*. Viene impostato come predefinito 0. |
 | `<TO>`   | Migrazione finale. L'impostazione predefinita è l'ultima migrazione.                                                                                                         |
 
-Options:
+Opzioni:
 
 |                   | Opzione            | Descrizione                                                        |
 |:------------------|:------------------|:-------------------------------------------------------------------|

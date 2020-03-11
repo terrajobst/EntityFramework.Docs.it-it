@@ -4,12 +4,12 @@ author: smitpatel
 ms.date: 10/10/2019
 ms.assetid: e17e060c-929f-4180-8883-40c438fbcc01
 uid: core/querying/tracking
-ms.openlocfilehash: 66988f936ab75e17620398c8f21e4a32bbc950bd
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: a6c71c12f429f1324abe91d1b2cef96312bec051
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445945"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417649"
 ---
 # <a name="tracking-vs-no-tracking-queries"></a>Rilevamento e query senza rilevamento
 
@@ -19,7 +19,7 @@ Il rilevamento del comportamento Controlla se Entity Framework Core manterrà le
 > I [tipi di entità senza chiave](xref:core/modeling/keyless-entity-types) non vengono mai rilevati. Quando in questo articolo vengono citati i tipi di entità, si riferisce ai tipi di entità con una chiave definita.
 
 > [!TIP]  
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
 
 ## <a name="tracking-queries"></a>Query con rilevamento delle modifiche
 
@@ -55,7 +55,7 @@ Se il set di risultati non contiene tipi di entità, non viene eseguita alcuna v
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Sample.cs#CustomProjection3)]
 
- EF Core supporta la valutazione dei client nella proiezione di primo livello. Se EF Core materializza un'istanza di entità per la valutazione client, verrà rilevata. Qui, poiché le entità `blog` vengono passate al metodo client `StandardizeURL`, EF Core tiene traccia anche delle istanze del Blog.
+ EF Core supporta la valutazione dei client nella proiezione di primo livello. Se EF Core materializza un'istanza di entità per la valutazione client, verrà rilevata. Qui, poiché stiamo passando `blog` entità al metodo client `StandardizeURL`, EF Core tiene traccia anche delle istanze di Blog.
 
 [!code-csharp[Main](../../../samples/core/Querying/Tracking/Sample.cs#ClientProjection)]
 

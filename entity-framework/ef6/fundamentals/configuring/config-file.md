@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 000044c6-1d32-4cf7-ae1f-ea21d86ebf8f
 ms.openlocfilehash: 86389e4a3a3bac46e2a4cf2da648a4b19e29f3c3
-ms.sourcegitcommit: 299011fc4bd576eed58a4274f967639fa13fec53
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 08/21/2019
-ms.locfileid: "69886559"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417973"
 ---
 # <a name="configuration-file-settings"></a>Impostazioni del file di configurazione
 Entity Framework consente di specificare alcune impostazioni dal file di configurazione. In generale EF segue un principio di "Convenzione sulla configurazione": tutte le impostazioni descritte in questo post hanno un comportamento predefinito, è necessario preoccuparsi solo di modificare l'impostazione quando il valore predefinito non soddisfa più i requisiti.  
@@ -38,7 +38,7 @@ La sezione **EntityFramework** è stata aggiunta automaticamente al file di conf
 
 In [Questa pagina](~/ef6/fundamentals/configuring/connection-strings.md) vengono forniti ulteriori dettagli sul modo in cui Entity Framework determina il database da utilizzare, incluse le stringhe di connessione nel file di configurazione.  
 
-Le stringhe di connessione vengono inserite nell'elemento standard connectionStrings e non richiedono la sezione **EntityFramework** .  
+Le stringhe di connessione vengono inserite nell'elemento standard **connectionStrings** e non richiedono la sezione **EntityFramework** .  
 
 I modelli basati su Code First usano le normali stringhe di connessione di ADO.NET. Ad esempio:  
 
@@ -92,7 +92,7 @@ In genere non è necessario registrare manualmente i provider. Questa operazione
 
 I provider vengono registrati includendo un elemento **provider** nella sezione figlio **provider** della sezione **EntityFramework** . Sono disponibili due attributi obbligatori per una voce del provider:  
 
-- invariname identifica il provider ADO.NET di base a cui è destinato questo provider EF  
+- **invariname** identifica il provider ADO.NET di base a cui è destinato questo provider EF  
 - **Type** è il nome del tipo completo di assembly dell'implementazione del provider EF  
 
 > [!NOTE]
@@ -145,7 +145,7 @@ Per impostazione predefinita, il file di log verrà sovrascritto con un nuovo fi
 </interceptors>
 ```  
 
-Per ulteriori informazioni su **DatabaseLogger** e sulla registrazione degli intercettori, vedere il post [di Blog EF 6,1: Attivazione della registrazione senza ricompilazione](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/).  
+Per altre informazioni su **DatabaseLogger** e sulla registrazione degli intercettori, vedere il post di blog [Ef 6,1: attivazione della registrazione senza ricompilazione](https://blog.oneunicorn.com/2014/02/09/ef-6-1-turning-on-logging-without-recompiling/).  
 
 ## <a name="code-first-default-connection-factory"></a>Code First Factory di connessione predefinita  
 
@@ -180,7 +180,7 @@ Ad esempio, SqlCeConnectionFactory, incluso in Entity Framework, richiede di spe
 </entityFramework>
 ```  
 
-Se non si imposta una factory di connessione predefinita, Code First USA SqlConnectionFactory, che punta `.\SQLEXPRESS`a. SqlConnectionFactory dispone inoltre di un costruttore che consente di eseguire l'override di parti della stringa di connessione. Se si desidera utilizzare un'istanza di SQL Server diversa `.\SQLEXPRESS` da, è possibile utilizzare questo costruttore per impostare il server.  
+Se non si imposta una factory di connessione predefinita, Code First USA SqlConnectionFactory, puntando a `.\SQLEXPRESS`. SqlConnectionFactory dispone inoltre di un costruttore che consente di eseguire l'override di parti della stringa di connessione. Se si desidera utilizzare un'istanza di SQL Server diversa da `.\SQLEXPRESS` è possibile utilizzare questo costruttore per impostare il server.  
 
 La Code First configurazione seguente provocherà l'uso di **ServerDatabase** per i contesti che non dispongono di una stringa di connessione esplicita impostata.  
 
@@ -240,7 +240,7 @@ I parametri del costruttore utilizzano la stessa sintassi delle factory di conne
 
 È possibile configurare uno degli inizializzatori di database generici inclusi in Entity Framework. L'attributo **Type** usa il formato .NET Framework per i tipi generici.  
 
-Se, ad esempio, si utilizza Migrazioni Code First, è possibile configurare il database di cui eseguire la migrazione automaticamente utilizzando `MigrateDatabaseToLatestVersion<TContext, TMigrationsConfiguration>` l'inizializzatore.  
+Se ad esempio si utilizza Migrazioni Code First, è possibile configurare il database di cui eseguire la migrazione automaticamente utilizzando l'inizializzatore di `MigrateDatabaseToLatestVersion<TContext, TMigrationsConfiguration>`.  
 
 ``` xml
 <contexts>

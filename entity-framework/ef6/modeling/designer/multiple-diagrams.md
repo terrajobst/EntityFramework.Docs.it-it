@@ -1,82 +1,82 @@
 ---
-title: Più diagrammi per ogni modello - Entity Framework 6
+title: Più diagrammi per modello-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: b95db5c8-de8d-43bd-9ccc-5df6a5e25e1b
 ms.openlocfilehash: e78b927a147143629ac5b73e23edf439ba6d0264
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283615"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418294"
 ---
-# <a name="multiple-diagrams-per-model"></a>Più diagrammi per ogni modello
+# <a name="multiple-diagrams-per-model"></a>Più diagrammi per modello
 > [!NOTE]
-> **EF5 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
+> **EF5 solo** le funzionalità, le API e così via descritte in questa pagina sono state introdotte in Entity Framework 5. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.
 
-Questa pagina e il video mostra come suddividere un modello in più diagrammi usando Entity Framework Designer (Entity Framework Designer). È possibile usare questa funzionalità quando il modello diventa troppo grande per visualizzare o modificare.
+In questo video e pagina viene illustrato come suddividere un modello in più diagrammi utilizzando il Entity Framework Designer (Entity Framework Designer). Questa funzionalità può essere utilizzata quando il modello diventa troppo grande per la visualizzazione o la modifica.
 
-Nelle versioni precedenti di Entity Framework Designer si potrebbe avere solo un unico diagramma per ogni file con estensione EDMX. A partire da Visual Studio 2012, è possibile utilizzare la finestra di progettazione di Entity Framework per suddividere il file EDMX in più diagrammi.
+Nelle versioni precedenti di EF designer era possibile avere un solo diagramma per il file EDMX. A partire da Visual Studio 2012, è possibile usare la finestra di progettazione EF per suddividere il file EDMX in più diagrammi.
 
-## <a name="watch-the-video"></a>Guarda il video
-In questo video mostra come suddividere un modello in più diagrammi usando Entity Framework Designer (Entity Framework Designer). È possibile usare questa funzionalità quando il modello diventa troppo grande per visualizzare o modificare.
+## <a name="watch-the-video"></a>Video
+In questo video viene illustrato come suddividere un modello in più diagrammi utilizzando il Entity Framework Designer (Entity Framework Designer). Questa funzionalità può essere utilizzata quando il modello diventa troppo grande per la visualizzazione o la modifica.
 
 **Presentato da**: Julia Kornich
 
-**Video**: [WMV](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.wmv) | [MP4](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-mp4video-multiplediagrams.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.zip)
+**Video**: [wmv](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.wmv) | [MP4](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-mp4video-multiplediagrams.m4v) | [WMV (zip)](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.zip)
 
-## <a name="ef-designer-overview"></a>Panoramica della finestra di progettazione di Entity Framework
+## <a name="ef-designer-overview"></a>Panoramica di EF designer
 
-Quando si crea un modello di utilizzo Entity Data Model Wizard della finestra di progettazione EF, un file con estensione edmx viene creato e aggiunto alla soluzione. Questo file definisce la forma delle entità e sul relativo mapping al database.
+Quando si crea un modello usando la procedura guidata Entity Data Model della finestra di progettazione di EF, viene creato un file con estensione edmx che viene aggiunto alla soluzione. Questo file definisce la forma delle entità e il modo in cui eseguono il mapping al database.
 
-La finestra di progettazione di Entity Framework include i componenti seguenti:
+EF designer è costituito dai componenti seguenti:
 
--   Un'area di progettazione visiva per la modifica del modello. È possibile creare, modificare o eliminare entità e associazioni.
--   Oggetto **Browser modello** finestra che fornisce visualizzazioni dell'albero del modello.  Le entità e le relative associazioni si trovano sotto i *\[ModelName\]* cartella. Le tabelle di database e i vincoli si trovano sotto i  *\[ModelName\]*. Cartella Store.
--   Oggetto **Dettagli Mapping** finestra per visualizzare e modificare i mapping. È possibile mappare i tipi di entità o le associazioni a stored procedure, colonne e tabelle di database. 
+-   Area di progettazione visiva per la modifica del modello. È possibile creare, modificare o eliminare entità e associazioni.
+-    **Browser modello** finestra che fornisce visualizzazioni ad albero del modello.  Le entità e le relative associazioni si trovano nella cartella *\[modelname\]* . Le tabelle e i vincoli del database si trovano nell' *\]\[ModelName* . Cartella dell'archivio.
+-   Finestra **Dettagli mapping** per la visualizzazione e la modifica dei mapping. È possibile mappare i tipi di entità o le associazioni a stored procedure, colonne e tabelle di database. 
 
-La finestra della superficie di progettazione visiva viene aperto automaticamente quando viene completata la procedura guidata Entity Data Model. Se il Browser di modello non è visibile, fare doppio clic su principale area di progettazione e seleziona **Browser modello**.
+La finestra superficie di progettazione visiva viene aperta automaticamente al termine della procedura guidata Entity Data Model. Se il browser modello non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione principale e scegliere **browser modello**.
 
-Lo screenshot seguente mostra un file con estensione edmx aperto in Entity Framework Designer. Lo screenshot Mostra la superficie di progettazione visiva (a sinistra) e il **Browser modello** finestra (a destra).
+La schermata seguente mostra un file con estensione edmx aperto nella finestra di progettazione EF. Lo screenshot mostra l'area di progettazione visiva (a sinistra) e il **browser modello** finestra (a destra).
 
-![Entity Framework Designer 2](~/ef6/media/efdesigner2.png)
+![Progettazione EF 2](~/ef6/media/efdesigner2.png)
 
-Per annullare un'operazione eseguita nella finestra di progettazione di Entity Framework, fare clic Ctrl-Z.
+Per annullare un'operazione eseguita in EF designer, fare clic su CTRL + Z.
 
-## <a name="working-with-diagrams"></a>Uso di diagrammi
+## <a name="working-with-diagrams"></a>Uso dei diagrammi
 
-Per impostazione predefinita Entity Framework Designer crea chiamato Diagram1 in un diagramma. Se si dispone di un diagramma con un numero elevato di entità e associazioni, si apprezzeranno più da suddividere logicamente tali. A partire da Visual Studio 2012, è possibile visualizzare il modello concettuale in più diagrammi.   
+Per impostazione predefinita, la finestra di progettazione EF crea un diagramma denominato Diagram1. Se si dispone di un diagramma con un numero elevato di entità e associazioni, è preferibile suddividerle logicamente. A partire da Visual Studio 2012, è possibile visualizzare il modello concettuale in più diagrammi.   
 
-Quando si aggiungono nuovi diagrammi, vengono visualizzate sotto la cartella di diagrammi nella finestra Browser modello. Per rinominare un diagramma: selezionare il diagramma nella finestra Browser modello, fare clic una volta sul nome e digitare il nuovo nome.  È anche possibile fare clic sul nome del diagramma e scegliere **Rinomina**.
+Quando si aggiungono nuovi diagrammi, questi vengono visualizzati nella cartella diagrammi della finestra browser modello. Per rinominare un diagramma: selezionare il diagramma nella finestra browser modello, fare clic una volta sul nome e digitare il nuovo nome.  È anche possibile fare clic con il pulsante destro del mouse sul nome del diagramma e scegliere **Rinomina**.
 
-Il nome del diagramma viene visualizzato accanto al nome del file con estensione edmx, nell'editor di Visual Studio. Ad esempio Model1.edmx\[Diagram1\].
+Il nome del diagramma viene visualizzato accanto al nome del file con estensione edmx nell'editor di Visual Studio. Ad esempio, Model1. edmx\[Diagram1\].
 
 ![DiagramName](~/ef6/media/diagramname.png)
 
-Il contenuto di diagrammi (forma e colore di entità e associazioni) viene archiviato nel. file edmx.diagram. Per visualizzare questo file, selezionare Esplora soluzioni, quindi espandere il file con estensione edmx. 
+Il contenuto dei diagrammi (forma e colore delle entità e delle associazioni) viene archiviato nel file con estensione edmx. Diagram. Per visualizzare questo file, selezionare Esplora soluzioni e aprire il file con estensione edmx. 
 
 ![DiagramFiles](~/ef6/media/diagramfiles.png)
 
-È consigliabile non modificare il. edmx.diagram file manualmente, il contenuto di questo file potrebbe essere sovrascritto da Entity Framework Designer.
- 
+Non è consigliabile modificare il file con estensione edmx. Diagram manualmente, il contenuto di questo file potrebbe essere sovrascritto da EF designer.
+ 
 ## <a name="splitting-entities-and-associations-into-a-new-diagram"></a>Suddivisione di entità e associazioni in un nuovo diagramma
 
-È possibile selezionare le entità nel diagramma esistente (tenere premuto MAIUSC per selezionare più entità). Scegliere il pulsante destro del mouse e selezionare **passa a diagramma nuovo**. Viene creato il nuovo diagramma e le entità selezionate e le relative associazioni vengono spostate al diagramma.
+È possibile selezionare entità nel diagramma esistente. tenere premuto MAIUSC per selezionare più entità. Fare clic con il pulsante destro del mouse e selezionare **passa a nuovo diagramma**. Il nuovo diagramma viene creato e le entità selezionate e le relative associazioni vengono spostate nel diagramma.
 
-In alternativa, è possibile fare clic sulla cartella i diagrammi nella finestra Browser modello e selezionare **aggiungere nuovo diagramma.** È quindi possibile trascinare e rilasciare le entità che si trova sotto la cartella tipi di entità nella finestra Browser modello nell'area di progettazione.
+In alternativa, è possibile fare clic con il pulsante destro del mouse sulla cartella diagrammi in browser modello e selezionare **Aggiungi nuovo diagramma.** È quindi possibile trascinare e rilasciare entità dalla cartella tipi di entità in browser modello nell'area di progettazione.
 
-È inoltre possibile tagliare o copiare le entità (utilizzando i tasti Ctrl + X o Ctrl + C) da un diagramma e incollare (usando il tasto Ctrl + V) in altro. Se il diagramma in cui si sta incollando un'entità già contiene un'entità con lo stesso nome, una nuova entità verrà creata e aggiunta al modello.  Ad esempio: diagramma 2 contiene l'entità Department. Incollare quindi un altro reparto sul diagramma 2. L'entità Department1 viene creato e aggiunto al modello concettuale.   
+È anche possibile tagliare o copiare entità (usando i tasti CTRL + X o CTRL + C) da un diagramma e incollare (usando il tasto CTRL + V) nell'altro. Se il diagramma in cui si incolla un'entità contiene già un'entità con lo stesso nome, verrà creata una nuova entità che verrà aggiunta al modello.  Ad esempio: Diagram2 contiene l'entità Department. Incollare quindi un altro reparto in Diagram2. L'entità Department1 viene creata e aggiunta al modello concettuale.   
 
-Per includere le entità correlate in un diagramma, fare clic tenendo premuto il tasto rick l'entità e selezionare **correlate includono**. In questo modo una copia delle entità correlate e le associazioni nel diagramma specificato.
+Per includere le entità correlate in un diagramma, fare clic con il pulsante destro del mouse sull'entità e scegliere **Includi correlati**. In questo modo verrà fatta una copia delle entità e delle associazioni correlate nel diagramma specificato.
 
-## <a name="changing-the-color-of-entities"></a>Modifica del colore di entità
+## <a name="changing-the-color-of-entities"></a>Modifica del colore delle entità
 
 Oltre a suddividere un modello in più diagrammi, è anche possibile modificare i colori delle entità.
 
-Per modificare il colore, selezionare un'entità (o più entità) nell'area di progettazione. Quindi, scegliere il pulsante destro del mouse e selezionare **proprietà**. Nella finestra Proprietà selezionare la **colore riempimento** proprietà. Specificare il colore usando un nome di colore validi (ad esempio, rosso) o un RGB valido (ad esempio, 255, 128, 128). 
+Per modificare il colore, selezionare un'entità (o più entità) nell'area di progettazione. Quindi, fare clic con il pulsante destro del mouse e selezionare **Proprietà**. Nella Finestra Proprietà selezionare la proprietà **colore riempimento** . Specificare il colore usando un nome di colore valido (ad esempio, rosso) o un valore RGB valido, ad esempio 255, 128, 128. 
 
 ![Colore](~/ef6/media/color.png)
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
-In questo argomento è stato illustrato come suddividere un modello in più diagrammi e anche come specificare un colore diverso per un'entità utilizzando la finestra di progettazione di Entity Framework. 
+In questo argomento è stato illustrato come suddividere un modello in più diagrammi e come specificare un colore diverso per un'entità usando il Entity Framework Designer. 

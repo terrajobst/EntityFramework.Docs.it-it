@@ -5,11 +5,11 @@ ms.date: 02/19/2018
 ms.assetid: 3154BF3C-1749-4C60-8D51-AE86773AA116
 uid: core/modeling/value-conversions
 ms.openlocfilehash: 93774bc1bc3887f982faeac151825a6643c1107c
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654790"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417202"
 ---
 # <a name="value-conversions"></a>Conversioni di valori
 
@@ -18,7 +18,7 @@ ms.locfileid: "73654790"
 
 I convertitori di valori consentono di convertire i valori delle proprietà durante la lettura o la scrittura nel database. Questa conversione può provenire da un valore a un altro dello stesso tipo (ad esempio, la crittografia di stringhe) o da un valore di un tipo a un valore di un altro tipo, ad esempio la conversione di valori enum da e verso stringhe nel database.
 
-## <a name="fundamentals"></a>Concetti fondamentali
+## <a name="fundamentals"></a>Nozioni fondamentali
 
 I convertitori di valori vengono specificati in termini di `ModelClrType` e di `ProviderClrType`. Il tipo di modello è il tipo .NET della proprietà nel tipo di entità. Il tipo di provider è il tipo .NET riconosciuto dal provider di database. Ad esempio, per salvare le enumerazioni come stringhe nel database, il tipo di modello è il tipo dell'enumerazione e il tipo di provider viene `String`. Questi due tipi possono essere gli stessi.
 
@@ -63,7 +63,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## <a name="the-valueconverter-class"></a>Classe ValueConverter
 
-La chiamata di `HasConversion` come illustrato in precedenza creerà un'istanza di `ValueConverter` e la imposterà sulla proprietà. Il `ValueConverter` può invece essere creato in modo esplicito. Esempio:
+La chiamata di `HasConversion` come illustrato in precedenza creerà un'istanza di `ValueConverter` e la imposterà sulla proprietà. Il `ValueConverter` può invece essere creato in modo esplicito. Ad esempio:
 
 ``` csharp
 var converter = new ValueConverter<EquineBeast, string>(
@@ -83,7 +83,7 @@ Questa operazione può essere utile quando più proprietà utilizzano la stessa 
 
 ## <a name="built-in-converters"></a>Convertitori predefiniti
 
-EF Core viene fornito con un set di classi `ValueConverter` predefinite, disponibile nello spazio dei nomi `Microsoft.EntityFrameworkCore.Storage.ValueConversion`. Questi sono:
+EF Core viene fornito con un set di classi `ValueConverter` predefinite, disponibile nello spazio dei nomi `Microsoft.EntityFrameworkCore.Storage.ValueConversion`. Si tratta di:
 
 * `BoolToZeroOneConverter`-bool a zero e uno
 * da `BoolToStringConverter` a bool a stringhe quali "Y" e "N"

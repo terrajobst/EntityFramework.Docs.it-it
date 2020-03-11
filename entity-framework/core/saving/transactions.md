@@ -4,19 +4,19 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d3e6515b-8181-482c-a790-c4a6778748c1
 uid: core/saving/transactions
-ms.openlocfilehash: 952cb891d145a47666f1d506ec00f066be9f245d
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: 390d89398ebfdf015804749e71ff0b61d3f278d3
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73654744"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417555"
 ---
-# <a name="using-transactions"></a>Uso delle transazioni
+# <a name="using-transactions"></a>Utilizzo di transazioni
 
 Le transazioni consentono di elaborare varie operazioni di database in modo atomico. Se viene eseguito il commit della transazione, tutte le operazioni vengono applicate correttamente nel database. Se viene eseguito il rollback della transazione, nessuna delle operazioni viene applicata nel database.
 
 > [!TIP]  
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Saving/Transactions/) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Saving/Transactions/) di questo articolo in GitHub.
 
 ## <a name="default-transaction-behavior"></a>Comportamento delle transazioni predefinito
 
@@ -84,7 +84,7 @@ L'esempio seguente mostra come eseguire un'operazione ADO.NET SqlClient e un'ope
 
 [!code-csharp[Main](../../../samples/core/Saving/Transactions/ExternalDbTransaction/Sample.cs?name=Transaction&highlight=4,10,21,26,27,28)]
 
-## <a name="using-systemtransactions"></a>Uso di System.Transactions
+## <a name="using-systemtransactions"></a>Utilizzo di System.Transactions
 
 > [!NOTE]  
 > Questa funzionalità è stata introdotta in EF Core 2.1.

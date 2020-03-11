@@ -4,12 +4,12 @@ author: smitpatel
 ms.date: 10/03/2019
 ms.assetid: 8b6697cc-7067-4dc2-8007-85d80503d123
 uid: core/querying/client-eval
-ms.openlocfilehash: 5cfb05041f04246712fb699f58b407f70a75ce92
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.openlocfilehash: e01bd146c4dfe7a8d36b641cb52ae366fddd8239
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72445961"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417760"
 ---
 # <a name="client-vs-server-evaluation"></a>Valutazione client e server
 
@@ -19,7 +19,7 @@ Come regola generale, Entity Framework Core tenta di valutare il più possibile 
 > Prima della versione 3,0, Entity Framework Core la valutazione client supportata in qualsiasi punto della query. Per ulteriori informazioni, vedere la [sezione versioni precedenti](#previous-versions).
 
 > [!TIP]
-> È possibile visualizzare l'[esempio](https://github.com/aspnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
+> È possibile visualizzare l'[esempio](https://github.com/dotnet/EntityFramework.Docs/tree/master/samples/core/Querying) di questo articolo in GitHub.
 
 ## <a name="client-evaluation-in-the-top-level-projection"></a>Valutazione client nella proiezione di primo livello
 
@@ -42,7 +42,7 @@ Potrebbe essere necessario forzare la valutazione del client in modo esplicito i
 - La quantità di dati è ridotta, quindi la valutazione del client non comporta un notevole calo delle prestazioni.
 - L'operatore LINQ utilizzato non ha alcuna conversione sul lato server.
 
-In questi casi, è possibile acconsentire esplicitamente alla valutazione client chiamando metodi come `AsEnumerable` o `ToList` (`AsAsyncEnumerable` o `ToListAsync` per Async). Utilizzando `AsEnumerable` è possibile che vengano trasmessi i risultati, ma l'utilizzo di `ToList` provocherebbe il buffering creando un elenco, che richiede inoltre memoria aggiuntiva. Tuttavia, se l'enumerazione viene eseguita più volte, l'archiviazione dei risultati in un elenco contribuisce maggiormente perché esiste solo una query al database. A seconda dell'utilizzo specifico, è consigliabile valutare quale metodo è più utile per il caso.
+In questi casi, è possibile acconsentire esplicitamente alla valutazione client chiamando metodi come `AsEnumerable` o `ToList` (`AsAsyncEnumerable` o `ToListAsync` per Async). Se si usa `AsEnumerable` si eseguirà il flusso dei risultati, ma l'uso di `ToList` provocherebbe il buffering creando un elenco, che richiede anche memoria aggiuntiva. Tuttavia, se l'enumerazione viene eseguita più volte, l'archiviazione dei risultati in un elenco contribuisce maggiormente perché esiste solo una query al database. A seconda dell'utilizzo specifico, è consigliabile valutare quale metodo è più utile per il caso.
 
 [!code-csharp[Main](../../../samples/core/Querying/ClientEval/Sample.cs#ExplicitClientEval)]
 
@@ -60,7 +60,7 @@ La sezione seguente si applica alle versioni EF Core precedenti 3,0.
 
 Le versioni precedenti di EF Core supportano la valutazione client in qualsiasi parte della query, non solo la proiezione di primo livello. Per questo motivo, le query simili a quelle pubblicate sotto la sezione di [valutazione client non supportata](#unsupported-client-evaluation) hanno funzionato correttamente. Poiché questo comportamento potrebbe causare problemi di prestazioni inosservati, EF Core registrato un avviso di valutazione del client. Per ulteriori informazioni sulla visualizzazione dell'output di registrazione, vedere [registrazione](xref:core/miscellaneous/logging).
 
-Facoltativamente EF Core consentito modificare il comportamento predefinito in modo da generare un'eccezione o non eseguire alcuna operazione durante la valutazione del client (ad eccezione di nella proiezione). Il comportamento di generazione delle eccezioni lo renderebbe simile al comportamento in 3,0. Per modificare il comportamento, è necessario configurare gli avvisi durante la configurazione delle opzioni per il contesto, in genere in `DbContext.OnConfiguring` o in `Startup.cs` se si usa ASP.NET Core.
+Facoltativamente EF Core consentito modificare il comportamento predefinito in modo da generare un'eccezione o non eseguire alcuna operazione durante la valutazione del client (ad eccezione di nella proiezione). Il comportamento di generazione delle eccezioni lo renderebbe simile al comportamento in 3,0. Per modificare il comportamento, è necessario configurare gli avvisi durante la configurazione delle opzioni per il contesto, in genere in `DbContext.OnConfiguring`o in `Startup.cs` se si usa ASP.NET Core.
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

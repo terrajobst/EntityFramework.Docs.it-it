@@ -4,38 +4,38 @@ author: ajcvickers
 ms.date: 12/03/2019
 uid: core/what-is-new/ef-core-3.0/breaking-changes
 ms.openlocfilehash: 6e0c17a22b56b206f18e47f678e3e237d5c42375
-ms.sourcegitcommit: b3cf5d2e3cb170b9916795d1d8c88678269639b1
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/30/2020
-ms.locfileid: "76888109"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417461"
 ---
 # <a name="breaking-changes-included-in-ef-core-30"></a>Modifiche di rilievo incluse nel EF Core 3,0
 
 Le modifiche alle API e al comportamento seguenti possono causare l'interruzione delle applicazioni esistenti durante l'aggiornamento a 3.0.0.
 Le modifiche che si prevede abbiano impatto solo sui provider di database sono documentate nelle [modifiche che influiscono sul provider](xref:core/providers/provider-log).
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 | **Modifica di rilievo**                                                                                               | **Impatto** |
 |:------------------------------------------------------------------------------------------------------------------|------------|
-| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | High       |
-| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | High      |
-| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | High      |
-| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | High      |
-| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | High      |
-| [I tipi di query vengono consolidati con tipi di entità](#qt) | High      |
-| [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Medio      |
-| [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Medio      |
-| [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Medio      |
-| [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Medio      |
-| [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Medio      |
-| [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Medio      |
-| [Le query senza rilevamento delle modifiche non eseguono più la risoluzione delle identità](#notrackingresolution) | Medio      |
-| [Modifiche dell'API dei metadati](#metadata-api-changes) | Medio      |
-| [Modifiche dell'API dei metadati specifiche del provider](#provider) | Medio      |
-| [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Medio      |
-| [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Medio      |
+| [Le query LINQ non vengono più valutate nel client](#linq-queries-are-no-longer-evaluated-on-the-client)         | Alto       |
+| [EF Core 3.0 usa come destinazione .NET Standard 2.1 invece che .NET Standard 2.0](#netstandard21) | Alto      |
+| [Lo strumento da riga di comando di EF Core, dotnet ef, non è più incluso in .NET Core SDK](#dotnet-ef) | Alto      |
+| [DetectChanges rispetta i valori di chiave generati dall'archivio](#dc) | Alto      |
+| [I metodi FromSql, ExecuteSql ed ExecuteSqlAsync sono stati rinominati](#fromsql) | Alto      |
+| [I tipi di query vengono consolidati con tipi di entità](#qt) | Alto      |
+| [Entity Framework Core non è più incluso nel framework condiviso di ASP.NET Core](#no-longer) | Media      |
+| [Le eliminazioni a catena vengono ora eseguite immediatamente per impostazione predefinita](#cascade) | Media      |
+| [Il caricamento eager delle entità correlate ora si verifica in una singola query](#eager-loading-single-query) | Media      |
+| [Semantica più chiara per DeleteBehavior.Restrict](#deletebehavior) | Media      |
+| [L'API di configurazione per le relazioni di tipo di proprietà è stata modificata](#config) | Media      |
+| [Ogni proprietà usa la generazione di chiavi di tipo intero in memoria indipendenti](#each) | Media      |
+| [Le query senza rilevamento delle modifiche non eseguono più la risoluzione delle identità](#notrackingresolution) | Media      |
+| [Modifiche dell'API dei metadati](#metadata-api-changes) | Media      |
+| [Modifiche dell'API dei metadati specifiche del provider](#provider) | Media      |
+| [Il metodo UseRowNumberForPaging è stato rimosso](#urn) | Media      |
+| [Non è possibile comporre il metodo dati da tabelle se usato con stored procedure](#fromsqlsproc) | Media      |
 | [I metodi FromSql possono essere specificati solo in radici di query](#fromsql) | Basso      |
 | [~~L'esecuzione di query viene registrata a livello di debug~~ - Modifica annullata](#qe) | Basso      |
 | [I valori di chiave temporanei non sono più impostati nelle istanze di entità](#tkv) | Basso      |
@@ -100,7 +100,7 @@ Gli avvisi di valutazione client inoltre si sono rivelati molto facili da ignora
 
 Inoltre, la valutazione client automatica può causare problemi in cui il miglioramento della conversione di query per espressioni specifiche causa modifiche impreviste che causano un'interruzione da una versione all'altra.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se una query non può essere convertita completamente, riscrivere la query in un formato che possa essere convertito o usare `AsEnumerable()`, `ToList()` o un elemento simile per riportare in modo esplicito i dati nel client dove possono essere quindi ulteriormente elaborati usando LINQ to Objects.
 
@@ -124,7 +124,7 @@ A partire dalla versione 3.0, EF Core usa come destinazione .NET Standard 2.1 e 
 
 Questo comportamento deriva da una decisione strategica per le tecnologie .NET, che mira a concentrare le energie su .NET Core e su altre piattaforme .NET moderne, ad esempio Xamarin.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare EF Core 3,1.
 
@@ -148,7 +148,7 @@ Prima di questa modifica, per ottenere EF Core erano necessarie procedure divers
 Con questa modifica, la procedura per ottenere EF Core è la stessa in tutti i provider, le implementazioni .NET supportate e i tipi di applicazioni.
 Gli sviluppatori possono ora controllare anche in modo preciso quando vengono aggiornati EF Core e i provider di dati di EF Core.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Per usare EF Core in un'applicazione ASP.NET Core 3.0 o in un'altra applicazione supportata, aggiungere in modo esplicito un riferimento al pacchetto al provider di database di EF Core che verrà usato dall'applicazione.
 
@@ -169,7 +169,7 @@ A partire dalla versione 3.0, .NET SDK non include lo strumento `dotnet ef` pert
 
 Questa modifica consente di distribuire e aggiornare `dotnet ef` come uno strumento della riga di comando di .NET in NuGet, coerentemente con il fatto che anche EF Core 3.0 viene distribuito come pacchetto NuGet.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Per essere in grado di gestire le migrazioni o eseguire lo scaffolding di `DbContext`, installare `dotnet-ef` come strumento globale:
 
@@ -214,7 +214,7 @@ Si noti che entrambe le query precedenti produrranno lo stesso codice SQL con pa
 Con gli overload di metodi come questi, è molto facile chiamare accidentalmente il metodo con stringa non elaborata anche se l'intento era chiamare il metodo con stringa interpolata e viceversa.
 Il risultato potrebbero essere query senza parametri, quando invece è prevista la parametrizzazione.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Passare all'uso dei nuovi nomi di metodo.
 
@@ -265,7 +265,7 @@ A partire da EF Core 3.0, i nuovi metodi `FromSqlRaw` e `FromSqlInterpolated` (c
 
 La specifica di `FromSql` in qualsiasi posizione diversa da un `DbSet` non ha alcun significato aggiuntivo oppure valore aggiunto e può causare ambiguità in determinati scenari.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le chiamate di `FromSql` devono essere spostate in modo da comparire direttamente nel `DbSet` a cui si applicano.
 
@@ -291,7 +291,7 @@ A partire da EF Core 3.0, vengono create istanze di entità diverse quando un'en
 
 La risoluzione delle identità (ovvero il processo per determinare che un'entità ha lo stesso tipo e ID di un'entità rilevata in precedenza) aggiunge un ulteriore sovraccarico della memoria e delle prestazioni, il che va ad annullare il vantaggio derivante dall'uso delle query senza rilevamento delle modifiche. Inoltre, anche se in alcuni casi la risoluzione delle identità può essere utile, tuttavia non è necessaria se le entità devono essere serializzate e inviate a un client, come avviene comunemente con le query senza rilevamento delle modifiche.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se la risoluzione delle identità è necessaria, usare una query con rilevamento delle modifiche.
 
@@ -328,7 +328,7 @@ A partire dalla versione 3.0, EF Core archivia il valore di chiave temporaneo co
 
 Questa modifica è stata apportata per impedire che i valori di chiave temporanei diventino erroneamente permanenti quando un'entità rilevata in precedenza da un'istanza `DbContext` viene spostata in un'altra istanza `DbContext`. 
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le applicazioni che assegnano valori di chiave primaria in chiavi esterne per creare associazioni tra le entità possono dipendere dal comportamento precedente se le chiavi primarie vengono generate dall'archivio e appartengono a entità con stato `Added`.
 Questo può essere evitato:
@@ -357,7 +357,7 @@ Se il valore di chiave non viene impostato o se il tipo di entità non usa chiav
 
 Questa modifica è stata apportata per rendere più semplice e coerente l'uso di grafici di entità disconnesse con chiavi generate dall'archivio.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Questa modifica può interrompere un'applicazione se un tipo di entità è configurato per l'uso di chiavi generate ma i valori di chiave sono impostati in modo esplicito per le nuove istanze.
 La correzione consiste nel configurare in modo esplicito le proprietà di chiave per non usare valori generati.
@@ -394,7 +394,7 @@ Ad esempio, la chiamata a `context.Remove()` per eliminare un'entità di sicurez
 
 Questa modifica è stata apportata per migliorare l'esperienza per gli scenari di data binding e controllo in cui è importante comprendere quali entità verranno eliminate _prima_ della chiamata di `SaveChanges`.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Il comportamento precedente può essere ripristinato tramite le impostazioni in `context.ChangeTracker`.
 Ad esempio:
@@ -420,7 +420,7 @@ A partire da 3,0, EF Core genera una singola query con JOIN nei database relazio
 
 L'invio di più query per l'implementazione di una singola query LINQ ha causato numerosi problemi, incluse le prestazioni negative in quanto sono stati necessari più round trip di database e i dati coerenza problemi poiché ogni query poteva osservare uno stato diverso del database.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Sebbene tecnicamente non si tratti di una modifica di rilievo, potrebbe avere un impatto significativo sulle prestazioni dell'applicazione quando una singola query contiene un numero elevato di `Include` operatore per le esplorazioni della raccolta. Per ulteriori informazioni e per riscrivere le query in modo più efficiente, [vedere il commento](https://github.com/aspnet/EntityFrameworkCore/issues/18022#issuecomment-542397085) .
 
@@ -443,7 +443,7 @@ A partire dalla versione 3.0, `DeleteBehavior.Restrict` assicura che le chiavi e
 
 Questa modifica è stata apportata per migliorare l'esperienza di uso di `DeleteBehavior` in modo intuitivo, senza effetti collaterali imprevisti.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Il comportamento precedente può essere ripristinato tramite `DeleteBehavior.ClientNoAction`.
 
@@ -468,7 +468,7 @@ Questa modifica è stata apportata per ridurre la confusione riguardo lo scopo d
 In particolare, si tratta di tipi di entità senza chiave che sono intrinsecamente di sola lettura per questo motivo ma non dovrebbero essere usati solo perché un tipo di entità deve essere di sola lettura.
 Analogamente, spesso vengono mappati alle viste solo perché le viste spesso non definiscono le chiavi.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le parti dell'API seguenti sono ora obsolete:
 * **`ModelBuilder.Query<>()`** - È necessario chiamare `ModelBuilder.Entity<>().HasNoKey()` per contrassegnare un tipo di entità come tipo senza chiavi.
@@ -529,7 +529,7 @@ Inoltre, la chiamata a `Entity()`, `HasOne()` o `Set()` con una destinazione di 
 Questa modifica è stata apportata per creare una separazione più netta tra la configurazione del tipo di proprietà e la _relazione_ con il tipo di proprietà.
 Ciò consente di eliminare ambiguità e confusione su metodi come `HasForeignKey`.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Modificare la configurazione delle relazioni dei tipi di proprietà per usare la superficie della nuova API come illustrato nell'esempio precedente.
 
@@ -564,7 +564,7 @@ Prima di EF Core 3.0, se `OrderDetails` è di proprietà di `Order` o viene mapp
 A partire dalla versione 3.0, EF Core consente di aggiungere un `Order` senza un `OrderDetails` ed esegue il mapping di tutte le proprietà di `OrderDetails`, tranne che la chiave primaria, a colonne che ammettono valori Null.
 In fase di query, EF Core imposta `OrderDetails` su `null` se una delle relative proprietà obbligatorie non ha un valore o se non sono presenti proprietà obbligatorie oltre alla chiave primaria e tutte le proprietà sono `null`.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se il modello include una tabella condivisa dipendente con tutte le colonne facoltative, ma è previsto che la navigazione che punta a essa non sia `null`, l'applicazione deve essere modificata per gestire casi in cui la navigazione è `null`. Se questo non è possibile, è consigliabile aggiungere una proprietà obbligatoria al tipo di entità o assegnare un valore non `null` ad almeno una proprietà.
 
@@ -609,7 +609,7 @@ A partire dalla versione 3.0, EF Core propaga il nuovo valore `Version` a `Order
 
 Questa modifica è stata apportata per evitare un valore del token di concorrenza non aggiornato quando viene aggiornata solo una delle entità mappate alla stessa tabella.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Tutte le entità che condividono la tabella devono includere una proprietà mappata alla colonna del token di concorrenza. È possibile crearne una in stato shadow:
 ```csharp
@@ -642,7 +642,7 @@ A partire da 3,0, EF Core genererà un'operazione se una query di rilevamento pr
 
 Le entità di proprietà non possono essere modificate senza il proprietario, quindi nella maggior parte dei casi l'esecuzione di query in questo modo è un errore.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se l'entità di proprietà deve essere rilevata in modo da essere modificata in un secondo momento, il proprietario deve essere incluso nella query.
 
@@ -699,7 +699,7 @@ A partire dalla versione 3.0, EF Core crea solo una colonna per `ShippingAddress
 
 Il comportamento precedente non era previsto.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È ancora possibile eseguire il mapping esplicito della proprietà a una colonna separata per i tipi derivati:
 
@@ -779,7 +779,7 @@ public class Order
 
 Questa modifica è stata apportata per evitare una definizione errata della proprietà di chiave primaria nel tipo di proprietà.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se la proprietà è stata progettata per essere la chiave esterna e di conseguenza parte della chiave primaria, configurarla in modo esplicito come chiave esterna.
 
@@ -816,7 +816,7 @@ A partire dalla versione 3.0, EF Core chiude la connessione non appena non viene
 
 Questa modifica consente di usare più contesti nello stesso `TransactionScope`. Il nuovo comportamento corrisponde anche a EF6.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se la connessione deve rimanere aperta, la chiamata esplicita di `OpenConnection()` garantirà che EF Core non la chiuda prematuramente:
 
@@ -854,7 +854,7 @@ Inoltre, se il database viene eliminato, la generazione di chiavi viene reimpost
 
 Questa modifica è stata apportata per allineare maggiormente la generazione di chiavi in memoria alla generazione di chiavi del database reale e per migliorare la possibilità di isolare i test l'uno dall'altro quando viene usato il database in memoria.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Ciò può interrompere un'applicazione che si basa sull'impostazione di valori di chiave in memoria specifici.
 È consigliabile non basare l'applicazione su valori di chiave specifici o eseguire l'aggiornamento per passare al nuovo comportamento.
@@ -877,7 +877,7 @@ Ciò potrebbe causare un'interruzione dell'applicazione se l'applicazione si bas
 
 Questa modifica è stata apportata per impedire a EF Core di attivare per errore la logica di business per impostazione predefinita quando si eseguono operazioni di database che interessano le entità.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È possibile ripristinare il comportamento delle versioni precedenti alla versione 3.0 tramite la configurazione della modalità di accesso delle proprietà in `ModelBuilder`.
 Ad esempio:
@@ -903,7 +903,7 @@ A partire da EF Core 3.0, se più campi corrispondono alla stessa proprietà, vi
 
 Questa modifica è stata apportata per evitare di usare automaticamente un campo rispetto a un altro quando un solo campo può essere quello corretto.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Per le proprietà con campi sottostanti ambigui, il campo da usare deve essere specificato in modo esplicito.
 Ad esempio, con l'API Fluent:
@@ -949,7 +949,7 @@ modelBuilder
 
 Questa modifica è stata introdotta per evitare di usare lo stesso campo per due proprietà con nome simile. Le regole di corrispondenza per le proprietà solo campo sono state anche uniformate a quelle per le proprietà mappate a proprietà CLR.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le proprietà solo campo devono avere lo stesso nome del campo a cui vengono mappate.
 In una versione futura di EF Core dopo il 3,0, si prevede di abilitare di nuovo in modo esplicito il nome di un campo diverso dal nome della proprietà (vedere il problema [#15307](https://github.com/aspnet/EntityFrameworkCore/issues/15307)):
@@ -979,7 +979,7 @@ A partire da EF Core 3.0, `AddDbContext` e `AddDbContextPool` non registreranno 
 
 EF Core 3.0 non richiede che questi servizi siano inclusi nel contenitore di inserimento delle dipendenze dell'applicazione. Tuttavia, se `ILoggerFactory` è registrato nel contenitore di inserimento delle dipendenze dell'applicazione, verrà ancora usato da EF Core.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se l'applicazione necessita di questi servizi, registrarli in modo esplicito con il contenitore di inserimento delle dipendenze usando [AddLogging](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.loggingservicecollectionextensions.addlogging) o [AddMemoryCache](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.memorycacheservicecollectionextensions.addmemorycache).
 
@@ -999,7 +999,7 @@ A partire da EF Core 3,0, `AddEntityFramework*` registrerà un servizio IMemoryC
 
 L'utilizzo di IMemoryCache senza un limite può comportare l'utilizzo di memoria non controllata se è presente un bug nella logica di memorizzazione nella cache delle query o se le query vengono generate in modo dinamico. La presenza di un limite predefinito attenua un potenziale attacco DoS.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Nella maggior parte dei casi, non è necessario chiamare `AddEntityFramework*` se viene chiamato anche `AddDbContext` o `AddDbContextPool`. Pertanto, la migliore mitigazione consiste nel rimuovere la chiamata `AddEntityFramework*`.
 
@@ -1029,7 +1029,7 @@ Gli altri metodi che causano il rilevamento delle modifiche, ad esempio `ChangeT
 
 Questa modifica è stata apportata per migliorare le prestazioni predefinite dell'uso di `context.Entry`.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Chiamare `ChangeTracker.DetectChanges()` in modo esplicito prima di chiamare `Entry` per garantire il comportamento precedente alla versione 3.0.
 
@@ -1050,7 +1050,7 @@ A partire da EF Core 3.0 viene generata un'eccezione che indica che non è stato
 
 Questa modifica è stata apportata poiché i valori `string`/`byte[]` generati dal client non risultano in genere utili e il comportamento predefinito rendeva complesso ragionare sui valori di chiave generati in un modo comune.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È possibile ripristinare il comportamento precedente alla versione 3.0 specificando in modo esplicito che le proprietà di chiave devono usare i valori generati se non viene impostato alcun altro valore non Null.
 Ad esempio, con l'API Fluent:
@@ -1087,7 +1087,7 @@ A partire da EF Core 3.0, `ILoggerFactory` viene registrato come servizio con am
 
 Questa modifica è stata apportata per consentire l'associazione di un logger a un'istanza `DbContext` che abilita altre funzionalità e rimuove alcuni casi di comportamento anomalo, ad esempio un'esplosione dei provider di servizi interni.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Questa modifica non dovrebbe influire sul codice dell'applicazione a meno che non vengano registrati e usati servizi personalizzati nel provider di servizi interno di EF Core.
 Questa condizione, tuttavia, non è comune.
@@ -1116,7 +1116,7 @@ Se si verifica questa situazione significa che il codice dell'applicazione sta t
 
 Questa modifica è stata apportata per rendere coerente e corretto il comportamento durante un tentativo di caricamento lazy in un'istanza `DbContext` eliminata.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Aggiornare il codice dell'applicazione per fare in modo che non venga tentato il caricamento lazy con un contesto eliminato oppure specificare una configurazione in modo che non venga eseguita alcuna operazione come descritto nel messaggio di eccezione.
 
@@ -1136,7 +1136,7 @@ A partire da EF Core 3.0, l'avviso viene considerato un errore e viene generata 
 
 Questa modifica è stata apportata per gestire meglio il codice dell'applicazione tramite un'esposizione più esplicita di questa situazione di errore.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 L'azione più appropriata quando si verifica questo errore consiste nell'individuare la causa radice e nell'interrompere la creazione di numerosi provider di servizi interni.
 È possibile tuttavia convertire nuovamente l'errore in avviso o ignorarlo tramite una configurazione in `DbContextOptionsBuilder`.
@@ -1176,7 +1176,7 @@ A partire da EF Core 3.0, il codice sopra riportato ora esegue quello che avrebb
 
 Il comportamento precedente era molto poco chiaro, soprattutto durante la lettura del codice di configurazione e la ricerca di errori.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Questa modifica causerà problemi solo nelle applicazioni che configurano relazioni in modo esplicito usando stringhe per i nomi dei tipi e senza specificare in modo esplicito la proprietà di navigazione.
 Non è uno scenario comune.
@@ -1211,7 +1211,7 @@ I metodi indicati in precedenza ora restituiscono il tipo `ValueTask<T>` sullo s
 
 Questa modifica riduce il numero delle allocazioni di heap sostenute quando si richiamano questi metodi, con un miglioramento generale delle prestazioni.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le applicazioni semplicemente in attesa delle API precedenti devono solo essere ricompilate e non sono richieste modifiche del codice sorgente.
 Per scenari di utilizzo più complessi (ad esempio, il passaggio del tipo `Task` restituito a `Task.WhenAny()`) è richiesto in genere che il tipo `ValueTask<T>` restituito venga convertito in `Task<T>` chiamando `AsTask()` su di esso.
@@ -1235,7 +1235,7 @@ Il nome di annotazione delle annotazioni di mapping del tipo è ora "TypeMapping
 
 Il mapping dei tipi non viene più usato solo per i provider di database relazionali.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Ciò causa un'interruzione solo nelle applicazioni che accedono al mapping dei tipi direttamente come annotazione. Questa situazione non è comune.
 L'azione più appropriata per risolvere il problema consiste nell'usare la superficie dell'API per accedere al mapping dei tipi anziché l'annotazione.
@@ -1257,7 +1257,7 @@ A partire da EF Core 3.0 e in preparazione all'aggiunta del supporto per la tabe
 Attualmente il mapping di un tipo derivato in una tabella diversa non è un'operazione valida.
 Questa modifica consente di evitare interruzioni future quando l'operazione diventerà un'operazione valida.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Rimuovere qualsiasi tentativo di mapping di tipi derivati in altre tabelle.
 
@@ -1278,7 +1278,7 @@ Usare `HasIndex().ForSqlServerInclude()`.
 
 Questa modifica è stata apportata per consolidare l'API per gli indici con `Include` in un'unica posizione per tutti i provider di database.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare la nuova API, come illustrato in precedenza.
 
@@ -1300,7 +1300,7 @@ Le proprietà seguenti sono state convertite in metodi di estensione:
 
 Questa modifica semplifica l'implementazione delle interfacce menzionate in precedenza.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare i nuovi metodi di estensione.
 
@@ -1322,7 +1322,7 @@ I metodi di estensione specifici del provider verranno resi flat:
 
 Questa modifica semplifica l'implementazione dei metodi di estensione menzionati in precedenza.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare i nuovi metodi di estensione.
 
@@ -1344,7 +1344,7 @@ A partire da EF Core 3.0, EF Core non invia più `PRAGMA foreign_keys = 1` quand
 
 Questa modifica è stata apportata poiché EF Core usa `SQLitePCLRaw.bundle_e_sqlite3` per impostazione predefinita. Ciò significa che l'imposizione della chiave esterna è abilitata per impostazione predefinita e non deve essere abilitata in modo esplicito ogni volta che viene aperta una connessione.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Le chiavi esterne sono abilitate per impostazione predefinita in SQLitePCLRaw.bundle_e_sqlite3, usato per impostazione predefinita per EF Core.
 Per gli altri casi, è possibile abilitare le chiavi esterne specificando `Foreign Keys=True` nella stringa di connessione.
@@ -1365,7 +1365,7 @@ A partire da EF Core 3.0, EF Core usa `SQLitePCLRaw.bundle_e_sqlite3`.
 
 Questa modifica è stata apportata per rendere coerente la versione di SQLite usata in iOS con le altre piattaforme.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Per usare la versione di SQLite nativa in iOS, configurare `Microsoft.Data.Sqlite` per l'uso di un'aggregazione `SQLitePCLRaw` diversa.
 
@@ -1387,7 +1387,7 @@ I valori Guid vengono ora archiviati come TEXT.
 
 Il formato binario dei valori Guid non è standardizzato. L'archiviazione dei valori come TEXT rende il database più compatibile con altre tecnologie.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È possibile eseguire la migrazione dei database esistenti al nuovo formato eseguendo SQL nel modo seguente.
 
@@ -1437,7 +1437,7 @@ I valori char vengono ora archiviati come testo.
 
 L'archiviazione dei valori come testo è un'operazione più naturale e rende il database più compatibile con altre tecnologie.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È possibile eseguire la migrazione dei database esistenti al nuovo formato eseguendo SQL nel modo seguente.
 
@@ -1478,7 +1478,7 @@ Gli ID di migrazione ora vengono sempre generati con il calendario delle imposta
 
 L'ordine delle migrazioni è importante quando si esegue l'aggiornamento del database o si risolvono i conflitti di unione. L'uso del calendario delle impostazioni cultura inglese non dipendenti da paese/area geografica evita i problemi che possono verificarsi quando i membri del team hanno calendari di sistema diversi.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Questa modifica interessa gli utenti che usano un calendario non gregoriano in cui l'anno ha un'estensione superiore al calendario gregoriano (come il calendario buddista tailandese). Gli ID di migrazione esistenti dovranno essere aggiornati in modo che le nuove migrazioni vengano collocate dopo le migrazioni esistenti.
 
@@ -1517,7 +1517,7 @@ A partire da EF Core 3.0, EF genererà solo codice SQL per la suddivisione in pa
 
 Questa modifica è stata apportata perché [SQL Server 2008 non è più un prodotto supportato](https://blogs.msdn.microsoft.com/sqlreleaseservices/end-of-mainstream-support-for-sql-server-2008-and-sql-server-2008-r2/) e l'aggiornamento di questa funzionalità per interagire con le modifiche apportate per le query in EF Core 3.0 è un lavoro significativo.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 È consigliabile eseguire l'aggiornamento a una versione più recente di SQL Server o usare un livello di compatibilità superiore, in modo che il codice SQL generato sia supportato. Detto questo, se non è possibile procedere in questo modo, [aggiungere un commento per il problema](https://github.com/aspnet/EntityFrameworkCore/issues/16400) con indicazioni dettagliate. Microsoft potrebbe rivedere questa decisione in base ai commenti e suggerimenti.
 
@@ -1540,7 +1540,7 @@ Questi metodi sono stati spostati in una nuova classe di base astratta `DbContex
 Nelle versioni dalla 2.0 alla 3.0 è stato necessario aggiungere o modificare questi metodi più volte.
 Suddividendoli in una nuova classe di base astratta sarà più facile apportare questo tipo di modifiche senza compromettere il funzionamento delle estensioni esistenti.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Aggiornare le estensioni per seguire il nuovo modello.
 Sono disponibili esempi nelle numerose implementazioni di `IDbContextOptionsExtension` per diversi tipi di estensioni nel codice sorgente di EF Core.
@@ -1559,7 +1559,7 @@ Sono disponibili esempi nelle numerose implementazioni di `IDbContextOptionsExte
 
 Allineamento del nome di questo evento di avviso con tutti gli altri eventi di avviso.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare il nuovo nome. (Si noti che il numero di ID evento non è stato modificato.)
 
@@ -1589,7 +1589,7 @@ var constraintName = myForeignKey.ConstraintName;
 
 Questa modifica introduce coerenza per la denominazione in quest'area e chiarisce anche che si tratta del nome del vincolo di chiave esterna e non del nome della colonna o della proprietà per cui è definita la chiave esterna.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare il nuovo nome.
 
@@ -1611,7 +1611,7 @@ A partire da EF Core 3.0 questi metodi sono pubblici.
 
 Questi metodi vengono usati da EF per determinare se un database viene creato, ma vuoto. Ciò risulta utile all'esterno di EF quando occorre determinare se applicare o meno le migrazioni.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Modificare l'accessibilità di eventuali override.
 
@@ -1633,7 +1633,7 @@ A partire da EF Core 3.0 è un pacchetto DevelopmentDependency. Ciò significa c
 
 Questo pacchetto è destinato solo all'uso in fase di progettazione. Le applicazioni distribuite non devono farvi riferimento. Questa raccomandazione è rafforzata dall'impostazione del pacchetto come DevelopmentDependency.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se è necessario fare riferimento a questo pacchetto per eseguire l'override del comportamento della fase di progettazione di EF Core, è possibile aggiornare i metadati dell'elemento PackageReference nel progetto.
 
@@ -1665,7 +1665,7 @@ Il pacchetto è stato aggiornato in base alla versione 2.0.0.
 
 La versione 2.0.0 di SQLitePCL.raw è destinata a .NET Standard 2.0. Era in precedenza destinata a .NET Standard 1.1 e ciò richiedeva un notevole impegno di chiusura di pacchetti transitivi per il funzionamento.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 SQLitePCL.raw versione 2.0.0 include alcune modifiche che causano un'interruzione. Per informazioni dettagliate, vedere le [note sulla versione](https://github.com/ericsink/SQLitePCL.raw/blob/v2/v2.md).
 
@@ -1687,7 +1687,7 @@ Il pacchetto è stato aggiornato in modo da dipendere dalla versione 2.0.0.
 
 La versione 2.0.0 di NetTopologySuite risolve vari problemi di usabilità riscontrati dagli utenti di EF Core.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 NetTopologySuite versione 2.0.0 include alcune modifiche che causano un'interruzione. Per informazioni dettagliate, vedere le [note sulla versione](https://www.nuget.org/packages/NetTopologySuite/2.0.0-pre001).
 
@@ -1710,7 +1710,7 @@ Il pacchetto è stato aggiornato in base a Microsoft. Data. SqlClient.
 Microsoft. Data. SqlClient è il driver di accesso ai dati principale per SQL Server in futuro e System. Data. SqlClient non è più l'obiettivo dello sviluppo.
 Alcune funzionalità importanti, ad esempio Always Encrypted, sono disponibili solo in Microsoft. Data. SqlClient.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Se il codice prende una dipendenza diretta da System. Data. SqlClient, è necessario modificarlo in modo che faccia riferimento a Microsoft. Data. SqlClient. Poiché i due pacchetti gestiscono un livello molto elevato di compatibilità API, questo dovrebbe essere solo una semplice modifica del pacchetto e dello spazio dei nomi.
 
@@ -1743,7 +1743,7 @@ Questo scenario viene ora rilevato nella compilazione del modello e viene genera
 
 Il modello risultante era ambiguo e sarà probabilmente errato in questo caso.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Usare la configurazione completa della relazione. Ad esempio:
 
@@ -1782,7 +1782,7 @@ Tutti i mapping di DbFunction sono considerati mappati alle funzioni definite da
 
 Lo schema precedentemente vuoto era un modo per trattare la funzione è incorporata, ma tale logica è applicabile solo per SqlServer, in cui le funzioni predefinite non appartengono ad alcuno schema.
 
-**Mitigazioni**
+**Procedure di mitigazione**
 
 Configurare manualmente la conversione di DbFunction per eseguirne il mapping a una funzione predefinita.
 

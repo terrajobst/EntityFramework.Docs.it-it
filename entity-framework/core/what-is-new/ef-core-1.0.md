@@ -5,11 +5,11 @@ ms.date: 10/27/2016
 ms.assetid: 20A25111-AEBE-4BC2-83A5-3F651952DF72
 uid: core/what-is-new/ef-core-1.0
 ms.openlocfilehash: 2cd2a54d75ed3f0caa8b674dfb56babcfcc13592
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73655849"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417524"
 ---
 # <a name="features-included-in-ef-core-10"></a>Funzionalità incluse in EF Core 1.0
 
@@ -61,11 +61,11 @@ Consente la generazione di valori dal database in caso di inserimento (valori pr
 
 Consente la definizione di oggetti sequenza nel modello.
 
-### <a name="unique-constraints"></a>Vincoli univoci
+### <a name="unique-constraints"></a>Vincoli UNIQUE
 
 Consente la definizione una chiave alternativa e di relazioni che specificano come destinazione tale chiave.
 
-### <a name="indexes"></a>Indexes
+### <a name="indexes"></a>Indici
 
 La definizione automatica di indici nel modello introduce gli indici nel database. Sono supportati anche gli indici univoci.
 
@@ -81,7 +81,7 @@ Consente di salvare le entità di una gerarchia di ereditarietà in una singola 
 
 Rileva i criteri non validi nel modello e visualizza utili messaggi di errore.
 
-## <a name="change-tracking"></a>Change tracking
+## <a name="change-tracking"></a>Rilevamento modifiche
 
 ### <a name="snapshot-change-tracking"></a>Rilevamento modifiche basato su snapshot
 
@@ -99,7 +99,7 @@ Tramite `DbContext.Entry` e `DbContext.ChangeTracker`.
 
 La nuova API `DbContext.AttachGraph` consente di ricollegare le entità a un contesto per salvare entità nuove/modificate.
 
-## <a name="saving-data"></a>Salvataggio di dati
+## <a name="saving-data"></a>Salvataggio dei dati
 
 ### <a name="basic-save-functionality"></a>Funzionalità di salvataggio di base
 
@@ -171,7 +171,7 @@ Si connette a Microsoft SQL Server 2008 e versioni successive.
 
 Si connette a un database SQLite 3.
 
-### <a name="in-memory"></a>In-Memory
+### <a name="in-memory"></a>In memoria
 
 È progettato per consentire facilmente il test senza connettersi a un vero database.
 

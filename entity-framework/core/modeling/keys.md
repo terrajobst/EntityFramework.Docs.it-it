@@ -6,13 +6,13 @@ ms.author: ansvyryd
 ms.date: 11/06/2019
 uid: core/modeling/keys
 ms.openlocfilehash: abd65a5ea079a49fd7a3bbc84a9337f6ee19fab1
-ms.sourcegitcommit: 32c51c22988c6f83ed4f8e50a1d01be3f4114e81
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/27/2019
-ms.locfileid: "75502006"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416467"
 ---
-# <a name="keys"></a>Keys
+# <a name="keys"></a>Chiavi
 
 Una chiave funge da identificatore univoco per ogni istanza dell'entità. Per la maggior parte delle entità in EF è disponibile un'unica chiave, che esegue il mapping al concetto di *chiave primaria* nei database relazionali (per le entità senza chiavi, vedere [entità](xref:core/modeling/keyless-entity-types)senza chiave). Le entità possono avere chiavi aggiuntive oltre la chiave primaria. per ulteriori informazioni, vedere [chiavi alternative](#alternate-keys) .
 
@@ -25,11 +25,11 @@ Per convenzione, una proprietà denominata `Id` o `<type name>Id` verrà configu
 
 È possibile configurare una singola proprietà come chiave primaria di un'entità come indicato di seguito:
 
-## <a name="data-annotationstabdata-annotations"></a>[Annotazioni dei dati](#tab/data-annotations)
+## <a name="data-annotations"></a>[Annotazioni dei dati](#tab/data-annotations)
 
 [!code-csharp[Main](../../../samples/core/Modeling/DataAnnotations/KeySingle.cs?name=KeySingle&highlight=3)]
 
-## <a name="fluent-apitabfluent-api"></a>[API Fluent](#tab/fluent-api)
+## <a name="fluent-api"></a>[API Fluent](#tab/fluent-api)
 
 [!code-csharp[Main](../../../samples/core/Modeling/FluentAPI/KeySingle.cs?name=KeySingle&highlight=4)]
 

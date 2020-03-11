@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 80fc5062-2f1c-4dbd-ab6e-b99496784b36
 ms.openlocfilehash: 4b3eee20ff238864b94ef4edfb97c1bae0713300
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181794"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419603"
 ---
 # <a name="databinding-with-winforms"></a>DataBinding con WinForms
 Questa procedura dettagliata illustra come associare tipi POCO a controlli Windows Form (WinForms) in un modulo "Master-Detail". L'applicazione utilizza Entity Framework per popolare gli oggetti con i dati del database, rilevare le modifiche e salvare in modo permanente i dati nel database.
@@ -25,11 +25,11 @@ Se si usa Visual Studio 2010, è anche necessario installare NuGet. Per altre in
 
 ## <a name="create-the-application"></a>Creare l'applicazione
 
--   Aprire Visual Studio
+-   Aprire Visual Studio.
 -   **Nuovo progetto&gt; di&gt; file....**
 -   Selezionare **Windows** nel riquadro sinistro e **Windows FormsApplication** nel riquadro a destra.
 -   Immettere **WinFormswithEFSample** come nome
--   Scegliere **OK**.
+-   Selezionare **OK**.
 
 ## <a name="install-the-entity-framework-nuget-package"></a>Installare il pacchetto NuGet Entity Framework
 
@@ -189,7 +189,7 @@ Procediamo con la generazione del database.
 
 -   Selezionare **OK** . verrà richiesto se si desidera creare un nuovo database, selezionare **Sì** .
 
-    ![Crea database](~/ef6/media/createdatabase.png)
+    ![Creare un database](~/ef6/media/createdatabase.png)
 
 -   Il nuovo database verrà ora visualizzato in Esplora server, fare clic con il pulsante destro del mouse su di esso e scegliere **nuova query** .
 -   Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .
@@ -278,9 +278,9 @@ Aggiungere le classi definite nel modello come origini dati per l'applicazione W
 -   Nella finestra scegliere un tipo di origine dati selezionare **oggetto** e fare clic su **Avanti** .
 -   Nella finestra di dialogo selezionare gli oggetti dati, espandere **WinFormswithEFSample** due volte e selezionare **Category** . non è necessario selezionare l'origine dati del prodotto, perché verrà visualizzata tramite la proprietà del prodotto nell'origine dati Category.
 
-    ![Origine dati](~/ef6/media/datasource.png)
+    ![origine dati](~/ef6/media/datasource.png)
 
--   Fare clic su **Fine**.
+-   Fare clic su **Finish** (Fine).
     Se la finestra Origini dati non viene visualizzata, selezionare **Visualizza-&gt; altre origini dati&gt; Windows**
 -   Premere l'icona Aggiungi, in modo che la finestra Origini dati non nasconda automaticamente. Se la finestra è già visibile, potrebbe essere necessario fare clic sul pulsante Aggiorna.
 
@@ -297,7 +297,7 @@ Aggiungere le classi definite nel modello come origini dati per l'applicazione W
     -   Fare clic con il pulsante destro del mouse sul controllo DataGridView e scegliere **modifica colonne..** ..
     -   Selezionare la colonna **ProductID** e impostare **ReadOnly** su **true**.
     -   Selezionare la colonna **CategoryID** e premere il pulsante **Rimuovi** . Eseguire la stessa operazione con la colonna **Category** .
-    -   Fare clic su **OK**.
+    -   Premere **OK**.
 
     Finora sono stati associati i controlli DataGridView ai componenti BindingSource nella finestra di progettazione. Nella sezione successiva verrà aggiunto il codice al code-behind per impostare categoryBindingSource. DataSource sulla raccolta di entità attualmente rilevate da DbContext. Quando sono stati trascinati e eliminati prodotti da sotto la categoria, il componente WinForms si è occupata della configurazione della proprietà productsBindingSource. DataSource sulla proprietà categoryBindingSource e productsBindingSource. DataMember sui prodotti. A causa di questa associazione, solo i prodotti che appartengono alla categoria attualmente selezionata verranno visualizzati in productDataGridView.
 -   Abilitare il pulsante **Salva** sulla barra degli strumenti di spostamento facendo clic con il pulsante destro del mouse e selezionando **abilitato**.

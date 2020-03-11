@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: dc6110a0-80a0-4370-8190-cea942841cee
 ms.openlocfilehash: 841aec645abdb2a56076d0b70bfb2614b0acafb4
-ms.sourcegitcommit: 37d0e0fd1703467918665a64837dc54ad2ec7484
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/16/2019
-ms.locfileid: "72446001"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419461"
 ---
 # <a name="improving-startup-performance-with-ngen"></a>Miglioramento delle prestazioni di avvio con NGen
 > [!NOTE]
@@ -24,7 +24,7 @@ Le osservazioni empiriche mostrano che le immagini native degli assembly di runt
 
 La funzione più semplice dello strumento NGen. exe consiste nel "installare" (ovvero creare e salvare in modo permanente su disco) immagini native per un assembly e tutte le relative dipendenze dirette. Ecco come è possibile ottenere questo risultato:  
 
-1. Aprire una finestra del prompt dei comandi come amministratore.
+1. Aprire una finestra del Prompt dei comandi come amministratore.
 2. Impostare la directory di lavoro corrente sul percorso degli assembly per i quali si desidera generare immagini native:
 
    ``` console
@@ -56,7 +56,7 @@ Quando si decide quali assembly generare immagini native per in un'applicazione 
 
 - **L'assembly di runtime EF principale, EntityFramework. dll**: un'applicazione tipica basata su EF esegue una quantità significativa di codice da questo assembly all'avvio o al primo accesso al database. Di conseguenza, la creazione di immagini native di questo assembly produrrà i maggiori vantaggi nelle prestazioni di avvio.  
 - **Qualsiasi assembly del provider EF usato dall'applicazione: il**tempo di avvio può anche trarre vantaggio leggermente dalla generazione di immagini native. Se, ad esempio, l'applicazione usa il provider EF per SQL Server sarà necessario generare un'immagine nativa per EntityFramework. SqlServer. dll.  
-- **Assembly e altre dipendenze dell'applicazione**: la [documentazione di Ngen. exe](https://msdn.microsoft.com/library/6t9t5wcf.aspx) riguarda i criteri generali per la scelta degli assembly per la generazione di immagini native per e l'effetto di immagini native sulla sicurezza, opzioni avanzate, ad esempio "hardware binding ", scenari come l'uso di immagini native negli scenari di debug e di profilatura e così via.  
+- **Assembly e altre dipendenze dell'applicazione**: la [documentazione di Ngen. exe](https://msdn.microsoft.com/library/6t9t5wcf.aspx) riguarda i criteri generali per la scelta degli assembly per la generazione di immagini native per e l'effetto di immagini native sulla sicurezza, opzioni avanzate, ad esempio "binding hardware", scenari come l'uso di immagini native negli scenari di debug e di profilatura e così via.  
 
 > [!TIP]
 > Assicurarsi di misurare attentamente l'effetto dell'utilizzo di immagini native sia sulle prestazioni di avvio sia sulle prestazioni complessive dell'applicazione e di confrontarle con i requisiti effettivi. Sebbene le immagini native consentano in genere di migliorare le prestazioni di avvio e, in alcuni casi, di ridurre l'utilizzo della memoria, non tutti gli scenari beneficeranno ugualmente. Ad esempio, in caso di esecuzione di uno stato stabile (ovvero, una volta che tutti i metodi usati dall'applicazione sono stati richiamati almeno una volta), il codice generato dal compilatore JIT può produrre effettivamente prestazioni leggermente migliori rispetto alle immagini native.  

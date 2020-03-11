@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: f019c97b-87b0-4e93-98f4-2c539f77b2dc
 ms.openlocfilehash: 35684196dcd7b708a8feeb1eca3096e8d4e555ec
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182527"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418697"
 ---
 # <a name="table-valued-functions-tvfs"></a>Funzioni con valori di tabella (funzioni con valori)
 > [!NOTE]
@@ -22,7 +22,7 @@ Il supporto di TVF è stato introdotto in Entity Framework versione 5. Si noti c
 
 Funzioni con valori sono molto simili alle stored procedure con una differenza fondamentale: il risultato di un TVF è componibile. Ciò significa che i risultati di un TVF possono essere utilizzati in una query LINQ mentre i risultati di un stored procedure non possono.
 
-## <a name="watch-the-video"></a>Guarda il video
+## <a name="watch-the-video"></a>Video
 
 **Presentato da**: Julia Kornich
 
@@ -38,7 +38,7 @@ Per completare questa procedura dettagliata, è necessario:
 
 ## <a name="set-up-the-project"></a>Configurare il progetto
 
-1.  Aprire Visual Studio
+1.  Aprire Visual Studio.
 2.  Scegliere **nuovo**dal menu **file** , quindi fare clic su **progetto** .
 3.  Nel riquadro sinistro fare clic su **Visual C\#** e quindi selezionare il modello **console** .
 4.  Immettere **TVF** come nome del progetto e fare clic su **OK** .
@@ -72,7 +72,7 @@ RETURN
 
  
 
-## <a name="create-a-model"></a>Creazione di un modello
+## <a name="create-a-model"></a>Creare il modello
 
 1.  Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, scegliere **Aggiungi**, quindi fare clic su **nuovo elemento** .
 2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro **modelli** .
@@ -124,6 +124,6 @@ Couse: Microeconomics, Student: Arturo Anand
 Couse: Microeconomics, Student: Carson Bryant
 ```
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato illustrato come eseguire il mapping di funzioni con valori di tabella (funzioni con valori) utilizzando il Entity Framework Designer. È stato inoltre illustrato come chiamare un TVF da una query LINQ.

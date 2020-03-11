@@ -1,24 +1,24 @@
 ---
-title: Codice primo inserimento, aggiornamento ed eliminazione di Stored procedure - Entity Framework 6
+title: Code First stored procedure INSERT, Update e Delete-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 9a7ae7f9-4072-4843-877d-506dd7eef576
 ms.openlocfilehash: bfc56671814aec1965ac054ff901297e5cdbbecb
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45489622"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419087"
 ---
-# <a name="code-first-insert-update-and-delete-stored-procedures"></a>Codice primo inserimento, aggiornamento ed eliminazione di Stored procedure
+# <a name="code-first-insert-update-and-delete-stored-procedures"></a>Stored procedure di inserimento, aggiornamento ed eliminazione di Code First
 > [!NOTE]
 > **Solo EF6 e versioni successive**: funzionalità, API e altri argomenti discussi in questa pagina sono stati introdotti in Entity Framework 6. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-Per impostazione predefinita, Code First configurerà tutte le entità per eseguire insert, aggiornare ed eliminare i comandi usando l'accesso diretto alle tabelle. A partire da Entity Framework 6 è possibile configurare il modello Code First per utilizzare le stored procedure per alcune o tutte le entità nel modello.  
+Per impostazione predefinita, Code First configurerà tutte le entità per eseguire i comandi di inserimento, aggiornamento ed eliminazione mediante l'accesso diretto alle tabelle. A partire da EF6 è possibile configurare il modello di Code First per l'utilizzo di stored procedure per alcune o tutte le entità nel modello.  
 
 ## <a name="basic-entity-mapping"></a>Mapping di entità di base  
 
-È possibile acconsentire esplicitamente tramite le stored procedure per l'inserimento, aggiornare ed eliminare tramite l'API Fluent.  
+È possibile scegliere di usare le stored procedure per l'inserimento, l'aggiornamento e l'eliminazione usando l'API Fluent.  
 
 ``` csharp
 modelBuilder
@@ -26,17 +26,17 @@ modelBuilder
   .MapToStoredProcedures();
 ```  
 
-Questa operazione causerà Code First per usare alcune convenzioni per compilare la struttura prevista delle stored procedure nel database.  
+In questo modo Code First utilizzerà alcune convenzioni per compilare la forma prevista delle stored procedure nel database.  
 
-- Tre stored procedure denominate  **\<type_name\>Inserisci**,  **\<type_name\>Aggiorna** e  **\<type_ nome\>Elimina** (ad esempio, Blog_Insert Blog_Update e Blog_Delete).  
-- I nomi dei parametri corrispondono ai nomi delle proprietà.  
+- Tre stored procedure denominate **\<type_name\>_Insert**, **\<** type_name\>_update **e\<type_name\>_Delete (ad** esempio, Blog_Insert, Blog_Update e Blog_Delete).  
+- I nomi dei parametri corrispondono ai nomi di proprietà.  
   > [!NOTE]
-  > Se si usa HasColumnName() o l'attributo di colonna per rinominare la colonna per una determinata proprietà questo nome viene usato per i parametri anziché il nome della proprietà.  
-- **Stored procedure insert** disporrà di un parametro per ogni proprietà, ad eccezione di quelli contrassegnati come archivio generato (identity o calcolate). La stored procedure deve restituire un set di risultati con una colonna per ogni proprietà dell'archivio generato.  
-- **Stored procedure di aggiornamento** disporrà di un parametro per ogni proprietà, ad eccezione di quelli contrassegnati con un modello di archivio generato di 'Computed'. Alcuni token di concorrenza che richiedono un parametro per il valore originale, vedere la *token di concorrenza* sezione per informazioni dettagliate. La stored procedure deve restituire un set di risultati con una colonna per ogni proprietà calcolata.  
-- **L'eliminazione di stored procedure** deve contenere un parametro per il valore della chiave di entità (o più parametri se l'entità dispone di una chiave composta). Inoltre, la procedura di eliminazione deve avere anche parametri per chiavi esterne associazione indipendente nella tabella di destinazione (relazioni che non dispongono di proprietà chiave esterna corrispondenti dichiarate nell'entità). Alcuni token di concorrenza che richiedono un parametro per il valore originale, vedere la *token di concorrenza* sezione per informazioni dettagliate.  
+  > Se si usa HasColumnName () o l'attributo Column per rinominare la colonna per una determinata proprietà, questo nome viene usato per i parametri anziché il nome della proprietà.  
+- **Il stored procedure di inserimento** avrà un parametro per ogni proprietà, ad eccezione di quelle contrassegnate come generate dall'archivio (identità o calcolata). Il stored procedure deve restituire un set di risultati con una colonna per ogni proprietà generata dall'archivio.  
+- **Il stored procedure di aggiornamento** disporrà di un parametro per ogni proprietà, ad eccezione di quelli contrassegnati con un modello generato da un archivio di "calcolato". Alcuni token di concorrenza richiedono un parametro per il valore originale. per informazioni dettagliate, vedere la sezione *token di concorrenza* riportata di seguito. Il stored procedure deve restituire un set di risultati con una colonna per ogni proprietà calcolata.  
+- **Il stored procedure DELETE** deve avere un parametro per il valore della chiave dell'entità (o più parametri se l'entità ha una chiave composta). Inoltre, la procedura DELETE deve disporre di parametri per tutte le chiavi esterne di associazione indipendenti nella tabella di destinazione (le relazioni che non dispongono di proprietà di chiave esterna corrispondenti dichiarate nell'entità). Alcuni token di concorrenza richiedono un parametro per il valore originale. per informazioni dettagliate, vedere la sezione *token di concorrenza* riportata di seguito.  
 
-Usando la classe seguente come esempio:  
+Usare la classe seguente come esempio:  
 
 ``` csharp
 public class Blog  
@@ -47,7 +47,7 @@ public class Blog
 }
 ```  
 
-Il valore predefinito sarebbero stored procedure:  
+Le stored procedure predefinite sono:  
 
 ``` SQL
 CREATE PROCEDURE [dbo].[Blog_Insert]  
@@ -75,11 +75,11 @@ AS
   WHERE BlogId = @BlogId
 ```  
 
-### <a name="overriding-the-defaults"></a>Viene sottoposto a override le impostazioni predefinite  
+### <a name="overriding-the-defaults"></a>Override delle impostazioni predefinite  
 
-È possibile eseguire l'override di parte o tutto ciò che è stato configurato per impostazione predefinita.  
+È possibile eseguire l'override di parte o di tutti gli elementi configurati per impostazione predefinita.  
 
-È possibile modificare il nome di uno o più stored procedure. Questo esempio Rinomina la stored procedure update solo.  
+È possibile modificare il nome di una o più stored procedure. Questo esempio Rinomina solo l'aggiornamento stored procedure.  
 
 ``` csharp
 modelBuilder  
@@ -88,7 +88,7 @@ modelBuilder
     s.Update(u => u.HasName("modify_blog")));
 ```  
 
-Questo esempio Rinomina tutte le tre stored procedure.  
+In questo esempio vengono rinominate tutte e tre le stored procedure.  
 
 ``` csharp
 modelBuilder  
@@ -99,7 +99,7 @@ modelBuilder
      .Insert(i => i.HasName("insert_blog")));
 ```  
 
-In questi esempi le chiamate vengono concatenate tra loro, ma è anche possibile usare la sintassi di blocco di espressione lambda.  
+In questi esempi le chiamate sono concatenate, ma è anche possibile usare la sintassi del blocco lambda.  
 
 ``` csharp
 modelBuilder  
@@ -112,7 +112,7 @@ modelBuilder
     });
 ```  
 
-Questo esempio Rinomina il parametro per la proprietà BlogId in stored procedure update.  
+Questo esempio rinomina il parametro per la proprietà BlogId nell'aggiornamento stored procedure.  
 
 ``` csharp
 modelBuilder  
@@ -121,7 +121,7 @@ modelBuilder
     s.Update(u => u.Parameter(b => b.BlogId, "blog_id")));
 ```  
 
-Queste chiamate sono tutti concatenabile e componibile. Ecco un esempio che consente di ridenominare tutte le tre stored procedure e i relativi parametri.  
+Queste chiamate sono tutte concatenabili e componibili. Di seguito è riportato un esempio in cui vengono rinominate tutte e tre le stored procedure e i relativi parametri.  
 
 ``` csharp
 modelBuilder  
@@ -138,7 +138,7 @@ modelBuilder
                    .Parameter(b => b.Url, "blog_url")));
 ```  
 
-È anche possibile modificare il nome delle colonne nel set di risultati che contiene i valori del database generato.  
+È inoltre possibile modificare il nome delle colonne nel set di risultati che contiene i valori generati dal database.  
 
 ``` csharp
 modelBuilder
@@ -162,9 +162,9 @@ END
 
 ## <a name="relationships-without-a-foreign-key-in-the-class-independent-associations"></a>Relazioni senza una chiave esterna nella classe (associazioni indipendenti)  
 
-Quando una proprietà di chiave esterna viene inclusa nella definizione della classe, il parametro corrispondente può essere rinominato in esattamente come qualsiasi altra proprietà. Se non esiste una relazione senza una proprietà di chiave esterna nella classe, il nome di parametro predefinito è  **\<navigation_property_name\>_\<primary_key_name\>**.  
+Quando una proprietà di chiave esterna è inclusa nella definizione della classe, il parametro corrispondente può essere rinominato in modo analogo a qualsiasi altra proprietà. Quando esiste una relazione senza una proprietà di chiave esterna nella classe, il nome del parametro predefinito è **\<navigation_property_name\>_\<primary_key_name\>** .  
 
-Ad esempio, le definizioni di classe seguente comporta un parametro Blog_BlogId viene previsto nelle stored procedure per inserire e aggiornare gli invii.  
+Le definizioni di classe seguenti, ad esempio, comportano un Blog_BlogId parametro previsto nelle stored procedure per inserire e aggiornare i post.  
 
 ``` csharp
 public class Blog  
@@ -186,9 +186,9 @@ public class Post
 }
 ```  
 
-### <a name="overriding-the-defaults"></a>Viene sottoposto a override le impostazioni predefinite  
+### <a name="overriding-the-defaults"></a>Override delle impostazioni predefinite  
 
-È possibile modificare i parametri per le chiavi esterne che non sono inclusi nella classe specificando il percorso per la proprietà di chiave primaria per il metodo con parametri.  
+È possibile modificare i parametri per le chiavi esterne che non sono incluse nella classe fornendo il percorso della proprietà della chiave primaria al Metodo Parameter.  
 
 ``` csharp
 modelBuilder
@@ -197,7 +197,7 @@ modelBuilder
     s.Insert(i => i.Parameter(p => p.Blog.BlogId, "blog_id")));
 ```  
 
-Se non si dispone di una proprietà di navigazione nell'entità dipendente (ad es. Nessuna proprietà Post.Blog) è possibile usare il metodo di associazione per identificare l'altra estremità della relazione e quindi configurare i parametri che corrispondono a ogni le proprietà di chiave.  
+Se non si dispone di una proprietà di navigazione nell'entità dipendente (ad esempio Nessuna proprietà post. Blog), quindi è possibile usare il metodo di associazione per identificare l'altra entità finale della relazione e quindi configurare i parametri che corrispondono a ognuna delle proprietà chiave.  
 
 ``` csharp
 modelBuilder
@@ -210,15 +210,15 @@ modelBuilder
 
 ## <a name="concurrency-tokens"></a>Token di concorrenza  
 
-Aggiornamento ed eliminazione di stored procedure potrebbe essere necessario anche gestire la concorrenza:  
+È anche possibile che le stored procedure Update e Delete debbano gestire la concorrenza:  
 
-- Se l'entità contiene i token di concorrenza, la stored procedure può facoltativamente includere un parametro di output che restituisce il numero di righe aggiornate/eliminate (righe interessate). Tale parametro deve essere configurato utilizzando il metodo RowsAffectedParameter.  
-Per impostazione predefinita Entity Framework Usa il valore restituito da ExecuteNonQuery per determinare il numero di righe interessato. Specificare un parametro di output delle righe interessate è utile se si esegue qualsiasi logica nella stored procedure che comporterebbe il valore restituito di ExecuteNonQuery risulti errato (dal punto di vista di Entity Framework) alla fine dell'esecuzione.  
-- Per ogni concorrenza di token vi sarà un parametro denominato  **\<property_name\>_Original** (ad esempio, Timestamp_Original). Questo verrà passato il valore originale di questa proprietà: il valore quando sottoposto a query dal database.  
-    - I token di concorrenza che vengono calcolati dal database, ad esempio i timestamp: disporrà solo un parametro di valore originale.  
-    - Le proprietà calcolate non sono impostate come token di concorrenza avrà inoltre un parametro per il nuovo valore nella procedura di aggiornamento. Usa le convenzioni di denominazione già illustrate per i nuovi valori. Un esempio di un token di questo tipo potrebbe essere utilizzando l'URL del Blog come un token di concorrenza, il nuovo valore è obbligatorio perché ciò può essere aggiornata a un nuovo valore da codice (a differenza di un token di Timestamp che viene aggiornato solo dal database).  
+- Se l'entità contiene token di concorrenza, il stored procedure può facoltativamente avere un parametro di output che restituisce il numero di righe aggiornate o eliminate (righe interessate). Questo parametro deve essere configurato con il metodo RowsAffectedParameter.  
+Per impostazione predefinita, EF usa il valore restituito da ExecuteNonQuery per determinare il numero di righe interessate. La specifica di un parametro di output interessato da righe è utile se si esegue qualsiasi logica nel SPROC che comporterebbe il valore restituito di ExecuteNonQuery come errato (dal punto di vista di EF) al termine dell'esecuzione.  
+- Per ogni token di concorrenza sarà presente un parametro denominato **\<property_name\>_Original** (ad esempio, Timestamp_Original). Viene passato il valore originale di questa proprietà, ovvero il valore quando viene eseguita una query dal database.  
+    - I token di concorrenza calcolati dal database, ad esempio i timestamp, avranno solo un parametro di valore originale.  
+    - Anche le proprietà non calcolate impostate come token di concorrenza avranno un parametro per il nuovo valore nella procedura di aggiornamento. Vengono utilizzate le convenzioni di denominazione già discusse per i nuovi valori. Un esempio di un token di questo tipo consiste nell'usare l'URL di un Blog come token di concorrenza, il nuovo valore è necessario perché può essere aggiornato a un nuovo valore dal codice (a differenza di un token timestamp che viene aggiornato solo dal database).  
 
-Si tratta di un esempio di classe e aggiornare stored procedure con un token di concorrenza di timestamp.  
+Si tratta di una classe di esempio che Aggiorna stored procedure con un token di concorrenza timestamp.  
 
 ``` csharp
 public class Blog  
@@ -243,7 +243,7 @@ AS
   WHERE BlogId = @BlogId AND [Timestamp] = @Timestamp_Original
 ```  
 
-Ecco un esempio di classe e aggiornare stored procedure con token di concorrenza non calcolata.  
+Di seguito è riportato un esempio di classe e di aggiornamento stored procedure con token di concorrenza non calcolata.  
 
 ``` csharp
 public class Blog  
@@ -267,9 +267,9 @@ AS
   WHERE BlogId = @BlogId AND [Url] = @Url_Original
 ```  
 
-### <a name="overriding-the-defaults"></a>Viene sottoposto a override le impostazioni predefinite  
+### <a name="overriding-the-defaults"></a>Override delle impostazioni predefinite  
 
-È facoltativamente possibile introdurre un parametro delle righe interessate.  
+Facoltativamente, è possibile introdurre un parametro di righe interessate.  
 
 ``` csharp
 modelBuilder  
@@ -278,7 +278,7 @@ modelBuilder
     s.Update(u => u.RowsAffectedParameter("rows_affected")));
 ```  
 
-Per i token di concorrenza di database calcolato, in cui viene passato solo il valore originale: è possibile utilizzare solo il parametro standard ridenominazione meccanismo per rinominare il parametro per il valore originale.  
+Per i token di concorrenza calcolati del database, dove viene passato solo il valore originale, è possibile usare semplicemente il meccanismo di ridenominazione dei parametri standard per rinominare il parametro per il valore originale.  
 
 ``` csharp
 modelBuilder  
@@ -287,7 +287,7 @@ modelBuilder
     s.Update(u => u.Parameter(b => b.Timestamp, "blog_timestamp")));
 ```  
 
-Per i token di concorrenza non calcolata, in cui sia il valore originale e quello nuovo viene passato – è possibile usare un overload di parametro che consente di specificare un nome per ogni parametro.  
+Per i token di concorrenza non calcolati, dove vengono passati sia il valore originale che quello nuovo, è possibile usare un overload del parametro che consente di specificare un nome per ogni parametro.  
 
 ``` csharp
 modelBuilder
@@ -297,7 +297,7 @@ modelBuilder
 
 ## <a name="many-to-many-relationships"></a>Relazioni many-to-many  
 
-Le classi seguenti si userà come esempio in questa sezione.  
+Come esempio in questa sezione verranno usate le classi seguenti.  
 
 ``` csharp
 public class Post  
@@ -318,7 +318,7 @@ public class Tag
 }
 ```  
 
-Molti-a-molti relazioni possono essere mappate alle stored procedure con la sintassi seguente.  
+Le relazioni many-to-many possono essere mappate alle stored procedure con la sintassi seguente.  
 
 ``` csharp
 modelBuilder  
@@ -328,12 +328,12 @@ modelBuilder
   .MapToStoredProcedures();
 ```  
 
-Se viene fornita alcuna altra configurazione la forma di stored procedure seguente viene utilizzata per impostazione predefinita.  
+Se non viene fornita nessun'altra configurazione, per impostazione predefinita viene usata la forma stored procedure seguente.  
 
-- Due stored procedure denominate  **\<type_one\>\<type_two\>Inserisci** e  **\<type_one\>\<type_two \>Elimina** (ad esempio, PostTag_Insert e PostTag_Delete).  
-- I parametri saranno i valori di chiave per ogni tipo. Il nome di ogni parametro in corso **\<type_name\>_\<property_name\>** (ad esempio, Post_PostId e Tag_TagId).
+- Due stored procedure denominate **\<type_one\>\<** type_two\> **_Insert e\<type_one\>\<** type_two\>_Delete, ad esempio PostTag_Insert e PostTag_Delete  
+- I parametri saranno i valori chiave per ogni tipo. Il nome di ogni parametro **\<type_name\>_\<property_name\>** (ad esempio, Post_PostId e Tag_TagId).
 
-Di seguito sono esempio inseriscono e aggiornano le stored procedure.  
+Di seguito sono riportate le stored procedure di esempio INSERT e Update.  
 
 ``` SQL
 CREATE PROCEDURE [dbo].[PostTag_Insert]  
@@ -350,9 +350,9 @@ AS
   WHERE Post_PostId = @Post_PostId AND Tag_TagId = @Tag_TagId
 ```  
 
-### <a name="overriding-the-defaults"></a>Viene sottoposto a override le impostazioni predefinite  
+### <a name="overriding-the-defaults"></a>Override delle impostazioni predefinite  
 
-Il procedura e nomi di parametro possono essere configurati in modo analogo alle procedure entità archiviata.  
+La procedura e i nomi di parametro possono essere configurati in modo analogo alle stored procedure di entità.  
 
 ``` csharp
 modelBuilder  

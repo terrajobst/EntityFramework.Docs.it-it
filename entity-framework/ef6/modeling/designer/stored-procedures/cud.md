@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 1e773972-2da5-45e0-85a2-3cf3fbcfa5cf
 ms.openlocfilehash: bdb0df969c33d5ad3f103bfa9af6002c9c2bb9b3
-ms.sourcegitcommit: 6c28926a1e35e392b198a8729fc13c1c1968a27b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/02/2019
-ms.locfileid: "71813553"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418322"
 ---
 # <a name="designer-cud-stored-procedures"></a>Stored procedure CUD della finestra di progettazione
 
@@ -29,7 +29,7 @@ Quando si esegue il mapping delle operazioni CUD alle stored procedure, si appli
 - Se il server genera il valore della chiave primaria per la riga inserita, è necessario eseguire il mapping di questo valore alla proprietà della chiave dell'entità. Nell'esempio seguente il **InsertPerson** stored procedure restituisce la chiave primaria appena creata come parte del set di risultati della stored procedure. Viene eseguito il mapping della chiave primaria alla chiave di entità (**PersonID**) utilizzando il **&lt;aggiungere associazioni di risultati&gt;**  funzionalità di Entity Framework Designer.
 - Viene eseguito il mapping delle chiamate stored procedure 1:1 con le entità del modello concettuale. Se, ad esempio, si implementa una gerarchia di ereditarietà nel modello concettuale ed è quindi necessario eseguire il mapping delle stored procedure CUD per le entità **padre** (base) e **figlio** (derivata), il salvataggio delle modifiche **figlio** chiamerà solo le stored procedure del **figlio**, non attiverà le chiamate alle stored procedure del **padre**.
 
-## <a name="prerequisites"></a>Prerequisiti
+## <a name="prerequisites"></a>Prerequisites
 
 Per completare questa procedura dettagliata, è necessario disporre di:
 
@@ -42,9 +42,9 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 - Seleziona **file-&gt; progetto nuovo-&gt;**
 - Nel riquadro sinistro fare clic su **Visual C\#** , quindi selezionare il modello **console** .
 - Immettere **CUDSProcsSample** come nome.
-- Fare clic su **OK**.
+- Selezionare **OK**.
 
-## <a name="create-a-model"></a>Creazione di un modello
+## <a name="create-a-model"></a>Creare il modello
 
 - Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, quindi scegliere **aggiungi&gt; nuovo elemento**.
 - Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.

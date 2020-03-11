@@ -1,51 +1,51 @@
 ---
-title: Separazione delle entità della finestra di progettazione - Entity Framework 6
+title: Suddivisione delle entità della finestra di progettazione-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: aa2dd48a-1f0e-49dd-863d-d6b4f5834832
 ms.openlocfilehash: ba1895ae491cec909ff88a8784eea82f1876f595
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490851"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418462"
 ---
-# <a name="designer-entity-splitting"></a>Suddivisione di entità della finestra di progettazione
-Questa procedura dettagliata illustra come eseguire il mapping di un tipo di entità a due tabelle modificando un modello con Entity Framework Designer (Entity Framework Designer). È possibile eseguire il mapping di un'entità a più tabelle quando le tabelle in questione condividono una chiave comune. I concetti relativi all'esecuzione del mapping di un tipo di entità a due tabelle possono essere facilmente estesi anche all'esecuzione del mapping a più di due tabelle.
+# <a name="designer-entity-splitting"></a>Suddivisione delle entità della finestra di progettazione
+Questa procedura dettagliata illustra come eseguire il mapping di un tipo di entità a due tabelle modificando un modello con il Entity Framework Designer (EF designer). È possibile eseguire il mapping di un'entità a più tabelle quando le tabelle in questione condividono una chiave comune. I concetti che si applicano al mapping di un tipo di entità a due tabelle sono facilmente estesi al mapping di un tipo di entità a più di due tabelle.
 
-L'immagine seguente mostra le finestre principali che vengono usate quando si lavora con la finestra di progettazione di Entity Framework.
+Nell'immagine seguente vengono illustrate le finestre principali che vengono usate quando si usa la finestra di progettazione EF.
 
 ![EF Designer](~/ef6/media/efdesigner.png)
 
-## <a name="prerequisites"></a>Prerequisiti
+## <a name="prerequisites"></a>Prerequisites
 
-Edizione Visual Studio 2012 o Visual Studio 2010, Ultimate, Premium, Professional o Web Express.
+Visual Studio 2012 o Visual Studio 2010, Ultimate, Premium, Professional o Web Express Edition.
 
-## <a name="create-the-database"></a>Creare il Database
+## <a name="create-the-database"></a>Creare il database
 
-Il server di database che viene installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:
+Il server di database installato con Visual Studio è diverso a seconda della versione di Visual Studio installata:
 
--   Se si usa Visual Studio 2012, quindi si creerà un database LocalDB.
--   Se si usa Visual Studio 2010 si creerà un database SQL Express.
+-   Se si usa Visual Studio 2012, si creerà un database del database locale.
+-   Se si usa Visual Studio 2010 verrà creato un database di SQL Express.
 
-Prima di tutto si creerà un database con due tabelle che si intende combinare in una singola entità.
+Verrà innanzitutto creato un database con due tabelle che verranno combinate in una singola entità.
 
--   Aprire Visual Studio
--   **Visualizzazione -&gt; Esplora Server**
--   Fare clic con il pulsante destro sul **connessioni dati -&gt; Aggiungi connessione...**
--   Se si è ancora connessi a un database da Esplora Server prima che è necessario selezionare **Microsoft SQL Server** come origine dati
--   Connettersi a LocalDB o SQL Express, in base alla quale è stato installato
+-   Aprire Visual Studio.
+-   **Visualizza-&gt; Esplora server**
+-   Fare clic con il pulsante destro del mouse su **connessioni dati-&gt; Aggiungi connessione...**
+-   Se non si è connessi a un database da Esplora server prima di selezionare **Microsoft SQL Server** come origine dati
+-   Connettersi a un database locale o a SQL Express, a seconda di quale installato
 -   Immettere **EntitySplitting** come nome del database
--   Selezionare **OK** e verrà richiesto se si desidera creare un nuovo database, selezionare **Sì**
--   Il nuovo database verrà ora visualizzato in Esplora Server
+-   Selezionare **OK** . verrà richiesto se si desidera creare un nuovo database, selezionare **Sì** .
+-   Il nuovo database verrà ora visualizzato in Esplora server
 -   Se si usa Visual Studio 2012
-    -   Fare doppio clic sul database in Esplora Server e selezionare **nuova Query**
-    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Execute**
+    -   Fare clic con il pulsante destro del mouse sul database in Esplora server e selezionare **nuova query** .
+    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui** .
 -   Se si usa Visual Studio 2010
-    -   Selezionare **- Data&gt; Transact SQL Editor -&gt; nuova connessione Query...**
-    -   Immettere **.\\ SQLEXPRESS** come nome del server e fare clic su **OK**
-    -   Selezionare il **EntitySplitting** database dall'elenco a discesa nella parte superiore dell'editor di query
-    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic su query e selezionare **Esegui SQL**
+    -   Selezione **dati-&gt; editor Transact-SQL-&gt; nuova connessione query...**
+    -   Immettere **.\\SQLEXPRESS** come nome del server e fare clic su **OK** .
+    -   Selezionare il database **EntitySplitting** dall'elenco a discesa nella parte superiore dell'editor di query
+    -   Copiare il codice SQL seguente nella nuova query, quindi fare clic con il pulsante destro del mouse sulla query e scegliere **Esegui SQL**
 
 ``` SQL
 CREATE TABLE [dbo].[Person] (
@@ -66,42 +66,42 @@ CONSTRAINT [FK_Person_PersonInfo] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Per
 
 ## <a name="create-the-project"></a>Creare il progetto
 
--   Scegliere **Nuovo** dal menu **File**, quindi fare clic su **Progetto**.
--   Nel riquadro sinistro, fare clic su **Visual C#\#**, quindi selezionare il **applicazione Console** modello.
+-   Scegliere **Nuovo** dal menu **File**e quindi fare clic su **Progetto**.
+-   Nel riquadro sinistro fare clic su **Visual C\#** , quindi selezionare il modello **applicazione console** .
 -   Immettere **MapEntityToTablesSample** come nome del progetto e fare clic su **OK**.
 -   Fare clic su **No** se viene richiesto di salvare la query SQL creata nella prima sezione.
 
-## <a name="create-a-model-based-on-the-database"></a>Creare un modello basato sul Database
+## <a name="create-a-model-based-on-the-database"></a>Creazione di un modello basato sul database
 
--   Fare clic sul nome del progetto in Esplora soluzioni, scegliere **Add**, quindi fare clic su **nuovo elemento**.
--   Selezionare **Data** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro dei modelli.
--   Immettere **MapEntityToTablesModel.edmx** per il nome del file e quindi fare clic su **Add**.
--   Nella finestra di dialogo Scegli contenuto Model, selezionare **genera da database**, quindi fare clic su **successivo.**
--   Selezionare il **EntitySplitting** connessione nell'elenco a discesa e fare clic su **successivo**.
--   Nella finestra di dialogo Scegli oggetti di Database, selezionare la casella accanto al **tabelle** nodo.
-    Tutte le tabelle da verrà aggiunto il **EntitySplitting** database al modello.
--   Scegliere **Fine**.
+-   Fare clic con il pulsante destro del mouse sul nome del progetto in Esplora soluzioni, scegliere **Aggiungi**, quindi fare clic su **nuovo elemento**.
+-   Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
+-   Immettere **MapEntityToTablesModel. edmx** per il nome del file e quindi fare clic su **Aggiungi**.
+-   Nella finestra di dialogo Scegli contenuto Model selezionare **genera da database**, quindi fare clic su **Avanti.**
+-   Selezionare la connessione **EntitySplitting** dall'elenco a discesa e fare clic su **Avanti**.
+-   Nella finestra di dialogo Scegli oggetti di database selezionare la casella accanto al nodo **tabelle** .
+    In questo modo, tutte le tabelle del database **EntitySplitting** vengono aggiunte al modello.
+-   Fare clic su **fine**.
 
-Entity Designer, che fornisce un'area di progettazione per la modifica del modello, viene visualizzato.
+Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello.
 
 ## <a name="map-an-entity-to-two-tables"></a>Eseguire il mapping di un'entità a due tabelle
 
-In questo passaggio si aggiornerà il **Person** tipo di entità per combinare dati provenienti dal **persona** e **PersonInfo** tabelle.
+In questo passaggio verrà aggiornato il tipo di entità **Person** per combinare i dati delle tabelle **Person** e **PersonInfo** .
 
--   Selezionare il **messaggio di posta elettronica** e **Phone** le proprietà del * * PersonInfo * * entità, quindi premere **Ctrl + X** chiavi.
--   Selezionare la * * persona * * entity e premere **Ctrl + V** chiavi.
--   Nell'area di progettazione, selezionare la **PersonInfo** entità e premere **eliminare** pulsante sulla tastiera.
--   Fare clic su **No** quando viene richiesto se si desidera rimuovere il **PersonInfo** tabella dal modello, si sta tentando di eseguire il mapping al **persona** entità.
+-   Selezionare le proprietà di **posta elettronica** e **telefono** dell'entità **PersonInfo **e premere **CTRL + X** .
+-   Selezionare l'entità **Person **e premere **CTRL + V** .
+-   Nell'area di progettazione selezionare l'entità  **PersonInfo** e premere il pulsante **Elimina** sulla tastiera.
+-   Fare clic su **No** quando viene richiesto se si desidera rimuovere la tabella **PersonInfo** dal modello, si sta per eseguirne il mapping all'entità **Person** .
 
-    ![Eliminare le tabelle](~/ef6/media/deletetables.png)
+    ![Elimina tabelle](~/ef6/media/deletetables.png)
 
-I passaggi successivi presuppongono il **Dettagli Mapping** finestra. Se non è possibile visualizzare questa finestra, fare doppio clic su area di progettazione e seleziona **Dettagli Mapping**.
+Per i passaggi successivi è necessario specificare i **Dettagli del Mapping** finestra. Se questa finestra non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **Dettagli mapping**.
 
--   Selezionare il **Person** tipo di entità e fare clic su **&lt;aggiungere una tabella o vista&gt;** nel **Dettagli Mapping** finestra.
--   Selezionare * * PersonInfo * * nell'elenco a discesa.
-    Il **Dettagli Mapping** finestra viene aggiornata con i mapping delle colonne predefinite, queste sono accettabili per questo scenario.
+-   Selezionare il tipo di entità **Person** e fare clic su **&lt;aggiungere una tabella o una vista&gt;**  nella finestra  **Dettagli mapping** .
+-   Selezionare **PersonInfo ** dall'elenco a discesa.
+    La finestra **Dettagli mapping** viene aggiornata con i mapping di colonna predefiniti, per questo scenario.
 
-Il **Person** tipo di entità è stato mappato il **persona** e **PersonInfo** tabelle.
+Il tipo di entità **person** viene ora mappato alle tabelle **Person** e **PersonInfo** .
 
 ![Mapping 2](~/ef6/media/mapping2.png)
 
@@ -132,13 +132,13 @@ Il **Person** tipo di entità è stato mappato il **persona** e **PersonInfo** t
 
 -   Compilare l'applicazione ed eseguirla.
 
-Le istruzioni T-SQL seguenti sono state eseguite sul database come risultato dell'esecuzione di questa applicazione. 
+Le istruzioni T-SQL seguenti sono state eseguite sul database in seguito all'esecuzione dell'applicazione. 
 
--   I seguenti due **Inserisci** le istruzioni sono state eseguite in seguito all'esecuzione rapida. SaveChanges (). Adottano i dati dal **Person** entità e la divisione tra la **persona** e **PersonInfo** tabelle.
+-   Le due istruzioni **Insert** seguenti sono state eseguite in seguito all'esecuzione del contesto. SaveChanges (). I dati vengono presi dall'entità **Person** e suddivisi tra le tabelle **Person** e **PersonInfo** .
 
     ![Inserisci 1](~/ef6/media/insert1.png)
 
     ![Inserisci 2](~/ef6/media/insert2.png)
--   Quanto segue **seleziona** è stata eseguita come risultato l'enumerazione degli utenti del database. Combina i dati di **Person** e **PersonInfo** tabella.
+-   La seguente **selezione** è stata eseguita in seguito all'enumerazione degli utenti nel database. Combina i dati della tabella **Person** e **PersonInfo** .
 
-    ![Seleziona](~/ef6/media/select.png)
+    ![Select](~/ef6/media/select.png)

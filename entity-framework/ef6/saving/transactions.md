@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 0d0f1824-d781-4cb3-8fda-b7eaefced1cd
 ms.openlocfilehash: 7030dc675993339f72c935f6b430cead85fecb7f
-ms.sourcegitcommit: c9c3e00c2d445b784423469838adc071a946e7c9
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 07/18/2019
-ms.locfileid: "68306516"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419685"
 ---
 # <a name="working-with-transactions"></a>Utilizzo delle transazioni
 > [!NOTE]
@@ -32,14 +32,14 @@ Tuttavia, alcuni utenti richiedono un maggiore controllo sulle transazioni. ques
 
 ## <a name="how-the-apis-work"></a>Funzionamento delle API  
 
-Prima di EF6 Entity Framework insistito sull'apertura della connessione al database stessa (generava un'eccezione se era stata passata una connessione già aperta). Poiché una transazione può essere avviata solo su una connessione aperta, questo significa che l'unico modo in cui un utente può eseguire il wrapping di più operazioni in un'unica transazione è stato quello di utilizzare un [TransactionScope](https://msdn.microsoft.com/library/system.transactions.transactionscope.aspx) o utilizzare la proprietà **ObjectContext. Connection** e avviare chiamata di **Open ()** e **BeginTransaction ()** direttamente nell'oggetto **EntityConnection** restituito. Inoltre, le chiamate API che hanno contattato il database avrebbero esito negativo se era stata avviata una transazione sulla connessione al database sottostante.  
+Prima di EF6 Entity Framework insistito sull'apertura della connessione al database stessa (generava un'eccezione se era stata passata una connessione già aperta). Poiché una transazione può essere avviata solo su una connessione aperta, questo significa che l'unico modo in cui un utente può eseguire il wrapping di più operazioni in un'unica transazione è stato usare un [TransactionScope](https://msdn.microsoft.com/library/system.transactions.transactionscope.aspx) o usare la proprietà **ObjectContext. Connection** e iniziare a chiamare **Open ()** e **BeginTransaction ()** direttamente nell'oggetto **EntityConnection** restituito. Inoltre, le chiamate API che hanno contattato il database avrebbero esito negativo se era stata avviata una transazione sulla connessione al database sottostante.  
 
 > [!NOTE]
 > La limitazione dell'accettazione solo delle connessioni chiuse è stata rimossa in Entity Framework 6. Per informazioni dettagliate, vedere [gestione della connessione](~/ef6/fundamentals/connection-management.md).  
 
 A partire da EF6, il Framework offre ora:  
 
-1. **Database.BeginTransaction()** : Un metodo più semplice per consentire a un utente di avviare e completare le transazioni all'interno di una DbContext esistente, consentendo la combinazione di più operazioni all'interno della stessa transazione e quindi di tutti i commit o il rollback come uno. Consente inoltre all'utente di specificare più facilmente il livello di isolamento per la transazione.  
+1. **Database. BeginTransaction ()** : un metodo più semplice per l'avvio e il completamento delle transazioni all'interno di un DbContext esistente, che consente di combinare diverse operazioni all'interno della stessa transazione e quindi di eseguire il commit o il rollback di tutte. Consente inoltre all'utente di specificare più facilmente il livello di isolamento per la transazione.  
 2. **Database. UseTransaction ()** : che consente al DbContext di usare una transazione che è stata avviata all'esterno del Entity Framework.  
 
 ### <a name="combining-several-operations-into-one-transaction-within-the-same-context"></a>Combinazione di più operazioni in un'unica transazione nello stesso contesto  
@@ -178,7 +178,7 @@ Si noterà un'eccezione da database. UseTransaction () se si passa una transazio
 
 Questa sezione illustra in dettaglio il modo in cui le transazioni precedenti interagiscono con:  
 
-- Resilienza della connessione  
+- Resilienza delle connessioni  
 - Metodi asincroni  
 - Transazioni TransactionScope  
 
@@ -188,8 +188,8 @@ La nuova funzionalità di resilienza della connessione non funziona con le trans
 
 ### <a name="asynchronous-programming"></a>Programmazione asincrona  
 
-L'approccio descritto nelle sezioni precedenti non necessita di altre opzioni o impostazioni per lavorare con i [metodi](~/ef6/fundamentals/async.md
-)di query e salvataggio asincroni. Tenere tuttavia presente che, a seconda delle operazioni eseguite all'interno dei metodi asincroni, è possibile che si verifichino transazioni con esecuzione prolungata, che possono a sua volta causare deadlock o un blocco negativo per le prestazioni dell'applicazione complessiva.  
+L'approccio descritto nelle sezioni precedenti non necessita di altre opzioni o impostazioni per lavorare con i metodi di [query e salvataggio asincroni](~/ef6/fundamentals/async.md
+). Tenere tuttavia presente che, a seconda delle operazioni eseguite all'interno dei metodi asincroni, è possibile che si verifichino transazioni con esecuzione prolungata, che possono a sua volta causare deadlock o un blocco negativo per le prestazioni dell'applicazione complessiva.  
 
 ### <a name="transactionscope-transactions"></a>Transazioni TransactionScope  
 

@@ -5,11 +5,11 @@ ms.author: bricelam
 ms.date: 09/18/2018
 uid: core/miscellaneous/cli/powershell
 ms.openlocfilehash: a9ce6d5b5f36a72e3715a9de787f1f00e989a58c
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72811909"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416718"
 ---
 # <a name="entity-framework-core-tools-reference---package-manager-console-in-visual-studio"></a>Guida di riferimento agli strumenti di Entity Framework Core-Console di gestione pacchetti in Visual Studio
 
@@ -147,7 +147,7 @@ Per visualizzare le informazioni della guida relative a un comando, usare il com
 
 Aggiunge una nuova migrazione.
 
-Parametri:
+Parametri
 
 | Parametro                         | Descrizione                                                                                                             |
 |:----------------------------------|:------------------------------------------------------------------------------------------------------------------------|
@@ -158,7 +158,7 @@ Parametri:
 
 Elimina il database.
 
-Parametri:
+Parametri
 
 | Parametro | Descrizione                                              |
 |:----------|:---------------------------------------------------------|
@@ -172,22 +172,22 @@ Ottiene informazioni su un tipo di `DbContext`.
 
 Rimuove l'ultima migrazione (esegue il rollback delle modifiche del codice eseguite per la migrazione).
 
-Parametri:
+Parametri
 
 | Parametro | Descrizione                                                                     |
 |:----------|:--------------------------------------------------------------------------------|
 | -Force    | Ripristinare la migrazione, ovvero eseguire il rollback delle modifiche applicate al database. |
 
-## <a name="scaffold-dbcontext"></a>Impalcature-DbContext
+## <a name="scaffold-dbcontext"></a>Scaffold-DbContext
 
 Genera il codice per un `DbContext` e i tipi di entità per un database. Affinché `Scaffold-DbContext` generi un tipo di entità, è necessario che la tabella di database disponga di una chiave primaria.
 
-Parametri:
+Parametri
 
 | Parametro                          | Descrizione                                                                                                                                                                                                                                                             |
 |:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | <nobr>-\<stringa di connessione ></nobr> | Stringa di connessione al database. Per i progetti ASP.NET Core 2. x, il valore può essere *nome =\<nome della stringa di connessione >* . In tal caso, il nome deriva dalle origini di configurazione configurate per il progetto. Si tratta di un parametro posizionale ed è obbligatorio. |
-| <nobr>-Provider \<stringa ></nobr>   | Provider da utilizzare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`. Si tratta di un parametro posizionale ed è obbligatorio.                                                                                           |
+| <nobr>-Provider \<stringa ></nobr>   | Provider da usare. Si tratta in genere del nome del pacchetto NuGet, ad esempio: `Microsoft.EntityFrameworkCore.SqlServer`. Si tratta di un parametro posizionale ed è obbligatorio.                                                                                           |
 | -OutputDir \<stringa >               | Directory in cui inserire i file. I percorsi sono relativi alla directory del progetto.                                                                                                                                                                                             |
 | -ContextDir \<stringa >              | Directory in cui inserire il file di `DbContext`. I percorsi sono relativi alla directory del progetto.                                                                                                                                                                              |
 | -Context \<stringa >                 | Nome della classe `DbContext` da generare.                                                                                                                                                                                                                          |
@@ -213,11 +213,11 @@ Scaffold-DbContext "Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Conn
 
 Genera uno script SQL che applica tutte le modifiche a una migrazione selezionata a un'altra.
 
-Parametri:
+Parametri
 
 | Parametro                | Descrizione                                                                                                                                                                                                                |
 |:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| *-Da* \<stringa >        | Migrazione iniziale. Le migrazioni possono essere identificate in base al nome o all'ID. Il numero 0 è un caso speciale che indica *prima della prima migrazione*. Il valore predefinito è 0.                                                              |
+| *-Da* \<stringa >        | Migrazione iniziale. Le migrazioni possono essere identificate in base al nome o all'ID. Il numero 0 è un caso speciale che indica *prima della prima migrazione*. Viene impostato come predefinito 0.                                                              |
 | *-Per* \<stringa >          | Migrazione finale. L'impostazione predefinita è l'ultima migrazione.                                                                                                                                                                      |
 | <nobr>-Idempotente</nobr> | Genera uno script che può essere utilizzato in un database in qualsiasi migrazione.                                                                                                                                                         |
 | -Output \<stringa >        | File in cui scrivere il risultato. Se questo parametro viene omesso, il file viene creato con un nome generato nella stessa cartella in cui vengono creati i file di runtime dell'applicazione, ad esempio: */obj/debug/netcoreapp2.1/ghbkztfz.SQL/* . |

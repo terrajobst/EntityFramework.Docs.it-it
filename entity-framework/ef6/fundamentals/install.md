@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 122c38a2-f9e8-4ecc-9c72-a83bc9af7814
 ms.openlocfilehash: 2bdec6a9be228fbe934d0f46aa1bfafdfb2c971c
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72181743"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419468"
 ---
 # <a name="get-entity-framework"></a>Ottenere Entity Framework
 Entity Framework è costituito da EF Tools per Visual Studio e dal runtime di EF.
@@ -27,7 +27,7 @@ La versione più recente di Entity Framework è disponibile come [pacchetto NuGe
 
 È possibile installare il pacchetto EntityFramework facendo clic con il pulsante destro del mouse sulla cartella **riferimenti** del progetto e scegliendo **Gestisci pacchetti NuGet...**
 
-![Gestisci pacchetti NuGet](~/ef6/media/managenugetpackages.png)
+![Manage NuGet Packages](~/ef6/media/managenugetpackages.png)
 
 ### <a name="installing-from-package-manager-console"></a>Installazione dalla console di gestione pacchetti
 

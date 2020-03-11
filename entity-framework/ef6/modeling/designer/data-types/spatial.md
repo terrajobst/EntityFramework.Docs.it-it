@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 06baa6e1-d680-4a95-845b-81305c87a962
 ms.openlocfilehash: a9c54fbc14dd02ce5d4d91449a0d5f9e72f7f0f7
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182507"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418539"
 ---
 # <a name="spatial---ef-designer"></a>Finestra di progettazione spaziale-EF
 > [!NOTE]
@@ -24,7 +24,7 @@ Per utilizzare i tipi di dati spaziali, è necessario utilizzare anche un provid
 
 Esistono due tipi di dati spaziali principali: geography e Geometry. Il tipo di dati geography archivia dati ellissoidali, ad esempio coordinate di latitudine e longitudine GPS. Il tipo di dati geometry rappresenta un sistema di coordinate euclideo (piano).
 
-## <a name="watch-the-video"></a>Guarda il video
+## <a name="watch-the-video"></a>Video
 In questo video viene illustrato come eseguire il mapping di tipi spaziali con la Entity Framework Designer. Viene inoltre illustrato come utilizzare una query LINQ per trovare una distanza tra due posizioni.
 
 **Presentato da**: Julia Kornich
@@ -48,7 +48,7 @@ Per completare questa procedura dettagliata, è necessario che Visual Studio 201
 2.  Selezionare **dati** dal menu a sinistra e quindi selezionare **ADO.NET Entity Data Model** nel riquadro modelli.
 3.  Immettere **UniversityModel. edmx** per il nome del file e quindi fare clic su **Aggiungi** .
 4.  Nella pagina Entity Data Model procedura guidata selezionare **modello vuoto** nella finestra di dialogo Scegli contenuto Model
-5.  Fare clic su **fine**
+5.  Fare clic su **Fine**
 
 Viene visualizzata la Entity Designer, che fornisce un'area di progettazione per la modifica del modello.
 
@@ -62,7 +62,7 @@ La procedura guidata consente di effettuare le azioni seguenti:
 
 1.  Fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, selezionare **Aggiungi-&gt; entità**. verrà visualizzata la finestra di dialogo nuova entità
 2.  Specificare **University** per il nome del tipo e specificare **UniversityID** per il nome della proprietà chiave, lasciare il tipo come **Int32**
-3.  Fare clic su **OK**
+3.  Fare clic su **OK**.
 4.  Fare clic con il pulsante destro del mouse sull'entità e scegliere **Aggiungi nuova-&gt; proprietà scalare**
 5.  Rinominare la nuova proprietà in **nome**
 6.  Aggiungere un'altra proprietà scalare e rinominarla in **location** aprire il finestra Proprietà e modificare il tipo della nuova proprietà in **geography**
@@ -126,6 +126,6 @@ The closest University to you is: School of Fine Art.
 
 Per visualizzare i dati nel database, fare clic con il pulsante destro del mouse sul nome del database in Esplora oggetti di SQL Server e selezionare **Aggiorna**. Quindi, fare clic con il pulsante destro del mouse sulla tabella e selezionare **Visualizza dati**.
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato illustrato come eseguire il mapping dei tipi spaziali usando il Entity Framework Designer e come usare i tipi spaziali nel codice. 

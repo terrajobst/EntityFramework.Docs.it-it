@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: f0cc4f93-67dd-4664-9753-0a9f913814db
 ms.openlocfilehash: eb7948eafb1322cabcf69b47bd5411f762fe8498
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182589"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418993"
 ---
 # <a name="code-first-migrations-with-an-existing-database"></a>Migrazioni Code First con un database esistente
 > [!NOTE]
@@ -67,7 +67,7 @@ In questo scenario sono necessarie migrazioni per poter creare l'intero database
 3.  Eseguire il comando **Update-database** nella console di gestione pacchetti. Verrà applicata la migrazione InitialCreate al database. Poiché la migrazione effettiva non contiene alcuna modifica (perché è stata impostata temporaneamente come commento), verrà semplicemente aggiunta una riga alla \_\_tabella MigrationsHistory che indica che la migrazione è già stata applicata.
 4.  Annulla il commento del codice nel metodo up. Ciò significa che quando questa migrazione viene applicata ai database futuri, lo schema già esistente nel database locale verrà creato dalle migrazioni.
 
-## <a name="things-to-be-aware-of"></a>Aspetti da tenere presente
+## <a name="things-to-be-aware-of"></a>Aspetti da tenere presenti
 
 Quando si usano le migrazioni su un database esistente, è necessario tenere presenti alcuni aspetti.
 

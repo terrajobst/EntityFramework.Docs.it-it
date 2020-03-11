@@ -1,29 +1,29 @@
 ---
-title: La gestione degli errori di commit transaction - Entity Framework 6
+title: Gestione degli errori di commit delle transazioni-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 5b1f7a7d-1b24-4645-95ec-5608a31ef577
 ms.openlocfilehash: 27e75e6a1919ee2300fe76cfcdf67cceaad887b3
-ms.sourcegitcommit: 269c8a1a457a9ad27b4026c22c4b1a76991fb360
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/18/2018
-ms.locfileid: "46283654"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417370"
 ---
 # <a name="handling-transaction-commit-failures"></a>Gestione degli errori di commit delle transazioni
 > [!NOTE]
-> **EF6.1 e versioni successive solo** -le funzionalità, le API, e così via illustrati in questa pagina sono stati introdotti in Entity Framework 6.1. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
+> **Ef 6.1 e versioni successive** : le funzionalità, le API e così via descritte in questa pagina sono state introdotte in Entity Framework 6,1. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-Come parte di 6.1 viene introdotto una nuova funzionalità di resilienza di connessione per Entity Framework: la possibilità di rilevare e correggere automaticamente quando gli errori di connessione temporanei interessano l'acknowledgement del commit della transazione. I dettagli completi dello scenario sono meglio descritti nel post di blog [connettività del Database SQL e il problema di idempotenza](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx).  In breve, lo scenario è che, quando viene generata un'eccezione durante il commit di una transazione, ci sono due le cause possibili:  
+Come parte di 6,1, viene introdotta una nuova funzionalità di resilienza della connessione per EF: la possibilità di rilevare e ripristinare automaticamente gli errori di connessione temporanei che influiscono sul riconoscimento dei commit delle transazioni. I dettagli completi dello scenario sono descritti meglio nel post di Blog [relativo alla connettività del database SQL e al problema idempotenza](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx).  In breve, lo scenario è che, quando viene generata un'eccezione durante un commit della transazione, esistono due possibili cause:  
 
-1. Il commit della transazione non riuscita nel server
-2. Il commit della transazione ha avuto esito positivo nel server, ma un problema di connettività ha impedito la notifica di esito positivo di raggiungere il client  
+1. Il commit della transazione non è riuscito nel server
+2. Il commit della transazione è riuscito sul server ma un problema di connettività ha impedito al client di raggiungere il successo della notifica  
 
-Quando la prima situazione si verifica l'applicazione o l'utente può ripetere l'operazione, ma quando si verifica la situazione secondo i tentativi devono essere evitati e l'applicazione è stato possibile recuperare automaticamente. Il problema è che senza la possibilità di rilevare Qual era il motivo effettivo è stato segnalato un'eccezione durante il commit, l'applicazione non è possibile scegliere la scelta giusta dell'azione. La nuova funzionalità in EF 6.1 consente di controllare con il database se la transazione ha avuto esito positivo e Segui il corso a destra dell'azione in modo trasparente a Entity Framework.  
+Quando si verifica la prima situazione, l'applicazione o l'utente può ritentare l'operazione, ma quando si verificano tentativi è consigliabile evitare il ripristino automatico dell'applicazione. Il problema è che, senza la possibilità di rilevare il motivo effettivo per cui è stata segnalata un'eccezione durante il commit, l'applicazione non può scegliere la giusta linea di azione. La nuova funzionalità di EF 6,1 consente a EF di eseguire un doppio controllo con il database se la transazione ha avuto esito positivo e di intraprendere il giusto corso di azione in modo trasparente.  
 
 ## <a name="using-the-feature"></a>Uso della funzionalità  
 
-Per abilitare la funzionalità è necessario includere una chiamata a [SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx) nel costruttore delle **DbConfiguration**. Se non si ha familiarità con **DbConfiguration**, vedere [configurazione basata su codice](~/ef6/fundamentals/configuring/code-based.md). Questa funzionalità può essere utilizzata in combinazione con la ripetizione automatica dei tentativi abbiamo introdotto in EF6, che consentono la situazione in cui la transazione effettivamente non è stato possibile eseguire il commit nel server a causa di un errore temporaneo:  
+Per abilitare la funzionalità è necessario includere una chiamata a [SetTransactionHandler](https://msdn.microsoft.com/library/system.data.entity.dbconfiguration.setdefaulttransactionhandler.aspx) nel costruttore di **DbConfiguration**. Se non si ha familiarità con **DbConfiguration**, vedere [configurazione basata su codice](~/ef6/fundamentals/configuring/code-based.md). Questa funzionalità può essere utilizzata in combinazione con i tentativi automatici introdotti in EF6, che contribuiscono alla situazione in cui la transazione non è riuscita a eseguire il commit sul server a causa di un errore temporaneo:  
 
 ``` csharp
 using System.Data.Entity;
@@ -42,31 +42,31 @@ public class MyConfiguration : DbConfiguration
 
 ## <a name="how-transactions-are-tracked"></a>Modalità di rilevamento delle transazioni  
 
-Quando è abilitata la funzionalità, Entity Framework aggiungerà automaticamente una nuova tabella al database denominato **__Transactions**. In questa tabella viene inserita una nuova riga ogni volta che viene creata una transazione da Entity Framework e che la riga viene verificata l'esistenza se si verifica un errore della transazione durante il commit.  
+Quando la funzionalità è abilitata, EF aggiungerà automaticamente una nuova tabella al database denominato **__Transactions**. Una nuova riga viene inserita in questa tabella ogni volta che una transazione viene creata da EF e tale riga viene verificata se si verifica un errore di transazione durante il commit.  
 
-Benché EF eseguirà sforzo possibile escludere le righe della tabella quando non sono più necessari, la tabella può aumentare se l'applicazione viene chiusa in modo anomalo e per tale motivo, che potrebbe essere necessario eliminare la tabella manualmente in alcuni casi.  
+Sebbene EF esegua il massimo sforzo per eliminare le righe dalla tabella quando non sono più necessarie, è possibile che la tabella cresca se l'applicazione viene chiusa in modo anomalo e per questo motivo potrebbe essere necessario ripulire la tabella manualmente in alcuni casi.  
 
 ## <a name="how-to-handle-commit-failures-with-previous-versions"></a>Come gestire gli errori di commit con le versioni precedenti
 
-Prima di 6.1 di Entity Framework non era meccanismo per gestire gli errori di commit all'interno del prodotto di Entity Framework. Esistono diversi modi per gestire questa situazione che può essere applicata alle versioni precedenti di Entity Framework 6:  
+Prima di EF 6,1 non era disponibile un meccanismo per gestire gli errori di commit nel prodotto EF. Esistono diversi modi per gestire questa situazione che possono essere applicati alle versioni precedenti di EF6:  
 
 * Opzione 1: non eseguire alcuna operazione  
 
-  La probabilità di un errore di connessione durante il commit della transazione è bassa, pertanto potrebbe essere accettabile per l'applicazione viene eseguita solo se questa condizione si verifica effettivamente.  
+  La probabilità di un errore di connessione durante il commit della transazione è bassa, quindi potrebbe essere accettabile che l'applicazione abbia esito negativo solo se questa condizione si verifica effettivamente.  
 
 * Opzione 2: usare il database per reimpostare lo stato  
 
-  1. Eliminare DbContext corrente  
+  1. Ignora il DbContext corrente  
   2. Creare un nuovo DbContext e ripristinare lo stato dell'applicazione dal database  
-  3. Informare l'utente che l'ultima operazione potrebbe non siano stata completata correttamente  
+  3. Informare l'utente che l'ultima operazione potrebbe non essere stata completata correttamente  
 
-* Opzione 3: tenere manualmente traccia della transazione  
+* Opzione 3: rilevare manualmente la transazione  
 
-  1. Aggiungere una tabella con rilevamento nel database usato per tenere traccia dello stato delle transazioni.  
+  1. Aggiungere una tabella non rilevata al database utilizzato per tenere traccia dello stato delle transazioni.  
   2. Inserire una riga nella tabella all'inizio di ogni transazione.  
   3. Se la connessione non riesce durante il commit, verificare la presenza della riga corrispondente nel database.  
-     - Se la riga è presente, continua a funzionare normalmente, come la transazione è stato eseguito il commit  
-     - Se la riga è assente, è possibile usare una strategia di esecuzione per ripetere l'operazione corrente.  
+     - Se la riga è presente, continuare normalmente, perché il commit della transazione è stato eseguito correttamente  
+     - Se la riga è assente, utilizzare una strategia di esecuzione per ritentare l'operazione corrente.  
   4. Se il commit ha esito positivo, eliminare la riga corrispondente per evitare la crescita della tabella.  
 
-[Questo post di blog](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contiene codice di esempio per questa operazione in SQL Azure.  
+[Questo post di Blog](https://blogs.msdn.com/b/adonet/archive/2013/03/11/sql-database-connectivity-and-the-idempotency-issue.aspx) contiene il codice di esempio per eseguire questa operazione in SQL Azure.  

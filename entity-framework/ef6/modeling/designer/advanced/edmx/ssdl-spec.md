@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: a4af4b1a-40f4-48cc-b2e0-fa8f5d9d5419
 ms.openlocfilehash: b20d1f99f1da9c53a8a164fccc461e07d19c879d
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182540"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418725"
 ---
 # <a name="ssdl-specification"></a>Specifica SSDL
 Store Schema Definition Language (SSDL) è un linguaggio basato su XML che descrive il modello di archiviazione di un'applicazione Entity Framework.
@@ -40,7 +40,7 @@ L'elemento **Association** può includere i seguenti elementi figlio (nell'ordin
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **Association** .
 
-| Nome attributo | È obbligatorio | Valore                                                                            |
+| Nome attributo | Obbligatorio | valore                                                                            |
 |:---------------|:------------|:---------------------------------------------------------------------------------|
 | **Nome**       | Sì         | Il nome del vincolo di chiave esterna corrispondente nel database sottostante. |
 
@@ -86,7 +86,7 @@ L'elemento **associationname** può includere i seguenti elementi figlio (nell'o
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento di **associazione** .
 
-| Nome attributo  | È obbligatorio | Valore                                                                                                |
+| Nome attributo  | Obbligatorio | valore                                                                                                |
 |:----------------|:------------|:-----------------------------------------------------------------------------------------------------|
 | **Nome**        | Sì         | Nome del vincolo di chiave esterna rappresentato dal set di associazioni.                          |
 | **Associazione** | Sì         | Nome dell'associazione che definisce le colonne che fanno parte del vincolo di chiave esterna. |
@@ -197,7 +197,7 @@ L'elemento **dipendente** può includere i seguenti elementi figlio (nell'ordine
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **dipendente** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                                                                                       |
+| Nome attributo | Obbligatorio | valore                                                                                                                                                       |
 |:---------------|:------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Ruolo**       | Sì         | Lo stesso valore dell'attributo **Role** (se utilizzato) dell'elemento End corrispondente; in caso contrario, il nome della tabella che contiene la colonna di riferimento. |
 
@@ -276,7 +276,7 @@ Un elemento **end** può includere i seguenti elementi figlio (nell'ordine elenc
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **finale** quando è figlio di un elemento **Association** .
 
-| Nome attributo   | È obbligatorio | Valore                                                                                                                                                                                                                                                                                                                                                                                      |
+| Nome attributo   | Obbligatorio | valore                                                                                                                                                                                                                                                                                                                                                                                      |
 |:-----------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Tipo**         | Sì         | Il nome completo del set di entità SSDL che si trova in corrispondenza dell'entità finale del vincolo di chiave esterna.                                                                                                                                                                                                                                                                                          |
 | **Ruolo**         | No          | Valore dell'attributo **Role** nell'elemento Principal o dipendente dell'elemento ReferentialConstraint corrispondente (se usato).                                                                                                                                                                                                                                             |
@@ -321,7 +321,7 @@ Un elemento **end** può includere i seguenti elementi figlio (nell'ordine elenc
 
 Nella tabella seguente vengono descritti gli attributi che possono essere applicati all'elemento **finale** quando è figlio di un elemento di **associazione** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                                                  |
+| Nome attributo | Obbligatorio | valore                                                                                                                  |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------|
 | **EntitySet**  | Sì         | Il nome del set di entità SSDL in corrispondenza dell'entità finale del vincolo di chiave esterna.                                      |
 | **Ruolo**       | No          | Valore di uno degli attributi **Role** specificati in un elemento **end** dell'elemento Association corrispondente. |
@@ -365,7 +365,7 @@ Un elemento **EntityContainer** può avere zero o più degli elementi figlio seg
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **EntityContainer** .
 
-| Nome attributo | È obbligatorio | Valore                                                                   |
+| Nome attributo | Obbligatorio | valore                                                                   |
 |:---------------|:------------|:------------------------------------------------------------------------|
 | **Nome**       | Sì         | Nome del contenitore di entità. Il nome non può contenere caratteri punto (.). |
 
@@ -409,7 +409,7 @@ Nella tabella seguente vengono descritti gli attributi che è possibile applicar
 > [!NOTE]
 > Alcuni attributi (non elencati qui) possono essere qualificati con l'alias del **negozio** . Questi attributi vengono utilizzati dalla procedura guidata Aggiorna modello in caso di aggiornamento di un modello.
 
-| Nome attributo | È obbligatorio | Valore                                                                                    |
+| Nome attributo | Obbligatorio | valore                                                                                    |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------|
 | **Nome**       | Sì         | Nome del set di entità.                                                              |
 | **EntityType** | Sì         | Nome completo del tipo di entità per il quale il set di entità contiene delle istanze. |
@@ -453,7 +453,7 @@ L'elemento **EntityType** può includere i seguenti elementi figlio (nell'ordine
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **EntityType** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                                                                                                  |
+| Nome attributo | Obbligatorio | valore                                                                                                                                                                  |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Nome**       | Sì         | Nome del tipo di entità. Questo valore corrisponde generalmente al nome della tabella in cui il tipo di entità rappresenta una riga. Questo valore non può contenere punti (.). |
 
@@ -501,11 +501,11 @@ Nella tabella seguente vengono descritti gli attributi che è possibile applicar
 > [!NOTE]
 > Alcuni attributi (non elencati qui) possono essere qualificati con l'alias del **negozio** . Questi attributi vengono utilizzati dalla procedura guidata Aggiorna modello in caso di aggiornamento di un modello.
 
-| Nome attributo             | È obbligatorio | Valore                                                                                                                                                                                                              |
+| Nome attributo             | Obbligatorio | valore                                                                                                                                                                                                              |
 |:---------------------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Nome**                   | Sì         | Nome della stored procedure.                                                                                                                                                                                  |
 | **ReturnType**             | No          | Tipo restituito della stored procedure.                                                                                                                                                                           |
-| **Aggregate**              | No          | **True** se il stored procedure restituisce un valore di aggregazione. in caso contrario, **false**.                                                                                                                                  |
+| **Aggregata**              | No          | **True** se il stored procedure restituisce un valore di aggregazione. in caso contrario, **false**.                                                                                                                                  |
 | **BuiltIn**                | No          | **True** se la funzione è una funzione incorporata<sup>1</sup> . in caso contrario, **false**.                                                                                                                                  |
 | **StoreFunctionName**      | No          | Nome della stored procedure.                                                                                                                                                                                  |
 | **Attributo NiladicFunction**        | No          | **True** se la funzione è una funzione senza parametri<sup>2</sup> . In caso contrario, **false** .                                                                                                                                   |
@@ -581,7 +581,7 @@ Un elemento **OnDelete** può includere i seguenti elementi figlio (nell'ordine 
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **OnDelete** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                               |
+| Nome attributo | Obbligatorio | valore                                                                                               |
 |:---------------|:------------|:----------------------------------------------------------------------------------------------------|
 | **Azione**     | Sì         | **Cascade** o **None**. (Il valore con **restrizioni** è valido ma ha lo stesso comportamento di **None**). |
 
@@ -624,14 +624,14 @@ L'elemento **Parameter** può includere i seguenti elementi figlio (nell'ordine 
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **Parameter** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                                                                                                                                                           |
+| Nome attributo | Obbligatorio | valore                                                                                                                                                                                                                           |
 |:---------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Nome**       | Sì         | Nome del parametro.                                                                                                                                                                                                      |
-| **Tipo**       | Sì         | Tipo del parametro.                                                                                                                                                                                                             |
+| **Tipo**       | Sì         | Tipo di parametro.                                                                                                                                                                                                             |
 | **Modalità**       | No          | **In**, **out**o **InOut** a seconda che il parametro sia un parametro di input, di output o di input/output.                                                                                                                |
 | **MaxLength**  | No          | Lunghezza massima del parametro.                                                                                                                                                                                            |
-| **Precisione**  | No          | Precisione del parametro.                                                                                                                                                                                                 |
-| **Scala**      | No          | Scala del parametro.                                                                                                                                                                                                     |
+| **Precisione**  | No          | Precisione del parametro                                                                                                                                                                                                 |
+| **Ridimensionare**      | No          | Scalabilità del parametro                                                                                                                                                                                                     |
 | **SRID**       | No          | Identificatore di riferimento del sistema spaziale. Valido solo per i parametri dei tipi spaziali. Per ulteriori informazioni, vedere [SRID](https://en.wikipedia.org/wiki/SRID) e [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 
 > [!NOTE]
@@ -667,7 +667,7 @@ L'elemento **Principal** può includere i seguenti elementi figlio (nell'ordine 
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **Principal** .
 
-| Nome attributo | È obbligatorio | Valore                                                                                                                                                      |
+| Nome attributo | Obbligatorio | valore                                                                                                                                                      |
 |:---------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Ruolo**       | Sì         | Lo stesso valore dell'attributo **Role** (se utilizzato) dell'elemento End corrispondente; in caso contrario, il nome della tabella che contiene la colonna a cui si fa riferimento. |
 
@@ -707,18 +707,18 @@ Un elemento **Property** non può contenere elementi figlio.
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **Property** .
 
-| Nome attributo            | È obbligatorio | Valore                                                                                                                                                                                                                           |
+| Nome attributo            | Obbligatorio | valore                                                                                                                                                                                                                           |
 |:--------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Nome**                  | Sì         | Nome della colonna corrispondente.                                                                                                                                                                                           |
 | **Tipo**                  | Sì         | Tipo della colonna corrispondente.                                                                                                                                                                                           |
-| **Nullable**              | No          | **True** (valore predefinito) o **false** a seconda che la colonna corrispondente possa avere un valore null.                                                                                                                  |
+| **Ammette i valori Null**              | No          | **True** (valore predefinito) o **false** a seconda che la colonna corrispondente possa avere un valore null.                                                                                                                  |
 | **DefaultValue**          | No          | Valore predefinito della colonna corrispondente.                                                                                                                                                                                  |
 | **MaxLength**             | No          | Lunghezza massima della colonna corrispondente.                                                                                                                                                                                 |
 | **FixedLength**           | No          | **True** o **false** a seconda che il valore della colonna corrispondente venga archiviato come stringa a lunghezza fissa.                                                                                                              |
 | **Precisione**             | No          | Precisione della colonna corrispondente.                                                                                                                                                                                      |
-| **Scala**                 | No          | Scala della colonna corrispondente.                                                                                                                                                                                          |
+| **Ridimensionare**                 | No          | Scala della colonna corrispondente.                                                                                                                                                                                          |
 | **Unicode**               | No          | **True** o **false** a seconda che il valore della colonna corrispondente venga archiviato come stringa Unicode.                                                                                                                   |
-| **Confronto**             | No          | Stringa che specifica la sequenza di confronto da utilizzare nell'origine dati.                                                                                                                                                   |
+| **Regole di confronto**             | No          | Stringa che specifica la sequenza di collazione da utilizzare nell'origine dati.                                                                                                                                                   |
 | **SRID**                  | No          | Identificatore di riferimento del sistema spaziale. Valido solo per le proprietà dei tipi spaziali. Per ulteriori informazioni, vedere [SRID](https://en.wikipedia.org/wiki/SRID) e [SRID (SQL Server)](https://msdn.microsoft.com/library/bb964707.aspx). |
 | **StoreGeneratedPattern** | No          | **None**, **Identity** (se il valore della colonna corrispondente è un'identità generata nel database) o **calcolata** (se il valore della colonna corrispondente viene calcolato nel database). Non valido per le proprietà RowType. |
 
@@ -759,7 +759,7 @@ L'elemento **PropertyRef** può avere solo gli elementi figlio seguenti:
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **PropertyRef** .
 
-| Nome attributo | È obbligatorio | Valore                                |
+| Nome attributo | Obbligatorio | valore                                |
 |:---------------|:------------|:-------------------------------------|
 | **Nome**       | Sì         | Nome della proprietà alla quale viene fatto riferimento. |
 
@@ -895,7 +895,7 @@ L'elemento **schema** nel Store Schema Definition Language (SSDL) è l'elemento 
 
 L'elemento **schema** può contenere zero o più degli elementi figlio seguenti:
 
--   Associazione
+-   Association Rules
 -   EntityType
 -   EntityContainer
 -   Funzione
@@ -908,7 +908,7 @@ Uno spazio dei nomi del modello di archiviazione è diverso dallo spazio dei nom
 
 Nella tabella seguente vengono descritti gli attributi che è possibile applicare all'elemento **schema** .
 
-| Nome attributo            | È obbligatorio | Valore                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Nome attributo            | Obbligatorio | valore                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 |:--------------------------|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Spazio dei nomi**             | Sì         | Spazio dei nomi del modello di archiviazione. Il valore dell'attributo **namespace** viene utilizzato per formare il nome completo di un tipo. Se, ad esempio, un elemento **EntityType** denominato *Customer* si trova nello spazio dei nomi ExampleModel. Store, il nome completo di **EntityType** sarà ExampleModel. Store. Customer. <br/> Non è possibile utilizzare le seguenti stringhe come valore per l'attributo **namespace** : **System**, **Transient**o **EDM**. Il valore dell'attributo **namespace** non può corrispondere al valore dell'attributo **namespace** nell'elemento schema CSDL. |
 | **Alias**                 | No          | Identificatore utilizzato al posto del nome dello spazio dei nomi. Se, ad esempio, un elemento **EntityType** denominato *Customer* si trova nello spazio dei nomi ExampleModel. Store e il valore dell'attributo **alias** è *StorageModel*, è possibile utilizzare StorageModel. Customer come nome completo dell'elemento **EntityType.**                                                                                                                                                                                                                                                                                    |
@@ -1070,9 +1070,9 @@ Nella tabella seguente vengono descritti i facet supportati in SSDL:
 
 | Facet           | Descrizione                                                                                                                                                                                                                                                 |
 |:----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Confronto**   | Specifica la sequenza di ordinamento da usare quando si eseguono operazioni di confronto e di ordinamento su valori della proprietà.                                                                                                             |
+| **Regole di confronto**   | Specifica la sequenza di ordinamento da usare quando si eseguono operazioni di confronto e di ordinamento su valori della proprietà.                                                                                                             |
 | **FixedLength** | Specifica se la lunghezza del valore della colonna può variare.                                                                                                                                                                                                  |
 | **MaxLength**   | Specifica la lunghezza massima del valore della colonna.                                                                                                                                                                                                           |
 | **Precisione**   | Per le proprietà di tipo **Decimal**, specifica il numero di cifre che un valore della proprietà può avere. Per le proprietà di tipo **Time**, **DateTime**e **DateTimeOffset**, specifica il numero di cifre per la parte frazionaria dei secondi del valore della colonna. |
-| **Scala**       | Specifica il numero di cifre a destra del separatore decimale per il valore della colonna.                                                                                                                                                                      |
+| **Ridimensionare**       | Specifica il numero di cifre a destra del separatore decimale per il valore della colonna.                                                                                                                                                                      |
 | **Unicode**     | Indica se il valore della colonna viene archiviato come Unicode.                                                                                                                                                                                                    |

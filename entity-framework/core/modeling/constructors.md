@@ -5,11 +5,11 @@ ms.date: 02/23/2018
 ms.assetid: 420AFFE7-B709-4A68-9149-F06F8746FB33
 uid: core/modeling/constructors
 ms.openlocfilehash: ddfaa8eebde388a9d3309f21b8891de593077956
-ms.sourcegitcommit: 2355447d89496a8ca6bcbfc0a68a14a0bf7f0327
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/23/2019
-ms.locfileid: "72811889"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417329"
 ---
 # <a name="entity-types-with-constructors"></a>Tipi di entità con costruttori
 
@@ -48,7 +48,7 @@ public class Post
 }
 ```
 
-Quando EF Core crea istanze di questi tipi, ad esempio per i risultati di una query, chiamerà prima di tutto il costruttore senza parametri predefinito e quindi imposterà ogni proprietà sul valore del database. Tuttavia, se EF Core trova un costruttore con parametri con i nomi di parametro e i tipi che corrispondono a quelli delle proprietà mappate, chiamerà invece il costruttore con parametri con i valori per tali proprietà e non imposterà in modo esplicito ogni proprietà. Esempio:
+Quando EF Core crea istanze di questi tipi, ad esempio per i risultati di una query, chiamerà prima di tutto il costruttore senza parametri predefinito e quindi imposterà ogni proprietà sul valore del database. Tuttavia, se EF Core trova un costruttore con parametri con i nomi di parametro e i tipi che corrispondono a quelli delle proprietà mappate, chiamerà invece il costruttore con parametri con i valori per tali proprietà e non imposterà in modo esplicito ogni proprietà. Ad esempio:
 
 ``` csharp
 public class Blog
@@ -87,7 +87,7 @@ public class Post
 }
 ```
 
-Alcuni aspetti da considerare:
+Note importanti:
 
 * Non è necessario che tutte le proprietà dispongano di parametri del costruttore. La proprietà post. Content, ad esempio, non è impostata da alcun parametro del costruttore, pertanto EF Core lo imposterà in modo normale dopo la chiamata al costruttore.
 * I tipi e i nomi dei parametri devono corrispondere ai nomi e ai tipi di proprietà, ad eccezione del fatto che le proprietà possono essere configurate in Pascal mentre i parametri sono con maiuscole/minuscole.
@@ -101,7 +101,7 @@ Quando le proprietà vengono impostate tramite il costruttore, può essere utile
 * Non è stato eseguito il mapping delle proprietà senza Setter per convenzione. Questa operazione tende a eseguire il mapping delle proprietà che non devono essere mappate, ad esempio le proprietà calcolate.
 * L'uso di valori di chiave generati automaticamente richiede una proprietà chiave che sia di lettura/scrittura, perché il valore della chiave deve essere impostato dal generatore di chiavi quando si inseriscono nuove entità.
 
-Un modo semplice per evitare questi problemi consiste nell'usare Setter privati. Esempio:
+Un modo semplice per evitare questi problemi consiste nell'usare Setter privati. Ad esempio:
 
 ``` csharp
 public class Blog

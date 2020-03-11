@@ -6,11 +6,11 @@ ms.date: 11/01/2018
 ms.assetid: 2BDE29FC-4161-41A0-841E-69F51CCD9341
 uid: core/modeling/spatial
 ms.openlocfilehash: 5b45f83ca7f02665f52ccfe16b5af506a6046a62
-ms.sourcegitcommit: f2a38c086291699422d8b28a72d9611d1b24ad0d
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 01/16/2020
-ms.locfileid: "76124431"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417405"
 ---
 # <a name="spatial-data"></a>Dati spaziali
 
@@ -19,11 +19,11 @@ ms.locfileid: "76124431"
 
 I dati spaziali rappresentano la posizione fisica e la forma degli oggetti. Molti database forniscono supporto per questo tipo di dati, in modo che possa essere indicizzato e sottoposto a query insieme ad altri dati. Gli scenari comuni includono l'esecuzione di query per gli oggetti all'interno di una distanza specificata da una posizione o la selezione dell'oggetto il cui bordo contiene una determinata posizione. EF Core supporta il mapping ai tipi di dati spaziali mediante la libreria spaziale [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) .
 
-## <a name="installing"></a>Installazione del
+## <a name="installing"></a>Installazione
 
 Per usare i dati spaziali con EF Core, è necessario installare il pacchetto NuGet di supporto appropriato. Il pacchetto che è necessario installare dipende dal provider in uso.
 
-Provider EF Core                        | Pacchetto NuGet spaziale
+Provider di EF Core                        | Pacchetto NuGet spaziale
 --------------------------------------- | ---------------------
 Microsoft.EntityFrameworkCore.SqlServer | [Microsoft. EntityFrameworkCore. SqlServer. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite)
 Microsoft.EntityFrameworkCore.Sqlite    | [Microsoft. EntityFrameworkCore. sqlite. NetTopologySuite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite)
@@ -48,10 +48,10 @@ optionsBuilder.UseSqlServer(
 
 Esistono diversi tipi di dati spaziali. Il tipo da utilizzare dipende dai tipi di forme che si desidera consentire. Di seguito è illustrata la gerarchia di tipi NTS che è possibile usare per le proprietà nel modello. Si trovano nello spazio dei nomi `NetTopologySuite.Geometries`.
 
-* Geometria
-  * Punto
+* Geometry
+  * Point
   * LineString
-  * Poligono
+  * Polygon
   * GeometryCollection
     * MultiPoint
     * MultiLineString
@@ -267,7 +267,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
     .ForSqliteHasSrid(4326);
 ```
 
-### <a name="dimension"></a>Dimensione
+### <a name="dimension"></a>Dimension
 
 Analogamente a SRID, viene specificata anche una dimensione (o ordinata) di una colonna come parte della colonna. Le ordinate predefinite sono X e Y. abilitare le coordinate aggiuntive (Z e M) usando il metodo ForSqliteHasDimension.
 

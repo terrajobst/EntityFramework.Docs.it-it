@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 452f17c3-9f26-4de4-9894-8bc036e23b0f
 ms.openlocfilehash: f5e7532e6c0b473d8ce77cbd11e3e673b0af6cbe
-ms.sourcegitcommit: b2b9468de2cf930687f8b85c3ce54ff8c449f644
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/12/2019
-ms.locfileid: "70921788"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418168"
 ---
 # <a name="designer-table-splitting"></a>Suddivisione di tabelle della finestra di progettazione
 In questa procedura dettagliata viene illustrato come eseguire il mapping di più tipi di entità a una singola tabella modificando un modello con il Entity Framework Designer (EF designer).
@@ -19,7 +19,7 @@ Nell'immagine seguente vengono illustrate le finestre principali che vengono usa
 
 ![EF Designer](~/ef6/media/efdesigner.png)
 
-## <a name="prerequisites"></a>Prerequisiti
+## <a name="prerequisites"></a>Prerequisites
 
 Per completare questa procedura dettagliata, è necessario disporre di:
 
@@ -31,7 +31,7 @@ Per completare questa procedura dettagliata, è necessario disporre di:
 Questa procedura dettagliata usa Visual Studio 2012.
 
 -   Aprire Visual Studio 2012.
--   Scegliere **Nuovo** dal menu **File**, quindi fare clic su **Progetto**.
+-   Scegliere **Nuovo** dal menu **File**e quindi fare clic su **Progetto**.
 -   Nel riquadro sinistro fare clic su Visual C\#, quindi selezionare il modello applicazione console.
 -   Immettere **TableSplittingSample** come nome del progetto e fare clic su **OK**.
 
@@ -65,7 +65,7 @@ In questa sezione si suddividerà l'entità **Person** in due entità, quindi la
 -   Creare un'associazione tra **Person** e **HireInfo**. A tale scopo, fare clic con il pulsante destro del mouse su un'area vuota dell'area di progettazione, scegliere **Aggiungi nuovo**e fare clic su **associazione**.
 -   Verrà visualizzata la finestra di dialogo Aggiungi di **associazione** . Per impostazione predefinita, viene fornito il nome **PersonHireInfo** .
 -   Specificare la molteplicità **1 (una)** su entrambe le estremità della relazione.
--   Fare clic su **OK**.
+-   Premere **OK**.
 
 Il passaggio successivo richiede la finestra **Dettagli Mapping** . Se questa finestra non è visibile, fare clic con il pulsante destro del mouse sull'area di progettazione e scegliere **Dettagli mapping**.
 
@@ -79,7 +79,7 @@ Il passaggio successivo richiede la finestra **Dettagli Mapping** . Se questa 
 -   Fare clic con il pulsante destro del mouse sull'associazione nell'area di progettazione e scegliere **Proprietà**.
 -   Nella finestra **Proprietà** selezionare la proprietà **vincoli referenziali** , quindi fare clic sul pulsante con i puntini di sospensione.
 -   Selezionare **Person** dall'elenco a discesa **principale** .
--   Fare clic su **OK**.
+-   Premere **OK**.
 
  
 
@@ -126,7 +126,7 @@ Le istruzioni T-SQL seguenti sono state eseguite nel database **School** in segu
 
 -   L' **inserimento** seguente è stato eseguito in seguito all'esecuzione del contesto. SaveChanges () e combina i dati delle entità **Person** e **HireInfo**
 
-    ![Inserisci](~/ef6/media/insert.png)
+    ![Inserimento](~/ef6/media/insert.png)
 
 -   L'istruzione **Select** seguente è stata eseguita in seguito all'esecuzione del contesto. People. FirstOrDefault () e seleziona solo le colonne di cui è stato eseguito il mapping a **Person**
 

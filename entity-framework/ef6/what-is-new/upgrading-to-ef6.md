@@ -4,11 +4,11 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 29958ae5-85d3-4585-9ba6-550b8ec9393a
 ms.openlocfilehash: 4395a9c117a6cf38e7fc08f11ee689d6fffa6fed
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182109"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419654"
 ---
 # <a name="upgrading-to-entity-framework-6"></a>Aggiornamento a Entity Framework 6
 
@@ -70,7 +70,7 @@ La regola generale per le modifiche dello spazio dei nomi è che qualsiasi tipo 
 - System. Data. Objects. ObjectContext = > System. Data. **Entity. Core**. Objects. ObjectContext  
 - System. Data. Objects. dataclasss. RelationshipManager = > System. Data. **Entity. Core**. Objects. dataclasss. RelationshipManager  
 
-Questi tipi sono inclusi negli spazi dei nomi *principali* perché non vengono utilizzati direttamente per la maggior parte delle applicazioni basate su DbContext. Alcuni tipi che facevano parte di System. Data. Entity. dll vengono comunque usati comunemente e direttamente per le applicazioni basate su DbContext, quindi non sono stati spostati negli spazi dei nomi di *base* . Questi sono:
+Questi tipi sono inclusi negli spazi dei nomi *principali* perché non vengono utilizzati direttamente per la maggior parte delle applicazioni basate su DbContext. Alcuni tipi che facevano parte di System. Data. Entity. dll vengono comunque usati comunemente e direttamente per le applicazioni basate su DbContext, quindi non sono stati spostati negli spazi dei nomi di *base* . Si tratta di:
 
 - System. Data. EntityState = > System. Data. **Entità**. EntityState  
 - System. Data. Objects. dataclasss. EdmFunctionAttribute = > System. Data. **Entity. DbFunctionAttribute**  

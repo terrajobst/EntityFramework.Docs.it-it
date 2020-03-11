@@ -1,30 +1,30 @@
 ---
-title: API Fluent - relazioni - EF6
+title: API Fluent-relazioni-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: fd73b4f8-16d5-40f1-9640-885ceafe67a1
 ms.openlocfilehash: 05f282c02699f8bf3c71197ac5e01000f1855917
-ms.sourcegitcommit: 2b787009fd5be5627f1189ee396e708cd130e07b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/13/2018
-ms.locfileid: "45490467"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78419073"
 ---
-# <a name="fluent-api---relationships"></a>API Fluent - relazioni
+# <a name="fluent-api---relationships"></a>API Fluent-relazioni
 > [!NOTE]
-> Questa pagina fornisce informazioni sulla configurazione di relazioni nel modello Code First usando l'API fluent. Per informazioni generali sulle relazioni in Entity Framework e su come accedere e modificare dati tramite relazioni, vedere [relazioni di & proprietà di navigazione](~/ef6/fundamentals/relationships.md).  
+> Questa pagina fornisce informazioni sulla configurazione delle relazioni nel modello di Code First usando l'API Fluent. Per informazioni generali sulle relazioni in EF e su come accedere e modificare i dati usando le relazioni, vedere [relazioni & proprietà di navigazione](~/ef6/fundamentals/relationships.md).  
 
-Quando si utilizza Code First, per definire il modello che definisce le classi CLR di dominio. Per impostazione predefinita, Entity Framework Usa le convenzioni Code First per eseguire il mapping di classi per lo schema del database. Se si usano le convenzioni di denominazione di Code First, nella maggior parte dei casi è possibile basarsi su Code First per impostare le relazioni tra le tabelle di base chiavi esterne e le proprietà di navigazione definite nelle classi. Se non si seguono le convenzioni di quando si definiscono le classi o se si desidera modificare il modo in cui funzionano le convenzioni, è possibile usare l'API fluent o annotazioni dei dati per configurare le classi in modo da Code First può mappare le relazioni tra le tabelle.  
+Quando si lavora con Code First, si definisce il modello definendo le classi CLR del dominio. Per impostazione predefinita, Entity Framework utilizza le convenzioni di Code First per eseguire il mapping delle classi allo schema del database. Se si usano le convenzioni di denominazione Code First, nella maggior parte dei casi è possibile basarsi su Code First per configurare le relazioni tra le tabelle in base alle chiavi esterne e alle proprietà di navigazione definite nelle classi. Se non si seguono le convenzioni durante la definizione delle classi o se si desidera modificare la modalità di funzionamento delle convenzioni, è possibile utilizzare le annotazioni di dati o API Fluent per configurare le classi in modo Code First possibile eseguire il mapping delle relazioni tra le tabelle.  
 
 ## <a name="introduction"></a>Introduzione  
 
-Quando si configura una relazione con l'API fluent, si inizia con l'istanza EntityTypeConfiguration e quindi Usa il metodo HasRequired, HasOptional o HasMany per specificare il tipo di relazione che fa parte di questa entità. I metodi HasRequired e HasOptional accettano un'espressione lambda che rappresenta una proprietà di navigazione di riferimento. Il metodo HasMany accetta un'espressione lambda che rappresenta una proprietà di navigazione della raccolta. È quindi possibile configurare una proprietà di navigazione inversa utilizzando i metodi WithRequired WithOptional e WithMany. Questi metodi hanno overload che non accettano argomenti e può essere utilizzato per specificare la cardinalità con le esplorazioni unidirezionale.  
+Quando si configura una relazione con l'API Fluent, si inizia con l'istanza di EntityTypeConfiguration e quindi si usa il metodo HasRequired, HasOptional o HasMany per specificare il tipo di relazione a cui partecipa questa entità. I metodi HasRequired e HasOptional accettano un'espressione lambda che rappresenta una proprietà di navigazione di riferimento. Il Metodo HasMany accetta un'espressione lambda che rappresenta una proprietà di navigazione della raccolta. È quindi possibile configurare una proprietà di navigazione inversa usando i metodi WithRequired, WithOptional e WithMany. Questi metodi hanno overload che non accettano argomenti e possono essere usati per specificare la cardinalità con le navigazioni unidirezionali.  
 
-È quindi possibile configurare le proprietà di chiave esterna tramite il metodo HasForeignKey. Questo metodo accetta un'espressione lambda che rappresenta la proprietà da utilizzare come chiave esterna.  
+È quindi possibile configurare le proprietà di chiave esterna usando il metodo HasForeignKey. Questo metodo accetta un'espressione lambda che rappresenta la proprietà da utilizzare come chiave esterna.  
 
-## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>Configurazione di una relazione necessaria-a-facoltativo (uno-a-Zero-o-uno)  
+## <a name="configuring-a-required-to-optional-relationship-one-tozero-or-one"></a>Configurazione di una relazione obbligatoria-a-facoltativa (uno-a-zero-o-uno)  
 
-Nell'esempio seguente configura una relazione uno-a-zero-o-uno. Il OfficeAssignment dispone della proprietà InstructorID che è una chiave primaria e una chiave esterna, perché il nome della proprietà non segue la convenzione che il metodo HasKey viene usato per configurare la chiave primaria.  
+Nell'esempio seguente viene configurata una relazione uno-a-zero-o-uno. OfficeAssignment dispone della proprietà InstructorID che è una chiave primaria e una chiave esterna, perché il nome della proprietà non segue la convenzione per la configurazione della chiave primaria, viene usato il metodo HasKey.  
 
 ``` csharp
 // Configure the primary key for the OfficeAssignment
@@ -37,9 +37,9 @@ modelBuilder.Entity<OfficeAssignment>()
     .WithOptional(t => t.OfficeAssignment);
 ```  
 
-## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>Configurazione di una relazione in cui entrambe le estremità sono necessari (uno a uno)  
+## <a name="configuring-a-relationship-where-both-ends-are-required-one-to-one"></a>Configurazione di una relazione in cui entrambe le entità finali sono obbligatorie (uno-a-uno)  
 
-Nella maggior parte dei casi Entity Framework in grado di dedurre il tipo è dipendente e che è l'entità in una relazione. Tuttavia, quando entrambe le estremità della relazione sono obbligatori o entrambi i lati sono facoltativi Entity Framework non è possibile identificare i dipendenti e un'entità. Quando sono necessarie entrambe le estremità della relazione, utilizzare WithRequiredPrincipal o WithRequiredDependent dopo il metodo HasRequired. Quando entrambe le estremità della relazione sono facoltative, usare WithOptionalPrincipal o WithOptionalDependent dopo il metodo HasOptional.  
+Nella maggior parte dei casi Entity Framework possibile dedurre il tipo di dipendente e che rappresenta l'entità in una relazione. Tuttavia, quando entrambe le entità finali della relazione sono obbligatorie o entrambi i lati sono facoltativi Entity Framework non possono identificare il dipendente e l'entità. Quando entrambe le entità finali della relazione sono obbligatorie, utilizzare WithRequiredPrincipal o WithRequiredDependent dopo il metodo HasRequired. Quando entrambe le entità finali della relazione sono facoltative, utilizzare WithOptionalPrincipal o WithOptionalDependent dopo il metodo HasOptional.  
 
 ``` csharp
 // Configure the primary key for the OfficeAssignment
@@ -53,7 +53,7 @@ modelBuilder.Entity<Instructor>()
 
 ## <a name="configuring-a-many-to-many-relationship"></a>Configurazione di una relazione molti-a-molti  
 
-Il codice seguente consente di configurare una relazione molti-a-molti tra i tipi Course e Instructor. Nell'esempio seguente, le convenzioni Code First predefiniti vengono utilizzate per creare una tabella di join. Di conseguenza la tabella CourseInstructor viene creata con colonne Course_CourseID e Instructor_InstructorID.  
+Il codice seguente configura una relazione molti-a-molti tra i tipi Course e Instructor. Nell'esempio seguente vengono utilizzate le convenzioni Code First predefinite per creare una tabella di join. Di conseguenza la tabella CourseInstructor viene creata con Course_CourseID e Instructor_InstructorID colonne.  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -61,7 +61,7 @@ modelBuilder.Entity<Course>()
     .WithMany(t => t.Courses)
 ```  
 
-Se si desidera specificare il nome della tabella join e i nomi delle colonne nella tabella è necessario eseguire una configurazione aggiuntiva tramite il metodo Map. Il codice seguente genera una tabella con colonne CourseID e InstructorID CourseInstructor.  
+Se si desidera specificare il nome della tabella di join e i nomi delle colonne nella tabella, è necessario eseguire una configurazione aggiuntiva tramite il metodo map. Il codice seguente genera la tabella CourseInstructor con le colonne CourseID e InstructorID.  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -77,7 +77,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="configuring-a-relationship-with-one-navigation-property"></a>Configurazione di una relazione con una proprietà di navigazione  
 
-Un direzionale (detto anche unidirezionali) avviene quando una proprietà di navigazione viene definita in uno solo delle entità finali della relazione e non su entrambi. Per convenzione, Code First interpreta sempre una relazione unidirezionale come uno-a-molti. Ad esempio, se si desidera che una relazione uno a uno tra Instructor e OfficeAssignment, in cui si dispone di una proprietà di navigazione in solo il tipo Instructor, è necessario usare l'API fluent per configurare questa relazione.  
+Una relazione unidirezionale (detta anche unidirezionale) si verifica quando una proprietà di navigazione viene definita su una sola delle relazioni che termina e non su entrambe. Per convenzione, Code First interpreta sempre una relazione unidirezionale come uno-a-molti. Se ad esempio si vuole una relazione uno-a-uno tra Instructor e OfficeAssignment, in cui è presente una proprietà di navigazione solo sul tipo di insegnante, è necessario usare l'API Fluent per configurare questa relazione.  
 
 ``` csharp
 // Configure the primary Key for the OfficeAssignment
@@ -91,14 +91,14 @@ modelBuilder.Entity<Instructor>()
 
 ## <a name="enabling-cascade-delete"></a>Abilitazione dell'eliminazione a catena  
 
-È possibile configurare cascade delete su una relazione usando il metodo WillCascadeOnDelete. Se una chiave esterna per l'entità dipendente non ammette valori null, il Code First imposta eliminazione a catena sulla relazione. Se una chiave esterna per l'entità dipendente è nullable, Code First nenastaveno eliminazione a catena sulla relazione e quando l'entità viene eliminata la chiave esterna verrà impostata su null.  
+È possibile configurare l'eliminazione a catena in una relazione tramite il metodo WillCascadeOnDelete. Se una chiave esterna nell'entità dipendente non ammette i valori null, Code First imposta CASCADE DELETE per la relazione. Se una chiave esterna nell'entità dipendente ammette i valori null, Code First non imposta CASCADE DELETE sulla relazione e quando l'entità viene eliminata, la chiave esterna viene impostata su null.  
 
-È possibile rimuovere queste convenzioni di eliminazione a catena utilizzando:  
+È possibile rimuovere le convenzioni di eliminazione a catena utilizzando:  
 
-modelBuilder.Conventions.Remove\<OneToManyCascadeDeleteConvention\>)  
-modelBuilder.Conventions.Remove\<ManyToManyCascadeDeleteConvention\>)  
+modelBuilder. Conventions. Remove\<OneToManyCascadeDeleteConvention\>()  
+modelBuilder. Conventions. Remove\<ManyToManyCascadeDeleteConvention\>()  
 
-Il codice seguente configura la relazione in modo che sia obbligatoria e quindi Disabilita eliminazione a catena.  
+Il codice seguente configura la relazione in modo che sia richiesta e quindi Disabilita l'eliminazione a catena.  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -110,7 +110,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="configuring-a-composite-foreign-key"></a>Configurazione di una chiave esterna composta  
 
-Se la chiave primaria nel tipo di reparto è costituita da proprietà DepartmentID e Name, si verrà configurata la chiave primaria per il reparto e la chiave esterna sui tipi di corso come indicato di seguito:  
+Se la chiave primaria del tipo di reparto è costituita dalle proprietà DepartmentID e Name, configurare la chiave primaria per il reparto e la chiave esterna per i tipi di corso come indicato di seguito:  
 
 ``` csharp
 // Composite primary key
@@ -126,7 +126,7 @@ modelBuilder.Entity<Course>()
 
 ## <a name="renaming-a-foreign-key-that-is-not-defined-in-the-model"></a>Ridenominazione di una chiave esterna che non è definita nel modello  
 
-Se si sceglie di non definire una chiave esterna nel tipo CLR, ma si desidera specificare il nome deve essere nel database, eseguire le operazioni seguenti:  
+Se si sceglie di non definire una chiave esterna per il tipo CLR, ma si desidera specificare il nome che deve avere nel database, eseguire le operazioni seguenti:  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -135,9 +135,9 @@ modelBuilder.Entity<Course>()
     .Map(m => m.MapKey("ChangedDepartmentID"));
 ```  
 
-## <a name="configuring-a-foreign-key-name-that-does-not-follow-the-code-first-convention"></a>Configurazione di un nome di chiave esterno che non segue la convenzione prima del codice  
+## <a name="configuring-a-foreign-key-name-that-does-not-follow-the-code-first-convention"></a>Configurazione di un nome di chiave esterna che non segue la convenzione di Code First  
 
-Se la proprietà di chiave esterna nella classe del corso è stata chiamata SomeDepartmentID anziché DepartmentID è presente, è necessario eseguire il comando seguente per specificare che si desidera SomeDepartmentID da utilizzare come chiave esterna:  
+Se la proprietà della chiave esterna della classe Course è stata chiamata SomeDepartmentID anziché DepartmentID, è necessario eseguire le operazioni seguenti per specificare che SomeDepartmentID deve essere la chiave esterna:  
 
 ``` csharp
 modelBuilder.Entity<Course>()
@@ -146,9 +146,9 @@ modelBuilder.Entity<Course>()
          .HasForeignKey(c => c.SomeDepartmentID);
 ```  
 
-## <a name="model-used-in-samples"></a>Modello utilizzato negli esempi  
+## <a name="model-used-in-samples"></a>Modello usato negli esempi  
 
-Il modello Code First seguente viene usato per gli esempi in questa pagina.  
+Per gli esempi in questa pagina viene utilizzato il modello di Code First seguente.  
 
 ``` csharp
 using System.Data.Entity;

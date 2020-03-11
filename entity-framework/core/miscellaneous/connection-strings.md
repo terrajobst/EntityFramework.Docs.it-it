@@ -5,11 +5,11 @@ ms.date: 10/27/2016
 ms.assetid: aeb0f5f8-b212-4f89-ae83-c642a5190ba0
 uid: core/miscellaneous/connection-strings
 ms.openlocfilehash: ed89d6d09b15b0dea7fd8bc3ff3e3f631495ecb7
-ms.sourcegitcommit: cbaa6cc89bd71d5e0bcc891e55743f0e8ea3393b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 09/20/2019
-ms.locfileid: "71149112"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416589"
 ---
 # <a name="connection-strings"></a>Stringhe di connessione
 
@@ -31,9 +31,9 @@ Le applicazioni WinForms, WPF e ASP.NET 4 hanno un modello di stringa di conness
 ```
 
 > [!TIP]  
-> L' `providerName` impostazione non è necessaria per EF Core stringhe di connessione archiviate in app. config perché il provider di database è configurato tramite codice.
+> L'impostazione `providerName` non è necessaria per EF Core stringhe di connessione archiviate in app. config, perché il provider di database è configurato tramite codice.
 
-È quindi possibile leggere la stringa di connessione usando `ConfigurationManager` l'API nel `OnConfiguring` metodo del contesto. Per poter usare questa API, potrebbe essere necessario `System.Configuration` aggiungere un riferimento all'assembly del Framework.
+È quindi possibile leggere la stringa di connessione usando l'API `ConfigurationManager` nel metodo `OnConfiguring` del contesto. Per poter usare questa API, potrebbe essere necessario aggiungere un riferimento all'assembly `System.Configuration` Framework.
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -67,7 +67,7 @@ public class BloggingContext : DbContext
 
 ## <a name="aspnet-core"></a>ASP.NET Core
 
-In ASP.NET Core il sistema di configurazione è molto flessibile e la stringa di connessione può essere archiviata in `appsettings.json`, una variabile di ambiente, l'archivio del segreto utente o un'altra origine della configurazione. Per ulteriori informazioni, vedere la sezione relativa alla [configurazione della documentazione di ASP.NET Core](https://docs.asp.net/en/latest/fundamentals/configuration.html) . Nell'esempio seguente viene illustrata la stringa di `appsettings.json`connessione archiviata in.
+In ASP.NET Core il sistema di configurazione è molto flessibile e la stringa di connessione può essere archiviata in `appsettings.json`, in una variabile di ambiente, nell'archivio dei segreti utente o in un'altra origine della configurazione. Per ulteriori informazioni, vedere la sezione relativa alla [configurazione della documentazione di ASP.NET Core](https://docs.asp.net/en/latest/fundamentals/configuration.html) . Nell'esempio seguente viene illustrata la stringa di connessione archiviata in `appsettings.json`.
 
 ``` json
 {
@@ -77,7 +77,7 @@ In ASP.NET Core il sistema di configurazione è molto flessibile e la stringa di
 }
 ```
 
-Il contesto viene in genere configurato `Startup.cs` in con la stringa di connessione letta dalla configurazione. Si noti `GetConnectionString()` che il metodo cerca un valore di configurazione la `ConnectionStrings:<connection string name>`cui chiave è. È necessario importare lo spazio dei nomi [Microsoft. Extensions. Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration) per usare questo metodo di estensione.
+Il contesto viene in genere configurato in `Startup.cs` con la stringa di connessione letta dalla configurazione. Si noti che il metodo `GetConnectionString()` Cerca un valore di configurazione la cui chiave è `ConnectionStrings:<connection string name>`. È necessario importare lo spazio dei nomi [Microsoft. Extensions. Configuration](https://docs.microsoft.com/dotnet/api/microsoft.extensions.configuration) per usare questo metodo di estensione.
 
 ``` csharp
 public void ConfigureServices(IServiceCollection services)

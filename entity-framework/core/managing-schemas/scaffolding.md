@@ -6,17 +6,17 @@ ms.date: 11/13/2018
 ms.assetid: 6263EF7D-4989-42E6-BDEE-45DA770342FB
 uid: core/managing-schemas/scaffolding
 ms.openlocfilehash: 1ba9352d261f1c131b0d70f8cdad2128d9afaefe
-ms.sourcegitcommit: 7a709ce4f77134782393aa802df5ab2718714479
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 12/04/2019
-ms.locfileid: "74824463"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78416763"
 ---
 # <a name="reverse-engineering"></a>Reverse Engineering
 
 Il Reverse Engineering è il processo di impalcature di classi di tipi di entità e una classe DbContext basata su uno schema di database. Può essere eseguita usando il comando `Scaffold-DbContext` degli strumenti di EF Core Console di gestione pacchetti (PMC) o il comando `dotnet ef dbcontext scaffold` degli strumenti dell'interfaccia della riga di comando di .NET (CLI).
 
-## <a name="installing"></a>Installazione del
+## <a name="installing"></a>Installazione
 
 Prima di reverse engineering, è necessario installare gli strumenti di [PMC](xref:core/miscellaneous/cli/powershell) (solo Visual Studio) o gli [strumenti dell'interfaccia](xref:core/miscellaneous/cli/dotnet)della riga di comando. Per informazioni dettagliate, vedere i collegamenti.
 

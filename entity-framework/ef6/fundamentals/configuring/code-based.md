@@ -1,37 +1,37 @@
 ---
-title: Configurazione basata su codice - Entity Framework 6
+title: Configurazione basata su codice-EF6
 author: divega
 ms.date: 10/23/2016
 ms.assetid: 13886d24-2c74-4a00-89eb-aa0dee328d83
 ms.openlocfilehash: 079a4ab30af74eac8b1f51ece5801ff40a867a29
-ms.sourcegitcommit: 5280dcac4423acad8b440143433459b18886115b
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 04/16/2019
-ms.locfileid: "59619285"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78417869"
 ---
 # <a name="code-based-configuration"></a>Configurazione basata su codice
 > [!NOTE]
 > **Solo EF6 e versioni successive**: funzionalità, API e altri argomenti discussi in questa pagina sono stati introdotti in Entity Framework 6. Se si usa una versione precedente, le informazioni qui riportate, o parte di esse, non sono applicabili.  
 
-Configurazione per un'applicazione Entity Framework può essere specificata in un file di configurazione (app.config/web.config) o tramite codice. Quest'ultimo è nota come configurazione basata su codice.  
+La configurazione di un'applicazione Entity Framework può essere specificata in un file di configurazione (app. config/web. config) o tramite codice. Quest'ultima è nota come configurazione basata su codice.  
 
-Configurazione in un file di configurazione è descritta una [articolo separato](config-file.md). Il file di configurazione ha la precedenza sulla configurazione basata su codice. In altre parole, se è impostata un'opzione di configurazione in entrambe le code e nel file di configurazione, viene utilizzata l'impostazione nel file di configurazione.  
+La configurazione in un file di configurazione è descritta in un [articolo separato](config-file.md). Il file di configurazione ha la precedenza sulla configurazione basata su codice. In altre parole, se un'opzione di configurazione è impostata nel codice e nel file di configurazione, viene utilizzata l'impostazione nel file di configurazione.  
 
-## <a name="using-dbconfiguration"></a>Usando DbConfiguration  
+## <a name="using-dbconfiguration"></a>Uso di DbConfiguration  
 
-Configurazione basata su codice in EF6 e versioni successive è possibile creare una sottoclasse di System.Data.Entity.Config.DbConfiguration. Le seguenti linee guida da seguire quando si crea una sottoclasse DbConfiguration:  
+La configurazione basata su codice in EF6 e versioni successive viene eseguita creando una sottoclasse di System. Data. Entity. config. DbConfiguration. Quando si crea una sottoclasse di DbConfiguration, è necessario seguire le linee guida seguenti:  
 
 - Creare una sola classe DbConfiguration per l'applicazione. Questa classe specifica le impostazioni a livello di dominio applicazione.  
-- Inserire la classe DbConfiguration nello stesso assembly come la classe DbContext. (Vedere la *lo spostamento DbConfiguration* sezione se si desidera modificare questa impostazione.)  
-- Assegnato alla classe DbConfiguration un costruttore pubblico senza parametri.  
-- Impostare le opzioni di configurazione tramite la chiamata di metodi DbConfiguration protetti all'interno di questo costruttore.  
+- Inserire la classe DbConfiguration nello stesso assembly della classe DbContext. Per modificare questa sezione, vedere la sezione relativa allo stato di *DbConfiguration* .  
+- Assegnare alla classe DbConfiguration un costruttore pubblico senza parametri.  
+- Impostare le opzioni di configurazione chiamando i metodi DbConfiguration protetti dall'interno del costruttore.  
 
-Attenendosi alle linee guida consente a EF di individuare e usare la configurazione automaticamente da entrambi gli strumenti che necessita di accedere al modello e quando viene eseguita l'applicazione.  
+Seguendo queste linee guida è possibile individuare e utilizzare automaticamente la propria configurazione mediante gli strumenti necessari per accedere al modello e quando viene eseguita l'applicazione.  
 
 ## <a name="example"></a>Esempio  
 
-Una classe derivata da DbConfiguration potrebbe essere simile al seguente:  
+Una classe derivata da DbConfiguration potrebbe essere simile alla seguente:  
 
 ``` csharp
 using System.Data.Entity;
@@ -51,13 +51,13 @@ namespace MyNamespace
 }
 ```  
 
-Questa classe imposta per usare la strategia di esecuzione di SQL Azure - per ripetere automaticamente le operazioni di database non riuscita - e Usa Local DB per i database creati per convenzione da Code First di Entity Framework.  
+Questa classe configura EF per l'uso della strategia di esecuzione SQL Azure: per ritentare automaticamente le operazioni di database non riuscite e per usare il database locale per i database creati per convenzione da Code First.  
 
-## <a name="moving-dbconfiguration"></a>Lo spostamento DbConfiguration  
+## <a name="moving-dbconfiguration"></a>Trasferimento di DbConfiguration  
 
-Esistono casi in cui non è possibile inserire la classe DbConfiguration nello stesso assembly come la classe DbContext. Ad esempio, potrebbe essere due DbContext ciascuna delle classi in assembly diversi. Sono disponibili due opzioni per gestirla.  
+In alcuni casi non è possibile inserire la classe DbConfiguration nello stesso assembly della classe DbContext. Ad esempio, è possibile avere due classi DbContext in assembly diversi. Sono disponibili due opzioni per la gestione di questo.  
 
-La prima opzione è usare il file di configurazione per specificare l'istanza DbConfiguration da utilizzare. A tale scopo, impostare l'attributo codeConfigurationType della sezione entityFramework. Ad esempio:  
+La prima opzione consiste nell'usare il file di configurazione per specificare l'istanza di DbConfiguration da usare. A tale scopo, impostare l'attributo codeConfigurationType della sezione entityFramework. Ad esempio:  
 
 ``` xml
 <entityFramework codeConfigurationType="MyNamespace.MyDbConfiguration, MyAssembly">
@@ -65,9 +65,9 @@ La prima opzione è usare il file di configurazione per specificare l'istanza Db
 </entityFramework>
 ```  
 
-Il valore di codeConfigurationType deve essere l'assembly e il nome completo dello spazio dei nomi della classe DbConfiguration.  
+Il valore di codeConfigurationType deve essere il nome completo dell'assembly e dello spazio dei nomi della classe DbConfiguration.  
 
-La seconda opzione consiste nell'inserire DbConfigurationTypeAttribute sulla classe del contesto. Ad esempio:  
+La seconda opzione consiste nell'inserire DbConfigurationTypeAttribute nella classe del contesto. Ad esempio:  
 
 ``` csharp  
 [DbConfigurationType(typeof(MyDbConfiguration))]
@@ -76,7 +76,7 @@ public class MyContextContext : DbContext
 }
 ```  
 
-Il valore passato all'attributo può essere di tipo DbConfiguration: come illustrato in precedenza - o stringa del nome tipo completo di assembly e dello spazio dei nomi. Ad esempio:  
+Il valore passato all'attributo può essere il tipo DbConfiguration, come illustrato sopra, oppure la stringa del nome del tipo completo di assembly e spazio dei nomi. Ad esempio:  
 
 ``` csharp
 [DbConfigurationType("MyNamespace.MyDbConfiguration, MyAssembly")]
@@ -85,28 +85,28 @@ public class MyContextContext : DbContext
 }
 ```  
 
-## <a name="setting-dbconfiguration-explicitly"></a>Impostare in modo esplicito DbConfiguration  
+## <a name="setting-dbconfiguration-explicitly"></a>Impostazione esplicita di DbConfiguration  
 
-Esistono alcune situazioni in cui configurazione potrebbe essere necessari prima di qualsiasi tipo DbContext è stato utilizzato. Alcuni esempi sono:  
+In alcune situazioni è possibile che sia necessaria la configurazione prima di utilizzare qualsiasi tipo di DbContext. Di seguito sono riportati alcuni esempi:  
 
-- Uso di DbModelBuilder per compilare un modello senza un contesto  
-- Uso di altri framework/codice di alcune utilità che usa un oggetto DbContext in cui tale contesto viene usato prima che venga utilizzato il contesto dell'applicazione  
+- Utilizzo di DbModelBuilder per compilare un modello senza un contesto  
+- Utilizzando un altro codice di Framework/utilità che utilizza un DbContext in cui tale contesto viene utilizzato prima che venga utilizzato il contesto dell'applicazione  
 
-In tali situazioni Entity Framework è in grado di individuare automaticamente la configurazione ed è invece necessario eseguire una delle operazioni seguenti:  
+In questi casi EF non è in grado di individuare automaticamente la configurazione ed è invece necessario eseguire una delle operazioni seguenti:  
 
-- Impostare il tipo DbConfiguration nel file di configurazione, come descritto nel *lo spostamento DbConfiguration* sezione precedente
-- Chiamare il metodo DbConfiguration.SetConfiguration statico durante l'avvio dell'applicazione  
+- Impostare il tipo DbConfiguration nel file di configurazione, come descritto nella sezione relativa al *passaggio di DbConfiguration* precedente
+- Chiamare il metodo statico DbConfiguration. seconfigurazione durante l'avvio dell'applicazione  
 
-## <a name="overriding-dbconfiguration"></a>Si esegue l'override DbConfiguration  
+## <a name="overriding-dbconfiguration"></a>Override di DbConfiguration  
 
-Esistono alcune situazioni in cui è necessario eseguire l'override di impostazioni di configurazione nella DbConfiguration. Ciò non avviene in genere dagli sviluppatori di applicazioni, ma piuttosto da provider di terze parti e plug-in non è possibile usare una classe derivata DbConfiguration.  
+In alcune situazioni è necessario eseguire l'override del set di configurazione in DbConfiguration. Questa operazione non viene in genere eseguita dagli sviluppatori di applicazioni, bensì da provider di terze parti e plug-in che non possono usare una classe DbConfiguration derivata.  
 
-A tale scopo, Entity Framework consente a un gestore eventi da registrare che consentono di modificare la configurazione esistente subito prima che venga bloccato.  Fornisce inoltre un metodo sugar in modo specifico per la sostituzione di qualsiasi servizio restituito dal localizzatore di servizi di Entity Framework. Si tratta di come si dovrà essere utilizzato:  
+A tale proposito, EntityFramework consente la registrazione di un gestore eventi in grado di modificare la configurazione esistente appena prima del blocco.  Fornisce inoltre un metodo Sugar specifico per la sostituzione di tutti i servizi restituiti dal localizzatore di servizi EF. Questo è il modo in cui è concepito per l'uso:  
 
-- All'avvio dell'app (prima che venga utilizzato Entity Framework) il plug-in o provider deve registrare il metodo del gestore eventi per questo evento. (Si noti che ciò deve verificarsi prima che l'applicazione usa Entity Framework).  
-- Il gestore dell'evento effettua una chiamata a ReplaceService per ogni servizio che deve essere sostituito.  
+- All'avvio dell'app (prima che venga usato EF) il plug-in o il provider deve registrare il metodo del gestore eventi per questo evento. Si noti che questa operazione deve verificarsi prima che l'applicazione usi EF.  
+- Il gestore eventi effettua una chiamata a ReplaceService per ogni servizio che deve essere sostituito.  
 
-Per sostituire IDbConnectionFactory e DbProviderService, ad esempio, si potrebbe registrare un gestore simile al seguente:  
+Per sostituire IDbConnectionFactory e DbProviderService, ad esempio, è necessario registrare un gestore simile al seguente:  
 
 ``` csharp
 DbConfiguration.Loaded += (_, a) =>
@@ -116,10 +116,10 @@ DbConfiguration.Loaded += (_, a) =>
    };
 ```  
 
-Nel codice sopra MyProviderServices e MyConnectionFactory rappresentano le implementazioni del servizio.  
+Nel codice precedente MyProviderServices e MyConnectionFactory rappresentano le implementazioni del servizio.  
 
-È anche possibile aggiungere i gestori delle dipendenze aggiuntive per ottenere lo stesso effetto.  
+È anche possibile aggiungere altri gestori di dipendenza per ottenere lo stesso effetto.  
 
-Si noti che è anche possibile eseguire il wrapping DbProviderFactory in questo modo, ma tale operazione così influiranno solo Entity Framework e non utilizzi di DbProviderFactory all'esterno di EF. Per questo motivo è opportuno continuare a eseguire il wrapping DbProviderFactory come prima.  
+Si noti che è anche possibile eseguire il wrapping di DbProviderFactory in questo modo, ma in questo modo si influirà solo su Entity Framework e non sugli usi di DbProviderFactory al di fuori di EF. Per questo motivo è probabile che si voglia continuare a eseguire il wrapping di DbProviderFactory in precedenza.  
 
-È inoltre necessario tenere presenti i servizi che si esegue all'esterno dell'applicazione, ad esempio, durante l'esecuzione di migrazioni dalla Console di gestione pacchetti. Quando si esegue la migrazione dalla console di che tenterà di trovare i DbConfiguration. Tuttavia, se otterrà il servizio sottoposto a wrapping dipende da dove il gestore dell'evento è stato registrato. Se è registrato come parte della costruzione del DbConfiguration deve eseguire il codice e il servizio è necessario ottenere il wrapping. In genere non si tratterà il case e ciò significa che gli strumenti non otterranno il servizio sottoposto a wrapping.  
+È inoltre necessario tenere presente i servizi eseguiti esternamente all'applicazione, ad esempio quando si eseguono migrazioni dalla console di gestione pacchetti. Quando si esegue la migrazione dalla console, si tenterà di trovare la DbConfiguration. Tuttavia, indipendentemente dal fatto che ottenga il servizio di cui è stato eseguito il Wrapped, dipende dalla posizione in cui è stato registrato il gestore eventi. Se viene registrato come parte della costruzione del DbConfiguration, il codice deve essere eseguito e il servizio dovrebbe essere incapsulato. In genere questo non è il caso e questo significa che gli strumenti non ottengono il servizio di cui è stato eseguito il Wrapped.  

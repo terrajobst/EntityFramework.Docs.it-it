@@ -4,16 +4,16 @@ author: divega
 ms.date: 10/23/2016
 ms.assetid: 2df6cb0a-7d8b-4e28-9d05-e2b9a90125af
 ms.openlocfilehash: d540fc6e84049f345ae22998f94c309e0be73fc3
-ms.sourcegitcommit: 708b18520321c587b2046ad2ea9fa7c48aeebfe5
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 10/09/2019
-ms.locfileid: "72182566"
+ms.lasthandoff: 03/06/2020
+ms.locfileid: "78418812"
 ---
 # <a name="code-first-to-a-new-database"></a>Code First a un nuovo database
 Questo video e una procedura dettagliata forniscono un'introduzione allo sviluppo di Code First destinati a un nuovo database. Questo scenario include la destinazione di un database che non esiste e Code First creerà oppure un database vuoto a cui Code First aggiungeranno nuove tabelle. Code First consente di definire il modello utilizzando le classi C\# o VB.Net. Facoltativamente, è possibile eseguire una configurazione aggiuntiva usando gli attributi delle classi e delle proprietà o usando un'API Fluent.
 
-## <a name="watch-the-video"></a>Guarda il video
+## <a name="watch-the-video"></a>Video
 In questo video viene fornita un'introduzione allo sviluppo di Code First destinati a un nuovo database. Questo scenario include la destinazione di un database che non esiste e Code First creerà oppure un database vuoto a cui Code First aggiungeranno nuove tabelle. Code First consente di definire il modello utilizzando C# o le classi VB.NET. Facoltativamente, è possibile eseguire una configurazione aggiuntiva usando gli attributi delle classi e delle proprietà o usando un'API Fluent.
 
 **Presentato da**: [Rowan Miller](https://romiller.com/)
@@ -30,11 +30,11 @@ Se si usa Visual Studio 2010, sarà anche necessario che [NuGet](https://visuals
 
 Per semplificare le operazioni, verrà compilata un'applicazione console di base che usa Code First per eseguire l'accesso ai dati.
 
--   Aprire Visual Studio
+-   Aprire Visual Studio.
 -   **Nuovo progetto&gt; di&gt; file...**
 -   Selezionare **Windows** nel menu a sinistra e nell' **applicazione console**
 -   Immettere **CodeFirstNewDatabaseSample** come nome
--   Scegliere **OK**.
+-   Selezionare **OK**.
 
 ## <a name="2-create-the-model"></a>2. creare il modello
 
@@ -367,6 +367,6 @@ La colonna DisplayName è stata rinominata per visualizzare\_nome:
 
 ![Schema con nome visualizzato rinominato](~/ef6/media/schemawithdisplaynamerenamed.png)
 
-## <a name="summary"></a>Riepilogo
+## <a name="summary"></a>Summary
 
 In questa procedura dettagliata è stato esaminato Code First sviluppo tramite un nuovo database. È stato definito un modello usando le classi, quindi è stato usato il modello per creare un database e archiviare e recuperare i dati. Una volta creato il database, è stato usato Migrazioni Code First per modificare lo schema man mano che il modello è stato sviluppato. È stato anche illustrato come configurare un modello usando le annotazioni dei dati e l'API Fluent.
