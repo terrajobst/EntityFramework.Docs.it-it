@@ -4,12 +4,12 @@ author: divega
 ms.date: 09/12/2019
 ms.assetid: 1060bb99-765f-4f32-aaeb-d6635d3dbd3e
 uid: ef6/what-is-new/past-releases
-ms.openlocfilehash: fada7740453cd9a55a1d0069236efcecbd9aa314
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.openlocfilehash: b7181334cd125c5cbf296d5b3674c0b5f087f438
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656146"
+ms.lasthandoff: 03/15/2020
+ms.locfileid: "79402173"
 ---
 # <a name="past-releases-of-entity-framework"></a>Versioni precedenti di Entity Framework
 
@@ -94,7 +94,7 @@ Questo aggiornamento secondario include un numero significativo di nuove funzion
 - **[La possibilità di configurare gli intercettori tramite il file app/Web. config](~/ef6/fundamentals/configuring/config-file.md)** consente di aggiungere gli intercettori senza ricompilare l'applicazione.
 - **System. Data. Entity. Infrastructure. Interceptor. DatabaseLogger**è un nuovo intercettore che semplifica la registrazione di tutte le operazioni di database in un file. In combinazione con la funzionalità precedente, in questo modo è possibile [attivare facilmente la registrazione delle operazioni di database per un'applicazione distribuita](~/ef6/fundamentals/configuring/config-file.md), senza dover ricompilare.
 - Il **rilevamento delle modifiche del modello delle migrazioni** è stato migliorato in modo che le migrazioni con impalcature siano più accurate. sono state inoltre migliorate le prestazioni del processo di rilevamento delle modifiche.
-- **Miglioramenti delle prestazioni** , incluse le operazioni di database ridotte durante l'inizializzazione, ottimizzazioni per il confronto di uguaglianza di valori null nelle query LINQ, generazione di visualizzazioni più veloce (creazione di modelli) in più scenari e materializzazione più efficiente di entità rilevate con più associazioni.
+- **Miglioramenti delle prestazioni** , tra cui operazioni di database ridotte durante l'inizializzazione, ottimizzazioni per il confronto di uguaglianza di valori null nelle query LINQ, generazione di visualizzazioni più veloce (creazione di modelli) in più scenari e materializzazione più efficiente delle entità registrate con più associazioni.
 
 ## <a name="ef-602"></a>EF 6.0.2
 Il runtime di EF 6.0.2 è stato rilasciato a NuGet nel dicembre 2013.
@@ -121,7 +121,7 @@ Le funzionalità seguenti funzionano per i modelli creati con Code First o la fi
 - La **[risoluzione delle dipendenze](~/ef6/fundamentals/configuring/dependency-resolution.md)** introduce il supporto per il modello di localizzatore del servizio ed è stato eseguito il factoring di alcune funzionalità che possono essere sostituite con implementazioni personalizzate.
 - La **[registrazione di intercettazione/SQL](~/ef6/fundamentals/logging-and-interception.md)** fornisce blocchi predefiniti di basso livello per l'intercettazione di operazioni EF con una semplice registrazione SQL compilata in primo piano.
 - I **miglioramenti della testabilità** semplificano la creazione di duplicati di test per DbContext e DbSet quando si [Usa un Framework fittizio](~/ef6/fundamentals/testing/mocking.md) o si [scrivono doppi test personalizzati](~/ef6/fundamentals/testing/writing-test-doubles.md).
-- **[È ora possibile creare DbContext con un DbConnection già aperto](~/ef6/fundamentals/connection-management.md)** che consente scenari in cui è utile se la connessione potrebbe essere aperta durante la creazione del contesto, ad esempio la condivisione di una connessione tra i componenti in cui non è possibile garantire stato della connessione.
+- **[È ora possibile creare DbContext con un DbConnection già aperto](~/ef6/fundamentals/connection-management.md)** che consente scenari in cui è utile se la connessione potrebbe essere aperta durante la creazione del contesto, ad esempio la condivisione di una connessione tra i componenti in cui non è possibile garantire lo stato della connessione.
 - Il **[supporto delle transazioni migliorato](~/ef6/saving/transactions.md)** fornisce il supporto per una transazione esterna al Framework, oltre a metodi migliorati per la creazione di una transazione all'interno del Framework.
 - **Enumerazioni, prestazioni spaziali e migliori in .net 4,0** : spostando i componenti di base che si trovavano nel .NET Framework nel pacchetto di Entity Framework, ora è possibile offrire supporto enum, tipi di dati spaziali e miglioramenti delle prestazioni di EF5 in .NET 4,0.
 - **Miglioramento delle prestazioni di Enumerable. Contains nelle query LINQ**.
@@ -234,7 +234,7 @@ Di seguito è riportato un elenco di contenuti che sono stati riuniti in modo sp
 ## <a name="ef-42"></a>EF 4,2
 Il runtime di EF 4.2.0 è stato rilasciato a NuGet nel novembre 2011.
 Questa versione include correzioni di bug per la versione 4.1.1 di EF.
-Poiché in questa versione sono state incluse solo correzioni di bug, potrebbe essere stata rilasciata la patch di EF 4.1.2, ma si è scelto di passare a 4,2 per poter uscire dalla data in base ai numeri di versione patch usati nelle versioni 4.1. x e adottare lo standard di [controllo delle versioni semantico](https://semver.org) per s controllo delle versioni di emantic.
+Poiché in questa versione sono state incluse solo correzioni di bug, potrebbe essere stata rilasciata la patch di EF 4.1.2, ma si è scelto di passare a 4,2 per poter uscire dalla data in base ai numeri di versione patch usati nelle versioni 4.1. x e adottare lo standard di [controllo delle versioni semantico](https://semver.org) per il controllo delle versioni semantico.
 
 Di seguito è riportato un elenco di contenuti riuniti in modo specifico per la versione EF 4,2, il contenuto fornito per EF 4,1 si applica ancora anche a EF 4,2:
 
