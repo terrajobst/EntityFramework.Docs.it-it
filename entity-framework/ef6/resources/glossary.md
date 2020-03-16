@@ -5,17 +5,17 @@ ms.date: 10/23/2016
 ms.assetid: 3f05ffdd-49bc-499c-9732-4a368bf5d2d7
 uid: ef6/resources/glossary
 ms.openlocfilehash: df0da4a68b3d2c882d9673417ee5fe335eccae2b
-ms.sourcegitcommit: 18ab4c349473d94b15b4ca977df12147db07b77f
+ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 11/06/2019
-ms.locfileid: "73656149"
+ms.lasthandoff: 03/15/2020
+ms.locfileid: "79402201"
 ---
 # <a name="entity-framework-glossary"></a>Glossario Entity Framework
 ## <a name="code-first"></a>Code First
 Creazione di un modello di Entity Framework utilizzando il codice. Il modello può essere destinato a un database esistente o a un nuovo database.
 
-## <a name="context"></a>Contesto
+## <a name="context"></a>Context
 Classe che rappresenta una sessione con il database, che consente di eseguire query e salvare i dati. Un contesto deriva dalla classe DbContext o ObjectContext.
 
 ## <a name="convention-code-first"></a>Convenzione (Code First)
@@ -46,7 +46,7 @@ API che può essere utilizzata per configurare un modello di Code First.
 Associazione tra entità in cui una proprietà che rappresenta la chiave esterna è inclusa nella classe dell'entità dipendente. Il prodotto, ad esempio, contiene una proprietà CategoryId.
 
 ## <a name="identifying-relationship"></a>Relazione di identificazione
-Relazione in cui la chiave primaria dell'entità principale fa parte della chiave primaria dell'entità dipendente. In questo tipo di relazione, l'entità dipendente non può esistere senza l'entità principale.
+Relazione in cui la chiave primaria dell'entità principale fa parte della chiave primaria dell'entità dipendente. In questo tipo di relazione l'entità dipendente non può esistere senza l'entità principale.
 
 ## <a name="independent-association"></a>Associazione indipendente
 Associazione tra entità in cui non è presente alcuna proprietà che rappresenta la chiave esterna nella classe dell'entità dipendente. Una classe prodotto, ad esempio, contiene una relazione con una categoria, ma nessuna proprietà CategoryId. Entity Framework tiene traccia dello stato dell'associazione indipendentemente dallo stato delle entità alle due estremità dell'associazione.
