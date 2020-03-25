@@ -4,12 +4,12 @@ author: bricelam
 ms.author: bricelam
 ms.date: 10/05/2018
 uid: core/managing-schemas/migrations/index
-ms.openlocfilehash: dc0c1ae1a03c98c6f230557dc0bdd4d29ec191dd
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 190057daed61c58c1f89ee8d775913458e413a50
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78412846"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136206"
 ---
 # <a name="migrations"></a>Migrazioni
 
@@ -215,15 +215,43 @@ Per il debug delle migrazioni o la distribuzione di queste in un database di pro
 
 ### <a name="net-core-cli"></a>[Interfaccia della riga di comando di .NET Core](#tab/dotnet-core-cli)
 
+#### <a name="basic-usage"></a>Utilizzo di base
 ```dotnetcli
 dotnet ef migrations script
 ```
 
+#### <a name="with-from-to-implied"></a>Con from (destinazione implicita)
+Verrà generato uno script SQL da questa migrazione alla migrazione più recente.
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables
+```
+
+#### <a name="with-from-and-to"></a>Con from e to
+Verrà generato uno script SQL dalla migrazione `from` alla migrazione `to` specificata.
+```dotnetcli
+dotnet ef migrations script 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+È possibile usare un `from` più recente rispetto a `to` per generare uno script di rollback. *Tenere conto degli scenari con potenziale perdita di dati.*
+
 ### <a name="visual-studio"></a>[Visual Studio](#tab/vs)
 
+#### <a name="basic-usage"></a>Utilizzo di base
 ``` powershell
 Script-Migration
 ```
+
+#### <a name="with-from-to-implied"></a>Con from (destinazione implicita)
+Verrà generato uno script SQL da questa migrazione alla migrazione più recente.
+```powershell
+Script-Migration 20190725054716_Add_new_tables
+```
+
+#### <a name="with-from-and-to"></a>Con from e to
+Verrà generato uno script SQL dalla migrazione `from` alla migrazione `to` specificata.
+```powershell
+Script-Migration 20190725054716_Add_new_tables 20190829031257_Add_audit_table
+```
+È possibile usare un `from` più recente rispetto a `to` per generare uno script di rollback. *Tenere conto degli scenari con potenziale perdita di dati.*
 
 ***
 
@@ -231,7 +259,7 @@ Con questo comando è possibile usare diverse opzioni.
 
 La migrazione **di origine** deve essere l'ultima migrazione applicata al database prima dell'esecuzione dello script. Se non è stata applicata alcuna migrazione, specificare `0` (valore predefinito).
 
-La migrazione **di destinazione**  è l'ultima migrazione applicata al database dopo l'esecuzione dello script. L'impostazione predefinita corrisponde all'ultima migrazione nel progetto.
+La migrazione **di destinazione** è l'ultima migrazione applicata al database dopo l'esecuzione dello script. L'impostazione predefinita corrisponde all'ultima migrazione nel progetto.
 
 Facoltativamente, è possibile generare uno script **idempotente**. Questo tipo di script applica le migrazioni solo se non sono già state applicate al database ed è utile se non si sa esattamente quale migrazione è stata applicata per ultima al database o se si stanno applicando migrazioni a più database a cui in precedenza sono state applicate migrazioni diverse.
 

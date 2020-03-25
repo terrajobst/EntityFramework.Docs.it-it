@@ -4,12 +4,12 @@ author: ajcvickers
 ms.date: 03/03/2020
 ms.assetid: C21F89EE-FB08-4ED9-A2A0-76CB7656E6E4
 uid: core/what-is-new/index
-ms.openlocfilehash: 2c41f65d1fead8430a39c6230a0f22506686504e
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 7b58b4de0eb8d9575f77e0b147da017eabad1867
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413206"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136219"
 ---
 # <a name="ef-core-releases-and-planning"></a>Versioni e pianificazione di EF Core
 
@@ -57,10 +57,12 @@ Questi dati verranno inclusi nel processo di pianificazione per la versione succ
 
 ### <a name="get-it-now"></a>Scaricare il software
 
-I pacchetti di EF Core 5.0 sono **già disponibili** come [build giornaliere](https://github.com/aspnet/AspNetCore/blob/master/docs/DailyBuilds.md). 
+I pacchetti di EF Core 5.0 sono **già disponibili** come:
 
-L'uso delle build giornaliere è un ottimo modo per individuare i problemi e fornire commenti e suggerimenti il prima possibile.
+* [Build giornaliere](https://github.com/dotnet/aspnetcore/blob/master/docs/DailyBuilds.md)
+  * Tutte le funzionalità e le correzioni di bug più recenti. Generalmente molto stabile. Più di 57000 test eseguiti su ogni build.
+* [Anteprime in NuGet](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore)
+  * Indietro rispetto alle build giornaliere, ma vengono testate per le interazioni con le anteprime di ASP.NET Core e .NET Core corrispondenti.
+
+L'uso delle anteprime o delle build giornaliere è un ottimo modo per individuare i problemi e fornire commenti e suggerimenti il prima possibile.
 Prima viene ricevuto tale feedback, maggiori saranno le probabilità di poter intervenire prima della successiva versione ufficiale.
-Microsoft si impegna a fondo per fornire build giornaliere ottimali, eseguendo più di 56.000 test su ciascuna piattaforma per ogni build.
-
-I pacchetti di anteprima saranno disponibili su NuGet più avanti nel corso dell'anno.

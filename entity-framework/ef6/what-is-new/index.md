@@ -4,18 +4,22 @@ author: divega
 ms.date: 09/12/2019
 ms.assetid: 41d1f86b-ce66-4bf2-8963-48514406fb4c
 uid: ef6/what-is-new/index
-ms.openlocfilehash: 9daae787d0cec0ca536413e6263bb363ba76ff2c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: e0367aeefd682434bf520301776bcff4f0e72e06
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78413416"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136132"
 ---
 # <a name="whats-new-in-ef6"></a>Novità di EF6
 
 Per ottenere le funzionalità più recenti e il livello di stabilità più elevato è consigliabile usare l'ultima versione rilasciata di Entity Framework.
 È possibile, tuttavia, usare una versione precedente o provare i miglioramenti resi disponibili nella versione provvisoria più recente.
 Per installare versioni specifiche di Entity Framework, vedere [Get Entity Framework](~/ef6/fundamentals/install.md) (Ottenere Entity Framework).
+
+## <a name="ef-640"></a>EF 6.4.0
+
+Il runtime di EF 6.4.0 è stato rilasciato in NuGet nel mese di dicembre 2019. L'obiettivo principale di EF 6.4 è quello di rifinire le funzionalità e gli scenari forniti in EF 6.3. Vedere l'[elenco delle correzioni importanti](https://github.com/dotnet/ef6/milestone/14?closed=1) su GitHub.
 
 ## <a name="ef-630"></a>EF 6.3.0
 
@@ -31,7 +35,7 @@ Il runtime di EF 6.3.0 è stato rilasciato in NuGet nel mese di settembre 2019. 
 
 ### <a name="ef-designer-support"></a>Supporto di EF Designer
 
-Attualmente non è disponibile alcun supporto per l'uso di EF Designer direttamente nei progetti .NET Core o .NET Standard. 
+Attualmente non è disponibile alcun supporto per l'uso di EF Designer direttamente nei progetti .NET Core o .NET Standard oppure nei progetti .NET Framework in stile SDK. 
 
 Per ovviare a questa limitazione, è possibile aggiungere il file EDMX e le classi generate per le entità e DbContext come file collegati a un progetto .NET Core 3.0 o .NET Standard 2.1 nella stessa soluzione.
 
@@ -47,6 +51,8 @@ Nel file di progetto i file collegati appariranno come segue:
 ```
 
 Si noti che il file EDMX è collegato all'azione di compilazione EntityDeploy. Si tratta di un'attività MSBuild speciale (ora inclusa nel pacchetto EF 6.3) che gestisce l'aggiunta del modello EF nell'assembly di destinazione come risorse incorporate (o la copia come file nella cartella di output, a seconda dell'impostazione di elaborazione degli artefatti dei metadati in EDMX). Per altri dettagli su come ottenere questa configurazione, vedere l'[esempio EDMX .NET Core](https://aka.ms/EdmxDotNetCoreSample).
+
+Avviso: assicurarsi che il progetto .NET Framework vecchio stile (ovvero non in stile SDK), che definisce il file con estensione edmx "reale" venga _prima_ del progetto che definisce il collegamento all'interno del file con estensione sln. In caso contrario, quando si apre il file con estensione edmx nella finestra di progettazione, viene visualizzato il messaggio di errore "Entity Framework non è disponibile nel framework di destinazione attualmente specificato per il progetto. È possibile modificare il framework di destinazione del progetto oppure modificare il modello in XmlEditor".
 
 ## <a name="past-releases"></a>Versioni precedenti
 
