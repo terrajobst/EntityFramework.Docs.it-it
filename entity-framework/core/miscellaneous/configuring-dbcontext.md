@@ -4,12 +4,12 @@ author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: d7a22b5a-4c5b-4e3b-9897-4d7320fcd13f
 uid: core/miscellaneous/configuring-dbcontext
-ms.openlocfilehash: 3ab90d46b7a4476044e5ea38eaf04f995708e7bf
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 53b38f288cd45e66d68ebcc3b6066646d59b0262
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78416669"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136183"
 ---
 # <a name="configuring-a-dbcontext"></a>Configurazione di un DbContext
 
@@ -186,9 +186,9 @@ Attendi sempre EF Core metodi asincroni immediatamente.
 
 Il metodo di estensione [`AddDbContext`](https://docs.microsoft.com/dotnet/api/microsoft.extensions.dependencyinjection.entityframeworkservicecollectionextensions.adddbcontext) registra `DbContext` tipi con una [durata con ambito](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection#service-lifetimes) per impostazione predefinita.
 
-Ciò è sicuro dai problemi di accesso simultaneo nelle applicazioni ASP.NET Core perché è presente un solo thread che esegue ogni richiesta client in un determinato momento e perché ogni richiesta ottiene un ambito di inserimento delle dipendenze separato (e quindi un'istanza di `DbContext` separata).
+Ciò è sicuro dai problemi di accesso simultaneo nella maggior parte delle applicazioni ASP.NET Core perché è presente un solo thread che esegue ogni richiesta client in un determinato momento e perché ogni richiesta ottiene un ambito di inserimento delle dipendenze separato (e quindi un'istanza di `DbContext` separata). Per il modello di hosting del server blazer, viene usata una richiesta logica per gestire il circuito utente di blazer e pertanto è disponibile solo un'istanza con ambito DbContext per ogni circuito utente se viene usato l'ambito di inserimento predefinito.
 
-Tuttavia, qualsiasi codice che esegua in modo esplicito più thread in parallelo deve garantire che non venga mai eseguito l'accesso alle istanze `DbContext`.
+Il codice che esegue in modo esplicito più thread in parallelo deve garantire che non venga mai eseguito l'accesso alle istanze `DbContext`.
 
 Usando l'inserimento di dipendenze, è possibile ottenere questo risultato registrando il contesto come ambito e creando ambiti (usando `IServiceScopeFactory`) per ogni thread o registrando il `DbContext` come temporaneo (usando l'overload di `AddDbContext` che accetta un parametro `ServiceLifetime`).
 

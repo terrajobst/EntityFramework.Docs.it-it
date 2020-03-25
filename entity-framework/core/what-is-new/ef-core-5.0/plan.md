@@ -3,12 +3,12 @@ title: Pianificare Entity Framework Core 5,0
 author: ajcvickers
 ms.date: 01/14/2020
 uid: core/what-is-new/ef-core-5.0/plan.md
-ms.openlocfilehash: c5b7300c61c2f668b6f9393ae51bf9ebddf330a7
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: 8b4ca32524869019c04d5a4d4d55967f68181cd7
+ms.sourcegitcommit: c3b8386071d64953ee68788ef9d951144881a6ab
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78417876"
+ms.lasthandoff: 03/24/2020
+ms.locfileid: "80136228"
 ---
 # <a name="plan-for-entity-framework-core-50"></a>Pianificare Entity Framework Core 5,0
 
@@ -67,7 +67,7 @@ Rilevato da [#2266](https://github.com/aspnet/EntityFrameworkCore/issues/2266)
 
 Dimensioni della maglietta: XL
 
-Stato: non avviato
+Stato: in corso
 
 Stiamo eseguendo TPT perché si tratta di una funzionalità estremamente richiesta (~ 254 voti, 3 in generale) e perché richiede alcune modifiche di basso livello che si ritiene siano appropriate per la natura fondamentale del piano generale .NET 5. Si prevede che questo provocherà modifiche di rilievo per i provider di database, anche se queste devono essere molto meno gravi rispetto alle modifiche necessarie per 3,0.
 
@@ -79,7 +79,7 @@ Rilevato da [#1833](https://github.com/aspnet/EntityFrameworkCore/issues/1833)
 
 Dimensioni T-Shirt: M
 
-Stato: non avviato
+Stato: in corso
 
 L'inclusione filtrata è una funzionalità molto richiesta (~ 317 voti, 2 nel complesso) che non è una grande quantità di lavoro e che riteniamo che lo sblocco o renderà più semplice molti scenari che attualmente richiedono filtri a livello di modello o query più complesse.
 
@@ -91,7 +91,7 @@ Rilevato da [#17270](https://github.com/aspnet/EntityFrameworkCore/issues/17270)
 
 Dimensioni della maglietta: L
 
-Stato: non avviato
+Stato: in corso
 
 Sono stati apportati miglioramenti alle versioni precedenti per il supporto di SQL non elaborato, tipi autochiave e aree correlate. Tuttavia, vi sono Gap e incoerenze nel modo in cui tutto funziona insieme nel suo complesso. L'obiettivo di 5,0 è correggerli e creare un'esperienza ottimale per la definizione, la migrazione e l'utilizzo di tipi diversi di entità e delle query e degli elementi di database associati. Questo può comportare anche aggiornamenti all'API di query compilata.
 
@@ -184,7 +184,7 @@ Rilevato da [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 Dimensioni della maglietta: L
 
-Stato: non avviato
+Stato: in corso
 
 L'idea è quella di semplificare la comprensione di ciò che accade negli elementi interni del EF Core. Questa operazione può essere utile per chiunque usi EF Core, ma la motivazione principale consiste nel rendere più semplice per gli utenti esterni:
 
