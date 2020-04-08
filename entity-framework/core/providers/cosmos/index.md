@@ -6,10 +6,10 @@ ms.author: ansvyryd
 ms.date: 11/05/2019
 uid: core/providers/cosmos/index
 ms.openlocfilehash: 74284bf78f404e376436a1ef5d5933186c85ae49
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413056"
 ---
 # <a name="ef-core-azure-cosmos-db-provider"></a>Provider di Azure Cosmos DB per EF Core
@@ -24,7 +24,7 @@ Prima di leggere questa sezione, è consigliabile acquisire familiarità con la 
 > [!NOTE]
 > Questo provider funziona solo con l'API SQL di Azure Cosmos DB.
 
-## <a name="install"></a>Installazione di
+## <a name="install"></a>Installazione
 
 Installare il [pacchetto NuGet Microsoft.EntityFrameworkCore.Cosmos](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Cosmos/).
 

@@ -4,19 +4,19 @@ author: divega
 ms.date: 07/05/2018
 ms.assetid: 4890228E-CEA1-4595-B8AD-CA81253F8767
 ms.openlocfilehash: bd9843a93121f53518a307c9d2d43b68ae03369c
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78413466"
 ---
 # <a name="creating-a-model"></a>Creazione di un modello
 
 Un modello EF archivia i dettagli relativi al mapping delle classi e delle proprietà delle applicazioni alle tabelle e alle colonne di database. Per creare un modello EF, esistono principalmente due metodi:
 
-- **Uso di Code First**: lo sviluppatore scrive il codice per specificare il modello. EF genera i modelli e i mapping in fase di runtime in base alle classi di entità e a una configurazione di modelli aggiuntiva specificata dallo sviluppatore.
+- **Tramite Code First**: lo sviluppatore per definisce il modello scrivendo codice. EF genera i modelli e i mapping in fase di runtime in base alle classi di entità e a una configurazione di modelli aggiuntiva specificata dallo sviluppatore.
 
-- **Uso di Entity Framework Designer**: lo sviluppatore definisce il modello disegnando caselle e linee in EF Designer. Il modello risultante viene archiviato in formato XML in un file con estensione EDMX. Gli oggetti del dominio dell'applicazione vengono in genere generati automaticamente partendo dal modello concettuale.
+- **Tramite EF Designer**: lo sviluppatore definisce il modello disegnando caselle e linee in EF Designer. Il modello risultante viene archiviato in formato XML in un file con estensione EDMX. Gli oggetti del dominio dell'applicazione vengono in genere generati automaticamente partendo dal modello concettuale.
 
 ## <a name="ef-workflows"></a>Flussi di lavoro di EF
 
