@@ -4,12 +4,12 @@ author: ErikEJ
 ms.date: 12/17/2019
 ms.assetid: 14fffb6c-a687-4881-a094-af4a1359a296
 uid: core/extensions/index
-ms.openlocfilehash: 99f59153a452a2f4aad5811110ebc5b5da7717ef
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.openlocfilehash: e3806f7161fecfe66450d3e08f97caf3d2c84cf3
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: HT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
-ms.locfileid: "78412996"
+ms.lasthandoff: 04/07/2020
+ms.locfileid: "80634236"
 ---
 # <a name="ef-core-tools--extensions"></a>Strumenti ed estensioni di EF Core
 
@@ -175,3 +175,14 @@ Estende DbContext con operazioni in blocco ad alte prestazioni: BulkSaveChanges,
 Aggiunta del supporto per la chiamata di metodi di estensione nelle espressioni lambda LINQ. Per EF Core: 3.1
 
 [Repository GitHub](https://github.com/ClaveConsulting/Expressionify)
+
+### <a name="xlinq"></a>XLinq
+
+Tecnologia LINQ (Language Integrated Query) per database relazionali. Consente di usare C# per scrivere query fortemente tipizzate. Per EF Core: 3.1
+
+- Supporto C# completo per la creazione di query: più istruzioni all'interno di lambda, variabili, funzioni e così via.
+- Nessun gap semantico con SQL. XLinq dichiara istruzioni SQL (ad esempio `SELECT`, `FROM`, `WHERE`) come metodi C# di prima classe, combinando la sintassi familiare con IntelliSense, l'indipendenza dai tipi e il refactoring.
+
+Di conseguenza, SQL diventa semplicemente "un'altra" libreria di classi che espone l'API in locale, letteralmente *"SQL integrato nel linguaggio"* .
+
+[Sito Web](http://xlinq.live/)
