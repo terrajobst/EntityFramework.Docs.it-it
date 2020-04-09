@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: 3f1993c2-cdf5-425b-bac2-a2665a20322b
 uid: core/saving/explicit-values-generated-properties
 ms.openlocfilehash: 43c4ab3c2a60645cdeff2a6cc40ce979f832f2fd
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78417569"
 ---
 # <a name="setting-explicit-values-for-generated-properties"></a>Impostazione di valori espliciti per le proprietà generate

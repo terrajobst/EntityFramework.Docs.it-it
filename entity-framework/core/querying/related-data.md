@@ -5,10 +5,10 @@ ms.date: 10/27/2016
 ms.assetid: f9fb64e2-6699-4d70-a773-592918c04c19
 uid: core/querying/related-data
 ms.openlocfilehash: 915aaa41beb495a046f2d6260e9c3b174d5f3031
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78417677"
 ---
 # <a name="loading-related-data"></a>Caricamento di dati correlati
@@ -54,7 +54,7 @@ Entity Framework Core consente di usare le proprietà di navigazione nel modello
 [!code-csharp[Main](../../../samples/core/Querying/RelatedData/Sample.cs#MultipleLeafIncludes)]
 
 > [!CAUTION]
-> Dalla versione 3.0.0, ogni `Include` provocherà l'aggiunta di un JOIN aggiuntivo alle query SQL prodotte dai provider relazionali, mentre le versioni precedenti generavano query SQL aggiuntive. Questo può modificare in modo significativo le prestazioni delle query, per un miglioramento o peggio. In particolare, è possibile che le query LINQ con un numero estremamente elevato di operatori di `Include` debbano essere suddivise in più query LINQ separate per evitare il problema di esplosione cartesiana.
+> A partire dalla versione 3.0.0, verrà `Include` aggiunta un'aggiunta di JOIN aggiuntiva alle query SQL prodotte dai provider relazionali, mentre le versioni precedenti generavano query SQL aggiuntive. Ciò può modificare in modo significativo le prestazioni delle query, nel bene e nel male. In particolare, LINQ query con un `Include` numero estremamente elevato di operatori potrebbe essere necessario essere suddivisi in più query LINQ separate per evitare il problema di esplosione cartesiana.
 
 ### <a name="include-on-derived-types"></a>Inclusione per i tipi derivati
 

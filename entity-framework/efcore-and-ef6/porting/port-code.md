@@ -1,37 +1,37 @@
 ---
-title: Porting da EF6 a EF Core-porting di un modello basato sul codice-EF
+title: Conversione da EF6 a EF Core - Porting di un modello basato su codice - EF
 author: rowanmiller
 ms.date: 10/27/2016
 ms.assetid: 2dce1a50-7d84-4856-abf6-2763dd9be99d
 uid: efcore-and-ef6/porting/port-code
 ms.openlocfilehash: 0a99eac2091c07d8bcf7d4e5e4bdc2afcaeee810
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78419637"
 ---
-# <a name="porting-an-ef6-code-based-model-to-ef-core"></a>Porting di un modello basato su codice EF6 per EF Core
+# <a name="porting-an-ef6-code-based-model-to-ef-core"></a>Conversione di un modello basato su codice EF6 in EF Core
 
-Se sono state lette tutte le avvertenze e si è pronti per la porta, di seguito sono riportate alcune linee guida utili per iniziare.
+Se hai letto tutte le avvertenze e sei pronto per il porting, ecco alcune linee guida per aiutarti a iniziare.
 
-## <a name="install-ef-core-nuget-packages"></a>Installare EF Core pacchetti NuGet
+## <a name="install-ef-core-nuget-packages"></a>Installare i pacchetti NuGet di EF CoreInstall EF Core NuGet packages
 
-Per usare EF Core, installare il pacchetto NuGet per il provider di database che si vuole usare. Ad esempio, quando la destinazione è SQL Server, è necessario installare `Microsoft.EntityFrameworkCore.SqlServer`. Per informazioni dettagliate, vedere [provider di database](../../core/providers/index.md) .
+Per utilizzare EF Core, installare il pacchetto NuGet per il provider di database che si desidera utilizzare. Ad esempio, quando si esegue la `Microsoft.EntityFrameworkCore.SqlServer`destinazione di SQL Server, è necessario installare . Per informazioni [dettagliate,](../../core/providers/index.md) vedere Provider di database.
 
-Se si prevede di usare le migrazioni, è necessario installare anche il pacchetto di `Microsoft.EntityFrameworkCore.Tools`.
+Se si prevede di utilizzare le migrazioni, `Microsoft.EntityFrameworkCore.Tools` è necessario installare anche il pacchetto.
 
-È consigliabile lasciare installato il pacchetto NuGet EF6 (EntityFramework), perché EF Core e EF6 possono essere utilizzati side-by-side nella stessa applicazione. Tuttavia, se non si intende usare EF6 in tutte le aree dell'applicazione, la disinstallazione del pacchetto consente di ottenere errori di compilazione su frammenti di codice che richiedono attenzione.
+È bene lasciare installato il pacchetto EF6 NuGet (EntityFramework), come Entity Core ed EF6 possono essere utilizzati side-by-side nella stessa applicazione. Tuttavia, se non si intende utilizzare EF6 in tutte le aree dell'applicazione, quindi la disinstallazione del pacchetto contribuirà a dare errori di compilazione su parti di codice che richiedono attenzione.
 
 ## <a name="swap-namespaces"></a>Scambia spazi dei nomi
 
-La maggior parte delle API usate in EF6 si trova nello spazio dei nomi `System.Data.Entity` e negli spazi dei nomi secondari correlati. La prima modifica del codice prevede lo scambio nello spazio dei nomi `Microsoft.EntityFrameworkCore`. Si inizia in genere con il file di codice del contesto derivato, quindi si esegue questa operazione, risolvendo gli errori di compilazione man mano che si verificano.
+La maggior parte delle API utilizzate in `System.Data.Entity` EF6 si trovano nello spazio dei nomi (e negli spazi dei nomi secondari correlati). La prima modifica del codice `Microsoft.EntityFrameworkCore` consiste nello scambiare allo spazio dei nomi. In genere si inizia con il file di codice di contesto derivato e quindi elaborare da lì, risolvere gli errori di compilazione come si verificano.
 
-## <a name="context-configuration-connection-etc"></a>Configurazione del contesto (connessione e così via)
+## <a name="context-configuration-connection-etc"></a>Configurazione del contesto (connessione, ecc.)
 
-Come descritto in [assicurarsi che EF Core funzionerà per l'applicazione](ensure-requirements.md), EF core ha meno magie per il rilevamento del database a cui connettersi. È necessario eseguire l'override del metodo `OnConfiguring` nel contesto derivato e utilizzare l'API specifica del provider di database per configurare la connessione al database.
+Come descritto in [Assicurarsi che EF Core funzioni per l'applicazione](ensure-requirements.md), EF Core ha meno magia intorno il rilevamento del database a cui connettersi. È necessario eseguire `OnConfiguring` l'override del metodo nel contesto derivato e utilizzare l'API specifica del provider di database per configurare la connessione al database.
 
-La maggior parte delle applicazioni EF6 archivia la stringa di connessione nel file di `App/Web.config` applicazioni. In EF Core la stringa di connessione viene letta usando l'API `ConfigurationManager`. Per poter usare questa API, potrebbe essere necessario aggiungere un riferimento all'assembly `System.Configuration` Framework.
+La maggior parte delle applicazioni EF6 archivia la stringa di connessione nel file di applicazioni. `App/Web.config` In EF Core, leggere questa `ConfigurationManager` stringa di connessione utilizzando l'API. Potrebbe essere necessario aggiungere un `System.Configuration` riferimento all'assembly del framework per poter utilizzare questa API.
 
 ``` csharp
 public class BloggingContext : DbContext
@@ -48,14 +48,14 @@ public class BloggingContext : DbContext
 
 ## <a name="update-your-code"></a>Aggiornare il codice
 
-A questo punto, è necessario risolvere gli errori di compilazione ed esaminare il codice per verificare se le modifiche apportate al comportamento incidono sull'utente.
+A questo punto, si tratta di risolvere gli errori di compilazione e di esaminare il codice per vedere se le modifiche al comportamento avranno un impatto sull'utente.
 
 ## <a name="existing-migrations"></a>Migrazioni esistenti
 
-Non esiste un modo davvero possibile per trasferire le migrazioni di EF6 esistenti in EF Core.
+Non esiste un modo fattibile per eseguire il porting delle migrazioni di EF6 esistenti a EF Core.There isn't really a feasible way to port existing EF6 migrations to EF Core.
 
-Se possibile, è preferibile presupporre che tutte le migrazioni precedenti da EF6 siano state applicate al database e quindi avviare la migrazione dello schema da tale punto utilizzando EF Core. A tale scopo, è necessario utilizzare il comando `Add-Migration` per aggiungere una migrazione dopo che il modello viene trasferito al EF Core. Sarà quindi necessario rimuovere tutto il codice dalla `Up` e `Down` metodi della migrazione con impalcature. Le migrazioni successive vengono confrontate con il modello quando la migrazione iniziale è stata sottoposta a impalcatura.
+Se possibile, è consigliabile presupporre che tutte le migrazioni precedenti da EF6 sono state applicate al database e quindi avviare la migrazione dello schema da quel punto utilizzando EF Core. A tale scopo, è `Add-Migration` necessario utilizzare il comando per aggiungere una migrazione una volta che il modello viene eseguito il porting a EF Core.To do this, you would use the command to add a migration once the model is ported to EF Core. È quindi necessario rimuovere `Up` tutto `Down` il codice dai metodi e della migrazione con scaffolding. Le migrazioni successive verranno confrontate con il modello quando è stato eseguito lo scaffolding della migrazione iniziale.
 
 ## <a name="test-the-port"></a>Testare la porta
 
-Solo perché l'applicazione viene compilata, non significa che la porta è stata eseguita correttamente per EF Core. È necessario testare tutte le aree dell'applicazione per assicurarsi che nessuna delle modifiche del comportamento abbia avuto un impatto negativo sull'applicazione.
+Solo perché l'applicazione viene compilata, non significa che è stato eseguito correttamente il porting a EF Core.Just because your application compiles, does not mean it is successfully ported to EF Core. Sarà necessario testare tutte le aree dell'applicazione per assicurarsi che nessuna delle modifiche di comportamento abbia influito negativamente sull'applicazione.

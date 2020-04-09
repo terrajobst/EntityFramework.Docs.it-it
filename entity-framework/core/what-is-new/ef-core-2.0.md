@@ -5,10 +5,10 @@ ms.date: 02/20/2018
 ms.assetid: 2CB5809E-0EFB-44F6-AF14-9D5BFFFBFF9D
 uid: core/what-is-new/ef-core-2.0
 ms.openlocfilehash: 83f6b819409d502dba17a678d44a0746a4a77f4b
-ms.sourcegitcommit: cc0ff36e46e9ed3527638f7208000e8521faef2e
+ms.sourcegitcommit: 9b562663679854c37c05fca13d93e180213fb4aa
 ms.translationtype: MT
 ms.contentlocale: it-IT
-ms.lasthandoff: 03/06/2020
+ms.lasthandoff: 04/07/2020
 ms.locfileid: "78417496"
 ---
 # <a name="new-features-in-ef-core-20"></a>Nuove funzionalità di EF Core 2.0
@@ -38,7 +38,7 @@ Leggere la [sezione sulla suddivisione di tabelle](xref:core/modeling/table-spli
 
 ### <a name="owned-types"></a>Tipi di proprietà
 
-Un tipo di entità di proprietà può condividere lo stesso tipo .NET con un altro tipo di entità di proprietà, ma poiché non può essere identificato solo dal tipo .NET è necessario che vi sia una navigazione da un altro tipo di entità. L'entità contenente la navigazione che lo definisce è il proprietario. Quando si esegue una query sul proprietario, i tipi di proprietà saranno inclusi per impostazione predefinita.
+Un tipo di entità di proprietà può condividere lo stesso tipo .NET con un altro tipo di entità di proprietà, ma poiché non può essere identificato solo dal tipo .NET, deve essere presente una navigazione da un altro tipo di entità. L'entità contenente la navigazione che lo definisce è il proprietario. Quando si esegue una query sul proprietario, i tipi di proprietà saranno inclusi per impostazione predefinita.
 
 Per convenzione viene creata una chiave primaria shadow per il tipo di proprietà e ne viene eseguito il mapping alla stessa tabella del proprietario usando la suddivisione di tabelle. Ciò consente di usare i tipi di proprietà in modo simile ai tipi complessi in EF6:
 
@@ -96,7 +96,7 @@ public class BloggingContext : DbContext
 }
 ```
 
-Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti l'uso di una proprietà `DbContext` a livello di istanza: `TenantId`. I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
+Viene definito un filtro a livello di modello che implementa il multi-tenancy e l'eliminazione temporanea per le istanze del tipo di entità `Post`. Si noti `DbContext` l'utilizzo di `TenantId`una proprietà a livello di istanza: . I filtri a livello di modello usano il valore dell'istanza del contesto corretta, ovvero l'istanza del contesto che esegue la query.
 
 È possibile disabilitare i filtri per le singole query LINQ usando l'operatore IgnoreQueryFilters().
 
@@ -135,9 +135,9 @@ var query =
 
 Alcuni punti di cui tenere conto:
 
-- Per convenzione, il nome del metodo viene usato come nome di una funzione (in questo caso una funzione definita dall'utente) durante la generazione di SQL, ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
+- Per convenzione, il nome del metodo viene utilizzato come nome di una funzione (in questo caso una funzione definita dall'utente) durante la generazione di SQL, ma è possibile eseguire l'override del nome e dello schema durante la registrazione del metodo.
 - Attualmente sono supportate solo le funzioni scalari.
-- È necessario creare la funzione mappata nel database. La creazione di EF Core migrazioni non verrà eseguita.
+- È necessario creare la funzione mappata nel database. Migrazioni di EF Core non si prenderà cura di crearlo.
 
 ### <a name="self-contained-type-configuration-for-code-first"></a>Configurazione dei tipi completa per Code First
 
@@ -182,7 +182,7 @@ Il nuovo metodo introduce alcune limitazioni nelle operazioni possibili nel meto
 > [!WARNING]  
 > Evitare di usare il pooling DbContext se nella classe DbContext derivata si mantiene uno stato (ad esempio, campi privati) che non deve essere condiviso tra le richieste. Prima di aggiungere un'istanza di DbContext al pool, EF Core reimposterà solo lo stato di cui è a conoscenza.
 
-### <a name="explicitly-compiled-queries"></a>Query compilate in modo esplicito
+### <a name="explicitly-compiled-queries"></a>Query compilate esplicite
 
 Questa è la seconda funzionalità di ottimizzazione delle prestazioni progettata per offrire vantaggi in scenari di vasta scala.
 
@@ -223,7 +223,7 @@ Il codice SQL generato per i join di gruppo è stato migliorato. I join di grupp
 
 ### <a name="string-interpolation-in-fromsql-and-executesqlcommand"></a>Interpolazione di stringhe in FromSql e ExecuteSqlCommand
 
-C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente C# di usare l'interpolazione di stringhe in modo sicuro. ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
+C# 6 ha introdotto l'interpolazione di stringhe, una funzionalità che consente di incorporare direttamente le espressioni C# nei valori letterali di stringa offrendo un ottimo modo per compilare le stringhe in fase di esecuzione. In EF Core 2.0 uno speciale supporto per le stringhe interpolate è stato aggiunto alle due API principali che accettano stringhe SQL non elaborate: `FromSql` e `ExecuteSqlCommand`. Questo nuovo supporto consente di utilizzare l'interpolazione di stringhe c'è in modo "sicuro". ovvero in modo da garantire la protezione dagli errori SQL injection comuni che possono verificarsi durante la costruzione dinamica di SQL in fase di esecuzione.
 
 Esempio:
 
@@ -270,7 +270,7 @@ Notare che Like() include un'implementazione in memoria che può rivelarsi utile
 
 ## <a name="database-management"></a>Gestione di database
 
-### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>Hook di pluralismo per l'impalcatura DbContext
+### <a name="pluralization-hook-for-dbcontext-scaffolding"></a>Hook di pluralizzazione per lo scaffolding DbContextPluralization hook for DbContext scaffolding
 
 EF Core 2.0 introduce un nuovo servizio *IPluralizer* usato per rendere singolari i nomi dei tipi di entità e rendere plurali i nomi DbSet. L'implementazione predefinita è no-op, quindi si tratta semplicemente di un hook a cui gli sviluppatori possono facilmente collegare i propri pluralizer.
 
@@ -309,7 +309,7 @@ Rende la soluzione più solida in Microsoft.Data.Sqlite per la distribuzione di 
 
 Aumenta in modo significativo le modalità di interazione dei provider con il modello e semplifica il funzionamento di convenzioni, annotazioni e API Fluent con i diversi provider.
 
-EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Questa scelta ha agevolato la semplificazione delle API di metadati di livello inferiore in modo tale che l'accesso ai *concetti di metadati relazionali comuni* viene sempre eseguito tramite una chiamata a `.Relational` anziché `.SqlServer`, `.Sqlite` e così via.
+EF Core 2.0 ora compila un elemento [IModel](https://github.com/aspnet/EntityFramework/blob/master/src/EFCore/Metadata/IModel.cs) diverso per ogni provider in uso. L'operazione è in genere trasparente per l'applicazione. Ciò ha facilitato una semplificazione delle API dei metadati `.SqlServer`di livello inferiore in modo che qualsiasi `.Sqlite`accesso ai concetti comuni dei *metadati relazionali* venga sempre effettuato tramite una chiamata a `.Relational` , , e così via.
 
 ### <a name="consolidated-logging-and-diagnostics"></a>Registrazione e diagnostica consolidate
 
